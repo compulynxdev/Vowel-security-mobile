@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProgressBar xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/AlertDialog.AppCompat"
+    android:layout_width="75dp"
+    android:layout_height="75dp"
+    android:layout_gravity="center"
+    android:indeterminateTint="@color/colorPrimaryDark"
+    android:background="@android:color/transparent"
+    android:focusable="true"
+    android:indeterminate="true"
+    android:orientation="vertical" />
