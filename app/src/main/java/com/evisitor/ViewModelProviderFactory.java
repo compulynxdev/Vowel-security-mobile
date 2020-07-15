@@ -1,11 +1,11 @@
-package com.evisitor.eVisitor;
+package com.evisitor;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.evisitor.eVisitor.data.DataManager;
-import com.evisitor.eVisitor.ui.main.MainViewModel;
+import com.evisitor.data.DataManager;
+import com.evisitor.ui.main.MainViewModel;
 
 /**
  * Created by Priyanka Joshi on 14-07-2020.

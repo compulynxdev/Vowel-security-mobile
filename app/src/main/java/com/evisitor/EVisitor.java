@@ -1,9 +1,8 @@
-package com.evisitor.eVisitor;
+package com.evisitor;
 
 import android.app.Application;
 
-import com.evisitor.eVisitor.data.AppDataManager;
-import com.evisitor.eVisitor.data.DataManager;
+import com.evisitor.data.AppDataManager;
 
 /**
  * Created by Priyanka Joshi on 14-07-2020.

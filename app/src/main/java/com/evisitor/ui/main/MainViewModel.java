@@ -1,8 +1,8 @@
-package com.evisitor.eVisitor.ui.main;
+package com.evisitor.ui.main;
 
-import com.evisitor.eVisitor.data.DataManager;
-import com.evisitor.eVisitor.ui.base.BaseNavigator;
-import com.evisitor.eVisitor.ui.base.BaseViewModel;
+import com.evisitor.data.DataManager;
+import com.evisitor.ui.base.BaseNavigator;
+import com.evisitor.ui.base.BaseViewModel;
 
 /**
  * Created by priyanka joshi

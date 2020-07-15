@@ -1,11 +1,9 @@
-package com.evisitor.eVisitor.ui.base;
+package com.evisitor.ui.base;
 
-import android.app.AlertDialog;
 import android.content.Context;
 
 import androidx.annotation.StringRes;
 
-import okhttp3.ResponseBody;
 /**
  * Created by priyanka joshi
  * Date: 15/07/20

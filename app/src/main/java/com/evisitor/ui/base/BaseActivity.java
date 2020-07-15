@@ -1,4 +1,4 @@
-package com.evisitor.eVisitor.ui.base;
+package com.evisitor.ui.base;
 
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;

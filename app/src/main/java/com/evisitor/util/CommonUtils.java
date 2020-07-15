@@ -10,7 +10,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.provider.Settings;
 import android.util.Patterns;
-import com.evisitor.eVisitor.R;
+import com.evisitor.R;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;

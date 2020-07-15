@@ -1,9 +1,8 @@
-package com.evisitor.eVisitor.data;
+package com.evisitor.data;
 
 import android.content.Context;
-import com.evisitor.eVisitor.data.local.db.AppDBHelper;
-import com.evisitor.eVisitor.data.local.prefs.AppPreferenceHelper;
-import com.evisitor.eVisitor.data.remote.AppApiHelper;
+import com.evisitor.data.local.prefs.AppPreferenceHelper;
+import com.evisitor.data.remote.AppApiHelper;
 
 /**
  * Created by Priyanka Joshi on 14-07-2020.
@@ -12,13 +11,11 @@ public class AppDataManager implements DataManager {
 
     private AppApiHelper apiHelper;
     private AppPreferenceHelper preferenceHelper;
-    private AppDBHelper dbHelper;
     private static AppDataManager instance;
 
-    public AppDataManager(Context context) {
+    private AppDataManager(Context context) {
         apiHelper = AppApiHelper.getAppApiInstance();
         preferenceHelper = new AppPreferenceHelper(context);
-        dbHelper = AppDBHelper.getInstance(context);
 
     }
 

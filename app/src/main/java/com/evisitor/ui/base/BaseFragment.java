@@ -1,37 +1,26 @@
-package com.evisitor.eVisitor.ui.base;
+package com.evisitor.ui.base;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.RelativeLayout;
+
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import com.evisitor.eVisitor.R;
-import com.evisitor.util.ScreenUtils;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import java.util.Objects;
+import androidx.fragment.app.Fragment;
 
 /**
  * Created by priyanka joshi
  * Date: 15/07/20
  */
 
-public abstract class BaseDialog<T extends ViewDataBinding, V extends BaseViewModel> extends DialogFragment {
+public abstract class BaseFragment <T extends ViewDataBinding, V extends BaseViewModel> extends Fragment implements BaseNavigator {
 
-    private static final String TAG = "BaseDialog";
     private BaseActivity mActivity;
     private View mRootView;
     private T mViewDataBinding;
@@ -62,17 +51,16 @@ public abstract class BaseDialog<T extends ViewDataBinding, V extends BaseViewMo
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (context instanceof BaseActivity) {
-            BaseActivity mActivity = (BaseActivity) context;
-            this.mActivity = mActivity;
-            mActivity.onFragmentAttached();
+            BaseActivity activity = (BaseActivity) context;
+            this.mActivity = activity;
+            activity.onFragmentAttached();
+
         }
     }
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme);
         mViewModel = getViewModel();
         setHasOptionsMenu(false);
     }
@@ -106,89 +94,103 @@ public abstract class BaseDialog<T extends ViewDataBinding, V extends BaseViewMo
         return mViewDataBinding;
     }
 
+    @Nullable
+    @Override
+    public Context getContext() {
+        return mActivity.getContext();
+    }
+
+    @Override
+    public boolean hasPermission(String permission) {
+        return mActivity != null && mActivity.hasPermission(permission);
+    }
+
+    @Override
     public void hideKeyboard() {
         if (mActivity != null) {
             mActivity.hideKeyboard();
         }
     }
 
+    @Override
     public boolean isNetworkConnected() {
         return mActivity != null && mActivity.isNetworkConnected();
     }
 
-   /* public void openActivityOnTokenExpire() {
+   /* @Override
+    public void openActivityOnTokenExpire() {
         if (mActivity != null) {
             mActivity.openActivityOnTokenExpire();
         }
     }*/
 
+
+    @Override
+    public void requestPermissionsSafely(String[] permissions, int requestCode) {
+        if (mActivity != null) {
+            mActivity.requestPermissionsSafely(permissions, requestCode);
+        }
+    }
+
+    @Override
     public void hideLoading() {
         if (mActivity != null) {
             mActivity.hideLoading();
         }
     }
 
+    @Override
     public void showLoading() {
         if (mActivity != null) {
             mActivity.showLoading();
         }
     }
 
-    @NonNull
+    /*@Override
+    public AlertDialog showAlert(@StringRes int title, @StringRes int msg) {
+        return showAlert(getString(title), getString(msg));
+    }
+
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // the content
-        final RelativeLayout root = new RelativeLayout(getActivity());
+    public AlertDialog showAlert(@StringRes int title, String msg) {
+        return showAlert(getString(title), msg);
+    }*/
+/*
 
-        root.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT));
-        // creating the fullscreen dialog
-        final Dialog dialog = new Dialog(mActivity);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(root);
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.getWindow().setLayout(
-                    (int) (ScreenUtils.getScreenWidth(mActivity) * 0.8f),
-                    ViewGroup.LayoutParams.WRAP_CONTENT);
-        }
-        Objects.requireNonNull(dialog.getWindow()).getAttributes().windowAnimations = R.style.DialogAnimation;
-        dialog.setCanceledOnTouchOutside(false);
-
-        return dialog;
+    @Override
+    public AlertDialog showAlert(String title, @StringRes int msg) {
+        return showAlert(title, getString(msg));
     }
 
-    public void show(FragmentManager fragmentManager) {
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-
-        transaction.addToBackStack(null);
-        show(transaction, TAG);
+    @Override
+    public AlertDialog showAlert(String title, String msg) {
+        AlertDialog alertDialog = AlertDialog.newInstance().setMsg(msg)
+                .setTitle(title)
+                .setCancelGone()
+                .setOnOKClickListener(DialogFragment::dismiss);
+        alertDialog.show(getChildFragmentManager());
+        return alertDialog;
     }
+*/
 
+
+    @Override
     public void showToast(String msg) {
         if (mActivity != null) mActivity.showToast(msg);
     }
 
+    @Override
     public void showToast(@StringRes int msg) {
         if (mActivity != null) mActivity.showToast(msg);
     }
 
-    protected void dismissDialog(@NonNull String tag) {
-        dismiss();
-        getBaseActivity().onFragmentDetached(tag);
-    }
-/*
 
-    public void handleApiFailure(@NonNull Throwable t) {
-        if(mActivity!=null)
-            mActivity.handleApiFailure(t);
-    }
 
-    public void handleApiError(ResponseBody response) {
-        if(mActivity!=null)
-            mActivity.handleApiError(response);
+    public interface Callback {
+
+        void onFragmentAttached();
+
+        void onFragmentDetached(String tag);
     }
-*/
 
 }

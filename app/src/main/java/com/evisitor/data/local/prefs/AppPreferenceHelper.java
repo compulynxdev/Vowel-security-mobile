@@ -1,4 +1,4 @@
-package com.evisitor.eVisitor.data.local.prefs;
+package com.evisitor.data.local.prefs;
 
 import android.content.Context;
 import android.content.SharedPreferences;

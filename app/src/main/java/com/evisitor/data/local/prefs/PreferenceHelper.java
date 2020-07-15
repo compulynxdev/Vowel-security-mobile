@@ -1,4 +1,4 @@
-package com.evisitor.eVisitor.data.local.prefs;
+package com.evisitor.data.local.prefs;
 
 /**
  * Created by Priyanka Joshi on 14-07-2020.

@@ -1,4 +1,4 @@
-package com.evisitor.eVisitor;
+package com.evisitor;
 
 import org.junit.Test;
 

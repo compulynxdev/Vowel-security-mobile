@@ -1,8 +1,8 @@
-package com.evisitor.eVisitor.ui.base;
+package com.evisitor.ui.base;
 
 import androidx.lifecycle.ViewModel;
 
-import com.evisitor.eVisitor.data.DataManager;
+import com.evisitor.data.DataManager;
 
 import java.lang.ref.WeakReference;
 

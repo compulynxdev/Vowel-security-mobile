@@ -1,4 +1,4 @@
-package com.evisitor.eVisitor.data.remote;
+package com.evisitor.data.remote;
 
 import java.util.concurrent.TimeUnit;
 
@@ -24,6 +24,10 @@ public class AppApiHelper implements ApiHelper {
             apiHelper = new AppApiHelper();
         }
         return apiHelper;
+    }
+
+    private AppApiHelper() {
+
     }
 
     private static ApiHelper getApiInterface() {

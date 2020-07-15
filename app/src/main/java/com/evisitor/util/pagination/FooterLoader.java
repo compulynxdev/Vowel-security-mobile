@@ -5,8 +5,8 @@ import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 
-import com.evisitor.eVisitor.R;
-import com.evisitor.eVisitor.ui.base.BaseViewHolder;
+import com.evisitor.R;
+import com.evisitor.ui.base.BaseViewHolder;
 
 
 /**
