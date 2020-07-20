@@ -1,6 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimary">#408DFF</color>
+    <color name="colorPrimaryDark">#408DFF</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="colorDashboard">#D2E5F9</color>
+
+    <color name="gray">#BABABA</color>
+    <color name="bg_color">#f7f7f7</color>
+    <color name="colorOverlay">#78ffffff</color>
+    <color name="black_effective">#2a2a2a</color>
+    <color name="shadow">#d0d8dc</color>
+    <color name="transparent">#00000000</color>
+    <color name="translucent_white">#88ffffff</color>
+    <color name="fb">#3b5998</color>
+    <color name="google">#d34836</color>
+
+    <!--Design colors-->
+    <color name="red">#ff0000</color>
+    <color name="light_red">#FD3F6E</color>
+    <color name="red_dark">#F06423</color>
+    <color name="red_dark2">#D85A1B</color>
+    <color name="cyan_light">#c9ebee</color>
+    <color name="cyan">#b5e3e7</color>
+    <color name="cyan_dark">#70BDC6</color>
+    <color name="navy_blue">#214258</color>
+    <color name="navy_blue_dark">#1C3A4E</color>
+    <!--<color name="green">#00FF00</color>-->
+    <color name="green">#4DCA60</color>
+    <color name="light_green">#D2F7EB</color>
+    <!--<color name="light_blue">#4D9FEC</color>-->
+    <color name="light_blue">#1076E6</color>
+    <color name="blue">#0001FC</color>
+    <color name="blue_black_dark">#13171d</color>
+    <color name="blue_black_light">#516179</color>
+    <color name="orange">#FFA500</color>
+    <color name="orange_dark">#FF770D</color>
+    <color name="yellow">#DABC00</color>
+    <color name="dark_green">#01944E</color>
+
+    <color name="white_smoke">#f5f5f5</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="black80p">#CC000000</color>
+    <color name="black30p">#4D000000</color>
+    <color name="black20p">#33000000</color>
+    <color name="black03p">#03000000</color>
 </resources>

@@ -44,15 +44,15 @@ ext {
     animatedVectorDrawableVersion = '1.0.0'
     gsonVersion = '2.8.2'
     glideVersion = '4.11.0'
-    retrofit = '2.5.0'
-    retrofitConverter = '2.4.0'
+    retrofit = '2.9.0'
+    retrofitConverter = '2.9.0'
 
     lifecycleExtVersion = '2.1.0'
     lifecycle_version = '2.2.0'
     greenDaoVersion = '3.2.2'
 
     // Test dependencies
-    junitVersion = '4.12'
+    junitVersion = '4.13'
     junitExtVersion = '1.1.1'
     espressoVersion = '3.2.0'
 }
