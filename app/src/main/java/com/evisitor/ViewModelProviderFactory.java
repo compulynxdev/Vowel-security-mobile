@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.data.DataManager;
 import com.evisitor.ui.main.MainViewModel;
+import com.evisitor.ui.profile.UserProfileViewModel;
+import com.evisitor.ui.settings.SettingsViewModel;
 
 /**
  * Created by Priyanka Joshi on 14-07-2020.
@@ -32,6 +34,12 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         if (modelClass.isAssignableFrom(MainViewModel.class)){
             //noinspection unchecked
             return (T) new MainViewModel(dataManager);
+        }else if (modelClass.isAssignableFrom(UserProfileViewModel.class)){
+            //noinspection unchecked
+            return (T) new UserProfileViewModel(dataManager);
+        }else if (modelClass.isAssignableFrom(SettingsViewModel.class)){
+            //noinspection unchecked
+            return (T) new SettingsViewModel(dataManager);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

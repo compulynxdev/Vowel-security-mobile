@@ -1,15 +1,15 @@
 package com.evisitor.ui.main;
 
 import android.os.Bundle;
-
 import androidx.lifecycle.ViewModelProvider;
-
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.ActivityMainBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.base.BaseNavigator;
+import com.evisitor.ui.profile.UserProfileFrament;
+import com.evisitor.ui.settings.SettingsFragment;
 
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements BaseNavigator {
@@ -59,13 +59,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                     name = "Explore";
                     break;
                 case ID_SETTINGS:
-                    name = "Settings";
+                    replaceFragment(SettingsFragment.newInstance(),R.id.frame_layout);
                     break;
                 case ID_PROFILE:
-                    name = "Profile";
+                    replaceFragment(UserProfileFrament.newInstance(),R.id.frame_layout);
                     break;
             }
-            getViewDataBinding().tvTitle.setText(name);
         });
         getViewDataBinding().bottomNavigation.show(ID_HOME, true);
     }

@@ -39,6 +39,7 @@ dependencies {
     // dependencies for local unit tests
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation "junit:junit:$rootProject.junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.junitExtVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
@@ -64,4 +65,8 @@ dependencies {
 
     //material bottom navigation
     implementation 'com.etebarian:meow-bottom-navigation-java:1.2.0'
+
+    // circular Image
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
 }
