@@ -1,24 +1,22 @@
-package com.evisitor.ui.profile;
+package com.evisitor.ui.notifications;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
-import com.evisitor.databinding.FragmentUserProfileBinding;
+import com.evisitor.databinding.FragmentNotificationsBinding;
 import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.base.BaseNavigator;
 
-public class UserProfileFrament extends BaseFragment<FragmentUserProfileBinding,UserProfileViewModel> implements BaseNavigator{
+public class NotificationsFragment extends BaseFragment<FragmentNotificationsBinding, NotificationsFragmentViewModel> implements BaseNavigator {
 
-
-    public static Fragment newInstance() {
-        UserProfileFrament fragment = new UserProfileFrament();
+    public static NotificationsFragment newInstance() {
+        NotificationsFragment fragment = new NotificationsFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -31,12 +29,12 @@ public class UserProfileFrament extends BaseFragment<FragmentUserProfileBinding,
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_user_profile;
+        return R.layout.fragment_notifications;
     }
 
     @Override
-    public UserProfileViewModel getViewModel() {
-        return new ViewModelProvider(this,ViewModelProviderFactory.getInstance()).get(UserProfileViewModel.class);
+    public NotificationsFragmentViewModel getViewModel() {
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(NotificationsFragmentViewModel.class);
     }
 
     @Override
@@ -44,7 +42,6 @@ public class UserProfileFrament extends BaseFragment<FragmentUserProfileBinding,
         super.onViewCreated(view, savedInstanceState);
         getViewModel().setNavigator(this);
         TextView tvTitle = view.findViewById(R.id.tv_title);
-        tvTitle.setText(R.string.title_profile);
+        tvTitle.setText(R.string.title_notification);
     }
-
 }

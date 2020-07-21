@@ -1,13 +1,18 @@
 package com.evisitor.ui.main;
 
 import android.os.Bundle;
+
 import androidx.lifecycle.ViewModelProvider;
+
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.ActivityMainBinding;
+import com.evisitor.ui.activity.ActivityFragment;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.base.BaseNavigator;
+import com.evisitor.ui.home.HomeFragment;
+import com.evisitor.ui.notifications.NotificationsFragment;
 import com.evisitor.ui.profile.UserProfileFrament;
 import com.evisitor.ui.settings.SettingsFragment;
 
@@ -15,9 +20,10 @@ import com.evisitor.ui.settings.SettingsFragment;
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements BaseNavigator {
 
     private final static int ID_HOME = 1;
-    private final static int ID_EXPLORE = 2;
-    private final static int ID_SETTINGS = 3;
-    private final static int ID_PROFILE = 4;
+    private final static int ID_ACTIVITY = 2;
+    private final static int ID_NOTIFICATION = 3;
+    private final static int ID_SETTINGS = 4;
+    private final static int ID_PROFILE = 5;
 
     @Override
     public int getBindingVariable() {
@@ -40,7 +46,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         getViewModel().setNavigator(this);
 
         getViewDataBinding().bottomNavigation.add(new MeowBottomNavigation.Model(ID_HOME, R.drawable.ic_home));
-        getViewDataBinding().bottomNavigation.add(new MeowBottomNavigation.Model(ID_EXPLORE, R.drawable.ic_explore));
+        getViewDataBinding().bottomNavigation.add(new MeowBottomNavigation.Model(ID_ACTIVITY, R.drawable.ic_clock));
+        getViewDataBinding().bottomNavigation.add(new MeowBottomNavigation.Model(ID_NOTIFICATION, R.drawable.ic_notification));
         getViewDataBinding().bottomNavigation.add(new MeowBottomNavigation.Model(ID_SETTINGS, R.drawable.ic_settings));
         getViewDataBinding().bottomNavigation.add(new MeowBottomNavigation.Model(ID_PROFILE, R.drawable.ic_profile));
 
@@ -50,22 +57,29 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         });
         getViewDataBinding().bottomNavigation.setOnShowListener(item -> {
 
-            String name = "";
             switch (item.getId()) {
                 case ID_HOME:
-                    name = "Home";
+                    replaceFragment(HomeFragment.newInstance(), R.id.frame_layout);
                     break;
-                case ID_EXPLORE:
-                    name = "Explore";
+
+                case ID_ACTIVITY:
+                    replaceFragment(ActivityFragment.newInstance(), R.id.frame_layout);
                     break;
+
+                case ID_NOTIFICATION:
+                    replaceFragment(NotificationsFragment.newInstance(), R.id.frame_layout);
+                    break;
+
                 case ID_SETTINGS:
                     replaceFragment(SettingsFragment.newInstance(),R.id.frame_layout);
                     break;
+
                 case ID_PROFILE:
                     replaceFragment(UserProfileFrament.newInstance(),R.id.frame_layout);
                     break;
             }
         });
+        getViewDataBinding().bottomNavigation.setCount(ID_NOTIFICATION, "100");
         getViewDataBinding().bottomNavigation.show(ID_HOME, true);
     }
 }

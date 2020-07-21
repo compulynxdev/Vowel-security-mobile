@@ -1,11 +1,11 @@
 package com.evisitor.ui.settings;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
-import android.view.View;
-import android.widget.TextView;
 
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
@@ -43,7 +43,7 @@ public class SettingsFragment extends BaseFragment<FragmentSettingsBinding,Setti
         super.onViewCreated(view, savedInstanceState);
         getViewModel().setNavigator(this);
         TextView tvTitle = view.findViewById(R.id.tv_title);
-        tvTitle.setText(R.string.settings);
+        tvTitle.setText(R.string.title_settings);
 
     }
 }
