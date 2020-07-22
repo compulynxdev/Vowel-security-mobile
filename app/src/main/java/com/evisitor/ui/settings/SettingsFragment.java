@@ -12,8 +12,9 @@ import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.FragmentSettingsBinding;
 import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.base.BaseNavigator;
+import com.evisitor.ui.settings.language.LanguageDialog;
 
-public class SettingsFragment extends BaseFragment<FragmentSettingsBinding,SettingsViewModel> implements BaseNavigator {
+public class SettingsFragment extends BaseFragment<FragmentSettingsBinding, SettingsViewModel> implements BaseNavigator, View.OnClickListener {
 
    public static SettingsFragment newInstance() {
         SettingsFragment fragment = new SettingsFragment();
@@ -45,5 +46,37 @@ public class SettingsFragment extends BaseFragment<FragmentSettingsBinding,Setti
         TextView tvTitle = view.findViewById(R.id.tv_title);
         tvTitle.setText(R.string.title_settings);
 
+        setOnClickListener(getViewDataBinding().infoConstraint, getViewDataBinding().languageConstraint, getViewDataBinding().aboutusConstraint
+                , getViewDataBinding().privacyConstraint, getViewDataBinding().logoutConstraint);
+    }
+
+    private void setOnClickListener(View... views) {
+        for (View view : views)
+            view.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.info_constraint:
+                break;
+
+            case R.id.language_constraint:
+                LanguageDialog.newInstance(language -> {
+                    //Todo set current lang to preference
+                    //getViewModel().getDataManager().
+                    getViewDataBinding().tvLang.setText(language.getLocalisationTitle());
+                }).show(getChildFragmentManager());
+                break;
+
+            case R.id.aboutus_constraint:
+                break;
+
+            case R.id.privacy_constraint:
+                break;
+
+            case R.id.logout_constraint:
+                break;
+        }
     }
 }

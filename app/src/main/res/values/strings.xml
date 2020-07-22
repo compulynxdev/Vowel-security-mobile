@@ -9,11 +9,20 @@
     <string name="title_profile">Profile</string>
 
     <!--Settings-->
+    <string name="app_info">App Info</string>
+    <string name="app_version">Version %s</string>
     <string name="language">Language</string>
     <string name="english">English</string>
+    <string name="swahili">Swahili</string>
     <string name="about_us">About Us</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="logout">Logout</string>
+
+    <!--Language Dialog-->
+    <string name="select_lang">Select Language</string>
+    <string name="cancel">Cancel</string>
+    <string name="done">Done</string>
+
 
     <!--Profile-->
     <string name="name">Name</string>

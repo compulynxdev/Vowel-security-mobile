@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#408DFF</color>
     <color name="colorAccent">#D81B60</color>
 
-    <color name="colorDashboard">#CC408DFF</color>
+    <color name="colorDashboard">#99408DFF</color>
 
     <color name="gray">#BABABA</color>
     <color name="bg_color">#f7f7f7</color>
@@ -41,7 +41,7 @@
 
     <color name="white_smoke">#f5f5f5</color>
     <color name="white">#ffffff</color>
-    <color name="black">#000000</color>
+    <color name="black">#BF000000</color>
     <color name="black80p">#CC000000</color>
     <color name="black30p">#4D000000</color>
     <color name="black20p">#33000000</color>

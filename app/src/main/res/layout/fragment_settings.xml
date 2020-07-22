@@ -30,6 +30,69 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_margin="18dp"
                 android:padding="8dp"
+                android:id="@+id/info_constraint"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card_corner"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:background="@drawable/bg_circle"
+                    android:contentDescription="@string/image"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_info"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/futura_round_medium"
+                    android:text="@string/app_info"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toTopOf="@id/tv_ver"
+                    app:layout_constraintStart_toEndOf="@+id/image"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+                <TextView
+                    android:id="@+id/tv_ver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/futura_round"
+                    android:text="@{@string/app_version(viewModel.version)}"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/image"
+                    app:layout_constraintTop_toBottomOf="@id/tv_info" />
+
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:rotation="180"
+                    android:src="@drawable/ic_back2"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_margin="18dp"
+                android:padding="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/info_constraint"
                 android:id="@+id/language_constraint"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:background="@drawable/bg_card_corner"
@@ -72,8 +135,7 @@
                     android:textSize="18sp"
                     app:layout_constraintTop_toBottomOf="@id/language"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/image1"
-                     />
+                    app:layout_constraintStart_toEndOf="@+id/image1" />
 
 
                 <ImageView
@@ -87,6 +149,7 @@
                     tools:ignore="ContentDescription" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 app:layout_constraintTop_toBottomOf="@+id/language_constraint"

@@ -11,6 +11,7 @@ import com.evisitor.ui.main.MainViewModel;
 import com.evisitor.ui.notifications.NotificationsFragmentViewModel;
 import com.evisitor.ui.profile.UserProfileViewModel;
 import com.evisitor.ui.settings.SettingsViewModel;
+import com.evisitor.ui.settings.language.LanguageDialogViewModel;
 
 /**
  * Created by Priyanka Joshi on 14-07-2020.
@@ -52,7 +53,11 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(UserProfileViewModel.class)) {
             //noinspection unchecked
             return (T) new UserProfileViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(LanguageDialogViewModel.class)) {
+            //noinspection unchecked
+            return (T) new LanguageDialogViewModel(dataManager);
         }
+
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }
 }
