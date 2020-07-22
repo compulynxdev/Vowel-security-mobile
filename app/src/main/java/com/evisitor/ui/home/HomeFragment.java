@@ -1,28 +1,27 @@
-package com.evisitor.ui.profile;
+package com.evisitor.ui.home;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
-import com.evisitor.databinding.FragmentUserProfileBinding;
+import com.evisitor.databinding.FragmentHomeBinding;
 import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.base.BaseNavigator;
 
-public class UserProfileFrament extends BaseFragment<FragmentUserProfileBinding,UserProfileViewModel> implements BaseNavigator{
+public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel> implements BaseNavigator {
 
-
-    public static Fragment newInstance() {
-        UserProfileFrament fragment = new UserProfileFrament();
+    public static HomeFragment newInstance() {
+        HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
+
 
     @Override
     public int getBindingVariable() {
@@ -31,12 +30,12 @@ public class UserProfileFrament extends BaseFragment<FragmentUserProfileBinding,
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_user_profile;
+        return R.layout.fragment_home;
     }
 
     @Override
-    public UserProfileViewModel getViewModel() {
-        return new ViewModelProvider(this,ViewModelProviderFactory.getInstance()).get(UserProfileViewModel.class);
+    public HomeViewModel getViewModel() {
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(HomeViewModel.class);
     }
 
     @Override
@@ -44,7 +43,6 @@ public class UserProfileFrament extends BaseFragment<FragmentUserProfileBinding,
         super.onViewCreated(view, savedInstanceState);
         getViewModel().setNavigator(this);
         TextView tvTitle = view.findViewById(R.id.tv_title);
-        tvTitle.setText(R.string.title_profile);
+        tvTitle.setText(R.string.title_home);
     }
-
 }

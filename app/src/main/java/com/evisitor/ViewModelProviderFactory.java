@@ -5,7 +5,10 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.data.DataManager;
+import com.evisitor.ui.activity.ActivityViewModel;
+import com.evisitor.ui.home.HomeViewModel;
 import com.evisitor.ui.main.MainViewModel;
+import com.evisitor.ui.notifications.NotificationsFragmentViewModel;
 import com.evisitor.ui.profile.UserProfileViewModel;
 import com.evisitor.ui.settings.SettingsViewModel;
 
@@ -17,7 +20,7 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
     private static ViewModelProviderFactory instance;
     private DataManager dataManager;
 
-    public ViewModelProviderFactory(DataManager dataManager) {
+    private ViewModelProviderFactory(DataManager dataManager) {
         this.dataManager = dataManager;
     }
 
@@ -34,12 +37,21 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         if (modelClass.isAssignableFrom(MainViewModel.class)){
             //noinspection unchecked
             return (T) new MainViewModel(dataManager);
-        }else if (modelClass.isAssignableFrom(UserProfileViewModel.class)){
+        } else if (modelClass.isAssignableFrom(HomeViewModel.class)) {
             //noinspection unchecked
-            return (T) new UserProfileViewModel(dataManager);
+            return (T) new HomeViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(ActivityViewModel.class)) {
+            //noinspection unchecked
+            return (T) new ActivityViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(NotificationsFragmentViewModel.class)) {
+            //noinspection unchecked
+            return (T) new NotificationsFragmentViewModel(dataManager);
         }else if (modelClass.isAssignableFrom(SettingsViewModel.class)){
             //noinspection unchecked
             return (T) new SettingsViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(UserProfileViewModel.class)) {
+            //noinspection unchecked
+            return (T) new UserProfileViewModel(dataManager);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

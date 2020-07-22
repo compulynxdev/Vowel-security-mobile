@@ -1,24 +1,22 @@
-package com.evisitor.ui.profile;
+package com.evisitor.ui.activity;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
-import com.evisitor.databinding.FragmentUserProfileBinding;
+import com.evisitor.databinding.FragmentActivityBinding;
 import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.base.BaseNavigator;
 
-public class UserProfileFrament extends BaseFragment<FragmentUserProfileBinding,UserProfileViewModel> implements BaseNavigator{
+public class ActivityFragment extends BaseFragment<FragmentActivityBinding, ActivityViewModel> implements BaseNavigator {
 
-
-    public static Fragment newInstance() {
-        UserProfileFrament fragment = new UserProfileFrament();
+    public static ActivityFragment newInstance() {
+        ActivityFragment fragment = new ActivityFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -31,12 +29,12 @@ public class UserProfileFrament extends BaseFragment<FragmentUserProfileBinding,
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_user_profile;
+        return R.layout.fragment_activity;
     }
 
     @Override
-    public UserProfileViewModel getViewModel() {
-        return new ViewModelProvider(this,ViewModelProviderFactory.getInstance()).get(UserProfileViewModel.class);
+    public ActivityViewModel getViewModel() {
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(ActivityViewModel.class);
     }
 
     @Override
@@ -44,7 +42,6 @@ public class UserProfileFrament extends BaseFragment<FragmentUserProfileBinding,
         super.onViewCreated(view, savedInstanceState);
         getViewModel().setNavigator(this);
         TextView tvTitle = view.findViewById(R.id.tv_title);
-        tvTitle.setText(R.string.title_profile);
+        tvTitle.setText(R.string.title_activity);
     }
-
 }

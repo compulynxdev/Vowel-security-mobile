@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#408DFF</color>
     <color name="colorAccent">#D81B60</color>
 
-    <color name="colorDashboard">#408DFF</color>
+    <color name="colorDashboard">#CC408DFF</color>
 
     <color name="gray">#BABABA</color>
     <color name="bg_color">#f7f7f7</color>
