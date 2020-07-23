@@ -69,9 +69,7 @@ public class NotificationsFragment extends BaseFragment<FragmentNotificationsBin
         getViewDataBinding().recyclerView.setAdapter(adapter);
 
         getViewDataBinding().swipeToRefresh.setOnRefreshListener(() -> {
-            notificationsList.remove(0);
             getViewDataBinding().swipeToRefresh.setRefreshing(false);
-            adapter.notifyDataSetChanged();
         });
     }
 }

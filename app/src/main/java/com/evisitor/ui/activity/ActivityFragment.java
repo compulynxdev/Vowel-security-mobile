@@ -59,6 +59,8 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
         imgSearch.setVisibility(View.VISIBLE);
         imgSearch.setOnClickListener(this);
         getViewDataBinding().tvIn.setOnClickListener(this);
+        getViewDataBinding().tvIn.setText(getString(R.string.check_in).concat(": 1"));
+        getViewDataBinding().tvOut.setText(getString(R.string.check_out).concat(": 1"));
         getViewDataBinding().tvOut.setOnClickListener(this);
 
         setUpPagerAdapter();
