@@ -6,6 +6,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
             android:background="@color/colorDashboard">
 
             <include
@@ -59,12 +60,12 @@
                 android:layout_height="45dp"
                 android:orientation="horizontal"
                 android:id="@+id/search_bar"
-                android:visibility="visible"
+                android:layout_marginTop="12dp"
                 android:background="@drawable/bg_search"
                 app:layout_constraintTop_toBottomOf="@id/linear"
                 android:layout_marginStart="18dp"
                 android:layout_marginEnd="18dp"
-                android:layout_marginTop="11dp"
+                android:visibility="gone"
                 >
 
                 <ImageView
@@ -76,13 +77,14 @@
                     android:contentDescription="@string/image" />
 
                 <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
                     android:id="@+id/et_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
+                    android:theme="@style/EditTextTheme"
                     android:layout_gravity="center_vertical"
                     android:hint="@string/search"
                     android:background="@null"
@@ -102,7 +104,8 @@
                 android:layout_height="0dp"
                 app:layout_constraintTop_toBottomOf="@id/search_bar"
                 android:id="@+id/viewPager"
-                android:layout_margin="18dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"

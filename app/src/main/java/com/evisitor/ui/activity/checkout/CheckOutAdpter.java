@@ -23,7 +23,8 @@ public class CheckOutAdpter extends RecyclerView.Adapter<BaseViewHolder> {
     private static final int VIEWTYPE_LOADER =2 ;
     private boolean showLoader;
     private Context context;
-    public CheckOutAdpter(List<CheckInOut> list, Context context) {
+
+    CheckOutAdpter(List<CheckInOut> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -34,7 +35,7 @@ public class CheckOutAdpter extends RecyclerView.Adapter<BaseViewHolder> {
         View view;
         switch (viewType) {
             case VIEWTYPE_ITEM:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.check_in_out_item, parent, false);
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_check_in_out, parent, false);
                 return new CheckOutAdpter.ViewHolder(view);
 
             default:

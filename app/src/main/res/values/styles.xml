@@ -34,4 +34,10 @@
         <item name="android:windowEnterAnimation">@anim/zoom_in_dialog</item>
         <item name="android:windowExitAnimation">@anim/zoom_out_dialog</item>
     </style>
+
+    <style name="EditTextTheme">
+        <item name="colorControlNormal">@color/gray</item>
+        <item name="colorControlActivated">@color/colorPrimaryDark</item>
+        <item name="colorControlHighlight">@color/colorPrimaryDark</item>
+    </style>
 </resources>

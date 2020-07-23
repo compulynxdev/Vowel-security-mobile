@@ -4,6 +4,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         android:background="@color/colorDashboard">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,8 +14,6 @@
             <include
                 android:id="@+id/toolbar"
                 layout="@layout/header" />
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

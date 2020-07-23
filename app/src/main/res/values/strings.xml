@@ -9,7 +9,7 @@
     <string name="title_profile">Profile</string>
 
     <!--Settings-->
-    <string name="app_info">App Info</string>
+    <string name="device_info">Device Info</string>
     <string name="app_version">Version %s</string>
     <string name="language">Language</string>
     <string name="english">English</string>
@@ -49,8 +49,8 @@
     <string name="dummy_email">user@gmail.com</string>
 
     <!--Activity-->
-    <string name="check_out">Check Out</string>
-    <string name="check_in">Check In</string>
+    <string name="check_out">Check Out : %s</string>
+    <string name="check_in">Check In : %s</string>
     <string name="search">Search</string>
     <string name="time_in">Time In </string>
     <string name="house_no">House No.</string>

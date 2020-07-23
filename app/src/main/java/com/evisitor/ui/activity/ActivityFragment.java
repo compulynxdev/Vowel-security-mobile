@@ -59,8 +59,8 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
         imgSearch.setVisibility(View.VISIBLE);
         imgSearch.setOnClickListener(this);
         getViewDataBinding().tvIn.setOnClickListener(this);
-        getViewDataBinding().tvIn.setText(getString(R.string.check_in).concat(": 1"));
-        getViewDataBinding().tvOut.setText(getString(R.string.check_out).concat(": 1"));
+        getViewDataBinding().tvIn.setText(getString(R.string.check_in, "1"));
+        getViewDataBinding().tvOut.setText(getString(R.string.check_out, "1"));
         getViewDataBinding().tvOut.setOnClickListener(this);
 
         setUpPagerAdapter();
@@ -131,7 +131,7 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
 
         private final List<Fragment> fragmentList = new ArrayList<>();
         ViewPagerAdapter(@NonNull FragmentManager fm) {
-            super(fm,FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+            super(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         }
 
         @NonNull
