@@ -12,6 +12,9 @@ public final class AppConstants {
     public static final int REQUEST_GALLERY = 52;
     public static final int LIMIT = 20;
 
+    public static final String ACTIVITY_ABOUT_US = "ACTIVITY_ABOUT_US";
+    public static final String ACTIVITY_PRIVACY = "ACTIVITY_PRIVACY";
+
     public static String CONTENT_TYPE_TEXT = "text/plain";
     public static String CONTENT_TYPE_JSON="application/json; charset=utf-8";
     public static String bearer = "Bearer";

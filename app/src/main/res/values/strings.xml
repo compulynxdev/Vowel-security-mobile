@@ -23,6 +23,14 @@
     <string name="cancel">Cancel</string>
     <string name="done">Done</string>
 
+    <!--Info Dialog-->
+    <string name="device_information">Device Information</string>
+    <string name="model">Model : %s</string>
+    <string name="MacID">Device ID : %s</string>
+
+    <!--About & Privacy Policy-->
+    <string name="title_about_us">About Us</string>
+    <string name="title_privacy_policy">Privacy Policy</string>
 
     <!--Profile-->
     <string name="name">Name</string>

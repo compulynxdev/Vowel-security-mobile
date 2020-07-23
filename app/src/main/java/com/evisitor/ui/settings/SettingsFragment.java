@@ -1,5 +1,6 @@
 package com.evisitor.ui.settings;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -12,11 +13,14 @@ import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.FragmentSettingsBinding;
 import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.base.BaseNavigator;
+import com.evisitor.ui.settings.content.ContentActivity;
+import com.evisitor.ui.settings.info.DeviceInfoDialog;
 import com.evisitor.ui.settings.language.LanguageDialog;
+import com.evisitor.util.AppConstants;
 
 public class SettingsFragment extends BaseFragment<FragmentSettingsBinding, SettingsViewModel> implements BaseNavigator, View.OnClickListener {
 
-   public static SettingsFragment newInstance() {
+    public static SettingsFragment newInstance() {
         SettingsFragment fragment = new SettingsFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -59,6 +63,7 @@ public class SettingsFragment extends BaseFragment<FragmentSettingsBinding, Sett
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.info_constraint:
+                DeviceInfoDialog.newInstance().show(getChildFragmentManager());
                 break;
 
             case R.id.language_constraint:
@@ -70,9 +75,15 @@ public class SettingsFragment extends BaseFragment<FragmentSettingsBinding, Sett
                 break;
 
             case R.id.aboutus_constraint:
+                Intent intent = ContentActivity.newIntent(getBaseActivity());
+                intent.putExtra("From", AppConstants.ACTIVITY_ABOUT_US);
+                startActivity(intent);
                 break;
 
             case R.id.privacy_constraint:
+                intent = ContentActivity.newIntent(getBaseActivity());
+                intent.putExtra("From", AppConstants.ACTIVITY_PRIVACY);
+                startActivity(intent);
                 break;
 
             case R.id.logout_constraint:

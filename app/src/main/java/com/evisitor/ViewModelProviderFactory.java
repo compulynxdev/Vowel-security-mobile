@@ -11,6 +11,8 @@ import com.evisitor.ui.main.MainViewModel;
 import com.evisitor.ui.notifications.NotificationsFragmentViewModel;
 import com.evisitor.ui.profile.UserProfileViewModel;
 import com.evisitor.ui.settings.SettingsViewModel;
+import com.evisitor.ui.settings.content.ContentViewModel;
+import com.evisitor.ui.settings.info.DeviceInfoViewModel;
 import com.evisitor.ui.settings.language.LanguageDialogViewModel;
 
 /**
@@ -47,7 +49,7 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(NotificationsFragmentViewModel.class)) {
             //noinspection unchecked
             return (T) new NotificationsFragmentViewModel(dataManager);
-        }else if (modelClass.isAssignableFrom(SettingsViewModel.class)){
+        } else if (modelClass.isAssignableFrom(SettingsViewModel.class)) {
             //noinspection unchecked
             return (T) new SettingsViewModel(dataManager);
         } else if (modelClass.isAssignableFrom(UserProfileViewModel.class)) {
@@ -56,6 +58,12 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(LanguageDialogViewModel.class)) {
             //noinspection unchecked
             return (T) new LanguageDialogViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(DeviceInfoViewModel.class)) {
+            //noinspection unchecked
+            return (T) new DeviceInfoViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(ContentViewModel.class)) {
+            //noinspection unchecked
+            return (T) new ContentViewModel(dataManager);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
