@@ -6,14 +6,23 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
+import com.evisitor.data.model.Notifications;
 import com.evisitor.databinding.FragmentNotificationsBinding;
 import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.base.BaseNavigator;
+import com.evisitor.util.CalenderUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NotificationsFragment extends BaseFragment<FragmentNotificationsBinding, NotificationsFragmentViewModel> implements BaseNavigator {
+
+    private List<Notifications> notificationsList = new ArrayList<>();
+    private NotifictionAdapter adapter ;
 
     public static NotificationsFragment newInstance() {
         NotificationsFragment fragment = new NotificationsFragment();
@@ -43,5 +52,26 @@ public class NotificationsFragment extends BaseFragment<FragmentNotificationsBin
         getViewModel().setNavigator(this);
         TextView tvTitle = view.findViewById(R.id.tv_title);
         tvTitle.setText(R.string.title_notification);
+
+        Notifications notifications = new Notifications();
+        notifications.setTitle("Suresh");
+        notifications.setTime(CalenderUtils.getCurrentTime());
+        notifications.setMsg("Check in approved");
+        notificationsList.add(notifications);
+
+        notifications = new Notifications();
+        notifications.setTitle("Suresh");
+        notifications.setTime(CalenderUtils.getCurrentTime());
+        notifications.setMsg("Check in rejected");
+        notificationsList.add(notifications);
+
+        adapter = new NotifictionAdapter(notificationsList);
+        getViewDataBinding().recyclerView.setAdapter(adapter);
+
+        getViewDataBinding().swipeToRefresh.setOnRefreshListener(() -> {
+            notificationsList.remove(0);
+            getViewDataBinding().swipeToRefresh.setRefreshing(false);
+            adapter.notifyDataSetChanged();
+        });
     }
 }

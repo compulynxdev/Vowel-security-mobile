@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.data.DataManager;
 import com.evisitor.ui.activity.ActivityViewModel;
+import com.evisitor.ui.activity.checkin.CheckInViewModel;
+import com.evisitor.ui.activity.checkout.CheckOutViewModel;
 import com.evisitor.ui.home.HomeViewModel;
 import com.evisitor.ui.main.MainViewModel;
 import com.evisitor.ui.notifications.NotificationsFragmentViewModel;
@@ -52,6 +54,12 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(UserProfileViewModel.class)) {
             //noinspection unchecked
             return (T) new UserProfileViewModel(dataManager);
+        }else if (modelClass.isAssignableFrom(CheckInViewModel.class)) {
+            //noinspection unchecked
+            return (T) new CheckInViewModel(dataManager);
+        }else if (modelClass.isAssignableFrom(CheckOutViewModel.class)) {
+            //noinspection unchecked
+            return (T) new CheckOutViewModel(dataManager);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }
