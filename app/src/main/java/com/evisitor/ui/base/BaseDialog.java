@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.RelativeLayout;
+
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,9 +20,11 @@ import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
 import com.evisitor.R;
 import com.evisitor.util.ScreenUtils;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
 import java.util.Objects;
 
 /**
@@ -116,11 +119,11 @@ public abstract class BaseDialog<T extends ViewDataBinding, V extends BaseViewMo
         return mActivity != null && mActivity.isNetworkConnected();
     }
 
-   /* public void openActivityOnTokenExpire() {
+    public void openActivityOnTokenExpire() {
         if (mActivity != null) {
             mActivity.openActivityOnTokenExpire();
         }
-    }*/
+    }
 
     public void hideLoading() {
         if (mActivity != null) {

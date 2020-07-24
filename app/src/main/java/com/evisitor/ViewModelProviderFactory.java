@@ -5,17 +5,20 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.data.DataManager;
-import com.evisitor.ui.activity.ActivityViewModel;
-import com.evisitor.ui.activity.checkin.CheckInViewModel;
-import com.evisitor.ui.activity.checkout.CheckOutViewModel;
-import com.evisitor.ui.home.HomeViewModel;
+import com.evisitor.ui.dialog.AlertViewModel;
+import com.evisitor.ui.login.LoginViewModel;
 import com.evisitor.ui.main.MainViewModel;
-import com.evisitor.ui.notifications.NotificationsFragmentViewModel;
-import com.evisitor.ui.profile.UserProfileViewModel;
-import com.evisitor.ui.settings.SettingsViewModel;
-import com.evisitor.ui.settings.content.ContentViewModel;
-import com.evisitor.ui.settings.info.DeviceInfoViewModel;
-import com.evisitor.ui.settings.language.LanguageDialogViewModel;
+import com.evisitor.ui.main.activity.ActivityViewModel;
+import com.evisitor.ui.main.activity.checkin.CheckInViewModel;
+import com.evisitor.ui.main.activity.checkout.CheckOutViewModel;
+import com.evisitor.ui.main.home.HomeViewModel;
+import com.evisitor.ui.main.notifications.NotificationsFragmentViewModel;
+import com.evisitor.ui.main.profile.UserProfileViewModel;
+import com.evisitor.ui.main.settings.SettingsViewModel;
+import com.evisitor.ui.main.settings.content.ContentViewModel;
+import com.evisitor.ui.main.settings.info.DeviceInfoViewModel;
+import com.evisitor.ui.main.settings.language.LanguageDialogViewModel;
+import com.evisitor.ui.splash.SplashViewModel;
 
 /**
  * Created by Priyanka Joshi on 14-07-2020.
@@ -39,7 +42,13 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        if (modelClass.isAssignableFrom(MainViewModel.class)){
+        if (modelClass.isAssignableFrom(SplashViewModel.class)) {
+            //noinspection unchecked
+            return (T) new SplashViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(LoginViewModel.class)) {
+            //noinspection unchecked
+            return (T) new LoginViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(MainViewModel.class)) {
             //noinspection unchecked
             return (T) new MainViewModel(dataManager);
         } else if (modelClass.isAssignableFrom(HomeViewModel.class)) {
@@ -72,7 +81,11 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(ContentViewModel.class)) {
             //noinspection unchecked
             return (T) new ContentViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(AlertViewModel.class)) {
+            //noinspection unchecked
+            return (T) new AlertViewModel(dataManager);
         }
+
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }
 }

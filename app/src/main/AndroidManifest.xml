@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-
     <application
         android:name=".EVisitor"
         android:allowBackup="true"
@@ -21,12 +20,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
+
+        <!--android:theme="@style/SplashTheme"-->
         <activity
-            android:name=".ui.main.MainActivity"
-            android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustNothing"
-            android:screenOrientation="portrait"
-            android:theme="@style/DashboardTheme">
+            android:name=".ui.splash.SplashActivity"
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,7 +32,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.settings.content.ContentActivity"
+            android:name=".ui.login.LoginActivity"
+            android:configChanges="orientation|screenSize"
+            android:launchMode="singleTop"
+            android:theme="@style/AuthTheme" />
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/DashboardTheme"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity
+            android:name=".ui.main.settings.content.ContentActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"

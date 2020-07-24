@@ -12,7 +12,10 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+
+import com.evisitor.ui.dialog.AlertDialog;
 
 /**
  * Created by priyanka joshi
@@ -117,13 +120,12 @@ public abstract class BaseFragment <T extends ViewDataBinding, V extends BaseVie
         return mActivity != null && mActivity.isNetworkConnected();
     }
 
-   /* @Override
+    @Override
     public void openActivityOnTokenExpire() {
         if (mActivity != null) {
             mActivity.openActivityOnTokenExpire();
         }
-    }*/
-
+    }
 
     @Override
     public void requestPermissionsSafely(String[] permissions, int requestCode) {
@@ -146,7 +148,7 @@ public abstract class BaseFragment <T extends ViewDataBinding, V extends BaseVie
         }
     }
 
-    /*@Override
+    @Override
     public AlertDialog showAlert(@StringRes int title, @StringRes int msg) {
         return showAlert(getString(title), getString(msg));
     }
@@ -154,8 +156,7 @@ public abstract class BaseFragment <T extends ViewDataBinding, V extends BaseVie
     @Override
     public AlertDialog showAlert(@StringRes int title, String msg) {
         return showAlert(getString(title), msg);
-    }*/
-/*
+    }
 
     @Override
     public AlertDialog showAlert(String title, @StringRes int msg) {
@@ -171,7 +172,6 @@ public abstract class BaseFragment <T extends ViewDataBinding, V extends BaseVie
         alertDialog.show(getChildFragmentManager());
         return alertDialog;
     }
-*/
 
 
     @Override

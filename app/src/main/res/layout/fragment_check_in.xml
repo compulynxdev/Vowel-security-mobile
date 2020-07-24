@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.activity.checkin.CheckInFragment">
+    tools:context=".ui.main.activity.checkin.CheckInFragment">
 
     <data>
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="com.evisitor.ui.activity.checkin.CheckInViewModel" />
+            type="com.evisitor.ui.main.activity.checkin.CheckInViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

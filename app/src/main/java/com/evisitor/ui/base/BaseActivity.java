@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
+
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,9 +17,12 @@ import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.evisitor.ui.dialog.AlertDialog;
 import com.evisitor.util.CommonUtils;
 import com.evisitor.util.NetworkUtils;
 
@@ -116,6 +120,11 @@ implements BaseFragment.Callback, BaseNavigator{
     }
 
     @Override
+    public void openActivityOnTokenExpire() {
+        getViewModel().getDataManager().logout(this);
+    }
+
+    @Override
     @TargetApi(Build.VERSION_CODES.M)
     public void requestPermissionsSafely(String[] permissions, int requestCode) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -135,7 +144,6 @@ implements BaseFragment.Callback, BaseNavigator{
         hideLoading();
         mProgressDialog = CommonUtils.showLoadingDialog(this);
     }
-/*
 
     @Override
     public AlertDialog showAlert(@StringRes int title, @StringRes int msg) {
@@ -154,14 +162,14 @@ implements BaseFragment.Callback, BaseNavigator{
 
     @Override
     public AlertDialog showAlert(String title, String msg) {
-        AlertDialog alertDialog = AlertDialog.newInstance().setMsg(msg)
+        AlertDialog alertDialog = AlertDialog.newInstance()
+                .setMsg(msg)
                 .setTitle(title)
                 .setCancelGone()
                 .setOnOKClickListener(DialogFragment::dismiss);
         alertDialog.show(getSupportFragmentManager());
         return alertDialog;
     }
-*/
 
     public void replaceFragment(@NonNull Fragment fragmentHolder, int layoutId) {
         try {

@@ -14,11 +14,13 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.evisitor.R;
+import com.evisitor.ui.dialog.AlertDialog;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -159,13 +161,12 @@ public abstract class BaseBottomSheetDialog<T extends ViewDataBinding, V extends
         return mActivity != null && mActivity.isNetworkConnected();
     }
 
-  /*  @Override
+    @Override
     public void openActivityOnTokenExpire() {
         if (mActivity != null) {
             mActivity.openActivityOnTokenExpire();
         }
-    }*/
-
+    }
 
     @Override
     public void requestPermissionsSafely(String[] permissions, int requestCode) {
@@ -188,7 +189,7 @@ public abstract class BaseBottomSheetDialog<T extends ViewDataBinding, V extends
         }
     }
 
-   /* @Override
+    @Override
     public AlertDialog showAlert(@StringRes int title, @StringRes int msg) {
         return showAlert(getString(title), getString(msg));
     }
@@ -213,7 +214,6 @@ public abstract class BaseBottomSheetDialog<T extends ViewDataBinding, V extends
         return alertDialog;
     }
 
-*/
     /*@Override
     public void handleApiFailure(@NonNull Throwable t) {
         if(mActivity!=null)

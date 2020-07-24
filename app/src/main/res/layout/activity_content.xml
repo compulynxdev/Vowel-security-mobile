@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorDashboard"
-        tools:context=".ui.settings.content.ContentActivity">
+        tools:context=".ui.main.settings.content.ContentActivity">
 
         <include
             android:id="@+id/toolbar"

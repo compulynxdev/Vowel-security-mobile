@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.profile.UserProfileFrament">
+    tools:context=".ui.main.profile.UserProfileFrament">
 
     <data>
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="com.evisitor.ui.profile.UserProfileViewModel" />
+            type="com.evisitor.ui.main.profile.UserProfileViewModel" />
     </data>
 
     <ScrollView

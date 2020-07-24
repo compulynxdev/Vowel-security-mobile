@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">E-Visitor</string>
 
+    <!--Login-->
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="remember_me">Remember me</string>
+    <string name="welcome_msg">Welcome To Login</string>
+
     <!--Dashboard-->
     <string name="title_home">Home</string>
     <string name="title_activity">Activity</string>
@@ -16,7 +22,13 @@
     <string name="swahili">Swahili</string>
     <string name="about_us">About Us</string>
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="logout">Logout</string>
+    <string name="title_logout">Logout</string>
+
+    <!--Logout Dialog-->
+    <string name="logout">Logout!</string>
+    <string name="logout_msg">Are you sure you want to \nlogout?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <!--Language Dialog-->
     <string name="select_lang">Select Language</string>
@@ -58,12 +70,7 @@
     <string name="visitor_type">Visitor Type</string>
     <string name="time_out">Time Out</string>
 
-
     <!--Other-->
     <string name="image">IMAGE</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
 
 </resources>

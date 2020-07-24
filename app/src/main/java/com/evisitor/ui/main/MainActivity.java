@@ -1,5 +1,7 @@
 package com.evisitor.ui.main;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.lifecycle.ViewModelProvider;
@@ -8,13 +10,13 @@ import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.ActivityMainBinding;
-import com.evisitor.ui.activity.ActivityFragment;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.base.BaseNavigator;
-import com.evisitor.ui.home.HomeFragment;
-import com.evisitor.ui.notifications.NotificationsFragment;
-import com.evisitor.ui.profile.UserProfileFrament;
-import com.evisitor.ui.settings.SettingsFragment;
+import com.evisitor.ui.main.activity.ActivityFragment;
+import com.evisitor.ui.main.home.HomeFragment;
+import com.evisitor.ui.main.notifications.NotificationsFragment;
+import com.evisitor.ui.main.profile.UserProfileFrament;
+import com.evisitor.ui.main.settings.SettingsFragment;
 
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements BaseNavigator {
@@ -24,6 +26,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     private final static int ID_NOTIFICATION = 3;
     private final static int ID_SETTINGS = 4;
     private final static int ID_PROFILE = 5;
+
+    public static Intent newIntent(Context context) {
+        return new Intent(context, MainActivity.class);
+    }
 
     @Override
     public int getBindingVariable() {

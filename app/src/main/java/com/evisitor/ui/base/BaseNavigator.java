@@ -4,6 +4,8 @@ import android.content.Context;
 
 import androidx.annotation.StringRes;
 
+import com.evisitor.ui.dialog.AlertDialog;
+
 /**
  * Created by priyanka joshi
  * Date: 15/07/20
@@ -19,19 +21,21 @@ public interface BaseNavigator {
 
     boolean isNetworkConnected();
 
+    void openActivityOnTokenExpire();
+
     void requestPermissionsSafely(String[] permissions, int requestCode);
 
     void hideLoading();
 
     void showLoading();
 
-   /* AlertDialog showAlert(@StringRes int title, @StringRes int msg);
+    AlertDialog showAlert(@StringRes int title, @StringRes int msg);
 
     AlertDialog showAlert(@StringRes int title, String msg);
 
     AlertDialog showAlert(String title, @StringRes int msg);
-*/
-   // AlertDialog showAlert(String title, String msg);
+
+    AlertDialog showAlert(String title, String msg);
 
     void showToast(String msg);
 

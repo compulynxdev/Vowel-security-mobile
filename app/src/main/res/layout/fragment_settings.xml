@@ -2,14 +2,14 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.settings.SettingsFragment">
+    tools:context=".ui.main.settings.SettingsFragment">
 
     <data>
         <import type="android.view.View"/>
 
         <variable
             name="viewModel"
-            type="com.evisitor.ui.settings.SettingsViewModel" />
+            type="com.evisitor.ui.main.settings.SettingsViewModel" />
     </data>
 
     <ScrollView
@@ -274,7 +274,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:fontFamily="@font/futura_round_medium"
-                    android:text="@string/logout"
+                    android:text="@string/title_logout"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     app:layout_constraintStart_toEndOf="@+id/image4"

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -6,6 +6,12 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/white</item>
+    </style>
+
+    <style name="AuthTheme" parent="AppTheme">
+        <item name="colorPrimaryDark">@color/translucent_white</item>
+        <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
+        <item name="android:statusBarColor">@color/translucent_white</item>
     </style>
 
     <style name="DashboardTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -39,5 +45,11 @@
         <item name="colorControlNormal">@color/gray</item>
         <item name="colorControlActivated">@color/colorPrimaryDark</item>
         <item name="colorControlHighlight">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="PrimaryButton">
+        <item name="android:background">@drawable/bg_button</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/futura_round</item>
     </style>
 </resources>
