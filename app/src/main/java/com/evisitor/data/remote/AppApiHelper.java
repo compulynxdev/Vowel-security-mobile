@@ -1,8 +1,12 @@
 package com.evisitor.data.remote;
 
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -39,5 +43,15 @@ public class AppApiHelper implements ApiHelper {
                     .build().create(ApiHelper.class);
         }
         return apiInterface;
+    }
+
+    @Override
+    public Call<ResponseBody> doLogin(RequestBody requestBody) {
+        return getApiInterface().doLogin(requestBody);
+    }
+
+    @Override
+    public Call<ResponseBody> doGetUserDetail(String authToken, Map<String, String> partMap) {
+        return getApiInterface().doGetUserDetail(authToken, partMap);
     }
 }

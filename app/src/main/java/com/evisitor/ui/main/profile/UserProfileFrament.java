@@ -14,7 +14,7 @@ import com.evisitor.databinding.FragmentUserProfileBinding;
 import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.base.BaseNavigator;
 
-public class UserProfileFrament extends BaseFragment<FragmentUserProfileBinding,UserProfileViewModel> implements BaseNavigator{
+public class UserProfileFrament extends BaseFragment<FragmentUserProfileBinding, UserProfileViewModel> implements BaseNavigator {
 
 
     public static Fragment newInstance() {
@@ -45,6 +45,14 @@ public class UserProfileFrament extends BaseFragment<FragmentUserProfileBinding,
         getViewModel().setNavigator(this);
         TextView tvTitle = view.findViewById(R.id.tv_title);
         tvTitle.setText(R.string.title_profile);
-    }
 
+        getViewModel().getUserDetail().observe(this, userDetail -> {
+            getViewDataBinding().tvName.setText(userDetail.getFullName());
+            getViewDataBinding().tvUsername.setText(userDetail.getUsername());
+            getViewDataBinding().tvEmail.setText(userDetail.getEmail());
+            getViewDataBinding().tvGender.setText(userDetail.getGender());
+            getViewDataBinding().tvContact.setText(userDetail.getGender());
+            getViewDataBinding().tvAddress.setText(userDetail.getAddress());
+        });
+    }
 }

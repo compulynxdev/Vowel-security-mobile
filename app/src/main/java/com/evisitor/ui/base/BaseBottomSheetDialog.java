@@ -25,6 +25,8 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+import okhttp3.ResponseBody;
+
 
 /**
  * Created by priyanka joshi
@@ -214,7 +216,7 @@ public abstract class BaseBottomSheetDialog<T extends ViewDataBinding, V extends
         return alertDialog;
     }
 
-    /*@Override
+    @Override
     public void handleApiFailure(@NonNull Throwable t) {
         if(mActivity!=null)
             mActivity.handleApiFailure(t);
@@ -224,7 +226,7 @@ public abstract class BaseBottomSheetDialog<T extends ViewDataBinding, V extends
     public void handleApiError(ResponseBody response) {
         if(mActivity!=null)
             mActivity.handleApiError(response);
-    }*/
+    }
 
     @Override
     public void showToast(String msg) {

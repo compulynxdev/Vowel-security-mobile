@@ -2,6 +2,8 @@ package com.evisitor.data.local.prefs;
 
 import android.app.Activity;
 
+import com.evisitor.data.model.UserDetail;
+
 /**
  * Created by Priyanka Joshi on 14-07-2020.
  */
@@ -11,7 +13,9 @@ public interface PreferenceHelper {
 
     void setLoggedIn(boolean isLoggedIn);
 
-    void logout(Activity activity);
+    boolean isRememberMe();
+
+    void setRememberMe(boolean isRemember);
 
     String getLanguage();
 
@@ -29,8 +33,17 @@ public interface PreferenceHelper {
 
     void setAccessToken(String token);
 
+    String getAccountId();
+
+    void setAccountId(String accId);
+
     String getUserId();
 
     void setUserId(String userId);
 
+    UserDetail getUserDetail();
+
+    void setUserDetail(UserDetail userDetail);
+
+    void logout(Activity activity);
 }

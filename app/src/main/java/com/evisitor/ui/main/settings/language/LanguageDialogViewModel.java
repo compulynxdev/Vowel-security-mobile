@@ -16,12 +16,12 @@ public class LanguageDialogViewModel extends BaseViewModel<BaseNavigator> {
     }
 
     LanguageBean getSelectedLang() {
-        return new LanguageBean("English");//getDataManager().getLanguage();
+        return new LanguageBean(getDataManager().getLanguage());
     }
 
     List<LanguageBean> getLangList() {
         List<LanguageBean> languageList = new ArrayList<>();
-        languageList.add(new LanguageBean(getNavigator().getContext().getString(R.string.english), "English", true));
+        languageList.add(new LanguageBean(getNavigator().getContext().getString(R.string.english), "English", false));
         languageList.add(new LanguageBean(getNavigator().getContext().getString(R.string.swahili), "Swahili", false));
         return languageList;
     }

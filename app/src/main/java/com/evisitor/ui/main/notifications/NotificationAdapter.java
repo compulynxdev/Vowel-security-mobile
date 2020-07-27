@@ -33,7 +33,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         switch (viewType) {
             default:
             case VIEWTYPE_ITEM:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.notification_items, parent, false);
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_notification, parent, false);
                 return new NotificationAdapter.ViewHolder(view);
 
             case VIEWTYPE_LOADER:

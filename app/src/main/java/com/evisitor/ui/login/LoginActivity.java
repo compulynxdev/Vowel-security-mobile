@@ -15,6 +15,8 @@ import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.main.MainActivity;
 import com.evisitor.ui.main.settings.info.DeviceInfoDialog;
 
+import java.util.Objects;
+
 public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> implements View.OnClickListener, LoginNavigator {
 
     public static Intent newIntent(Context context) {
@@ -43,6 +45,10 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
         getViewDataBinding().btnLogin.setOnClickListener(this);
         getViewDataBinding().imgInfo.setOnClickListener(this);
+        if (getViewModel().getDataManager().isRememberMe()) {
+            getViewDataBinding().etUsername.setText(getViewModel().getDataManager().getUsername());
+            getViewDataBinding().etPassword.setText(getViewModel().getDataManager().getUserPassword());
+        }
     }
 
     @Override
@@ -53,14 +59,12 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         finish();
     }
 
-
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_login) {
-           /* getViewModel().doLogin(Objects.requireNonNull(getViewDataBinding().etUsername.getText()).toString(),
+            getViewModel().doVerifyAndLogin(Objects.requireNonNull(getViewDataBinding().etUsername.getText()).toString(),
                     Objects.requireNonNull(getViewDataBinding().etPassword.getText()).toString(),
-                            getViewDataBinding().checkClock.isChecked());*/
-            openMainActivity();
+                    getViewDataBinding().cbRemember.isChecked());
         } else if (v.getId() == R.id.img_info) {
             DeviceInfoDialog.newInstance().show(getSupportFragmentManager());
         }

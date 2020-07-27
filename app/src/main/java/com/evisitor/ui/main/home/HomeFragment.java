@@ -22,7 +22,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         return fragment;
     }
 
-
     @Override
     public int getBindingVariable() {
         return com.evisitor.BR.viewModel;
@@ -44,5 +43,16 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         getViewModel().setNavigator(this);
         TextView tvTitle = view.findViewById(R.id.tv_title);
         tvTitle.setText(R.string.title_home);
+
+        setupAdapter();
+    }
+
+    private void setupAdapter() {
+        getViewModel().getHomeListData().observe(this, homeBeansList -> {
+            HomeAdapter homeAdapter = new HomeAdapter(homeBeansList, pos -> {
+
+            });
+            getViewDataBinding().recyclerView.setAdapter(homeAdapter);
+        });
     }
 }

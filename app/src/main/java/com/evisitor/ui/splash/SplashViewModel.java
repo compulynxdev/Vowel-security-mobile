@@ -1,5 +1,7 @@
 package com.evisitor.ui.splash;
 
+import android.os.Handler;
+
 import com.evisitor.data.DataManager;
 import com.evisitor.ui.base.BaseViewModel;
 
@@ -15,13 +17,12 @@ public class SplashViewModel extends BaseViewModel<SplashNavigator> {
     }
 
     void decideNextActivity() {
-        getNavigator().openLoginActivity();
-        /*new Handler().postDelayed(() -> {
+        new Handler().post(() -> {
             if (getDataManager().isLoggedIn()) {
                 getNavigator().openMainActivity();
             } else {
                 getNavigator().openLoginActivity();
             }
-        }, 1500);*/
+        });
     }
 }

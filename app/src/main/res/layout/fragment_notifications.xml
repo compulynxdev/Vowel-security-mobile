@@ -5,7 +5,6 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:background="@color/colorDashboard"
             android:layout_height="match_parent">
 
             <include
@@ -23,8 +22,9 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:overScrollMode="never"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/notification_items"
+                    tools:listitem="@layout/item_notification"
                     android:id="@+id/recycler_view"
                     />
 

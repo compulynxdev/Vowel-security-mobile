@@ -22,9 +22,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.evisitor.R;
 import com.evisitor.ui.dialog.AlertDialog;
 import com.evisitor.util.CommonUtils;
 import com.evisitor.util.NetworkUtils;
+
+import org.json.JSONObject;
+
+import okhttp3.ResponseBody;
 
 /**
  * Created by priyanka joshi
@@ -193,8 +198,6 @@ implements BaseFragment.Callback, BaseNavigator{
 
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
-            //todo
-            //fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 getWindow().setEnterTransition(null);
             }
@@ -220,5 +223,29 @@ implements BaseFragment.Callback, BaseNavigator{
         showToast(getString(msg));
     }
 
+    @Override
+    public void handleApiFailure(@NonNull Throwable t) {
+        showAlert(getString(R.string.alert), t.getMessage());
+    }
 
+    @Override
+    public void handleApiError(ResponseBody response) {
+        try {
+            String data = response.string();
+            if (data.isEmpty()) {
+                showAlert(R.string.alert, R.string.alert_error);
+            } else {
+                JSONObject object = new JSONObject(data);
+                if (object.has("detail"))
+                    showAlert(object.getString("title"), object.getString("detail"));
+                else if (object.has("message")) {
+                    showAlert(object.getString("title"), object.getString("message"));
+                } else {
+                    showAlert(R.string.alert, R.string.alert_error);
+                }
+            }
+        } catch (Exception e) {
+            showAlert(getString(R.string.alert), R.string.alert_error);
+        }
+    }
 }

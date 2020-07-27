@@ -50,6 +50,7 @@ public class SettingsFragment extends BaseFragment<FragmentSettingsBinding, Sett
         getViewModel().setNavigator(this);
         TextView tvTitle = view.findViewById(R.id.tv_title);
         tvTitle.setText(R.string.title_settings);
+        getViewDataBinding().tvLang.setText(getViewModel().getDataManager().getLanguage());
 
         setOnClickListener(getViewDataBinding().infoConstraint, getViewDataBinding().languageConstraint, getViewDataBinding().aboutusConstraint
                 , getViewDataBinding().privacyConstraint, getViewDataBinding().logoutConstraint);
@@ -69,8 +70,7 @@ public class SettingsFragment extends BaseFragment<FragmentSettingsBinding, Sett
 
             case R.id.language_constraint:
                 LanguageDialog.newInstance(language -> {
-                    //Todo set current lang to preference
-                    //getViewModel().getDataManager().
+                    getViewModel().getDataManager().setLanguage(language.getLangName());
                     getViewDataBinding().tvLang.setText(language.getLocalisationTitle());
                 }).show(getChildFragmentManager());
                 break;

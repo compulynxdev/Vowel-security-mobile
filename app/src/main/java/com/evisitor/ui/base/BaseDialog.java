@@ -27,6 +27,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.Objects;
 
+import okhttp3.ResponseBody;
+
 /**
  * Created by priyanka joshi
  * Date: 15/07/20
@@ -181,7 +183,6 @@ public abstract class BaseDialog<T extends ViewDataBinding, V extends BaseViewMo
         dismiss();
         getBaseActivity().onFragmentDetached(tag);
     }
-/*
 
     public void handleApiFailure(@NonNull Throwable t) {
         if(mActivity!=null)
@@ -192,6 +193,5 @@ public abstract class BaseDialog<T extends ViewDataBinding, V extends BaseViewMo
         if(mActivity!=null)
             mActivity.handleApiError(response);
     }
-*/
 
 }

@@ -17,6 +17,8 @@ import androidx.fragment.app.Fragment;
 
 import com.evisitor.ui.dialog.AlertDialog;
 
+import okhttp3.ResponseBody;
+
 /**
  * Created by priyanka joshi
  * Date: 15/07/20
@@ -184,7 +186,17 @@ public abstract class BaseFragment <T extends ViewDataBinding, V extends BaseVie
         if (mActivity != null) mActivity.showToast(msg);
     }
 
+    @Override
+    public void handleApiFailure(@NonNull Throwable t) {
+        if (mActivity != null)
+            mActivity.handleApiFailure(t);
+    }
 
+    @Override
+    public void handleApiError(ResponseBody response) {
+        if (mActivity != null)
+            mActivity.handleApiError(response);
+    }
 
     public interface Callback {
 

@@ -14,8 +14,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorDashboard">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -129,7 +128,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:fontFamily="@font/futura_round"
-                    android:text="@string/english"
                     android:textColor="@color/black"
                     android:id="@+id/tv_lang"
                     android:textSize="18sp"

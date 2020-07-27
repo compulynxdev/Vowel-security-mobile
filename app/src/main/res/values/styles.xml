@@ -8,6 +8,16 @@
         <item name="colorAccent">@color/white</item>
     </style>
 
+    <style name="AppTheme.FullScreen" parent="AppTheme">
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="SplashTheme" parent="AppTheme.FullScreen">
+        <item name="android:windowBackground">@drawable/background_splash</item>
+    </style>
+
     <style name="AuthTheme" parent="AppTheme">
         <item name="colorPrimaryDark">@color/translucent_white</item>
         <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>

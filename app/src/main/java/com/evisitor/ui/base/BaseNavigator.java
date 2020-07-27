@@ -2,9 +2,12 @@ package com.evisitor.ui.base;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 
 import com.evisitor.ui.dialog.AlertDialog;
+
+import okhttp3.ResponseBody;
 
 /**
  * Created by priyanka joshi
@@ -40,8 +43,8 @@ public interface BaseNavigator {
     void showToast(String msg);
 
     void showToast(@StringRes int msg);
-/*
-    void handleApiError(ResponseBody response);
 
-    void createLog(String activityName, String action);*/
+    void handleApiFailure(@NonNull Throwable t);
+
+    void handleApiError(ResponseBody response);
 }
