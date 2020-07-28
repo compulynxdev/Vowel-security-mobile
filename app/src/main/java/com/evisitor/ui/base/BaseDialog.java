@@ -25,8 +25,6 @@ import com.evisitor.R;
 import com.evisitor.util.ScreenUtils;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-import java.util.Objects;
-
 import okhttp3.ResponseBody;
 
 /**
@@ -63,6 +61,8 @@ public abstract class BaseDialog<T extends ViewDataBinding, V extends BaseViewMo
      */
     public abstract V getViewModel();
 
+    private int defaultView = ViewGroup.LayoutParams.WRAP_CONTENT;
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -73,6 +73,9 @@ public abstract class BaseDialog<T extends ViewDataBinding, V extends BaseViewMo
         }
     }
 
+    public void setDefaultView(int defaultView) {
+        this.defaultView = defaultView;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -103,7 +106,7 @@ public abstract class BaseDialog<T extends ViewDataBinding, V extends BaseViewMo
         mViewDataBinding.executePendingBindings();
     }
 
-    public BaseActivity getBaseActivity() {
+    protected BaseActivity getBaseActivity() {
         return mActivity;
     }
 
@@ -111,7 +114,7 @@ public abstract class BaseDialog<T extends ViewDataBinding, V extends BaseViewMo
         return mViewDataBinding;
     }
 
-    public void hideKeyboard() {
+    protected void hideKeyboard() {
         if (mActivity != null) {
             mActivity.hideKeyboard();
         }
@@ -154,10 +157,9 @@ public abstract class BaseDialog<T extends ViewDataBinding, V extends BaseViewMo
         if (dialog.getWindow() != null) {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.getWindow().setLayout(
-                    (int) (ScreenUtils.getScreenWidth(mActivity) * 0.8f),
-                    ViewGroup.LayoutParams.WRAP_CONTENT);
+                    (int) (ScreenUtils.getScreenWidth(mActivity) * 0.8f), defaultView);
         }
-        Objects.requireNonNull(dialog.getWindow()).getAttributes().windowAnimations = R.style.DialogAnimation;
+        //Objects.requireNonNull(dialog.getWindow()).getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.setCanceledOnTouchOutside(false);
 
         return dialog;

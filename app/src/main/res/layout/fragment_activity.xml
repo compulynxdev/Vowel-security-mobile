@@ -29,7 +29,7 @@
                     android:fontFamily="@font/futura_round_medium"
                     android:gravity="center"
                     android:textSize="20sp"
-                    android:text="@string/check_in"
+                    android:text="@string/check_in_with_count"
                     android:textColor="@color/colorPrimaryDark"
                      />
 
@@ -48,7 +48,7 @@
                     android:textSize="20sp"
                     android:fontFamily="@font/futura_round_medium"
                     android:gravity="center"
-                    android:text="@string/check_out"
+                    android:text="@string/check_out_with_count"
                     android:textColor="@color/black"
                      />
 

@@ -16,18 +16,22 @@ import com.evisitor.ui.base.BaseDialog;
 
 public class AlertDialog extends BaseDialog<DialogAlertBinding, AlertViewModel> implements View.OnClickListener {
 
-    private CancelListener cancelListener;
-    private OKListener okListener;
+    private NegativeListener negativeListener;
+    private PositiveListener positiveListener;
 
     //default param
     private String msg = "";
     private String mTitle = "";
-    private String labelOkBtn = "";
-    private String labelCancelBtn = "";
-    private boolean isCancelVisible = true;
+    private String positiveBtnLabel = "";
+    private String negativeBtnLabel = "";
+    private boolean isCloseBtnShow = false;
+    private boolean isNegativeBtnShow = true;
+    private int negativeBtnColor = R.color.red;
+    private int negativeBtnBgDrawable = -1;
+    private int positiveBtnColor = R.color.white;
+    private int positiveBtnBgDrawable = -1;
 
     public static AlertDialog newInstance() {
-
         Bundle args = new Bundle();
         AlertDialog fragment = new AlertDialog();
         fragment.setArguments(args);
@@ -44,33 +48,53 @@ public class AlertDialog extends BaseDialog<DialogAlertBinding, AlertViewModel> 
         return this;
     }
 
-    public AlertDialog setLabelOkBtn(String labelOkBtn) {
-        this.labelOkBtn = labelOkBtn;
+    public AlertDialog setPositiveBtnLabel(String positiveBtnLabel) {
+        this.positiveBtnLabel = positiveBtnLabel;
         return this;
     }
 
-    public AlertDialog setLabelCancelBtn(String labelCancelBtn) {
-        this.labelCancelBtn = labelCancelBtn;
+    public AlertDialog setNegativeBtnLabel(String negativeBtnLabel) {
+        this.negativeBtnLabel = negativeBtnLabel;
         return this;
     }
 
-    public AlertDialog setCancelGone() {
-        this.isCancelVisible = false;
+    public AlertDialog setCloseBtnShow(boolean closeBtnShow) {
+        isCloseBtnShow = closeBtnShow;
         return this;
     }
 
-    public AlertDialog setCancelViewVisible() {
-        this.isCancelVisible = true;
+    public AlertDialog setNegativeBtnShow(boolean negativeBtnShow) {
+        isNegativeBtnShow = negativeBtnShow;
         return this;
     }
 
-    public AlertDialog setOnCancelClickListener(CancelListener cancelListener) {
-        this.cancelListener = cancelListener;
+    public AlertDialog setNegativeBtnColor(int negativeBtnColor) {
+        this.negativeBtnColor = negativeBtnColor;
         return this;
     }
 
-    public AlertDialog setOnOKClickListener(OKListener okListener) {
-        this.okListener = okListener;
+    public AlertDialog setNegativeBtnBgDrawable(int negativeBtnBgDrawable) {
+        this.negativeBtnBgDrawable = negativeBtnBgDrawable;
+        return this;
+    }
+
+    public AlertDialog setPositiveBtnColor(int positiveBtnColor) {
+        this.positiveBtnColor = positiveBtnColor;
+        return this;
+    }
+
+    public AlertDialog setPositiveBtnBgDrawable(int positiveBtnBgDrawable) {
+        this.positiveBtnBgDrawable = positiveBtnBgDrawable;
+        return this;
+    }
+
+    public AlertDialog setOnNegativeClickListener(NegativeListener negativeListener) {
+        this.negativeListener = negativeListener;
+        return this;
+    }
+
+    public AlertDialog setOnPositiveClickListener(PositiveListener positiveListener) {
+        this.positiveListener = positiveListener;
         return this;
     }
 
@@ -92,23 +116,36 @@ public class AlertDialog extends BaseDialog<DialogAlertBinding, AlertViewModel> 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         getViewDataBinding().tvTitle.setText(mTitle);
         getViewDataBinding().tvMsg.setText(msg);
 
-        if (!labelOkBtn.isEmpty())
-            getViewDataBinding().btnOk.setText(labelOkBtn);
-        if (!labelCancelBtn.isEmpty())
-            getViewDataBinding().btnCancel.setText(labelCancelBtn);
-        if (isCancelVisible) {
-            getViewDataBinding().btnOk.setBackground(getResources().getDrawable(R.drawable.bg_bottom_right_primary_corner));
-            getViewDataBinding().btnCancel.setVisibility(View.VISIBLE);
-            getViewDataBinding().btnCancel.setOnClickListener(this);
+        getViewDataBinding().imgClose.setOnClickListener(this);
+        getViewDataBinding().btnPositive.setOnClickListener(this);
+        getViewDataBinding().btnNegative.setOnClickListener(this);
+        setUpConfiguration();
+    }
+
+    private void setUpConfiguration() {
+        getViewDataBinding().imgClose.setVisibility(isCloseBtnShow ? View.VISIBLE : View.GONE);
+        getViewDataBinding().btnPositive.setTextColor(getResources().getColor(positiveBtnColor));
+        getViewDataBinding().btnNegative.setTextColor(getResources().getColor(negativeBtnColor));
+        if (!positiveBtnLabel.isEmpty())
+            getViewDataBinding().btnPositive.setText(positiveBtnLabel);
+        if (!negativeBtnLabel.isEmpty())
+            getViewDataBinding().btnNegative.setText(negativeBtnLabel);
+        if (isNegativeBtnShow) {
+            getViewDataBinding().btnPositive.setBackground(getResources().getDrawable(R.drawable.bg_bottom_right_primary_corner));
+            getViewDataBinding().btnNegative.setVisibility(View.VISIBLE);
         } else {
-            getViewDataBinding().btnOk.setBackground(getResources().getDrawable(R.drawable.bg_bottom_lr_primary_corner));
-            getViewDataBinding().btnCancel.setVisibility(View.GONE);
+            getViewDataBinding().btnPositive.setBackground(getResources().getDrawable(R.drawable.bg_bottom_lr_primary_corner));
+            getViewDataBinding().btnNegative.setVisibility(View.GONE);
         }
-        getViewDataBinding().btnOk.setOnClickListener(this);
+
+        if (positiveBtnBgDrawable != -1)
+            getViewDataBinding().btnPositive.setBackground(getResources().getDrawable(positiveBtnBgDrawable));
+
+        if (negativeBtnBgDrawable != -1)
+            getViewDataBinding().btnPositive.setBackground(getResources().getDrawable(negativeBtnBgDrawable));
     }
 
     public void show(FragmentManager fragmentManager) {
@@ -119,25 +156,29 @@ public class AlertDialog extends BaseDialog<DialogAlertBinding, AlertViewModel> 
     public void onClick(View v) {
         hideKeyboard();
         switch (v.getId()) {
-            case R.id.btn_cancel:
-                if (cancelListener != null) {
-                    cancelListener.onCancelClick(this);
+            case R.id.img_close:
+                dismiss();
+                break;
+
+            case R.id.btn_negative:
+                if (negativeListener != null) {
+                    negativeListener.onNegativeClick(this);
                 }
                 break;
 
-            case R.id.btn_ok:
-                if (okListener != null) {
-                    okListener.onOkClick(this);
+            case R.id.btn_positive:
+                if (positiveListener != null) {
+                    positiveListener.onPositiveClick(this);
                 }
                 break;
         }
     }
 
-    public interface CancelListener {
-        void onCancelClick(AlertDialog dialog);
+    public interface NegativeListener {
+        void onNegativeClick(AlertDialog dialog);
     }
 
-    public interface OKListener {
-        void onOkClick(AlertDialog dialog);
+    public interface PositiveListener {
+        void onPositiveClick(AlertDialog dialog);
     }
 }

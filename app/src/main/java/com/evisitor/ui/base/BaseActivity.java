@@ -170,8 +170,8 @@ implements BaseFragment.Callback, BaseNavigator{
         AlertDialog alertDialog = AlertDialog.newInstance()
                 .setMsg(msg)
                 .setTitle(title)
-                .setCancelGone()
-                .setOnOKClickListener(DialogFragment::dismiss);
+                .setNegativeBtnShow(false)
+                .setOnPositiveClickListener(DialogFragment::dismiss);
         alertDialog.show(getSupportFragmentManager());
         return alertDialog;
     }

@@ -14,11 +14,11 @@ import com.evisitor.databinding.FragmentUserProfileBinding;
 import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.base.BaseNavigator;
 
-public class UserProfileFrament extends BaseFragment<FragmentUserProfileBinding, UserProfileViewModel> implements BaseNavigator {
+public class UserProfileFragment extends BaseFragment<FragmentUserProfileBinding, UserProfileViewModel> implements BaseNavigator {
 
 
     public static Fragment newInstance() {
-        UserProfileFrament fragment = new UserProfileFrament();
+        UserProfileFragment fragment = new UserProfileFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;

@@ -25,6 +25,7 @@ public class HomeViewModel extends BaseViewModel<BaseNavigator> {
         list.add(new HomeBean(R.drawable.ic_person, getNavigator().getContext().getString(R.string.title_service_provider), "40"));
         list.add(new HomeBean(R.drawable.ic_person, getNavigator().getContext().getString(R.string.title_ttl_expected_visitor), "100"));
         list.add(new HomeBean(R.drawable.ic_person, getNavigator().getContext().getString(R.string.title_blacklisted_visitor), "0"));
+        list.add(new HomeBean(R.drawable.ic_person, getNavigator().getContext().getString(R.string.title_trespasser_visitor), "0"));
         homeListData.setValue(list);
         return homeListData;
     }

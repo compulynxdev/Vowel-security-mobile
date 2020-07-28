@@ -15,7 +15,7 @@ import com.evisitor.ui.base.BaseNavigator;
 import com.evisitor.ui.main.activity.ActivityFragment;
 import com.evisitor.ui.main.home.HomeFragment;
 import com.evisitor.ui.main.notifications.NotificationsFragment;
-import com.evisitor.ui.main.profile.UserProfileFrament;
+import com.evisitor.ui.main.profile.UserProfileFragment;
 import com.evisitor.ui.main.settings.SettingsFragment;
 
 
@@ -81,7 +81,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                     break;
 
                 case ID_PROFILE:
-                    replaceFragment(UserProfileFrament.newInstance(),R.id.frame_layout);
+                    replaceFragment(UserProfileFragment.newInstance(), R.id.frame_layout);
                     break;
             }
         });

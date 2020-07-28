@@ -41,6 +41,28 @@
     <string name="title_service_provider">Service Provider</string>
     <string name="title_ttl_expected_visitor">Total Expected Visitors</string>
     <string name="title_blacklisted_visitor">Blacklisted Visitors</string>
+    <string name="title_trespasser_visitor">Trespasser Visitors</string>
+
+    <!--Visitor Profile-->
+    <string name="check_in">Check In</string>
+    <string name="check_out">Check Out</string>
+    <string name="data_name">Name : %s</string>
+    <string name="data_vehicle">Vehicle No : %s</string>
+    <string name="vehicle_col">Vehicle No :</string>
+    <string name="data_house">House No : %s</string>
+    <string name="data_host">Host : %s</string>
+    <string name="data_time">Time : %s</string>
+    <string name="data_identity">Identity No : %s</string>
+    <string name="data_mobile">Mobile : %s</string>
+
+    <!--Check-In Dialog-->
+    <string name="msg_check_in_option">Select an option for Check In.</string>
+    <string name="send_notification">Send Notification</string>
+    <string name="approve_by_call">Approve by Call</string>
+
+    <string name="msg_check_in_call">Please call manually and wait for resident confirmation and select option according to resident.</string>
+    <string name="approve">Approve</string>
+    <string name="reject">Reject</string>
 
     <!--Settings-->
     <string name="device_info">Device Info</string>
@@ -89,8 +111,8 @@
     <string name="dummy_email">user@gmail.com</string>
 
     <!--Activity-->
-    <string name="check_out">Check Out : %s</string>
-    <string name="check_in">Check In : %s</string>
+    <string name="check_out_with_count">Check Out : %s</string>
+    <string name="check_in_with_count">Check In : %s</string>
     <string name="search">Search</string>
     <string name="time_in">Time In </string>
     <string name="house_no">House No.</string>

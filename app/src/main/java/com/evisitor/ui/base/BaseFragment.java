@@ -91,7 +91,7 @@ public abstract class BaseFragment <T extends ViewDataBinding, V extends BaseVie
         mViewDataBinding.executePendingBindings();
     }
 
-    public BaseActivity getBaseActivity() {
+    protected BaseActivity getBaseActivity() {
         return mActivity;
     }
 
@@ -169,8 +169,8 @@ public abstract class BaseFragment <T extends ViewDataBinding, V extends BaseVie
     public AlertDialog showAlert(String title, String msg) {
         AlertDialog alertDialog = AlertDialog.newInstance().setMsg(msg)
                 .setTitle(title)
-                .setCancelGone()
-                .setOnOKClickListener(DialogFragment::dismiss);
+                .setNegativeBtnShow(false)
+                .setOnPositiveClickListener(DialogFragment::dismiss);
         alertDialog.show(getChildFragmentManager());
         return alertDialog;
     }

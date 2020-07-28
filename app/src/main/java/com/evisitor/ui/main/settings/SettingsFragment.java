@@ -89,13 +89,13 @@ public class SettingsFragment extends BaseFragment<FragmentSettingsBinding, Sett
 
             case R.id.logout_constraint:
                 showAlert(R.string.logout, R.string.logout_msg)
-                        .setCancelViewVisible()
-                        .setLabelOkBtn(getString(R.string.yes))
-                        .setLabelCancelBtn(getString(R.string.no))
-                        .setOnOKClickListener(dialog -> {
+                        .setNegativeBtnShow(true)
+                        .setPositiveBtnLabel(getString(R.string.yes))
+                        .setNegativeBtnLabel(getString(R.string.no))
+                        .setOnPositiveClickListener(dialog -> {
                             dialog.dismiss();
                             openActivityOnTokenExpire();
-                        }).setOnCancelClickListener(DialogFragment::dismiss);
+                        }).setOnNegativeClickListener(DialogFragment::dismiss);
                 break;
         }
     }
