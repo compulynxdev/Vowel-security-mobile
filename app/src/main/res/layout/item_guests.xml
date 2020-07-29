@@ -39,7 +39,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:textSize="16sp"
             android:id="@+id/tv_name"
             />
@@ -48,21 +47,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            
-            android:id="@+id/tv_time"
+
+            android:id="@+id/tv_vehicle"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            
+
             android:textSize="16sp"
             android:id="@+id/tv_house_no"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            
+
             android:textSize="16sp"
             android:id="@+id/tv_host"/>
 
@@ -70,35 +69,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-
-            android:id="@+id/tv_type"/>
+            android:id="@+id/tv_time"/>
 
     </LinearLayout>
 
-    <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="20dp"
-        android:visibility="gone"
-        android:contentDescription="@string/image"
-        android:id="@+id/img_trespasser"
-        android:src="@drawable/ic_alert"
-        android:background="@drawable/bg_circle"/>
-
-    <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintTop_toBottomOf="@id/img_trespasser"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:contentDescription="@string/image"
-        android:visibility="gone"
-        android:id="@+id/img_flagged"
-        android:src="@drawable/ic_flag"
-        android:background="@drawable/bg_circle"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

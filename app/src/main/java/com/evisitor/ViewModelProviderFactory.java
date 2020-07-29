@@ -12,6 +12,9 @@ import com.evisitor.ui.main.activity.ActivityViewModel;
 import com.evisitor.ui.main.activity.checkin.CheckInViewModel;
 import com.evisitor.ui.main.activity.checkout.CheckOutViewModel;
 import com.evisitor.ui.main.home.HomeViewModel;
+import com.evisitor.ui.main.home.guest.add.AddGuestViewModel;
+import com.evisitor.ui.main.home.guest.add.dialogs.GenderPickerViewModel;
+import com.evisitor.ui.main.home.guest.expected.GuestViewModel;
 import com.evisitor.ui.main.notifications.NotificationsFragmentViewModel;
 import com.evisitor.ui.main.profile.UserProfileViewModel;
 import com.evisitor.ui.main.settings.SettingsViewModel;
@@ -88,8 +91,16 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(VisitorProfileViewModel.class)) {
             //noinspection unchecked
             return (T) new VisitorProfileViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(GuestViewModel.class)) {
+            //noinspection unchecked
+            return (T) new GuestViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(AddGuestViewModel.class)) {
+            //noinspection unchecked
+            return (T) new AddGuestViewModel(dataManager);
+        }else if (modelClass.isAssignableFrom(GenderPickerViewModel.class)) {
+            //noinspection unchecked
+            return (T) new GenderPickerViewModel(dataManager);
         }
-
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }
 }

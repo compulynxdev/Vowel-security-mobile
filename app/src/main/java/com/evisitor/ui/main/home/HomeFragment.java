@@ -1,5 +1,6 @@
 package com.evisitor.ui.main.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import com.evisitor.ui.main.visitorprofile.VisitorProfileDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.evisitor.ui.main.home.guest.expected.ExpectedGuestActivity;
 
 public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel> implements BaseNavigator {
 
@@ -59,10 +61,12 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
                 switch (pos) {
                     //Guests
                     case 0:
-                        VisitorProfileDialog.newInstance(getDummyData(), (dialog) -> {
+                        Intent i = ExpectedGuestActivity.getStartIntent(getContext());
+                        startActivity(i);
+                        /*VisitorProfileDialog.newInstance(getDummyData(), (dialog) -> {
                             dialog.dismiss();
                             showCheckInDialog();
-                        }).setBtnLabel(getString(R.string.check_in)).show(getChildFragmentManager());
+                        }).setBtnLabel(getString(R.string.check_in)).show(getChildFragmentManager());*/
                         break;
 
                     //House-Keeping

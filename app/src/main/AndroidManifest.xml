@@ -20,8 +20,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-
-        <!--android:theme="@style/SplashTheme"-->
+        <activity android:name=".ui.main.home.guest.add.AddGuestActivity"></activity>
+        <activity android:name=".ui.main.home.guest.expected.ExpectedGuestActivity" /> <!-- android:theme="@style/SplashTheme" -->
         <activity
             android:name=".ui.splash.SplashActivity"
             android:configChanges="orientation|screenSize"
@@ -49,6 +49,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/DashboardTheme" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
