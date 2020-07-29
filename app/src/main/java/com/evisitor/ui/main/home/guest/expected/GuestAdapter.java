@@ -7,10 +7,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import com.evisitor.R;
 import com.evisitor.data.model.Guests;
 import com.evisitor.ui.base.BaseViewHolder;
+import com.evisitor.ui.main.home.guest.OnGuestSelectedListener;
 import com.evisitor.util.pagination.FooterLoader;
 import java.util.List;
 
@@ -20,10 +22,12 @@ public class GuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private static final int VIEWTYPE_LOADER =2 ;
     private boolean showLoader;
     private Context context;
+    private OnGuestSelectedListener listener;
 
-    GuestAdapter(List<Guests> list, Context context) {
+    GuestAdapter(List<Guests> list, Context context, OnGuestSelectedListener callback) {
         this.list = list;
         this.context = context;
+        this.listener=callback;
     }
 
     @NonNull
@@ -84,6 +88,10 @@ public class GuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             host = itemView.findViewById(R.id.tv_host);
             vehicle = itemView.findViewById(R.id.tv_vehicle);
             imgVisitor = itemView.findViewById(R.id.img_visitor);
+            itemView.findViewById(R.id.constraint).setOnClickListener(v -> {
+                if (listener!=null)
+                    listener.onGuestClick(list.get(getAdapterPosition()));
+            });
         }
 
         @Override
@@ -93,8 +101,8 @@ public class GuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             time.setText(context.getString(R.string.time_out).concat(" : ").concat(bean.getTime()));
             houseNo.setText(context.getString(R.string.house_no).concat(" : ").concat(bean.getName()));
             host.setText(context.getString(R.string.host).concat(" : ").concat(bean.getHost()));
-            if (!bean.getVehicleNo().isEmpty())
-            vehicle.setText(context.getString(R.string.vehicle).concat(" : ").concat(bean.getVehicleNo()));
+            if (!bean.getExpectedVehicleNo().isEmpty())
+            vehicle.setText(context.getString(R.string.vehicle).concat(" : ").concat(bean.getExpectedVehicleNo()));
             else vehicle.setVisibility(View.GONE);
         }
     }

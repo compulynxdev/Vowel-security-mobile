@@ -1,5 +1,7 @@
 package com.evisitor.data.remote;
 
+import com.evisitor.data.model.GuestsResponse;
+
 import java.util.Map;
 
 import okhttp3.RequestBody;
@@ -20,4 +22,9 @@ public interface ApiHelper {
 
     @GET(WebServices.GET_USER_DETAIL)
     Call<ResponseBody> doGetUserDetail(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+
+    @GET(WebServices.GET_EXPECTED_GUEST_LIST_DETAIL)
+    Call<GuestsResponse> doGetExpectedGuestListDetail(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+
+
 }

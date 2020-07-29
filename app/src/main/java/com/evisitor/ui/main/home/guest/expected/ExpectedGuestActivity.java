@@ -1,7 +1,7 @@
 package com.evisitor.ui.main.home.guest.expected;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,13 +10,14 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.Guests;
+import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.databinding.ActivityExpectedGuestBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.main.home.guest.add.AddGuestActivity;
+import com.evisitor.ui.main.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
 
@@ -66,7 +67,16 @@ public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBin
 
     private void setUpAdapter() {
         guestsList = new ArrayList<>();
-        adapter = new GuestAdapter(guestsList,this);
+        adapter = new GuestAdapter(guestsList, this, guests -> {
+            List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
+            visitorProfileBeanList.add(new VisitorProfileBean(guests.getName()));
+            visitorProfileBeanList.add(new VisitorProfileBean(getString(R.string.vehicle),guests.getExpectedVehicleNo(),true));
+            visitorProfileBeanList.add(new VisitorProfileBean(guests.getContactNo()));
+            visitorProfileBeanList.add(new VisitorProfileBean(guests.getIdentityNo()));
+            visitorProfileBeanList.add(new VisitorProfileBean(guests.getHouseNo()));
+            visitorProfileBeanList.add(new VisitorProfileBean(guests.getHost()));
+            VisitorProfileDialog.newInstance(visitorProfileBeanList, DialogFragment::dismiss).show(getSupportFragmentManager());
+        });
         getViewDataBinding().recyclerView.setAdapter(adapter);
 
         getViewDataBinding().swipeToRefresh.setOnRefreshListener(() -> {
