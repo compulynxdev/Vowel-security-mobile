@@ -1,5 +1,6 @@
 package com.evisitor.ui.main.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.FragmentHomeBinding;
 import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.base.BaseNavigator;
+import com.evisitor.ui.main.home.guest.expected.ExpectedGuestActivity;
 
 public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel> implements BaseNavigator {
 
@@ -50,6 +52,10 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     private void setupAdapter() {
         getViewModel().getHomeListData().observe(this, homeBeansList -> {
             HomeAdapter homeAdapter = new HomeAdapter(homeBeansList, pos -> {
+                if (pos == 0){
+                    Intent i = ExpectedGuestActivity.getStartIntent(getContext());
+                    startActivity(i);
+                }
 
             });
             getViewDataBinding().recyclerView.setAdapter(homeAdapter);
