@@ -32,13 +32,18 @@ public class GuestViewModel extends BaseViewModel<GuestNavigator> {
         super(dataManager);
     }
 
-    MutableLiveData<List<Guests>> getGuestListData(int page, String search) {
+    MutableLiveData<List<Guests>> getGuestListData() {
+        return guestListData;
+    }
+
+    void getGuestListData(int page, String search) {
         Map<String, String> map = new HashMap<>();
         map.put("accountId", getDataManager().getAccountId());
         if (!search.isEmpty())
             map.put("search", search);
-        map.put("page", ""+page);
-        map.put("offset", search);
+        map.put("page", "" + page);
+        map.put("size", String.valueOf(AppConstants.LIMIT));
+
         getDataManager().doGetExpectedGuestListDetail(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
@@ -57,27 +62,27 @@ public class GuestViewModel extends BaseViewModel<GuestNavigator> {
                     getNavigator().showAlert(R.string.alert, R.string.alert_error);
                 }
             }
+
             @Override
             public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 getNavigator().hideLoading();
                 getNavigator().handleApiFailure(t);
             }
         });
-        return guestListData;
     }
 
     List<VisitorProfileBean> setClickVisitorDetail(Guests guests) {
         getNavigator().showLoading();
         List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
         getDataManager().setGuestDetail(guests);
-        visitorProfileBeanList.add(new VisitorProfileBean(guests.getName()));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle),guests.getExpectedVehicleNo(),true));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, guests.getName())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), guests.getExpectedVehicleNo(), true));
         if (!guests.getContactNo().isEmpty())
-            visitorProfileBeanList.add(new VisitorProfileBean(guests.getContactNo()));
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, guests.getContactNo())));
         if (!guests.getIdentityNo().isEmpty())
-            visitorProfileBeanList.add(new VisitorProfileBean(guests.getIdentityNo()));
-        visitorProfileBeanList.add(new VisitorProfileBean(guests.getHouseNo()));
-        visitorProfileBeanList.add(new VisitorProfileBean(guests.getHost()));
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, guests.getIdentityNo())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_house, guests.getHouseNo())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, guests.getHost())));
         getNavigator().hideLoading();
         return visitorProfileBeanList;
     }
@@ -150,8 +155,7 @@ public class GuestViewModel extends BaseViewModel<GuestNavigator> {
                             getNavigator().refreshList();
                         });
                     } catch (Exception e) {
-                        e.printStackTrace();
-                        getNavigator().showAlert(getNavigator().getContext().getString(R.string.alert),e.toString());
+                        getNavigator().showAlert(R.string.alert, R.string.alert_error);
                     }
                 }else if (response.code()==401){
                     getNavigator().openActivityOnTokenExpire();

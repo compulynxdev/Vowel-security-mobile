@@ -110,6 +110,11 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
                         houseId = String.valueOf(houseDetailBean.getId());
                         getViewDataBinding().actvHouseNo.setText(houseDetailBean.getName());
 
+                        ownerId = "";
+                        getViewDataBinding().tvOwner.setText("");
+                        residentId = "";
+                        getViewDataBinding().tvHost.setText("");
+
                         getHostData(houseId);
                     });
                 });
@@ -121,7 +126,6 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
         getViewModel().doGetHostDetails(houseId).observe(this, hostDetailList -> {
             this.hostDetailList = hostDetailList;
             getViewDataBinding().hostGroup.setVisibility(View.VISIBLE);
-
             setUpOwner(hostDetailList, false);
         });
     }

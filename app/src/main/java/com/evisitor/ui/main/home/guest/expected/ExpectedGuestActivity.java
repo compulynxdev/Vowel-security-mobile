@@ -21,7 +21,6 @@ import com.evisitor.ui.dialog.AlertDialog;
 import com.evisitor.ui.main.home.guest.add.AddGuestActivity;
 import com.evisitor.ui.main.home.guest.add.scan.ScanIDActivity;
 import com.evisitor.ui.main.visitorprofile.VisitorProfileDialog;
-import com.evisitor.util.AppConstants;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
 
 import java.util.ArrayList;
@@ -97,17 +96,29 @@ public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBin
             doSearch(getViewDataBinding().etSearch.getText().toString());
             getViewDataBinding().swipeToRefresh.setRefreshing(false);
         });
-        getData(page,"");
         scrollListener = new RecyclerViewScrollListener() {
             @Override
             public void onLoadMore() {
                 adapter.showLoading(true);
                 adapter.notifyDataSetChanged();
-                page += AppConstants.LIMIT;
-                getData(page, getViewDataBinding().etSearch.getText().toString());
+                page++;
+
+                getViewModel().getGuestListData(page, getViewDataBinding().etSearch.getText().toString().trim());
             }
         };
         getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
+
+        getViewModel().getGuestListData().observe(this, guests -> {
+            adapter.showLoading(false);
+            adapter.notifyDataSetChanged();
+
+            if (page == 0) guestsList.clear();
+
+            guestsList.addAll(guests);
+            adapter.notifyDataSetChanged();
+        });
+
+        getViewModel().getGuestListData(page, "");
     }
 
     private void setUpSearch() {
@@ -151,23 +162,11 @@ public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBin
         });
     }
 
-    private void getData(int page, String search) {
-        getViewModel().getGuestListData(page,search).observe(this, guests -> {
-            adapter.showLoading(false);
-            adapter.notifyDataSetChanged();
-
-            if (page == 0) guestsList.clear();
-
-            guestsList.addAll(guests);
-            adapter.notifyDataSetChanged();
-        });
-
-    }
     private void doSearch(String search) {
         scrollListener.onDataCleared();
         guestsList.clear();
         this.page = 0;
-        getData(page, search);
+        getViewModel().getGuestListData(page, search.trim());
     }
 
     private void showCheckinOptions() {
