@@ -1,2 +1,2 @@
-include ':app'
+include ':app', ':mrzreader'
 rootProject.name='E-Visitor'

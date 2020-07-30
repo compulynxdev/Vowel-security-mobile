@@ -54,4 +54,19 @@ public class AppApiHelper implements ApiHelper {
     public Call<ResponseBody> doGetUserDetail(String authToken, Map<String, String> partMap) {
         return getApiInterface().doGetUserDetail(authToken, partMap);
     }
+
+    @Override
+    public Call<ResponseBody> doAddGuest(String authToken, RequestBody requestBody) {
+        return getApiInterface().doAddGuest(authToken, requestBody);
+    }
+
+    @Override
+    public Call<ResponseBody> doGetHouseDetailList(String authToken, Map<String, String> partMap) {
+        return getApiInterface().doGetHouseDetailList(authToken, partMap);
+    }
+
+    @Override
+    public Call<ResponseBody> doGetHostDetailList(String authToken, Map<String, String> partMap) {
+        return getApiInterface().doGetHostDetailList(authToken, partMap);
+    }
 }

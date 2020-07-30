@@ -3,6 +3,7 @@
 
     <!--Alerts-->
     <string name="alert">Alert</string>
+    <string name="ocr_error">Detector dependencies are not yet available.</string>
     <string name="something_went_wrong">Something went wrong</string>
     <string name="alert_error">Oops! We encountered a internal error. Please check again in a while.</string>
     <string name="alert_internet">Please check you internet connection and try again!</string>
@@ -12,9 +13,11 @@
     <string name="select">Select</string>
     <string name="take_photo">Camera</string>
     <string name="gallery">Gallery</string>
+    <string name="view_image">View Image</string>
     <string name="permission_camera_deny">Camera permission denied by user</string>
     <string name="alert_out_of_memory">Phone storage is full</string>
     <string name="alert_image_select">Please select image</string>
+    <string name="alert_image_size">Selected image size is %d MB\nImage size must not be greater than 2MB</string>
 
     <!--Login-->
     <string name="login">Login</string>
@@ -23,9 +26,9 @@
     <string name="welcome_msg">Welcome To Login</string>
 
     <!--Login Validations-->
-    <string name="alert_empty_username">Please Enter Username !!</string>
+    <string name="alert_empty_username">Please enter username.</string>
     <string name="alert_username_length">Username minimum length must be 5 and maximum length 10.</string>
-    <string name="alert_empty_password">Please Enter Password !!</string>
+    <string name="alert_empty_password">Please enter password.</string>
     <string name="alert_pwd_Length">Password length must be greater than or equal to 5.</string>
 
     <!--Dashboard-->
@@ -56,13 +59,46 @@
     <string name="data_mobile">Mobile : %s</string>
 
     <!--Check-In Dialog-->
+    <string name="msg_add_guest_option">Please select Check In option.</string>
+    <string name="scan_id">Scan Id</string>
+    <string name="manually">Manually</string>
+
     <string name="msg_check_in_option">Select an option for Check In.</string>
     <string name="send_notification">Send Notification</string>
     <string name="approve_by_call">Approve by Call</string>
 
+    <string name="msg_check_in_confirmation">Please confirm resident to check in guest or not?</string>
+
     <string name="msg_check_in_call">Please call manually and wait for resident confirmation and select option according to resident.</string>
     <string name="approve">Approve</string>
     <string name="reject">Reject</string>
+
+    <!--Guest-->
+    <string name="title_expected_guests">Expected Guests</string>
+    <string name="vehicle">Vehicle No.</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="enter_identityNo">Enter Identity No</string>
+    <string name="enter_vehicle">Enter Vehicle No</string>
+    <string name="enter_contact">Enter Contact</string>
+    <string name="select_gender">Select Gender</string>
+    <string name="select_house">Select House Number</string>
+    <string name="select_owner">Select Owner</string>
+    <string name="select_host">Select Host</string>
+    <string name="add">Add</string>
+    <string name="title_add_guest">Add Guest</string>
+    <string name="title_scan_id">Scan ID</string>
+    <string name="close">Close</string>
+    <string name="enter_address">Enter Address</string>
+
+    <!--Add Guest Check-In Validation-->
+    <string name="alert_empty_name">Please enter name.</string>
+    <string name="alert_empty_contact">Please enter contact number.</string>
+    <string name="alert_contact_length">Contact number minimum length must be 7 and maximum length 12.</string>
+    <string name="alert_empty_address">Please enter address.</string>
+    <string name="alert_select_gender">Please select gender.</string>
+    <string name="alert_select_house_no">Please select house number.</string>
+    <string name="alert_select_owner">Please select house owner.</string>
+    <string name="alert_select_host">Please select host.</string>
 
     <!--Settings-->
     <string name="device_info">Device Info</string>
@@ -106,6 +142,7 @@
     <string name="dummy_name">Hrithik Kaushal</string>
     <string name="dummy_username">Hrithik</string>
     <string name="male">Male</string>
+    <string name="female">Female</string>
     <string name="dummy_contact">9876452310</string>
     <string name="dummy_address">Rajendra nagar, Indore</string>
     <string name="dummy_email">user@gmail.com</string>
@@ -123,19 +160,6 @@
 
     <!--Other-->
     <string name="image">IMAGE</string>
-    <string name="title_expected_guests">Expected Guests</string>
-    <string name="vehicle">Vehicle No.</string>
-    <string name="enter_name">Enter Name</string>
-    <string name="enter_identityNo">Enter Identity No</string>
-    <string name="enter_vehicle">Enter Vehicle No</string>
-    <string name="enter_contact">Enter Contact</string>
-    <string name="select_gender">Select Gender</string>
-    <string name="select_house">Select House Number</string>
-    <string name="select_owner">Select Owner</string>
-    <string name="select_host">Select Host</string>
-    <string name="add">Add</string>
-    <string name="title_add_guest">Add Guest</string>
-    <string name="close">Close</string>
-    <string name="enter_address">Enter Address</string>
+
 
 </resources>

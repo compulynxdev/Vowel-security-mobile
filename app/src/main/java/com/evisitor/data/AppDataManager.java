@@ -154,4 +154,19 @@ public class AppDataManager implements DataManager {
     public Call<ResponseBody> doGetUserDetail(String authToken, Map<String, String> partMap) {
         return apiHelper.doGetUserDetail(authToken, partMap);
     }
+
+    @Override
+    public Call<ResponseBody> doAddGuest(String authToken, RequestBody requestBody) {
+        return apiHelper.doAddGuest(authToken, requestBody);
+    }
+
+    @Override
+    public Call<ResponseBody> doGetHouseDetailList(String authToken, Map<String, String> partMap) {
+        return apiHelper.doGetHouseDetailList(authToken, partMap);
+    }
+
+    @Override
+    public Call<ResponseBody> doGetHostDetailList(String authToken, Map<String, String> partMap) {
+        return apiHelper.doGetHostDetailList(authToken, partMap);
+    }
 }

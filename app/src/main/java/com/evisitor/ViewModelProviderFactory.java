@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.data.DataManager;
 import com.evisitor.ui.dialog.AlertViewModel;
+import com.evisitor.ui.dialog.ImagePickViewModel;
 import com.evisitor.ui.login.LoginViewModel;
 import com.evisitor.ui.main.MainViewModel;
 import com.evisitor.ui.main.activity.ActivityViewModel;
@@ -14,6 +15,8 @@ import com.evisitor.ui.main.activity.checkout.CheckOutViewModel;
 import com.evisitor.ui.main.home.HomeViewModel;
 import com.evisitor.ui.main.home.guest.add.AddGuestViewModel;
 import com.evisitor.ui.main.home.guest.add.dialogs.GenderPickerViewModel;
+import com.evisitor.ui.main.home.guest.add.dialogs.HostPickerViewModel;
+import com.evisitor.ui.main.home.guest.add.scan.ScanIDViewModel;
 import com.evisitor.ui.main.home.guest.expected.GuestViewModel;
 import com.evisitor.ui.main.notifications.NotificationsFragmentViewModel;
 import com.evisitor.ui.main.profile.UserProfileViewModel;
@@ -100,7 +103,17 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         }else if (modelClass.isAssignableFrom(GenderPickerViewModel.class)) {
             //noinspection unchecked
             return (T) new GenderPickerViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(ImagePickViewModel.class)) {
+            //noinspection unchecked
+            return (T) new ImagePickViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(HostPickerViewModel.class)) {
+            //noinspection unchecked
+            return (T) new HostPickerViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(ScanIDViewModel.class)) {
+            //noinspection unchecked
+            return (T) new ScanIDViewModel(dataManager);
         }
+
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }
 }

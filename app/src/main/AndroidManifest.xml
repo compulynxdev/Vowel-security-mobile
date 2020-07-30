@@ -20,8 +20,24 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.main.home.guest.add.AddGuestActivity"></activity>
-        <activity android:name=".ui.main.home.guest.expected.ExpectedGuestActivity" /> <!-- android:theme="@style/SplashTheme" -->
+        <activity
+            android:name=".ui.main.home.guest.add.AddGuestActivity"
+            android:configChanges="orientation|screenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/DashboardTheme" />
+        <activity
+            android:name=".ui.main.home.guest.add.scan.ScanIDActivity"
+            android:configChanges="orientation|screenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/DashboardTheme" />
+        <activity
+            android:name=".ui.main.home.guest.expected.ExpectedGuestActivity"
+            android:configChanges="orientation|screenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/DashboardTheme" />
         <activity
             android:name=".ui.splash.SplashActivity"
             android:configChanges="orientation|screenSize"

@@ -20,4 +20,13 @@ public interface ApiHelper {
 
     @GET(WebServices.GET_USER_DETAIL)
     Call<ResponseBody> doGetUserDetail(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+
+    @POST(WebServices.ADD_GUEST)
+    Call<ResponseBody> doAddGuest(@Header("authorization") String authToken, @Body RequestBody requestBody);
+
+    @GET(WebServices.GET_HOUSE_LIST)
+    Call<ResponseBody> doGetHouseDetailList(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+
+    @GET(WebServices.GET_HOST_LIST)
+    Call<ResponseBody> doGetHostDetailList(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
 }

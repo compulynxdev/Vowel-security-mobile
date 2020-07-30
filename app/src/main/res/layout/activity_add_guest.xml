@@ -25,19 +25,34 @@
     <include layout="@layout/header"
         android:id="@+id/toolbar"/>
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/img_user"
-        android:layout_width="105dp"
-        android:layout_height="105dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="20dp"
-        app:civ_circle_background_color="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        android:src="@drawable/ic_person"
-        app:civ_border_color="@color/black"
-        app:civ_border_width="1dp"
-        tools:ignore="ContentDescription" />
+        <FrameLayout
+            android:id="@+id/frame_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_user"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_person"
+                app:civ_border_color="@color/colorPrimary"
+                app:civ_border_width="2dp"
+                app:civ_circle_background_color="@color/white"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="bottom|end"
+                android:background="@drawable/bg_circle_primary"
+                android:padding="7dp"
+                android:src="@drawable/ic_camera"
+                tools:ignore="ContentDescription" />
+        </FrameLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -48,7 +63,7 @@
             android:layout_marginEnd="18dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/img_user">
+            app:layout_constraintTop_toBottomOf="@+id/frame_img">
 
             <EditText
                 android:id="@+id/et_identity"
@@ -64,12 +79,13 @@
                 android:background="@drawable/bg_search"
                 android:fontFamily="@font/futura_round_medium"
                 android:textColor="@color/black"
+                android:imeOptions="actionNext"
                 android:textSize="16sp"
                 android:autofillHints="name"
                 android:textAlignment="center"
                 tools:targetApi="o"
                 app:layout_constraintTop_toTopOf="parent"
-                android:imeOptions="actionSearch"
+                android:textColorHint="@color/black40p"
                 android:inputType="textPersonName"
                 tools:ignore="LabelFor" />
 
@@ -81,19 +97,20 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="10dp"
                 android:theme="@style/EditTextTheme"
                 android:layout_gravity="center_vertical"
                 android:hint="@string/enter_name"
                 android:background="@drawable/bg_search"
                 android:fontFamily="@font/futura_round_medium"
                 android:textColor="@color/black"
+                android:imeOptions="actionNext"
                 android:textSize="16sp"
                 android:textAlignment="center"
                 android:autofillHints="name"
                 tools:targetApi="o"
                 app:layout_constraintTop_toBottomOf="@id/et_identity"
-                android:imeOptions="actionSearch"
+                android:textColorHint="@color/black40p"
                 android:inputType="textPersonName"
                 tools:ignore="LabelFor" />
 
@@ -105,19 +122,20 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="10dp"
                 android:theme="@style/EditTextTheme"
                 android:layout_gravity="center_vertical"
                 android:hint="@string/enter_vehicle"
                 android:background="@drawable/bg_search"
                 android:fontFamily="@font/futura_round_medium"
                 android:textColor="@color/black"
+                android:imeOptions="actionNext"
                 android:textSize="16sp"
                 android:textAlignment="center"
                 android:autofillHints="name"
                 tools:targetApi="o"
                 app:layout_constraintTop_toBottomOf="@id/et_name"
-                android:imeOptions="actionSearch"
+                android:textColorHint="@color/black40p"
                 android:inputType="textPersonName"
                 tools:ignore="LabelFor" />
 
@@ -129,19 +147,20 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="10dp"
                 android:theme="@style/EditTextTheme"
                 android:layout_gravity="center_vertical"
                 android:hint="@string/enter_contact"
                 android:background="@drawable/bg_search"
                 android:fontFamily="@font/futura_round_medium"
                 android:textColor="@color/black"
+                android:imeOptions="actionNext"
                 android:textSize="16sp"
                 android:textAlignment="center"
                 android:autofillHints="name"
                 tools:targetApi="o"
                 app:layout_constraintTop_toBottomOf="@id/et_vehicle"
-                android:imeOptions="actionSearch"
+                android:textColorHint="@color/black40p"
                 android:inputType="number"
                 tools:ignore="LabelFor" />
 
@@ -153,22 +172,22 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="10dp"
                 android:theme="@style/EditTextTheme"
                 android:layout_gravity="center_vertical"
                 android:hint="@string/enter_address"
                 android:background="@drawable/bg_search"
                 android:fontFamily="@font/futura_round_medium"
                 android:textColor="@color/black"
+                android:imeOptions="actionNext"
                 android:textSize="16sp"
                 android:textAlignment="center"
                 android:autofillHints="name"
                 tools:targetApi="o"
                 app:layout_constraintTop_toBottomOf="@id/et_contact"
-                android:imeOptions="actionSearch"
+                android:textColorHint="@color/black40p"
                 android:inputType="textPersonName"
                 tools:ignore="LabelFor" />
-
 
 
             <TextView
@@ -179,17 +198,18 @@
                 android:id="@+id/tv_gender"
                 android:layout_marginEnd="10dp"
                 android:textColor="@color/black"
+                android:layout_marginTop="10dp"
                 android:textSize="16sp"
                 android:gravity="center"
                 android:fontFamily="@font/futura_round_medium"
-                android:layout_marginTop="8dp"
-                android:text="@string/select_gender"
+                android:hint="@string/select_gender"
+                android:textColorHint="@color/black40p"
                 app:layout_constraintTop_toBottomOf="@id/et_address"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
-            <EditText
-                android:id="@+id/et_house_no"
+            <AutoCompleteTextView
+                android:id="@+id/actv_house_no"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -202,13 +222,14 @@
                 android:background="@drawable/bg_search"
                 android:fontFamily="@font/futura_round_medium"
                 android:textColor="@color/black"
+                android:imeOptions="actionDone"
                 android:layout_marginTop="10dp"
                 android:textSize="16sp"
                 android:autofillHints="name"
                 android:textAlignment="center"
                 tools:targetApi="o"
                 app:layout_constraintTop_toBottomOf="@id/tv_gender"
-                android:imeOptions="actionSearch"
+                android:textColorHint="@color/black40p"
                 android:inputType="textPersonName"
                 tools:ignore="LabelFor" />
 
@@ -220,13 +241,14 @@
                 android:background="@drawable/bg_search"
                 android:layout_marginEnd="10dp"
                 android:textColor="@color/black"
+                android:layout_marginTop="10dp"
                 android:id="@+id/tv_owner"
                 android:textSize="16sp"
                 android:gravity="center"
                 android:fontFamily="@font/futura_round_medium"
-                android:layout_marginTop="8dp"
-                android:text="@string/select_owner"
-                app:layout_constraintTop_toBottomOf="@id/et_house_no"
+                android:hint="@string/select_owner"
+                android:textColorHint="@color/black40p"
+                app:layout_constraintTop_toBottomOf="@id/actv_house_no"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -237,12 +259,13 @@
                 android:background="@drawable/bg_search"
                 android:layout_marginEnd="10dp"
                 android:textColor="@color/black"
+                android:layout_marginTop="10dp"
                 android:id="@+id/tv_host"
                 android:textSize="16sp"
                 android:gravity="center"
                 android:fontFamily="@font/futura_round_medium"
-                android:layout_marginTop="8dp"
-                android:text="@string/select_host"
+                android:hint="@string/select_host"
+                android:textColorHint="@color/black40p"
                 app:layout_constraintTop_toBottomOf="@id/tv_owner"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
@@ -255,19 +278,17 @@
                 android:visibility="gone"/>
 
             <Button
-                android:layout_width="wrap_content"
+                android:id="@+id/btn_add"
+                style="@style/PrimaryButton"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/tv_host"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/bg_search"
-                android:backgroundTint="@color/colorPrimaryDark"
                 android:text="@string/add"
-                android:textColor="@color/white"
-                android:textAllCaps="false"
-                android:fontFamily="@font/futura_round_medium"
-                android:layout_marginBottom="10dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                android:layout_width="0dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/tv_gender"
+                app:layout_constraintStart_toStartOf="@id/tv_gender" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

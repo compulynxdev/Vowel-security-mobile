@@ -44,7 +44,6 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$rootProject.junitExtVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
 
-
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
     // LiveData
@@ -83,5 +82,11 @@ dependencies {
 
     //Image viewer
     implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
+
+    //Google OCR
+    implementation 'com.google.android.gms:play-services-vision:20.1.0'
+
+    //MRZ Reader
+    implementation project(path: ':mrzreader')
 
 }

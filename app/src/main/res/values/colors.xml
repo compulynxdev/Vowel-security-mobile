@@ -43,7 +43,7 @@
     <color name="white">#ffffff</color>
     <color name="black">#BF000000</color>
     <color name="black80p">#CC000000</color>
-    <color name="black30p">#4D000000</color>
+    <color name="black40p">#66000000</color>
     <color name="black20p">#33000000</color>
     <color name="black03p">#03000000</color>
 </resources>

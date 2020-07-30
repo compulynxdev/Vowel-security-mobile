@@ -1,7 +1,5 @@
 package com.evisitor.ui.main.home.guest.expected;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,12 +9,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModelProvider;
+
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.Guests;
 import com.evisitor.databinding.ActivityExpectedGuestBinding;
 import com.evisitor.ui.base.BaseActivity;
+import com.evisitor.ui.dialog.AlertDialog;
 import com.evisitor.ui.main.home.guest.add.AddGuestActivity;
+import com.evisitor.ui.main.home.guest.add.scan.ScanIDActivity;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
 
@@ -58,10 +60,24 @@ public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBin
         setUpSearch();
         setUpAdapter();
 
-        getViewDataBinding().fabAdd.setOnClickListener(v -> {
-            Intent i = AddGuestActivity.getStartIntent(this);
-            startActivity(i);
-        });
+        getViewDataBinding().fabAdd.setOnClickListener(v -> AlertDialog.newInstance()
+                .setNegativeBtnShow(true)
+                .setCloseBtnShow(true)
+                .setTitle(getString(R.string.check_in))
+                .setMsg(getString(R.string.msg_add_guest_option))
+                .setNegativeBtnColor(R.color.colorPrimary)
+                .setPositiveBtnLabel(getString(R.string.manually))
+                .setNegativeBtnLabel(getString(R.string.scan_id))
+                .setOnNegativeClickListener(dialog1 -> {
+                    dialog1.dismiss();
+                    Intent i = ScanIDActivity.getStartIntent(this);
+                    startActivity(i);
+                })
+                .setOnPositiveClickListener(dialog12 -> {
+                    dialog12.dismiss();
+                    Intent i = AddGuestActivity.getStartIntent(this);
+                    startActivity(i);
+                }).show(getSupportFragmentManager()));
     }
 
     private void setUpAdapter() {
@@ -141,6 +157,6 @@ public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBin
         scrollListener.onDataCleared();
         guestsList.clear();
         this.page = 0;
-        getData(0,search);
+        getData(page, search);
     }
 }
