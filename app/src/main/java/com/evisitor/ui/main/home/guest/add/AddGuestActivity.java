@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -100,8 +101,8 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
             @Override
             public void afterTextChanged(Editable s) {
                 getViewModel().doGetHouseDetails(s.toString()).observe(AddGuestActivity.this, houseDetailList -> {
-                    HouseDetailAdapter arrayAdapter = new HouseDetailAdapter(AddGuestActivity.this, houseDetailList);
-                    getViewDataBinding().actvHouseNo.setThreshold(1);
+                    ArrayAdapter<HouseDetailBean> arrayAdapter = new ArrayAdapter<>(AddGuestActivity.this, android.R.layout.simple_list_item_1, houseDetailList);
+                    getViewDataBinding().actvHouseNo.setThreshold(2);
                     getViewDataBinding().actvHouseNo.setAdapter(arrayAdapter);
 
                     getViewDataBinding().actvHouseNo.setOnItemClickListener((adapterView, view, i, l) -> {

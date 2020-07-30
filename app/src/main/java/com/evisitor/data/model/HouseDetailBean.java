@@ -1,5 +1,7 @@
 package com.evisitor.data.model;
 
+import androidx.annotation.NonNull;
+
 public class HouseDetailBean {
 
     /**
@@ -24,5 +26,11 @@ public class HouseDetailBean {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return name;
     }
 }
