@@ -4,4 +4,5 @@ import com.evisitor.ui.base.BaseNavigator;
 
 public interface GuestNavigator extends BaseNavigator {
 
+    void refreshList();
 }

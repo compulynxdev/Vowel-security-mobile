@@ -23,7 +23,7 @@ public class Guests {
     private boolean isOwner;
 
     @SerializedName("residentId")
-    private boolean residentId;
+    private String residentId;
 
     @SerializedName("notificationStatus")
     private boolean notificationStatus;
@@ -51,13 +51,6 @@ public class Guests {
         isOwner = owner;
     }
 
-    public boolean isResidentId() {
-        return residentId;
-    }
-
-    public void setResidentId(boolean residentId) {
-        this.residentId = residentId;
-    }
 
     public boolean isNotificationStatus() {
         return notificationStatus;
@@ -65,6 +58,14 @@ public class Guests {
 
     public void setNotificationStatus(boolean notificationStatus) {
         this.notificationStatus = notificationStatus;
+    }
+
+    public String getResidentId() {
+        return residentId;
+    }
+
+    public void setResidentId(String residentId) {
+        this.residentId = residentId;
     }
 
     public String getIdentityNo() {

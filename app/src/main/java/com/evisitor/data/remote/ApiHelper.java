@@ -26,5 +26,10 @@ public interface ApiHelper {
     @GET(WebServices.GET_EXPECTED_GUEST_LIST_DETAIL)
     Call<GuestsResponse> doGetExpectedGuestListDetail(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
 
+    @POST(WebServices.GUEST_CHECKIN_CHECKOUT)
+    Call<ResponseBody> doGuestCheckInCheckOut(@Header("authorization") String authToken, @Body RequestBody body);
+
+    @POST(WebServices.GUEST_SEND_NOTIFICTION)
+    Call<ResponseBody> doGuestSendNotification(@Header("authorization") String authToken, @Body RequestBody body);
 
 }

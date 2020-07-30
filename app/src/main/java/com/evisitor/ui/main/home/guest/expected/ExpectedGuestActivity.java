@@ -1,6 +1,5 @@
 package com.evisitor.ui.main.home.guest.expected;
 
-import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.content.Intent;
@@ -16,11 +15,11 @@ import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.databinding.ActivityExpectedGuestBinding;
 import com.evisitor.ui.base.BaseActivity;
+import com.evisitor.ui.dialog.AlertDialog;
 import com.evisitor.ui.main.home.guest.add.AddGuestActivity;
 import com.evisitor.ui.main.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,14 +67,11 @@ public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBin
     private void setUpAdapter() {
         guestsList = new ArrayList<>();
         adapter = new GuestAdapter(guestsList, this, guests -> {
-            List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
-            visitorProfileBeanList.add(new VisitorProfileBean(guests.getName()));
-            visitorProfileBeanList.add(new VisitorProfileBean(getString(R.string.vehicle),guests.getExpectedVehicleNo(),true));
-            visitorProfileBeanList.add(new VisitorProfileBean(guests.getContactNo()));
-            visitorProfileBeanList.add(new VisitorProfileBean(guests.getIdentityNo()));
-            visitorProfileBeanList.add(new VisitorProfileBean(guests.getHouseNo()));
-            visitorProfileBeanList.add(new VisitorProfileBean(guests.getHost()));
-            VisitorProfileDialog.newInstance(visitorProfileBeanList, DialogFragment::dismiss).show(getSupportFragmentManager());
+            List<VisitorProfileBean> visitorProfileBeanList = getViewModel().setClickVisitorDetail(guests);
+            VisitorProfileDialog.newInstance(visitorProfileBeanList, visitorProfileDialog -> {
+                visitorProfileDialog.dismiss();
+                showCheckinOptions();
+            }).setBtnLabel(getString(R.string.check_in)).show(getSupportFragmentManager());
         });
         getViewDataBinding().recyclerView.setAdapter(adapter);
 
@@ -152,5 +148,48 @@ public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBin
         guestsList.clear();
         this.page = 0;
         getData(0,search);
+    }
+
+    private void showCheckinOptions() {
+        AlertDialog.newInstance()
+                .setNegativeBtnShow(true)
+                .setCloseBtnShow(true)
+                .setTitle(getString(R.string.check_in))
+                .setMsg(getString(R.string.msg_check_in_option))
+                .setNegativeBtnColor(R.color.colorPrimary)
+                .setPositiveBtnLabel(getString(R.string.approve_by_call))
+                .setNegativeBtnLabel(getString(R.string.send_notification))
+                .setOnNegativeClickListener(dialog1 -> {
+                    dialog1.dismiss();
+                    getViewModel().sendNotification();
+                })
+                .setOnPositiveClickListener(dialog12 -> {
+                    dialog12.dismiss();
+                    showCallDialog();
+                }).show(getSupportFragmentManager());
+
+    }
+
+    private void showCallDialog() {
+        AlertDialog.newInstance()
+                .setNegativeBtnShow(true)
+                .setCloseBtnShow(true)
+                .setTitle(getString(R.string.check_in))
+                .setMsg(getString(R.string.msg_check_in_call))
+                .setPositiveBtnLabel(getString(R.string.approve))
+                .setNegativeBtnLabel(getString(R.string.reject))
+                .setOnNegativeClickListener(dialog1 -> {
+                    dialog1.dismiss();
+                    showAlert(R.string.alert,R.string.check_in_rejected);
+                })
+                .setOnPositiveClickListener(dialog12 -> {
+                    dialog12.dismiss();
+                    getViewModel().approveByCall();
+                }).show(getSupportFragmentManager());
+    }
+
+    @Override
+    public void refreshList() {
+        doSearch(getViewDataBinding().etSearch.getText().toString());
     }
 }

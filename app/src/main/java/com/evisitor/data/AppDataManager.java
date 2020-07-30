@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.evisitor.data.local.prefs.AppPreferenceHelper;
+import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.GuestsResponse;
 import com.evisitor.data.model.UserDetail;
 import com.evisitor.data.remote.AppApiHelper;
@@ -74,6 +75,16 @@ public class AppDataManager implements DataManager {
     @Override
     public void logout(Activity activity) {
         preferenceHelper.logout(activity);
+    }
+
+    @Override
+    public void setGuestDetail(Guests guests) {
+        preferenceHelper.setGuestDetail(guests);
+    }
+
+    @Override
+    public Guests getGuestDetail() {
+        return preferenceHelper.getGuestDetail();
     }
 
     @Override
@@ -159,5 +170,15 @@ public class AppDataManager implements DataManager {
     @Override
     public Call<GuestsResponse> doGetExpectedGuestListDetail(String authToken, Map<String, String> partMap) {
         return apiHelper.doGetExpectedGuestListDetail(authToken, partMap);
+    }
+
+    @Override
+    public Call<ResponseBody> doGuestCheckInCheckOut(String authToken, RequestBody body) {
+        return apiHelper.doGuestCheckInCheckOut(authToken, body);
+    }
+
+    @Override
+    public Call<ResponseBody> doGuestSendNotification(String authToken, RequestBody body) {
+        return apiHelper.doGuestSendNotification(authToken, body);
     }
 }

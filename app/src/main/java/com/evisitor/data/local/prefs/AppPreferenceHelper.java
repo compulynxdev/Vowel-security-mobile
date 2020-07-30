@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.UserDetail;
 import com.evisitor.ui.login.LoginActivity;
 
@@ -31,6 +32,12 @@ public class AppPreferenceHelper implements PreferenceHelper {
     private static final String USER_GENDER = "USER_GENDER";
     private static final String USER_ADDRESS = "USER_ADDRESS";
     private static final String USER_CONTACT = "USER_CONTACT";
+
+    /*Guest Detail*/
+    private static final String GUEST_ID = "USER_EMAIL";
+    private static final String FLAT_ID = "USER_COUNTRY";
+    private static final String GUEST_VEHICLE_NO = "USER_GENDER";
+    private static final String RESIDENT_ID = "RESIDENT_ID";
 
     private final SharedPreferences mPrefs;
 
@@ -149,5 +156,23 @@ public class AppPreferenceHelper implements PreferenceHelper {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         activity.startActivity(intent);
         activity.finish();
+    }
+
+    @Override
+    public void setGuestDetail(Guests guests) {
+        mPrefs.edit().putString(GUEST_ID, guests.getIdentityNo()).apply();
+        mPrefs.edit().putString(GUEST_VEHICLE_NO, guests.getExpectedVehicleNo()).apply();
+        mPrefs.edit().putString(RESIDENT_ID, guests.getResidentId()).apply();
+        mPrefs.edit().putString(FLAT_ID, guests.getFlatId()).apply();
+    }
+
+    @Override
+    public Guests getGuestDetail() {
+        Guests guests = new Guests();
+        guests.setGuestId(mPrefs.getString(GUEST_ID, ""));
+        guests.setFlatId(mPrefs.getString(FLAT_ID, ""));
+        guests.setExpectedVehicleNo(mPrefs.getString(GUEST_VEHICLE_NO, ""));
+        guests.setResidentId(mPrefs.getString(RESIDENT_ID, ""));
+        return null;
     }
 }

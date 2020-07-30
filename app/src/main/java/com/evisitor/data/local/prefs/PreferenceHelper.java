@@ -2,6 +2,7 @@ package com.evisitor.data.local.prefs;
 
 import android.app.Activity;
 
+import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.UserDetail;
 
 /**
@@ -46,4 +47,8 @@ public interface PreferenceHelper {
     void setUserDetail(UserDetail userDetail);
 
     void logout(Activity activity);
+
+    void setGuestDetail(Guests guests);
+
+    Guests getGuestDetail();
 }

@@ -61,4 +61,14 @@ public class AppApiHelper implements ApiHelper {
     public Call<GuestsResponse> doGetExpectedGuestListDetail(String authToken, Map<String, String> partMap) {
         return getApiInterface().doGetExpectedGuestListDetail(authToken, partMap);
     }
+
+    @Override
+    public Call<ResponseBody> doGuestCheckInCheckOut(String authToken, RequestBody body) {
+        return getApiInterface().doGuestCheckInCheckOut(authToken, body);
+    }
+
+    @Override
+    public Call<ResponseBody> doGuestSendNotification(String authToken, RequestBody body) {
+        return getApiInterface().doGuestSendNotification(authToken, body);
+    }
 }
