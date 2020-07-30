@@ -21,8 +21,7 @@ public class SplashViewModel extends BaseViewModel<SplashNavigator> {
             if (getDataManager().isLoggedIn()) {
                 getNavigator().openMainActivity();
             } else {
-                //getNavigator().openLoginActivity();
-                getNavigator().openMainActivity();
+                getNavigator().openLoginActivity();
             }
         });
     }

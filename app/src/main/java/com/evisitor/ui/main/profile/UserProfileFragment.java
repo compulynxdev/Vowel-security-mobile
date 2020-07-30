@@ -51,7 +51,7 @@ public class UserProfileFragment extends BaseFragment<FragmentUserProfileBinding
             getViewDataBinding().tvUsername.setText(userDetail.getUsername());
             getViewDataBinding().tvEmail.setText(userDetail.getEmail());
             getViewDataBinding().tvGender.setText(userDetail.getGender());
-            getViewDataBinding().tvContact.setText(userDetail.getGender());
+            getViewDataBinding().tvContact.setText(userDetail.getContactNo());
             getViewDataBinding().tvAddress.setText(userDetail.getAddress());
         });
     }

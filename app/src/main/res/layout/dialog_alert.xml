@@ -86,7 +86,7 @@
             android:background="@drawable/bg_bottom_right_primary_corner"
             android:fontFamily="@font/futura_round_medium"
             android:gravity="center"
-            android:text="@string/done"
+            android:text="@string/ok"
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="14sp"
