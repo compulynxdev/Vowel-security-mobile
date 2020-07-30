@@ -3,6 +3,7 @@
 
     <!--Alerts-->
     <string name="alert">Alert</string>
+    <string name="under_development">Under-Development</string>
     <string name="ocr_error">Detector dependencies are not yet available.</string>
     <string name="something_went_wrong">Something went wrong</string>
     <string name="alert_error">Oops! We encountered a internal error. Please check again in a while.</string>
@@ -162,9 +163,10 @@
     <string name="image">IMAGE</string>
     <string name="selectCheckinOption">Select Check In Option</string>
     <string name="susscess">Success</string>
-    <string name="check_in_rejected">Check In Rejected!!</string>
+    <string name="check_in_rejected">Check In Rejected.</string>
+    <string name="check_in_success">Check In Successfully.</string>
     <string name="send_notification_success">Notification send successfully</string>
-    <string name="ok">ok</string>
+    <string name="ok">OK</string>
     <string name="expected_time">Expected Time</string>
 
 </resources>

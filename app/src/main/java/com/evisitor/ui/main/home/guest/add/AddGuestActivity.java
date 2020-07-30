@@ -22,6 +22,7 @@ import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.dialog.AlertDialog;
 import com.evisitor.ui.dialog.ImagePickBottomSheetDialog;
 import com.evisitor.ui.dialog.ImagePickCallback;
+import com.evisitor.ui.main.MainActivity;
 import com.evisitor.ui.main.home.guest.add.dialogs.GenderPickerBottomSheetDialog;
 import com.evisitor.ui.main.home.guest.add.dialogs.HostPickerBottomSheetDialog;
 import com.evisitor.util.PermissionUtils;
@@ -100,30 +101,32 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
 
             @Override
             public void afterTextChanged(Editable s) {
-                getViewModel().doGetHouseDetails(s.toString()).observe(AddGuestActivity.this, houseDetailList -> {
-                    ArrayAdapter<HouseDetailBean> arrayAdapter = new ArrayAdapter<>(AddGuestActivity.this, android.R.layout.simple_list_item_1, houseDetailList);
-                    getViewDataBinding().actvHouseNo.setThreshold(2);
-                    getViewDataBinding().actvHouseNo.setAdapter(arrayAdapter);
-
-                    getViewDataBinding().actvHouseNo.setOnItemClickListener((adapterView, view, i, l) -> {
-                        HouseDetailBean houseDetailBean = (HouseDetailBean) adapterView.getItemAtPosition(i);
-                        houseId = String.valueOf(houseDetailBean.getId());
-                        getViewDataBinding().actvHouseNo.setText(houseDetailBean.getName());
-
-                        ownerId = "";
-                        getViewDataBinding().tvOwner.setText("");
-                        residentId = "";
-                        getViewDataBinding().tvHost.setText("");
-
-                        getHostData(houseId);
-                    });
-                });
+                getViewModel().doGetHouseDetails(s.toString());
             }
         });
-    }
 
-    private void getHostData(String houseId) {
-        getViewModel().doGetHostDetails(houseId).observe(this, hostDetailList -> {
+        getViewModel().doGetHouseDetails().observe(AddGuestActivity.this, houseDetailList -> {
+            ArrayAdapter<HouseDetailBean> arrayAdapter = new ArrayAdapter<>(AddGuestActivity.this, android.R.layout.simple_list_item_1, houseDetailList);
+            getViewDataBinding().actvHouseNo.setThreshold(2);
+            getViewDataBinding().actvHouseNo.setAdapter(arrayAdapter);
+
+            getViewDataBinding().actvHouseNo.setOnItemClickListener((adapterView, view, i, l) -> {
+                HouseDetailBean houseDetailBean = (HouseDetailBean) adapterView.getItemAtPosition(i);
+                houseId = String.valueOf(houseDetailBean.getId());
+                getViewDataBinding().actvHouseNo.setText(houseDetailBean.getName());
+
+                /*Reset Data once House Info Change*/
+                ownerId = "";
+                getViewDataBinding().tvOwner.setText("");
+                residentId = "";
+                getViewDataBinding().tvHost.setText("");
+
+                getViewModel().doGetHostDetails(houseId);
+                /*End Here*/
+            });
+        });
+
+        getViewModel().doGetHostDetails().observe(this, hostDetailList -> {
             this.hostDetailList = hostDetailList;
             getViewDataBinding().hostGroup.setVisibility(View.VISIBLE);
             setUpOwner(hostDetailList, false);
@@ -206,11 +209,43 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
                 break;
 
             case R.id.btn_add:
-                getViewModel().doVerifyInputsAndAddGuest(bmp_profile, getViewDataBinding().etIdentity.getText().toString(), getViewDataBinding().etName.getText().toString()
-                        , getViewDataBinding().etVehicle.getText().toString(), getViewDataBinding().etContact.getText().toString()
+                if (getViewModel().doVerifyInputs(getViewDataBinding().etName.getText().toString()
+                        , getViewDataBinding().etContact.getText().toString()
                         , getViewDataBinding().etAddress.getText().toString(), getViewDataBinding().tvGender.getText().toString()
-                        , getViewDataBinding().actvHouseNo.getText().toString()
-                        , houseId, ownerId, residentId);
+                        , houseId, ownerId, residentId)) {
+
+                    AlertDialog.newInstance()
+                            .setNegativeBtnShow(true)
+                            .setCloseBtnShow(false)
+                            .setTitle(getString(R.string.check_in))
+                            .setMsg(getString(R.string.msg_check_in_call))
+                            .setPositiveBtnLabel(getString(R.string.approve))
+                            .setNegativeBtnLabel(getString(R.string.reject))
+                            .setOnNegativeClickListener(dialog1 -> {
+                                dialog1.dismiss();
+
+                                AlertDialog.newInstance()
+                                        .setCloseBtnShow(false)
+                                        .setNegativeBtnShow(false)
+                                        .setTitle(getString(R.string.alert))
+                                        .setMsg(getString(R.string.check_in_rejected))
+                                        .setOnPositiveClickListener(dialog12 -> {
+                                            dialog12.dismiss();
+                                            Intent intent = MainActivity.newIntent(this);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                            startActivity(intent);
+                                            finish();
+                                        }).show(getSupportFragmentManager());
+                            })
+                            .setOnPositiveClickListener(dialog12 -> {
+                                dialog12.dismiss();
+                                getViewModel().doAddGuest(bmp_profile, getViewDataBinding().etIdentity.getText().toString(), getViewDataBinding().etName.getText().toString()
+                                        , getViewDataBinding().etVehicle.getText().toString(), getViewDataBinding().etContact.getText().toString()
+                                        , getViewDataBinding().etAddress.getText().toString(), getViewDataBinding().tvGender.getText().toString()
+                                        , getViewDataBinding().actvHouseNo.getText().toString()
+                                        , houseId, ownerId, residentId);
+                            }).show(getSupportFragmentManager());
+                }
                 break;
         }
     }
@@ -218,17 +253,16 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
     @Override
     public void onSuccess() {
         AlertDialog.newInstance()
-                .setNegativeBtnShow(true)
                 .setCloseBtnShow(false)
-                .setTitle(getString(R.string.check_in))
-                .setMsg(getString(R.string.msg_check_in_call))
-                .setPositiveBtnLabel(getString(R.string.approve))
-                .setNegativeBtnLabel(getString(R.string.reject))
-                .setOnNegativeClickListener(dialog1 -> {
-                    dialog1.dismiss();
-                })
+                .setNegativeBtnShow(false)
+                .setTitle(getString(R.string.susscess))
+                .setMsg(getString(R.string.check_in_success))
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
+                    Intent intent = MainActivity.newIntent(this);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
                 }).show(getSupportFragmentManager());
     }
 

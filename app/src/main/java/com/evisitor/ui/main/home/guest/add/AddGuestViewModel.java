@@ -37,7 +37,11 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
         super(dataManager);
     }
 
-    MutableLiveData<List<HouseDetailBean>> doGetHouseDetails(String search) {
+    MutableLiveData<List<HouseDetailBean>> doGetHouseDetails() {
+        return houseDetailMutableList;
+    }
+
+    void doGetHouseDetails(String search) {
         if (getNavigator().isNetworkConnected()) {
             Map<String, String> map = new HashMap<>();
             map.put("accountId", getDataManager().getAccountId());
@@ -70,11 +74,13 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
         } else {
             getNavigator().showAlert(R.string.alert, R.string.alert_internet);
         }
-
-        return houseDetailMutableList;
     }
 
-    MutableLiveData<List<HostDetailBean>> doGetHostDetails(String houseId) {
+    MutableLiveData<List<HostDetailBean>> doGetHostDetails() {
+        return hostDetailMutableList;
+    }
+
+    void doGetHostDetails(String houseId) {
         if (getNavigator().isNetworkConnected()) {
             Map<String, String> map = new HashMap<>();
             map.put("accountId", getDataManager().getAccountId());
@@ -107,45 +113,9 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
         } else {
             getNavigator().showAlert(R.string.alert, R.string.alert_internet);
         }
-
-        return hostDetailMutableList;
     }
 
-
-    void doVerifyInputsAndAddGuest(Bitmap bmp_profile, String identityNo, String name, String vehicleNo, String contact, String address, String gender, String houseNumber, String houseId, String ownerId, String residentId) {
-        if (getNavigator().isNetworkConnected()) {
-            houseId = houseNumber.isEmpty() ? "0" : houseId;
-            if (verifyInput(name, contact, address, gender, houseId, ownerId, residentId)) {
-                JSONObject object = new JSONObject();
-                try {
-                    object.put("fullName", name);
-                    object.put("accountId", getDataManager().getAccountId());
-                    object.put("email", "");
-                    object.put("documentType", "");
-                    object.put("documentId", identityNo);
-                    object.put("contactNo", contact);
-                    object.put("guestType", "RANDOM_VISITOR");
-                    object.put("address", address);
-                    object.put("country", "");
-                    object.put("premiseHierarchyDetailsId", houseId);  //house or flat id
-                    object.put("expectedVehicleNo", vehicleNo);
-                    object.put("enteredVehicleNo", vehicleNo);
-                    object.put("gender", gender);
-                    object.put("residentId", residentId); //host id
-                    object.put("cardId", "");
-                    object.put("dob", "");
-                    object.put("image", bmp_profile == null ? "" : AppUtils.getBitmapToBase64(bmp_profile));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                doAddGuest(object);
-            }
-        } else {
-            getNavigator().showAlert(R.string.alert, R.string.alert_internet);
-        }
-    }
-
-    private boolean verifyInput(String name, String contact, String address, String gender, String houseId, String ownerId, String residentId) {
+    boolean doVerifyInputs(String name, String contact, String address, String gender, String houseId, String ownerId, String residentId) {
         if (name.isEmpty()) {
             getNavigator().showToast(R.string.alert_empty_name);
             return false;
@@ -173,33 +143,59 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
         } else return true;
     }
 
-    private void doAddGuest(JSONObject object) {
+    void doAddGuest(Bitmap bmp_profile, String identityNo, String name, String vehicleNo, String contact, String address, String gender, String houseNumber, String houseId, String ownerId, String residentId) {
         getNavigator().showLoading();
 
-        RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
-        getDataManager().doAddGuest(getDataManager().getHeader(), body).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                getNavigator().hideLoading();
-                if (response.code() == 200) {
-                    try {
-                        assert response.body() != null;
-                        AppLogger.e("Response", response.body().string());
-                        getNavigator().onSuccess();
-                    } catch (Exception e) {
-                        getNavigator().showAlert(R.string.alert, R.string.alert_error);
+        if (getNavigator().isNetworkConnected()) {
+            JSONObject object = new JSONObject();
+            try {
+                object.put("fullName", name);
+                object.put("accountId", getDataManager().getAccountId());
+                object.put("email", "");
+                object.put("documentType", "");
+                object.put("documentId", identityNo);
+                object.put("contactNo", contact);
+                object.put("guestType", "RANDOM_VISITOR");
+                object.put("address", address);
+                object.put("country", "");
+                object.put("premiseHierarchyDetailsId", houseId);  //house or flat id
+                object.put("expectedVehicleNo", vehicleNo);
+                object.put("enteredVehicleNo", vehicleNo);
+                object.put("gender", gender);
+                object.put("residentId", residentId); //host id
+                object.put("cardId", "");
+                object.put("dob", "");
+                object.put("image", bmp_profile == null ? "" : AppUtils.getBitmapToBase64(bmp_profile));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
+            getDataManager().doAddGuest(getDataManager().getHeader(), body).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                    getNavigator().hideLoading();
+                    if (response.code() == 200) {
+                        try {
+                            assert response.body() != null;
+                            AppLogger.e("Response", response.body().string());
+                            getNavigator().onSuccess();
+                        } catch (Exception e) {
+                            getNavigator().showAlert(R.string.alert, R.string.alert_error);
+                        }
+                    } else {
+                        getNavigator().handleApiError(response.errorBody());
                     }
-                } else {
-                    getNavigator().handleApiError(response.errorBody());
                 }
-            }
 
-            @Override
-            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                getNavigator().hideLoading();
-                getNavigator().handleApiFailure(t);
-            }
-        });
+                @Override
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                    getNavigator().hideLoading();
+                    getNavigator().handleApiFailure(t);
+                }
+            });
+        } else {
+            getNavigator().showAlert(R.string.alert, R.string.alert_internet);
+        }
     }
-
 }
