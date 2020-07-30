@@ -173,6 +173,6 @@ public class AppPreferenceHelper implements PreferenceHelper {
         guests.setFlatId(mPrefs.getString(FLAT_ID, ""));
         guests.setExpectedVehicleNo(mPrefs.getString(GUEST_VEHICLE_NO, ""));
         guests.setResidentId(mPrefs.getString(RESIDENT_ID, ""));
-        return null;
+        return guests;
     }
 }

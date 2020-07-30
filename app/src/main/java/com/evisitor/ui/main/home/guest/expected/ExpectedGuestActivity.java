@@ -1,6 +1,5 @@
 package com.evisitor.ui.main.home.guest.expected;
 
-import androidx.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +8,9 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.lifecycle.ViewModelProvider;
+
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.Guests;
@@ -21,6 +23,7 @@ import com.evisitor.ui.main.home.guest.add.scan.ScanIDActivity;
 import com.evisitor.ui.main.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -152,6 +155,8 @@ public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBin
         getViewModel().getGuestListData(page,search).observe(this, guests -> {
             adapter.showLoading(false);
             adapter.notifyDataSetChanged();
+
+            if (page == 0) guestsList.clear();
 
             guestsList.addAll(guests);
             adapter.notifyDataSetChanged();

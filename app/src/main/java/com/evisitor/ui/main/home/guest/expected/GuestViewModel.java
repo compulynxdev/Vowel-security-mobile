@@ -2,6 +2,7 @@ package com.evisitor.ui.main.home.guest.expected;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
+
 import com.evisitor.R;
 import com.evisitor.data.DataManager;
 import com.evisitor.data.model.Guests;
@@ -10,12 +11,15 @@ import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.ui.base.BaseViewModel;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppUtils;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -29,35 +33,36 @@ public class GuestViewModel extends BaseViewModel<GuestNavigator> {
     }
 
     MutableLiveData<List<Guests>> getGuestListData(int page, String search) {
-        getNavigator().showLoading();
         Map<String, String> map = new HashMap<>();
         map.put("accountId", getDataManager().getAccountId());
         if (!search.isEmpty())
-        map.put("search", search);
+            map.put("search", search);
         map.put("page", ""+page);
         map.put("offset", search);
-        List<Guests> list = new ArrayList<>();
-        getDataManager().doGetExpectedGuestListDetail(getDataManager().getHeader(),map).enqueue(new Callback<GuestsResponse>() {
+        getDataManager().doGetExpectedGuestListDetail(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(@NonNull Call<GuestsResponse> call,@NonNull  Response<GuestsResponse> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 getNavigator().hideLoading();
-                if (response.code()==200){
-                    assert response.body()!=null;
-                    if (response.body().getContent().size()>0){
-                        list.addAll(response.body().getContent());
-                    }
-                }else if (response.code()==401){
-                    getNavigator().openActivityOnTokenExpire();
+                try {
+                    if (response.code() == 200) {
+                        assert response.body() != null;
+                        GuestsResponse guestsResponse = getDataManager().getGson().fromJson(response.body().string(), GuestsResponse.class);
+                        if (guestsResponse.getContent() != null) {
+                            guestListData.setValue(guestsResponse.getContent());
+                        }
+                    } else if (response.code() == 401) {
+                        getNavigator().openActivityOnTokenExpire();
+                    } else getNavigator().handleApiError(response.errorBody());
+                } catch (Exception e) {
+                    getNavigator().showAlert(R.string.alert, R.string.alert_error);
                 }
-                else getNavigator().handleApiError(response.errorBody());
             }
             @Override
-            public void onFailure(@NonNull Call<GuestsResponse> call,@NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 getNavigator().hideLoading();
                 getNavigator().handleApiFailure(t);
             }
         });
-        guestListData.setValue(list);
         return guestListData;
     }
 
@@ -99,9 +104,9 @@ public class GuestViewModel extends BaseViewModel<GuestNavigator> {
                 if (response.code() == 200){
                     getNavigator().showAlert(getNavigator().getContext().getString(R.string.susscess)
                             ,getNavigator().getContext().getString(R.string.send_notification_success)).setOnPositiveClickListener(dialog -> {
-                                dialog.dismiss();
-                                getNavigator().refreshList();
-                            });
+                        dialog.dismiss();
+                        getNavigator().refreshList();
+                    });
                 }else if (response.code()==401){
                     getNavigator().openActivityOnTokenExpire();
                 }  else{
@@ -149,7 +154,7 @@ public class GuestViewModel extends BaseViewModel<GuestNavigator> {
                         getNavigator().showAlert(getNavigator().getContext().getString(R.string.alert),e.toString());
                     }
                 }else if (response.code()==401){
-                   getNavigator().openActivityOnTokenExpire();
+                    getNavigator().openActivityOnTokenExpire();
                 }  else{
                     getNavigator().handleApiError(response.errorBody());
                 }

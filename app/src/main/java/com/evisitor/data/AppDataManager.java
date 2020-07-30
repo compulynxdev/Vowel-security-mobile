@@ -5,7 +5,6 @@ import android.content.Context;
 
 import com.evisitor.data.local.prefs.AppPreferenceHelper;
 import com.evisitor.data.model.Guests;
-import com.evisitor.data.model.GuestsResponse;
 import com.evisitor.data.model.UserDetail;
 import com.evisitor.data.remote.AppApiHelper;
 import com.evisitor.util.AppConstants;
@@ -183,7 +182,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Call<GuestsResponse> doGetExpectedGuestListDetail(String authToken, Map<String, String> partMap) {
+    public Call<ResponseBody> doGetExpectedGuestListDetail(String authToken, Map<String, String> partMap) {
         return apiHelper.doGetExpectedGuestListDetail(authToken, partMap);
     }
 
