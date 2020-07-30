@@ -89,7 +89,7 @@ public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBin
                 getData(page, getViewDataBinding().etSearch.getText().toString());
             }
         };
-        getViewDataBinding().recyclerView.setOnScrollListener(scrollListener);
+        getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
     }
 
     private void setUpSearch() {
