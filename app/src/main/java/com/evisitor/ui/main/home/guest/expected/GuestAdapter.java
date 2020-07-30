@@ -12,6 +12,7 @@ import com.evisitor.R;
 import com.evisitor.data.model.Guests;
 import com.evisitor.ui.base.BaseViewHolder;
 import com.evisitor.ui.main.home.guest.OnGuestSelectedListener;
+import com.evisitor.util.CalenderUtils;
 import com.evisitor.util.pagination.FooterLoader;
 import java.util.List;
 
@@ -98,7 +99,8 @@ public class GuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             Guests bean = list.get(position);
             name.setText(context.getString(R.string.name).concat(" : ").concat(bean.getName()));
             if (bean.getTime()!=null && !bean.getTime().isEmpty())
-                time.setText(context.getString(R.string.expected_time).concat(" : ").concat(bean.getTime()));
+                time.setText(context.getString(R.string.expected_time).concat(" : ").concat(CalenderUtils.formatDate(bean.getTime(),CalenderUtils.SERVER_DATE_FORMAT,
+                        CalenderUtils.TIME_FORMAT)));
             else time.setVisibility(View.GONE);
             houseNo.setText(context.getString(R.string.house_no).concat(" : ").concat(bean.getName()));
             host.setText(context.getString(R.string.host).concat(" : ").concat(bean.getHost()));
