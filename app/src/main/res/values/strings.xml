@@ -160,6 +160,9 @@
 
     <!--Other-->
     <string name="image">IMAGE</string>
-
+    <string name="selectCheckinOption">Select Check In Option</string>
+    <string name="susscess">Success</string>
+    <string name="check_in_rejected">Check In Rejected!!</string>
+    <string name="send_notification_success">Notification send successfully</string>
 
 </resources>

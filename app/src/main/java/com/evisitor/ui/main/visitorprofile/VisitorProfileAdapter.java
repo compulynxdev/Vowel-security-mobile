@@ -1,5 +1,7 @@
 package com.evisitor.ui.main.visitorprofile;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.evisitor.EVisitor;
 import com.evisitor.R;
+import com.evisitor.data.DataManager;
+import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.ui.base.BaseViewHolder;
 
@@ -60,9 +65,28 @@ public class VisitorProfileAdapter extends RecyclerView.Adapter<BaseViewHolder> 
             VisitorProfileBean bean = list.get(position);
 
             if (bean.isEditable()) {
+                DataManager dataManager = EVisitor.getInstance().getDataManager();
                 constraint_editable.setVisibility(View.VISIBLE);
                 tv_title.setText(bean.getTitle());
                 et_data.setText(bean.getValue());
+                et_data.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        Guests guests = dataManager.getGuestDetail();
+                        guests.setExpectedVehicleNo(et_data.getText().toString());
+                        dataManager.setGuestDetail(guests);
+                    }
+                });
             } else {
                 constraint_editable.setVisibility(View.GONE);
                 tv_name.setText(bean.getTitle());

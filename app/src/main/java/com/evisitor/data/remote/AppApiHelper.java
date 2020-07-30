@@ -1,5 +1,7 @@
 package com.evisitor.data.remote;
 
+import com.evisitor.data.model.GuestsResponse;
+
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -68,5 +70,20 @@ public class AppApiHelper implements ApiHelper {
     @Override
     public Call<ResponseBody> doGetHostDetailList(String authToken, Map<String, String> partMap) {
         return getApiInterface().doGetHostDetailList(authToken, partMap);
+    }
+
+    @Override
+    public Call<GuestsResponse> doGetExpectedGuestListDetail(String authToken, Map<String, String> partMap) {
+        return getApiInterface().doGetExpectedGuestListDetail(authToken, partMap);
+    }
+
+    @Override
+    public Call<ResponseBody> doGuestCheckInCheckOut(String authToken, RequestBody body) {
+        return getApiInterface().doGuestCheckInCheckOut(authToken, body);
+    }
+
+    @Override
+    public Call<ResponseBody> doGuestSendNotification(String authToken, RequestBody body) {
+        return getApiInterface().doGuestSendNotification(authToken, body);
     }
 }
