@@ -28,7 +28,7 @@ public class Guests {
     @SerializedName("notificationStatus")
     private boolean notificationStatus;
 
-    @SerializedName("identityNo")
+    @SerializedName("documentId")
     private String identityNo;
 
     @SerializedName("contactNo")
@@ -40,7 +40,7 @@ public class Guests {
     @SerializedName("id")
     private String guestId;
 
-    @SerializedName("image")
+    //@SerializedName("image")
     private String url;
 
     public boolean isOwner() {
@@ -77,7 +77,7 @@ public class Guests {
     }
 
     public String getContactNo() {
-        return contactNo;
+        return contactNo==null? "": contactNo;
     }
 
     public void setContactNo(String contactNo) {
@@ -85,7 +85,7 @@ public class Guests {
     }
 
     public String getFlatId() {
-        return flatId;
+        return flatId==null? "": flatId;
     }
 
     public void setFlatId(String flatId) {
@@ -93,7 +93,7 @@ public class Guests {
     }
 
     public String getGuestId() {
-        return guestId;
+        return guestId==null?"": guestId;
     }
 
     public void setGuestId(String guestId) {
@@ -125,7 +125,7 @@ public class Guests {
     }
 
     public String getTime() {
-        return time;
+        return time==null?"": time;
     }
 
     public void setTime(String time) {
@@ -133,7 +133,8 @@ public class Guests {
     }
 
     public String getHouseNo() {
-        return houseNo;
+        return houseNo== null? "" : houseNo;
+
     }
 
     public void setHouseNo(String houseNo) {
@@ -141,7 +142,7 @@ public class Guests {
     }
 
     public String getHost() {
-        return host;
+        return host==null ? "" : host;
     }
 
     public void setHost(String host) {

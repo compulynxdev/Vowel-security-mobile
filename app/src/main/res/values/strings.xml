@@ -165,5 +165,6 @@
     <string name="check_in_rejected">Check In Rejected!!</string>
     <string name="send_notification_success">Notification send successfully</string>
     <string name="ok">ok</string>
+    <string name="expected_time">Expected Time</string>
 
 </resources>

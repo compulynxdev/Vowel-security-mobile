@@ -67,8 +67,10 @@ public class GuestViewModel extends BaseViewModel<GuestNavigator> {
         getDataManager().setGuestDetail(guests);
         visitorProfileBeanList.add(new VisitorProfileBean(guests.getName()));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle),guests.getExpectedVehicleNo(),true));
-        visitorProfileBeanList.add(new VisitorProfileBean(guests.getContactNo()));
-        visitorProfileBeanList.add(new VisitorProfileBean(guests.getIdentityNo()));
+        if (!guests.getContactNo().isEmpty())
+            visitorProfileBeanList.add(new VisitorProfileBean(guests.getContactNo()));
+        if (!guests.getIdentityNo().isEmpty())
+            visitorProfileBeanList.add(new VisitorProfileBean(guests.getIdentityNo()));
         visitorProfileBeanList.add(new VisitorProfileBean(guests.getHouseNo()));
         visitorProfileBeanList.add(new VisitorProfileBean(guests.getHost()));
         getNavigator().hideLoading();
