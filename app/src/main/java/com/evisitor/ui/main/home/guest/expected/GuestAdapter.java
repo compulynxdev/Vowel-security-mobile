@@ -6,14 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.evisitor.R;
 import com.evisitor.data.model.Guests;
 import com.evisitor.ui.base.BaseViewHolder;
 import com.evisitor.ui.main.home.guest.OnGuestSelectedListener;
 import com.evisitor.util.CalenderUtils;
 import com.evisitor.util.pagination.FooterLoader;
+
 import java.util.List;
 
 public class GuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
@@ -28,6 +31,16 @@ public class GuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         this.list = list;
         this.context = context;
         this.listener=callback;
+    }
+
+    @Override
+    public void setHasStableIds(boolean hasStableIds) {
+        super.setHasStableIds(hasStableIds);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return Long.parseLong(list.get(position).getGuestId());
     }
 
     @NonNull
@@ -97,15 +110,15 @@ public class GuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         public void onBind(int position) {
             Guests bean = list.get(position);
-            name.setText(context.getString(R.string.name).concat(" : ").concat(bean.getName()));
+            name.setText(context.getString(R.string.data_name, bean.getName()));
             if (bean.getTime()!=null && !bean.getTime().isEmpty())
-                time.setText(context.getString(R.string.expected_time).concat(" : ").concat(CalenderUtils.formatDate(bean.getTime(),CalenderUtils.SERVER_DATE_FORMAT,
+                time.setText(context.getString(R.string.data_expected_time, CalenderUtils.formatDate(bean.getTime(), CalenderUtils.SERVER_DATE_FORMAT,
                         CalenderUtils.TIME_FORMAT)));
             else time.setVisibility(View.GONE);
-            houseNo.setText(context.getString(R.string.house_no).concat(" : ").concat(bean.getName()));
-            host.setText(context.getString(R.string.host).concat(" : ").concat(bean.getHost()));
+            houseNo.setText(context.getString(R.string.data_house, bean.getHouseNo()));
+            host.setText(context.getString(R.string.data_host, bean.getHost()));
             if (!bean.getExpectedVehicleNo().isEmpty())
-                vehicle.setText(context.getString(R.string.vehicle).concat(" : ").concat(bean.getExpectedVehicleNo()));
+                vehicle.setText(context.getString(R.string.data_vehicle, bean.getExpectedVehicleNo()));
             else vehicle.setVisibility(View.GONE);
         }
     }

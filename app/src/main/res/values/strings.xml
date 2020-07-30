@@ -56,6 +56,7 @@
     <string name="data_house">House No : %s</string>
     <string name="data_host">Host : %s</string>
     <string name="data_time">Time : %s</string>
+    <string name="data_expected_time">Expected Time : %s</string>
     <string name="data_identity">Identity No : %s</string>
     <string name="data_mobile">Mobile : %s</string>
 
@@ -167,6 +168,5 @@
     <string name="check_in_success">Check In Successfully.</string>
     <string name="send_notification_success">Notification send successfully</string>
     <string name="ok">OK</string>
-    <string name="expected_time">Expected Time</string>
 
 </resources>

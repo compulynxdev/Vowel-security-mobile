@@ -90,6 +90,7 @@ public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBin
                 showCheckinOptions();
             }).setBtnLabel(getString(R.string.check_in)).show(getSupportFragmentManager());
         });
+        //adapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(adapter);
 
         getViewDataBinding().swipeToRefresh.setOnRefreshListener(() -> {
@@ -111,8 +112,6 @@ public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBin
         getViewModel().getGuestListData().observe(this, guests -> {
             adapter.showLoading(false);
             adapter.notifyDataSetChanged();
-
-            if (page == 0) guestsList.clear();
 
             guestsList.addAll(guests);
             adapter.notifyDataSetChanged();

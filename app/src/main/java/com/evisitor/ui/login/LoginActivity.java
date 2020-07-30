@@ -46,6 +46,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         getViewDataBinding().btnLogin.setOnClickListener(this);
         getViewDataBinding().imgInfo.setOnClickListener(this);
         if (getViewModel().getDataManager().isRememberMe()) {
+            getViewDataBinding().cbRemember.setChecked(true);
             getViewDataBinding().etUsername.setText(getViewModel().getDataManager().getUsername());
             getViewDataBinding().etPassword.setText(getViewModel().getDataManager().getUserPassword());
         }
