@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import com.evisitor.R;
 import com.evisitor.data.model.Guests;
@@ -98,11 +97,13 @@ public class GuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         public void onBind(int position) {
             Guests bean = list.get(position);
             name.setText(context.getString(R.string.name).concat(" : ").concat(bean.getName()));
-            time.setText(context.getString(R.string.time_out).concat(" : ").concat(bean.getTime()));
+            if (bean.getTime()!=null && !bean.getTime().isEmpty())
+                time.setText(context.getString(R.string.expected_time).concat(" : ").concat(bean.getTime()));
+            else time.setVisibility(View.GONE);
             houseNo.setText(context.getString(R.string.house_no).concat(" : ").concat(bean.getName()));
             host.setText(context.getString(R.string.host).concat(" : ").concat(bean.getHost()));
             if (!bean.getExpectedVehicleNo().isEmpty())
-            vehicle.setText(context.getString(R.string.vehicle).concat(" : ").concat(bean.getExpectedVehicleNo()));
+                vehicle.setText(context.getString(R.string.vehicle).concat(" : ").concat(bean.getExpectedVehicleNo()));
             else vehicle.setVisibility(View.GONE);
         }
     }
