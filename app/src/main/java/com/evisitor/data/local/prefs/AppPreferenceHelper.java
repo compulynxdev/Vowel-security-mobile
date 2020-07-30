@@ -160,7 +160,7 @@ public class AppPreferenceHelper implements PreferenceHelper {
 
     @Override
     public void setGuestDetail(Guests guests) {
-        mPrefs.edit().putString(GUEST_ID, guests.getIdentityNo()).apply();
+        mPrefs.edit().putString(GUEST_ID, guests.getGuestId()).apply();
         mPrefs.edit().putString(GUEST_VEHICLE_NO, guests.getExpectedVehicleNo()).apply();
         mPrefs.edit().putString(RESIDENT_ID, guests.getResidentId()).apply();
         mPrefs.edit().putString(FLAT_ID, guests.getFlatId()).apply();
