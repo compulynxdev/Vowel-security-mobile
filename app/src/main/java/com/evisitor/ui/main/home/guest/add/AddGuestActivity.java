@@ -17,14 +17,15 @@ import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.HostDetailBean;
 import com.evisitor.data.model.HouseDetailBean;
+import com.evisitor.data.model.IdentityBean;
 import com.evisitor.databinding.ActivityAddGuestBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.dialog.AlertDialog;
 import com.evisitor.ui.dialog.ImagePickBottomSheetDialog;
 import com.evisitor.ui.dialog.ImagePickCallback;
 import com.evisitor.ui.main.MainActivity;
-import com.evisitor.ui.main.home.guest.add.dialogs.GenderPickerBottomSheetDialog;
 import com.evisitor.ui.main.home.guest.add.dialogs.HostPickerBottomSheetDialog;
+import com.evisitor.ui.main.home.guest.add.dialogs.PickerBottomSheetDialog;
 import com.evisitor.util.PermissionUtils;
 import com.sharma.mrzreader.MrzRecord;
 
@@ -38,6 +39,7 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
     private String ownerId = "";  //also called house owner id
     private Bitmap bmp_profile;
     private List<HostDetailBean> hostDetailList;
+    private String idType = "";
 
     public static Intent getStartIntent(Context context){
         return new Intent(context,AddGuestActivity.class);
@@ -74,6 +76,25 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
         if (getIntent().hasExtra("Record")) {
             MrzRecord mrzRecord = (MrzRecord) intent.getSerializableExtra("Record");
             assert mrzRecord != null;
+
+            String code = mrzRecord.getCode1() + "" + mrzRecord.getCode2();
+            switch (code.toLowerCase()) {
+                case "p<":
+                case "p":
+                    IdentityBean bean = (IdentityBean) getViewModel().getIdentityTypeList().get(1);
+                    getViewDataBinding().tvIdentity.setText(bean.getTitle());
+                    idType = bean.getKey();
+                    break;
+
+                case "ac":
+                case "id":
+                    bean = (IdentityBean) getViewModel().getIdentityTypeList().get(0);
+                    getViewDataBinding().tvIdentity.setText(bean.getTitle());
+                    idType = bean.getKey();
+                    break;
+            }
+
+            //getViewDataBinding().tvIdentity.setText(mrzRecord.getCode().toString().concat(" [").concat(mrzRecord.getCode1() + "").concat(mrzRecord.getCode2() + "]"));
 
             getViewDataBinding().etIdentity.setText(mrzRecord.getDocumentNumber());
             getViewDataBinding().etName.setText(mrzRecord.getGivenNames().concat(" ").concat(mrzRecord.getSurname()));
@@ -156,8 +177,26 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
     private void setUp() {
         ImageView imgBack = findViewById(R.id.img_back);
         imgBack.setVisibility(View.VISIBLE);
-        setOnClickListener(imgBack, getViewDataBinding().tvGender, getViewDataBinding().tvOwner, getViewDataBinding().tvHost
+        setOnClickListener(imgBack, getViewDataBinding().tvIdentity, getViewDataBinding().tvGender, getViewDataBinding().tvOwner, getViewDataBinding().tvHost
                 , getViewDataBinding().frameImg, getViewDataBinding().btnAdd);
+
+        getViewDataBinding().etIdentity.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().trim().isEmpty() || s.toString().trim().length() > 1)
+                    getViewDataBinding().tvIdentity.setVisibility(s.toString().trim().isEmpty() ? View.GONE : View.VISIBLE);
+            }
+        });
     }
 
     private void setOnClickListener(View... views) {
@@ -190,8 +229,16 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
                 }
                 break;
 
+            case R.id.tv_identity:
+                PickerBottomSheetDialog.newInstance(getViewModel().getIdentityTypeList()).setItemSelectedListener(pos -> {
+                    IdentityBean bean = (IdentityBean) getViewModel().getIdentityTypeList().get(pos);
+                    getViewDataBinding().tvIdentity.setText(bean.getTitle());
+                    idType = bean.getKey();
+                }).show(getSupportFragmentManager());
+                break;
+
             case R.id.tv_gender:
-                GenderPickerBottomSheetDialog.newInstance().setItemSelectedListener(data -> getViewDataBinding().tvGender.setText(data)).show(getSupportFragmentManager());
+                PickerBottomSheetDialog.newInstance(getViewModel().getGenderList()).setItemSelectedListener(pos -> getViewDataBinding().tvGender.setText(getViewModel().getGenderList().get(pos))).show(getSupportFragmentManager());
                 break;
 
             case R.id.tv_owner:
@@ -209,9 +256,9 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
                 break;
 
             case R.id.btn_add:
-                if (getViewModel().doVerifyInputs(getViewDataBinding().etName.getText().toString()
-                        , getViewDataBinding().etContact.getText().toString()
-                        , getViewDataBinding().etAddress.getText().toString(), getViewDataBinding().tvGender.getText().toString()
+                if (getViewModel().doVerifyInputs(getViewDataBinding().etIdentity.getText().toString().trim(), idType
+                        , getViewDataBinding().etName.getText().toString().trim(), getViewDataBinding().etContact.getText().toString().trim()
+                        , getViewDataBinding().etAddress.getText().toString().trim(), getViewDataBinding().tvGender.getText().toString()
                         , houseId, ownerId, residentId)) {
 
                     AlertDialog.newInstance()
@@ -239,8 +286,8 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
                             })
                             .setOnPositiveClickListener(dialog12 -> {
                                 dialog12.dismiss();
-                                getViewModel().doAddGuest(bmp_profile, getViewDataBinding().etIdentity.getText().toString(), getViewDataBinding().etName.getText().toString()
-                                        , getViewDataBinding().etVehicle.getText().toString(), getViewDataBinding().etContact.getText().toString()
+                                getViewModel().doAddGuest(bmp_profile, getViewDataBinding().etIdentity.getText().toString().trim(), idType, getViewDataBinding().etName.getText().toString()
+                                        , getViewDataBinding().etVehicle.getText().toString().trim(), getViewDataBinding().etContact.getText().toString()
                                         , getViewDataBinding().etAddress.getText().toString(), getViewDataBinding().tvGender.getText().toString()
                                         , getViewDataBinding().actvHouseNo.getText().toString()
                                         , houseId, ownerId, residentId);

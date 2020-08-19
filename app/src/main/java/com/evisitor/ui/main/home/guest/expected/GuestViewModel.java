@@ -10,6 +10,7 @@ import com.evisitor.data.model.GuestsResponse;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.ui.base.BaseViewModel;
 import com.evisitor.util.AppConstants;
+import com.evisitor.util.AppLogger;
 import com.evisitor.util.AppUtils;
 
 import org.json.JSONException;
@@ -37,6 +38,7 @@ public class GuestViewModel extends BaseViewModel<GuestNavigator> {
     }
 
     void getGuestListData(int page, String search) {
+        AppLogger.e("MYPage", page + " : " + search);
         Map<String, String> map = new HashMap<>();
         map.put("accountId", getDataManager().getAccountId());
         if (!search.isEmpty())
@@ -48,6 +50,7 @@ public class GuestViewModel extends BaseViewModel<GuestNavigator> {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 getNavigator().hideLoading();
+                getNavigator().hideSwipeToRefresh();
                 try {
                     if (response.code() == 200) {
                         assert response.body() != null;
@@ -65,6 +68,7 @@ public class GuestViewModel extends BaseViewModel<GuestNavigator> {
 
             @Override
             public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                getNavigator().hideSwipeToRefresh();
                 getNavigator().hideLoading();
                 getNavigator().handleApiFailure(t);
             }

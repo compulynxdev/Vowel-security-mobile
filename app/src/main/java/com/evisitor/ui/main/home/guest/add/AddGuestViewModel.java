@@ -9,6 +9,7 @@ import com.evisitor.R;
 import com.evisitor.data.DataManager;
 import com.evisitor.data.model.HostDetailBean;
 import com.evisitor.data.model.HouseDetailBean;
+import com.evisitor.data.model.IdentityBean;
 import com.evisitor.ui.base.BaseViewModel;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppLogger;
@@ -18,6 +19,7 @@ import com.google.gson.reflect.TypeToken;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +34,8 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
 
     private MutableLiveData<List<HouseDetailBean>> houseDetailMutableList = new MutableLiveData<>();
     private MutableLiveData<List<HostDetailBean>> hostDetailMutableList = new MutableLiveData<>();
+    private List<String> genderList = new ArrayList<>();
+    private List<IdentityBean> identityTypeList = new ArrayList<>();
 
     public AddGuestViewModel(DataManager dataManager) {
         super(dataManager);
@@ -115,8 +119,11 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
         }
     }
 
-    boolean doVerifyInputs(String name, String contact, String address, String gender, String houseId, String ownerId, String residentId) {
-        if (name.isEmpty()) {
+    boolean doVerifyInputs(String identityNo, String idType, String name, String contact, String address, String gender, String houseId, String ownerId, String residentId) {
+        if (!identityNo.isEmpty() && idType.isEmpty()) {
+            getNavigator().showToast(R.string.alert_select_id);
+            return false;
+        } else if (name.isEmpty()) {
             getNavigator().showToast(R.string.alert_empty_name);
             return false;
         } else if (contact.isEmpty()) {
@@ -143,7 +150,7 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
         } else return true;
     }
 
-    void doAddGuest(Bitmap bmp_profile, String identityNo, String name, String vehicleNo, String contact, String address, String gender, String houseNumber, String houseId, String ownerId, String residentId) {
+    void doAddGuest(Bitmap bmp_profile, String identityNo, String idType, String name, String vehicleNo, String contact, String address, String gender, String houseNumber, String houseId, String ownerId, String residentId) {
         getNavigator().showLoading();
 
         if (getNavigator().isNetworkConnected()) {
@@ -152,7 +159,7 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
                 object.put("fullName", name);
                 object.put("accountId", getDataManager().getAccountId());
                 object.put("email", "");
-                object.put("documentType", "");
+                object.put("documentType", identityNo.isEmpty() ? "" : idType);
                 object.put("documentId", identityNo);
                 object.put("contactNo", contact);
                 object.put("guestType", "RANDOM_VISITOR");
@@ -197,5 +204,22 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
         } else {
             getNavigator().showAlert(R.string.alert, R.string.alert_internet);
         }
+    }
+
+    List<String> getGenderList() {
+        if (genderList.isEmpty()) {
+            genderList.add("Male");
+            genderList.add("Female");
+        }
+        return genderList;
+    }
+
+    List getIdentityTypeList() {
+        if (identityTypeList.isEmpty()) {
+            identityTypeList.add(new IdentityBean("National ID", "nationalId"));
+            identityTypeList.add(new IdentityBean("Passport", "passport"));
+            identityTypeList.add(new IdentityBean("Driving Licence", "dl"));
+        }
+        return identityTypeList;
     }
 }

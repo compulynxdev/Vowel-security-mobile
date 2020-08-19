@@ -2,33 +2,39 @@ package com.evisitor.ui.main.home.guest.add.dialogs;
 
 import android.os.Bundle;
 import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
-import com.evisitor.databinding.DialogGenderPickerBinding;
+import com.evisitor.databinding.DialogPickerBinding;
 import com.evisitor.ui.base.BaseBottomSheetDialog;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class GenderPickerBottomSheetDialog extends BaseBottomSheetDialog<DialogGenderPickerBinding, GenderPickerViewModel> {
+public class PickerBottomSheetDialog extends BaseBottomSheetDialog<DialogPickerBinding, PickerViewModel> {
 
-    private static final String TAG = "GenderPickerBottomSheet";
+    private static final String TAG = "PickerBottomSheetDialog";
     private OnItemSelectedListener itemSelectedListener;
+    private List list;
 
-    public static GenderPickerBottomSheetDialog newInstance() {
+    public static PickerBottomSheetDialog newInstance(List list) {
 
         Bundle args = new Bundle();
 
-        GenderPickerBottomSheetDialog fragment = new GenderPickerBottomSheetDialog();
+        PickerBottomSheetDialog fragment = new PickerBottomSheetDialog();
         fragment.setArguments(args);
+        fragment.setData(list);
         return fragment;
     }
 
-    public GenderPickerBottomSheetDialog setItemSelectedListener(OnItemSelectedListener itemSelectedListener) {
+    private void setData(List list) {
+        this.list = list;
+    }
+
+    public PickerBottomSheetDialog setItemSelectedListener(OnItemSelectedListener itemSelectedListener) {
         this.itemSelectedListener = itemSelectedListener;
         return this;
     }
@@ -40,12 +46,12 @@ public class GenderPickerBottomSheetDialog extends BaseBottomSheetDialog<DialogG
 
     @Override
     public int getLayoutId() {
-        return R.layout.dialog_gender_picker;
+        return R.layout.dialog_picker;
     }
 
     @Override
-    public GenderPickerViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(GenderPickerViewModel.class);
+    public PickerViewModel getViewModel() {
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(PickerViewModel.class);
     }
 
     @Override
@@ -53,12 +59,10 @@ public class GenderPickerBottomSheetDialog extends BaseBottomSheetDialog<DialogG
         super.onViewCreated(view, savedInstanceState);
         getViewDataBinding().loopWheelView.setOnItemSelectedListener((picker, data, position) -> {
             if (itemSelectedListener != null) {
-                itemSelectedListener.setOnItemSelectedListener(data.toString());
+                itemSelectedListener.setOnItemSelectedListener(position);
             }
         });
-        List<String> list = new ArrayList<>();
-        list.add("Male");
-        list.add("Female");
+
         getViewDataBinding().loopWheelView.setData(list);
     }
 

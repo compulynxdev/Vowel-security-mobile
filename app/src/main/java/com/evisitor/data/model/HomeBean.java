@@ -1,14 +1,24 @@
 package com.evisitor.data.model;
 
 public class HomeBean {
+    private int pos;
     private int icon;
     private String title;
     private String count;
 
-    public HomeBean(int icon, String title, String count) {
+    public HomeBean(int pos, int icon, String title, String count) {
+        this.pos = pos;
         this.icon = icon;
         this.title = title;
         this.count = count;
+    }
+
+    public int getPos() {
+        return pos;
+    }
+
+    public void setPos(int pos) {
+        this.pos = pos;
     }
 
     public int getIcon() {

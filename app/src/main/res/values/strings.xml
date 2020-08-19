@@ -93,6 +93,7 @@
     <string name="enter_address">Enter Address</string>
 
     <!--Add Guest Check-In Validation-->
+    <string name="alert_select_id">Please select identity type.</string>
     <string name="alert_empty_name">Please enter name.</string>
     <string name="alert_empty_contact">Please enter contact number.</string>
     <string name="alert_contact_length">Contact number minimum length must be 7 and maximum length 12.</string>
@@ -168,5 +169,6 @@
     <string name="check_in_success">Check In Successfully.</string>
     <string name="send_notification_success">Notification send successfully</string>
     <string name="ok">OK</string>
+    <string name="select_identity_type">Select Identity Type</string>
 
 </resources>

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,7 +29,6 @@ import java.util.List;
 
 public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBinding,GuestViewModel> implements GuestNavigator {
 
-    private boolean viewSearch = false;
     private List<Guests> guestsList;
     private RecyclerViewScrollListener scrollListener;
     private GuestAdapter adapter;
@@ -58,8 +58,8 @@ public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBin
         getViewModel().setNavigator(this);
         TextView tvTitle = findViewById(R.id.tv_title);
         tvTitle.setText(R.string.title_expected_guests );
-        setUpSearch();
         setUpAdapter();
+        setUpSearch();
 
         getViewDataBinding().fabAdd.setOnClickListener(v -> AlertDialog.newInstance()
                 .setNegativeBtnShow(true)
@@ -90,13 +90,9 @@ public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBin
                 showCheckinOptions();
             }).setBtnLabel(getString(R.string.check_in)).show(getSupportFragmentManager());
         });
-        //adapter.setHasStableIds(true);
+        adapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(adapter);
 
-        getViewDataBinding().swipeToRefresh.setOnRefreshListener(() -> {
-            doSearch(getViewDataBinding().etSearch.getText().toString());
-            getViewDataBinding().swipeToRefresh.setRefreshing(false);
-        });
         scrollListener = new RecyclerViewScrollListener() {
             @Override
             public void onLoadMore() {
@@ -113,11 +109,20 @@ public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBin
             adapter.showLoading(false);
             adapter.notifyDataSetChanged();
 
+            if (page == 0) guestsList.clear();
+
             guestsList.addAll(guests);
             adapter.notifyDataSetChanged();
         });
 
-        getViewModel().getGuestListData(page, "");
+        getViewDataBinding().swipeToRefresh.setOnRefreshListener(this::updateUI);
+        getViewDataBinding().swipeToRefresh.setColorSchemeResources(R.color.colorPrimary);
+        updateUI();
+    }
+
+    private void updateUI() {
+        getViewDataBinding().swipeToRefresh.setRefreshing(true);
+        doSearch(getViewDataBinding().etSearch.getText().toString());
     }
 
     private void setUpSearch() {
@@ -127,15 +132,12 @@ public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBin
         imgBack.setVisibility(View.VISIBLE);
         imgBack.setOnClickListener(v -> onBackPressed());
         imgSearch.setOnClickListener(v -> {
-            if (!viewSearch) {
-                getViewDataBinding().searchBar.setVisibility(View.VISIBLE);
+            hideKeyboard();
+            getViewDataBinding().searchBar.setVisibility(getViewDataBinding().searchBar.getVisibility() == View.GONE
+                    ? View.VISIBLE : View.GONE);
+
+            if (!getViewDataBinding().etSearch.getText().toString().trim().isEmpty()) {
                 getViewDataBinding().etSearch.setText("");
-                viewSearch = true;
-            }
-            else{
-                getViewDataBinding().searchBar.setVisibility(View.GONE);
-                getViewDataBinding().etSearch.setText("");
-                viewSearch = false;
             }
         });
 
@@ -152,12 +154,18 @@ public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBin
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().isEmpty())
-                    doSearch("");
-                else {
+                if (s.toString().isEmpty() || s.toString().length() >= 2) {
                     doSearch(s.toString());
                 }
             }
+        });
+
+        getViewDataBinding().etSearch.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                hideKeyboard();
+                return true;
+            }
+            return false;
         });
     }
 
@@ -204,6 +212,11 @@ public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBin
                     dialog12.dismiss();
                     getViewModel().approveByCall();
                 }).show(getSupportFragmentManager());
+    }
+
+    @Override
+    public void hideSwipeToRefresh() {
+        getViewDataBinding().swipeToRefresh.setRefreshing(false);
     }
 
     @Override

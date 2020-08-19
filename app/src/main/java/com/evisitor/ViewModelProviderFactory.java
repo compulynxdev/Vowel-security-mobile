@@ -14,8 +14,8 @@ import com.evisitor.ui.main.activity.checkin.CheckInViewModel;
 import com.evisitor.ui.main.activity.checkout.CheckOutViewModel;
 import com.evisitor.ui.main.home.HomeViewModel;
 import com.evisitor.ui.main.home.guest.add.AddGuestViewModel;
-import com.evisitor.ui.main.home.guest.add.dialogs.GenderPickerViewModel;
 import com.evisitor.ui.main.home.guest.add.dialogs.HostPickerViewModel;
+import com.evisitor.ui.main.home.guest.add.dialogs.PickerViewModel;
 import com.evisitor.ui.main.home.guest.add.scan.ScanIDViewModel;
 import com.evisitor.ui.main.home.guest.expected.GuestViewModel;
 import com.evisitor.ui.main.notifications.NotificationsFragmentViewModel;
@@ -100,9 +100,9 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(AddGuestViewModel.class)) {
             //noinspection unchecked
             return (T) new AddGuestViewModel(dataManager);
-        }else if (modelClass.isAssignableFrom(GenderPickerViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(PickerViewModel.class)) {
             //noinspection unchecked
-            return (T) new GenderPickerViewModel(dataManager);
+            return (T) new PickerViewModel(dataManager);
         } else if (modelClass.isAssignableFrom(ImagePickViewModel.class)) {
             //noinspection unchecked
             return (T) new ImagePickViewModel(dataManager);

@@ -52,35 +52,29 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     private void setupAdapter() {
         getViewModel().getHomeListData().observe(this, homeBeansList -> {
             HomeAdapter homeAdapter = new HomeAdapter(homeBeansList, pos -> {
-                switch (pos) {
-                    //Guests
-                    case 0:
+                switch (homeBeansList.get(pos).getPos()) {
+                    case HomeViewModel.GUEST_VIEW:
                         Intent i = ExpectedGuestActivity.getStartIntent(getContext());
                         startActivity(i);
                         break;
 
-                    //House-Keeping
-                    case 1:
+                    case HomeViewModel.HOUSE_KEEPING_VIEW:
                         showToast(R.string.under_development);
                         break;
 
-                    //Service-Provider
-                    case 2:
+                    case HomeViewModel.SERVICE_PROVIDER_VIEW:
                         showToast(R.string.under_development);
                         break;
 
-                    //Total Expected Visitor
-                    case 3:
+                    case HomeViewModel.TOTAL_VISITOR_VIEW:
                         showToast(R.string.under_development);
                         break;
 
-                    //Blacklisted Visitor
-                    case 4:
+                    case HomeViewModel.BLACKLISTED_VISITOR_VIEW:
                         showToast(R.string.under_development);
                         break;
 
-                    //Trespasser Visitor
-                    case 5:
+                    case HomeViewModel.TRESPASSER_VIEW:
                         showToast(R.string.under_development);
                         break;
                 }
