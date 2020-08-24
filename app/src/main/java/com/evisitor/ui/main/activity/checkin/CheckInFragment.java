@@ -121,9 +121,6 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding,CheckIn
             }
         });
 
-
-        getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
-
         getViewDataBinding().swipeToRefresh.setOnRefreshListener(this::updateUI);
         getViewDataBinding().swipeToRefresh.setColorSchemeResources(R.color.colorPrimary);
 
@@ -159,7 +156,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding,CheckIn
                 }
             }
         };
-
+        getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
         getViewModel().getGuestListData().observe(this, guests -> {
             adapter.showLoading(false);
             adapter.notifyDataSetChanged();

@@ -16,7 +16,7 @@ class WebServices {
 
     static final String GUEST_SEND_NOTIFICTION = "notification/send_notification";
     static final String GET_EXPECTED_GUEST_LIST_DETAIL = "guest/get_all_booked_guest";
-    static final String GUEST_CHECKIN_CHECKOUT = "guest/guest_check_in_check_out";
+    static final String GUEST_CHECKIN_CHECKOUT = "guest/check_in_check_out";
     static final String HOUSEKEEPING_CHECKIN_CHECKOUT = "househelp/house_help_check_in_check_out";
     static final String SERVICE_PROVIDER_CHECKIN_CHECKOUT = "serviceprovider/service_provider_check_in_check_out";
     static final String GET_GUEST_CHECKIN_LIST = "guest/get_guest_check_in_check_out";

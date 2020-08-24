@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.evisitor.R;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.ui.base.BaseViewHolder;
+import com.evisitor.util.CalenderUtils;
 import com.evisitor.util.pagination.FooterLoader;
 import java.util.List;
 
@@ -101,7 +102,7 @@ public class ServiceProviderCheckInAdapter extends RecyclerView.Adapter<BaseView
         public void onBind(int position) {
             ServiceProvider bean = list.get(position);
             name.setText(context.getString(R.string.name).concat(" : ").concat(bean.getName()));
-            time.setText(context.getString(R.string.time_in).concat(" : ").concat(bean.getCheckInTime()));
+            time.setText(context.getString(R.string.time_in).concat(" : ").concat(CalenderUtils.formatDate(bean.getCheckInTime(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIME_FORMAT)));
             houseNo.setText(context.getString(R.string.house_no).concat(" : ").concat(bean.getName()));
             host.setText(context.getString(R.string.host).concat(" : ").concat(bean.getHost()));
         }

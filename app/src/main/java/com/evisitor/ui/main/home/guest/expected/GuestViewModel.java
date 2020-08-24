@@ -136,9 +136,10 @@ public class GuestViewModel extends BaseViewModel<GuestNavigator> {
         getNavigator().showLoading();
         JSONObject object = new JSONObject();
         try {
-            object.put("guestId",getDataManager().getGuestDetail().getGuestId());
+            object.put("id",getDataManager().getGuestDetail().getGuestId());
             object.put("enteredVehicleNo",getDataManager().getGuestDetail().getExpectedVehicleNo());
             object.put("type", AppConstants.CHECK_IN);
+            object.put("visitor", AppConstants.GUEST);
         } catch (JSONException e) {
             e.printStackTrace();
             getNavigator().hideLoading();
