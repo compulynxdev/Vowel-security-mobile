@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.evisitor.data.local.prefs.AppPreferenceHelper;
 import com.evisitor.data.model.Guests;
+import com.evisitor.data.model.SPResponse;
 import com.evisitor.data.model.UserDetail;
 import com.evisitor.data.remote.AppApiHelper;
 import com.evisitor.util.AppConstants;
@@ -26,6 +27,7 @@ public class AppDataManager implements DataManager {
     private AppPreferenceHelper preferenceHelper;
     private static AppDataManager instance;
     private final Gson mGson;
+    private SPResponse.ContentBean spDetail;
 
     private AppDataManager(Context context) {
         apiHelper = AppApiHelper.getAppApiInstance();
@@ -49,6 +51,16 @@ public class AppDataManager implements DataManager {
     @Override
     public String getHeader() {
         return AppConstants.bearer.concat(" ").concat(preferenceHelper.getAccessToken());
+    }
+
+    @Override
+    public void setSPDetail(SPResponse.ContentBean spDetail) {
+        this.spDetail = spDetail;
+    }
+
+    @Override
+    public SPResponse.ContentBean getSpDetail() {
+        return spDetail;
     }
 
     @Override
@@ -194,5 +206,10 @@ public class AppDataManager implements DataManager {
     @Override
     public Call<ResponseBody> doGuestSendNotification(String authToken, RequestBody body) {
         return apiHelper.doGuestSendNotification(authToken, body);
+    }
+
+    @Override
+    public Call<ResponseBody> doGetExpectedSPList(String authToken, Map<String, String> partMap) {
+        return apiHelper.doGetExpectedSPList(authToken, partMap);
     }
 }

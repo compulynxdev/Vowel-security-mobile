@@ -1,4 +1,4 @@
-package com.evisitor.ui.main.home.guest.expected;
+package com.evisitor.ui.main.home.sp;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,29 +14,28 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
-import com.evisitor.data.model.Guests;
+import com.evisitor.data.model.SPResponse;
 import com.evisitor.data.model.VisitorProfileBean;
-import com.evisitor.databinding.ActivityExpectedGuestBinding;
+import com.evisitor.databinding.ActivityExpectedSpBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.dialog.AlertDialog;
-import com.evisitor.ui.main.home.guest.add.AddGuestActivity;
-import com.evisitor.ui.main.home.guest.add.scan.ScanIDActivity;
 import com.evisitor.ui.main.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBinding,GuestViewModel> implements GuestNavigator {
+public class ExpectedSPActivity extends BaseActivity<ActivityExpectedSpBinding, SPViewModel> implements SPNavigator {
 
-    private List<Guests> guestsList;
+    private List<SPResponse.ContentBean> spList;
     private RecyclerViewScrollListener scrollListener;
-    private GuestAdapter adapter;
+    private SPAdapter adapter;
     private int page = 0;
 
-    public static Intent getStartIntent(Context context){
-        return new Intent(context,ExpectedGuestActivity.class);
+    public static Intent getStartIntent(Context context) {
+        return new Intent(context, ExpectedSPActivity.class);
     }
+
     @Override
     public int getBindingVariable() {
         return com.evisitor.BR.viewModel;
@@ -44,12 +43,12 @@ public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBin
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_expected_guest;
+        return R.layout.activity_expected_sp;
     }
 
     @Override
-    public GuestViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(GuestViewModel.class);
+    public SPViewModel getViewModel() {
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(SPViewModel.class);
     }
 
     @Override
@@ -57,35 +56,15 @@ public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBin
         super.onCreate(savedInstanceState);
         getViewModel().setNavigator(this);
         TextView tvTitle = findViewById(R.id.tv_title);
-        tvTitle.setText(R.string.title_expected_guests );
+        tvTitle.setText(R.string.title_service_provider);
         setUpAdapter();
         setUpSearch();
-
-        getViewDataBinding().fabAdd.setOnClickListener(v -> AlertDialog.newInstance()
-                .setNegativeBtnShow(true)
-                .setCloseBtnShow(true)
-                .setTitle(getString(R.string.check_in))
-                .setMsg(getString(R.string.msg_add_guest_option))
-                .setNegativeBtnColor(R.color.colorPrimary)
-                .setPositiveBtnLabel(getString(R.string.manually))
-                .setNegativeBtnLabel(getString(R.string.scan_id))
-                .setOnNegativeClickListener(dialog1 -> {
-                    dialog1.dismiss();
-                    Intent i = ScanIDActivity.getStartIntent(this);
-                    startActivity(i);
-                })
-                .setOnPositiveClickListener(dialog12 -> {
-                    dialog12.dismiss();
-                    Intent i = AddGuestActivity.getStartIntent(this);
-                    startActivity(i);
-                }).show(getSupportFragmentManager()));
     }
 
     private void setUpAdapter() {
-        guestsList = new ArrayList<>();
-        adapter = new GuestAdapter(guestsList, this, pos -> {
-            Guests guest = guestsList.get(pos);
-            List<VisitorProfileBean> visitorProfileBeanList = getViewModel().setClickVisitorDetail(guest);
+        spList = new ArrayList<>();
+        adapter = new SPAdapter(spList, pos -> {
+            List<VisitorProfileBean> visitorProfileBeanList = getViewModel().setClickVisitorDetail(spList.get(pos));
             VisitorProfileDialog.newInstance(visitorProfileBeanList, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
                 showCheckinOptions();
@@ -101,18 +80,18 @@ public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBin
                 adapter.notifyDataSetChanged();
                 page++;
 
-                getViewModel().getGuestListData(page, getViewDataBinding().etSearch.getText().toString().trim());
+                getViewModel().getSpListData(page, getViewDataBinding().etSearch.getText().toString().trim());
             }
         };
         getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
 
-        getViewModel().getGuestListData().observe(this, guests -> {
+        getViewModel().getSpListData().observe(this, spList -> {
             adapter.showLoading(false);
             adapter.notifyDataSetChanged();
 
-            if (page == 0) guestsList.clear();
+            if (page == 0) this.spList.clear();
 
-            guestsList.addAll(guests);
+            this.spList.addAll(spList);
             adapter.notifyDataSetChanged();
         });
 
@@ -172,9 +151,9 @@ public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBin
 
     private void doSearch(String search) {
         scrollListener.onDataCleared();
-        guestsList.clear();
+        spList.clear();
         this.page = 0;
-        getViewModel().getGuestListData(page, search.trim());
+        getViewModel().getSpListData(page, search.trim());
     }
 
     private void showCheckinOptions() {
@@ -207,7 +186,7 @@ public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBin
                 .setNegativeBtnLabel(getString(R.string.reject))
                 .setOnNegativeClickListener(dialog1 -> {
                     dialog1.dismiss();
-                    showAlert(R.string.alert,R.string.check_in_rejected);
+                    showAlert(R.string.alert, R.string.check_in_rejected);
                 })
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();

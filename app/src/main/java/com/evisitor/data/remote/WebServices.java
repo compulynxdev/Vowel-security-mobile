@@ -15,8 +15,10 @@ class WebServices {
     static final String GET_HOST_LIST = "resident/get_resident_by_flat_id"; //?accountId=1&flatId=6
 
     static final String GUEST_SEND_NOTIFICTION = "notification/send_notification";
-    static final String GET_EXPECTED_GUEST_LIST_DETAIL = "guest/get_all_booked_guest";
+    static final String GET_EXPECTED_GUEST_LIST = "guest/get_all_booked_guest";
     static final String GUEST_CHECKIN_CHECKOUT = "guest/guest_check_in_check_out";
+
+    static final String GET_EXPECTED_SP_LIST = "serviceprovider/get_all_expected_service_provider";
 
     private WebServices() {
     }

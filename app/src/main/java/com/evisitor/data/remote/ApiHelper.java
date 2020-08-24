@@ -30,7 +30,7 @@ public interface ApiHelper {
     @GET(WebServices.GET_HOST_LIST)
     Call<ResponseBody> doGetHostDetailList(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
 
-    @GET(WebServices.GET_EXPECTED_GUEST_LIST_DETAIL)
+    @GET(WebServices.GET_EXPECTED_GUEST_LIST)
     Call<ResponseBody> doGetExpectedGuestListDetail(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
 
     @POST(WebServices.GUEST_CHECKIN_CHECKOUT)
@@ -38,5 +38,8 @@ public interface ApiHelper {
 
     @POST(WebServices.GUEST_SEND_NOTIFICTION)
     Call<ResponseBody> doGuestSendNotification(@Header("authorization") String authToken, @Body RequestBody body);
+
+    @GET(WebServices.GET_EXPECTED_SP_LIST)
+    Call<ResponseBody> doGetExpectedSPList(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
 
 }

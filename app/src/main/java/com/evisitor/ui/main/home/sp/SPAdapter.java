@@ -1,4 +1,4 @@
-package com.evisitor.ui.main.home.guest.expected;
+package com.evisitor.ui.main.home.sp;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.evisitor.R;
-import com.evisitor.data.model.Guests;
+import com.evisitor.data.model.SPResponse;
 import com.evisitor.ui.base.BaseViewHolder;
 import com.evisitor.ui.base.ItemClickCallback;
 import com.evisitor.util.CalenderUtils;
@@ -19,18 +19,16 @@ import com.evisitor.util.pagination.FooterLoader;
 
 import java.util.List;
 
-public class GuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
-    private List<Guests> list;
+public class SPAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private static final int VIEWTYPE_ITEM = 1;
-    private static final int VIEWTYPE_LOADER =2 ;
+    private static final int VIEWTYPE_LOADER = 2;
+    private List<SPResponse.ContentBean> list;
     private boolean showLoader;
-    private Context context;
     private ItemClickCallback listener;
 
-    GuestAdapter(List<Guests> list, Context context, ItemClickCallback callback) {
+    SPAdapter(List<SPResponse.ContentBean> list, ItemClickCallback callback) {
         this.list = list;
-        this.context = context;
-        this.listener=callback;
+        this.listener = callback;
     }
 
     @Override
@@ -40,7 +38,7 @@ public class GuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public long getItemId(int position) {
-        return Long.parseLong(list.get(position).getGuestId());
+        return list.get(position).getId();
     }
 
     @NonNull
@@ -50,7 +48,7 @@ public class GuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         switch (viewType) {
             case VIEWTYPE_ITEM:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_guests, parent, false);
-                return new GuestAdapter.ViewHolder(view);
+                return new SPAdapter.ViewHolder(view);
 
             default:
             case VIEWTYPE_LOADER:
@@ -61,7 +59,7 @@ public class GuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        if (position == list.size()-1) {
+        if (position == list.size() - 1) {
             return showLoader ? VIEWTYPE_LOADER : VIEWTYPE_ITEM;
         }
         return VIEWTYPE_ITEM;
@@ -92,7 +90,8 @@ public class GuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public class ViewHolder extends BaseViewHolder {
         ImageView imgVisitor;
-        TextView name,time,houseNo,host,vehicle;
+        TextView name, time, houseNo, host, vehicle;
+
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_name);
@@ -102,21 +101,22 @@ public class GuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             vehicle = itemView.findViewById(R.id.tv_vehicle);
             imgVisitor = itemView.findViewById(R.id.img_visitor);
             itemView.findViewById(R.id.constraint).setOnClickListener(v -> {
-                if (listener!=null)
+                if (listener != null)
                     listener.onItemClick(getAdapterPosition());
             });
         }
 
         @Override
         public void onBind(int position) {
-            Guests bean = list.get(position);
-            name.setText(context.getString(R.string.data_name, bean.getName()));
-            if (bean.getTime()!=null && !bean.getTime().isEmpty())
-                time.setText(context.getString(R.string.data_expected_time, CalenderUtils.formatDate(bean.getTime(), CalenderUtils.SERVER_DATE_FORMAT,
+            SPResponse.ContentBean bean = list.get(position);
+            Context context = name.getContext();
+            name.setText(context.getString(R.string.data_name, bean.getFullName()));
+            if (bean.getExpectedDate() != null && !bean.getExpectedDate().isEmpty())
+                time.setText(context.getString(R.string.data_expected_time, CalenderUtils.formatDate(bean.getExpectedDate(), CalenderUtils.SERVER_DATE_FORMAT,
                         CalenderUtils.TIME_FORMAT)));
             else time.setVisibility(View.GONE);
-            houseNo.setText(context.getString(R.string.data_house, bean.getHouseNo()));
-            host.setText(context.getString(R.string.data_host, bean.getHost()));
+            houseNo.setText(context.getString(R.string.data_house, bean.getFlatNo()));
+            host.setText(context.getString(R.string.data_host, bean.getResidentName()));
             if (!bean.getExpectedVehicleNo().isEmpty())
                 vehicle.setText(context.getString(R.string.data_vehicle, bean.getExpectedVehicleNo()));
             else vehicle.setVisibility(View.GONE);
