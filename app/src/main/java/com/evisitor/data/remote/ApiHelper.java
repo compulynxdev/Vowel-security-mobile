@@ -39,4 +39,19 @@ public interface ApiHelper {
     @POST(WebServices.GUEST_SEND_NOTIFICTION)
     Call<ResponseBody> doGuestSendNotification(@Header("authorization") String authToken, @Body RequestBody body);
 
+    @GET(WebServices.GET_GUEST_CHECKIN_LIST)
+    Call<ResponseBody> doGetGuestCheckInList(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+
+    @GET(WebServices.GET_HOUSEKEEPING_CHECKIN_LIST)
+    Call<ResponseBody> doGetHouseKeepingCheckInList(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+
+    @GET(WebServices.GET_SERVICE_PROVIDER_CHECKIN_LIST)
+    Call<ResponseBody> doGetServiceProviderCheckInList(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+
+    @POST(WebServices.HOUSEKEEPING_CHECKIN_CHECKOUT)
+    Call<ResponseBody> doHouseKeepingCheckInCheckOut(@Header("authorization") String authToken, @Body RequestBody body);
+
+    @POST(WebServices.SERVICE_PROVIDER_CHECKIN_CHECKOUT)
+    Call<ResponseBody> doServiceProviderCheckInCheckOut(@Header("authorization") String authToken, @Body RequestBody body);
+
 }

@@ -48,7 +48,4 @@ public interface PreferenceHelper {
 
     void logout(Activity activity);
 
-    void setGuestDetail(Guests guests);
-
-    Guests getGuestDetail();
 }

@@ -1,17 +1,19 @@
 package com.evisitor.data.model;
 
 import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
-public class GuestsResponse {
-    @SerializedName("content")
-    private List<Guests> content;
+public class ServiceProviderCheckInResponse {
 
-    public List<Guests> getContent() {
+    @SerializedName("content")
+    private List<ServiceProvider> content;
+
+    public List<ServiceProvider> getContent() {
         return content;
     }
 
-    public void setContent(List<Guests> content) {
+    public void setContent(List<ServiceProvider> content) {
         this.content = content;
     }
 }
