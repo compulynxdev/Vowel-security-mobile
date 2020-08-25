@@ -27,6 +27,7 @@ public class AppDataManager implements DataManager {
     private AppPreferenceHelper preferenceHelper;
     private static AppDataManager instance;
     private final Gson mGson;
+    private Guests guests;
     private SPResponse.ContentBean spDetail;
 
     private AppDataManager(Context context) {
@@ -40,6 +41,24 @@ public class AppDataManager implements DataManager {
             instance = new AppDataManager(context);
         }
         return instance;
+    }
+
+    @Override
+    public void setGuestDetail(Guests guest) {
+        guests = new Guests();
+        guests.setFlatId(guest.getFlatId());
+        guests.setResidentId(guest.getResidentId());
+        guests.setGuestId(guest.getGuestId());
+        guests.setExpectedVehicleNo(guest.getExpectedVehicleNo());
+    }
+
+    @Override
+    public Guests getGuestDetail() {
+        guests.setGuestId(guests.getGuestId());
+        guests.setFlatId(guests.getFlatId());
+        guests.setExpectedVehicleNo(guests.getExpectedVehicleNo());
+        guests.setResidentId(guests.getResidentId());
+        return guests;
     }
 
 
@@ -86,16 +105,6 @@ public class AppDataManager implements DataManager {
     @Override
     public void logout(Activity activity) {
         preferenceHelper.logout(activity);
-    }
-
-    @Override
-    public void setGuestDetail(Guests guests) {
-        preferenceHelper.setGuestDetail(guests);
-    }
-
-    @Override
-    public Guests getGuestDetail() {
-        return preferenceHelper.getGuestDetail();
     }
 
     @Override
@@ -206,6 +215,31 @@ public class AppDataManager implements DataManager {
     @Override
     public Call<ResponseBody> doGuestSendNotification(String authToken, RequestBody body) {
         return apiHelper.doGuestSendNotification(authToken, body);
+    }
+
+    @Override
+    public Call<ResponseBody> doGetGuestCheckInList(String authToken, Map<String, String> partMap) {
+        return apiHelper.doGetGuestCheckInList(authToken, partMap);
+    }
+
+    @Override
+    public Call<ResponseBody> doGetHouseKeepingCheckInList(String authToken, Map<String, String> partMap) {
+        return apiHelper.doGetHouseKeepingCheckInList(authToken, partMap);
+    }
+
+    @Override
+    public Call<ResponseBody> doGetServiceProviderCheckInList(String authToken, Map<String, String> partMap) {
+        return apiHelper.doGetServiceProviderCheckInList(authToken, partMap);
+    }
+
+    @Override
+    public Call<ResponseBody> doHouseKeepingCheckInCheckOut(String authToken, RequestBody body) {
+        return apiHelper.doHouseKeepingCheckInCheckOut(authToken, body);
+    }
+
+    @Override
+    public Call<ResponseBody> doServiceProviderCheckInCheckOut(String authToken, RequestBody body) {
+        return apiHelper.doServiceProviderCheckInCheckOut(authToken, body);
     }
 
     @Override

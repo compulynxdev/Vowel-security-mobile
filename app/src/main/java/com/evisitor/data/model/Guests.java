@@ -34,6 +34,17 @@ public class Guests {
     @SerializedName("contactNo")
     private String contactNo;
 
+    public String getCheckInTime() {
+        return checkInTime;
+    }
+
+    public void setCheckInTime(String checkInTime) {
+        this.checkInTime = checkInTime;
+    }
+
+    @SerializedName("checkInTime")
+    private String checkInTime;
+
     @SerializedName("premiseHierarchyDetailsId")
     private String flatId;
 

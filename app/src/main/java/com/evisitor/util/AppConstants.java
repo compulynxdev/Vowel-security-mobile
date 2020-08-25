@@ -15,6 +15,10 @@ public final class AppConstants {
     public static final String ACTIVITY_ABOUT_US = "ACTIVITY_ABOUT_US";
     public static final String ACTIVITY_PRIVACY = "ACTIVITY_PRIVACY";
     public static final String CHECK_IN = "CHECK_IN";
+    public static final String CHECK_OUT = "CHECK_OUT";
+    public static final String GUEST = "GUEST";
+    public static final String SERVICE_PROVIDER = "SERVICE_PROVIDER";
+    public static final String HOUSE_HELP = "HOUSE_HELP";
 
     public static String CONTENT_TYPE_TEXT = "text/plain";
     public static String CONTENT_TYPE_JSON="application/json; charset=utf-8";

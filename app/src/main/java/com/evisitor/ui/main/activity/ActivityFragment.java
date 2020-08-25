@@ -4,14 +4,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
-
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.FragmentActivityBinding;
@@ -19,13 +17,13 @@ import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.base.BaseNavigator;
 import com.evisitor.ui.main.activity.checkin.CheckInFragment;
 import com.evisitor.ui.main.activity.checkout.CheckOutFragment;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityFragment extends BaseFragment<FragmentActivityBinding, ActivityViewModel> implements BaseNavigator,View.OnClickListener {
 
     private boolean viewSearch = false;
+    private int listOf = 0;
     public static ActivityFragment newInstance() {
         ActivityFragment fragment = new ActivityFragment();
         Bundle args = new Bundle();
@@ -68,8 +66,8 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
 
     private void setUpPagerAdapter() {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(CheckInFragment.newInstance());
-        adapter.addFragment(CheckOutFragment.newInstance());
+        adapter.addFragment(CheckInFragment.newInstance(getViewDataBinding().etSearch,getViewDataBinding().tabLayout));
+        adapter.addFragment(CheckOutFragment.newInstance(getViewDataBinding().etSearch,getViewDataBinding().tabLayout));
         getViewDataBinding().viewPager.setOffscreenPageLimit(2);
 
         getViewDataBinding().viewPager.setAdapter(adapter);
@@ -148,7 +146,5 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
         void addFragment(Fragment fragment){
             fragmentList.add(fragment);
         }
-
-
     }
 }

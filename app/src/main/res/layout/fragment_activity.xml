@@ -12,12 +12,49 @@
                 android:id="@+id/header"
                 layout="@layout/header" />
 
+
+            <com.google.android.material.tabs.TabLayout
+                android:layout_width="match_parent"
+                app:layout_constraintTop_toBottomOf="@+id/header"
+                android:id="@+id/tab_layout"
+                android:background="@drawable/bg_card_corner"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="18dp"
+                app:tabTextColor="@color/black"
+                app:tabSelectedTextColor="@color/colorPrimary"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/guest_tab"
+                    android:text="@string/title_guests"
+                    android:clickable="true"
+                    android:focusable="true" />
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="@string/title_house_keeping"
+                    android:id="@+id/house_keeping_tab"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="@string/title_service_provider"
+                    android:id="@+id/service_tab"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+            </com.google.android.material.tabs.TabLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_margin="18dp"
                 android:id="@+id/linear"
-                app:layout_constraintTop_toBottomOf="@+id/header"
+                app:layout_constraintTop_toBottomOf="@+id/tab_layout"
                 android:background="@drawable/bg_card_corner"
                 android:orientation="horizontal">
 

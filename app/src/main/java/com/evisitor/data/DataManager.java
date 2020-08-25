@@ -1,6 +1,7 @@
 package com.evisitor.data;
 
 import com.evisitor.data.local.prefs.PreferenceHelper;
+import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.SPResponse;
 import com.evisitor.data.remote.ApiHelper;
 import com.google.gson.Gson;
@@ -12,6 +13,10 @@ public interface DataManager extends ApiHelper, PreferenceHelper {
     Gson getGson();
 
     String getHeader();
+
+    void setGuestDetail(Guests guest) ;
+
+     Guests getGuestDetail() ;
 
     void setSPDetail(SPResponse.ContentBean spDetail);
 
