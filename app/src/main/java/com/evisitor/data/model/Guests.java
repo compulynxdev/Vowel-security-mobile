@@ -45,6 +45,9 @@ public class Guests {
     @SerializedName("checkInTime")
     private String checkInTime;
 
+    @SerializedName("checkOutTime")
+    private String checkOutTime;
+
     @SerializedName("premiseHierarchyDetailsId")
     private String flatId;
 
@@ -146,6 +149,14 @@ public class Guests {
     public String getHouseNo() {
         return houseNo== null? "" : houseNo;
 
+    }
+
+    public String getCheckOutTime() {
+        return checkOutTime;
+    }
+
+    public void setCheckOutTime(String checkOutTime) {
+        this.checkOutTime = checkOutTime;
     }
 
     public void setHouseNo(String houseNo) {
