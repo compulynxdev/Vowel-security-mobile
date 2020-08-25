@@ -6,14 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.evisitor.R;
 import com.evisitor.data.model.Guests;
 import com.evisitor.ui.base.BaseViewHolder;
-import com.evisitor.ui.main.home.guest.OnGuestSelectedListener;
+import com.evisitor.ui.base.ItemClickCallback;
 import com.evisitor.util.CalenderUtils;
 import com.evisitor.util.pagination.FooterLoader;
+
 import java.util.List;
 
 public class GuestCheckInAdapter extends RecyclerView.Adapter<BaseViewHolder> {
@@ -22,9 +25,9 @@ public class GuestCheckInAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private static final int VIEWTYPE_LOADER =2 ;
     private boolean showLoader;
     private Context context;
-    private OnGuestSelectedListener listener;
+    private ItemClickCallback listener;
 
-    public GuestCheckInAdapter(List<Guests> list, Context context, OnGuestSelectedListener click) {
+    public GuestCheckInAdapter(List<Guests> list, Context context, ItemClickCallback click) {
         this.list = list;
         this.listener = click;
         this.context = context;
@@ -93,7 +96,7 @@ public class GuestCheckInAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
             itemView.findViewById(R.id.constraint).setOnClickListener(v -> {
                 if (listener!=null)
-                    listener.onGuestClick(list.get(getAdapterPosition()));
+                    listener.onItemClick(getAdapterPosition());
             });
 
         }

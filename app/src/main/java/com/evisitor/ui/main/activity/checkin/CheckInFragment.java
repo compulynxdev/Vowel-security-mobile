@@ -6,9 +6,11 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
+
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.Guests;
@@ -24,6 +26,7 @@ import com.evisitor.ui.main.home.guest.expected.GuestNavigator;
 import com.evisitor.ui.main.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
 import com.google.android.material.tabs.TabLayout;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -212,8 +215,8 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding,CheckIn
      }
 
     private void setUpGuestAdapter() {
-        adapter = new GuestCheckInAdapter(list, getBaseActivity(), guests -> {
-            List<VisitorProfileBean> beans = getViewModel().getGuestCheckInProfileBean(guests);
+        adapter = new GuestCheckInAdapter(list, getBaseActivity(), pos -> {
+            List<VisitorProfileBean> beans = getViewModel().getGuestCheckInProfileBean(list.get(pos));
             VisitorProfileDialog.newInstance(beans, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
                 getViewModel().checkOut(0);
