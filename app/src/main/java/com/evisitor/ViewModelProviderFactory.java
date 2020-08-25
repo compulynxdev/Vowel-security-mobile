@@ -19,6 +19,7 @@ import com.evisitor.ui.main.home.guest.add.dialogs.PickerViewModel;
 import com.evisitor.ui.main.home.guest.add.scan.ScanIDViewModel;
 import com.evisitor.ui.main.home.guest.expected.GuestViewModel;
 import com.evisitor.ui.main.home.sp.SPViewModel;
+import com.evisitor.ui.main.idverification.IdVerificationViewModel;
 import com.evisitor.ui.main.notifications.NotificationsFragmentViewModel;
 import com.evisitor.ui.main.profile.UserProfileViewModel;
 import com.evisitor.ui.main.settings.SettingsViewModel;
@@ -116,6 +117,9 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(SPViewModel.class)) {
             //noinspection unchecked
             return (T) new SPViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(IdVerificationViewModel.class)) {
+            //noinspection unchecked
+            return (T) new IdVerificationViewModel(dataManager);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

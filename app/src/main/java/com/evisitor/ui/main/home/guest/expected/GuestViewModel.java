@@ -147,7 +147,7 @@ public class GuestViewModel extends BaseViewModel<GuestNavigator> {
         }
 
         RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON,object.toString());
-        getDataManager().doGuestCheckInCheckOut(getDataManager().getHeader(),body).enqueue(new Callback<ResponseBody>() {
+        getDataManager().doCheckInCheckOut(getDataManager().getHeader(), body).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call,@NonNull  Response<ResponseBody> response) {
                 getNavigator().hideLoading();

@@ -78,6 +78,7 @@ public class SPViewModel extends BaseViewModel<SPNavigator> {
         List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
         getDataManager().setSPDetail(spBean);
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, spBean.getFullName())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_profile, spBean.getProfile())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), spBean.getExpectedVehicleNo(), true));
         if (!spBean.getContactNo().isEmpty())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, spBean.getContactNo())));
@@ -93,10 +94,12 @@ public class SPViewModel extends BaseViewModel<SPNavigator> {
         getNavigator().showLoading();
         JSONObject object = new JSONObject();
         try {
-            object.put("guestId", getDataManager().getGuestDetail().getGuestId());
+            object.put("guestId", getDataManager().getSpDetail().getId());
             object.put("accountId", getDataManager().getAccountId());
-            object.put("residentId", getDataManager().getGuestDetail().getResidentId());
-            object.put("premiseHierarchyDetailsId", getDataManager().getGuestDetail().getFlatId());
+
+            //Todo check send notification
+            /*object.put("residentId", getDataManager().getSpDetail().getResidentId());
+            object.put("premiseHierarchyDetailsId", getDataManager().getSpDetail().getFlatId());*/
         } catch (JSONException e) {
             e.printStackTrace();
             getNavigator().hideLoading();
@@ -134,9 +137,10 @@ public class SPViewModel extends BaseViewModel<SPNavigator> {
         getNavigator().showLoading();
         JSONObject object = new JSONObject();
         try {
-            object.put("guestId", getDataManager().getGuestDetail().getGuestId());
-            object.put("enteredVehicleNo", getDataManager().getGuestDetail().getExpectedVehicleNo());
+            object.put("id", getDataManager().getSpDetail().getId());
+            object.put("enteredVehicleNo", getDataManager().getSpDetail().getExpectedVehicleNo());
             object.put("type", AppConstants.CHECK_IN);
+            object.put("visitor", AppConstants.SERVICE_PROVIDER);
         } catch (JSONException e) {
             e.printStackTrace();
             getNavigator().hideLoading();
@@ -144,7 +148,7 @@ public class SPViewModel extends BaseViewModel<SPNavigator> {
         }
 
         RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
-        getDataManager().doGuestCheckInCheckOut(getDataManager().getHeader(), body).enqueue(new Callback<ResponseBody>() {
+        getDataManager().doCheckInCheckOut(getDataManager().getHeader(), body).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 getNavigator().hideLoading();

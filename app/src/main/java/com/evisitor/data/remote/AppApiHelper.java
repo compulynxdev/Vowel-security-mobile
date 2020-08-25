@@ -76,8 +76,8 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Call<ResponseBody> doGuestCheckInCheckOut(String authToken, RequestBody body) {
-        return getApiInterface().doGuestCheckInCheckOut(authToken, body);
+    public Call<ResponseBody> doCheckInCheckOut(String authToken, RequestBody body) {
+        return getApiInterface().doCheckInCheckOut(authToken, body);
     }
 
     @Override

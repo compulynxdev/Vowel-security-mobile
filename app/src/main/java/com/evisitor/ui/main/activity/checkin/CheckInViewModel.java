@@ -2,6 +2,7 @@ package com.evisitor.ui.main.activity.checkin;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
+
 import com.evisitor.R;
 import com.evisitor.data.DataManager;
 import com.evisitor.data.model.Guests;
@@ -20,10 +21,12 @@ import com.evisitor.util.CalenderUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -176,7 +179,7 @@ public class CheckInViewModel extends BaseViewModel<GuestNavigator> {
         List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
         getDataManager().setGuestDetail(guests);
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, guests.getName())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time, CalenderUtils.formatDate(guests.getCheckInTime(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIME_FORMAT))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time, CalenderUtils.formatDate(guests.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIME_FORMAT_AM))));
 
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), guests.getExpectedVehicleNo(), true));
         if (!guests.getContactNo().isEmpty())
@@ -197,7 +200,7 @@ public class CheckInViewModel extends BaseViewModel<GuestNavigator> {
         guests.setGuestId(houseKeeping.getHouseKeeperId());
         getDataManager().setGuestDetail(guests);
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, houseKeeping.getName())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time, CalenderUtils.formatDate(houseKeeping.getCheckInTime(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIME_FORMAT))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time, CalenderUtils.formatDate(houseKeeping.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIME_FORMAT_AM))));
 
         if (!houseKeeping.getContactNo().isEmpty())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, houseKeeping.getContactNo())));
@@ -217,7 +220,7 @@ public class CheckInViewModel extends BaseViewModel<GuestNavigator> {
         guests.setGuestId(serviceProvider.getServiceProviderId());
         getDataManager().setGuestDetail(guests);
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, serviceProvider.getName())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time, CalenderUtils.formatDate(serviceProvider.getCheckInTime(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIME_FORMAT))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time, CalenderUtils.formatDate(serviceProvider.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIME_FORMAT_AM))));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), serviceProvider.getExpectedVehicleNo(), false));
         if (!serviceProvider.getContactNo().isEmpty())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, serviceProvider.getContactNo())));
@@ -262,7 +265,7 @@ public class CheckInViewModel extends BaseViewModel<GuestNavigator> {
         }
 
         RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON,object.toString());
-        getDataManager().doGuestCheckInCheckOut(getDataManager().getHeader(),body).enqueue(new Callback<ResponseBody>() {
+        getDataManager().doCheckInCheckOut(getDataManager().getHeader(), body).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call,@NonNull  Response<ResponseBody> response) {
                 getNavigator().hideLoading();

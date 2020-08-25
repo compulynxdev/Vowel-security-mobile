@@ -47,7 +47,7 @@ public class SPAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         View view;
         switch (viewType) {
             case VIEWTYPE_ITEM:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_guests, parent, false);
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_sp, parent, false);
                 return new SPAdapter.ViewHolder(view);
 
             default:
@@ -90,11 +90,12 @@ public class SPAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public class ViewHolder extends BaseViewHolder {
         ImageView imgVisitor;
-        TextView name, time, houseNo, host, vehicle;
+        TextView name, profile, time, houseNo, host, vehicle;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_name);
+            profile = itemView.findViewById(R.id.tv_profile);
             time = itemView.findViewById(R.id.tv_time);
             houseNo = itemView.findViewById(R.id.tv_house_no);
             host = itemView.findViewById(R.id.tv_host);
@@ -111,9 +112,10 @@ public class SPAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             SPResponse.ContentBean bean = list.get(position);
             Context context = name.getContext();
             name.setText(context.getString(R.string.data_name, bean.getFullName()));
+            profile.setText(context.getString(R.string.data_profile, bean.getProfile()));
             if (bean.getExpectedDate() != null && !bean.getExpectedDate().isEmpty())
                 time.setText(context.getString(R.string.data_expected_time, CalenderUtils.formatDate(bean.getExpectedDate(), CalenderUtils.SERVER_DATE_FORMAT,
-                        CalenderUtils.TIME_FORMAT)));
+                        CalenderUtils.TIME_FORMAT_AM)));
             else time.setVisibility(View.GONE);
             houseNo.setText(context.getString(R.string.data_house, bean.getFlatNo()));
             host.setText(context.getString(R.string.data_host, bean.getResidentName()));

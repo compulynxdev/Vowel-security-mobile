@@ -51,6 +51,7 @@
     <string name="check_in">Check In</string>
     <string name="check_out">Check Out</string>
     <string name="data_name">Name : %s</string>
+    <string name="data_profile">Profile : %s</string>
     <string name="data_vehicle">Vehicle No : %s</string>
     <string name="vehicle_col">Vehicle No :</string>
     <string name="data_house">House No : %s</string>
@@ -173,5 +174,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="submit">Submit</string>
+    <string name="or">OR</string>
+    <string name="please_verify_identity_card_for_check_in">Please verify identity card \nfor check-in</string>
 
 </resources>

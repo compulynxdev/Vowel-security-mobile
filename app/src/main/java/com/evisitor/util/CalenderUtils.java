@@ -24,8 +24,8 @@ public final class CalenderUtils {
     public static final String DB_TIMESTAMP_FORMAT_DASH = "yyyy-MM-dd";
     public static final String TIME_FORMAT = "HH:mm";
     public static final String TIME_FORMAT_SEC = "HH:mm:ss";
-    public static final String DAY = "EEE";
     public static final String TIME_FORMAT_AM = "hh:mm a";
+    public static final String DAY = "EEE";
     public static final String DATE_FORMAT = "EEE, MMMM dd";
     //public static final String SERVER_DATE_FORMAT = "E MMM dd HH:mm:ss Z yyyy";
     public static final String SERVER_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";

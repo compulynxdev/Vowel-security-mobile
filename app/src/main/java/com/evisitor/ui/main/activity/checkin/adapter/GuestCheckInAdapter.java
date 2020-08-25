@@ -105,7 +105,7 @@ public class GuestCheckInAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         public void onBind(int position) {
             Guests bean = list.get(position);
             name.setText(context.getString(R.string.name).concat(" : ").concat(bean.getName()));
-            time.setText(context.getString(R.string.time_in).concat(" : ").concat(CalenderUtils.formatDate(bean.getCheckInTime(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIME_FORMAT)));
+            time.setText(context.getString(R.string.time_in).concat(" : ").concat(CalenderUtils.formatDate(bean.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIME_FORMAT_AM)));
             houseNo.setText(context.getString(R.string.house_no).concat(" : ").concat(bean.getName()));
             host.setText(context.getString(R.string.host).concat(" : ").concat(bean.getHost()));
         }

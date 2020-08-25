@@ -208,8 +208,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Call<ResponseBody> doGuestCheckInCheckOut(String authToken, RequestBody body) {
-        return apiHelper.doGuestCheckInCheckOut(authToken, body);
+    public Call<ResponseBody> doCheckInCheckOut(String authToken, RequestBody body) {
+        return apiHelper.doCheckInCheckOut(authToken, body);
     }
 
     @Override
