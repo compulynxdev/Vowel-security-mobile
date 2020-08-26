@@ -105,9 +105,10 @@ public class ServiceProviderCheckInAdapter extends RecyclerView.Adapter<BaseView
         public void onBind(int position) {
             ServiceProvider bean = list.get(position);
             name.setText(context.getString(R.string.name).concat(" : ").concat(bean.getName()));
-            time.setText(context.getString(R.string.time_in).concat(" : ").concat(CalenderUtils.formatDate(bean.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIME_FORMAT_AM)));
-            houseNo.setText(context.getString(R.string.house_no).concat(" : ").concat(bean.getName()));
-            host.setText(context.getString(R.string.host).concat(" : ").concat(bean.getHost()));
+            time.setText(context.getString(R.string.time_in).concat(" : ").concat(CalenderUtils.formatDate(bean.getCheckInTime(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIME_FORMAT)));
+            if (!bean.getHouseNo().isEmpty())
+                houseNo.setText(context.getString(R.string.house_no).concat(" : ").concat(bean.getName()));
+            host.setText(context.getString(R.string.host).concat(" : ").concat(bean.getHost().isEmpty() ? bean.getCreatedBy() : bean.getHost()));
         }
     }
 

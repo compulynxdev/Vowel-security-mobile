@@ -19,6 +19,7 @@
                 android:id="@+id/tab_layout"
                 android:background="@drawable/bg_card_corner"
                 android:layout_marginTop="18dp"
+                app:tabIndicatorHeight="0dp"
                 android:layout_marginBottom="18dp"
                 app:tabTextColor="@color/black"
                 app:tabSelectedTextColor="@color/colorPrimary"

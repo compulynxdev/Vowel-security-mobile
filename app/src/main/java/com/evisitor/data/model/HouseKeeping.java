@@ -30,7 +30,28 @@ public class HouseKeeping {
     @SerializedName("contactNo")
     private String contactNo;
 
-   /* @SerializedName("premiseHierarchyDetailsId")
+    @SerializedName("createdBy")
+    private String createdBy;
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
+
+    @SerializedName("profile")
+    private String profile;
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+/* @SerializedName("premiseHierarchyDetailsId")
     private String flatId;*/
 
     @SerializedName("id")
