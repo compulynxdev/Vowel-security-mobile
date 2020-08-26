@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.evisitor.R;
-import com.evisitor.data.model.SPResponse;
+import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.ui.base.BaseViewHolder;
 import com.evisitor.ui.base.ItemClickCallback;
 import com.evisitor.util.CalenderUtils;
@@ -22,11 +22,11 @@ import java.util.List;
 public class SPAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private static final int VIEWTYPE_ITEM = 1;
     private static final int VIEWTYPE_LOADER = 2;
-    private List<SPResponse.ContentBean> list;
+    private List<ServiceProvider> list;
     private boolean showLoader;
     private ItemClickCallback listener;
 
-    SPAdapter(List<SPResponse.ContentBean> list, ItemClickCallback callback) {
+    SPAdapter(List<ServiceProvider> list, ItemClickCallback callback) {
         this.list = list;
         this.listener = callback;
     }
@@ -38,7 +38,7 @@ public class SPAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public long getItemId(int position) {
-        return list.get(position).getId();
+        return Long.parseLong(list.get(position).getServiceProviderId());
     }
 
     @NonNull
@@ -109,16 +109,22 @@ public class SPAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         @Override
         public void onBind(int position) {
-            SPResponse.ContentBean bean = list.get(position);
+            ServiceProvider bean = list.get(position);
             Context context = name.getContext();
-            name.setText(context.getString(R.string.data_name, bean.getFullName()));
+            name.setText(context.getString(R.string.data_name, bean.getName()));
             profile.setText(context.getString(R.string.data_profile, bean.getProfile()));
-            if (bean.getExpectedDate() != null && !bean.getExpectedDate().isEmpty())
-                time.setText(context.getString(R.string.data_expected_time, CalenderUtils.formatDate(bean.getExpectedDate(), CalenderUtils.SERVER_DATE_FORMAT,
+            if (bean.getTime() != null && !bean.getTime().isEmpty())
+                time.setText(context.getString(R.string.data_expected_time, CalenderUtils.formatDate(bean.getTime(), CalenderUtils.SERVER_DATE_FORMAT,
                         CalenderUtils.TIME_FORMAT_AM)));
             else time.setVisibility(View.GONE);
-            houseNo.setText(context.getString(R.string.data_house, bean.getFlatNo()));
-            host.setText(context.getString(R.string.data_host, bean.getResidentName()));
+            if (bean.getHouseNo().isEmpty()) {
+                houseNo.setVisibility(View.GONE);
+                host.setText(context.getString(R.string.data_host, bean.getCreatedBy()));
+            } else {
+                houseNo.setVisibility(View.VISIBLE);
+                houseNo.setText(context.getString(R.string.data_house, bean.getHouseNo()));
+                host.setText(context.getString(R.string.data_host, bean.getHost()));
+            }
             if (!bean.getExpectedVehicleNo().isEmpty())
                 vehicle.setText(context.getString(R.string.data_vehicle, bean.getExpectedVehicleNo()));
             else vehicle.setVisibility(View.GONE);

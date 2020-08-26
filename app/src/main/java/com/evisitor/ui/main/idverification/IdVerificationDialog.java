@@ -67,11 +67,15 @@ public class IdVerificationDialog extends BaseDialog<DialogIdVerificationBinding
                 break;
 
             case R.id.btn_scan:
-                dismissDialog(TAG);
+                if (callback != null) {
+                    callback.onScanClick(this);
+                } else dismissDialog(TAG);
                 break;
 
             case R.id.btn_submit:
-                dismissDialog(TAG);
+                if (callback != null) {
+                    callback.onSubmitClick(this, getViewDataBinding().etData.getText().toString().trim());
+                } else dismissDialog(TAG);
                 break;
         }
     }

@@ -1,4 +1,4 @@
-package com.evisitor.ui.main.home.guest.add.scan;
+package com.evisitor.ui.main.home.scan;
 
 import android.Manifest;
 import android.content.Context;
@@ -21,7 +21,6 @@ import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.ActivityScanIdBinding;
 import com.evisitor.ui.base.BaseActivity;
-import com.evisitor.ui.main.home.guest.add.AddGuestActivity;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.text.TextBlock;
@@ -203,9 +202,11 @@ public class ScanIDActivity extends BaseActivity<ActivityScanIdBinding, ScanIDVi
             final MrzRecord record = MrzParser.Companion.parse(mrz);
             if (!isDataParsed) {
                 isDataParsed = true;
-                Intent intent = AddGuestActivity.getStartIntent(this);
+
+                Intent intent = getIntent();
                 intent.putExtra("Record", record);
-                startActivity(intent);
+                setResult(RESULT_OK, intent);
+                finish();
             }
         } catch (Exception ex) {
             ex.printStackTrace();

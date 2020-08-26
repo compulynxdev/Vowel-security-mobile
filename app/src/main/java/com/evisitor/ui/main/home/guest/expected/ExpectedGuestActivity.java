@@ -10,6 +10,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
@@ -20,9 +21,10 @@ import com.evisitor.databinding.ActivityExpectedGuestBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.dialog.AlertDialog;
 import com.evisitor.ui.main.home.guest.add.AddGuestActivity;
-import com.evisitor.ui.main.home.guest.add.scan.ScanIDActivity;
+import com.evisitor.ui.main.home.scan.ScanIDActivity;
 import com.evisitor.ui.main.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
+import com.sharma.mrzreader.MrzRecord;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,7 @@ public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBin
     private RecyclerViewScrollListener scrollListener;
     private GuestAdapter adapter;
     private int page = 0;
+    private final int SCAN_RESULT = 101;
 
     public static Intent getStartIntent(Context context){
         return new Intent(context,ExpectedGuestActivity.class);
@@ -72,7 +75,7 @@ public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBin
                 .setOnNegativeClickListener(dialog1 -> {
                     dialog1.dismiss();
                     Intent i = ScanIDActivity.getStartIntent(this);
-                    startActivity(i);
+                    startActivityForResult(i, SCAN_RESULT);
                 })
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
@@ -223,5 +226,18 @@ public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBin
     @Override
     public void refreshList() {
         doSearch(getViewDataBinding().etSearch.getText().toString());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SCAN_RESULT && data != null) {
+                MrzRecord mrzRecord = (MrzRecord) data.getSerializableExtra("Record");
+                Intent intent = AddGuestActivity.getStartIntent(this);
+                intent.putExtra("Record", mrzRecord);
+                startActivity(intent);
+            }
+        }
     }
 }

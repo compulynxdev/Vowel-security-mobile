@@ -10,7 +10,7 @@ import com.evisitor.data.model.GuestsResponse;
 import com.evisitor.data.model.HouseKeeping;
 import com.evisitor.data.model.HouseKeepingCheckInResponse;
 import com.evisitor.data.model.ServiceProvider;
-import com.evisitor.data.model.ServiceProviderCheckInResponse;
+import com.evisitor.data.model.ServiceProviderResponse;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.ui.base.BaseViewModel;
 import com.evisitor.ui.main.home.guest.expected.GuestNavigator;
@@ -91,7 +91,7 @@ public class CheckInViewModel extends BaseViewModel<GuestNavigator> {
                 try {
                     if (response.code() == 200) {
                         assert response.body() != null;
-                        ServiceProviderCheckInResponse serviceProviderCheckInResponse = getDataManager().getGson().fromJson(response.body().string(), ServiceProviderCheckInResponse.class);
+                        ServiceProviderResponse serviceProviderCheckInResponse = getDataManager().getGson().fromJson(response.body().string(), ServiceProviderResponse.class);
                         if (serviceProviderCheckInResponse.getContent() != null) {
                             serviceProviderListData.setValue(serviceProviderCheckInResponse.getContent());
                         }

@@ -14,9 +14,14 @@ public class ServiceProvider {
     @SerializedName("checkInTime")
     private String checkInTime;
 
-
     @SerializedName("checkOutTime")
     private String checkOutTime;
+
+    @SerializedName("profile")
+    private String profile;
+
+    @SerializedName("expectedDate")
+    private String time;
 
     @SerializedName("flatNo")
     private String houseNo;
@@ -30,14 +35,20 @@ public class ServiceProvider {
     @SerializedName("contactNo")
     private String contactNo;
 
-   /* @SerializedName("premiseHierarchyDetailsId")
-    private String flatId;*/
+    @SerializedName("residentId")
+    private String residentId;
+
+    @SerializedName("flatId")
+    private String flatId;
 
     @SerializedName("id")
     private String serviceProviderId;
 
     //@SerializedName("image")
     private String url;
+
+    @SerializedName("createdBy")
+    private String createdBy;
 
     @SerializedName("expectedVehicleNo")
     private String expectedVehicleNo;
@@ -76,7 +87,7 @@ public class ServiceProvider {
     }
 
     public String getHouseNo() {
-        return houseNo;
+        return houseNo == null || houseNo.isEmpty() ? "" : houseNo;
     }
 
     public void setHouseNo(String houseNo) {
@@ -131,4 +142,43 @@ public class ServiceProvider {
         this.url = url;
     }
 
+    public String getResidentId() {
+        return residentId;
+    }
+
+    public void setResidentId(String residentId) {
+        this.residentId = residentId;
+    }
+
+    public String getFlatId() {
+        return flatId;
+    }
+
+    public void setFlatId(String flatId) {
+        this.flatId = flatId;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
 }

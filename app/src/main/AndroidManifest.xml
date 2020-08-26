@@ -27,7 +27,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/DashboardTheme" />
         <activity
-            android:name=".ui.main.home.guest.add.scan.ScanIDActivity"
+            android:name=".ui.main.home.scan.ScanIDActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"

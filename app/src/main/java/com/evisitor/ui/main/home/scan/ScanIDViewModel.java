@@ -1,4 +1,4 @@
-package com.evisitor.ui.main.home.guest.add.scan;
+package com.evisitor.ui.main.home.scan;
 
 import com.evisitor.data.DataManager;
 import com.evisitor.ui.base.BaseNavigator;

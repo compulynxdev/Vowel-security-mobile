@@ -92,19 +92,18 @@ public class GuestViewModel extends BaseViewModel<GuestNavigator> {
     }
 
     void sendNotification() {
-        getNavigator().showLoading();
         JSONObject object = new JSONObject();
         try {
-            object.put("guestId",getDataManager().getGuestDetail().getGuestId());
-            object.put("accountId",getDataManager().getAccountId());
-            object.put("residentId",getDataManager().getGuestDetail().getResidentId());
+            object.put("id", getDataManager().getGuestDetail().getGuestId());
+            object.put("accountId", getDataManager().getAccountId());
+            object.put("residentId", getDataManager().getSpDetail().getResidentId());
             object.put("premiseHierarchyDetailsId", getDataManager().getGuestDetail().getFlatId());
+            object.put("type", AppConstants.GUEST);
         } catch (JSONException e) {
             e.printStackTrace();
-            getNavigator().hideLoading();
-            getNavigator().showAlert(getNavigator().getContext().getString(R.string.alert),e.toString());
         }
 
+        getNavigator().showLoading();
         RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON,object.toString());
         getDataManager().doGuestSendNotification(getDataManager().getHeader(),body).enqueue(new Callback<ResponseBody>() {
             @Override
@@ -133,7 +132,6 @@ public class GuestViewModel extends BaseViewModel<GuestNavigator> {
     }
 
     void approveByCall() {
-        getNavigator().showLoading();
         JSONObject object = new JSONObject();
         try {
             object.put("id",getDataManager().getGuestDetail().getGuestId());
@@ -142,10 +140,9 @@ public class GuestViewModel extends BaseViewModel<GuestNavigator> {
             object.put("visitor", AppConstants.GUEST);
         } catch (JSONException e) {
             e.printStackTrace();
-            getNavigator().hideLoading();
-            getNavigator().showAlert(getNavigator().getContext().getString(R.string.alert),e.toString());
         }
 
+        getNavigator().showLoading();
         RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON,object.toString());
         getDataManager().doCheckInCheckOut(getDataManager().getHeader(), body).enqueue(new Callback<ResponseBody>() {
             @Override

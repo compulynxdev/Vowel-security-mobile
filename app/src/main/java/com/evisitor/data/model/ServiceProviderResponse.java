@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class ServiceProviderCheckInResponse {
+public class ServiceProviderResponse {
 
     @SerializedName("content")
     private List<ServiceProvider> content;

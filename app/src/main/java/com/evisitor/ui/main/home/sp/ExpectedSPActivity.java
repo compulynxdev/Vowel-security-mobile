@@ -10,29 +10,33 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
-import com.evisitor.data.model.SPResponse;
+import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.databinding.ActivityExpectedSpBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.dialog.AlertDialog;
+import com.evisitor.ui.main.home.scan.ScanIDActivity;
 import com.evisitor.ui.main.idverification.IdVerificationCallback;
 import com.evisitor.ui.main.idverification.IdVerificationDialog;
 import com.evisitor.ui.main.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
+import com.sharma.mrzreader.MrzRecord;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ExpectedSPActivity extends BaseActivity<ActivityExpectedSpBinding, SPViewModel> implements SPNavigator {
 
-    private List<SPResponse.ContentBean> spList;
+    private final int SCAN_RESULT = 101;
     private RecyclerViewScrollListener scrollListener;
     private SPAdapter adapter;
     private int page = 0;
+    private List<ServiceProvider> spList;
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, ExpectedSPActivity.class);
@@ -69,17 +73,32 @@ public class ExpectedSPActivity extends BaseActivity<ActivityExpectedSpBinding, 
             List<VisitorProfileBean> visitorProfileBeanList = getViewModel().setClickVisitorDetail(spList.get(pos));
             VisitorProfileDialog.newInstance(visitorProfileBeanList, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
-                IdVerificationDialog.newInstance(new IdVerificationCallback() {
-                    @Override
-                    public void onScanClick(IdVerificationDialog dialog) {
-                        showCheckinOptions();
-                    }
 
-                    @Override
-                    public void onSubmitClick(IdVerificationDialog dialog) {
-                        showCheckinOptions();
-                    }
-                }).show(getSupportFragmentManager());
+                ServiceProvider tmpBean = getViewModel().getDataManager().getSpDetail();
+                if (tmpBean.getIdentityNo().isEmpty()) {
+                    showCheckinOptions();
+                } else {
+                    IdVerificationDialog.newInstance(new IdVerificationCallback() {
+                        @Override
+                        public void onScanClick(IdVerificationDialog dialog) {
+                            dialog.dismiss();
+                            Intent i = ScanIDActivity.getStartIntent(ExpectedSPActivity.this);
+                            startActivityForResult(i, SCAN_RESULT);
+                        }
+
+                        @Override
+                        public void onSubmitClick(IdVerificationDialog dialog, String id) {
+                            dialog.dismiss();
+
+                            if (tmpBean.getIdentityNo().equals(id))
+                                showCheckinOptions();
+                            else {
+                                showToast(R.string.alert_id);
+                            }
+                        }
+                    }).show(getSupportFragmentManager());
+                }
+
             }).setBtnLabel(getString(R.string.check_in)).show(getSupportFragmentManager());
         });
         adapter.setHasStableIds(true);
@@ -169,22 +188,29 @@ public class ExpectedSPActivity extends BaseActivity<ActivityExpectedSpBinding, 
     }
 
     private void showCheckinOptions() {
-        AlertDialog.newInstance()
+        AlertDialog alert = AlertDialog.newInstance()
                 .setNegativeBtnShow(true)
                 .setCloseBtnShow(true)
                 .setTitle(getString(R.string.check_in))
                 .setMsg(getString(R.string.msg_check_in_option))
-                .setNegativeBtnColor(R.color.colorPrimary)
                 .setPositiveBtnLabel(getString(R.string.approve_by_call))
-                .setNegativeBtnLabel(getString(R.string.send_notification))
-                .setOnNegativeClickListener(dialog1 -> {
-                    dialog1.dismiss();
-                    getViewModel().sendNotification();
-                })
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
                     showCallDialog();
-                }).show(getSupportFragmentManager());
+                });
+
+
+        if (getViewModel().getDataManager().getSpDetail().getHouseNo().isEmpty()) {
+            alert.setNegativeBtnShow(false).show(getSupportFragmentManager());
+        } else {
+            alert.setNegativeBtnColor(R.color.colorPrimary)
+                    .setNegativeBtnLabel(getString(R.string.send_notification))
+                    .setOnNegativeClickListener(dialog1 -> {
+                        dialog1.dismiss();
+                        getViewModel().sendNotification();
+                    })
+                    .show(getSupportFragmentManager());
+        }
 
     }
 
@@ -214,5 +240,21 @@ public class ExpectedSPActivity extends BaseActivity<ActivityExpectedSpBinding, 
     @Override
     public void refreshList() {
         doSearch(getViewDataBinding().etSearch.getText().toString());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SCAN_RESULT && data != null) {
+                MrzRecord mrzRecord = (MrzRecord) data.getSerializableExtra("Record");
+                assert mrzRecord != null;
+                if (getViewModel().getDataManager().getSpDetail().getIdentityNo().equals(mrzRecord.getDocumentNumber()))
+                    showCheckinOptions();
+                else {
+                    showToast(R.string.alert_id);
+                }
+            }
+        }
     }
 }
