@@ -39,19 +39,25 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding,Check
     private GuestCheckOutAdapter adapter;
     private ServiceProviderCheckOutAdapter serviceProviderAdapter;
     private HouseKeepingCheckOutAdapter houseKeepingAdapter;
-    private static TabLayout tabLayout;
-    private static EditText etSearch;
+    private TabLayout tabLayout;
+    private EditText etSearch;
     private int listOf=0;
+    private OnFragmentInteraction listener;
     private RecyclerViewScrollListener scrollListener;
     private int page;
 
-    public static CheckOutFragment newInstance(EditText et_Search, TabLayout tab_Layout) {
+    public static CheckOutFragment newInstance(EditText et_Search, TabLayout tab_Layout,OnFragmentInteraction interaction) {
         CheckOutFragment fragment = new CheckOutFragment();
         Bundle args = new Bundle();
+        fragment.setData(et_Search,tab_Layout,interaction);
         fragment.setArguments(args);
-        etSearch = et_Search;
-        tabLayout = tab_Layout;
         return fragment;
+    }
+
+    private void setData(EditText et_Search, TabLayout tab_layout, OnFragmentInteraction interaction){
+        etSearch=et_Search;
+        tabLayout = tab_layout;
+        listener = interaction;
     }
 
 
@@ -164,6 +170,8 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding,Check
 
             list.addAll(guests);
             adapter.notifyDataSetChanged();
+
+            if (listOf==0) listener.totalCount(list.size());
         });
 
         getViewModel().getHouseKeepingListData().observe(this, list -> {
@@ -174,6 +182,7 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding,Check
 
             houseKeepings.addAll(list);
             houseKeepingAdapter.notifyDataSetChanged();
+            if (listOf==1) listener.totalCount(houseKeepings.size());
         });
 
         getViewModel().getServiceProviderListData().observe(this, guests -> {
@@ -184,6 +193,8 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding,Check
 
             serviceProviders.addAll(guests);
             serviceProviderAdapter.notifyDataSetChanged();
+
+            if (listOf==2) listener.totalCount(serviceProviders.size());
         });
 
     }
@@ -236,7 +247,7 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding,Check
         list.clear();
         serviceProviders.clear();
         houseKeepings.clear();
-        page = 0;
+        this.page = 0;
         getViewModel().getGuestListData(page, search.trim(),listOf);
     }
 
@@ -255,4 +266,7 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding,Check
         doSearch(etSearch.getText().toString());
     }
 
+    public interface OnFragmentInteraction{
+        void totalCount(int size);
+    }
 }

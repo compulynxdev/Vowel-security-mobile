@@ -6,11 +6,9 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
-
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.Guests;
@@ -26,7 +24,6 @@ import com.evisitor.ui.main.home.guest.expected.GuestNavigator;
 import com.evisitor.ui.main.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
 import com.google.android.material.tabs.TabLayout;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,20 +34,25 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding,CheckIn
     private GuestCheckInAdapter adapter;
     private ServiceProviderCheckInAdapter serviceProviderAdapter;
     private HouseKeepingCheckInAdapter houseKeepingAdapter;
-    private static TabLayout tabLayout;
-    private static EditText etSearch;
+    private TabLayout tabLayout;
+    private EditText etSearch;
+    private OnFragmentInteraction listener;
     private RecyclerViewScrollListener scrollListener;
     private int page;
     private int listOf=0;
-     public static CheckInFragment newInstance(EditText et_Search, TabLayout tab_Layout) {
+     public static CheckInFragment newInstance(EditText et_Search, TabLayout tab_Layout, OnFragmentInteraction listener) {
         CheckInFragment fragment = new CheckInFragment();
         Bundle args = new Bundle();
-        tabLayout=tab_Layout;
-        etSearch = et_Search;
+        fragment.setData(et_Search,tab_Layout,listener);
         fragment.setArguments(args);
         return fragment;
     }
 
+    private void setData(EditText et_Search, TabLayout tab_layout, OnFragmentInteraction interaction){
+        etSearch=et_Search;
+        tabLayout = tab_layout;
+        listener = interaction;
+    }
     @Override
     public int getBindingVariable() {
         return com.evisitor.BR.viewModel;
@@ -80,7 +82,6 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding,CheckIn
         list=new ArrayList<>();
         houseKeepings = new ArrayList<>();
         serviceProviders = new ArrayList<>();
-
 
         setUpGuestAdapter();
 
@@ -168,6 +169,8 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding,CheckIn
 
             list.addAll(guests);
             adapter.notifyDataSetChanged();
+
+            if (listOf==0)  listener.totalCount(list.size());
         });
 
         getViewModel().getHouseKeepingListData().observe(this, list -> {
@@ -178,6 +181,8 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding,CheckIn
 
             houseKeepings.addAll(list);
             houseKeepingAdapter.notifyDataSetChanged();
+
+            if (listOf==1) listener.totalCount(houseKeepings.size());
         });
 
         getViewModel().getServiceProviderListData().observe(this, guests -> {
@@ -188,6 +193,8 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding,CheckIn
 
             serviceProviders.addAll(guests);
             serviceProviderAdapter.notifyDataSetChanged();
+
+            if (listOf==2) listener.totalCount(serviceProviders.size());
         });
 
     }
@@ -280,5 +287,9 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding,CheckIn
     private void updateUI() {
         getViewDataBinding().swipeToRefresh.setRefreshing(true);
         doSearch(etSearch.getText().toString());
+    }
+
+    public interface OnFragmentInteraction{
+         void totalCount(int size);
     }
 }

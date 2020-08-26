@@ -17,7 +17,6 @@ import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppLogger;
 import com.evisitor.util.AppUtils;
 import com.evisitor.util.CalenderUtils;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
@@ -203,8 +202,11 @@ public class CheckInViewModel extends BaseViewModel<GuestNavigator> {
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, houseKeeping.getContactNo())));
         if (!houseKeeping.getIdentityNo().isEmpty())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, houseKeeping.getIdentityNo())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_house, houseKeeping.getHouseNo())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, houseKeeping.getHost())));
+        if (!houseKeeping.getHouseNo().isEmpty())
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_house, houseKeeping.getHouseNo())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, houseKeeping.getHost().isEmpty() ? houseKeeping.getCreatedBy() : houseKeeping.getHost())));
+        if (!houseKeeping.getProfile().isEmpty())
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, houseKeeping.getProfile())));
         getNavigator().hideLoading();
         return visitorProfileBeanList;
     }
@@ -223,8 +225,11 @@ public class CheckInViewModel extends BaseViewModel<GuestNavigator> {
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, serviceProvider.getContactNo())));
         if (!serviceProvider.getIdentityNo().isEmpty())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, serviceProvider.getIdentityNo())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_house, serviceProvider.getHouseNo())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, serviceProvider.getHost())));
+        if (!serviceProvider.getHouseNo().isEmpty())
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_house, serviceProvider.getHouseNo())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, serviceProvider.getHost().isEmpty() ? serviceProvider.getCreatedBy() : serviceProvider.getHost())));
+        if (!serviceProvider.getIdentityNo().isEmpty())
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, serviceProvider.getIdentityNo())));
         getNavigator().hideLoading();
         return visitorProfileBeanList;
     }

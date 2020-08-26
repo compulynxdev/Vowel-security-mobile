@@ -11,24 +11,13 @@ import com.evisitor.data.model.HouseKeeping;
 import com.evisitor.data.model.HouseKeepingCheckInResponse;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.model.ServiceProviderCheckInResponse;
-import com.evisitor.data.model.VisitorProfileBean;
-import com.evisitor.ui.base.BaseNavigator;
 import com.evisitor.ui.base.BaseViewModel;
 import com.evisitor.ui.main.home.guest.expected.GuestNavigator;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppLogger;
-import com.evisitor.util.AppUtils;
-import com.evisitor.util.CalenderUtils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;

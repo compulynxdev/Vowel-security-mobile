@@ -30,6 +30,13 @@ public class ServiceProvider {
     @SerializedName("contactNo")
     private String contactNo;
 
+    @SerializedName("createdBy")
+    private String createdBy;
+
+
+    @SerializedName("profile")
+    private String profile;
+
    /* @SerializedName("premiseHierarchyDetailsId")
     private String flatId;*/
 
@@ -93,6 +100,22 @@ public class ServiceProvider {
 
     public String getExpectedVehicleNo() {
         return expectedVehicleNo;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
     }
 
     public void setExpectedVehicleNo(String expectedVehicleNo) {

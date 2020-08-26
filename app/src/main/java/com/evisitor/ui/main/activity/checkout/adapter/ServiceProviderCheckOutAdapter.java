@@ -98,8 +98,9 @@ public class ServiceProviderCheckOutAdapter extends RecyclerView.Adapter<BaseVie
             ServiceProvider bean = list.get(position);
             name.setText(context.getString(R.string.name).concat(" : ").concat(bean.getName()));
             time.setText(context.getString(R.string.time_out).concat(" : ").concat(CalenderUtils.formatDate(bean.getCheckOutTime(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIME_FORMAT)));
-            houseNo.setText(context.getString(R.string.house_no).concat(" : ").concat(bean.getName()));
-            host.setText(context.getString(R.string.host).concat(" : ").concat(bean.getHost()));
+            if (!bean.getHouseNo().isEmpty())
+                houseNo.setText(context.getString(R.string.house_no).concat(" : ").concat(bean.getName()));
+            host.setText(context.getString(R.string.host).concat(" : ").concat(bean.getHost().isEmpty() ? bean.getCreatedBy() : bean.getHost()));
         }
     }
 }

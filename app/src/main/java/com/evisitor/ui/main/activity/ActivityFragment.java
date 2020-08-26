@@ -23,7 +23,6 @@ import java.util.List;
 public class ActivityFragment extends BaseFragment<FragmentActivityBinding, ActivityViewModel> implements BaseNavigator,View.OnClickListener {
 
     private boolean viewSearch = false;
-    private int listOf = 0;
     public static ActivityFragment newInstance() {
         ActivityFragment fragment = new ActivityFragment();
         Bundle args = new Bundle();
@@ -66,8 +65,8 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
 
     private void setUpPagerAdapter() {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(CheckInFragment.newInstance(getViewDataBinding().etSearch,getViewDataBinding().tabLayout));
-        adapter.addFragment(CheckOutFragment.newInstance(getViewDataBinding().etSearch,getViewDataBinding().tabLayout));
+        adapter.addFragment(CheckInFragment.newInstance(getViewDataBinding().etSearch, getViewDataBinding().tabLayout, size -> getViewDataBinding().tvIn.setText(getString(R.string.check_in_with_count,String.valueOf(size)))));
+        adapter.addFragment(CheckOutFragment.newInstance(getViewDataBinding().etSearch, getViewDataBinding().tabLayout, size -> getViewDataBinding().tvOut.setText(getString(R.string.check_out_with_count,String.valueOf(size)))));
         getViewDataBinding().viewPager.setOffscreenPageLimit(2);
 
         getViewDataBinding().viewPager.setAdapter(adapter);
