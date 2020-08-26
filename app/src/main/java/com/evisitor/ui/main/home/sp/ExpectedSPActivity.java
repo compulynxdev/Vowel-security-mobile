@@ -19,6 +19,8 @@ import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.databinding.ActivityExpectedSpBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.dialog.AlertDialog;
+import com.evisitor.ui.main.idverification.IdVerificationCallback;
+import com.evisitor.ui.main.idverification.IdVerificationDialog;
 import com.evisitor.ui.main.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
 
@@ -67,7 +69,17 @@ public class ExpectedSPActivity extends BaseActivity<ActivityExpectedSpBinding, 
             List<VisitorProfileBean> visitorProfileBeanList = getViewModel().setClickVisitorDetail(spList.get(pos));
             VisitorProfileDialog.newInstance(visitorProfileBeanList, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
-                showCheckinOptions();
+                IdVerificationDialog.newInstance(new IdVerificationCallback() {
+                    @Override
+                    public void onScanClick(IdVerificationDialog dialog) {
+                        showCheckinOptions();
+                    }
+
+                    @Override
+                    public void onSubmitClick(IdVerificationDialog dialog) {
+                        showCheckinOptions();
+                    }
+                }).show(getSupportFragmentManager());
             }).setBtnLabel(getString(R.string.check_in)).show(getSupportFragmentManager());
         });
         adapter.setHasStableIds(true);
