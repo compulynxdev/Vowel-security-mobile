@@ -106,8 +106,18 @@ public class GuestCheckInAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             Guests bean = list.get(position);
             name.setText(context.getString(R.string.data_name,bean.getName()));
             time.setText(context.getString(R.string.data_time_in,CalenderUtils.formatDate(bean.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIME_FORMAT_AM)));
-            houseNo.setText(context.getString(R.string.data_house,bean.getName()));
-            host.setText(context.getString(R.string.data_host,bean.getHost()));
+            if (!bean.getHouseNo().isEmpty()) {
+                houseNo.setVisibility(View.VISIBLE);
+                houseNo.setText(context.getString(R.string.data_house, bean.getHouseNo()));
+                host.setText(context.getString(R.string.data_host,bean.getHost()));
+
+            }
+            else{
+                houseNo.setVisibility(View.GONE);
+                houseNo.setText("");
+                host.setText(context.getString(R.string.data_host,bean.getCreatedBy()));
+
+            }
         }
     }
 }

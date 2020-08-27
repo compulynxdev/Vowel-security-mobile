@@ -95,7 +95,7 @@ public class ServiceProvider {
     }
 
     public String getHost() {
-        return host;
+        return host == null ? "" : host;
     }
 
     public void setHost(String host) {

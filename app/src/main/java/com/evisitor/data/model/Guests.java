@@ -31,6 +31,9 @@ public class Guests {
     @SerializedName("documentId")
     private String identityNo;
 
+    @SerializedName("createdBy")
+    private String createdBy;
+
     @SerializedName("contactNo")
     private String contactNo;
 
@@ -169,5 +172,13 @@ public class Guests {
 
     public void setHost(String host) {
         this.host = host;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 }

@@ -102,7 +102,7 @@ public class HouseKeeping {
     }
 
     public String getHost() {
-        return host;
+        return host==null ? "": host;
     }
 
     public void setHost(String host) {
