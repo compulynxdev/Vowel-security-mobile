@@ -1,36 +1,28 @@
 package com.evisitor.ui.main.activity.checkout;
 
-
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
-
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
-import com.evisitor.data.model.CheckInOut;
 import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.HouseKeeping;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.databinding.FragmentCheckOutBinding;
 import com.evisitor.ui.base.BaseFragment;
-import com.evisitor.ui.base.BaseNavigator;
 import com.evisitor.ui.main.activity.checkout.adapter.GuestCheckOutAdapter;
 import com.evisitor.ui.main.activity.checkout.adapter.HouseKeepingCheckOutAdapter;
 import com.evisitor.ui.main.activity.checkout.adapter.ServiceProviderCheckOutAdapter;
 import com.evisitor.ui.main.home.guest.expected.GuestNavigator;
-import com.evisitor.util.CalenderUtils;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
 import com.google.android.material.tabs.TabLayout;
-
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding,CheckOutViewModel> implements GuestNavigator {
     private List<Guests> list;
@@ -44,7 +36,7 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding,Check
     private int listOf=0;
     private OnFragmentInteraction listener;
     private RecyclerViewScrollListener scrollListener;
-    private int page;
+    private int page=0;
 
     public static CheckOutFragment newInstance(EditText et_Search, TabLayout tab_Layout,OnFragmentInteraction interaction) {
         CheckOutFragment fragment = new CheckOutFragment();
@@ -126,10 +118,6 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding,Check
 
             }
         });
-
-        getViewDataBinding().swipeToRefresh.setOnRefreshListener(this::updateUI);
-        getViewDataBinding().swipeToRefresh.setColorSchemeResources(R.color.colorPrimary);
-
         setUpSearch();
 
         scrollListener = new RecyclerViewScrollListener() {
@@ -196,23 +184,30 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding,Check
 
             if (listOf==2) listener.totalCount(serviceProviders.size());
         });
-
+        updateUI();
     }
 
     private void setUpHouseKeeperAdapter() {
         houseKeepingAdapter = new HouseKeepingCheckOutAdapter(houseKeepings, getBaseActivity());
+        houseKeepingAdapter.setHasStableIds(true);
     }
 
     private void setUpServiceProviderAdapter() {
         serviceProviderAdapter = new ServiceProviderCheckOutAdapter(serviceProviders,getBaseActivity());
+        serviceProviderAdapter.setHasStableIds(true);
     }
 
     private void setUpGuestAdapter() {
         adapter = new GuestCheckOutAdapter(list,getBaseActivity());
+        adapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(adapter);
     }
 
     private void setUpSearch() {
+
+        getViewDataBinding().swipeToRefresh.setOnRefreshListener(this::updateUI);
+        getViewDataBinding().swipeToRefresh.setColorSchemeResources(R.color.colorPrimary);
+
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

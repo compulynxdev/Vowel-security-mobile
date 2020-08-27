@@ -22,7 +22,6 @@ import java.util.List;
 
 public class ActivityFragment extends BaseFragment<FragmentActivityBinding, ActivityViewModel> implements BaseNavigator,View.OnClickListener {
 
-    private boolean viewSearch = false;
     public static ActivityFragment newInstance() {
         ActivityFragment fragment = new ActivityFragment();
         Bundle args = new Bundle();
@@ -56,8 +55,8 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
         imgSearch.setVisibility(View.VISIBLE);
         imgSearch.setOnClickListener(this);
         getViewDataBinding().tvIn.setOnClickListener(this);
-        getViewDataBinding().tvIn.setText(getString(R.string.check_in_with_count, "1"));
-        getViewDataBinding().tvOut.setText(getString(R.string.check_out_with_count, "1"));
+        getViewDataBinding().tvIn.setText(getString(R.string.check_in_with_count, "0"));
+        getViewDataBinding().tvOut.setText(getString(R.string.check_out_with_count, "0"));
         getViewDataBinding().tvOut.setOnClickListener(this);
 
         setUpPagerAdapter();
@@ -73,7 +72,6 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
         getViewDataBinding().viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                getViewDataBinding().etSearch.setText("");
             }
 
             @Override
@@ -109,15 +107,12 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
                 break;
 
             case R.id.img_search :
-                if (!viewSearch) {
-                    getViewDataBinding().searchBar.setVisibility(View.VISIBLE);
+                hideKeyboard();
+                getViewDataBinding().searchBar.setVisibility(getViewDataBinding().searchBar.getVisibility() == View.GONE
+                        ? View.VISIBLE : View.GONE);
+
+                if (!getViewDataBinding().etSearch.getText().toString().trim().isEmpty()) {
                     getViewDataBinding().etSearch.setText("");
-                    viewSearch = true;
-                }
-                else{
-                    getViewDataBinding().searchBar.setVisibility(View.GONE);
-                    getViewDataBinding().etSearch.setText("");
-                    viewSearch = false;
                 }
                 break;
 

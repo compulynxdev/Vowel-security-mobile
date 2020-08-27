@@ -223,7 +223,7 @@ public class CheckInViewModel extends BaseViewModel<GuestNavigator> {
         getDataManager().setGuestDetail(guests);
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, serviceProvider.getName())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time, CalenderUtils.formatDate(serviceProvider.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIME_FORMAT_AM))));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), serviceProvider.getExpectedVehicleNo(), false));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), serviceProvider.getExpectedVehicleNo(), true));
         if (!serviceProvider.getContactNo().isEmpty())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, serviceProvider.getContactNo())));
         if (!serviceProvider.getIdentityNo().isEmpty())

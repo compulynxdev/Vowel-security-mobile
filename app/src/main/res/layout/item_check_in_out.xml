@@ -33,6 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/linear"
+        android:gravity="center_vertical"
         android:orientation="vertical"
         app:layout_constraintStart_toEndOf="@id/guideline"
         app:layout_constraintTop_toTopOf="parent"
@@ -48,21 +49,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
-            
             android:id="@+id/tv_time"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            
             android:textSize="14sp"
             android:id="@+id/tv_house_no"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            
             android:textSize="14sp"
             android:id="@+id/tv_host"/>
 
@@ -70,7 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
-
+            android:visibility="gone"
             android:id="@+id/tv_type"/>
 
     </LinearLayout>

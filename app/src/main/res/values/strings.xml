@@ -178,5 +178,7 @@
     <string name="or">OR</string>
     <string name="alert_id">Please enter valid identity number</string>
     <string name="please_verify_identity_card_for_check_in">Please verify identity card \nfor check-in</string>
+    <string name="data_time_in">Time In : %s</string>
+    <string name="data_time_out">Time Out : %s</string>
 
 </resources>

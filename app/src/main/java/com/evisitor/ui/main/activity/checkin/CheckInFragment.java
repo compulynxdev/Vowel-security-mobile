@@ -197,6 +197,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding,CheckIn
             if (listOf==2) listener.totalCount(serviceProviders.size());
         });
 
+        updateUI();
     }
 
     private void setUpHouseKeeperAdapter() {

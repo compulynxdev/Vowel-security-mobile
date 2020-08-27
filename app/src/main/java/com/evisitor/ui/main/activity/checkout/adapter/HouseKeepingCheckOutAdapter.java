@@ -77,7 +77,6 @@ public class HouseKeepingCheckOutAdapter extends RecyclerView.Adapter<BaseViewHo
         return list.size();
     }
 
-
     public class ViewHolder extends BaseViewHolder {
 
         ImageView imgVisitor;
@@ -96,11 +95,12 @@ public class HouseKeepingCheckOutAdapter extends RecyclerView.Adapter<BaseViewHo
         @Override
         public void onBind(int position) {
             HouseKeeping bean = list.get(position);
-            name.setText(context.getString(R.string.name).concat(" : ").concat(bean.getName()));
-            time.setText(context.getString(R.string.time_out).concat(" : ").concat(CalenderUtils.formatDate(bean.getCheckOutTime(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIME_FORMAT)));
+            name.setText(context.getString(R.string.data_name,bean.getName()));
+            time.setText(context.getString(R.string.data_time_in,CalenderUtils.formatDate(bean.getCheckOutTime(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIME_FORMAT)));
             if (!bean.getHouseNo().isEmpty())
-                houseNo.setText(context.getString(R.string.house_no).concat(" : ").concat(bean.getName()));
-            host.setText(context.getString(R.string.host).concat(" : ").concat(bean.getHost().isEmpty() ? bean.getCreatedBy() : bean.getHost()));
+                houseNo.setText(context.getString(R.string.data_house,bean.getName()));
+            else houseNo.setText("");
+            host.setText(context.getString(R.string.data_host,bean.getHost().isEmpty() ? bean.getCreatedBy() : bean.getHost()));
         }
     }
 }
