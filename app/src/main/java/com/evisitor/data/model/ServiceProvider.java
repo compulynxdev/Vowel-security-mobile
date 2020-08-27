@@ -54,6 +54,16 @@ public class ServiceProvider {
     private String expectedVehicleNo;
 
 
+    @SerializedName("checkOutFeature")
+    private boolean checkOutFeature;
+
+    @SerializedName("hostCheckOutTime")
+    private String hostCheckOutTime;
+
+    @SerializedName("isHostCheckOut")
+    private boolean isHostCheckOut;
+
+
     public String getName() {
         return name;
     }
@@ -72,6 +82,30 @@ public class ServiceProvider {
 
     public String getCheckInTime() {
         return checkInTime;
+    }
+
+    public boolean isCheckOutFeature() {
+        return checkOutFeature;
+    }
+
+    public void setCheckOutFeature(boolean checkOutFeature) {
+        this.checkOutFeature = checkOutFeature;
+    }
+
+    public String getHostCheckOutTime() {
+        return hostCheckOutTime;
+    }
+
+    public void setHostCheckOutTime(String hostCheckOutTime) {
+        this.hostCheckOutTime = hostCheckOutTime;
+    }
+
+    public boolean isHostCheckOut() {
+        return isHostCheckOut;
+    }
+
+    public void setHostCheckOut(boolean hostCheckOut) {
+        isHostCheckOut = hostCheckOut;
     }
 
     public void setCheckInTime(String checkInTime) {

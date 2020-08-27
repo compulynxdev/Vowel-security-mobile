@@ -187,6 +187,8 @@ public class CheckInViewModel extends BaseViewModel<GuestNavigator> {
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, guests.getIdentityNo())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_house, guests.getHouseNo())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, guests.getHost())));
+        if (guests.isCheckOutFeature())
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_is_checkout, guests.isHostCheckOut())));
         getNavigator().hideLoading();
         return visitorProfileBeanList;
     }
@@ -210,6 +212,8 @@ public class CheckInViewModel extends BaseViewModel<GuestNavigator> {
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, houseKeeping.getHost().isEmpty() ? houseKeeping.getCreatedBy() : houseKeeping.getHost())));
         if (!houseKeeping.getProfile().isEmpty())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, houseKeeping.getProfile())));
+        if (houseKeeping.isCheckOutFeature())
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_is_checkout, houseKeeping.isHostCheckOut())));
         getNavigator().hideLoading();
         return visitorProfileBeanList;
     }
@@ -233,6 +237,8 @@ public class CheckInViewModel extends BaseViewModel<GuestNavigator> {
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, serviceProvider.getHost().isEmpty() ? serviceProvider.getCreatedBy() : serviceProvider.getHost())));
         if (!serviceProvider.getIdentityNo().isEmpty())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, serviceProvider.getIdentityNo())));
+        if (serviceProvider.isCheckOutFeature())
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_is_checkout, serviceProvider.isHostCheckOut())));
         getNavigator().hideLoading();
         return visitorProfileBeanList;
     }

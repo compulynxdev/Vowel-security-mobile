@@ -57,6 +57,16 @@ public class HouseKeeping {
     @SerializedName("id")
     private String houseKeeperId;
 
+
+    @SerializedName("checkOutFeature")
+    private boolean checkOutFeature;
+
+    @SerializedName("hostCheckOutTime")
+    private String hostCheckOutTime;
+
+    @SerializedName("isHostCheckOut")
+    private boolean isHostCheckOut;
+
     //@SerializedName("image")
     private String url;
 
@@ -87,6 +97,30 @@ public class HouseKeeping {
 
     public String getCheckOutTime() {
         return checkOutTime;
+    }
+
+    public boolean isCheckOutFeature() {
+        return checkOutFeature;
+    }
+
+    public void setCheckOutFeature(boolean checkOutFeature) {
+        this.checkOutFeature = checkOutFeature;
+    }
+
+    public String getHostCheckOutTime() {
+        return hostCheckOutTime;
+    }
+
+    public void setHostCheckOutTime(String hostCheckOutTime) {
+        this.hostCheckOutTime = hostCheckOutTime;
+    }
+
+    public boolean isHostCheckOut() {
+        return isHostCheckOut;
+    }
+
+    public void setHostCheckOut(boolean hostCheckOut) {
+        isHostCheckOut = hostCheckOut;
     }
 
     public void setCheckOutTime(String checkOutTime) {

@@ -57,8 +57,42 @@ public class Guests {
     @SerializedName("id")
     private String guestId;
 
+
+    @SerializedName("checkOutFeature")
+    private boolean checkOutFeature;
+
+    @SerializedName("hostCheckOutTime")
+    private String hostCheckOutTime;
+
+    @SerializedName("isHostCheckOut")
+    private boolean isHostCheckOut;
+
     //@SerializedName("image")
     private String url;
+
+    public boolean isCheckOutFeature() {
+        return checkOutFeature;
+    }
+
+    public void setCheckOutFeature(boolean checkOutFeature) {
+        this.checkOutFeature = checkOutFeature;
+    }
+
+    public String getHostCheckOutTime() {
+        return hostCheckOutTime;
+    }
+
+    public void setHostCheckOutTime(String hostCheckOutTime) {
+        this.hostCheckOutTime = hostCheckOutTime;
+    }
+
+    public boolean isHostCheckOut() {
+        return isHostCheckOut;
+    }
+
+    public void setHostCheckOut(boolean hostCheckOut) {
+        isHostCheckOut = hostCheckOut;
+    }
 
     public boolean isOwner() {
         return isOwner;
