@@ -120,7 +120,10 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
     }
 
     boolean doVerifyInputs(String identityNo, String idType, String name, String contact, String address, String gender, String houseId, String ownerId, String residentId) {
-        if (!identityNo.isEmpty() && idType.isEmpty()) {
+        if (getDataManager().isIdentifyFeature() && identityNo.isEmpty()) {
+            getNavigator().showToast(R.string.alert_empty_id);
+            return false;
+        } else if (!identityNo.isEmpty() && idType.isEmpty()) {
             getNavigator().showToast(R.string.alert_select_id);
             return false;
         } else if (name.isEmpty()) {

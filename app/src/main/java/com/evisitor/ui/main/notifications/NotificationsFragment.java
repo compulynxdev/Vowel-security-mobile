@@ -13,7 +13,6 @@ import com.evisitor.data.model.Notifications;
 import com.evisitor.databinding.FragmentNotificationsBinding;
 import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.base.BaseNavigator;
-import com.evisitor.util.CalenderUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +52,7 @@ public class NotificationsFragment extends BaseFragment<FragmentNotificationsBin
         tvTitle.setText(R.string.title_notification);
 
         Notifications notifications = new Notifications();
-        notifications.setTitle("Suresh");
+      /*  notifications.setTitle("Suresh");
         notifications.setTime(CalenderUtils.getCurrentTime());
         notifications.setMsg("Check in approved");
         notificationsList.add(notifications);
@@ -62,7 +61,7 @@ public class NotificationsFragment extends BaseFragment<FragmentNotificationsBin
         notifications.setTitle("Suresh");
         notifications.setTime(CalenderUtils.getCurrentTime());
         notifications.setMsg("Check in rejected");
-        notificationsList.add(notifications);
+        notificationsList.add(notifications);*/
 
         adapter = new NotificationAdapter(notificationsList);
         getViewDataBinding().recyclerView.setAdapter(adapter);

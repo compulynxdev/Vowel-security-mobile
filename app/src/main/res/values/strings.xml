@@ -94,6 +94,7 @@
     <string name="enter_address">Enter Address</string>
 
     <!--Add Guest Check-In Validation-->
+    <string name="alert_empty_id">Please enter identity number.</string>
     <string name="alert_select_id">Please select identity type.</string>
     <string name="alert_empty_name">Please enter name.</string>
     <string name="alert_empty_contact">Please enter contact number.</string>

@@ -120,7 +120,7 @@ public class Guests {
     }
 
     public String getIdentityNo() {
-        return identityNo;
+        return identityNo == null ? "" : identityNo;
     }
 
     public void setIdentityNo(String identityNo) {

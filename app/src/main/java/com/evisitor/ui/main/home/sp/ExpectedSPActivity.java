@@ -189,7 +189,6 @@ public class ExpectedSPActivity extends BaseActivity<ActivityExpectedSpBinding, 
 
     private void showCheckinOptions() {
         AlertDialog alert = AlertDialog.newInstance()
-                .setNegativeBtnShow(true)
                 .setCloseBtnShow(true)
                 .setTitle(getString(R.string.check_in))
                 .setMsg(getString(R.string.msg_check_in_option))
@@ -200,10 +199,12 @@ public class ExpectedSPActivity extends BaseActivity<ActivityExpectedSpBinding, 
                 });
 
 
-        if (getViewModel().getDataManager().getSpDetail().getHouseNo().isEmpty()) {
+        ServiceProvider bean = getViewModel().getDataManager().getSpDetail();
+        if (!bean.isNotificationStatus() || bean.getHouseNo().isEmpty()) {
             alert.setNegativeBtnShow(false).show(getSupportFragmentManager());
         } else {
             alert.setNegativeBtnColor(R.color.colorPrimary)
+                    .setNegativeBtnShow(true)
                     .setNegativeBtnLabel(getString(R.string.send_notification))
                     .setOnNegativeClickListener(dialog1 -> {
                         dialog1.dismiss();
@@ -211,7 +212,6 @@ public class ExpectedSPActivity extends BaseActivity<ActivityExpectedSpBinding, 
                     })
                     .show(getSupportFragmentManager());
         }
-
     }
 
     private void showCallDialog() {

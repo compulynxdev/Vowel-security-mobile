@@ -22,6 +22,8 @@ import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.dialog.AlertDialog;
 import com.evisitor.ui.main.home.guest.add.AddGuestActivity;
 import com.evisitor.ui.main.home.scan.ScanIDActivity;
+import com.evisitor.ui.main.idverification.IdVerificationCallback;
+import com.evisitor.ui.main.idverification.IdVerificationDialog;
 import com.evisitor.ui.main.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
 import com.sharma.mrzreader.MrzRecord;
@@ -87,11 +89,34 @@ public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBin
     private void setUpAdapter() {
         guestsList = new ArrayList<>();
         adapter = new GuestAdapter(guestsList, this, pos -> {
-            Guests guest = guestsList.get(pos);
-            List<VisitorProfileBean> visitorProfileBeanList = getViewModel().setClickVisitorDetail(guest);
+            List<VisitorProfileBean> visitorProfileBeanList = getViewModel().setClickVisitorDetail(guestsList.get(pos));
             VisitorProfileDialog.newInstance(visitorProfileBeanList, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
-                showCheckinOptions();
+
+                Guests tmpBean = getViewModel().getDataManager().getGuestDetail();
+                if (getViewModel().getDataManager().isIdentifyFeature() || tmpBean.getIdentityNo().isEmpty()) {
+                    showCheckinOptions();
+                } else {
+                    IdVerificationDialog.newInstance(new IdVerificationCallback() {
+                        @Override
+                        public void onScanClick(IdVerificationDialog dialog) {
+                            dialog.dismiss();
+                            Intent i = ScanIDActivity.getStartIntent(ExpectedGuestActivity.this);
+                            startActivityForResult(i, SCAN_RESULT);
+                        }
+
+                        @Override
+                        public void onSubmitClick(IdVerificationDialog dialog, String id) {
+                            dialog.dismiss();
+
+                            if (tmpBean.getIdentityNo().equals(id))
+                                showCheckinOptions();
+                            else {
+                                showToast(R.string.alert_id);
+                            }
+                        }
+                    }).show(getSupportFragmentManager());
+                }
             }).setBtnLabel(getString(R.string.check_in)).show(getSupportFragmentManager());
         });
         adapter.setHasStableIds(true);
@@ -181,23 +206,30 @@ public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBin
     }
 
     private void showCheckinOptions() {
-        AlertDialog.newInstance()
-                .setNegativeBtnShow(true)
+        AlertDialog alert = AlertDialog.newInstance()
                 .setCloseBtnShow(true)
                 .setTitle(getString(R.string.check_in))
                 .setMsg(getString(R.string.msg_check_in_option))
-                .setNegativeBtnColor(R.color.colorPrimary)
                 .setPositiveBtnLabel(getString(R.string.approve_by_call))
-                .setNegativeBtnLabel(getString(R.string.send_notification))
-                .setOnNegativeClickListener(dialog1 -> {
-                    dialog1.dismiss();
-                    getViewModel().sendNotification();
-                })
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
                     showCallDialog();
-                }).show(getSupportFragmentManager());
+                });
 
+
+        Guests bean = getViewModel().getDataManager().getGuestDetail();
+        if (!bean.isNotificationStatus() || bean.getHouseNo().isEmpty()) {
+            alert.setNegativeBtnShow(false).show(getSupportFragmentManager());
+        } else {
+            alert.setNegativeBtnColor(R.color.colorPrimary)
+                    .setNegativeBtnShow(true)
+                    .setNegativeBtnLabel(getString(R.string.send_notification))
+                    .setOnNegativeClickListener(dialog1 -> {
+                        dialog1.dismiss();
+                        getViewModel().sendNotification();
+                    })
+                    .show(getSupportFragmentManager());
+        }
     }
 
     private void showCallDialog() {

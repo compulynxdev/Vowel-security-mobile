@@ -18,6 +18,7 @@ import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppLogger;
 import com.evisitor.util.AppUtils;
 import com.evisitor.util.CalenderUtils;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -53,7 +54,6 @@ public class CheckInViewModel extends BaseViewModel<GuestNavigator> {
     MutableLiveData<List<ServiceProvider>> getServiceProviderListData() {
         return serviceProviderListData;
     }
-
 
     void getGuestListData(int page, String search,int listOf) {
         AppLogger.e("MYPage", page + " : " + search);
@@ -193,7 +193,6 @@ public class CheckInViewModel extends BaseViewModel<GuestNavigator> {
         return visitorProfileBeanList;
     }
 
-
     List<VisitorProfileBean> getHouseKeepingCheckInProfileBean(HouseKeeping houseKeeping) {
         getNavigator().showLoading();
         List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
@@ -211,13 +210,12 @@ public class CheckInViewModel extends BaseViewModel<GuestNavigator> {
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_house, houseKeeping.getHouseNo())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, houseKeeping.getHost().isEmpty() ? houseKeeping.getCreatedBy() : houseKeeping.getHost())));
         if (!houseKeeping.getProfile().isEmpty())
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, houseKeeping.getProfile())));
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_profile, houseKeeping.getProfile())));
         if (houseKeeping.isCheckOutFeature())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_is_checkout, houseKeeping.isHostCheckOut())));
         getNavigator().hideLoading();
         return visitorProfileBeanList;
     }
-
 
     List<VisitorProfileBean> getServiceProviderCheckInProfileBean(ServiceProvider serviceProvider) {
         getNavigator().showLoading();
@@ -305,5 +303,4 @@ public class CheckInViewModel extends BaseViewModel<GuestNavigator> {
             }
         });
     }
-
 }

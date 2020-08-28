@@ -6,9 +6,11 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
+
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.Guests;
@@ -24,10 +26,12 @@ import com.evisitor.ui.main.home.guest.expected.GuestNavigator;
 import com.evisitor.ui.main.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
 import com.google.android.material.tabs.TabLayout;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class CheckInFragment extends BaseFragment<FragmentCheckInBinding,CheckInViewModel> implements GuestNavigator {
+
     private List<Guests> list;
     private List<ServiceProvider> serviceProviders;
     private List<HouseKeeping> houseKeepings;
@@ -207,7 +211,6 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding,CheckIn
                 visitorProfileDialog.dismiss();
                 getViewModel().checkOut(1);
             }).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
-
         });
      }
 
@@ -218,7 +221,6 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding,CheckIn
                 visitorProfileDialog.dismiss();
                 getViewModel().checkOut(2);
             }).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
-
         });
      }
 
@@ -229,11 +231,9 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding,CheckIn
                 visitorProfileDialog.dismiss();
                 getViewModel().checkOut(0);
             }).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
-
         });
 
         getViewDataBinding().recyclerView.setAdapter(adapter);
-
     }
 
     private void setUpSearch() {
@@ -263,7 +263,6 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding,CheckIn
             }
             return false;
         });
-
     }
 
     private void doSearch(String search) {
