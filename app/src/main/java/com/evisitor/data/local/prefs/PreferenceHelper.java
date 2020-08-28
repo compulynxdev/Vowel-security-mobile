@@ -48,4 +48,8 @@ public interface PreferenceHelper {
 
     void logout(Activity activity);
 
+    boolean isIdentifyFeature();
+
+    void setIdentifyFeature(boolean identityFeature);
+
 }

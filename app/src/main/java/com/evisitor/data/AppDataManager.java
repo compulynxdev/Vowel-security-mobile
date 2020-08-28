@@ -108,6 +108,16 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public boolean isIdentifyFeature() {
+        return preferenceHelper.isIdentifyFeature();
+    }
+
+    @Override
+    public void setIdentifyFeature(boolean notificationStatus) {
+        preferenceHelper.setIdentifyFeature(notificationStatus);
+    }
+
+    @Override
     public String getLanguage() {
         return preferenceHelper.getLanguage();
     }

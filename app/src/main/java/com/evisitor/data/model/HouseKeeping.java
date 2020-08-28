@@ -67,6 +67,10 @@ public class HouseKeeping {
     @SerializedName("isHostCheckOut")
     private boolean isHostCheckOut;
 
+
+    @SerializedName("notificationStatus")
+    private boolean notificationStatus;
+
     //@SerializedName("image")
     private String url;
 
@@ -173,5 +177,13 @@ public class HouseKeeping {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public boolean isNotificationStatus() {
+        return notificationStatus;
+    }
+
+    public void setNotificationStatus(boolean notificationStatus) {
+        this.notificationStatus = notificationStatus;
     }
 }

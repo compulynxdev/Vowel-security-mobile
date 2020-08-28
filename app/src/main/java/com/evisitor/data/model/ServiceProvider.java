@@ -64,6 +64,17 @@ public class ServiceProvider {
     private boolean isHostCheckOut;
 
 
+    @SerializedName("notificationStatus")
+    private boolean notificationStatus;
+
+    public boolean isNotificationStatus() {
+        return notificationStatus;
+    }
+
+    public void setNotificationStatus(boolean notificationStatus) {
+        this.notificationStatus = notificationStatus;
+    }
+
     public String getName() {
         return name;
     }

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
-import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.UserDetail;
 import com.evisitor.ui.login.LoginActivity;
 
@@ -32,6 +31,7 @@ public class AppPreferenceHelper implements PreferenceHelper {
     private static final String USER_GENDER = "USER_GENDER";
     private static final String USER_ADDRESS = "USER_ADDRESS";
     private static final String USER_CONTACT = "USER_CONTACT";
+    private static final String IDENTIFY_FEATURE = "IDENTIFY_FEATURE";
 
     private final SharedPreferences mPrefs;
 
@@ -150,6 +150,17 @@ public class AppPreferenceHelper implements PreferenceHelper {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         activity.startActivity(intent);
         activity.finish();
+    }
+
+    @Override
+    public boolean isIdentifyFeature() {
+        return mPrefs.getBoolean(IDENTIFY_FEATURE, false);
+    }
+
+    @Override
+    public void setIdentifyFeature(boolean notificationStatus) {
+        mPrefs.edit().putBoolean(IDENTIFY_FEATURE,notificationStatus).apply();
+
     }
 
 }
