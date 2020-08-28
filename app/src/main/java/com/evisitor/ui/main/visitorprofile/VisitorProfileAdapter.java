@@ -16,6 +16,7 @@ import com.evisitor.EVisitor;
 import com.evisitor.R;
 import com.evisitor.data.DataManager;
 import com.evisitor.data.model.Guests;
+import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.ui.base.BaseViewHolder;
 
@@ -83,8 +84,17 @@ public class VisitorProfileAdapter extends RecyclerView.Adapter<BaseViewHolder> 
                     @Override
                     public void afterTextChanged(Editable s) {
                         Guests guests = dataManager.getGuestDetail();
-                        guests.setExpectedVehicleNo(et_data.getText().toString());
-                        dataManager.setGuestDetail(guests);
+                        if (guests != null) {
+                            guests.setEnteredVehicleNo(et_data.getText().toString());
+                            dataManager.setGuestDetail(guests);
+                            return;
+                        }
+
+                        ServiceProvider spBean = dataManager.getSpDetail();
+                        if (spBean != null) {
+                            spBean.setEnteredVehicleNo(et_data.getText().toString());
+                            dataManager.setSPDetail(spBean);
+                        }
                     }
                 });
             } else {

@@ -2,6 +2,7 @@ package com.evisitor.data;
 
 import com.evisitor.data.local.prefs.PreferenceHelper;
 import com.evisitor.data.model.Guests;
+import com.evisitor.data.model.HouseKeeping;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.remote.ApiHelper;
 import com.google.gson.Gson;
@@ -21,4 +22,8 @@ public interface DataManager extends ApiHelper, PreferenceHelper {
     void setSPDetail(ServiceProvider spDetail);
 
     ServiceProvider getSpDetail();
+
+    HouseKeeping getHouseKeeping();
+
+    void setHouseKeeping(HouseKeeping houseKeeping);
 }

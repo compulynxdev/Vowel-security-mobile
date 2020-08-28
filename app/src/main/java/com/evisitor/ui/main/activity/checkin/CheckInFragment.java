@@ -205,8 +205,8 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding,CheckIn
     }
 
     private void setUpHouseKeeperAdapter() {
-        houseKeepingAdapter = new HouseKeepingCheckInAdapter(houseKeepings, getBaseActivity(), guests -> {
-            List<VisitorProfileBean> beans = getViewModel().getHouseKeepingCheckInProfileBean(guests);
+        houseKeepingAdapter = new HouseKeepingCheckInAdapter(houseKeepings, getBaseActivity(), houseKeeping -> {
+            List<VisitorProfileBean> beans = getViewModel().getHouseKeepingCheckInProfileBean(houseKeeping);
             VisitorProfileDialog.newInstance(beans, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
                 getViewModel().checkOut(1);
@@ -215,8 +215,8 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding,CheckIn
      }
 
     private void setUpServiceProviderAdapter() {
-        serviceProviderAdapter = new ServiceProviderCheckInAdapter(serviceProviders, getBaseActivity(), guests -> {
-            List<VisitorProfileBean> beans = getViewModel().getServiceProviderCheckInProfileBean(guests);
+        serviceProviderAdapter = new ServiceProviderCheckInAdapter(serviceProviders, getBaseActivity(), serviceProvider -> {
+            List<VisitorProfileBean> beans = getViewModel().getServiceProviderCheckInProfileBean(serviceProvider);
             VisitorProfileDialog.newInstance(beans, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
                 getViewModel().checkOut(2);

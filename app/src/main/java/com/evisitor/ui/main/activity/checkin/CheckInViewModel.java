@@ -180,7 +180,7 @@ public class CheckInViewModel extends BaseViewModel<GuestNavigator> {
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, guests.getName())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time, CalenderUtils.formatDate(guests.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIME_FORMAT_AM))));
 
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), guests.getExpectedVehicleNo(), true));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_vehicle, guests.getEnteredVehicleNo().isEmpty() ? "N/A" : guests.getEnteredVehicleNo())));
         if (!guests.getContactNo().isEmpty())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, guests.getContactNo())));
         if (!guests.getIdentityNo().isEmpty())
@@ -196,9 +196,7 @@ public class CheckInViewModel extends BaseViewModel<GuestNavigator> {
     List<VisitorProfileBean> getHouseKeepingCheckInProfileBean(HouseKeeping houseKeeping) {
         getNavigator().showLoading();
         List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
-        Guests guests = new Guests();
-        guests.setGuestId(houseKeeping.getHouseKeeperId());
-        getDataManager().setGuestDetail(guests);
+        getDataManager().setHouseKeeping(houseKeeping);
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, houseKeeping.getName())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time, CalenderUtils.formatDate(houseKeeping.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIME_FORMAT_AM))));
 
@@ -220,12 +218,10 @@ public class CheckInViewModel extends BaseViewModel<GuestNavigator> {
     List<VisitorProfileBean> getServiceProviderCheckInProfileBean(ServiceProvider serviceProvider) {
         getNavigator().showLoading();
         List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
-        Guests guests = new Guests();
-        guests.setGuestId(serviceProvider.getServiceProviderId());
-        getDataManager().setGuestDetail(guests);
+        getDataManager().setSPDetail(serviceProvider);
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, serviceProvider.getName())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time, CalenderUtils.formatDate(serviceProvider.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIME_FORMAT_AM))));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), serviceProvider.getExpectedVehicleNo(), true));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_vehicle, serviceProvider.getEnteredVehicleNo().isEmpty() ? "N/A" : serviceProvider.getEnteredVehicleNo())));
         if (!serviceProvider.getContactNo().isEmpty())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, serviceProvider.getContactNo())));
         if (!serviceProvider.getIdentityNo().isEmpty())
@@ -248,21 +244,18 @@ public class CheckInViewModel extends BaseViewModel<GuestNavigator> {
             switch (type){
                 case 0:
                     object.put("id",getDataManager().getGuestDetail().getGuestId());
-                    object.put("enteredVehicleNo",getDataManager().getGuestDetail().getExpectedVehicleNo());
                     object.put("visitor",AppConstants.GUEST);
                     object.put("type", AppConstants.CHECK_OUT);
                     break;
 
                 case 1:
-                    object.put("id",getDataManager().getGuestDetail().getGuestId());
-                    object.put("enteredVehicleNo",getDataManager().getGuestDetail().getExpectedVehicleNo());
+                    object.put("id", getDataManager().getHouseKeeping().getHouseKeeperId());
                     object.put("visitor",AppConstants.HOUSE_HELP);
                     object.put("type", AppConstants.CHECK_OUT);
                     break;
 
                 case 2:
-                    object.put("id",getDataManager().getGuestDetail().getGuestId());
-                    object.put("enteredVehicleNo",getDataManager().getGuestDetail().getExpectedVehicleNo());
+                    object.put("id", getDataManager().getSpDetail().getServiceProviderId());
                     object.put("visitor",AppConstants.SERVICE_PROVIDER);
                     object.put("type", AppConstants.CHECK_OUT);
                     break;

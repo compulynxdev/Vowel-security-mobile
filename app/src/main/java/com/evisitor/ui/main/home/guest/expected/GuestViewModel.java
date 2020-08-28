@@ -100,7 +100,7 @@ public class GuestViewModel extends BaseViewModel<GuestNavigator> {
         try {
             object.put("id", getDataManager().getGuestDetail().getGuestId());
             object.put("accountId", getDataManager().getAccountId());
-            object.put("residentId", getDataManager().getSpDetail().getResidentId());
+            object.put("residentId", getDataManager().getGuestDetail().getResidentId());
             object.put("premiseHierarchyDetailsId", getDataManager().getGuestDetail().getFlatId());
             object.put("type", AppConstants.GUEST);
         } catch (JSONException e) {
@@ -139,7 +139,7 @@ public class GuestViewModel extends BaseViewModel<GuestNavigator> {
         JSONObject object = new JSONObject();
         try {
             object.put("id",getDataManager().getGuestDetail().getGuestId());
-            object.put("enteredVehicleNo",getDataManager().getGuestDetail().getExpectedVehicleNo());
+            object.put("enteredVehicleNo", getDataManager().getGuestDetail().getEnteredVehicleNo());
             object.put("type", AppConstants.CHECK_IN);
             object.put("visitor", AppConstants.GUEST);
         } catch (JSONException e) {

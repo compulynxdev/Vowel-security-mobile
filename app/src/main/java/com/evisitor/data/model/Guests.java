@@ -10,6 +10,9 @@ public class Guests {
     @SerializedName("expectedVehicleNo")
     private String expectedVehicleNo;
 
+    @SerializedName("enteredVehicleNo")
+    private String enteredVehicleNo = "";
+
     @SerializedName("expectedDate")
     private String time;
 
@@ -185,7 +188,6 @@ public class Guests {
 
     public String getHouseNo() {
         return houseNo== null? "" : houseNo;
-
     }
 
     public String getCheckOutTime() {
@@ -214,5 +216,13 @@ public class Guests {
 
     public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
+    }
+
+    public String getEnteredVehicleNo() {
+        return enteredVehicleNo == null || enteredVehicleNo.isEmpty() ? getExpectedVehicleNo() : enteredVehicleNo;
+    }
+
+    public void setEnteredVehicleNo(String enteredVehicleNo) {
+        this.enteredVehicleNo = enteredVehicleNo;
     }
 }

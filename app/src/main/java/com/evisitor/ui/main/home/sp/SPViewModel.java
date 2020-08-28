@@ -139,7 +139,7 @@ public class SPViewModel extends BaseViewModel<SPNavigator> {
         JSONObject object = new JSONObject();
         try {
             object.put("id", getDataManager().getSpDetail().getServiceProviderId());
-            object.put("enteredVehicleNo", getDataManager().getSpDetail().getExpectedVehicleNo());
+            object.put("enteredVehicleNo", getDataManager().getSpDetail().getEnteredVehicleNo());
             object.put("type", AppConstants.CHECK_IN);
             object.put("visitor", AppConstants.SERVICE_PROVIDER);
         } catch (JSONException e) {

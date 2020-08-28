@@ -94,7 +94,7 @@ public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBin
                 visitorProfileDialog.dismiss();
 
                 Guests tmpBean = getViewModel().getDataManager().getGuestDetail();
-                if (getViewModel().getDataManager().isIdentifyFeature() || tmpBean.getIdentityNo().isEmpty()) {
+                if (!getViewModel().getDataManager().isIdentifyFeature() || tmpBean.getIdentityNo().isEmpty()) {
                     showCheckinOptions();
                 } else {
                     IdVerificationDialog.newInstance(new IdVerificationCallback() {

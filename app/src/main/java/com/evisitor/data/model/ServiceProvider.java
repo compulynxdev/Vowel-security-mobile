@@ -53,6 +53,8 @@ public class ServiceProvider {
     @SerializedName("expectedVehicleNo")
     private String expectedVehicleNo;
 
+    @SerializedName("enteredVehicleNo")
+    private String enteredVehicleNo = "";
 
     @SerializedName("checkOutFeature")
     private boolean checkOutFeature;
@@ -225,5 +227,13 @@ public class ServiceProvider {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getEnteredVehicleNo() {
+        return enteredVehicleNo == null || enteredVehicleNo.isEmpty() ? getExpectedVehicleNo() : enteredVehicleNo;
+    }
+
+    public void setEnteredVehicleNo(String enteredVehicleNo) {
+        this.enteredVehicleNo = enteredVehicleNo;
     }
 }

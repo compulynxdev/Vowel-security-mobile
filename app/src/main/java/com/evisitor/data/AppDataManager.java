@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.evisitor.data.local.prefs.AppPreferenceHelper;
 import com.evisitor.data.model.Guests;
+import com.evisitor.data.model.HouseKeeping;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.model.UserDetail;
 import com.evisitor.data.remote.AppApiHelper;
@@ -29,6 +30,7 @@ public class AppDataManager implements DataManager {
     private final Gson mGson;
     private Guests guests;
     private ServiceProvider spDetail;
+    private HouseKeeping houseKeeping;
 
     private AppDataManager(Context context) {
         apiHelper = AppApiHelper.getAppApiInstance();
@@ -45,19 +47,11 @@ public class AppDataManager implements DataManager {
 
     @Override
     public void setGuestDetail(Guests guest) {
-        guests = new Guests();
-        guests.setFlatId(guest.getFlatId());
-        guests.setResidentId(guest.getResidentId());
-        guests.setGuestId(guest.getGuestId());
-        guests.setExpectedVehicleNo(guest.getExpectedVehicleNo());
+        this.guests = guest;
     }
 
     @Override
     public Guests getGuestDetail() {
-        guests.setGuestId(guests.getGuestId());
-        guests.setFlatId(guests.getFlatId());
-        guests.setExpectedVehicleNo(guests.getExpectedVehicleNo());
-        guests.setResidentId(guests.getResidentId());
         return guests;
     }
 
@@ -80,6 +74,16 @@ public class AppDataManager implements DataManager {
     @Override
     public ServiceProvider getSpDetail() {
         return spDetail;
+    }
+
+    @Override
+    public HouseKeeping getHouseKeeping() {
+        return houseKeeping;
+    }
+
+    @Override
+    public void setHouseKeeping(HouseKeeping houseKeeping) {
+        this.houseKeeping = houseKeeping;
     }
 
     @Override
