@@ -6,11 +6,9 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
-
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.Guests;
@@ -25,7 +23,6 @@ import com.evisitor.ui.main.activity.checkin.adapter.ServiceProviderCheckInAdapt
 import com.evisitor.ui.main.home.guest.expected.GuestNavigator;
 import com.evisitor.ui.main.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
-import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,25 +35,46 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding,CheckIn
     private GuestCheckInAdapter adapter;
     private ServiceProviderCheckInAdapter serviceProviderAdapter;
     private HouseKeepingCheckInAdapter houseKeepingAdapter;
-    private TabLayout tabLayout;
     private EditText etSearch;
     private OnFragmentInteraction listener;
     private RecyclerViewScrollListener scrollListener;
     private int page;
     private int listOf=0;
-     public static CheckInFragment newInstance(EditText et_Search, TabLayout tab_Layout, OnFragmentInteraction listener) {
+     public static CheckInFragment newInstance(EditText et_Search,int listOf,OnFragmentInteraction listener) {
         CheckInFragment fragment = new CheckInFragment();
         Bundle args = new Bundle();
-        fragment.setData(et_Search,tab_Layout,listener);
+         fragment.setData(et_Search, listOf,listener);
         fragment.setArguments(args);
         return fragment;
     }
 
-    private void setData(EditText et_Search, TabLayout tab_layout, OnFragmentInteraction interaction){
+    private void setData(EditText et_Search, int listOf, OnFragmentInteraction interaction){
         etSearch=et_Search;
-        tabLayout = tab_layout;
+        this.listOf = listOf;
         listener = interaction;
     }
+
+    public void setList(int listOf){
+        this.listOf = listOf;
+        switch (listOf){
+            //guest
+            case 0:
+                getViewDataBinding().recyclerView.setAdapter(adapter);
+                break;
+
+                //house
+            case 1:
+                getViewDataBinding().recyclerView.setAdapter(houseKeepingAdapter);
+                break;
+                //service
+            case 2:
+                getViewDataBinding().recyclerView.setAdapter(serviceProviderAdapter);
+                break;
+        }
+        doSearch(etSearch.getText().toString());
+    }
+
+
     @Override
     public int getBindingVariable() {
         return com.evisitor.BR.viewModel;
@@ -92,42 +110,6 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding,CheckIn
         setUpServiceProviderAdapter();
 
         setUpHouseKeeperAdapter();
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition()){
-                    //guest
-                    case 0:
-                        listOf = 0;
-                        getViewDataBinding().recyclerView.setAdapter(adapter);
-                        doSearch(etSearch.getText().toString());
-                        break;
-                    //house keeping
-                    case 1:
-                        listOf=1;
-                        getViewDataBinding().recyclerView.setAdapter(houseKeepingAdapter);
-                        doSearch(etSearch.getText().toString());
-                        break;
-                    //service provider
-                    case 2 :
-                        listOf = 2;
-                        getViewDataBinding().recyclerView.setAdapter(serviceProviderAdapter);
-                        doSearch(etSearch.getText().toString());
-                        break;
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
 
         getViewDataBinding().swipeToRefresh.setOnRefreshListener(this::updateUI);
         getViewDataBinding().swipeToRefresh.setColorSchemeResources(R.color.colorPrimary);
@@ -288,6 +270,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding,CheckIn
         getViewDataBinding().swipeToRefresh.setRefreshing(true);
         doSearch(etSearch.getText().toString());
     }
+
 
     public interface OnFragmentInteraction{
          void totalCount(int size);

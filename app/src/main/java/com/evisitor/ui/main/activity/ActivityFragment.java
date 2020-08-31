@@ -21,6 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityFragment extends BaseFragment<FragmentActivityBinding, ActivityViewModel> implements BaseNavigator,View.OnClickListener {
+    private int listOf;
+    private CheckInFragment checkInFragment;
+    private CheckOutFragment checkOutFragment;
 
     public static ActivityFragment newInstance() {
         ActivityFragment fragment = new ActivityFragment();
@@ -58,14 +61,21 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
         getViewDataBinding().tvIn.setText(getString(R.string.check_in_with_count, "0"));
         getViewDataBinding().tvOut.setText(getString(R.string.check_out_with_count, "0"));
         getViewDataBinding().tvOut.setOnClickListener(this);
+        //guest
+        listOf = 0;
+        getViewDataBinding().titleGuest.setOnClickListener(this);
+        getViewDataBinding().titleHouse.setOnClickListener(this);
+        getViewDataBinding().titleService.setOnClickListener(this);
 
         setUpPagerAdapter();
     }
 
     private void setUpPagerAdapter() {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(CheckInFragment.newInstance(getViewDataBinding().etSearch, getViewDataBinding().tabLayout, size -> getViewDataBinding().tvIn.setText(getString(R.string.check_in_with_count,String.valueOf(size)))));
-        adapter.addFragment(CheckOutFragment.newInstance(getViewDataBinding().etSearch, getViewDataBinding().tabLayout, size -> getViewDataBinding().tvOut.setText(getString(R.string.check_out_with_count,String.valueOf(size)))));
+        checkInFragment = CheckInFragment.newInstance(getViewDataBinding().etSearch, listOf, size -> getViewDataBinding().tvIn.setText(getString(R.string.check_in_with_count,String.valueOf(size))));
+        adapter.addFragment(checkInFragment);
+        checkOutFragment = CheckOutFragment.newInstance(getViewDataBinding().etSearch,listOf, size -> getViewDataBinding().tvOut.setText(getString(R.string.check_out_with_count,String.valueOf(size))));
+        adapter.addFragment(checkOutFragment);
         getViewDataBinding().viewPager.setOffscreenPageLimit(2);
 
         getViewDataBinding().viewPager.setAdapter(adapter);
@@ -116,6 +126,32 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
                 }
                 break;
 
+            case R.id.title_guest:
+                listOf = 0;
+                checkInFragment.setList(listOf);
+                checkOutFragment.setList(listOf);
+                getViewDataBinding().titleGuest.setTextColor(getResources().getColor(R.color.colorPrimary));
+                getViewDataBinding().titleService.setTextColor(getResources().getColor(R.color.black));
+                getViewDataBinding().titleHouse.setTextColor(getResources().getColor(R.color.black));
+                break;
+
+            case R.id.title_house:
+                listOf = 1;
+                checkInFragment.setList(listOf);
+                checkOutFragment.setList(listOf);
+                getViewDataBinding().titleGuest.setTextColor(getResources().getColor(R.color.black));
+                getViewDataBinding().titleService.setTextColor(getResources().getColor(R.color.black));
+                getViewDataBinding().titleHouse.setTextColor(getResources().getColor(R.color.colorPrimary));
+                break;
+
+            case R.id.title_service:
+                listOf = 2;
+                checkInFragment.setList(listOf);
+                checkOutFragment.setList(listOf);
+                getViewDataBinding(). titleGuest.setTextColor(getResources().getColor(R.color.black));
+                getViewDataBinding().titleService.setTextColor(getResources().getColor(R.color.colorPrimary));
+                getViewDataBinding().titleHouse.setTextColor(getResources().getColor(R.color.black));
+               break;
         }
     }
 

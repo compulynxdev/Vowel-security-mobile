@@ -14,16 +14,21 @@
 
 
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 app:layout_constraintTop_toBottomOf="@+id/header"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:background="@drawable/bg_card_corner"
                 android:id="@+id/relative"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
                 android:layout_marginBottom="18dp"
+                android:orientation="horizontal"
+                android:weightSum="3"
                 android:layout_marginTop="18dp"
                 android:layout_height="55dp">
+<!--
                 <com.google.android.material.tabs.TabLayout
                     android:layout_width="wrap_content"
                     android:id="@+id/tab_layout"
@@ -61,8 +66,46 @@
                         android:focusable="true" />
 
                 </com.google.android.material.tabs.TabLayout>
+-->
 
-            </RelativeLayout>
+                <TextView
+                    android:layout_width="0dp"
+                    android:id="@+id/title_guest"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/futura_round_medium"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:text="@string/title_guests"
+                    android:textColor="@color/colorPrimaryDark"
+                    />
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:id="@+id/title_house"
+                    android:fontFamily="@font/futura_round_medium"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:text="@string/title_house_keeping"
+                    android:textColor="@color/black"
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:id="@+id/title_service"
+                    android:fontFamily="@font/futura_round_medium"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:text="@string/title_service_provider"
+                    android:textColor="@color/black"
+                    />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -80,7 +123,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/futura_round_medium"
                     android:gravity="center"
-                    android:textSize="17sp"
+                    android:textSize="16sp"
                     android:text="@string/check_in_with_count"
                     android:textColor="@color/colorPrimaryDark"
                      />
@@ -97,7 +140,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:textSize="17sp"
+                    android:textSize="16sp"
                     android:fontFamily="@font/futura_round_medium"
                     android:gravity="center"
                     android:text="@string/check_out_with_count"

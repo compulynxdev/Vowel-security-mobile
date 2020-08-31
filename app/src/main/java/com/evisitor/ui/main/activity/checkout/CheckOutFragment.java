@@ -20,7 +20,6 @@ import com.evisitor.ui.main.activity.checkout.adapter.HouseKeepingCheckOutAdapte
 import com.evisitor.ui.main.activity.checkout.adapter.ServiceProviderCheckOutAdapter;
 import com.evisitor.ui.main.home.guest.expected.GuestNavigator;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
-import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,24 +30,23 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding,Check
     private GuestCheckOutAdapter adapter;
     private ServiceProviderCheckOutAdapter serviceProviderAdapter;
     private HouseKeepingCheckOutAdapter houseKeepingAdapter;
-    private TabLayout tabLayout;
     private EditText etSearch;
     private int listOf=0;
     private OnFragmentInteraction listener;
     private RecyclerViewScrollListener scrollListener;
     private int page=0;
 
-    public static CheckOutFragment newInstance(EditText et_Search, TabLayout tab_Layout,OnFragmentInteraction interaction) {
+    public static CheckOutFragment newInstance(EditText et_Search,int listOf, OnFragmentInteraction interaction) {
         CheckOutFragment fragment = new CheckOutFragment();
         Bundle args = new Bundle();
-        fragment.setData(et_Search,tab_Layout,interaction);
+        fragment.setData(et_Search,listOf,interaction);
         fragment.setArguments(args);
         return fragment;
     }
 
-    private void setData(EditText et_Search, TabLayout tab_layout, OnFragmentInteraction interaction){
+    private void setData(EditText et_Search, int listOf, OnFragmentInteraction interaction){
         etSearch=et_Search;
-        tabLayout = tab_layout;
+        this.listOf = listOf;
         listener = interaction;
     }
 
@@ -68,6 +66,27 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding,Check
         return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(CheckOutViewModel.class);
     }
 
+    public void setList(int listOf){
+        this.listOf = listOf;
+        switch (listOf){
+            //guest
+            case 0:
+                getViewDataBinding().recyclerView.setAdapter(adapter);
+                break;
+
+            //house
+            case 1:
+                getViewDataBinding().recyclerView.setAdapter(houseKeepingAdapter);
+                break;
+            //service
+            case 2:
+                getViewDataBinding().recyclerView.setAdapter(serviceProviderAdapter);
+                break;
+        }
+        doSearch(etSearch.getText().toString());
+    }
+
+
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -83,41 +102,6 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding,Check
 
         setUpHouseKeeperAdapter();
 
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition()){
-                    //guest
-                    case 0:
-                        listOf = 0;
-                        getViewDataBinding().recyclerView.setAdapter(adapter);
-                        doSearch(etSearch.getText().toString());
-                        break;
-                    //house keeping
-                    case 1:
-                        listOf=1;
-                        getViewDataBinding().recyclerView.setAdapter(houseKeepingAdapter);
-                        doSearch(etSearch.getText().toString());
-                        break;
-                    //service provider
-                    case 2 :
-                        listOf = 2;
-                        getViewDataBinding().recyclerView.setAdapter(serviceProviderAdapter);
-                        doSearch(etSearch.getText().toString());
-                        break;
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
         setUpSearch();
 
         scrollListener = new RecyclerViewScrollListener() {
@@ -156,7 +140,7 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding,Check
 
             if (page == 0) list.clear();
 
-            list.addAll(guests);
+            list.addAll(guests);;
             adapter.notifyDataSetChanged();
 
             if (listOf==0) listener.totalCount(list.size());
