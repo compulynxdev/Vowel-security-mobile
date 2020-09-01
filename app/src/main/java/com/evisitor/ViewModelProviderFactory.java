@@ -124,7 +124,7 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
             return (T) new IdVerificationViewModel(dataManager);
         }else if (modelClass.isAssignableFrom(FragmentGuestViewModel.class)) {
             //noinspection unchecked
-            return (T) new FragmentSpViewModel(dataManager);
+            return (T) new FragmentGuestViewModel(dataManager);
         }else if (modelClass.isAssignableFrom(FragmentSpViewModel.class)) {
             //noinspection unchecked
             return (T) new FragmentSpViewModel(dataManager);
