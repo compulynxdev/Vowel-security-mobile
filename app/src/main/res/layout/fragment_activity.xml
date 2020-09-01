@@ -28,45 +28,6 @@
                 android:weightSum="3"
                 android:layout_marginTop="18dp"
                 android:layout_height="55dp">
-<!--
-                <com.google.android.material.tabs.TabLayout
-                    android:layout_width="wrap_content"
-                    android:id="@+id/tab_layout"
-                    android:background="@drawable/bg_card_corner"
-                    app:tabIndicatorHeight="0dp"
-                    android:layout_centerInParent="true"
-                    app:tabMode="scrollable"
-                    app:tabIndicatorGravity="center"
-                    app:tabTextAppearance="@style/CustomTabText"
-                    app:tabTextColor="@color/black"
-                    app:tabSelectedTextColor="@color/colorPrimary"
-                    android:layout_height="wrap_content">
-
-                    <com.google.android.material.tabs.TabItem
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/guest_tab"
-                        android:text="@string/title_guests"
-                        android:clickable="true"
-                        android:focusable="true" />
-                    <com.google.android.material.tabs.TabItem
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="@string/title_house_keeping"
-                        android:id="@+id/house_keeping_tab"
-                        android:clickable="true"
-                        android:focusable="true" />
-
-                    <com.google.android.material.tabs.TabItem
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="@string/title_service_provider"
-                        android:id="@+id/service_tab"
-                        android:clickable="true"
-                        android:focusable="true" />
-
-                </com.google.android.material.tabs.TabLayout>
--->
 
                 <TextView
                     android:layout_width="0dp"

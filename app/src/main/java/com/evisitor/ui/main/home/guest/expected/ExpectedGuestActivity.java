@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
-import com.evisitor.data.model.Guests;
 import com.evisitor.databinding.ActivityExpectedGuestBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.base.BaseNavigator;
@@ -70,7 +69,7 @@ public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBin
     }
 
     private void setUpList() {
-        addFragment(ExpectedGuestFragment.newInstance(getViewDataBinding().etSearch),R.id.guest_frame,false);
+        replaceFragment(ExpectedGuestFragment.newInstance(getViewDataBinding().etSearch),R.id.guest_frame);
     }
 
     private void setUpSearch() {

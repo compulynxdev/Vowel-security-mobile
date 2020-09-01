@@ -21,6 +21,7 @@ import com.evisitor.ui.main.home.guest.expected.GuestViewModel;
 import com.evisitor.ui.main.home.scan.ScanIDViewModel;
 import com.evisitor.ui.main.home.sp.FragmentSpViewModel;
 import com.evisitor.ui.main.home.sp.SPViewModel;
+import com.evisitor.ui.main.home.total.TotalVisitorsViewModel;
 import com.evisitor.ui.main.idverification.IdVerificationViewModel;
 import com.evisitor.ui.main.notifications.NotificationsFragmentViewModel;
 import com.evisitor.ui.main.profile.UserProfileViewModel;
@@ -128,6 +129,9 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         }else if (modelClass.isAssignableFrom(FragmentSpViewModel.class)) {
             //noinspection unchecked
             return (T) new FragmentSpViewModel(dataManager);
+        }else if (modelClass.isAssignableFrom(TotalVisitorsViewModel.class)) {
+            //noinspection unchecked
+            return (T) new TotalVisitorsViewModel(dataManager);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

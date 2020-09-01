@@ -14,6 +14,7 @@ import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.base.BaseNavigator;
 import com.evisitor.ui.main.home.guest.expected.ExpectedGuestActivity;
 import com.evisitor.ui.main.home.sp.ExpectedSPActivity;
+import com.evisitor.ui.main.home.total.TotalVisitorsActivity;
 
 public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel> implements BaseNavigator {
 
@@ -66,7 +67,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
                         break;
 
                     case HomeViewModel.TOTAL_VISITOR_VIEW:
-                        showToast(R.string.under_development);
+                        startActivity(TotalVisitorsActivity.getStartIntent(getContext()));
                         break;
 
                     case HomeViewModel.BLACKLISTED_VISITOR_VIEW:
