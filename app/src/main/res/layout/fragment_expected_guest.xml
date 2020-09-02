@@ -8,7 +8,7 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="com.evisitor.ui.main.home.guest.expected.FragmentGuestViewModel" />
+            type="com.evisitor.ui.main.home.guest.expected.ExpectedGuestViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

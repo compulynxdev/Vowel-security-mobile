@@ -6,7 +6,7 @@ import com.evisitor.data.DataManager;
 
 import java.lang.ref.WeakReference;
 
-public class BaseViewModel <N extends  BaseNavigator> extends ViewModel {
+public class BaseViewModel<N extends BaseNavigator> extends ViewModel {
     private DataManager dataManager;
     private WeakReference<N> mNavigator;
 

@@ -12,7 +12,7 @@ import com.evisitor.data.model.HouseKeepingCheckInResponse;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.model.ServiceProviderResponse;
 import com.evisitor.ui.base.BaseViewModel;
-import com.evisitor.ui.main.home.guest.expected.GuestNavigator;
+import com.evisitor.ui.main.home.guest.expected.ExpectedGuestNavigator;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppLogger;
 
@@ -25,7 +25,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CheckOutViewModel extends BaseViewModel<GuestNavigator> {
+public class CheckOutViewModel extends BaseViewModel<ExpectedGuestNavigator> {
 
     private MutableLiveData<List<Guests>> guestListData = new MutableLiveData<>();
     private MutableLiveData<List<HouseKeeping>> houseKeepingListData = new MutableLiveData<>();

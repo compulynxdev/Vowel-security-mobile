@@ -17,11 +17,11 @@ import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.ActivitySpBinding;
 import com.evisitor.ui.base.BaseActivity;
 
-public class ExpectedSPActivity extends BaseActivity<ActivitySpBinding, SPViewModel> {
+public class SPActivity extends BaseActivity<ActivitySpBinding, SPViewModel> {
 
     private ExpectedSPFragment fragment;
     public static Intent getStartIntent(Context context) {
-        return new Intent(context, ExpectedSPActivity.class);
+        return new Intent(context, SPActivity.class);
     }
 
     @Override

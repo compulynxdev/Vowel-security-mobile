@@ -1,4 +1,4 @@
-package com.evisitor.ui.main.home.guest.expected;
+package com.evisitor.ui.main.home.guest;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,15 +16,16 @@ import com.evisitor.databinding.ActivityExpectedGuestBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.dialog.AlertDialog;
 import com.evisitor.ui.main.home.guest.add.AddGuestActivity;
+import com.evisitor.ui.main.home.guest.expected.ExpectedGuestFragment;
 import com.evisitor.ui.main.home.scan.ScanIDActivity;
 import com.sharma.mrzreader.MrzRecord;
 
-public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBinding, GuestViewModel> {
+public class GuestActivity extends BaseActivity<ActivityExpectedGuestBinding, GuestViewModel> {
 
     private final int SCAN_RESULT = 101;
 
     public static Intent getStartIntent(Context context){
-        return new Intent(context,ExpectedGuestActivity.class);
+        return new Intent(context, GuestActivity.class);
     }
     @Override
     public int getBindingVariable() {

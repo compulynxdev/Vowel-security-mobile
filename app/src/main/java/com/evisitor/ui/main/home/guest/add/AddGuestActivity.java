@@ -302,7 +302,7 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
         AlertDialog.newInstance()
                 .setCloseBtnShow(false)
                 .setNegativeBtnShow(false)
-                .setTitle(getString(R.string.susscess))
+                .setTitle(getString(R.string.success))
                 .setMsg(getString(R.string.check_in_success))
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();

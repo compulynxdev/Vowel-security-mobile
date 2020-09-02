@@ -13,16 +13,16 @@ import com.evisitor.ui.main.activity.ActivityViewModel;
 import com.evisitor.ui.main.activity.checkin.CheckInViewModel;
 import com.evisitor.ui.main.activity.checkout.CheckOutViewModel;
 import com.evisitor.ui.main.home.HomeViewModel;
+import com.evisitor.ui.main.home.guest.GuestViewModel;
 import com.evisitor.ui.main.home.guest.add.AddGuestViewModel;
 import com.evisitor.ui.main.home.guest.add.dialogs.HostPickerViewModel;
 import com.evisitor.ui.main.home.guest.add.dialogs.PickerViewModel;
-import com.evisitor.ui.main.home.guest.expected.FragmentGuestViewModel;
-import com.evisitor.ui.main.home.guest.expected.GuestViewModel;
+import com.evisitor.ui.main.home.guest.expected.ExpectedGuestViewModel;
 import com.evisitor.ui.main.home.housekeeping.HKViewModel;
 import com.evisitor.ui.main.home.housekeeping.expected.ExpectedHKViewModel;
 import com.evisitor.ui.main.home.housekeeping.registered.RegisteredHKViewModel;
 import com.evisitor.ui.main.home.scan.ScanIDViewModel;
-import com.evisitor.ui.main.home.sp.FragmentSpViewModel;
+import com.evisitor.ui.main.home.sp.ExpectedSpViewModel;
 import com.evisitor.ui.main.home.sp.SPViewModel;
 import com.evisitor.ui.main.home.total.TotalVisitorsViewModel;
 import com.evisitor.ui.main.idverification.IdVerificationViewModel;
@@ -126,12 +126,12 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(IdVerificationViewModel.class)) {
             //noinspection unchecked
             return (T) new IdVerificationViewModel(dataManager);
-        } else if (modelClass.isAssignableFrom(FragmentGuestViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(ExpectedGuestViewModel.class)) {
             //noinspection unchecked
-            return (T) new FragmentGuestViewModel(dataManager);
-        } else if (modelClass.isAssignableFrom(FragmentSpViewModel.class)) {
+            return (T) new ExpectedGuestViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(ExpectedSpViewModel.class)) {
             //noinspection unchecked
-            return (T) new FragmentSpViewModel(dataManager);
+            return (T) new ExpectedSpViewModel(dataManager);
         } else if (modelClass.isAssignableFrom(ExpectedHKViewModel.class)) {
             //noinspection unchecked
             return (T) new ExpectedHKViewModel(dataManager);

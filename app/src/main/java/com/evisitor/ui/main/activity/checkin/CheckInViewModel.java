@@ -12,8 +12,8 @@ import com.evisitor.data.model.HouseKeepingCheckInResponse;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.model.ServiceProviderResponse;
 import com.evisitor.data.model.VisitorProfileBean;
-import com.evisitor.ui.base.BaseViewModel;
-import com.evisitor.ui.main.home.guest.expected.GuestNavigator;
+import com.evisitor.ui.main.BaseCheckInOutViewModel;
+import com.evisitor.ui.main.home.guest.expected.ExpectedGuestNavigator;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppLogger;
 import com.evisitor.util.AppUtils;
@@ -33,7 +33,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CheckInViewModel extends BaseViewModel<GuestNavigator> {
+public class CheckInViewModel extends BaseCheckInOutViewModel<ExpectedGuestNavigator> {
 
     private MutableLiveData<List<Guests>> guestListData = new MutableLiveData<>();
     private MutableLiveData<List<HouseKeeping>> houseKeepingListData = new MutableLiveData<>();
@@ -238,7 +238,6 @@ public class CheckInViewModel extends BaseViewModel<GuestNavigator> {
     }
 
     void checkOut(int type) {
-        getNavigator().showLoading();
         JSONObject object = new JSONObject();
         try {
             switch (type){
@@ -262,38 +261,9 @@ public class CheckInViewModel extends BaseViewModel<GuestNavigator> {
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            getNavigator().hideLoading();
-            getNavigator().showAlert(getNavigator().getContext().getString(R.string.alert),e.toString());
         }
 
         RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON,object.toString());
-        getDataManager().doCheckInCheckOut(getDataManager().getHeader(), body).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(@NonNull Call<ResponseBody> call,@NonNull  Response<ResponseBody> response) {
-                getNavigator().hideLoading();
-                if (response.code() == 200){
-                    try {
-                        assert response.body()!=null;
-                        JSONObject object1 = new JSONObject(response.body().string());
-                        getNavigator().showAlert(getNavigator().getContext().getString(R.string.susscess),object1.getString("result")).setOnPositiveClickListener(dialog -> {
-                            dialog.dismiss();
-                            getNavigator().refreshList();
-                        });
-                    } catch (Exception e) {
-                        getNavigator().showAlert(R.string.alert, R.string.alert_error);
-                    }
-                }else if (response.code()==401){
-                    getNavigator().openActivityOnTokenExpire();
-                }  else{
-                    getNavigator().handleApiError(response.errorBody());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ResponseBody> call,@NonNull Throwable t) {
-                getNavigator().hideLoading();
-                getNavigator().handleApiFailure(t);
-            }
-        });
+        doCheckInOut(body, () -> getNavigator().refreshList());
     }
 }

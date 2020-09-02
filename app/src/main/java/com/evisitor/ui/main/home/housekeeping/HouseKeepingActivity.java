@@ -47,7 +47,7 @@ public class HouseKeepingActivity extends BaseActivity<ActivityHkBinding, HKView
         super.onCreate(savedInstanceState);
         getViewModel().setNavigator(this);
         initView();
-        //setUpSearch();
+        setUpSearch();
 
         setUpPagerAdapter();
     }
@@ -74,12 +74,13 @@ public class HouseKeepingActivity extends BaseActivity<ActivityHkBinding, HKView
 
             @Override
             public void onPageSelected(int position) {
-                if (position == 0) {
+                if (!getViewDataBinding().etSearch.getText().toString().trim().isEmpty()) {
                     getViewDataBinding().etSearch.setText("");
+                }
+                if (position == 0) {
                     getViewDataBinding().tvExpected.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                     getViewDataBinding().tvRegistered.setTextColor(getResources().getColor(R.color.black));
                 } else {
-                    getViewDataBinding().etSearch.setText("");
                     getViewDataBinding().tvExpected.setTextColor(getResources().getColor(R.color.black));
                     getViewDataBinding().tvRegistered.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                 }

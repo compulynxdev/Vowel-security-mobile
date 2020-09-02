@@ -2,15 +2,16 @@ package com.evisitor.ui.main.home.guest.expected;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProvider;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.Guests;
@@ -23,13 +24,14 @@ import com.evisitor.ui.main.idverification.IdVerificationCallback;
 import com.evisitor.ui.main.idverification.IdVerificationDialog;
 import com.evisitor.ui.main.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBinding,FragmentGuestViewModel> implements GuestNavigator{
+public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBinding, ExpectedGuestViewModel> implements ExpectedGuestNavigator {
     private List<Guests> guestsList;
     private RecyclerViewScrollListener scrollListener;
-    private GuestAdapter adapter;
+    private ExpectedGuestAdapter adapter;
     private EditText etSearch;
     private int page = 0;
 
@@ -56,21 +58,21 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
     }
 
     @Override
-    public FragmentGuestViewModel getViewModel() {
-        return new ViewModelProvider(this,ViewModelProviderFactory.getInstance()).get(FragmentGuestViewModel.class);
+    public ExpectedGuestViewModel getViewModel() {
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(ExpectedGuestViewModel.class);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getViewModel().setNavigator(this);
+        getViewModel().setCheckInOutNavigator(this);
         setUpAdapter();
         setUpSearch();
     }
 
     private void setUpAdapter() {
         guestsList = new ArrayList<>();
-        adapter = new GuestAdapter(guestsList, getContext(), pos -> {
+        adapter = new ExpectedGuestAdapter(guestsList, getContext(), pos -> {
             List<VisitorProfileBean> visitorProfileBeanList = getViewModel().setClickVisitorDetail(guestsList.get(pos));
             VisitorProfileDialog.newInstance(visitorProfileBeanList, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();

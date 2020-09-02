@@ -44,13 +44,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/DashboardTheme" />
         <activity
-            android:name=".ui.main.home.guest.expected.ExpectedGuestActivity"
+            android:name=".ui.main.home.guest.GuestActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/DashboardTheme" />
         <activity
-            android:name=".ui.main.home.sp.ExpectedSPActivity"
+            android:name=".ui.main.home.sp.SPActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"

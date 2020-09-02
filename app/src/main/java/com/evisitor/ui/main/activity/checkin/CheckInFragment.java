@@ -6,9 +6,11 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
+
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.Guests;
@@ -20,14 +22,14 @@ import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.main.activity.checkin.adapter.GuestCheckInAdapter;
 import com.evisitor.ui.main.activity.checkin.adapter.HouseKeepingCheckInAdapter;
 import com.evisitor.ui.main.activity.checkin.adapter.ServiceProviderCheckInAdapter;
-import com.evisitor.ui.main.home.guest.expected.GuestNavigator;
+import com.evisitor.ui.main.home.guest.expected.ExpectedGuestNavigator;
 import com.evisitor.ui.main.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CheckInFragment extends BaseFragment<FragmentCheckInBinding,CheckInViewModel> implements GuestNavigator {
+public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckInViewModel> implements ExpectedGuestNavigator {
 
     private List<Guests> list;
     private List<ServiceProvider> serviceProviders;
@@ -99,7 +101,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding,CheckIn
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getViewModel().setNavigator(this);
+        getViewModel().setCheckInOutNavigator(this);
 
         list=new ArrayList<>();
         houseKeepings = new ArrayList<>();

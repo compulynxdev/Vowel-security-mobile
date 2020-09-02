@@ -66,7 +66,7 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getViewModel().setNavigator(this);
+        getViewModel().setCheckInOutNavigator(this);
         setUpAdapter();
     }
 

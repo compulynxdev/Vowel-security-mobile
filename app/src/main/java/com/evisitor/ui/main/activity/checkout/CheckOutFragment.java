@@ -6,8 +6,10 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
+
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.Guests;
@@ -18,12 +20,13 @@ import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.main.activity.checkout.adapter.GuestCheckOutAdapter;
 import com.evisitor.ui.main.activity.checkout.adapter.HouseKeepingCheckOutAdapter;
 import com.evisitor.ui.main.activity.checkout.adapter.ServiceProviderCheckOutAdapter;
-import com.evisitor.ui.main.home.guest.expected.GuestNavigator;
+import com.evisitor.ui.main.home.guest.expected.ExpectedGuestNavigator;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding,CheckOutViewModel> implements GuestNavigator {
+public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, CheckOutViewModel> implements ExpectedGuestNavigator {
     private List<Guests> list;
     private List<ServiceProvider> serviceProviders;
     private List<HouseKeeping> houseKeepings;
@@ -140,7 +143,7 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding,Check
 
             if (page == 0) list.clear();
 
-            list.addAll(guests);;
+            list.addAll(guests);
             adapter.notifyDataSetChanged();
 
             if (listOf==0) listener.totalCount(list.size());

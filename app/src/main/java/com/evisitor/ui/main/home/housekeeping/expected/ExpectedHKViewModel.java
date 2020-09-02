@@ -8,7 +8,7 @@ import com.evisitor.data.DataManager;
 import com.evisitor.data.model.HouseKeeping;
 import com.evisitor.data.model.HouseKeepingCheckInResponse;
 import com.evisitor.data.model.VisitorProfileBean;
-import com.evisitor.ui.base.BaseViewModel;
+import com.evisitor.ui.main.BaseCheckInOutViewModel;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppUtils;
 
@@ -26,7 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ExpectedHKViewModel extends BaseViewModel<ExpectedHKNavigator> {
+public class ExpectedHKViewModel extends BaseCheckInOutViewModel<ExpectedHKNavigator> implements BaseCheckInOutViewModel.ApiCallback {
     private MutableLiveData<List<HouseKeeping>> hkListData = new MutableLiveData<>();
 
     public ExpectedHKViewModel(DataManager dataManager) {
@@ -107,32 +107,8 @@ public class ExpectedHKViewModel extends BaseViewModel<ExpectedHKNavigator> {
             e.printStackTrace();
         }
 
-        getNavigator().showLoading();
         RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
-        getDataManager().doGuestSendNotification(getDataManager().getHeader(), body).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                getNavigator().hideLoading();
-                if (response.code() == 200) {
-                    getNavigator().showAlert(getNavigator().getContext().getString(R.string.susscess)
-                            , getNavigator().getContext().getString(R.string.send_notification_success)).setOnPositiveClickListener(dialog -> {
-                        dialog.dismiss();
-                        getNavigator().refreshList();
-                    });
-                } else if (response.code() == 401) {
-                    getNavigator().openActivityOnTokenExpire();
-                } else {
-                    getNavigator().handleApiError(response.errorBody());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                getNavigator().hideLoading();
-                getNavigator().handleApiFailure(t);
-            }
-        });
-
+        sendNotification(body, this);
     }
 
     void approveByCall() {
@@ -145,36 +121,12 @@ public class ExpectedHKViewModel extends BaseViewModel<ExpectedHKNavigator> {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        getNavigator().showLoading();
         RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
-        getDataManager().doCheckInCheckOut(getDataManager().getHeader(), body).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                getNavigator().hideLoading();
-                if (response.code() == 200) {
-                    try {
-                        assert response.body() != null;
-                        JSONObject object1 = new JSONObject(response.body().string());
-                        getNavigator().showAlert(getNavigator().getContext().getString(R.string.susscess), object1.getString("result")).setOnPositiveClickListener(dialog -> {
-                            dialog.dismiss();
-                            getNavigator().refreshList();
-                        });
-                    } catch (Exception e) {
-                        getNavigator().showAlert(R.string.alert, R.string.alert_error);
-                    }
-                } else if (response.code() == 401) {
-                    getNavigator().openActivityOnTokenExpire();
-                } else {
-                    getNavigator().handleApiError(response.errorBody());
-                }
-            }
+        doCheckInOut(body, this);
+    }
 
-            @Override
-            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                getNavigator().hideLoading();
-                getNavigator().handleApiFailure(t);
-            }
-        });
+    @Override
+    public void onSuccess() {
+        getNavigator().refreshList();
     }
 }

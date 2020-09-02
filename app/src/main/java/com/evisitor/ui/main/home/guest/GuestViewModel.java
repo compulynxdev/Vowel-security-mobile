@@ -1,4 +1,4 @@
-package com.evisitor.ui.main.home.guest.expected;
+package com.evisitor.ui.main.home.guest;
 
 import com.evisitor.data.DataManager;
 import com.evisitor.ui.base.BaseNavigator;

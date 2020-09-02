@@ -27,10 +27,10 @@ import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
-public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, FragmentSpViewModel> implements SPNavigator {
+public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, ExpectedSpViewModel> implements ExpectedSPNavigator {
     private final int SCAN_RESULT = 101;
     private RecyclerViewScrollListener scrollListener;
-    private SPAdapter adapter;
+    private ExpectedSPAdapter adapter;
     private String search ="";
     private int page = 0;
     private List<ServiceProvider> spList;
@@ -58,20 +58,20 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Fr
     }
 
     @Override
-    public FragmentSpViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(FragmentSpViewModel.class);
+    public ExpectedSpViewModel getViewModel() {
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(ExpectedSpViewModel.class);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getViewModel().setNavigator(this);
+        getViewModel().setCheckInOutNavigator(this);
         setUpAdapter();
     }
 
     private void setUpAdapter() {
         spList = new ArrayList<>();
-        adapter = new SPAdapter(spList, pos -> {
+        adapter = new ExpectedSPAdapter(spList, pos -> {
             List<VisitorProfileBean> visitorProfileBeanList = getViewModel().setClickVisitorDetail(spList.get(pos));
             VisitorProfileDialog.newInstance(visitorProfileBeanList, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
