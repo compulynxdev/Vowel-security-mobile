@@ -18,6 +18,9 @@ import com.evisitor.ui.main.home.guest.add.dialogs.HostPickerViewModel;
 import com.evisitor.ui.main.home.guest.add.dialogs.PickerViewModel;
 import com.evisitor.ui.main.home.guest.expected.FragmentGuestViewModel;
 import com.evisitor.ui.main.home.guest.expected.GuestViewModel;
+import com.evisitor.ui.main.home.housekeeping.HKViewModel;
+import com.evisitor.ui.main.home.housekeeping.expected.ExpectedHKViewModel;
+import com.evisitor.ui.main.home.housekeeping.registered.RegisteredHKViewModel;
 import com.evisitor.ui.main.home.scan.ScanIDViewModel;
 import com.evisitor.ui.main.home.sp.FragmentSpViewModel;
 import com.evisitor.ui.main.home.sp.SPViewModel;
@@ -122,12 +125,21 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(IdVerificationViewModel.class)) {
             //noinspection unchecked
             return (T) new IdVerificationViewModel(dataManager);
-        }else if (modelClass.isAssignableFrom(FragmentGuestViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(FragmentGuestViewModel.class)) {
             //noinspection unchecked
             return (T) new FragmentGuestViewModel(dataManager);
-        }else if (modelClass.isAssignableFrom(FragmentSpViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(FragmentSpViewModel.class)) {
             //noinspection unchecked
             return (T) new FragmentSpViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(ExpectedHKViewModel.class)) {
+            //noinspection unchecked
+            return (T) new ExpectedHKViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(HKViewModel.class)) {
+            //noinspection unchecked
+            return (T) new HKViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(RegisteredHKViewModel.class)) {
+            //noinspection unchecked
+            return (T) new RegisteredHKViewModel(dataManager);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

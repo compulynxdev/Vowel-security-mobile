@@ -13,6 +13,7 @@ import com.evisitor.databinding.FragmentHomeBinding;
 import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.base.BaseNavigator;
 import com.evisitor.ui.main.home.guest.expected.ExpectedGuestActivity;
+import com.evisitor.ui.main.home.housekeeping.HouseKeepingActivity;
 import com.evisitor.ui.main.home.sp.ExpectedSPActivity;
 
 public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel> implements BaseNavigator {
@@ -58,7 +59,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
                         break;
 
                     case HomeViewModel.HOUSE_KEEPING_VIEW:
-                        showToast(R.string.under_development);
+                        startActivity(HouseKeepingActivity.getStartIntent(getContext()));
                         break;
 
                     case HomeViewModel.SERVICE_PROVIDER_VIEW:

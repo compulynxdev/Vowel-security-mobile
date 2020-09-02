@@ -260,4 +260,9 @@ public class AppDataManager implements DataManager {
     public Call<ResponseBody> doGetExpectedSPList(String authToken, Map<String, String> partMap) {
         return apiHelper.doGetExpectedSPList(authToken, partMap);
     }
+
+    @Override
+    public Call<ResponseBody> doGetRegisteredHKList(String authToken, Map<String, String> partMap) {
+        return apiHelper.doGetRegisteredHKList(authToken, partMap);
+    }
 }

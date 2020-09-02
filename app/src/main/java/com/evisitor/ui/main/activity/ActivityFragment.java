@@ -4,12 +4,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
+
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.FragmentActivityBinding;
@@ -17,8 +16,7 @@ import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.base.BaseNavigator;
 import com.evisitor.ui.main.activity.checkin.CheckInFragment;
 import com.evisitor.ui.main.activity.checkout.CheckOutFragment;
-import java.util.ArrayList;
-import java.util.List;
+import com.evisitor.util.ViewPagerAdapter;
 
 public class ActivityFragment extends BaseFragment<FragmentActivityBinding, ActivityViewModel> implements BaseNavigator,View.OnClickListener {
     private int listOf;
@@ -152,29 +150,6 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
                 getViewDataBinding().titleService.setTextColor(getResources().getColor(R.color.colorPrimary));
                 getViewDataBinding().titleHouse.setTextColor(getResources().getColor(R.color.black));
                break;
-        }
-    }
-
-    class ViewPagerAdapter extends FragmentPagerAdapter{
-
-        private final List<Fragment> fragmentList = new ArrayList<>();
-        ViewPagerAdapter(@NonNull FragmentManager fm) {
-            super(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        }
-
-        @NonNull
-        @Override
-        public Fragment getItem(int position) {
-            return fragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return fragmentList.size();
-        }
-
-        void addFragment(Fragment fragment){
-            fragmentList.add(fragment);
         }
     }
 }

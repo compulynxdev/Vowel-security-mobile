@@ -57,6 +57,11 @@ public class HouseKeeping {
     @SerializedName("id")
     private String houseKeeperId;
 
+    @SerializedName("residentId")
+    private String residentId;
+
+    @SerializedName("flatId")
+    private String flatId;
 
     @SerializedName("checkOutFeature")
     private boolean checkOutFeature;
@@ -73,6 +78,12 @@ public class HouseKeeping {
 
     //@SerializedName("image")
     private String url;
+
+    @SerializedName("expectedVehicleNo")
+    private String expectedVehicleNo;
+
+    @SerializedName("enteredVehicleNo")
+    private String enteredVehicleNo = "";
 
 
     public String getName() {
@@ -171,6 +182,22 @@ public class HouseKeeping {
         this.houseKeeperId = houseKeeperId;
     }
 
+    public String getResidentId() {
+        return residentId;
+    }
+
+    public void setResidentId(String residentId) {
+        this.residentId = residentId;
+    }
+
+    public String getFlatId() {
+        return flatId;
+    }
+
+    public void setFlatId(String flatId) {
+        this.flatId = flatId;
+    }
+
     public String getUrl() {
         return url;
     }
@@ -185,5 +212,21 @@ public class HouseKeeping {
 
     public void setNotificationStatus(boolean notificationStatus) {
         this.notificationStatus = notificationStatus;
+    }
+
+    public String getExpectedVehicleNo() {
+        return expectedVehicleNo == null ? "" : expectedVehicleNo;
+    }
+
+    public void setExpectedVehicleNo(String expectedVehicleNo) {
+        this.expectedVehicleNo = expectedVehicleNo;
+    }
+
+    public String getEnteredVehicleNo() {
+        return enteredVehicleNo == null || enteredVehicleNo.isEmpty() ? getExpectedVehicleNo() : enteredVehicleNo;
+    }
+
+    public void setEnteredVehicleNo(String enteredVehicleNo) {
+        this.enteredVehicleNo = enteredVehicleNo;
     }
 }

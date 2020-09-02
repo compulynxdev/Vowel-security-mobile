@@ -57,4 +57,7 @@ public interface ApiHelper {
     @GET(WebServices.GET_EXPECTED_SP_LIST)
     Call<ResponseBody> doGetExpectedSPList(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
 
+    @GET(WebServices.GET_REGISTERED_HOUSE_KEEPING_LIST)
+    Call<ResponseBody> doGetRegisteredHKList(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+
 }

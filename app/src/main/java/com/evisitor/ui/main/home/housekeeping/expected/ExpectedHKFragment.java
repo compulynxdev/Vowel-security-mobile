@@ -1,4 +1,4 @@
-package com.evisitor.ui.main.home.sp;
+package com.evisitor.ui.main.home.housekeeping.expected;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
+import com.evisitor.data.model.HouseKeeping;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.databinding.FragmentExpectedBinding;
@@ -27,22 +28,22 @@ import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
-public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, FragmentSpViewModel> implements SPNavigator {
+public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, ExpectedHKViewModel> implements ExpectedHKNavigator {
     private final int SCAN_RESULT = 101;
     private RecyclerViewScrollListener scrollListener;
-    private SPAdapter adapter;
-    private String search ="";
+    private ExpectedHKAdapter adapter;
+    private String search = "";
     private int page = 0;
-    private List<ServiceProvider> spList;
+    private List<HouseKeeping> list;
 
-    public static ExpectedSPFragment newInstance() {
-        ExpectedSPFragment fragment = new ExpectedSPFragment();
+    public static ExpectedHKFragment newInstance() {
+        ExpectedHKFragment fragment = new ExpectedHKFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
 
-    public void setSearch(String search){
+    public void setSearch(String search) {
         this.search = search;
         doSearch(search);
     }
@@ -58,8 +59,8 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Fr
     }
 
     @Override
-    public FragmentSpViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(FragmentSpViewModel.class);
+    public ExpectedHKViewModel getViewModel() {
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(ExpectedHKViewModel.class);
     }
 
     @Override
@@ -70,13 +71,13 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Fr
     }
 
     private void setUpAdapter() {
-        spList = new ArrayList<>();
-        adapter = new SPAdapter(spList, pos -> {
-            List<VisitorProfileBean> visitorProfileBeanList = getViewModel().setClickVisitorDetail(spList.get(pos));
+        list = new ArrayList<>();
+        adapter = new ExpectedHKAdapter(list, pos -> {
+            List<VisitorProfileBean> visitorProfileBeanList = getViewModel().setClickVisitorDetail(list.get(pos));
             VisitorProfileDialog.newInstance(visitorProfileBeanList, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
 
-                ServiceProvider tmpBean = getViewModel().getDataManager().getSpDetail();
+                HouseKeeping tmpBean = getViewModel().getDataManager().getHouseKeeping();
                 if (tmpBean.getIdentityNo().isEmpty()) {
                     showCheckinOptions();
                 } else {
@@ -113,18 +114,18 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Fr
                 adapter.notifyDataSetChanged();
                 page++;
 
-                getViewModel().getSpListData(page, search);
+                getViewModel().getExpectedHKListData(page, search);
             }
         };
         getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
 
-        getViewModel().getSpListData().observe(this, spList -> {
+        getViewModel().getHkListData().observe(this, spList -> {
             adapter.showLoading(false);
             adapter.notifyDataSetChanged();
 
-            if (page == 0) this.spList.clear();
+            if (page == 0) this.list.clear();
 
-            this.spList.addAll(spList);
+            this.list.addAll(spList);
             adapter.notifyDataSetChanged();
         });
 
@@ -140,9 +141,9 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Fr
 
     private void doSearch(String search) {
         scrollListener.onDataCleared();
-        spList.clear();
+        list.clear();
         this.page = 0;
-        getViewModel().getSpListData(page, search.trim());
+        getViewModel().getExpectedHKListData(page, search.trim());
     }
 
     private void showCheckinOptions() {

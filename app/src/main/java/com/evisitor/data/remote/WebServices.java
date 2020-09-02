@@ -24,6 +24,7 @@ class WebServices {
     static final String GET_SERVICE_PROVIDER_CHECKIN_LIST = "serviceprovider/get_service_provider_check_in_check_out";
 
     static final String GET_EXPECTED_SP_LIST = "serviceprovider/get_all_expected_service_provider";
+    static final String GET_REGISTERED_HOUSE_KEEPING_LIST = "staff/get_all_staff"; //?accountId=1&page=0&size=10&search=a
 
     private WebServices() {
     }

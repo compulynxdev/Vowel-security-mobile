@@ -6,20 +6,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
+
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
-import com.evisitor.data.model.Guests;
 import com.evisitor.databinding.ActivityExpectedGuestBinding;
 import com.evisitor.ui.base.BaseActivity;
-import com.evisitor.ui.base.BaseNavigator;
 import com.evisitor.ui.dialog.AlertDialog;
 import com.evisitor.ui.main.home.guest.add.AddGuestActivity;
 import com.evisitor.ui.main.home.scan.ScanIDActivity;
 import com.sharma.mrzreader.MrzRecord;
 
-public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBinding,GuestViewModel> implements BaseNavigator {
+public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBinding, GuestViewModel> {
 
     private final int SCAN_RESULT = 101;
 

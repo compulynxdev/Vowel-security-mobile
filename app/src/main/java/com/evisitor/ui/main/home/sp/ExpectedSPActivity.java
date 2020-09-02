@@ -9,13 +9,15 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.lifecycle.ViewModelProvider;
+
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
-import com.evisitor.databinding.ActivityExpectedSpBinding;
+import com.evisitor.databinding.ActivitySpBinding;
 import com.evisitor.ui.base.BaseActivity;
 
-public class ExpectedSPActivity extends BaseActivity<ActivityExpectedSpBinding, SPViewModel> implements SPNavigator {
+public class ExpectedSPActivity extends BaseActivity<ActivitySpBinding, SPViewModel> {
 
     private ExpectedSPFragment fragment;
     public static Intent getStartIntent(Context context) {
@@ -29,7 +31,7 @@ public class ExpectedSPActivity extends BaseActivity<ActivityExpectedSpBinding, 
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_expected_sp;
+        return R.layout.activity_sp;
     }
 
     @Override
@@ -91,12 +93,5 @@ public class ExpectedSPActivity extends BaseActivity<ActivityExpectedSpBinding, 
             }
             return false;
         });
-    }
-    @Override
-    public void hideSwipeToRefresh() {
-    }
-
-    @Override
-    public void refreshList() {
     }
 }

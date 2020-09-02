@@ -60,6 +60,8 @@
     <string name="data_expected_time">Expected Time : %s</string>
     <string name="data_identity">Identity No : %s</string>
     <string name="data_mobile">Mobile : %s</string>
+    <string name="data_register_by">Registered By : %s</string>
+    <string name="data_register_date">Registered Date : %s</string>
 
     <!--Check-In Dialog-->
     <string name="msg_add_guest_option">Please select Check In option.</string>
@@ -182,5 +184,7 @@
     <string name="data_time_in">Time In : %s</string>
     <string name="data_time_out">Time Out : %s</string>
     <string name="data_is_checkout">Host Check Out : %b</string>
+    <string name="expected">Expected</string>
+    <string name="registered">Registered</string>
 
 </resources>

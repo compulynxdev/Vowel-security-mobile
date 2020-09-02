@@ -1,12 +1,12 @@
-package com.evisitor.ui.main.home.sp;
+package com.evisitor.ui.main.home.housekeeping;
 
 import com.evisitor.data.DataManager;
 import com.evisitor.ui.base.BaseNavigator;
 import com.evisitor.ui.base.BaseViewModel;
 
-public class SPViewModel extends BaseViewModel<BaseNavigator> {
+public class HKViewModel extends BaseViewModel<BaseNavigator> {
 
-    public SPViewModel(DataManager dataManager) {
+    public HKViewModel(DataManager dataManager) {
         super(dataManager);
     }
 }
