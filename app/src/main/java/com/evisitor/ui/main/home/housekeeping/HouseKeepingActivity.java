@@ -9,10 +9,8 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
-
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.ActivityHkBinding;
@@ -23,6 +21,8 @@ import com.evisitor.util.ViewPagerAdapter;
 
 public class HouseKeepingActivity extends BaseActivity<ActivityHkBinding, HKViewModel> implements View.OnClickListener {
 
+    private ExpectedHKFragment expectedHKFragment;
+    private RegisteredHKFragment registeredHKFragment;
     public static Intent getStartIntent(Context context) {
         return new Intent(context, HouseKeepingActivity.class);
     }
@@ -65,8 +65,10 @@ public class HouseKeepingActivity extends BaseActivity<ActivityHkBinding, HKView
 
     private void setUpPagerAdapter() {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(ExpectedHKFragment.newInstance());
-        adapter.addFragment(RegisteredHKFragment.newInstance());
+        expectedHKFragment = ExpectedHKFragment.newInstance();
+        adapter.addFragment(expectedHKFragment);
+        registeredHKFragment = RegisteredHKFragment.newInstance();
+        adapter.addFragment(registeredHKFragment);
         getViewDataBinding().viewPager.setOffscreenPageLimit(2);
 
         getViewDataBinding().viewPager.setAdapter(adapter);
@@ -117,7 +119,8 @@ public class HouseKeepingActivity extends BaseActivity<ActivityHkBinding, HKView
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.toString().isEmpty() || s.toString().length() >= 2) {
-                    //fragment.setSearch(s.toString());
+                    expectedHKFragment.setSearch(s.toString());
+                    registeredHKFragment.setSearch(s.toString());
                 }
             }
         });
