@@ -28,7 +28,7 @@
 
     <!--Login Validations-->
     <string name="alert_empty_username">Please enter username.</string>
-    <string name="alert_username_length">Username minimum length must be 5 and maximum length 10.</string>
+    <string name="alert_username_length">Username minimum length must be 5.</string>
     <string name="alert_empty_password">Please enter password.</string>
     <string name="alert_pwd_Length">Password length must be greater than or equal to 5.</string>
 
@@ -57,6 +57,7 @@
     <string name="data_house">House No : %s</string>
     <string name="data_host">Host : %s</string>
     <string name="data_time">Time : %s</string>
+    <string name="data_time_slot">Time : %s - %s</string>
     <string name="data_expected_time">Expected Time : %s</string>
     <string name="data_identity">Identity No : %s</string>
     <string name="data_mobile">Mobile : %s</string>

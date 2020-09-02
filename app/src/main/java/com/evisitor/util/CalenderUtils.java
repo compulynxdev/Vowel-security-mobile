@@ -29,6 +29,7 @@ public final class CalenderUtils {
     public static final String DATE_FORMAT = "EEE, MMMM dd";
     //public static final String SERVER_DATE_FORMAT = "E MMM dd HH:mm:ss Z yyyy";
     public static final String SERVER_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
+    public static final String SERVER_DATE_FORMAT2 = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 
 
     private CalenderUtils() {
@@ -45,8 +46,8 @@ public final class CalenderUtils {
 
     public static String formatDate(String date, @NonNull String pFormat, @NonNull String dFormat) {
         try {
-            SimpleDateFormat parseFormat = new SimpleDateFormat(pFormat, Locale.getDefault());
-            SimpleDateFormat displayFormat = new SimpleDateFormat(dFormat, Locale.getDefault());
+            SimpleDateFormat parseFormat = new SimpleDateFormat(pFormat, Locale.US);
+            SimpleDateFormat displayFormat = new SimpleDateFormat(dFormat, Locale.US);
             Date dTime = parseFormat.parse(date);
             assert dTime != null;
             return displayFormat.format(dTime);

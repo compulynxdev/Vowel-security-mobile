@@ -101,16 +101,6 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Call<ResponseBody> doHouseKeepingCheckInCheckOut(String authToken, RequestBody body) {
-        return getApiInterface().doHouseKeepingCheckInCheckOut(authToken, body);
-    }
-
-    @Override
-    public Call<ResponseBody> doServiceProviderCheckInCheckOut(String authToken, RequestBody body) {
-        return getApiInterface().doServiceProviderCheckInCheckOut(authToken, body);
-    }
-
-    @Override
     public Call<ResponseBody> doGetExpectedSPList(String authToken, Map<String, String> partMap) {
         return getApiInterface().doGetExpectedSPList(authToken, partMap);
     }

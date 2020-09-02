@@ -49,7 +49,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
         if (userName.isEmpty()) {
             getNavigator().showToast(R.string.alert_empty_username);
             return false;
-        } else if (userName.length() < 5 || userName.length() > 10) {
+        } else if (userName.length() < 5) {
             getNavigator().showToast(R.string.alert_username_length);
             return false;
         } else if (password.isEmpty()) {

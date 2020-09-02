@@ -22,6 +22,7 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
     private VisitorProfileCallback callback;
     private List<VisitorProfileBean> visitorInfoList;
     private String btnLabel = "";
+    private boolean isBtnVisible = true;
 
     public static VisitorProfileDialog newInstance(List<VisitorProfileBean> visitorInfoList, VisitorProfileCallback callback) {
         Bundle args = new Bundle();
@@ -51,6 +52,11 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
         return this;
     }
 
+    public VisitorProfileDialog setBtnVisible(boolean btnVisible) {
+        isBtnVisible = btnVisible;
+        return this;
+    }
+
     @Override
     public VisitorProfileViewModel getViewModel() {
         return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(VisitorProfileViewModel.class);
@@ -65,6 +71,7 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
         super.onViewCreated(view, savedInstanceState);
         getViewModel().setNavigator(getBaseActivity());
         getViewDataBinding().imgClose.setOnClickListener(this);
+        getViewDataBinding().btnOk.setVisibility(isBtnVisible ? View.VISIBLE : View.GONE);
         getViewDataBinding().btnOk.setOnClickListener(this);
 
         if (!btnLabel.isEmpty()) {

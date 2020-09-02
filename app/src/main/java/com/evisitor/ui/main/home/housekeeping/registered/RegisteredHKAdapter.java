@@ -14,6 +14,7 @@ import com.evisitor.R;
 import com.evisitor.data.model.RegisteredHKResponse;
 import com.evisitor.ui.base.BaseViewHolder;
 import com.evisitor.ui.base.ItemClickCallback;
+import com.evisitor.util.CalenderUtils;
 import com.evisitor.util.pagination.FooterLoader;
 
 import java.util.List;
@@ -46,7 +47,7 @@ public class RegisteredHKAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         View view;
         switch (viewType) {
             case VIEWTYPE_ITEM:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_sp, parent, false);
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_hk_registered, parent, false);
                 return new RegisteredHKAdapter.ViewHolder(view);
 
             default:
@@ -89,17 +90,16 @@ public class RegisteredHKAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public class ViewHolder extends BaseViewHolder {
         ImageView imgVisitor;
-        TextView name, profile, time, houseNo, host, vehicle;
+        TextView name, profile, time, identity;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_name);
+            identity = itemView.findViewById(R.id.tv_identity);
             profile = itemView.findViewById(R.id.tv_profile);
             time = itemView.findViewById(R.id.tv_time);
-            houseNo = itemView.findViewById(R.id.tv_house_no);
-            host = itemView.findViewById(R.id.tv_host);
-            vehicle = itemView.findViewById(R.id.tv_vehicle);
             imgVisitor = itemView.findViewById(R.id.img_visitor);
+
             itemView.findViewById(R.id.constraint).setOnClickListener(v -> {
                 if (listener != null)
                     listener.onItemClick(getAdapterPosition());
@@ -111,11 +111,9 @@ public class RegisteredHKAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             RegisteredHKResponse.ContentBean bean = list.get(position);
             Context context = name.getContext();
             name.setText(context.getString(R.string.data_name, bean.getFullName()));
+            identity.setText(context.getString(R.string.data_identity, bean.getDocumentId().isEmpty() ? "N?A" : bean.getDocumentId()));
             profile.setText(context.getString(R.string.data_profile, bean.getProfile()));
-         /*   if (bean.getTime() != null && !bean.getTime().isEmpty())
-                time.setText(context.getString(R.string.data_expected_time, CalenderUtils.formatDate(bean.getTime(), CalenderUtils.SERVER_DATE_FORMAT,
-                        CalenderUtils.TIME_FORMAT_AM)));
-            else time.setVisibility(View.GONE);*/
+            time.setText(context.getString(R.string.data_time_slot, CalenderUtils.formatDate(bean.getTimeIn(), CalenderUtils.TIME_FORMAT, CalenderUtils.TIME_FORMAT_AM), CalenderUtils.formatDate(bean.getTimeOut(), CalenderUtils.TIME_FORMAT, CalenderUtils.TIME_FORMAT_AM)));
         }
     }
 

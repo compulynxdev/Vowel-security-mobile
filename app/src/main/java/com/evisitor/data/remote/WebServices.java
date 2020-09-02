@@ -15,16 +15,17 @@ class WebServices {
     static final String GET_HOST_LIST = "resident/get_resident_by_flat_id"; //?accountId=1&flatId=6
 
     static final String GUEST_SEND_NOTIFICTION = "notification/send_notification";
+
     static final String GET_EXPECTED_GUEST_LIST = "guest/get_all_booked_guest";
-    static final String CHECKIN_CHECKOUT = "guest/check_in_check_out";
-    static final String HOUSEKEEPING_CHECKIN_CHECKOUT = "househelp/house_help_check_in_check_out";
-    static final String SERVICE_PROVIDER_CHECKIN_CHECKOUT = "serviceprovider/service_provider_check_in_check_out";
+    static final String GET_EXPECTED_SP_LIST = "serviceprovider/get_all_expected_service_provider";
+    static final String GET_REGISTERED_HOUSE_KEEPING_LIST = "staff/get_all_staff"; //?accountId=1&page=0&size=10&type=expected&search=a
+
     static final String GET_GUEST_CHECKIN_LIST = "guest/get_guest_check_in_check_out";
     static final String GET_HOUSEKEEPING_CHECKIN_LIST = "househelp/get_house_help_check_in_check_out";
     static final String GET_SERVICE_PROVIDER_CHECKIN_LIST = "serviceprovider/get_service_provider_check_in_check_out";
 
-    static final String GET_EXPECTED_SP_LIST = "serviceprovider/get_all_expected_service_provider";
-    static final String GET_REGISTERED_HOUSE_KEEPING_LIST = "staff/get_all_staff"; //?accountId=1&page=0&size=10&search=a
+    static final String HOUSE_KEEPING_CHECKIN_CHECKOUT = "staff/register_staff_check_in";
+    static final String CHECKIN_CHECKOUT = "guest/check_in_check_out";
 
     private WebServices() {
     }

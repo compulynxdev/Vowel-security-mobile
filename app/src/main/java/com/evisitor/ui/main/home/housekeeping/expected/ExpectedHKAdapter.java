@@ -11,9 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.evisitor.R;
-import com.evisitor.data.model.HouseKeeping;
+import com.evisitor.data.model.RegisteredHKResponse;
 import com.evisitor.ui.base.BaseViewHolder;
 import com.evisitor.ui.base.ItemClickCallback;
+import com.evisitor.util.CalenderUtils;
 import com.evisitor.util.pagination.FooterLoader;
 
 import java.util.List;
@@ -21,11 +22,11 @@ import java.util.List;
 public class ExpectedHKAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private static final int VIEWTYPE_ITEM = 1;
     private static final int VIEWTYPE_LOADER = 2;
-    private List<HouseKeeping> list;
+    private List<RegisteredHKResponse.ContentBean> list;
     private boolean showLoader;
     private ItemClickCallback listener;
 
-    ExpectedHKAdapter(List<HouseKeeping> list, ItemClickCallback callback) {
+    ExpectedHKAdapter(List<RegisteredHKResponse.ContentBean> list, ItemClickCallback callback) {
         this.list = list;
         this.listener = callback;
     }
@@ -37,7 +38,7 @@ public class ExpectedHKAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public long getItemId(int position) {
-        return Long.parseLong(list.get(position).getHouseKeeperId());
+        return list.get(position).getId();
     }
 
     @NonNull
@@ -46,7 +47,7 @@ public class ExpectedHKAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         View view;
         switch (viewType) {
             case VIEWTYPE_ITEM:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_sp, parent, false);
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_hk, parent, false);
                 return new ExpectedHKAdapter.ViewHolder(view);
 
             default:
@@ -89,16 +90,16 @@ public class ExpectedHKAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public class ViewHolder extends BaseViewHolder {
         ImageView imgVisitor;
-        TextView name, profile, time, houseNo, host, vehicle;
+        TextView name, identity, profile, time, houseNo, host;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_name);
+            identity = itemView.findViewById(R.id.tv_identity);
             profile = itemView.findViewById(R.id.tv_profile);
             time = itemView.findViewById(R.id.tv_time);
             houseNo = itemView.findViewById(R.id.tv_house_no);
             host = itemView.findViewById(R.id.tv_host);
-            vehicle = itemView.findViewById(R.id.tv_vehicle);
             imgVisitor = itemView.findViewById(R.id.img_visitor);
             itemView.findViewById(R.id.constraint).setOnClickListener(v -> {
                 if (listener != null)
@@ -108,25 +109,20 @@ public class ExpectedHKAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         @Override
         public void onBind(int position) {
-            HouseKeeping bean = list.get(position);
+            RegisteredHKResponse.ContentBean bean = list.get(position);
             Context context = name.getContext();
-            name.setText(context.getString(R.string.data_name, bean.getName()));
+            name.setText(context.getString(R.string.data_name, bean.getFullName()));
+            identity.setText(context.getString(R.string.data_identity, bean.getDocumentId().isEmpty() ? "N?A" : bean.getDocumentId()));
             profile.setText(context.getString(R.string.data_profile, bean.getProfile()));
-         /*   if (bean.getTime() != null && !bean.getTime().isEmpty())
-                time.setText(context.getString(R.string.data_expected_time, CalenderUtils.formatDate(bean.getTime(), CalenderUtils.SERVER_DATE_FORMAT,
-                        CalenderUtils.TIME_FORMAT_AM)));
-            else time.setVisibility(View.GONE);*/
-            if (bean.getHouseNo().isEmpty()) {
+            if (bean.getFlatNo().isEmpty()) {
                 houseNo.setVisibility(View.GONE);
                 host.setText(context.getString(R.string.data_host, bean.getCreatedBy()));
             } else {
                 houseNo.setVisibility(View.VISIBLE);
-                houseNo.setText(context.getString(R.string.data_house, bean.getHouseNo()));
-                host.setText(context.getString(R.string.data_host, bean.getHost()));
+                houseNo.setText(context.getString(R.string.data_house, bean.getFlatNo()));
+                host.setText(context.getString(R.string.data_host, bean.getResidentName()));
             }
-            if (!bean.getExpectedVehicleNo().isEmpty())
-                vehicle.setText(context.getString(R.string.data_vehicle, bean.getExpectedVehicleNo()));
-            else vehicle.setVisibility(View.GONE);
+            time.setText(context.getString(R.string.data_time_slot, CalenderUtils.formatDate(bean.getTimeIn(), CalenderUtils.TIME_FORMAT, CalenderUtils.TIME_FORMAT_AM), CalenderUtils.formatDate(bean.getTimeOut(), CalenderUtils.TIME_FORMAT, CalenderUtils.TIME_FORMAT_AM)));
         }
     }
 
