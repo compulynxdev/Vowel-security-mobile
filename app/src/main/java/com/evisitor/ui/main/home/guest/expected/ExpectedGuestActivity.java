@@ -70,7 +70,7 @@ public class ExpectedGuestActivity extends BaseActivity<ActivityExpectedGuestBin
     }
 
     private void setUpList() {
-        addFragment(ExpectedGuestFragment.newInstance(getViewDataBinding().etSearch),R.id.guest_frame,false);
+        replaceFragment(ExpectedGuestFragment.newInstance(getViewDataBinding().etSearch),R.id.guest_frame);
     }
 
     private void setUpSearch() {

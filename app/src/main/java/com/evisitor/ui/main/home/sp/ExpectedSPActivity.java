@@ -48,7 +48,7 @@ public class ExpectedSPActivity extends BaseActivity<ActivitySpBinding, SPViewMo
         setUpSearch();
 
         fragment = ExpectedSPFragment.newInstance();
-        addFragment(fragment,R.id.frame_layout,false);
+        replaceFragment(fragment,R.id.frame_layout);
     }
 
     private void setUpSearch() {
