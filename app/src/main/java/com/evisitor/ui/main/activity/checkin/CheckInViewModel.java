@@ -9,6 +9,7 @@ import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.GuestsResponse;
 import com.evisitor.data.model.HouseKeeping;
 import com.evisitor.data.model.HouseKeepingCheckInResponse;
+import com.evisitor.data.model.RegisteredHKResponse;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.model.ServiceProviderResponse;
 import com.evisitor.data.model.VisitorProfileBean;
@@ -78,7 +79,6 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ExpectedGuestNavig
                 getServiceProviderList(map);
                 break;
         }
-
     }
 
     private void getServiceProviderList(Map<String, String> map) {
@@ -196,7 +196,9 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ExpectedGuestNavig
     List<VisitorProfileBean> getHouseKeepingCheckInProfileBean(HouseKeeping houseKeeping) {
         getNavigator().showLoading();
         List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
-        getDataManager().setHouseKeeping(houseKeeping);
+        RegisteredHKResponse.ContentBean hkBean = new RegisteredHKResponse.ContentBean();
+        hkBean.setId(Integer.parseInt(houseKeeping.getHouseKeeperId()));
+        getDataManager().setHouseKeeping(hkBean);
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, houseKeeping.getName())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time, CalenderUtils.formatDate(houseKeeping.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIME_FORMAT_AM))));
 
@@ -248,7 +250,7 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ExpectedGuestNavig
                     break;
 
                 case 1:
-                    object.put("id", getDataManager().getHouseKeeping().getHouseKeeperId());
+                    object.put("id", String.valueOf(getDataManager().getHouseKeeping().getId()));
                     object.put("visitor",AppConstants.HOUSE_HELP);
                     object.put("type", AppConstants.CHECK_OUT);
                     break;

@@ -48,16 +48,12 @@ public interface ApiHelper {
     @GET(WebServices.GET_SERVICE_PROVIDER_CHECKIN_LIST)
     Call<ResponseBody> doGetServiceProviderCheckInList(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
 
-    @POST(WebServices.HOUSEKEEPING_CHECKIN_CHECKOUT)
-    Call<ResponseBody> doHouseKeepingCheckInCheckOut(@Header("authorization") String authToken, @Body RequestBody body);
-
-    @POST(WebServices.SERVICE_PROVIDER_CHECKIN_CHECKOUT)
-    Call<ResponseBody> doServiceProviderCheckInCheckOut(@Header("authorization") String authToken, @Body RequestBody body);
-
     @GET(WebServices.GET_EXPECTED_SP_LIST)
     Call<ResponseBody> doGetExpectedSPList(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
 
     @GET(WebServices.GET_REGISTERED_HOUSE_KEEPING_LIST)
     Call<ResponseBody> doGetRegisteredHKList(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
 
+    /*@POST(WebServices.HOUSE_KEEPING_CHECKIN_CHECKOUT)
+    Call<ResponseBody> doHouseKeepingCheckInCheckOut(@Header("authorization") String authToken, @Body RequestBody body);*/
 }

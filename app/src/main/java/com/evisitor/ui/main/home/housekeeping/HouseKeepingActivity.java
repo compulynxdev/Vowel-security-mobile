@@ -21,7 +21,7 @@ import com.evisitor.ui.main.home.housekeeping.expected.ExpectedHKFragment;
 import com.evisitor.ui.main.home.housekeeping.registered.RegisteredHKFragment;
 import com.evisitor.util.ViewPagerAdapter;
 
-public class HouseKeepingActivity extends BaseActivity<ActivityHkBinding, HKViewModel> {
+public class HouseKeepingActivity extends BaseActivity<ActivityHkBinding, HKViewModel> implements View.OnClickListener {
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, HouseKeepingActivity.class);
@@ -58,6 +58,9 @@ public class HouseKeepingActivity extends BaseActivity<ActivityHkBinding, HKView
         ImageView imgBack = findViewById(R.id.img_back);
         imgBack.setVisibility(View.VISIBLE);
         imgBack.setOnClickListener(v -> onBackPressed());
+
+        getViewDataBinding().tvRegistered.setOnClickListener(this);
+        getViewDataBinding().tvExpected.setOnClickListener(this);
     }
 
     private void setUpPagerAdapter() {
@@ -98,15 +101,7 @@ public class HouseKeepingActivity extends BaseActivity<ActivityHkBinding, HKView
     private void setUpSearch() {
         ImageView imgSearch = findViewById(R.id.img_search);
         imgSearch.setVisibility(View.VISIBLE);
-        imgSearch.setOnClickListener(v -> {
-            hideKeyboard();
-            getViewDataBinding().searchBar.setVisibility(getViewDataBinding().searchBar.getVisibility() == View.GONE
-                    ? View.VISIBLE : View.GONE);
-
-            if (!getViewDataBinding().etSearch.getText().toString().trim().isEmpty()) {
-                getViewDataBinding().etSearch.setText("");
-            }
-        });
+        imgSearch.setOnClickListener(this);
 
         getViewDataBinding().etSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -134,5 +129,28 @@ public class HouseKeepingActivity extends BaseActivity<ActivityHkBinding, HKView
             }
             return false;
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_expected:
+                getViewDataBinding().viewPager.setCurrentItem(0, true);
+                break;
+
+            case R.id.tv_registered:
+                getViewDataBinding().viewPager.setCurrentItem(1, true);
+                break;
+
+            case R.id.img_search:
+                hideKeyboard();
+                getViewDataBinding().searchBar.setVisibility(getViewDataBinding().searchBar.getVisibility() == View.GONE
+                        ? View.VISIBLE : View.GONE);
+
+                if (!getViewDataBinding().etSearch.getText().toString().trim().isEmpty()) {
+                    getViewDataBinding().etSearch.setText("");
+                }
+                break;
+        }
     }
 }

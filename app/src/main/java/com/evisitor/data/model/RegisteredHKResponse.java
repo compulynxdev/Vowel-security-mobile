@@ -297,6 +297,9 @@ public class RegisteredHKResponse {
         private String email;
         private String timeIn;
         private String contactNo;
+        private boolean notificationStatus;
+        private String expectedVehicleNo;
+        private String enteredVehicleNo = "";
         private List<String> workingDays;
 
         public String getCountry() {
@@ -348,7 +351,7 @@ public class RegisteredHKResponse {
         }
 
         public String getTimeOut() {
-            return timeOut;
+            return timeOut == null ? "" : timeOut;
         }
 
         public void setTimeOut(String timeOut) {
@@ -428,7 +431,7 @@ public class RegisteredHKResponse {
         }
 
         public String getTimeIn() {
-            return timeIn;
+            return timeIn == null ? "" : timeIn;
         }
 
         public void setTimeIn(String timeIn) {
@@ -449,6 +452,30 @@ public class RegisteredHKResponse {
 
         public void setWorkingDays(List<String> workingDays) {
             this.workingDays = workingDays;
+        }
+
+        public String getExpectedVehicleNo() {
+            return expectedVehicleNo == null ? "" : expectedVehicleNo;
+        }
+
+        public void setExpectedVehicleNo(String expectedVehicleNo) {
+            this.expectedVehicleNo = expectedVehicleNo;
+        }
+
+        public String getEnteredVehicleNo() {
+            return enteredVehicleNo == null || enteredVehicleNo.isEmpty() ? getExpectedVehicleNo() : enteredVehicleNo;
+        }
+
+        public void setEnteredVehicleNo(String enteredVehicleNo) {
+            this.enteredVehicleNo = enteredVehicleNo;
+        }
+
+        public boolean isNotificationStatus() {
+            return notificationStatus;
+        }
+
+        public void setNotificationStatus(boolean notificationStatus) {
+            this.notificationStatus = notificationStatus;
         }
     }
 }

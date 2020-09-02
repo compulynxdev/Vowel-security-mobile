@@ -5,7 +5,7 @@ import android.content.Context;
 
 import com.evisitor.data.local.prefs.AppPreferenceHelper;
 import com.evisitor.data.model.Guests;
-import com.evisitor.data.model.HouseKeeping;
+import com.evisitor.data.model.RegisteredHKResponse;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.model.UserDetail;
 import com.evisitor.data.remote.AppApiHelper;
@@ -30,7 +30,7 @@ public class AppDataManager implements DataManager {
     private final Gson mGson;
     private Guests guests;
     private ServiceProvider spDetail;
-    private HouseKeeping houseKeeping;
+    private RegisteredHKResponse.ContentBean houseKeeping;
 
     private AppDataManager(Context context) {
         apiHelper = AppApiHelper.getAppApiInstance();
@@ -77,12 +77,12 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public HouseKeeping getHouseKeeping() {
+    public RegisteredHKResponse.ContentBean getHouseKeeping() {
         return houseKeeping;
     }
 
     @Override
-    public void setHouseKeeping(HouseKeeping houseKeeping) {
+    public void setHouseKeeping(RegisteredHKResponse.ContentBean houseKeeping) {
         this.houseKeeping = houseKeeping;
     }
 
@@ -244,16 +244,6 @@ public class AppDataManager implements DataManager {
     @Override
     public Call<ResponseBody> doGetServiceProviderCheckInList(String authToken, Map<String, String> partMap) {
         return apiHelper.doGetServiceProviderCheckInList(authToken, partMap);
-    }
-
-    @Override
-    public Call<ResponseBody> doHouseKeepingCheckInCheckOut(String authToken, RequestBody body) {
-        return apiHelper.doHouseKeepingCheckInCheckOut(authToken, body);
-    }
-
-    @Override
-    public Call<ResponseBody> doServiceProviderCheckInCheckOut(String authToken, RequestBody body) {
-        return apiHelper.doServiceProviderCheckInCheckOut(authToken, body);
     }
 
     @Override

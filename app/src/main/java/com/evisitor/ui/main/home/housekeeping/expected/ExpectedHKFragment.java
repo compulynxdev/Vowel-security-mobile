@@ -10,8 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
-import com.evisitor.data.model.HouseKeeping;
-import com.evisitor.data.model.ServiceProvider;
+import com.evisitor.data.model.RegisteredHKResponse;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.databinding.FragmentExpectedBinding;
 import com.evisitor.ui.base.BaseFragment;
@@ -34,7 +33,7 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
     private ExpectedHKAdapter adapter;
     private String search = "";
     private int page = 0;
-    private List<HouseKeeping> list;
+    private List<RegisteredHKResponse.ContentBean> list;
 
     public static ExpectedHKFragment newInstance() {
         ExpectedHKFragment fragment = new ExpectedHKFragment();
@@ -77,8 +76,8 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
             VisitorProfileDialog.newInstance(visitorProfileBeanList, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
 
-                HouseKeeping tmpBean = getViewModel().getDataManager().getHouseKeeping();
-                if (tmpBean.getIdentityNo().isEmpty()) {
+                RegisteredHKResponse.ContentBean tmpBean = getViewModel().getDataManager().getHouseKeeping();
+                if (tmpBean.getDocumentId().isEmpty()) {
                     showCheckinOptions();
                 } else {
                     IdVerificationDialog.newInstance(new IdVerificationCallback() {
@@ -93,7 +92,7 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
                         public void onSubmitClick(IdVerificationDialog dialog, String id) {
                             dialog.dismiss();
 
-                            if (tmpBean.getIdentityNo().equals(id))
+                            if (tmpBean.getDocumentId().equals(id))
                                 showCheckinOptions();
                             else {
                                 showToast(R.string.alert_id);
@@ -119,13 +118,13 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
         };
         getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
 
-        getViewModel().getHkListData().observe(this, spList -> {
+        getViewModel().getHkListData().observe(this, list -> {
             adapter.showLoading(false);
             adapter.notifyDataSetChanged();
 
             if (page == 0) this.list.clear();
 
-            this.list.addAll(spList);
+            this.list.addAll(list);
             adapter.notifyDataSetChanged();
         });
 
@@ -158,8 +157,8 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
                 });
 
 
-        ServiceProvider bean = getViewModel().getDataManager().getSpDetail();
-        if (!bean.isNotificationStatus() || bean.getHouseNo().isEmpty()) {
+        RegisteredHKResponse.ContentBean bean = getViewModel().getDataManager().getHouseKeeping();
+        if (!bean.isNotificationStatus() || bean.getFlatNo().isEmpty()) {
             alert.setNegativeBtnShow(false).show(getFragmentManager());
         } else {
             alert.setNegativeBtnColor(R.color.colorPrimary)
@@ -198,7 +197,7 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
             if (requestCode == SCAN_RESULT && data != null) {
                 MrzRecord mrzRecord = (MrzRecord) data.getSerializableExtra("Record");
                 assert mrzRecord != null;
-                if (getViewModel().getDataManager().getSpDetail().getIdentityNo().equals(mrzRecord.getDocumentNumber()))
+                if (getViewModel().getDataManager().getHouseKeeping().getDocumentId().equals(mrzRecord.getDocumentNumber()))
                     showCheckinOptions();
                 else {
                     showToast(R.string.alert_id);
