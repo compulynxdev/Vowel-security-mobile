@@ -21,6 +21,7 @@ import com.evisitor.databinding.ActivityTotalVisitorsBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.base.BaseNavigator;
 import com.evisitor.ui.main.home.guest.expected.ExpectedGuestFragment;
+import com.evisitor.ui.main.home.housekeeping.expected.ExpectedHKFragment;
 import com.evisitor.ui.main.home.sp.ExpectedSPFragment;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,7 @@ import java.util.List;
 public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBinding,TotalVisitorsViewModel> implements BaseNavigator ,View.OnClickListener{
 
     private ExpectedSPFragment expectedSPFragment;
+    private ExpectedHKFragment expectedHKFragment;
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context,TotalVisitorsActivity.class);
@@ -70,11 +72,12 @@ public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBin
     private void setUpPagerAdapter() {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(ExpectedGuestFragment.newInstance(getViewDataBinding().etSearch));
-        adapter.addFragment(ExpectedGuestFragment.newInstance(getViewDataBinding().etSearch));
+        expectedHKFragment = ExpectedHKFragment.newInstance();
+        adapter.addFragment(expectedHKFragment);
         expectedSPFragment = ExpectedSPFragment.newInstance();
         adapter.addFragment(expectedSPFragment);
 
-        getViewDataBinding().viewPager.setOffscreenPageLimit(2);
+        getViewDataBinding().viewPager.setOffscreenPageLimit(3);
 
         getViewDataBinding().viewPager.setAdapter(adapter);
         getViewDataBinding().viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -169,6 +172,7 @@ public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBin
             public void afterTextChanged(Editable s) {
                 if (s.toString().isEmpty() || s.toString().length() >= 2) {
                     expectedSPFragment.setSearch(s.toString());
+                    expectedHKFragment.setSearch(s.toString());
                 }
             }
         });
