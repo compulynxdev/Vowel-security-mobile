@@ -121,7 +121,7 @@ public class ExpectedHKViewModel extends BaseCheckInOutViewModel<ExpectedHKNavig
             object.put("staffId", String.valueOf(getDataManager().getHouseKeeping().getId()));
             object.put("enteredVehicleNo", getDataManager().getHouseKeeping().getEnteredVehicleNo());
             object.put("type", AppConstants.CHECK_IN);
-            // object.put("visitor", AppConstants.HOUSE_HELP);
+            object.put("visitor", AppConstants.HOUSE_HELP);
         } catch (JSONException e) {
             e.printStackTrace();
         }
