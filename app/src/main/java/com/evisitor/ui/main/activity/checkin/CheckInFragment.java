@@ -299,7 +299,6 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
         doSearch(etSearch.getText().toString());
     }
 
-
     public interface OnFragmentInteraction{
          void totalCount(int size);
     }
