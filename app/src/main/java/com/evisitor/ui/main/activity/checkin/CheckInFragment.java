@@ -194,7 +194,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
             List<VisitorProfileBean> beans = getViewModel().getHouseKeepingCheckInProfileBean(houseKeeping);
             VisitorProfileDialog.newInstance(beans, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
-                if (!houseKeeping.isCheckOutFeature())
+                if (houseKeeping.isCheckOutFeature() && !houseKeeping.isHostCheckOut())
                     showCallDialog(1);
                 else getViewModel().checkOut(1);
             }).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
@@ -206,7 +206,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
             List<VisitorProfileBean> beans = getViewModel().getServiceProviderCheckInProfileBean(serviceProvider);
             VisitorProfileDialog.newInstance(beans, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
-                if (!serviceProvider.isCheckOutFeature())
+                if (serviceProvider.isCheckOutFeature() && !serviceProvider.isHostCheckOut())
                     showCallDialog(2);
                 else getViewModel().checkOut(2);
             }).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
@@ -219,7 +219,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
             List<VisitorProfileBean> beans = getViewModel().getGuestCheckInProfileBean(guests);
             VisitorProfileDialog.newInstance(beans, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
-                if (!guests.isCheckOutFeature())
+                if (guests.isCheckOutFeature() && !guests.isHostCheckOut())
                     showCallDialog(0);
                 else getViewModel().checkOut(0);
             }).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
