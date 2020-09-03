@@ -19,6 +19,7 @@ import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.databinding.FragmentCheckInBinding;
 import com.evisitor.ui.base.BaseFragment;
+import com.evisitor.ui.dialog.AlertDialog;
 import com.evisitor.ui.main.activity.checkin.adapter.GuestCheckInAdapter;
 import com.evisitor.ui.main.activity.checkin.adapter.HouseKeepingCheckInAdapter;
 import com.evisitor.ui.main.activity.checkin.adapter.ServiceProviderCheckInAdapter;
@@ -193,7 +194,9 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
             List<VisitorProfileBean> beans = getViewModel().getHouseKeepingCheckInProfileBean(houseKeeping);
             VisitorProfileDialog.newInstance(beans, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
-                getViewModel().checkOut(1);
+                if (!houseKeeping.isCheckOutFeature())
+                    showCallDialog(1);
+                else getViewModel().checkOut(1);
             }).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
         });
      }
@@ -203,21 +206,44 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
             List<VisitorProfileBean> beans = getViewModel().getServiceProviderCheckInProfileBean(serviceProvider);
             VisitorProfileDialog.newInstance(beans, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
-                getViewModel().checkOut(2);
+                if (!serviceProvider.isCheckOutFeature())
+                    showCallDialog(2);
+                else getViewModel().checkOut(2);
             }).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
         });
      }
 
     private void setUpGuestAdapter() {
         adapter = new GuestCheckInAdapter(list, getBaseActivity(), pos -> {
-            List<VisitorProfileBean> beans = getViewModel().getGuestCheckInProfileBean(list.get(pos));
+            Guests guests = list.get(pos);
+            List<VisitorProfileBean> beans = getViewModel().getGuestCheckInProfileBean(guests);
             VisitorProfileDialog.newInstance(beans, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
-                getViewModel().checkOut(0);
+                if (!guests.isCheckOutFeature())
+                    showCallDialog(0);
+                else getViewModel().checkOut(0);
             }).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
         });
 
         getViewDataBinding().recyclerView.setAdapter(adapter);
+    }
+
+    private void showCallDialog(int type) {
+        AlertDialog.newInstance()
+                .setNegativeBtnShow(true)
+                .setCloseBtnShow(true)
+                .setTitle(getString(R.string.check_out))
+                .setMsg(getString(R.string.msg_check_in_call))
+                .setPositiveBtnLabel(getString(R.string.approve))
+                .setNegativeBtnLabel(getString(R.string.reject))
+                .setOnNegativeClickListener(dialog1 -> {
+                    dialog1.dismiss();
+                    showAlert(R.string.alert, R.string.check_out_rejected);
+                })
+                .setOnPositiveClickListener(dialog12 -> {
+                    dialog12.dismiss();
+                    getViewModel().checkOut(type);
+                }).show(getFragmentManager());
     }
 
     private void setUpSearch() {
