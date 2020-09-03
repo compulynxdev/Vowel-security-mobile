@@ -89,19 +89,18 @@ public class HouseKeepingCheckOutAdapter extends RecyclerView.Adapter<BaseViewHo
             host = itemView.findViewById(R.id.tv_host);
             visitorType = itemView.findViewById(R.id.tv_type);
             imgVisitor = itemView.findViewById(R.id.img_visitor);
-
         }
 
         @Override
         public void onBind(int position) {
             HouseKeeping bean = list.get(position);
             name.setText(context.getString(R.string.data_name,bean.getName()));
-            time.setText(context.getString(R.string.data_time_in,CalenderUtils.formatDate(bean.getCheckOutTime(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIME_FORMAT)));
+            time.setText(context.getString(R.string.data_time,CalenderUtils.formatDate(bean.getCheckInTime(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIME_FORMAT_AM)
+                .concat(" - ").concat(CalenderUtils.formatDate(bean.getCheckOutTime(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIME_FORMAT_AM))));
             if (!bean.getHouseNo().isEmpty()) {
                 houseNo.setVisibility(View.VISIBLE);
                 houseNo.setText(context.getString(R.string.data_house, bean.getHouseNo()));
                 host.setText(context.getString(R.string.data_host,bean.getHost()));
-
             }
             else{
                 houseNo.setVisibility(View.GONE);

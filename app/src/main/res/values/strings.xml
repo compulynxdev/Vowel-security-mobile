@@ -192,5 +192,6 @@
     <string name="data_is_checkout">Host Check Out : %b</string>
     <string name="expected">Expected</string>
     <string name="registered">Registered</string>
+    <string name="check_out_rejected">Check Out Rejected.</string>
 
 </resources>

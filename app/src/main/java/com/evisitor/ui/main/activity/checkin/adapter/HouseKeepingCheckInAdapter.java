@@ -104,7 +104,7 @@ public class HouseKeepingCheckInAdapter extends RecyclerView.Adapter<BaseViewHol
         public void onBind(int position) {
             HouseKeeping bean = list.get(position);
             name.setText(context.getString(R.string.data_name,bean.getName()));
-            time.setText(context.getString(R.string.data_time_in,CalenderUtils.formatDate(bean.getCheckInTime(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIME_FORMAT)));
+            time.setText(context.getString(R.string.data_time_in,CalenderUtils.formatDate(bean.getCheckInTime(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIME_FORMAT_AM)));
             if (!bean.getHouseNo().isEmpty()) {
                 houseNo.setVisibility(View.VISIBLE);
                 houseNo.setText(context.getString(R.string.data_house, bean.getHouseNo()));
