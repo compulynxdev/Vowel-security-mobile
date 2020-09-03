@@ -114,8 +114,8 @@ public class ExpectedSPAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             name.setText(context.getString(R.string.data_name, bean.getName()));
             profile.setText(context.getString(R.string.data_profile, bean.getProfile()));
             if (bean.getTime() != null && !bean.getTime().isEmpty())
-                time.setText(context.getString(R.string.data_expected_time, CalenderUtils.formatDate(bean.getTime(), CalenderUtils.SERVER_DATE_FORMAT,
-                        CalenderUtils.TIME_FORMAT_AM)));
+                time.setText(context.getString(R.string.data_time, CalenderUtils.formatDate(bean.getTime(), CalenderUtils.SERVER_DATE_FORMAT,
+                        CalenderUtils.TIMESTAMP_FORMAT)));
             else time.setVisibility(View.GONE);
             if (bean.getHouseNo().isEmpty()) {
                 houseNo.setVisibility(View.GONE);
