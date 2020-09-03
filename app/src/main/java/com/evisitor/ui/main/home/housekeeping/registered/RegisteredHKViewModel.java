@@ -9,6 +9,7 @@ import com.evisitor.data.model.RegisteredHKResponse;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.ui.base.BaseViewModel;
 import com.evisitor.util.AppConstants;
+import com.evisitor.util.AppUtils;
 import com.evisitor.util.CalenderUtils;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class RegisteredHKViewModel extends BaseViewModel<RegisteredHKNavigator> 
         return registeredHKListData;
     }
 
-    void getExpectedHKListData(int page, String search) {
+    void getRegisteredHKListData(int page, String search) {
         Map<String, String> map = new HashMap<>();
         map.put("accountId", getDataManager().getAccountId());
         if (!search.isEmpty())
@@ -74,6 +75,7 @@ public class RegisteredHKViewModel extends BaseViewModel<RegisteredHKNavigator> 
         List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, bean.getFullName())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_profile, bean.getProfile())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_days_slot, getHKDays(bean.getWorkingDays()))));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time_slot, CalenderUtils.formatDate(bean.getTimeIn(), CalenderUtils.TIME_FORMAT, CalenderUtils.TIME_FORMAT_AM), CalenderUtils.formatDate(bean.getTimeOut(), CalenderUtils.TIME_FORMAT, CalenderUtils.TIME_FORMAT_AM))));
         if (!bean.getContactNo().isEmpty())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, bean.getContactNo())));
@@ -84,5 +86,17 @@ public class RegisteredHKViewModel extends BaseViewModel<RegisteredHKNavigator> 
 
         getNavigator().hideLoading();
         return visitorProfileBeanList;
+    }
+
+    private String getHKDays(List<String> days) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String day : days) {
+            stringBuilder.append(AppUtils.capitaliseFirstLetter(day)).append(", ");
+        }
+        if (stringBuilder.toString().trim().endsWith(",")) {
+            stringBuilder = new StringBuilder(stringBuilder.toString().substring(0, stringBuilder.toString().trim().length() - 1));
+        }
+
+        return stringBuilder.toString();
     }
 }

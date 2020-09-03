@@ -76,7 +76,7 @@ public class RegisteredHKFragment extends BaseFragment<FragmentExpectedBinding, 
                 adapter.notifyDataSetChanged();
                 page++;
 
-                getViewModel().getExpectedHKListData(page, search);
+                getViewModel().getRegisteredHKListData(page, search);
             }
         };
         getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
@@ -105,7 +105,7 @@ public class RegisteredHKFragment extends BaseFragment<FragmentExpectedBinding, 
         scrollListener.onDataCleared();
         list.clear();
         this.page = 0;
-        getViewModel().getExpectedHKListData(page, search.trim());
+        getViewModel().getRegisteredHKListData(page, search.trim());
     }
 
     @Override

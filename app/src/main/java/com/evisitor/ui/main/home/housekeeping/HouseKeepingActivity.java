@@ -9,8 +9,10 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
+
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.ActivityHkBinding;
@@ -118,8 +120,10 @@ public class HouseKeepingActivity extends BaseActivity<ActivityHkBinding, HKView
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().isEmpty() || s.toString().length() >= 2) {
+                if (s.toString().trim().isEmpty() || s.toString().trim().length() >= 2) {
+                    if (getViewDataBinding().viewPager.getCurrentItem() == 0)
                     expectedHKFragment.setSearch(s.toString());
+                    else
                     registeredHKFragment.setSearch(s.toString());
                 }
             }

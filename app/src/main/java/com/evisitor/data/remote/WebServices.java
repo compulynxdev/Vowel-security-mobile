@@ -6,7 +6,7 @@ package com.evisitor.data.remote;
 class WebServices {
 
     static final String BASE_URL = "http://103.21.52.30:8085/e-visitor-system/api/";
-    //static final String BASE_URL = "http://192.168.43.58:8003/api/";
+    //static final String BASE_URL = "http://192.168.43.58:8085/api/";
 
     static final String LOGIN_AUTH = "authenticate";
     static final String GET_USER_DETAIL = "usermaster/get_user_details"; //?username=ram

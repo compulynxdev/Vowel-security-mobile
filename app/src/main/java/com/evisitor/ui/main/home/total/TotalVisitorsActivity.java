@@ -1,11 +1,5 @@
 package com.evisitor.ui.main.home.total;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.viewpager.widget.ViewPager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +9,14 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager.widget.ViewPager;
+
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.ActivityTotalVisitorsBinding;
@@ -23,6 +25,7 @@ import com.evisitor.ui.base.BaseNavigator;
 import com.evisitor.ui.main.home.guest.expected.ExpectedGuestFragment;
 import com.evisitor.ui.main.home.housekeeping.expected.ExpectedHKFragment;
 import com.evisitor.ui.main.home.sp.ExpectedSPFragment;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +58,7 @@ public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBin
         super.onCreate(savedInstanceState);
         getViewModel().setNavigator(this);
         TextView tvTitle = findViewById(R.id.tv_title);
-        tvTitle.setText(R.string.title_ttl_expected_visitor);
+        tvTitle.setText(R.string.title_expected_visitor);
 
         ImageView imgSearch = findViewById(R.id.img_search);
         imgSearch.setVisibility(View.VISIBLE);
