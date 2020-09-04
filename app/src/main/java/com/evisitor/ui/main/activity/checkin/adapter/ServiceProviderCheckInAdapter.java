@@ -88,7 +88,7 @@ public class ServiceProviderCheckInAdapter extends RecyclerView.Adapter<BaseView
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_name);
-            time = itemView.findViewById(R.id.tv_time);
+            time = itemView.findViewById(R.id.tv_time_in);
             houseNo = itemView.findViewById(R.id.tv_house_no);
             host = itemView.findViewById(R.id.tv_host);
             visitorType = itemView.findViewById(R.id.tv_type);
@@ -105,7 +105,7 @@ public class ServiceProviderCheckInAdapter extends RecyclerView.Adapter<BaseView
         public void onBind(int position) {
             ServiceProvider bean = list.get(position);
             name.setText(context.getString(R.string.data_name,bean.getName()));
-            time.setText(context.getString(R.string.data_time_in,CalenderUtils.formatDate(bean.getCheckInTime(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIME_FORMAT)));
+            time.setText(context.getString(R.string.data_time_in,CalenderUtils.formatDate(bean.getCheckInTime(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIMESTAMP_FORMAT)));
             if (!bean.getHouseNo().isEmpty()) {
                 houseNo.setVisibility(View.VISIBLE);
                 houseNo.setText(context.getString(R.string.data_house, bean.getHouseNo()));

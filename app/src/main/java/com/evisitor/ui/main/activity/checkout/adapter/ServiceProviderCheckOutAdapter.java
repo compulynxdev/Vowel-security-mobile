@@ -82,23 +82,26 @@ public class ServiceProviderCheckOutAdapter extends RecyclerView.Adapter<BaseVie
     public class ViewHolder extends BaseViewHolder {
 
         ImageView imgVisitor;
-        TextView name,time,houseNo,host,visitorType;
+        TextView name, timeIn,timeOut,houseNo,host,visitorType;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_name);
-            time = itemView.findViewById(R.id.tv_time);
+            timeIn = itemView.findViewById(R.id.tv_time_in);
+            timeOut = itemView.findViewById(R.id.tv_time_out);
             houseNo = itemView.findViewById(R.id.tv_house_no);
             host = itemView.findViewById(R.id.tv_host);
             visitorType = itemView.findViewById(R.id.tv_type);
             imgVisitor = itemView.findViewById(R.id.img_visitor);
+            timeOut.setVisibility(View.VISIBLE);
+
         }
 
         @Override
         public void onBind(int position) {
             ServiceProvider bean = list.get(position);
             name.setText(context.getString(R.string.data_name,bean.getName()));
-            time.setText(context.getString(R.string.data_time,CalenderUtils.formatDate(bean.getCheckInTime(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIME_FORMAT_AM)
-                    .concat(" - ").concat(CalenderUtils.formatDate(bean.getCheckOutTime(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIME_FORMAT_AM))));
+            timeIn.setText(context.getString(R.string.data_time_in,CalenderUtils.formatDate(bean.getCheckInTime(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIMESTAMP_FORMAT)));
+            timeOut.setText(context.getString(R.string.data_time_out,CalenderUtils.formatDate(bean.getCheckOutTime(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIMESTAMP_FORMAT)));
             if (!bean.getHouseNo().isEmpty()) {
                 houseNo.setVisibility(View.VISIBLE);
                 houseNo.setText(context.getString(R.string.data_house, bean.getHouseNo()));
