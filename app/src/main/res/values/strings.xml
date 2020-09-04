@@ -41,14 +41,14 @@
 
     <!--Home-->
     <string name="title_guests">Guests</string>
-    <string name="title_house_keeping">House Keeping</string>
+    <string name="title_house_keeping">House Help</string>
     <string name="title_service_provider">Service Provider</string>
     <string name="title_ttl_expected_visitor">Total Expected Visitors</string>
     <string name="title_expected_visitor">Expected Visitors</string>
     <string name="title_blacklisted_visitor">Blacklisted Visitors</string>
     <string name="title_trespasser_visitor">Trespasser Visitors</string>
 
-    <string name="title_house_keeping2">House \nKeeping</string>
+    <string name="title_house_keeping2">House \Help</string>
     <string name="title_service_provider2">Service \nProvider</string>
 
     <!--Visitor Profile-->
