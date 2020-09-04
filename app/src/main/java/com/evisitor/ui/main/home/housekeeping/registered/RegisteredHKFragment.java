@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RegisteredHKFragment extends BaseFragment<FragmentExpectedBinding, RegisteredHKViewModel> implements RegisteredHKNavigator {
-    private final int SCAN_RESULT = 101;
     private RecyclerViewScrollListener scrollListener;
     private RegisteredHKAdapter adapter;
     private String search = "";
@@ -33,7 +32,7 @@ public class RegisteredHKFragment extends BaseFragment<FragmentExpectedBinding, 
         return fragment;
     }
 
-    public void setSearch(String search) {
+    public synchronized void setSearch(String search) {
         this.search = search;
         doSearch(search);
     }
@@ -82,9 +81,6 @@ public class RegisteredHKFragment extends BaseFragment<FragmentExpectedBinding, 
         getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
 
         getViewModel().getRegisteredHKListData().observe(this, list -> {
-            adapter.showLoading(false);
-            adapter.notifyDataSetChanged();
-
             if (page == 0) this.list.clear();
 
             this.list.addAll(list);
@@ -110,7 +106,15 @@ public class RegisteredHKFragment extends BaseFragment<FragmentExpectedBinding, 
 
     @Override
     public void hideSwipeToRefresh() {
+        hideAdapterLoading();
         getViewDataBinding().swipeToRefresh.setRefreshing(false);
+    }
+
+    private void hideAdapterLoading() {
+        if (adapter != null) {
+            adapter.showLoading(false);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override

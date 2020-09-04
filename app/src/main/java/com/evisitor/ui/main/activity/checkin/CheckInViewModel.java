@@ -69,14 +69,17 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ExpectedGuestNavig
         switch (listOf){
             case 0:
                 getGuestList(map);
+                AppLogger.d("Searching : ExpectedGuest", "" + page);
                 break;
 
             case 1:
                 getHouseKeeperList(map);
+                AppLogger.d("Searching : ExpectedHK", "" + page);
                 break;
 
             case 2:
                 getServiceProviderList(map);
+                AppLogger.d("Searching : ExpectedSP", "" + page);
                 break;
         }
     }

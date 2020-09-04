@@ -10,6 +10,7 @@ import com.evisitor.data.model.ServiceProviderResponse;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.ui.main.BaseCheckInOutViewModel;
 import com.evisitor.util.AppConstants;
+import com.evisitor.util.AppLogger;
 import com.evisitor.util.AppUtils;
 
 import org.json.JSONException;
@@ -44,6 +45,7 @@ public class ExpectedSpViewModel extends BaseCheckInOutViewModel<ExpectedSPNavig
             map.put("search", search);
         map.put("page", "" + page);
         map.put("size", String.valueOf(AppConstants.LIMIT));
+        AppLogger.d("Searching : ExpectedSP", "" + page);
 
         getDataManager().doGetExpectedSPList(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
             @Override

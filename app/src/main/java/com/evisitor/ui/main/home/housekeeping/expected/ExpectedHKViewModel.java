@@ -9,6 +9,7 @@ import com.evisitor.data.model.RegisteredHKResponse;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.ui.main.BaseCheckInOutViewModel;
 import com.evisitor.util.AppConstants;
+import com.evisitor.util.AppLogger;
 import com.evisitor.util.AppUtils;
 import com.evisitor.util.CalenderUtils;
 
@@ -45,6 +46,7 @@ public class ExpectedHKViewModel extends BaseCheckInOutViewModel<ExpectedHKNavig
             map.put("search", search);
         map.put("page", "" + page);
         map.put("size", String.valueOf(AppConstants.LIMIT));
+        AppLogger.d("Searching : ExpectedHK", "" + page);
 
         getDataManager().doGetRegisteredHKList(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
             @Override

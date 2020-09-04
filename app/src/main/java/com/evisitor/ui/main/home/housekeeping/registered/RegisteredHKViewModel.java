@@ -9,6 +9,7 @@ import com.evisitor.data.model.RegisteredHKResponse;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.ui.base.BaseViewModel;
 import com.evisitor.util.AppConstants;
+import com.evisitor.util.AppLogger;
 import com.evisitor.util.AppUtils;
 import com.evisitor.util.CalenderUtils;
 
@@ -40,6 +41,7 @@ public class RegisteredHKViewModel extends BaseViewModel<RegisteredHKNavigator> 
             map.put("search", search);
         map.put("page", "" + page);
         map.put("size", String.valueOf(AppConstants.LIMIT));
+        AppLogger.d("Searching : Registered", "" + page);
 
         getDataManager().doGetRegisteredHKList(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
             @Override
@@ -51,6 +53,7 @@ public class RegisteredHKViewModel extends BaseViewModel<RegisteredHKNavigator> 
                         assert response.body() != null;
                         RegisteredHKResponse registeredHKResponse = getDataManager().getGson().fromJson(response.body().string(), RegisteredHKResponse.class);
                         if (registeredHKResponse.getContent() != null) {
+                            AppLogger.d("Searching : Size", "" + registeredHKResponse.getContent().size());
                             registeredHKListData.setValue(registeredHKResponse.getContent());
                         }
                     } else if (response.code() == 401) {

@@ -42,7 +42,7 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
         return fragment;
     }
 
-    public void setSearch(String search) {
+    public synchronized void setSearch(String search) {
         this.search = search;
         doSearch(search);
     }
