@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.evisitor.R;
-import com.evisitor.data.model.RegisteredHKResponse;
+import com.evisitor.data.model.HouseKeepingResponse;
 import com.evisitor.ui.base.BaseViewHolder;
 import com.evisitor.ui.base.ItemClickCallback;
 import com.evisitor.util.CalenderUtils;
@@ -22,11 +22,11 @@ import java.util.List;
 public class ExpectedHKAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private static final int VIEWTYPE_ITEM = 1;
     private static final int VIEWTYPE_LOADER = 2;
-    private List<RegisteredHKResponse.ContentBean> list;
+    private List<HouseKeepingResponse.ContentBean> list;
     private boolean showLoader;
     private ItemClickCallback listener;
 
-    ExpectedHKAdapter(List<RegisteredHKResponse.ContentBean> list, ItemClickCallback callback) {
+    ExpectedHKAdapter(List<HouseKeepingResponse.ContentBean> list, ItemClickCallback callback) {
         this.list = list;
         this.listener = callback;
     }
@@ -109,7 +109,7 @@ public class ExpectedHKAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         @Override
         public void onBind(int position) {
-            RegisteredHKResponse.ContentBean bean = list.get(position);
+            HouseKeepingResponse.ContentBean bean = list.get(position);
             Context context = name.getContext();
             name.setText(context.getString(R.string.data_name, bean.getFullName()));
             identity.setText(context.getString(R.string.data_identity, bean.getDocumentId().isEmpty() ? "N?A" : bean.getDocumentId()));

@@ -2,7 +2,7 @@ package com.evisitor.data;
 
 import com.evisitor.data.local.prefs.PreferenceHelper;
 import com.evisitor.data.model.Guests;
-import com.evisitor.data.model.RegisteredHKResponse;
+import com.evisitor.data.model.HouseKeepingResponse;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.remote.ApiHelper;
 import com.google.gson.Gson;
@@ -23,7 +23,7 @@ public interface DataManager extends ApiHelper, PreferenceHelper {
 
     ServiceProvider getSpDetail();
 
-    RegisteredHKResponse.ContentBean getHouseKeeping();
+    HouseKeepingResponse.ContentBean getHouseKeeping();
 
-    void setHouseKeeping(RegisteredHKResponse.ContentBean houseKeeping);
+    void setHouseKeeping(HouseKeepingResponse.ContentBean houseKeeping);
 }

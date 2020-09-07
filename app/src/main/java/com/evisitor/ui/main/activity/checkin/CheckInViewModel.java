@@ -1,7 +1,6 @@
 package com.evisitor.ui.main.activity.checkin;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.MutableLiveData;
 
 import com.evisitor.R;
 import com.evisitor.data.DataManager;
@@ -9,12 +8,12 @@ import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.GuestsResponse;
 import com.evisitor.data.model.HouseKeeping;
 import com.evisitor.data.model.HouseKeepingCheckInResponse;
-import com.evisitor.data.model.RegisteredHKResponse;
+import com.evisitor.data.model.HouseKeepingResponse;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.model.ServiceProviderResponse;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.ui.main.BaseCheckInOutViewModel;
-import com.evisitor.ui.main.home.guest.expected.ExpectedGuestNavigator;
+import com.evisitor.ui.main.activity.ActivityNavigator;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppLogger;
 import com.evisitor.util.AppUtils;
@@ -34,30 +33,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CheckInViewModel extends BaseCheckInOutViewModel<ExpectedGuestNavigator> {
-
-    private MutableLiveData<List<Guests>> guestListData = new MutableLiveData<>();
-    private MutableLiveData<List<HouseKeeping>> houseKeepingListData = new MutableLiveData<>();
-    private MutableLiveData<List<ServiceProvider>> serviceProviderListData = new MutableLiveData<>();
+public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator> {
 
     public CheckInViewModel(DataManager dataManager) {
         super(dataManager);
     }
 
-    MutableLiveData<List<Guests>> getGuestListData() {
-        return guestListData;
-    }
-
-    MutableLiveData<List<HouseKeeping>> getHouseKeepingListData() {
-        return houseKeepingListData;
-    }
-
-    MutableLiveData<List<ServiceProvider>> getServiceProviderListData() {
-        return serviceProviderListData;
-    }
-
     void getGuestListData(int page, String search,int listOf) {
-        AppLogger.e("MYPage", page + " : " + search);
         Map<String, String> map = new HashMap<>();
         map.put("accountId", getDataManager().getAccountId());
         if (!search.isEmpty())
@@ -69,17 +51,17 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ExpectedGuestNavig
         switch (listOf){
             case 0:
                 getGuestList(map);
-                AppLogger.d("Searching : ExpectedGuest", "" + page);
+                AppLogger.d("Searching : ExpectedGuest", page + " : " + search);
                 break;
 
             case 1:
                 getHouseKeeperList(map);
-                AppLogger.d("Searching : ExpectedHK", "" + page);
+                AppLogger.d("Searching : ExpectedHK", page + " : " + search);
                 break;
 
             case 2:
                 getServiceProviderList(map);
-                AppLogger.d("Searching : ExpectedSP", "" + page);
+                AppLogger.d("Searching : ExpectedSP", page + " : " + search);
                 break;
         }
     }
@@ -95,7 +77,7 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ExpectedGuestNavig
                         assert response.body() != null;
                         ServiceProviderResponse serviceProviderCheckInResponse = getDataManager().getGson().fromJson(response.body().string(), ServiceProviderResponse.class);
                         if (serviceProviderCheckInResponse.getContent() != null) {
-                            serviceProviderListData.setValue(serviceProviderCheckInResponse.getContent());
+                            getNavigator().onExpectedSPSuccess(serviceProviderCheckInResponse.getContent());
                         }
                     } else if (response.code() == 401) {
                         getNavigator().openActivityOnTokenExpire();
@@ -126,7 +108,7 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ExpectedGuestNavig
                         assert response.body() != null;
                         HouseKeepingCheckInResponse houseKeepingCheckInResponse = getDataManager().getGson().fromJson(response.body().string(), HouseKeepingCheckInResponse.class);
                         if (houseKeepingCheckInResponse.getContent() != null) {
-                            houseKeepingListData.setValue(houseKeepingCheckInResponse.getContent());
+                            getNavigator().onExpectedHKSuccess(houseKeepingCheckInResponse.getContent());
                         }
                     } else if (response.code() == 401) {
                         getNavigator().openActivityOnTokenExpire();
@@ -157,7 +139,7 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ExpectedGuestNavig
                         assert response.body() != null;
                         GuestsResponse guestsResponse = getDataManager().getGson().fromJson(response.body().string(), GuestsResponse.class);
                         if (guestsResponse.getContent() != null) {
-                            guestListData.setValue(guestsResponse.getContent());
+                            getNavigator().onExpectedGuestSuccess(guestsResponse.getContent());
                         }
                     } else if (response.code() == 401) {
                         getNavigator().openActivityOnTokenExpire();
@@ -199,7 +181,7 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ExpectedGuestNavig
     List<VisitorProfileBean> getHouseKeepingCheckInProfileBean(HouseKeeping houseKeeping) {
         getNavigator().showLoading();
         List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
-        RegisteredHKResponse.ContentBean hkBean = new RegisteredHKResponse.ContentBean();
+        HouseKeepingResponse.ContentBean hkBean = new HouseKeepingResponse.ContentBean();
         hkBean.setId(Integer.parseInt(houseKeeping.getHouseKeeperId()));
         getDataManager().setHouseKeeping(hkBean);
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, houseKeeping.getName())));

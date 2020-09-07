@@ -127,7 +127,7 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
             case R.id.title_guest:
                 listOf = 0;
                 checkInFragment.setList(listOf);
-                checkOutFragment.setList(listOf);
+                checkOutFragment.setGuestsList(listOf);
                 getViewDataBinding().titleGuest.setTextColor(getResources().getColor(R.color.colorPrimary));
                 getViewDataBinding().titleService.setTextColor(getResources().getColor(R.color.black));
                 getViewDataBinding().titleHouse.setTextColor(getResources().getColor(R.color.black));
@@ -136,7 +136,7 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
             case R.id.title_house:
                 listOf = 1;
                 checkInFragment.setList(listOf);
-                checkOutFragment.setList(listOf);
+                checkOutFragment.setGuestsList(listOf);
                 getViewDataBinding().titleGuest.setTextColor(getResources().getColor(R.color.black));
                 getViewDataBinding().titleService.setTextColor(getResources().getColor(R.color.black));
                 getViewDataBinding().titleHouse.setTextColor(getResources().getColor(R.color.colorPrimary));
@@ -145,7 +145,7 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
             case R.id.title_service:
                 listOf = 2;
                 checkInFragment.setList(listOf);
-                checkOutFragment.setList(listOf);
+                checkOutFragment.setGuestsList(listOf);
                 getViewDataBinding(). titleGuest.setTextColor(getResources().getColor(R.color.black));
                 getViewDataBinding().titleService.setTextColor(getResources().getColor(R.color.colorPrimary));
                 getViewDataBinding().titleHouse.setTextColor(getResources().getColor(R.color.black));

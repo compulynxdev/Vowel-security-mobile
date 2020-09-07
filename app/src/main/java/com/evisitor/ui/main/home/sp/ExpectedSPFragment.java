@@ -109,24 +109,13 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
         scrollListener = new RecyclerViewScrollListener() {
             @Override
             public void onLoadMore() {
-                adapter.showLoading(true);
-                adapter.notifyDataSetChanged();
+                setAdapterLoading(true);
                 page++;
 
                 getViewModel().getSpListData(page, search);
             }
         };
         getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
-
-        getViewModel().getSpListData().observe(this, spList -> {
-            adapter.showLoading(false);
-            adapter.notifyDataSetChanged();
-
-            if (page == 0) this.spList.clear();
-
-            this.spList.addAll(spList);
-            adapter.notifyDataSetChanged();
-        });
 
         getViewDataBinding().swipeToRefresh.setOnRefreshListener(this::updateUI);
         getViewDataBinding().swipeToRefresh.setColorSchemeResources(R.color.colorPrimary);
@@ -207,8 +196,24 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
     }
 
     @Override
+    public void onExpectedSPSuccess(List<ServiceProvider> spList) {
+        if (page == 0) this.spList.clear();
+
+        this.spList.addAll(spList);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void hideSwipeToRefresh() {
+        setAdapterLoading(false);
         getViewDataBinding().swipeToRefresh.setRefreshing(false);
+    }
+
+    private void setAdapterLoading(boolean isShowLoader) {
+        if (adapter != null) {
+            adapter.showLoading(isShowLoader);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override

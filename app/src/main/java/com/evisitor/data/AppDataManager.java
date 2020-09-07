@@ -5,7 +5,7 @@ import android.content.Context;
 
 import com.evisitor.data.local.prefs.AppPreferenceHelper;
 import com.evisitor.data.model.Guests;
-import com.evisitor.data.model.RegisteredHKResponse;
+import com.evisitor.data.model.HouseKeepingResponse;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.model.UserDetail;
 import com.evisitor.data.remote.AppApiHelper;
@@ -30,7 +30,7 @@ public class AppDataManager implements DataManager {
     private final Gson mGson;
     private Guests guests;
     private ServiceProvider spDetail;
-    private RegisteredHKResponse.ContentBean houseKeeping;
+    private HouseKeepingResponse.ContentBean houseKeeping;
 
     private AppDataManager(Context context) {
         apiHelper = AppApiHelper.getAppApiInstance();
@@ -77,12 +77,12 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public RegisteredHKResponse.ContentBean getHouseKeeping() {
+    public HouseKeepingResponse.ContentBean getHouseKeeping() {
         return houseKeeping;
     }
 
     @Override
-    public void setHouseKeeping(RegisteredHKResponse.ContentBean houseKeeping) {
+    public void setHouseKeeping(HouseKeepingResponse.ContentBean houseKeeping) {
         this.houseKeeping = houseKeeping;
     }
 

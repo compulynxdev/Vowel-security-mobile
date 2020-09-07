@@ -8,7 +8,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
@@ -20,22 +19,23 @@ import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.databinding.FragmentCheckInBinding;
 import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.dialog.AlertDialog;
+import com.evisitor.ui.main.activity.ActivityNavigator;
 import com.evisitor.ui.main.activity.checkin.adapter.GuestCheckInAdapter;
 import com.evisitor.ui.main.activity.checkin.adapter.HouseKeepingCheckInAdapter;
 import com.evisitor.ui.main.activity.checkin.adapter.ServiceProviderCheckInAdapter;
-import com.evisitor.ui.main.home.guest.expected.ExpectedGuestNavigator;
 import com.evisitor.ui.main.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckInViewModel> implements ExpectedGuestNavigator {
+public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckInViewModel> implements ActivityNavigator {
 
-    private List<Guests> list;
-    private List<ServiceProvider> serviceProviders;
-    private List<HouseKeeping> houseKeepings;
-    private GuestCheckInAdapter adapter;
+    private List<Guests> guestsList;
+    private List<ServiceProvider> serviceProviderList;
+    private List<HouseKeeping> houseKeepingList;
+
+    private GuestCheckInAdapter guestAdapter;
     private ServiceProviderCheckInAdapter serviceProviderAdapter;
     private HouseKeepingCheckInAdapter houseKeepingAdapter;
     private EditText etSearch;
@@ -43,6 +43,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
     private RecyclerViewScrollListener scrollListener;
     private int page;
     private int listOf=0;
+
      public static CheckInFragment newInstance(EditText et_Search,int listOf,OnFragmentInteraction listener) {
         CheckInFragment fragment = new CheckInFragment();
         Bundle args = new Bundle();
@@ -62,7 +63,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
         switch (listOf){
             //guest
             case 0:
-                getViewDataBinding().recyclerView.setAdapter(adapter);
+                getViewDataBinding().recyclerView.setAdapter(guestAdapter);
                 break;
 
                 //house
@@ -94,19 +95,13 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getViewModel().setCheckInOutNavigator(this);
 
-        list=new ArrayList<>();
-        houseKeepings = new ArrayList<>();
-        serviceProviders = new ArrayList<>();
+        guestsList = new ArrayList<>();
+        houseKeepingList = new ArrayList<>();
+        serviceProviderList = new ArrayList<>();
 
         setUpGuestAdapter();
 
@@ -125,22 +120,19 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
             public void onLoadMore() {
                 switch (listOf){
                     case 0 :
-                        adapter.showLoading(true);
-                        adapter.notifyDataSetChanged();
+                        setGuestAdapterLoading(true);
                         page++;
                         getViewModel().getGuestListData(page, etSearch.getText().toString().trim(),listOf);
                         break;
 
                     case 1 :
-                        houseKeepingAdapter.showLoading(true);
-                        houseKeepingAdapter.notifyDataSetChanged();
+                        setHKAdapterLoading(true);
                         page++;
                         getViewModel().getGuestListData(page, etSearch.getText().toString().trim(),listOf);
                         break;
 
                     case 2 :
-                        serviceProviderAdapter.showLoading(true);
-                        serviceProviderAdapter.notifyDataSetChanged();
+                        setSPAdapterLoading(true);
                         page++;
                         getViewModel().getGuestListData(page, etSearch.getText().toString().trim(),listOf);
                         break;
@@ -150,47 +142,12 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
             }
         };
         getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
-        getViewModel().getGuestListData().observe(this, guests -> {
-            adapter.showLoading(false);
-            adapter.notifyDataSetChanged();
-
-            if (page == 0) list.clear();
-
-            list.addAll(guests);
-            adapter.notifyDataSetChanged();
-
-            if (listOf==0)  listener.totalCount(list.size());
-        });
-
-        getViewModel().getHouseKeepingListData().observe(this, list -> {
-            houseKeepingAdapter.showLoading(false);
-            houseKeepingAdapter.notifyDataSetChanged();
-
-            if (page == 0) houseKeepings.clear();
-
-            houseKeepings.addAll(list);
-            houseKeepingAdapter.notifyDataSetChanged();
-
-            if (listOf==1) listener.totalCount(houseKeepings.size());
-        });
-
-        getViewModel().getServiceProviderListData().observe(this, guests -> {
-            serviceProviderAdapter.showLoading(false);
-            serviceProviderAdapter.notifyDataSetChanged();
-
-            if (page == 0) serviceProviders.clear();
-
-            serviceProviders.addAll(guests);
-            serviceProviderAdapter.notifyDataSetChanged();
-
-            if (listOf==2) listener.totalCount(serviceProviders.size());
-        });
 
         updateUI();
     }
 
     private void setUpHouseKeeperAdapter() {
-        houseKeepingAdapter = new HouseKeepingCheckInAdapter(houseKeepings, getBaseActivity(), houseKeeping -> {
+        houseKeepingAdapter = new HouseKeepingCheckInAdapter(houseKeepingList, getBaseActivity(), houseKeeping -> {
             List<VisitorProfileBean> beans = getViewModel().getHouseKeepingCheckInProfileBean(houseKeeping);
             VisitorProfileDialog.newInstance(beans, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
@@ -202,7 +159,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
      }
 
     private void setUpServiceProviderAdapter() {
-        serviceProviderAdapter = new ServiceProviderCheckInAdapter(serviceProviders, getBaseActivity(), serviceProvider -> {
+        serviceProviderAdapter = new ServiceProviderCheckInAdapter(serviceProviderList, getBaseActivity(), serviceProvider -> {
             List<VisitorProfileBean> beans = getViewModel().getServiceProviderCheckInProfileBean(serviceProvider);
             VisitorProfileDialog.newInstance(beans, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
@@ -214,8 +171,8 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
      }
 
     private void setUpGuestAdapter() {
-        adapter = new GuestCheckInAdapter(list, getBaseActivity(), pos -> {
-            Guests guests = list.get(pos);
+        guestAdapter = new GuestCheckInAdapter(guestsList, getBaseActivity(), pos -> {
+            Guests guests = guestsList.get(pos);
             List<VisitorProfileBean> beans = getViewModel().getGuestCheckInProfileBean(guests);
             VisitorProfileDialog.newInstance(beans, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
@@ -225,7 +182,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
             }).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
         });
 
-        getViewDataBinding().recyclerView.setAdapter(adapter);
+        getViewDataBinding().recyclerView.setAdapter(guestAdapter);
     }
 
     private void showCallDialog(int type) {
@@ -277,16 +234,80 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
 
     private void doSearch(String search) {
         scrollListener.onDataCleared();
-        list.clear();
-        serviceProviders.clear();
-        houseKeepings.clear();
+        guestsList.clear();
+        serviceProviderList.clear();
+        houseKeepingList.clear();
         this.page = 0;
         getViewModel().getGuestListData(page, search.trim(),listOf);
     }
 
     @Override
+    public void onExpectedGuestSuccess(List<Guests> tmpGuestsList) {
+        if (page == 0) guestsList.clear();
+
+        guestsList.addAll(tmpGuestsList);
+        guestAdapter.notifyDataSetChanged();
+
+        if (listOf == 0) listener.totalCount(guestsList.size());
+    }
+
+    @Override
+    public void onExpectedHKSuccess(List<HouseKeeping> tmpHouseKeepingList) {
+        if (page == 0) houseKeepingList.clear();
+
+        houseKeepingList.addAll(tmpHouseKeepingList);
+        houseKeepingAdapter.notifyDataSetChanged();
+
+        if (listOf == 1) listener.totalCount(houseKeepingList.size());
+    }
+
+    @Override
+    public void onExpectedSPSuccess(List<ServiceProvider> tmpSPList) {
+        if (page == 0) serviceProviderList.clear();
+
+        serviceProviderList.addAll(tmpSPList);
+        serviceProviderAdapter.notifyDataSetChanged();
+
+        if (listOf == 2) listener.totalCount(serviceProviderList.size());
+    }
+
+    @Override
     public void hideSwipeToRefresh() {
         getViewDataBinding().swipeToRefresh.setRefreshing(false);
+        switch (listOf) {
+            case 0:
+                setGuestAdapterLoading(false);
+                break;
+
+            case 1:
+                setHKAdapterLoading(false);
+                break;
+
+            case 2:
+                setSPAdapterLoading(false);
+                break;
+        }
+    }
+
+    private void setGuestAdapterLoading(boolean isShowLoader) {
+        if (guestAdapter != null) {
+            guestAdapter.showLoading(isShowLoader);
+            guestAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void setHKAdapterLoading(boolean isShowLoader) {
+        if (houseKeepingAdapter != null) {
+            houseKeepingAdapter.showLoading(isShowLoader);
+            houseKeepingAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void setSPAdapterLoading(boolean isShowLoader) {
+        if (serviceProviderAdapter != null) {
+            serviceProviderAdapter.showLoading(isShowLoader);
+            serviceProviderAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
