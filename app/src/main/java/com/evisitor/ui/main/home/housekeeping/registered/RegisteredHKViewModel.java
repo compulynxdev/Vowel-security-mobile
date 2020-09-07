@@ -1,11 +1,10 @@
 package com.evisitor.ui.main.home.housekeeping.registered;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.MutableLiveData;
 
 import com.evisitor.R;
 import com.evisitor.data.DataManager;
-import com.evisitor.data.model.RegisteredHKResponse;
+import com.evisitor.data.model.HouseKeepingResponse;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.ui.base.BaseViewModel;
 import com.evisitor.util.AppConstants;
@@ -24,14 +23,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RegisteredHKViewModel extends BaseViewModel<RegisteredHKNavigator> {
-    private MutableLiveData<List<RegisteredHKResponse.ContentBean>> registeredHKListData = new MutableLiveData<>();
 
     public RegisteredHKViewModel(DataManager dataManager) {
         super(dataManager);
-    }
-
-    MutableLiveData<List<RegisteredHKResponse.ContentBean>> getRegisteredHKListData() {
-        return registeredHKListData;
     }
 
     void getRegisteredHKListData(int page, String search) {
@@ -41,7 +35,7 @@ public class RegisteredHKViewModel extends BaseViewModel<RegisteredHKNavigator> 
             map.put("search", search);
         map.put("page", "" + page);
         map.put("size", String.valueOf(AppConstants.LIMIT));
-        AppLogger.d("Searching : Registered", "" + page);
+        AppLogger.d("Searching : Registered", page + " : " + search);
 
         getDataManager().doGetRegisteredHKList(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
             @Override
@@ -51,10 +45,10 @@ public class RegisteredHKViewModel extends BaseViewModel<RegisteredHKNavigator> 
                 try {
                     if (response.code() == 200) {
                         assert response.body() != null;
-                        RegisteredHKResponse registeredHKResponse = getDataManager().getGson().fromJson(response.body().string(), RegisteredHKResponse.class);
+                        HouseKeepingResponse registeredHKResponse = getDataManager().getGson().fromJson(response.body().string(), HouseKeepingResponse.class);
                         if (registeredHKResponse.getContent() != null) {
                             AppLogger.d("Searching : Size", "" + registeredHKResponse.getContent().size());
-                            registeredHKListData.setValue(registeredHKResponse.getContent());
+                            getNavigator().onRegisteredHKSuccess(registeredHKResponse.getContent());
                         }
                     } else if (response.code() == 401) {
                         getNavigator().openActivityOnTokenExpire();
@@ -73,7 +67,7 @@ public class RegisteredHKViewModel extends BaseViewModel<RegisteredHKNavigator> 
         });
     }
 
-    List<VisitorProfileBean> setClickVisitorDetail(RegisteredHKResponse.ContentBean bean) {
+    List<VisitorProfileBean> setClickVisitorDetail(HouseKeepingResponse.ContentBean bean) {
         getNavigator().showLoading();
         List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, bean.getFullName())));

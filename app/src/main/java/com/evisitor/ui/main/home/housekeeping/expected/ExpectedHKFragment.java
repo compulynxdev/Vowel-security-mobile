@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
-import com.evisitor.data.model.RegisteredHKResponse;
+import com.evisitor.data.model.HouseKeepingResponse;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.databinding.FragmentExpectedBinding;
 import com.evisitor.ui.base.BaseFragment;
@@ -33,7 +33,7 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
     private ExpectedHKAdapter adapter;
     private String search = "";
     private int page = 0;
-    private List<RegisteredHKResponse.ContentBean> list;
+    private List<HouseKeepingResponse.ContentBean> list;
 
     public static ExpectedHKFragment newInstance() {
         ExpectedHKFragment fragment = new ExpectedHKFragment();
@@ -76,7 +76,7 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
             VisitorProfileDialog.newInstance(visitorProfileBeanList, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
 
-                RegisteredHKResponse.ContentBean tmpBean = getViewModel().getDataManager().getHouseKeeping();
+                HouseKeepingResponse.ContentBean tmpBean = getViewModel().getDataManager().getHouseKeeping();
                 if (tmpBean.getDocumentId().isEmpty()) {
                     showCheckinOptions();
                 } else {
@@ -109,24 +109,13 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
         scrollListener = new RecyclerViewScrollListener() {
             @Override
             public void onLoadMore() {
-                adapter.showLoading(true);
-                adapter.notifyDataSetChanged();
+                setAdapterLoading(true);
                 page++;
 
                 getViewModel().getExpectedHKListData(page, search);
             }
         };
         getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
-
-        getViewModel().getHkListData().observe(this, list -> {
-            adapter.showLoading(false);
-            adapter.notifyDataSetChanged();
-
-            if (page == 0) this.list.clear();
-
-            this.list.addAll(list);
-            adapter.notifyDataSetChanged();
-        });
 
         getViewDataBinding().swipeToRefresh.setOnRefreshListener(this::updateUI);
         getViewDataBinding().swipeToRefresh.setColorSchemeResources(R.color.colorPrimary);
@@ -157,7 +146,7 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
                 });
 
 
-        RegisteredHKResponse.ContentBean bean = getViewModel().getDataManager().getHouseKeeping();
+        HouseKeepingResponse.ContentBean bean = getViewModel().getDataManager().getHouseKeeping();
         if (!bean.isNotificationStatus() || bean.getFlatNo().isEmpty()) {
             alert.setNegativeBtnShow(false).show(getFragmentManager());
         } else {
@@ -207,8 +196,24 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
     }
 
     @Override
+    public void onExpectedHKSuccess(List<HouseKeepingResponse.ContentBean> houseKeepingList) {
+        if (page == 0) this.list.clear();
+
+        this.list.addAll(houseKeepingList);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void hideSwipeToRefresh() {
+        setAdapterLoading(false);
         getViewDataBinding().swipeToRefresh.setRefreshing(false);
+    }
+
+    private void setAdapterLoading(boolean isShowLoader) {
+        if (adapter != null) {
+            adapter.showLoading(isShowLoader);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override

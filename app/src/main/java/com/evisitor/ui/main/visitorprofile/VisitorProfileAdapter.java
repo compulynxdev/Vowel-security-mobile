@@ -16,7 +16,7 @@ import com.evisitor.EVisitor;
 import com.evisitor.R;
 import com.evisitor.data.DataManager;
 import com.evisitor.data.model.Guests;
-import com.evisitor.data.model.RegisteredHKResponse;
+import com.evisitor.data.model.HouseKeepingResponse;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.ui.base.BaseViewHolder;
@@ -97,7 +97,7 @@ public class VisitorProfileAdapter extends RecyclerView.Adapter<BaseViewHolder> 
                             dataManager.setSPDetail(spBean);
                         }
 
-                        RegisteredHKResponse.ContentBean hkBean = dataManager.getHouseKeeping();
+                        HouseKeepingResponse.ContentBean hkBean = dataManager.getHouseKeeping();
                         if (hkBean != null) {
                             hkBean.setEnteredVehicleNo(et_data.getText().toString());
                             dataManager.setHouseKeeping(hkBean);

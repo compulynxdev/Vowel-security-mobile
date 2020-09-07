@@ -52,44 +52,17 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/search_bar"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
+        <include
+            android:id="@+id/custom_search_view"
+            layout="@layout/custom_search_view"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimens_search_height"
             android:layout_marginStart="18dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="18dp"
-            android:background="@drawable/bg_search"
-            android:orientation="horizontal"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/ll_tab">
-
-            <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_gravity="center"
-                android:layout_marginStart="20dp"
-                android:contentDescription="@string/image"
-                android:src="@drawable/ic_search" />
-
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/et_search"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:layout_marginEnd="10dp"
-                android:background="@null"
-                app:iconifiedByDefault="false"
-                app:layout_constraintTop_toBottomOf="@id/linear"
-                android:fontFamily="@font/futura_round_medium"
-                android:imeOptions="actionSearch"
-                android:inputType="textPersonName"
-                android:textColor="@color/black"
-                android:theme="@style/EditTextTheme"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:searchIcon="@null" />
-        </LinearLayout>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_tab" />
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"
@@ -100,8 +73,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/search_bar" />
-
+            app:layout_constraintTop_toBottomOf="@id/custom_search_view" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

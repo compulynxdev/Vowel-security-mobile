@@ -109,24 +109,13 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
         scrollListener = new RecyclerViewScrollListener() {
             @Override
             public void onLoadMore() {
-                adapter.showLoading(true);
-                adapter.notifyDataSetChanged();
+                setAdapterLoading(true);
                 page++;
 
                 getViewModel().getGuestListData(page, etSearch.getText().toString().trim());
             }
         };
         getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
-
-        getViewModel().getGuestListData().observe(this, guests -> {
-            adapter.showLoading(false);
-            adapter.notifyDataSetChanged();
-
-            if (page == 0) guestsList.clear();
-
-            guestsList.addAll(guests);
-            adapter.notifyDataSetChanged();
-        });
 
         getViewDataBinding().swipeToRefresh.setOnRefreshListener(this::updateUI);
         getViewDataBinding().swipeToRefresh.setColorSchemeResources(R.color.colorPrimary);
@@ -220,8 +209,24 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
     }
 
     @Override
+    public void onExpectedGuestSuccess(List<Guests> tmpGuestsList) {
+        if (page == 0) guestsList.clear();
+
+        guestsList.addAll(tmpGuestsList);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void hideSwipeToRefresh() {
+        setAdapterLoading(false);
         getViewDataBinding().swipeToRefresh.setRefreshing(false);
+    }
+
+    private void setAdapterLoading(boolean isShowLoader) {
+        if (adapter != null) {
+            adapter.showLoading(isShowLoader);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override

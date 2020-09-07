@@ -1,7 +1,6 @@
 package com.evisitor.ui.main.home.sp;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.MutableLiveData;
 
 import com.evisitor.R;
 import com.evisitor.data.DataManager;
@@ -28,14 +27,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ExpectedSpViewModel extends BaseCheckInOutViewModel<ExpectedSPNavigator> implements BaseCheckInOutViewModel.ApiCallback {
-    private MutableLiveData<List<ServiceProvider>> spListData = new MutableLiveData<>();
 
     public ExpectedSpViewModel(DataManager dataManager) {
         super(dataManager);
-    }
-
-    MutableLiveData<List<ServiceProvider>> getSpListData() {
-        return spListData;
     }
 
     void getSpListData(int page, String search) {
@@ -45,7 +39,7 @@ public class ExpectedSpViewModel extends BaseCheckInOutViewModel<ExpectedSPNavig
             map.put("search", search);
         map.put("page", "" + page);
         map.put("size", String.valueOf(AppConstants.LIMIT));
-        AppLogger.d("Searching : ExpectedSP", "" + page);
+        AppLogger.d("Searching : ExpectedSP", page + " : " + search);
 
         getDataManager().doGetExpectedSPList(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
             @Override
@@ -57,7 +51,7 @@ public class ExpectedSpViewModel extends BaseCheckInOutViewModel<ExpectedSPNavig
                         assert response.body() != null;
                         ServiceProviderResponse spResponse = getDataManager().getGson().fromJson(response.body().string(), ServiceProviderResponse.class);
                         if (spResponse.getContent() != null) {
-                            spListData.setValue(spResponse.getContent());
+                            getNavigator().onExpectedSPSuccess(spResponse.getContent());
                         }
                     } else if (response.code() == 401) {
                         getNavigator().openActivityOnTokenExpire();

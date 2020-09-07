@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
-import com.evisitor.data.model.RegisteredHKResponse;
+import com.evisitor.data.model.HouseKeepingResponse;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.databinding.FragmentExpectedBinding;
 import com.evisitor.ui.base.BaseFragment;
@@ -23,7 +23,7 @@ public class RegisteredHKFragment extends BaseFragment<FragmentExpectedBinding, 
     private RegisteredHKAdapter adapter;
     private String search = "";
     private int page = 0;
-    private List<RegisteredHKResponse.ContentBean> list;
+    private List<HouseKeepingResponse.ContentBean> list;
 
     public static RegisteredHKFragment newInstance() {
         RegisteredHKFragment fragment = new RegisteredHKFragment();
@@ -71,21 +71,13 @@ public class RegisteredHKFragment extends BaseFragment<FragmentExpectedBinding, 
         scrollListener = new RecyclerViewScrollListener() {
             @Override
             public void onLoadMore() {
-                adapter.showLoading(true);
-                adapter.notifyDataSetChanged();
+                setAdapterLoading(true);
                 page++;
 
                 getViewModel().getRegisteredHKListData(page, search);
             }
         };
         getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
-
-        getViewModel().getRegisteredHKListData().observe(this, list -> {
-            if (page == 0) this.list.clear();
-
-            this.list.addAll(list);
-            adapter.notifyDataSetChanged();
-        });
 
         getViewDataBinding().swipeToRefresh.setOnRefreshListener(this::updateUI);
         getViewDataBinding().swipeToRefresh.setColorSchemeResources(R.color.colorPrimary);
@@ -105,14 +97,22 @@ public class RegisteredHKFragment extends BaseFragment<FragmentExpectedBinding, 
     }
 
     @Override
+    public void onRegisteredHKSuccess(List<HouseKeepingResponse.ContentBean> houseKeepingList) {
+        if (page == 0) this.list.clear();
+
+        this.list.addAll(houseKeepingList);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void hideSwipeToRefresh() {
-        hideAdapterLoading();
+        setAdapterLoading(false);
         getViewDataBinding().swipeToRefresh.setRefreshing(false);
     }
 
-    private void hideAdapterLoading() {
+    private void setAdapterLoading(boolean isShowLoader) {
         if (adapter != null) {
-            adapter.showLoading(false);
+            adapter.showLoading(isShowLoader);
             adapter.notifyDataSetChanged();
         }
     }

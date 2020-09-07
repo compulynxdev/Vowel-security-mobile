@@ -81,7 +81,7 @@ public class HouseKeepingActivity extends BaseActivity<ActivityHkBinding, HKView
 
             @Override
             public void onPageSelected(int position) {
-                getViewDataBinding().etSearch.setQuery("", false);
+                getViewDataBinding().customSearchView.searchView.setQuery("", false);
 
                 if (position == 0) {
                     getViewDataBinding().tvExpected.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
@@ -106,15 +106,15 @@ public class HouseKeepingActivity extends BaseActivity<ActivityHkBinding, HKView
         imgSearch.setVisibility(View.VISIBLE);
         imgSearch.setOnClickListener(this);
 
-        getViewDataBinding().etSearch.setActivated(true);
-        getViewDataBinding().etSearch.setQueryHint(getString(R.string.search_data));
-        getViewDataBinding().etSearch.onActionViewExpanded();
-        getViewDataBinding().etSearch.clearFocus();
-        TextView searchText = getViewDataBinding().etSearch.findViewById(R.id.search_src_text);
+        getViewDataBinding().customSearchView.searchView.setActivated(true);
+        getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_data));
+        getViewDataBinding().customSearchView.searchView.onActionViewExpanded();
+        getViewDataBinding().customSearchView.searchView.clearFocus();
+        TextView searchText = getViewDataBinding().customSearchView.searchView.findViewById(R.id.search_src_text);
         searchText.setTextSize(16);
         searchText.setTypeface(ResourcesCompat.getFont(this, R.font.futura_round_medium));
 
-        getViewDataBinding().etSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        getViewDataBinding().customSearchView.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
@@ -132,32 +132,7 @@ public class HouseKeepingActivity extends BaseActivity<ActivityHkBinding, HKView
             }
         });
 
-        getViewDataBinding().etSearch.setOnSearchClickListener(v -> hideKeyboard());
-
-       /* getViewDataBinding().etSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        getViewDataBinding().etSearch.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                hideKeyboard();
-                return true;
-            }
-            return false;
-        });*/
+        getViewDataBinding().customSearchView.searchView.setOnSearchClickListener(v -> hideKeyboard());
     }
 
     @Override
@@ -173,10 +148,10 @@ public class HouseKeepingActivity extends BaseActivity<ActivityHkBinding, HKView
 
             case R.id.img_search:
                 hideKeyboard();
-                getViewDataBinding().searchBar.setVisibility(getViewDataBinding().searchBar.getVisibility() == View.GONE
+                getViewDataBinding().customSearchView.searchBar.setVisibility(getViewDataBinding().customSearchView.searchBar.getVisibility() == View.GONE
                         ? View.VISIBLE : View.GONE);
 
-                getViewDataBinding().etSearch.setQuery("", false);
+                getViewDataBinding().customSearchView.searchView.setQuery("", false);
                 break;
         }
     }
