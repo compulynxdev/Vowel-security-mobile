@@ -54,6 +54,9 @@ public interface ApiHelper {
     @GET(WebServices.GET_REGISTERED_HOUSE_KEEPING_LIST)
     Call<ResponseBody> doGetRegisteredHKList(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
 
+    @GET(WebServices.GET_BLACK_LIST_VISITORS)
+    Call<ResponseBody> doGetBlackListVisitors(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+
     /*@POST(WebServices.HOUSE_KEEPING_CHECKIN_CHECKOUT)
     Call<ResponseBody> doHouseKeepingCheckInCheckOut(@Header("authorization") String authToken, @Body RequestBody body);*/
 }

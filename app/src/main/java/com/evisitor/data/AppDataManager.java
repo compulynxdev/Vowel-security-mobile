@@ -255,4 +255,9 @@ public class AppDataManager implements DataManager {
     public Call<ResponseBody> doGetRegisteredHKList(String authToken, Map<String, String> partMap) {
         return apiHelper.doGetRegisteredHKList(authToken, partMap);
     }
+
+    @Override
+    public Call<ResponseBody> doGetBlackListVisitors(String authToken, Map<String, String> partMap) {
+        return apiHelper.doGetBlackListVisitors(authToken, partMap);
+    }
 }

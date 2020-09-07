@@ -13,6 +13,7 @@ import com.evisitor.ui.main.activity.ActivityViewModel;
 import com.evisitor.ui.main.activity.checkin.CheckInViewModel;
 import com.evisitor.ui.main.activity.checkout.CheckOutViewModel;
 import com.evisitor.ui.main.home.HomeViewModel;
+import com.evisitor.ui.main.home.blacklist.BlackListViewModel;
 import com.evisitor.ui.main.home.guest.GuestViewModel;
 import com.evisitor.ui.main.home.guest.add.AddGuestViewModel;
 import com.evisitor.ui.main.home.guest.add.dialogs.HostPickerViewModel;
@@ -144,6 +145,9 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         }else if (modelClass.isAssignableFrom(TotalVisitorsViewModel.class)) {
             //noinspection unchecked
             return (T) new TotalVisitorsViewModel(dataManager);
+        }else if (modelClass.isAssignableFrom(BlackListViewModel.class)) {
+            //noinspection unchecked
+            return (T) new BlackListViewModel(dataManager);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

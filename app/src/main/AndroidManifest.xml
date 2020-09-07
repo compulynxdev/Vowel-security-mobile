@@ -20,11 +20,18 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.main.home.total.TotalVisitorsActivity"
+        <activity android:name=".ui.main.home.blacklist.BlackListVisitorActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/DashboardTheme"/>
+            android:theme="@style/DashboardTheme"
+            />
+        <activity
+            android:name=".ui.main.home.total.TotalVisitorsActivity"
+            android:configChanges="orientation|screenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/DashboardTheme" />
         <activity
             android:name=".ui.main.home.housekeeping.HouseKeepingActivity"
             android:configChanges="orientation|screenSize"
