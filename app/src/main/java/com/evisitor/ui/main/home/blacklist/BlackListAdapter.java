@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.evisitor.R;
 import com.evisitor.data.model.BlackListVisitorResponse;
 import com.evisitor.ui.base.BaseViewHolder;
+import com.evisitor.util.CalenderUtils;
 import com.evisitor.util.pagination.FooterLoader;
 
 import java.util.List;
@@ -86,7 +87,7 @@ public class BlackListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public class ViewHolder extends BaseViewHolder {
         ImageView imgVisitor;
-        TextView name,docId,profile,contact,reason,type;
+        TextView name,docId,profile,contact,reason,type,hostTime;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_name);
@@ -95,6 +96,7 @@ public class BlackListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             contact = itemView.findViewById(R.id.tv_contact);
             reason = itemView.findViewById(R.id.tv_reason);
             type = itemView.findViewById(R.id.tv_type);
+            hostTime = itemView.findViewById(R.id.tv_host_checkout_time);
             imgVisitor = itemView.findViewById(R.id.img_visitor);
         }
 
@@ -126,6 +128,11 @@ public class BlackListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 type.setVisibility(View.VISIBLE);
                 type.setText(type.getContext().getString(R.string.data_type,bean.getType()));
             }else type.setVisibility(View.GONE);
+
+            if (bean.getHostCheckOutTime()!=null && !bean.getHostCheckOutTime().isEmpty()){
+                hostTime.setVisibility(View.VISIBLE);
+                hostTime.setText(hostTime.getContext().getString(R.string.data_host_checkout_time, CalenderUtils.formatDate(bean.getHostCheckOutTime(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIMESTAMP_FORMAT)));
+            }else hostTime.setVisibility(View.GONE);
         }
     }
 

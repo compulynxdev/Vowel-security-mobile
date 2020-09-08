@@ -268,6 +268,7 @@ public class BlackListVisitorResponse {
          "createdBy" : "account",
          "documentId" : "121212",
          "id" : 1,
+         "hostCheckOutTime":"2020-09-07T04:49:18Z",
          "guestId" : 3,
          "status" : true,
          "contactNo" : "978784664"*/
@@ -287,6 +288,7 @@ public class BlackListVisitorResponse {
         private boolean status;
         private String contactNo;
         private int id;
+        private String hostCheckOutTime;
 
         public String getReason() {
             return reason;
@@ -398,6 +400,14 @@ public class BlackListVisitorResponse {
 
         public void setId(int id) {
             this.id = id;
+        }
+
+        public String getHostCheckOutTime() {
+            return hostCheckOutTime;
+        }
+
+        public void setHostCheckOutTime(String hostCheckOutTime) {
+            this.hostCheckOutTime = hostCheckOutTime;
         }
     }
 
