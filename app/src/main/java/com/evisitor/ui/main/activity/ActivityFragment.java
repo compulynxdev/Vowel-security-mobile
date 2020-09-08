@@ -2,10 +2,9 @@ package com.evisitor.ui.main.activity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
@@ -49,12 +48,36 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getViewModel().setNavigator(this);
-        TextView tvTitle = view.findViewById(R.id.tv_title);
-        tvTitle.setText(R.string.title_activity);
+        initView();
+        setupSearch();
+        setUpPagerAdapter();
+    }
 
-        ImageView imgSearch = view.findViewById(R.id.img_search);
-        imgSearch.setVisibility(View.VISIBLE);
-        imgSearch.setOnClickListener(this);
+    private void setupSearch() {
+        setupSearchSetting(getViewDataBinding().customSearchView.searchView);
+        getViewDataBinding().header.imgSearch.setVisibility(View.VISIBLE);
+        getViewDataBinding().header.imgSearch.setOnClickListener(this);
+
+        getViewDataBinding().customSearchView.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (newText.trim().isEmpty() || newText.trim().length() >= 3) {
+                    if (getViewDataBinding().viewPager.getCurrentItem() == 0)
+                        checkInFragment.doSearch(newText);
+                    else checkOutFragment.doSearch(newText);
+                }
+                return false;
+            }
+        });
+    }
+
+    private void initView() {
+        getViewDataBinding().header.tvTitle.setText(R.string.title_activity);
         getViewDataBinding().tvIn.setOnClickListener(this);
         getViewDataBinding().tvIn.setText(getString(R.string.check_in_with_count, "0"));
         getViewDataBinding().tvOut.setText(getString(R.string.check_out_with_count, "0"));
@@ -64,15 +87,13 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
         getViewDataBinding().titleGuest.setOnClickListener(this);
         getViewDataBinding().titleHouse.setOnClickListener(this);
         getViewDataBinding().titleService.setOnClickListener(this);
-
-        setUpPagerAdapter();
     }
 
     private void setUpPagerAdapter() {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        checkInFragment = CheckInFragment.newInstance(getViewDataBinding().etSearch, listOf, size -> getViewDataBinding().tvIn.setText(getString(R.string.check_in_with_count,String.valueOf(size))));
+        checkInFragment = CheckInFragment.newInstance(getViewDataBinding().customSearchView.searchView, listOf, size -> getViewDataBinding().tvIn.setText(getString(R.string.check_in_with_count, String.valueOf(size))));
         adapter.addFragment(checkInFragment);
-        checkOutFragment = CheckOutFragment.newInstance(getViewDataBinding().etSearch,listOf, size -> getViewDataBinding().tvOut.setText(getString(R.string.check_out_with_count,String.valueOf(size))));
+        checkOutFragment = CheckOutFragment.newInstance(getViewDataBinding().customSearchView.searchView, listOf, size -> getViewDataBinding().tvOut.setText(getString(R.string.check_out_with_count, String.valueOf(size))));
         adapter.addFragment(checkOutFragment);
         getViewDataBinding().viewPager.setOffscreenPageLimit(2);
 
@@ -84,12 +105,12 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
 
             @Override
             public void onPageSelected(int position) {
+                getViewDataBinding().customSearchView.searchView.setQuery("", false);
+
                 if (position == 0) {
-                    getViewDataBinding().etSearch.setText("");
                     getViewDataBinding().tvIn.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                     getViewDataBinding().tvOut.setTextColor(getResources().getColor(R.color.black));
                 } else {
-                    getViewDataBinding().etSearch.setText("");
                     getViewDataBinding().tvIn.setTextColor(getResources().getColor(R.color.black));
                     getViewDataBinding().tvOut.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                 }
@@ -116,18 +137,16 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
 
             case R.id.img_search :
                 hideKeyboard();
-                getViewDataBinding().searchBar.setVisibility(getViewDataBinding().searchBar.getVisibility() == View.GONE
+                getViewDataBinding().customSearchView.llSearchBar.setVisibility(getViewDataBinding().customSearchView.llSearchBar.getVisibility() == View.GONE
                         ? View.VISIBLE : View.GONE);
 
-                if (!getViewDataBinding().etSearch.getText().toString().trim().isEmpty()) {
-                    getViewDataBinding().etSearch.setText("");
-                }
+                getViewDataBinding().customSearchView.searchView.setQuery("", false);
                 break;
 
             case R.id.title_guest:
                 listOf = 0;
-                checkInFragment.setList(listOf);
-                checkOutFragment.setGuestsList(listOf);
+                checkInFragment.setCheckInList(listOf);
+                checkOutFragment.setCheckOutList(listOf);
                 getViewDataBinding().titleGuest.setTextColor(getResources().getColor(R.color.colorPrimary));
                 getViewDataBinding().titleService.setTextColor(getResources().getColor(R.color.black));
                 getViewDataBinding().titleHouse.setTextColor(getResources().getColor(R.color.black));
@@ -135,8 +154,8 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
 
             case R.id.title_house:
                 listOf = 1;
-                checkInFragment.setList(listOf);
-                checkOutFragment.setGuestsList(listOf);
+                checkInFragment.setCheckInList(listOf);
+                checkOutFragment.setCheckOutList(listOf);
                 getViewDataBinding().titleGuest.setTextColor(getResources().getColor(R.color.black));
                 getViewDataBinding().titleService.setTextColor(getResources().getColor(R.color.black));
                 getViewDataBinding().titleHouse.setTextColor(getResources().getColor(R.color.colorPrimary));
@@ -144,12 +163,12 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
 
             case R.id.title_service:
                 listOf = 2;
-                checkInFragment.setList(listOf);
-                checkOutFragment.setGuestsList(listOf);
+                checkInFragment.setCheckInList(listOf);
+                checkOutFragment.setCheckOutList(listOf);
                 getViewDataBinding(). titleGuest.setTextColor(getResources().getColor(R.color.black));
                 getViewDataBinding().titleService.setTextColor(getResources().getColor(R.color.colorPrimary));
                 getViewDataBinding().titleHouse.setTextColor(getResources().getColor(R.color.black));
-               break;
+                break;
         }
     }
 }

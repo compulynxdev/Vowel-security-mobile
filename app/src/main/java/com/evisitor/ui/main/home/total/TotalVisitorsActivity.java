@@ -163,18 +163,19 @@ public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBin
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (newText.trim().isEmpty() || newText.trim().length() >= 3) {
+                String txt = newText.trim();
+                if (txt.isEmpty() || txt.length() >= 3) {
                     switch (getViewDataBinding().viewPager.getCurrentItem()) {
                         case 0:
-                            expectedGuestFragment.setSearch(newText);
+                            expectedGuestFragment.setSearch(txt);
                             break;
 
                         case 1:
-                            expectedHKFragment.setSearch(newText);
+                            expectedHKFragment.setSearch(txt);
                             break;
 
                         case 2:
-                            expectedSPFragment.setSearch(newText);
+                            expectedSPFragment.setSearch(txt);
                             break;
                     }
                 }

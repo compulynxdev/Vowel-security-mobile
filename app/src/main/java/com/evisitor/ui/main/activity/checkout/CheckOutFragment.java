@@ -1,13 +1,10 @@
 package com.evisitor.ui.main.activity.checkout;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
@@ -35,22 +32,22 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
     private GuestCheckOutAdapter guestAdapter;
     private ServiceProviderCheckOutAdapter serviceProviderAdapter;
     private HouseKeepingCheckOutAdapter houseKeepingAdapter;
-    private EditText etSearch;
+    private SearchView searchView;
     private int listOf=0;
     private OnFragmentInteraction listener;
     private RecyclerViewScrollListener scrollListener;
     private int page=0;
 
-    public static CheckOutFragment newInstance(EditText et_Search,int listOf, OnFragmentInteraction interaction) {
+    public static CheckOutFragment newInstance(SearchView searchView, int listOf, OnFragmentInteraction interaction) {
         CheckOutFragment fragment = new CheckOutFragment();
         Bundle args = new Bundle();
-        fragment.setData(et_Search,listOf,interaction);
+        fragment.setData(searchView, listOf, interaction);
         fragment.setArguments(args);
         return fragment;
     }
 
-    private void setData(EditText et_Search, int listOf, OnFragmentInteraction interaction){
-        etSearch=et_Search;
+    private void setData(SearchView searchView, int listOf, OnFragmentInteraction interaction) {
+        this.searchView = searchView;
         this.listOf = listOf;
         listener = interaction;
     }
@@ -71,7 +68,7 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
         return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(CheckOutViewModel.class);
     }
 
-    public void setGuestsList(int listOf) {
+    public void setCheckOutList(int listOf) {
         this.listOf = listOf;
         switch (listOf){
             //guest
@@ -89,7 +86,7 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
                 getViewDataBinding().recyclerView.setAdapter(serviceProviderAdapter);
                 break;
         }
-        doSearch(etSearch.getText().toString());
+        doSearch(searchView.getQuery().toString().trim());
     }
 
 
@@ -103,12 +100,8 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
         serviceProviderList = new ArrayList<>();
 
         setUpGuestAdapter();
-
         setUpServiceProviderAdapter();
-
         setUpHouseKeeperAdapter();
-
-        setUpSearch();
 
         scrollListener = new RecyclerViewScrollListener() {
             @Override
@@ -117,19 +110,19 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
                     case 0 :
                         setGuestAdapterLoading(true);
                         page++;
-                        getViewModel().getGuestListData(page, etSearch.getText().toString().trim(),listOf);
+                        getViewModel().getCheckOutData(page, searchView.getQuery().toString().trim(), listOf);
                         break;
 
                     case 1 :
                         setHKAdapterLoading(true);
                         page++;
-                        getViewModel().getGuestListData(page, etSearch.getText().toString().trim(),listOf);
+                        getViewModel().getCheckOutData(page, searchView.getQuery().toString().trim(), listOf);
                         break;
 
                     case 2 :
                         setSPAdapterLoading(true);
                         page++;
-                        getViewModel().getGuestListData(page, etSearch.getText().toString().trim(),listOf);
+                        getViewModel().getCheckOutData(page, searchView.getQuery().toString().trim(), listOf);
                         break;
 
 
@@ -137,6 +130,9 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
             }
         };
         getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
+
+        getViewDataBinding().swipeToRefresh.setOnRefreshListener(this::updateUI);
+        getViewDataBinding().swipeToRefresh.setColorSchemeResources(R.color.colorPrimary);
         updateUI();
     }
 
@@ -156,47 +152,13 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
         getViewDataBinding().recyclerView.setAdapter(guestAdapter);
     }
 
-    private void setUpSearch() {
-
-        getViewDataBinding().swipeToRefresh.setOnRefreshListener(this::updateUI);
-        getViewDataBinding().swipeToRefresh.setColorSchemeResources(R.color.colorPrimary);
-
-        etSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.toString().isEmpty() || s.toString().length() >= 2) {
-                    doSearch(s.toString());
-                }
-            }
-        });
-
-        etSearch.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                hideKeyboard();
-                return true;
-            }
-            return false;
-        });
-
-    }
-
-    private void doSearch(String search) {
+    public void doSearch(String search) {
         scrollListener.onDataCleared();
         guestsList.clear();
         serviceProviderList.clear();
         houseKeepingList.clear();
         this.page = 0;
-        getViewModel().getGuestListData(page, search.trim(),listOf);
+        getViewModel().getCheckOutData(page, search.trim(), listOf);
     }
 
     @Override
@@ -269,12 +231,12 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
 
     @Override
     public void refreshList() {
-        doSearch(etSearch.getText().toString());
+        doSearch(searchView.getQuery().toString().trim());
     }
 
     private void updateUI() {
         getViewDataBinding().swipeToRefresh.setRefreshing(true);
-        doSearch(etSearch.getText().toString());
+        doSearch(searchView.getQuery().toString().trim());
     }
 
     public interface OnFragmentInteraction{

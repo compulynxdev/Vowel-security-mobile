@@ -39,7 +39,7 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
         super(dataManager);
     }
 
-    void getGuestListData(int page, String search,int listOf) {
+    void getCheckInData(int page, String search, int listOf) {
         Map<String, String> map = new HashMap<>();
         map.put("accountId", getDataManager().getAccountId());
         if (!search.isEmpty())
@@ -51,17 +51,17 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
         switch (listOf){
             case 0:
                 getGuestList(map);
-                AppLogger.d("Searching : ExpectedGuest", page + " : " + search);
+                AppLogger.d("Searching : CheckInViewModel ExpectedGuest", page + " : " + search);
                 break;
 
             case 1:
                 getHouseKeeperList(map);
-                AppLogger.d("Searching : ExpectedHK", page + " : " + search);
+                AppLogger.d("Searching : CheckInViewModel ExpectedHK", page + " : " + search);
                 break;
 
             case 2:
                 getServiceProviderList(map);
-                AppLogger.d("Searching : ExpectedSP", page + " : " + search);
+                AppLogger.d("Searching : CheckInViewModel ExpectedSP", page + " : " + search);
                 break;
         }
     }
