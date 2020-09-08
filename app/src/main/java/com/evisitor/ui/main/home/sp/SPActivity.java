@@ -3,13 +3,9 @@ package com.evisitor.ui.main.home.sp;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.ImageView;
-import android.widget.TextView;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
@@ -20,6 +16,7 @@ import com.evisitor.ui.base.BaseActivity;
 public class SPActivity extends BaseActivity<ActivitySpBinding, SPViewModel> {
 
     private ExpectedSPFragment fragment;
+
     public static Intent getStartIntent(Context context) {
         return new Intent(context, SPActivity.class);
     }
@@ -43,8 +40,9 @@ public class SPActivity extends BaseActivity<ActivitySpBinding, SPViewModel> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getViewModel().setNavigator(this);
-        TextView tvTitle = findViewById(R.id.tv_title);
-        tvTitle.setText(R.string.title_service_provider);
+        getViewDataBinding().header.tvTitle.setText(R.string.title_service_provider);
+        getViewDataBinding().header.imgBack.setVisibility(View.VISIBLE);
+        getViewDataBinding().header.imgBack.setOnClickListener(v -> onBackPressed());
         setUpSearch();
 
         fragment = ExpectedSPFragment.newInstance();
@@ -52,46 +50,30 @@ public class SPActivity extends BaseActivity<ActivitySpBinding, SPViewModel> {
     }
 
     private void setUpSearch() {
-        ImageView imgSearch = findViewById(R.id.img_search);
-        imgSearch.setVisibility(View.VISIBLE);
-        ImageView imgBack = findViewById(R.id.img_back);
-        imgBack.setVisibility(View.VISIBLE);
-        imgBack.setOnClickListener(v -> onBackPressed());
-        imgSearch.setOnClickListener(v -> {
+        getViewDataBinding().header.imgSearch.setVisibility(View.VISIBLE);
+        getViewDataBinding().header.imgSearch.setOnClickListener(v -> {
             hideKeyboard();
-            getViewDataBinding().searchBar.setVisibility(getViewDataBinding().searchBar.getVisibility() == View.GONE
+            getViewDataBinding().customSearchView.llSearchBar.setVisibility(getViewDataBinding().customSearchView.llSearchBar.getVisibility() == View.GONE
                     ? View.VISIBLE : View.GONE);
 
-            if (!getViewDataBinding().etSearch.getText().toString().trim().isEmpty()) {
-                getViewDataBinding().etSearch.setText("");
-            }
+            getViewDataBinding().customSearchView.searchView.setQuery("", false);
         });
 
-        getViewDataBinding().etSearch.addTextChangedListener(new TextWatcher() {
+        setupSearchSetting(getViewDataBinding().customSearchView.searchView);
+        getViewDataBinding().customSearchView.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+            public boolean onQueryTextSubmit(String query) {
+                return false;
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            public boolean onQueryTextChange(String newText) {
+                if (newText.trim().isEmpty() || newText.trim().length() >= 3) {
+                    fragment.setSearch(newText);
 
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.toString().isEmpty() || s.toString().length() >= 2) {
-                    fragment.setSearch(s.toString());
                 }
+                return false;
             }
-        });
-
-        getViewDataBinding().etSearch.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                hideKeyboard();
-                return true;
-            }
-            return false;
         });
     }
 }

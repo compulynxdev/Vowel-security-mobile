@@ -4,10 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
@@ -23,6 +22,7 @@ import com.sharma.mrzreader.MrzRecord;
 public class GuestActivity extends BaseActivity<ActivityExpectedGuestBinding, GuestViewModel> {
 
     private final int SCAN_RESULT = 101;
+    private ExpectedGuestFragment guestFragment;
 
     public static Intent getStartIntent(Context context){
         return new Intent(context, GuestActivity.class);
@@ -46,10 +46,13 @@ public class GuestActivity extends BaseActivity<ActivityExpectedGuestBinding, Gu
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getViewModel().setNavigator(this);
-        TextView tvTitle = findViewById(R.id.tv_title);
-        tvTitle.setText(R.string.title_expected_guests );
+        getViewDataBinding().header.tvTitle.setText(R.string.title_expected_guests);
+        getViewDataBinding().header.imgBack.setVisibility(View.VISIBLE);
+        getViewDataBinding().header.imgBack.setOnClickListener(v -> onBackPressed());
         setUpSearch();
-        setUpList();
+        guestFragment = ExpectedGuestFragment.newInstance();
+        replaceFragment(guestFragment, R.id.guest_frame);
+
         getViewDataBinding().fabAdd.setOnClickListener(v -> AlertDialog.newInstance()
                 .setNegativeBtnShow(true)
                 .setCloseBtnShow(true)
@@ -70,26 +73,30 @@ public class GuestActivity extends BaseActivity<ActivityExpectedGuestBinding, Gu
                 }).show(getSupportFragmentManager()));
     }
 
-    private void setUpList() {
-        replaceFragment(ExpectedGuestFragment.newInstance(getViewDataBinding().etSearch),R.id.guest_frame);
-    }
-
     private void setUpSearch() {
-        ImageView imgSearch = findViewById(R.id.img_search);
-        imgSearch.setVisibility(View.VISIBLE);
-        ImageView imgBack = findViewById(R.id.img_back);
-        imgBack.setVisibility(View.VISIBLE);
-        imgBack.setOnClickListener(v -> onBackPressed());
-        imgSearch.setOnClickListener(v -> {
+        getViewDataBinding().header.imgSearch.setVisibility(View.VISIBLE);
+        getViewDataBinding().header.imgSearch.setOnClickListener(v -> {
             hideKeyboard();
-            getViewDataBinding().searchBar.setVisibility(getViewDataBinding().searchBar.getVisibility() == View.GONE
+            getViewDataBinding().customSearchView.llSearchBar.setVisibility(getViewDataBinding().customSearchView.llSearchBar.getVisibility() == View.GONE
                     ? View.VISIBLE : View.GONE);
 
-            if (!getViewDataBinding().etSearch.getText().toString().trim().isEmpty()) {
-                getViewDataBinding().etSearch.setText("");
+            getViewDataBinding().customSearchView.searchView.setQuery("", false);
+        });
+        setupSearchSetting(getViewDataBinding().customSearchView.searchView);
+        getViewDataBinding().customSearchView.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (newText.trim().isEmpty() || newText.trim().length() >= 3) {
+                    guestFragment.setSearch(newText);
+                }
+                return false;
             }
         });
-
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.LayoutRes;
@@ -15,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.DialogFragment;
@@ -247,5 +250,16 @@ implements BaseFragment.Callback, BaseNavigator{
         } catch (Exception e) {
             showAlert(getString(R.string.alert), R.string.alert_error);
         }
+    }
+
+    public void setupSearchSetting(SearchView searchView) {
+        searchView.setActivated(true);
+        searchView.setQueryHint(getString(R.string.search_data));
+        searchView.onActionViewExpanded();
+        searchView.clearFocus();
+        TextView searchText = searchView.findViewById(R.id.search_src_text);
+        searchText.setTextSize(16);
+        searchText.setTypeface(ResourcesCompat.getFont(this, R.font.futura_round_medium));
+        searchView.setOnSearchClickListener(v -> hideKeyboard());
     }
 }

@@ -4,11 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.appcompat.widget.SearchView;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
@@ -55,11 +52,9 @@ public class HouseKeepingActivity extends BaseActivity<ActivityHkBinding, HKView
     }
 
     private void initView() {
-        TextView tvTitle = findViewById(R.id.tv_title);
-        tvTitle.setText(R.string.title_house_keeping);
-        ImageView imgBack = findViewById(R.id.img_back);
-        imgBack.setVisibility(View.VISIBLE);
-        imgBack.setOnClickListener(v -> onBackPressed());
+        getViewDataBinding().header.tvTitle.setText(R.string.title_house_keeping);
+        getViewDataBinding().header.imgBack.setVisibility(View.VISIBLE);
+        getViewDataBinding().header.imgBack.setOnClickListener(v -> onBackPressed());
 
         getViewDataBinding().tvRegistered.setOnClickListener(this);
         getViewDataBinding().tvExpected.setOnClickListener(this);
@@ -97,23 +92,13 @@ public class HouseKeepingActivity extends BaseActivity<ActivityHkBinding, HKView
 
             }
         });
-
     }
 
-
     private void setUpSearch() {
-        ImageView imgSearch = findViewById(R.id.img_search);
-        imgSearch.setVisibility(View.VISIBLE);
-        imgSearch.setOnClickListener(this);
+        getViewDataBinding().header.imgSearch.setVisibility(View.VISIBLE);
+        getViewDataBinding().header.imgSearch.setOnClickListener(this);
 
-        getViewDataBinding().customSearchView.searchView.setActivated(true);
-        getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_data));
-        getViewDataBinding().customSearchView.searchView.onActionViewExpanded();
-        getViewDataBinding().customSearchView.searchView.clearFocus();
-        TextView searchText = getViewDataBinding().customSearchView.searchView.findViewById(R.id.search_src_text);
-        searchText.setTextSize(16);
-        searchText.setTypeface(ResourcesCompat.getFont(this, R.font.futura_round_medium));
-
+        setupSearchSetting(getViewDataBinding().customSearchView.searchView);
         getViewDataBinding().customSearchView.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -132,7 +117,6 @@ public class HouseKeepingActivity extends BaseActivity<ActivityHkBinding, HKView
             }
         });
 
-        getViewDataBinding().customSearchView.searchView.setOnSearchClickListener(v -> hideKeyboard());
     }
 
     @Override
@@ -148,7 +132,7 @@ public class HouseKeepingActivity extends BaseActivity<ActivityHkBinding, HKView
 
             case R.id.img_search:
                 hideKeyboard();
-                getViewDataBinding().customSearchView.searchBar.setVisibility(getViewDataBinding().customSearchView.searchBar.getVisibility() == View.GONE
+                getViewDataBinding().customSearchView.llSearchBar.setVisibility(getViewDataBinding().customSearchView.llSearchBar.getVisibility() == View.GONE
                         ? View.VISIBLE : View.GONE);
 
                 getViewDataBinding().customSearchView.searchView.setQuery("", false);
