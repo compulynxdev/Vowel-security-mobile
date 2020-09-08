@@ -131,7 +131,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
         scrollListener.onDataCleared();
         spList.clear();
         this.page = 0;
-        getViewModel().getSpListData(page, search.trim());
+        getViewModel().getSpListData(page, search);
     }
 
     private void showCheckinOptions() {

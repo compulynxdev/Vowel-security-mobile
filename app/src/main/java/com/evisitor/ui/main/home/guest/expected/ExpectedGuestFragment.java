@@ -2,11 +2,7 @@ package com.evisitor.ui.main.home.guest.expected;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,19 +28,19 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
     private List<Guests> guestsList;
     private RecyclerViewScrollListener scrollListener;
     private ExpectedGuestAdapter adapter;
-    private EditText etSearch;
+    private String search = "";
     private int page = 0;
 
-    public static ExpectedGuestFragment newInstance(EditText editText) {
+    public static ExpectedGuestFragment newInstance() {
         ExpectedGuestFragment fragment = new ExpectedGuestFragment();
         Bundle args = new Bundle();
-        fragment.setEditText(editText);
         fragment.setArguments(args);
         return fragment;
     }
 
-    private void setEditText(EditText editText) {
-        etSearch=editText;
+    public void setSearch(String search) {
+        this.search = search;
+        doSearch(search);
     }
 
     @Override
@@ -67,7 +63,6 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
         super.onViewCreated(view, savedInstanceState);
         getViewModel().setCheckInOutNavigator(this);
         setUpAdapter();
-        setUpSearch();
     }
 
     private void setUpAdapter() {
@@ -112,7 +107,7 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
                 setAdapterLoading(true);
                 page++;
 
-                getViewModel().getGuestListData(page, etSearch.getText().toString().trim());
+                getViewModel().getGuestListData(page, search);
             }
         };
         getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
@@ -124,43 +119,15 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
 
     private void updateUI() {
         getViewDataBinding().swipeToRefresh.setRefreshing(true);
-        doSearch(etSearch.getText().toString());
+        doSearch(search);
     }
 
-    private void setUpSearch() {
-        etSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.toString().isEmpty() || s.toString().length() >= 2) {
-                    doSearch(s.toString());
-                }
-            }
-        });
-
-        etSearch.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                hideKeyboard();
-                return true;
-            }
-            return false;
-        });
-    }
 
     private void doSearch(String search) {
         scrollListener.onDataCleared();
         guestsList.clear();
         this.page = 0;
-        getViewModel().getGuestListData(page, search.trim());
+        getViewModel().getGuestListData(page, search);
     }
 
     private void showCheckinOptions() {
@@ -231,6 +198,6 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
 
     @Override
     public void refreshList() {
-        doSearch(etSearch.getText().toString());
+        doSearch(search);
     }
 }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
-        android:id="@+id/search_bar"
+        android:id="@+id/ll_search_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_search"

@@ -37,14 +37,9 @@ ext {
     buildToolsVersion = '29.0.3'
     constraintLayoutVersion = '2.0.1'
     recyclerViewVersion = '1.1.0'
-    cardViewVersion = '1.0.0'
 
     // App dependencies
-    supportLibraryVersion = '1.1.0'
     materialVersion = '1.2.1'
-    vectorDrawableVersion = '1.0.1'
-    animatedVectorDrawableVersion = '1.0.0'
-    gsonVersion = '2.8.2'
     glideVersion = '4.11.0'
     retrofit = '2.9.0'
     retrofitConverter = '2.9.0'
