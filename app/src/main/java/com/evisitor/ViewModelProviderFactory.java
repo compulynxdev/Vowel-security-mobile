@@ -26,6 +26,9 @@ import com.evisitor.ui.main.home.scan.ScanIDViewModel;
 import com.evisitor.ui.main.home.sp.ExpectedSpViewModel;
 import com.evisitor.ui.main.home.sp.SPViewModel;
 import com.evisitor.ui.main.home.total.TotalVisitorsViewModel;
+import com.evisitor.ui.main.home.trespasser.TrespasserViewModel;
+import com.evisitor.ui.main.home.trespasser.guests.TrespasserGuestViewModel;
+import com.evisitor.ui.main.home.trespasser.services.TrespasserSPViewModel;
 import com.evisitor.ui.main.idverification.IdVerificationViewModel;
 import com.evisitor.ui.main.notifications.NotificationsFragmentViewModel;
 import com.evisitor.ui.main.profile.UserProfileViewModel;
@@ -148,6 +151,15 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         }else if (modelClass.isAssignableFrom(BlackListViewModel.class)) {
             //noinspection unchecked
             return (T) new BlackListViewModel(dataManager);
+        }else if (modelClass.isAssignableFrom(TrespasserViewModel.class)) {
+            //noinspection unchecked
+            return (T) new TrespasserViewModel(dataManager);
+        }else if (modelClass.isAssignableFrom(TrespasserGuestViewModel.class)) {
+            //noinspection unchecked
+            return (T) new TrespasserGuestViewModel(dataManager);
+        }else if (modelClass.isAssignableFrom(TrespasserSPViewModel.class)) {
+            //noinspection unchecked
+            return (T) new TrespasserSPViewModel(dataManager);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

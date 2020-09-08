@@ -17,18 +17,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BlackListViewModel extends BaseViewModel<BlackListNavigtor> {
-    private MutableLiveData<List<BlackListVisitorResponse.ContentBean>> blackListData = new MutableLiveData<>();
     public BlackListViewModel(DataManager dataManager) {
         super(dataManager);
     }
 
 
-    MutableLiveData<List<BlackListVisitorResponse.ContentBean>> getBlackListData() {
-        return blackListData;
-    }
-
     void getData(int page, String search){
-        getNavigator().showLoading();
         AppLogger.e("MYPage", page + " : " + search);
         Map<String, String> map = new HashMap<>();
         map.put("accountId", getDataManager().getAccountId());
@@ -38,7 +32,7 @@ public class BlackListViewModel extends BaseViewModel<BlackListNavigtor> {
         map.put("size", String.valueOf(AppConstants.LIMIT));
         map.put("type",AppConstants.BLACK);
         AppLogger.d("Searching : BlackList", "" + page);
-        getDataManager().doGetExpectedGuestListDetail(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
+        getDataManager().doGetBlackListVisitors(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 getNavigator().hideLoading();
@@ -47,9 +41,8 @@ public class BlackListViewModel extends BaseViewModel<BlackListNavigtor> {
                     if (response.code() == 200) {
                         assert response.body() != null;
                         BlackListVisitorResponse visitorResponse = getDataManager().getGson().fromJson(response.body().string(), BlackListVisitorResponse.class);
-                        if (visitorResponse.getContent() != null) {
-                            blackListData.setValue(visitorResponse.getContent());
-                        }
+                        if (visitorResponse.getContent() != null)
+                            getNavigator().OnSuccessBlackList(visitorResponse.getContent());
                     } else if (response.code() == 401) {
                         getNavigator().openActivityOnTokenExpire();
                     } else getNavigator().handleApiError(response.errorBody());

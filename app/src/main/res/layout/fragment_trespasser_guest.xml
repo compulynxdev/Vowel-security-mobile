@@ -1,47 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.main.home.blacklist.BlackListVisitorActivity">
-
-
-    <data>
-        <import type="android.view.View"/>
-        <variable
-            name="viewModel"
-            type="com.evisitor.ui.main.home.blacklist.BlackListViewModel" />
-    </data>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.main.home.trespasser.guests.TrespasserGuestFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="@color/colorDashboard"
-        android:animateLayoutChanges="true"
         android:layout_height="match_parent">
-
-        <include layout="@layout/header"
-            android:id="@+id/header"/>
-
-        <include
-            android:id="@+id/custom_search_view"
-            layout="@layout/custom_search_view"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/dimens_search_height"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="18dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/header" />
-
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeToRefresh"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:id="@+id/swipeToRefresh"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/custom_search_view"
             app:layout_constraintStart_toStartOf="parent"
             >
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
@@ -51,8 +25,9 @@
                 android:paddingTop="18dp"
                 android:paddingEnd="8dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_black_list" />
+                tools:listitem="@layout/item_trespasser_list" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </layout>

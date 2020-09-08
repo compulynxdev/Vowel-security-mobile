@@ -1,4 +1,4 @@
-package com.evisitor.ui.main.home.blacklist;
+package com.evisitor.ui.main.home.trespasser;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,21 +10,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.evisitor.R;
-import com.evisitor.data.model.BlackListVisitorResponse;
+import com.evisitor.data.model.TrespassserResponse;
 import com.evisitor.ui.base.BaseViewHolder;
 import com.evisitor.util.CalenderUtils;
 import com.evisitor.util.pagination.FooterLoader;
 
 import java.util.List;
 
-public class BlackListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
+public class TrespasserAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
-    private List<BlackListVisitorResponse.ContentBean> list;
+    private List<TrespassserResponse.ContentBean> list;
     private static final int VIEWTYPE_ITEM = 1;
     private static final int VIEWTYPE_LOADER =2 ;
     private boolean showLoader;
 
-    BlackListAdapter(List<BlackListVisitorResponse.ContentBean> list) {
+    TrespasserAdapter(List<TrespassserResponse.ContentBean> list) {
         this.list = list;
     }
 
@@ -39,8 +39,8 @@ public class BlackListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         View view;
         switch (viewType) {
             case VIEWTYPE_ITEM:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_black_list, parent, false);
-                return new BlackListAdapter.ViewHolder(view);
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_trespasser_list, parent, false);
+                return new TrespasserAdapter.ViewHolder(view);
 
             default:
             case VIEWTYPE_LOADER:
@@ -82,46 +82,46 @@ public class BlackListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public class ViewHolder extends BaseViewHolder {
         ImageView imgVisitor;
-        TextView name,docId,profile,contact,reason,type;
+        TextView name,docId, flat,contact, vehicleNo, checkInTime;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_name);
             docId = itemView.findViewById(R.id.tv_doc_id);
-            profile = itemView.findViewById(R.id.tv_profile);
+            flat = itemView.findViewById(R.id.tv_flat);
             contact = itemView.findViewById(R.id.tv_contact);
-            reason = itemView.findViewById(R.id.tv_reason);
-            type = itemView.findViewById(R.id.tv_type);
+            vehicleNo = itemView.findViewById(R.id.tv_vehicle);
+            checkInTime = itemView.findViewById(R.id.tv_check);
             imgVisitor = itemView.findViewById(R.id.img_visitor);
         }
 
         @Override
         public void onBind(int position) {
-            BlackListVisitorResponse.ContentBean bean = list.get(position);
+            TrespassserResponse.ContentBean bean = list.get(position);
             name.setText(name.getContext().getString(R.string.data_name,bean.getFullName()));
             if (bean.getDocumentId()!=null && !bean.getDocumentId().isEmpty()){
                 docId.setVisibility(View.VISIBLE);
                 docId.setText(docId.getContext().getString(R.string.data_identity,bean.getDocumentId()));
             }else docId.setVisibility(View.GONE);
 
-            if (bean.getProfile()!=null && !bean.getProfile().isEmpty()){
-                profile.setVisibility(View.VISIBLE);
-                profile.setText(profile.getContext().getString(R.string.data_profile,bean.getProfile()));
-            }else profile.setVisibility(View.GONE);
+            if (bean.getFlatNo()!=null && !bean.getFlatNo().isEmpty()){
+                flat.setVisibility(View.VISIBLE);
+                flat.setText(flat.getContext().getString(R.string.data_house,bean.getFlatNo()));
+            }else flat.setVisibility(View.GONE);
 
             if (bean.getContactNo()!=null && !bean.getContactNo().isEmpty()){
                 contact.setVisibility(View.VISIBLE);
                 contact.setText(contact.getContext().getString(R.string.data_mobile,bean.getContactNo()));
             }else contact.setVisibility(View.GONE);
 
-            if (bean.getReason()!=null && !bean.getReason().isEmpty()){
-                reason.setVisibility(View.VISIBLE);
-                reason.setText(reason.getContext().getString(R.string.data_reason,bean.getReason()));
-            }else reason.setVisibility(View.GONE);
+            if (bean.getEnteredVehicleNo()!=null && !bean.getEnteredVehicleNo().isEmpty()){
+                vehicleNo.setVisibility(View.VISIBLE);
+                vehicleNo.setText(vehicleNo.getContext().getString(R.string.data_vehicle,bean.getEnteredVehicleNo()));
+            }else vehicleNo.setVisibility(View.GONE);
 
-            if (bean.getType()!=null && !bean.getType().isEmpty()){
-                type.setVisibility(View.VISIBLE);
-                type.setText(type.getContext().getString(R.string.data_type,bean.getType()));
-            }else type.setVisibility(View.GONE);
+            if (bean.getCheckInTime()!=null && !bean.getCheckInTime().isEmpty()){
+                checkInTime.setVisibility(View.VISIBLE);
+                checkInTime.setText(checkInTime.getContext().getString(R.string.data_type, CalenderUtils.formatDate(bean.getCheckInTime(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIMESTAMP_FORMAT)));
+            }else checkInTime.setVisibility(View.GONE);
 
         }
     }
