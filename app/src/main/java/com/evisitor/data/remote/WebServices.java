@@ -25,7 +25,6 @@ class WebServices {
     static final String GET_HOUSEKEEPING_CHECKIN_LIST = "staff/get_staff_check_in";
     static final String GET_SERVICE_PROVIDER_CHECKIN_LIST = "serviceprovider/get_service_provider_check_in_check_out";
 
-    static final String HOUSE_KEEPING_CHECKIN_CHECKOUT = "staff/register_staff_check_in";
     static final String CHECKIN_CHECKOUT = "guest/check_in_check_out";
 
     private WebServices() {

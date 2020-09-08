@@ -54,10 +54,10 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
     }
 
     private void setupSearch() {
-        setupSearchSetting(getViewDataBinding().customSearchView.searchView);
         getViewDataBinding().header.imgSearch.setVisibility(View.VISIBLE);
         getViewDataBinding().header.imgSearch.setOnClickListener(this);
 
+        setupSearchSetting(getViewDataBinding().customSearchView.searchView);
         getViewDataBinding().customSearchView.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -66,10 +66,11 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (newText.trim().isEmpty() || newText.trim().length() >= 3) {
+                String txt = newText.trim();
+                if (txt.isEmpty() || txt.length() >= 3) {
                     if (getViewDataBinding().viewPager.getCurrentItem() == 0)
-                        checkInFragment.doSearch(newText);
-                    else checkOutFragment.doSearch(newText);
+                        checkInFragment.doSearch(txt);
+                    else checkOutFragment.doSearch(txt);
                 }
                 return false;
             }
@@ -91,9 +92,9 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
 
     private void setUpPagerAdapter() {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        checkInFragment = CheckInFragment.newInstance(getViewDataBinding().customSearchView.searchView, listOf, size -> getViewDataBinding().tvIn.setText(getString(R.string.check_in_with_count, String.valueOf(size))));
+        checkInFragment = CheckInFragment.newInstance(listOf, size -> getViewDataBinding().tvIn.setText(getString(R.string.check_in_with_count, String.valueOf(size))));
         adapter.addFragment(checkInFragment);
-        checkOutFragment = CheckOutFragment.newInstance(getViewDataBinding().customSearchView.searchView, listOf, size -> getViewDataBinding().tvOut.setText(getString(R.string.check_out_with_count, String.valueOf(size))));
+        checkOutFragment = CheckOutFragment.newInstance(listOf, size -> getViewDataBinding().tvOut.setText(getString(R.string.check_out_with_count, String.valueOf(size))));
         adapter.addFragment(checkOutFragment);
         getViewDataBinding().viewPager.setOffscreenPageLimit(2);
 
@@ -105,12 +106,14 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
 
             @Override
             public void onPageSelected(int position) {
-                getViewDataBinding().customSearchView.searchView.setQuery("", false);
+                getViewDataBinding().customSearchView.searchView.setQuery("", true);
 
                 if (position == 0) {
+                    checkInFragment.doSearch("");
                     getViewDataBinding().tvIn.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                     getViewDataBinding().tvOut.setTextColor(getResources().getColor(R.color.black));
                 } else {
+                    checkOutFragment.doSearch("");
                     getViewDataBinding().tvIn.setTextColor(getResources().getColor(R.color.black));
                     getViewDataBinding().tvOut.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                 }

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
@@ -35,22 +34,21 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
     private GuestCheckInAdapter guestAdapter;
     private ServiceProviderCheckInAdapter serviceProviderAdapter;
     private HouseKeepingCheckInAdapter houseKeepingAdapter;
-    private SearchView searchView;
     private OnFragmentInteraction listener;
     private RecyclerViewScrollListener scrollListener;
     private int guestPage, hkPage, spPage;
     private int listOf=0;
+    private String search = "";
 
-    public static CheckInFragment newInstance(SearchView searchView, int listOf, OnFragmentInteraction listener) {
+    public static CheckInFragment newInstance(int listOf, OnFragmentInteraction listener) {
         CheckInFragment fragment = new CheckInFragment();
         Bundle args = new Bundle();
-        fragment.setData(searchView, listOf, listener);
+        fragment.setData(listOf, listener);
         fragment.setArguments(args);
         return fragment;
     }
 
-    private void setData(SearchView searchView, int listOf, OnFragmentInteraction interaction) {
-        this.searchView = searchView;
+    private void setData(int listOf, OnFragmentInteraction interaction) {
         this.listOf = listOf;
         listener = interaction;
     }
@@ -73,7 +71,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                 getViewDataBinding().recyclerView.setAdapter(serviceProviderAdapter);
                 break;
         }
-        doSearch(searchView.getQuery().toString().trim());
+        doSearch(search);
     }
 
 
@@ -113,19 +111,19 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                     case 0 :
                         setGuestAdapterLoading(true);
                         guestPage++;
-                        getViewModel().getCheckInData(guestPage, searchView.getQuery().toString().trim(), listOf);
+                        getViewModel().getCheckInData(guestPage, search, listOf);
                         break;
 
                     case 1 :
                         setHKAdapterLoading(true);
                         hkPage++;
-                        getViewModel().getCheckInData(hkPage, searchView.getQuery().toString().trim(), listOf);
+                        getViewModel().getCheckInData(hkPage, search, listOf);
                         break;
 
                     case 2 :
                         setSPAdapterLoading(true);
                         spPage++;
-                        getViewModel().getCheckInData(spPage, searchView.getQuery().toString().trim(), listOf);
+                        getViewModel().getCheckInData(spPage, search, listOf);
                         break;
 
 
@@ -197,6 +195,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
     }
 
     public void doSearch(String search) {
+        this.search = search;
         scrollListener.onDataCleared();
         switch (listOf) {
             case 0:
@@ -290,12 +289,12 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
 
     @Override
     public void refreshList() {
-        doSearch(searchView.getQuery().toString().trim());
+        doSearch(search);
     }
 
     private void updateUI() {
         getViewDataBinding().swipeToRefresh.setRefreshing(true);
-        doSearch(searchView.getQuery().toString().trim());
+        doSearch(search);
     }
 
     public interface OnFragmentInteraction{

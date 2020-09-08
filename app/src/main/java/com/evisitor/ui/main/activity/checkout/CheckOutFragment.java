@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
@@ -32,22 +31,21 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
     private GuestCheckOutAdapter guestAdapter;
     private ServiceProviderCheckOutAdapter serviceProviderAdapter;
     private HouseKeepingCheckOutAdapter houseKeepingAdapter;
-    private SearchView searchView;
     private int listOf=0;
     private OnFragmentInteraction listener;
     private RecyclerViewScrollListener scrollListener;
-    private int page=0;
+    private int guestPage, hkPage, spPage;
+    private String search = "";
 
-    public static CheckOutFragment newInstance(SearchView searchView, int listOf, OnFragmentInteraction interaction) {
+    public static CheckOutFragment newInstance(int listOf, OnFragmentInteraction interaction) {
         CheckOutFragment fragment = new CheckOutFragment();
         Bundle args = new Bundle();
-        fragment.setData(searchView, listOf, interaction);
+        fragment.setData(listOf, interaction);
         fragment.setArguments(args);
         return fragment;
     }
 
-    private void setData(SearchView searchView, int listOf, OnFragmentInteraction interaction) {
-        this.searchView = searchView;
+    private void setData(int listOf, OnFragmentInteraction interaction) {
         this.listOf = listOf;
         listener = interaction;
     }
@@ -86,7 +84,7 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
                 getViewDataBinding().recyclerView.setAdapter(serviceProviderAdapter);
                 break;
         }
-        doSearch(searchView.getQuery().toString().trim());
+        doSearch(search);
     }
 
 
@@ -109,20 +107,20 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
                 switch (listOf){
                     case 0 :
                         setGuestAdapterLoading(true);
-                        page++;
-                        getViewModel().getCheckOutData(page, searchView.getQuery().toString().trim(), listOf);
+                        guestPage++;
+                        getViewModel().getCheckOutData(guestPage, search, listOf);
                         break;
 
                     case 1 :
                         setHKAdapterLoading(true);
-                        page++;
-                        getViewModel().getCheckOutData(page, searchView.getQuery().toString().trim(), listOf);
+                        hkPage++;
+                        getViewModel().getCheckOutData(hkPage, search, listOf);
                         break;
 
                     case 2 :
                         setSPAdapterLoading(true);
-                        page++;
-                        getViewModel().getCheckOutData(page, searchView.getQuery().toString().trim(), listOf);
+                        spPage++;
+                        getViewModel().getCheckOutData(spPage, search, listOf);
                         break;
 
 
@@ -153,17 +151,32 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
     }
 
     public void doSearch(String search) {
+        this.search = search;
         scrollListener.onDataCleared();
-        guestsList.clear();
-        serviceProviderList.clear();
-        houseKeepingList.clear();
-        this.page = 0;
-        getViewModel().getCheckOutData(page, search.trim(), listOf);
+        switch (listOf) {
+            case 0:
+                guestsList.clear();
+                guestPage = 0;
+                getViewModel().getCheckOutData(guestPage, search, listOf);
+                break;
+
+            case 1:
+                houseKeepingList.clear();
+                hkPage = 0;
+                getViewModel().getCheckOutData(hkPage, search, listOf);
+                break;
+
+            case 2:
+                serviceProviderList.clear();
+                spPage = 0;
+                getViewModel().getCheckOutData(spPage, search, listOf);
+                break;
+        }
     }
 
     @Override
     public void onExpectedGuestSuccess(List<Guests> tmpGuestsList) {
-        if (page == 0) guestsList.clear();
+        if (guestPage == 0) guestsList.clear();
 
         guestsList.addAll(tmpGuestsList);
         guestAdapter.notifyDataSetChanged();
@@ -173,7 +186,7 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
 
     @Override
     public void onExpectedHKSuccess(List<HouseKeeping> tmpHouseKeepingList) {
-        if (page == 0) houseKeepingList.clear();
+        if (hkPage == 0) houseKeepingList.clear();
 
         houseKeepingList.addAll(tmpHouseKeepingList);
         houseKeepingAdapter.notifyDataSetChanged();
@@ -182,7 +195,7 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
 
     @Override
     public void onExpectedSPSuccess(List<ServiceProvider> tmpSPList) {
-        if (page == 0) serviceProviderList.clear();
+        if (spPage == 0) serviceProviderList.clear();
 
         serviceProviderList.addAll(tmpSPList);
         serviceProviderAdapter.notifyDataSetChanged();
@@ -231,12 +244,12 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
 
     @Override
     public void refreshList() {
-        doSearch(searchView.getQuery().toString().trim());
+        doSearch(search);
     }
 
     private void updateUI() {
         getViewDataBinding().swipeToRefresh.setRefreshing(true);
-        doSearch(searchView.getQuery().toString().trim());
+        doSearch(search);
     }
 
     public interface OnFragmentInteraction{

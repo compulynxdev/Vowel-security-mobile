@@ -155,6 +155,7 @@ public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBin
         getViewDataBinding().header.imgSearch.setVisibility(View.VISIBLE);
         getViewDataBinding().header.imgSearch.setOnClickListener(this);
         setupSearchSetting(getViewDataBinding().customSearchView.searchView);
+
         getViewDataBinding().customSearchView.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
