@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:visibility="gone"
-            android:id="@+id/tv_profile"/>
+            android:id="@+id/tv_flat"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -71,14 +71,14 @@
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:visibility="gone"
-            android:id="@+id/tv_reason"/>
+            android:id="@+id/tv_check"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:visibility="gone"
-            android:id="@+id/tv_type"/>
+            android:id="@+id/tv_vehicle"/>
 
     </LinearLayout>
 

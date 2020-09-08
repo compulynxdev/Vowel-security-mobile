@@ -1,13 +1,11 @@
 package com.evisitor.ui.main.home.blacklist;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.evisitor.R;
@@ -24,6 +22,7 @@ public class BlackListVisitorActivity extends BaseActivity<ActivityBlackListVisi
     private List<BlackListVisitorResponse.ContentBean> list;
     private RecyclerViewScrollListener scrollListener;
     private int page;
+    private String search = "";
     private BlackListAdapter adapter;
 
     public static Intent getStartIntent(Context context) {
@@ -52,96 +51,87 @@ public class BlackListVisitorActivity extends BaseActivity<ActivityBlackListVisi
         TextView tvTitle = findViewById(R.id.tv_title);
         tvTitle.setText(R.string.title_blacklisted_visitor);
 
-        ImageView imgSearch = findViewById(R.id.img_search);
-        imgSearch.setVisibility(View.VISIBLE);
-        imgSearch.setOnClickListener(v -> {
-            hideKeyboard();
-            getViewDataBinding().searchBar.setVisibility(getViewDataBinding().searchBar.getVisibility() == View.GONE
-                    ? View.VISIBLE : View.GONE);
-
-            if (!getViewDataBinding().etSearch.getText().toString().trim().isEmpty()) {
-                getViewDataBinding().etSearch.setText("");
-            }
-        });
-
         ImageView imgBack = findViewById(R.id.img_back);
         imgBack.setVisibility(View.VISIBLE);
         imgBack.setOnClickListener(v -> onBackPressed());
 
-        setUpSearch();
-        setUpAdapter();
-
         scrollListener = new RecyclerViewScrollListener() {
             @Override
             public void onLoadMore() {
-                adapter.showLoading(true);
+                setAdapterLoading(true);
                 adapter.notifyDataSetChanged();
                 page++;
-                doSearch(getViewDataBinding().etSearch.getText().toString().trim());
+                doSearch(search);
             }
         };
         getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
+        setUpSearch();
+        setUpAdapter();
+
+        getViewDataBinding().swipeToRefresh.setOnRefreshListener(this::updateUI);
+        getViewDataBinding().swipeToRefresh.setColorSchemeResources(R.color.colorPrimary);
+
         updateUI();
 
-        getViewModel().getBlackListData().observe(this, contentBeans -> {
-            adapter.showLoading(false);
-            adapter.notifyDataSetChanged();
 
-            if (page==0) this.list.clear();
-
-            this.list.addAll(contentBeans);
-            adapter.notifyDataSetChanged();
-        });
     }
 
     private void setUpAdapter() {
         list = new ArrayList<>();
         adapter = new BlackListAdapter(list);
+        adapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(adapter);
+        updateUI();
     }
 
     private void setUpSearch() {
-        getViewDataBinding().etSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        getViewDataBinding().header.imgSearch.setVisibility(View.VISIBLE);
+        getViewDataBinding().header.imgSearch.setOnClickListener(v -> {
+            hideKeyboard();
+            getViewDataBinding().customSearchView.llSearchBar.setVisibility(getViewDataBinding().customSearchView.llSearchBar.getVisibility() == View.GONE
+                    ? View.VISIBLE : View.GONE);
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.toString().isEmpty() || s.toString().length() >= 2) {
-                    doSearch(s.toString());
-                }
-            }
+            getViewDataBinding().customSearchView.searchView.setQuery("", false);
         });
-
-        getViewDataBinding().etSearch.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                hideKeyboard();
-                return true;
+        setupSearchSetting(getViewDataBinding().customSearchView.searchView);
+        getViewDataBinding().customSearchView.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
             }
-            return false;
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (newText.trim().isEmpty() || newText.trim().length() >= 3) {
+                        doSearch(newText);
+                }
+                return false;
+            }
         });
     }
 
     private void updateUI() {
         getViewDataBinding().swipeToRefresh.setRefreshing(true);
-        doSearch(getViewDataBinding().etSearch.getText().toString());
+        doSearch(search);
     }
 
     @Override
     public void hideSwipeToRefresh() {
+        setAdapterLoading(false);
         getViewDataBinding().swipeToRefresh.setRefreshing(false);
     }
 
     @Override
     public void refreshList() {
-        doSearch(getViewDataBinding().etSearch.getText().toString());
+        doSearch(search);
+    }
+
+    @Override
+    public void OnSuccessBlackList(List<BlackListVisitorResponse.ContentBean> beans) {
+            if (page==0) this.list.clear();
+
+            this.list.addAll(beans);
+            adapter.notifyDataSetChanged();
     }
 
     private void doSearch(String search) {
@@ -149,5 +139,12 @@ public class BlackListVisitorActivity extends BaseActivity<ActivityBlackListVisi
         this.list.clear();
         this.page = 0;
         getViewModel().getData(page,search);
+    }
+
+    private void setAdapterLoading(boolean isShowLoader) {
+        if (adapter != null) {
+            adapter.showLoading(isShowLoader);
+            adapter.notifyDataSetChanged();
+        }
     }
 }

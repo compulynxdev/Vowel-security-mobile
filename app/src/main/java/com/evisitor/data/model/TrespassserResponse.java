@@ -2,8 +2,7 @@ package com.evisitor.data.model;
 
 import java.util.List;
 
-public class BlackListVisitorResponse {
-
+public class TrespassserResponse {
     /**
      * content : [{"country":null,"address":null,"documentType":null,"workingDays":["sunday","monday"],"profile":"Driver","fullName":"SURESH RAINA","employment":"self","timeOut":"18:20:02","createdDate":"2020-09-01T08:54:18Z","flatNo":"zxcvbdcfv","createdBy":"superadmin","residentName":"zxdcfvb","documentId":null,"flatId":2,"residentId":1,"id":8,"email":null,"timeIn":"09:20:02","contactNo":"89655552633"}]
      * pageable : {"sort":{"sorted":true,"unsorted":false,"empty":false},"offset":0,"pageNumber":0,"pageSize":10,"unpaged":false,"paged":true}
@@ -258,67 +257,32 @@ public class BlackListVisitorResponse {
 
     public static class ContentBean {
         /**
-         "reason" : "Suspected Guest",
-         "lastModifiedDate" : "2020-09-07T04:49:18Z",
-         "lastModifiedBy" : "account",
-         "profile" : "RANDOM_VISITOR",
-         "fullName" : "raja",
-         "type" : "GUEST",
-         "createdDate" : "2020-09-04T04:43:27Z",
+         "createdDate" : "2020-09-07T04:49:18Z",
+         "fullName" : "account",
+         "flatNo" : "200",
+         "checkOutTime" : "RANDOM_VISITOR",
+         "gender" : "Male",
+         "createdBy" : "GUEST",
+         "checkInTime" : "2020-09-04T04:43:27Z",
          "createdBy" : "account",
          "documentId" : "121212",
          "id" : 1,
-         "guestId" : 3,
-         "status" : true,
+         "enteredVehicleNo" : 1,
+         "hostCheckoutTime" : 1,
          "contactNo" : "978784664"*/
 
 
-        private String reason;
-        private String lastModifiedDate;
-        private String lastModifiedBy;
-        private String profile;
         private String fullName;
-        private String type;
+        private String flatNo;
         private String createdDate;
         private String createdBy;
-        private String residentName;
+        private String hostCheckoutTime;
+        private String checkInTime;
         private String documentId;
-        private String guestId;
-        private boolean status;
+        private String gender;
+        private String enteredVehicleNo;
         private String contactNo;
         private int id;
-
-        public String getReason() {
-            return reason;
-        }
-
-        public void setReason(String reason) {
-            this.reason = reason;
-        }
-
-        public String getLastModifiedDate() {
-            return lastModifiedDate;
-        }
-
-        public void setLastModifiedDate(String lastModifiedDate) {
-            this.lastModifiedDate = lastModifiedDate;
-        }
-
-        public String getLastModifiedBy() {
-            return lastModifiedBy;
-        }
-
-        public void setLastModifiedBy(String lastModifiedBy) {
-            this.lastModifiedBy = lastModifiedBy;
-        }
-
-        public String getProfile() {
-            return profile;
-        }
-
-        public void setProfile(String profile) {
-            this.profile = profile;
-        }
 
         public String getFullName() {
             return fullName;
@@ -328,12 +292,12 @@ public class BlackListVisitorResponse {
             this.fullName = fullName;
         }
 
-        public String getType() {
-            return type;
+        public String getFlatNo() {
+            return flatNo;
         }
 
-        public void setType(String type) {
-            this.type = type;
+        public void setFlatNo(String flatNo) {
+            this.flatNo = flatNo;
         }
 
         public String getCreatedDate() {
@@ -352,12 +316,20 @@ public class BlackListVisitorResponse {
             this.createdBy = createdBy;
         }
 
-        public String getResidentName() {
-            return residentName;
+        public String getHostCheckoutTime() {
+            return hostCheckoutTime;
         }
 
-        public void setResidentName(String residentName) {
-            this.residentName = residentName;
+        public void setHostCheckoutTime(String hostCheckoutTime) {
+            this.hostCheckoutTime = hostCheckoutTime;
+        }
+
+        public String getCheckInTime() {
+            return checkInTime;
+        }
+
+        public void setCheckInTime(String checkInTime) {
+            this.checkInTime = checkInTime;
         }
 
         public String getDocumentId() {
@@ -368,20 +340,20 @@ public class BlackListVisitorResponse {
             this.documentId = documentId;
         }
 
-        public String getGuestId() {
-            return guestId;
+        public String getGender() {
+            return gender;
         }
 
-        public void setGuestId(String guestId) {
-            this.guestId = guestId;
+        public void setGender(String gender) {
+            this.gender = gender;
         }
 
-        public boolean isStatus() {
-            return status;
+        public String getEnteredVehicleNo() {
+            return enteredVehicleNo;
         }
 
-        public void setStatus(boolean status) {
-            this.status = status;
+        public void setEnteredVehicleNo(String enteredVehicleNo) {
+            this.enteredVehicleNo = enteredVehicleNo;
         }
 
         public String getContactNo() {
