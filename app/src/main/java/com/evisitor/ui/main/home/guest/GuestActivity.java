@@ -91,8 +91,9 @@ public class GuestActivity extends BaseActivity<ActivityExpectedGuestBinding, Gu
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (newText.trim().isEmpty() || newText.trim().length() >= 3) {
-                    guestFragment.setSearch(newText);
+                String txt = newText.trim();
+                if (txt.isEmpty() || txt.length() >= 3) {
+                    guestFragment.setSearch(txt);
                 }
                 return false;
             }

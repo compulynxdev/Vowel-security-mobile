@@ -1,13 +1,10 @@
 package com.evisitor.ui.main.activity.checkin;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
@@ -38,27 +35,27 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
     private GuestCheckInAdapter guestAdapter;
     private ServiceProviderCheckInAdapter serviceProviderAdapter;
     private HouseKeepingCheckInAdapter houseKeepingAdapter;
-    private EditText etSearch;
+    private SearchView searchView;
     private OnFragmentInteraction listener;
     private RecyclerViewScrollListener scrollListener;
-    private int page;
+    private int guestPage, hkPage, spPage;
     private int listOf=0;
 
-     public static CheckInFragment newInstance(EditText et_Search,int listOf,OnFragmentInteraction listener) {
+    public static CheckInFragment newInstance(SearchView searchView, int listOf, OnFragmentInteraction listener) {
         CheckInFragment fragment = new CheckInFragment();
         Bundle args = new Bundle();
-         fragment.setData(et_Search, listOf,listener);
+        fragment.setData(searchView, listOf, listener);
         fragment.setArguments(args);
         return fragment;
     }
 
-    private void setData(EditText et_Search, int listOf, OnFragmentInteraction interaction){
-        etSearch=et_Search;
+    private void setData(SearchView searchView, int listOf, OnFragmentInteraction interaction) {
+        this.searchView = searchView;
         this.listOf = listOf;
         listener = interaction;
     }
 
-    public void setList(int listOf){
+    public void setCheckInList(int listOf) {
         this.listOf = listOf;
         switch (listOf){
             //guest
@@ -66,16 +63,17 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                 getViewDataBinding().recyclerView.setAdapter(guestAdapter);
                 break;
 
-                //house
+            //house
             case 1:
                 getViewDataBinding().recyclerView.setAdapter(houseKeepingAdapter);
                 break;
-                //service
+
+            //service
             case 2:
                 getViewDataBinding().recyclerView.setAdapter(serviceProviderAdapter);
                 break;
         }
-        doSearch(etSearch.getText().toString());
+        doSearch(searchView.getQuery().toString().trim());
     }
 
 
@@ -108,33 +106,26 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
         setUpServiceProviderAdapter();
 
         setUpHouseKeeperAdapter();
-
-        getViewDataBinding().swipeToRefresh.setOnRefreshListener(this::updateUI);
-        getViewDataBinding().swipeToRefresh.setColorSchemeResources(R.color.colorPrimary);
-
-
-        setUpSearch();
-
         scrollListener = new RecyclerViewScrollListener() {
             @Override
             public void onLoadMore() {
                 switch (listOf){
                     case 0 :
                         setGuestAdapterLoading(true);
-                        page++;
-                        getViewModel().getGuestListData(page, etSearch.getText().toString().trim(),listOf);
+                        guestPage++;
+                        getViewModel().getCheckInData(guestPage, searchView.getQuery().toString().trim(), listOf);
                         break;
 
                     case 1 :
                         setHKAdapterLoading(true);
-                        page++;
-                        getViewModel().getGuestListData(page, etSearch.getText().toString().trim(),listOf);
+                        hkPage++;
+                        getViewModel().getCheckInData(hkPage, searchView.getQuery().toString().trim(), listOf);
                         break;
 
                     case 2 :
                         setSPAdapterLoading(true);
-                        page++;
-                        getViewModel().getGuestListData(page, etSearch.getText().toString().trim(),listOf);
+                        spPage++;
+                        getViewModel().getCheckInData(spPage, searchView.getQuery().toString().trim(), listOf);
                         break;
 
 
@@ -143,6 +134,8 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
         };
         getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
 
+        getViewDataBinding().swipeToRefresh.setOnRefreshListener(this::updateUI);
+        getViewDataBinding().swipeToRefresh.setColorSchemeResources(R.color.colorPrimary);
         updateUI();
     }
 
@@ -156,7 +149,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                 else getViewModel().checkOut(1);
             }).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
         });
-     }
+    }
 
     private void setUpServiceProviderAdapter() {
         serviceProviderAdapter = new ServiceProviderCheckInAdapter(serviceProviderList, getBaseActivity(), serviceProvider -> {
@@ -168,7 +161,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                 else getViewModel().checkOut(2);
             }).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
         });
-     }
+    }
 
     private void setUpGuestAdapter() {
         guestAdapter = new GuestCheckInAdapter(guestsList, getBaseActivity(), pos -> {
@@ -203,47 +196,32 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                 }).show(getFragmentManager());
     }
 
-    private void setUpSearch() {
-        etSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.toString().isEmpty() || s.toString().length() >= 2) {
-                    doSearch(s.toString());
-                }
-            }
-        });
-
-        etSearch.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                hideKeyboard();
-                return true;
-            }
-            return false;
-        });
-    }
-
-    private void doSearch(String search) {
+    public void doSearch(String search) {
         scrollListener.onDataCleared();
-        guestsList.clear();
-        serviceProviderList.clear();
-        houseKeepingList.clear();
-        this.page = 0;
-        getViewModel().getGuestListData(page, search.trim(),listOf);
+        switch (listOf) {
+            case 0:
+                guestsList.clear();
+                guestPage = 0;
+                getViewModel().getCheckInData(guestPage, search, listOf);
+                break;
+
+            case 1:
+                houseKeepingList.clear();
+                hkPage = 0;
+                getViewModel().getCheckInData(hkPage, search, listOf);
+                break;
+
+            case 2:
+                serviceProviderList.clear();
+                spPage = 0;
+                getViewModel().getCheckInData(spPage, search, listOf);
+                break;
+        }
     }
 
     @Override
     public void onExpectedGuestSuccess(List<Guests> tmpGuestsList) {
-        if (page == 0) guestsList.clear();
+        if (guestPage == 0) guestsList.clear();
 
         guestsList.addAll(tmpGuestsList);
         guestAdapter.notifyDataSetChanged();
@@ -253,7 +231,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
 
     @Override
     public void onExpectedHKSuccess(List<HouseKeeping> tmpHouseKeepingList) {
-        if (page == 0) houseKeepingList.clear();
+        if (hkPage == 0) houseKeepingList.clear();
 
         houseKeepingList.addAll(tmpHouseKeepingList);
         houseKeepingAdapter.notifyDataSetChanged();
@@ -263,7 +241,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
 
     @Override
     public void onExpectedSPSuccess(List<ServiceProvider> tmpSPList) {
-        if (page == 0) serviceProviderList.clear();
+        if (spPage == 0) serviceProviderList.clear();
 
         serviceProviderList.addAll(tmpSPList);
         serviceProviderAdapter.notifyDataSetChanged();
@@ -312,15 +290,15 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
 
     @Override
     public void refreshList() {
-        doSearch(etSearch.getText().toString());
+        doSearch(searchView.getQuery().toString().trim());
     }
 
     private void updateUI() {
         getViewDataBinding().swipeToRefresh.setRefreshing(true);
-        doSearch(etSearch.getText().toString());
+        doSearch(searchView.getQuery().toString().trim());
     }
 
     public interface OnFragmentInteraction{
-         void totalCount(int size);
+        void totalCount(int size);
     }
 }

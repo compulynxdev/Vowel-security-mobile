@@ -68,9 +68,10 @@ public class SPActivity extends BaseActivity<ActivitySpBinding, SPViewModel> {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (newText.trim().isEmpty() || newText.trim().length() >= 3) {
-                    fragment.setSearch(newText);
+                String txt = newText.trim();
 
+                if (txt.isEmpty() || txt.length() >= 3) {
+                    fragment.setSearch(txt);
                 }
                 return false;
             }

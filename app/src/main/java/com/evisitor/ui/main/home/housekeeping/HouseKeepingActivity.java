@@ -107,11 +107,12 @@ public class HouseKeepingActivity extends BaseActivity<ActivityHkBinding, HKView
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (newText.trim().isEmpty() || newText.trim().length() >= 3) {
+                String txt = newText.trim();
+                if (txt.isEmpty() || txt.length() >= 3) {
                     if (getViewDataBinding().viewPager.getCurrentItem() == 0)
-                        expectedHKFragment.setSearch(newText);
+                        expectedHKFragment.setSearch(txt);
                     else
-                        registeredHKFragment.setSearch(newText);
+                        registeredHKFragment.setSearch(txt);
                 }
                 return false;
             }

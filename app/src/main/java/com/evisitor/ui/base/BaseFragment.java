@@ -10,6 +10,7 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
+import androidx.appcompat.widget.SearchView;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.DialogFragment;
@@ -196,6 +197,11 @@ public abstract class BaseFragment <T extends ViewDataBinding, V extends BaseVie
     public void handleApiError(ResponseBody response) {
         if (mActivity != null)
             mActivity.handleApiError(response);
+    }
+
+    public void setupSearchSetting(SearchView searchView) {
+        if (mActivity != null)
+            mActivity.setupSearchSetting(searchView);
     }
 
     public interface Callback {
