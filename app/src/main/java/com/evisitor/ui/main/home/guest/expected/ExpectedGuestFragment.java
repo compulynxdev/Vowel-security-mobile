@@ -138,7 +138,8 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
                 .setPositiveBtnLabel(getString(R.string.approve_by_call))
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
-                    showCallDialog();
+                    if (isNetworkConnected(true))
+                        showCallDialog();
                 });
 
 
@@ -151,7 +152,8 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
                     .setNegativeBtnLabel(getString(R.string.send_notification))
                     .setOnNegativeClickListener(dialog1 -> {
                         dialog1.dismiss();
-                        getViewModel().sendNotification();
+                        if (isNetworkConnected(true))
+                            getViewModel().sendNotification();
                     })
                     .show(getFragmentManager());
         }
@@ -171,7 +173,8 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
                 })
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
-                    getViewModel().approveByCall();
+                    if (isNetworkConnected(true))
+                        getViewModel().approveByCall();
                 }).show(getFragmentManager());
     }
 

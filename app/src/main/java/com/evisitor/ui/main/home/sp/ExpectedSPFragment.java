@@ -142,6 +142,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                 .setPositiveBtnLabel(getString(R.string.approve_by_call))
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
+                    if (isNetworkConnected(true))
                     showCallDialog();
                 });
 
@@ -155,6 +156,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                     .setNegativeBtnLabel(getString(R.string.send_notification))
                     .setOnNegativeClickListener(dialog1 -> {
                         dialog1.dismiss();
+                        if (isNetworkConnected(true))
                         getViewModel().sendNotification();
                     })
                     .show(getFragmentManager());
@@ -175,6 +177,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                 })
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
+                    if (isNetworkConnected(true))
                     getViewModel().approveByCall();
                 }).show(getFragmentManager());
     }

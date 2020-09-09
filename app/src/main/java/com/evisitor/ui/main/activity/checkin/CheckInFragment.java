@@ -144,7 +144,10 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                 visitorProfileDialog.dismiss();
                 if (houseKeeping.isCheckOutFeature() && !houseKeeping.isHostCheckOut())
                     showCallDialog(1);
-                else getViewModel().checkOut(1);
+                else {
+                    if (isNetworkConnected(true))
+                    getViewModel().checkOut(1);
+                }
             }).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
         });
     }
@@ -190,6 +193,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                 })
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
+                    if (isNetworkConnected(true))
                     getViewModel().checkOut(type);
                 }).show(getFragmentManager());
     }

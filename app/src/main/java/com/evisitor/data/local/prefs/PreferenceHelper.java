@@ -52,4 +52,8 @@ public interface PreferenceHelper {
 
     void setIdentifyFeature(boolean identityFeature);
 
+    String getLevelName();
+
+    void setLevelName(String levelName);
+
 }

@@ -33,6 +33,7 @@ public class ExpectedSpViewModel extends BaseCheckInOutViewModel<ExpectedSPNavig
     }
 
     void getSpListData(int page, String search) {
+        if (getNavigator().isNetworkConnected()){
         Map<String, String> map = new HashMap<>();
         map.put("accountId", getDataManager().getAccountId());
         if (!search.isEmpty())
@@ -68,6 +69,12 @@ public class ExpectedSpViewModel extends BaseCheckInOutViewModel<ExpectedSPNavig
                 getNavigator().handleApiFailure(t);
             }
         });
+        }else {
+            getNavigator().hideSwipeToRefresh();
+            getNavigator().hideLoading();
+            getNavigator().showAlert(getNavigator().getContext().getString(R.string.alert),getNavigator().getContext().getString(R.string.alert_internet));
+        }
+
     }
 
     List<VisitorProfileBean> setClickVisitorDetail(ServiceProvider spBean) {
