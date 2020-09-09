@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.evisitor.R;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.ui.base.BaseViewHolder;
@@ -107,12 +109,26 @@ public class ServiceProviderCheckOutAdapter extends RecyclerView.Adapter<BaseVie
                 houseNo.setText(context.getString(R.string.data_house, bean.getHouseNo()));
                 host.setText(context.getString(R.string.data_host,bean.getHost()));
 
-            }
-            else{
+            } else {
                 houseNo.setVisibility(View.GONE);
                 houseNo.setText("");
                 host.setText(context.getString(R.string.data_host,bean.getCreatedBy()));
 
+            }
+
+            if (bean.getImageUrl().isEmpty()) {
+                Glide.with(imgVisitor.getContext())
+                        .load(R.drawable.ic_person)
+                        .centerCrop()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(imgVisitor);
+            } else {
+                Glide.with(imgVisitor.getContext())
+                        .load(bean.getImageUrl())
+                        .centerCrop()
+                        .placeholder(R.drawable.ic_person)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(imgVisitor);
             }
         }
     }

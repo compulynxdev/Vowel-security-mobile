@@ -33,7 +33,6 @@ public class HomeViewModel extends BaseViewModel<BaseNavigator> {
     private MutableLiveData<List<HomeBean>> homeListData = new MutableLiveData<>();
     private List<HomeBean> list = new ArrayList<>();
 
-
     public HomeViewModel(DataManager dataManager) {
         super(dataManager);
     }

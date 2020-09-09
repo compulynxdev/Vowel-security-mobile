@@ -26,4 +26,6 @@ public interface DataManager extends ApiHelper, PreferenceHelper {
     HouseKeepingResponse.ContentBean getHouseKeeping();
 
     void setHouseKeeping(HouseKeepingResponse.ContentBean houseKeeping);
+
+    String getImageBaseURL();
 }

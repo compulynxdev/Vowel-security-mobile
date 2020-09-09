@@ -13,9 +13,20 @@ android {
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), "proguard-rules.pro"
+
+            //Live url
+            buildConfigField("String", "BASE_URL", "\"http://103.21.52.30:8085/\"")
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            //Live url
+            buildConfigField("String", "BASE_URL", "\"http://103.21.52.30:8085/\"")
         }
     }
 

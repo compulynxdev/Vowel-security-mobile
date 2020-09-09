@@ -1,11 +1,13 @@
 package com.evisitor.data.remote;
 
+import com.evisitor.BuildConfig;
+
 /**
  * Created by Priyanka Joshi on 14-07-2020.
  */
 class WebServices {
 
-    static final String BASE_URL = "http://103.21.52.30:8085/e-visitor-system/api/";
+    static final String BASE_URL = BuildConfig.BASE_URL + "e-visitor-system/api/";
     //static final String BASE_URL = "http://192.168.43.58:8085/api/";
 
     static final String LOGIN_AUTH = "authenticate";

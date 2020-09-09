@@ -76,8 +76,8 @@ public class HouseKeeping {
     @SerializedName("notificationStatus")
     private boolean notificationStatus;
 
-    //@SerializedName("image")
-    private String url;
+    @SerializedName("image")
+    private String imageUrl;
 
     @SerializedName("expectedVehicleNo")
     private String expectedVehicleNo;
@@ -85,6 +85,13 @@ public class HouseKeeping {
     @SerializedName("enteredVehicleNo")
     private String enteredVehicleNo = "";
 
+    public String getImageUrl() {
+        return imageUrl == null ? "" : imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     public String getName() {
         return name;
@@ -196,14 +203,6 @@ public class HouseKeeping {
 
     public void setFlatId(String flatId) {
         this.flatId = flatId;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public boolean isNotificationStatus() {

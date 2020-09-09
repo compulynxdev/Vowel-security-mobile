@@ -1,5 +1,7 @@
 package com.evisitor.data.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class HouseKeepingResponse {
@@ -279,6 +281,8 @@ public class HouseKeepingResponse {
          * contactNo : 89655552633
          */
 
+        @SerializedName("image")
+        private String imageUrl;
         private String country;
         private String address;
         private String documentType;
@@ -301,6 +305,14 @@ public class HouseKeepingResponse {
         private String expectedVehicleNo;
         private String enteredVehicleNo = "";
         private List<String> workingDays;
+
+        public String getImageUrl() {
+            return imageUrl == null ? "" : imageUrl;
+        }
+
+        public void setImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
+        }
 
         public String getCountry() {
             return country;

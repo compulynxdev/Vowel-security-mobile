@@ -44,8 +44,8 @@ public class ServiceProvider {
     @SerializedName("id")
     private String serviceProviderId;
 
-    //@SerializedName("image")
-    private String url;
+    @SerializedName("image")
+    private String imageUrl;
 
     @SerializedName("createdBy")
     private String createdBy;
@@ -181,12 +181,12 @@ public class ServiceProvider {
         this.serviceProviderId = serviceProviderId;
     }
 
-    public String getUrl() {
-        return url;
+    public String getImageUrl() {
+        return imageUrl == null ? "" : imageUrl;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getResidentId() {

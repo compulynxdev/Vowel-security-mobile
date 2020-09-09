@@ -70,8 +70,8 @@ public class Guests {
     @SerializedName("isHostCheckOut")
     private boolean isHostCheckOut;
 
-    //@SerializedName("image")
-    private String url;
+    @SerializedName("image")
+    private String imageUrl;
 
     public boolean isCheckOutFeature() {
         return checkOutFeature;
@@ -154,12 +154,12 @@ public class Guests {
         this.guestId = guestId;
     }
 
-    public String getUrl() {
-        return url;
+    public String getImageUrl() {
+        return imageUrl == null ? "" : imageUrl;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getName() {

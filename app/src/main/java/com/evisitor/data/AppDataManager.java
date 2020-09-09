@@ -3,6 +3,7 @@ package com.evisitor.data;
 import android.app.Activity;
 import android.content.Context;
 
+import com.evisitor.BuildConfig;
 import com.evisitor.data.local.prefs.AppPreferenceHelper;
 import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.HouseKeepingResponse;
@@ -84,6 +85,11 @@ public class AppDataManager implements DataManager {
     @Override
     public void setHouseKeeping(HouseKeepingResponse.ContentBean houseKeeping) {
         this.houseKeeping = houseKeeping;
+    }
+
+    @Override
+    public String getImageBaseURL() {
+        return BuildConfig.BASE_URL + "images/";
     }
 
     @Override
