@@ -17,6 +17,7 @@ import com.evisitor.ui.main.home.guest.GuestActivity;
 import com.evisitor.ui.main.home.housekeeping.HouseKeepingActivity;
 import com.evisitor.ui.main.home.sp.SPActivity;
 import com.evisitor.ui.main.home.total.TotalVisitorsActivity;
+import com.evisitor.ui.main.home.trespasser.TrespasserActivity;
 
 public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel> implements BaseNavigator {
 
@@ -77,7 +78,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
                         break;
 
                     case HomeViewModel.TRESPASSER_VIEW:
-                        showToast(R.string.under_development);
+                        startActivity(TrespasserActivity.getStartIntent(getContext()));
                         break;
                 }
             });

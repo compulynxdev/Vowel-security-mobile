@@ -21,6 +21,7 @@ public final class AppConstants {
     public static final String HOUSE_HELP = "HOUSE_HELP";
     public static final String EXPECTED = "expected";
     public static final String BLACK = "black";
+    public static final String TODAY = "today";
 
     public static String CONTENT_TYPE_TEXT = "text/plain";
     public static String CONTENT_TYPE_JSON="application/json; charset=utf-8";

@@ -114,4 +114,14 @@ public class AppApiHelper implements ApiHelper {
     public Call<ResponseBody> doGetBlackListVisitors(String authToken, Map<String, String> partMap) {
         return getApiInterface().doGetBlackListVisitors(authToken, partMap);
     }
+
+    @Override
+    public Call<ResponseBody> doGetAllTrespasserGuest(String authToken, Map<String, String> partMap) {
+        return getApiInterface().doGetAllTrespasserGuest(authToken, partMap);
+    }
+
+    @Override
+    public Call<ResponseBody> doGetAllTrespasserSP(String authToken, Map<String, String> partMap) {
+        return getApiInterface().doGetAllTrespasserSP(authToken, partMap);
+    }
 }
