@@ -4,7 +4,13 @@ public class HomeBean {
     private int pos;
     private int icon;
     private String title;
-    private String count;
+    private String count = "0";
+
+    public HomeBean(int pos, int icon, String title) {
+        this.pos = pos;
+        this.icon = icon;
+        this.title = title;
+    }
 
     public HomeBean(int pos, int icon, String title, String count) {
         this.pos = pos;
@@ -38,7 +44,7 @@ public class HomeBean {
     }
 
     public String getCount() {
-        return count;
+        return count == null || count.isEmpty() ? "0" : count;
     }
 
     public void setCount(String count) {

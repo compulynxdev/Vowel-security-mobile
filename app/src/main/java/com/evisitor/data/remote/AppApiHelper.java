@@ -114,4 +114,9 @@ public class AppApiHelper implements ApiHelper {
     public Call<ResponseBody> doGetBlackListVisitors(String authToken, Map<String, String> partMap) {
         return getApiInterface().doGetBlackListVisitors(authToken, partMap);
     }
+
+    @Override
+    public Call<ResponseBody> doGetVisitorCount(String authToken, Map<String, String> partMap) {
+        return getApiInterface().doGetVisitorCount(authToken, partMap);
+    }
 }

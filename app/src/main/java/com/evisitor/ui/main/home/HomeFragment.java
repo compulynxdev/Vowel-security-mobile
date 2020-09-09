@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
+import com.evisitor.data.model.HomeBean;
 import com.evisitor.databinding.FragmentHomeBinding;
 import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.base.BaseNavigator;
@@ -18,7 +19,12 @@ import com.evisitor.ui.main.home.housekeeping.HouseKeepingActivity;
 import com.evisitor.ui.main.home.sp.SPActivity;
 import com.evisitor.ui.main.home.total.TotalVisitorsActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel> implements BaseNavigator {
+
+    private List<HomeBean> homeList;
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -53,35 +59,46 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     }
 
     private void setupAdapter() {
-        getViewModel().getHomeListData().observe(this, homeBeansList -> {
-            HomeAdapter homeAdapter = new HomeAdapter(homeBeansList, pos -> {
-                switch (homeBeansList.get(pos).getPos()) {
-                    case HomeViewModel.GUEST_VIEW:
-                        startActivity(GuestActivity.getStartIntent(getContext()));
-                        break;
+        homeList = new ArrayList<>();
+        HomeAdapter homeAdapter = new HomeAdapter(homeList, pos -> {
+            switch (homeList.get(pos).getPos()) {
+                case HomeViewModel.GUEST_VIEW:
+                    startActivity(GuestActivity.getStartIntent(getContext()));
+                    break;
 
-                    case HomeViewModel.HOUSE_KEEPING_VIEW:
-                        startActivity(HouseKeepingActivity.getStartIntent(getContext()));
-                        break;
+                case HomeViewModel.HOUSE_KEEPING_VIEW:
+                    startActivity(HouseKeepingActivity.getStartIntent(getContext()));
+                    break;
 
-                    case HomeViewModel.SERVICE_PROVIDER_VIEW:
-                        startActivity(SPActivity.getStartIntent(getContext()));
-                        break;
+                case HomeViewModel.SERVICE_PROVIDER_VIEW:
+                    startActivity(SPActivity.getStartIntent(getContext()));
+                    break;
 
-                    case HomeViewModel.TOTAL_VISITOR_VIEW:
-                        startActivity(TotalVisitorsActivity.getStartIntent(getContext()));
-                        break;
+                case HomeViewModel.TOTAL_VISITOR_VIEW:
+                    startActivity(TotalVisitorsActivity.getStartIntent(getContext()));
+                    break;
 
-                    case HomeViewModel.BLACKLISTED_VISITOR_VIEW:
-                        startActivity(BlackListVisitorActivity.getStartIntent(getContext()));
-                        break;
+                case HomeViewModel.BLACKLISTED_VISITOR_VIEW:
+                    startActivity(BlackListVisitorActivity.getStartIntent(getContext()));
+                    break;
 
-                    case HomeViewModel.TRESPASSER_VIEW:
-                        showToast(R.string.under_development);
-                        break;
-                }
-            });
-            getViewDataBinding().recyclerView.setAdapter(homeAdapter);
+                case HomeViewModel.TRESPASSER_VIEW:
+                    showToast(R.string.under_development);
+                    break;
+
+                case HomeViewModel.FLAGGED_VIEW:
+                    showToast(R.string.under_development);
+                    break;
+            }
         });
+        getViewDataBinding().recyclerView.setAdapter(homeAdapter);
+
+        getViewModel().getHomeListData().observe(this, homeBeansList -> {
+            homeList.clear();
+            homeList.addAll(homeBeansList);
+            homeAdapter.notifyDataSetChanged();
+        });
+        getViewModel().setupHomeList();
+        //getViewModel().getVisitorCount();
     }
 }

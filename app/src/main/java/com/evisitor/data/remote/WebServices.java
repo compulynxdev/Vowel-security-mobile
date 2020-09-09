@@ -26,6 +26,7 @@ class WebServices {
     static final String GET_SERVICE_PROVIDER_CHECKIN_LIST = "serviceprovider/get_service_provider_check_in_check_out";
 
     static final String CHECKIN_CHECKOUT = "guest/check_in_check_out";
+    static final String GET_VISITOR_COUNT = "guest/get_visitor_count"; //?accountId=1
 
     private WebServices() {
     }

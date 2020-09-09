@@ -47,6 +47,7 @@
     <string name="title_expected_visitor">Expected Visitors</string>
     <string name="title_blacklisted_visitor">Blacklisted Visitors</string>
     <string name="title_trespasser_visitor">Trespasser Visitors</string>
+    <string name="title_flagged_visitor">Flagged Visitors</string>
 
     <string name="title_house_keeping2">House \Help</string>
     <string name="title_service_provider2">Service \nProvider</string>
@@ -195,7 +196,7 @@
     <string name="check_out_rejected">Check Out Rejected.</string>
     <string name="msg_check_out_call">Resident didn\'t checkout yet, Please call manually and wait for resident confirmation and select option according to resident.</string>
     <string name="data_reason">Reason : %s</string>
-    <string name="data_type">Visistor Type : %s</string>
+    <string name="data_type">Visitor Type : %s</string>
     <string name="data_host_checkout_time">Host Check Out Time : %s</string>
 
 </resources>
