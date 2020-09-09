@@ -36,12 +36,10 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
     }
 
     void doVerifyAndLogin(String userName, String password, boolean isRemember) {
-        if (getNavigator().isNetworkConnected()) {
+        if (getNavigator().isNetworkConnected(true)) {
             if (verifyInput(userName, password)) {
                 doLogin(userName, password, isRemember);
             }
-        } else {
-            getNavigator().showAlert(R.string.alert, R.string.alert_internet);
         }
     }
 

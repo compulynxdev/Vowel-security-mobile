@@ -24,6 +24,8 @@ public interface BaseNavigator {
 
     boolean isNetworkConnected();
 
+    boolean isNetworkConnected(boolean isShowMsg);
+
     void openActivityOnTokenExpire();
 
     void requestPermissionsSafely(String[] permissions, int requestCode);

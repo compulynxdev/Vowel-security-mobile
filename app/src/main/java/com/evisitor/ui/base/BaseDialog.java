@@ -124,6 +124,10 @@ public abstract class BaseDialog<T extends ViewDataBinding, V extends BaseViewMo
         return mActivity != null && mActivity.isNetworkConnected();
     }
 
+    public boolean isNetworkConnected(boolean isShowMsg) {
+        return mActivity != null && mActivity.isNetworkConnected(isShowMsg);
+    }
+
     public void openActivityOnTokenExpire() {
         if (mActivity != null) {
             mActivity.openActivityOnTokenExpire();

@@ -272,6 +272,11 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public Call<ResponseBody> doGetALLFlagVisitors(String authToken, Map<String, String> partMap) {
+        return apiHelper.doGetALLFlagVisitors(authToken, partMap);
+    }
+
+    @Override
     public Call<ResponseBody> doGetVisitorCount(String authToken, Map<String, String> partMap) {
         return apiHelper.doGetVisitorCount(authToken, partMap);
     }

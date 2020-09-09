@@ -46,7 +46,7 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
     }
 
     void doGetHouseDetails(String search) {
-        if (getNavigator().isNetworkConnected()) {
+        if (getNavigator().isNetworkConnected(true)) {
             Map<String, String> map = new HashMap<>();
             map.put("accountId", getDataManager().getAccountId());
             map.put("search", search);
@@ -75,8 +75,6 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
                     getNavigator().handleApiFailure(t);
                 }
             });
-        } else {
-            getNavigator().showAlert(R.string.alert, R.string.alert_internet);
         }
     }
 
@@ -85,7 +83,7 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
     }
 
     void doGetHostDetails(String houseId) {
-        if (getNavigator().isNetworkConnected()) {
+        if (getNavigator().isNetworkConnected(true)) {
             Map<String, String> map = new HashMap<>();
             map.put("accountId", getDataManager().getAccountId());
             map.put("flatId", houseId);
@@ -114,8 +112,6 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
                     getNavigator().handleApiFailure(t);
                 }
             });
-        } else {
-            getNavigator().showAlert(R.string.alert, R.string.alert_internet);
         }
     }
 
@@ -154,9 +150,10 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
     }
 
     void doAddGuest(Bitmap bmp_profile, String identityNo, String idType, String name, String vehicleNo, String contact, String address, String gender, String houseNumber, String houseId, String ownerId, String residentId) {
-        getNavigator().showLoading();
 
-        if (getNavigator().isNetworkConnected()) {
+        if (getNavigator().isNetworkConnected(true)) {
+            getNavigator().showLoading();
+
             JSONObject object = new JSONObject();
             try {
                 object.put("fullName", name);
@@ -204,8 +201,6 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
                     getNavigator().handleApiFailure(t);
                 }
             });
-        } else {
-            getNavigator().showAlert(R.string.alert, R.string.alert_internet);
         }
     }
 

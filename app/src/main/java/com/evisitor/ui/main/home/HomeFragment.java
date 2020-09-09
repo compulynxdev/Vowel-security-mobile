@@ -14,6 +14,7 @@ import com.evisitor.databinding.FragmentHomeBinding;
 import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.base.BaseNavigator;
 import com.evisitor.ui.main.home.blacklist.BlackListVisitorActivity;
+import com.evisitor.ui.main.home.flag.FlagVisitorActivity;
 import com.evisitor.ui.main.home.guest.GuestActivity;
 import com.evisitor.ui.main.home.housekeeping.HouseKeepingActivity;
 import com.evisitor.ui.main.home.sp.SPActivity;
@@ -88,7 +89,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
                     break;
 
                 case HomeViewModel.FLAGGED_VIEW:
-                    showToast(R.string.under_development);
+                    startActivity(FlagVisitorActivity.getStartIntent(getContext()));
                     break;
             }
         });

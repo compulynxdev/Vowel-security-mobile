@@ -126,6 +126,11 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
+    public Call<ResponseBody> doGetALLFlagVisitors(String authToken, Map<String, String> partMap) {
+        return getApiInterface().doGetALLFlagVisitors(authToken, partMap);
+    }
+
+    @Override
     public Call<ResponseBody> doGetVisitorCount(String authToken, Map<String, String> partMap) {
         return getApiInterface().doGetVisitorCount(authToken, partMap);
     }

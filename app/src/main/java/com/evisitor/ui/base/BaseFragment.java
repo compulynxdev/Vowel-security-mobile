@@ -124,6 +124,11 @@ public abstract class BaseFragment <T extends ViewDataBinding, V extends BaseVie
     }
 
     @Override
+    public boolean isNetworkConnected(boolean isShowMsg) {
+        return mActivity != null && mActivity.isNetworkConnected(isShowMsg);
+    }
+
+    @Override
     public void openActivityOnTokenExpire() {
         if (mActivity != null) {
             mActivity.openActivityOnTokenExpire();

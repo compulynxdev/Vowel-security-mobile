@@ -128,6 +128,14 @@ implements BaseFragment.Callback, BaseNavigator{
     }
 
     @Override
+    public boolean isNetworkConnected(boolean isShowMsg) {
+        boolean status = NetworkUtils.isNetworkConnected(getApplicationContext());
+
+        if (isShowMsg && !status) showAlert(R.string.app_name, R.string.alert_internet);
+        return status;
+    }
+
+    @Override
     public void openActivityOnTokenExpire() {
         getViewModel().getDataManager().logout(this);
     }

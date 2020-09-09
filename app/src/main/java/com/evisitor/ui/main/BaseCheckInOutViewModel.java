@@ -37,7 +37,7 @@ public class BaseCheckInOutViewModel<N extends BaseNavigator> extends BaseViewMo
     }
 
     protected void sendNotification(RequestBody body, ApiCallback apiCallback) {
-        if (getNavigator().isNetworkConnected()) {
+        if (getNavigator().isNetworkConnected(true)) {
             getNavigator().showLoading();
             getDataManager().doGuestSendNotification(getDataManager().getHeader(), body).enqueue(new Callback<ResponseBody>() {
                 @Override
@@ -68,7 +68,7 @@ public class BaseCheckInOutViewModel<N extends BaseNavigator> extends BaseViewMo
     }
 
     protected void doCheckInOut(RequestBody body, ApiCallback apiCallback) {
-        if (getNavigator().isNetworkConnected()) {
+        if (getNavigator().isNetworkConnected(true)) {
             getNavigator().showLoading();
             getDataManager().doCheckInCheckOut(getDataManager().getHeader(), body).enqueue(new Callback<ResponseBody>() {
                 @Override

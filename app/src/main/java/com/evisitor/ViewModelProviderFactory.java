@@ -14,6 +14,7 @@ import com.evisitor.ui.main.activity.checkin.CheckInViewModel;
 import com.evisitor.ui.main.activity.checkout.CheckOutViewModel;
 import com.evisitor.ui.main.home.HomeViewModel;
 import com.evisitor.ui.main.home.blacklist.BlackListViewModel;
+import com.evisitor.ui.main.home.flag.FlagVisitorViewModel;
 import com.evisitor.ui.main.home.guest.GuestViewModel;
 import com.evisitor.ui.main.home.guest.add.AddGuestViewModel;
 import com.evisitor.ui.main.home.guest.add.dialogs.HostPickerViewModel;
@@ -145,21 +146,24 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(RegisteredHKViewModel.class)) {
             //noinspection unchecked
             return (T) new RegisteredHKViewModel(dataManager);
-        }else if (modelClass.isAssignableFrom(TotalVisitorsViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(TotalVisitorsViewModel.class)) {
             //noinspection unchecked
             return (T) new TotalVisitorsViewModel(dataManager);
-        }else if (modelClass.isAssignableFrom(BlackListViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(BlackListViewModel.class)) {
             //noinspection unchecked
             return (T) new BlackListViewModel(dataManager);
-        }else if (modelClass.isAssignableFrom(TrespasserViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(TrespasserViewModel.class)) {
             //noinspection unchecked
             return (T) new TrespasserViewModel(dataManager);
-        }else if (modelClass.isAssignableFrom(TrespasserGuestViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(TrespasserGuestViewModel.class)) {
             //noinspection unchecked
             return (T) new TrespasserGuestViewModel(dataManager);
-        }else if (modelClass.isAssignableFrom(TrespasserSPViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(TrespasserSPViewModel.class)) {
             //noinspection unchecked
             return (T) new TrespasserSPViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(FlagVisitorViewModel.class)) {
+            //noinspection unchecked
+            return (T) new FlagVisitorViewModel(dataManager);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

@@ -5,9 +5,6 @@ package com.evisitor.data.remote;
  */
 class WebServices {
 
-    static final String GET_BLACK_LIST_VISITORS = "blacklist/get_all_blacklist";
-    static final String GET_ALL_TRESPASSER_GUEST = "guest/get_all_trespasser_guest";
-    static final String GET_ALL_TRESPSSER_SP = "serviceprovider/get_all_trespasser_service_provider";
     static final String BASE_URL = "http://103.21.52.30:8085/e-visitor-system/api/";
     //static final String BASE_URL = "http://192.168.43.58:8085/api/";
 
@@ -29,6 +26,11 @@ class WebServices {
 
     static final String CHECKIN_CHECKOUT = "guest/check_in_check_out";
     static final String GET_VISITOR_COUNT = "guest/get_visitor_count"; //?accountId=1
+
+    static final String GET_BLACK_LIST_VISITORS = "blacklist/get_all_blacklist";
+    static final String GET_ALL_TRESPASSER_GUEST = "guest/get_all_trespasser_guest";
+    static final String GET_ALL_TRESPSSER_SP = "serviceprovider/get_all_trespasser_service_provider";
+    static final String GET_ALL_FLAG_VISITORS = "flag/get_all_flag_list"; //?page=0&size=10&sortBy=&direction=&search=&accountId=1&type=flag
 
     private WebServices() {
     }
