@@ -56,6 +56,6 @@ public class FlagVisitorViewModel extends BaseViewModel<FlagVisitorNavigator> {
                     getNavigator().handleApiFailure(t);
                 }
             });
-        }
+        }else getNavigator().hideSwipeToRefresh();
     }
 }

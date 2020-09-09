@@ -138,7 +138,10 @@ public class BlackListVisitorActivity extends BaseActivity<ActivityBlackListVisi
         scrollListener.onDataCleared();
         this.list.clear();
         this.page = 0;
-        getViewModel().getData(page,search);
+        if (isNetworkConnected(true))
+            getViewModel().getData(page,search);
+        else getViewDataBinding().swipeToRefresh.setRefreshing(false);
+
     }
 
     private void setAdapterLoading(boolean isShowLoader) {

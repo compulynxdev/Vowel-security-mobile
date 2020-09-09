@@ -23,43 +23,48 @@ public class TrespasserSPViewModel extends BaseViewModel<TrespasserSPNavigator> 
     }
 
     void getTrespasserSP(int page, String search) {
-        Map<String, String> map = new HashMap<>();
-        map.put("accountId", getDataManager().getAccountId());
-        if (!search.isEmpty())
-            map.put("search", search);
-        map.put("page", "" + page);
-        map.put("size", String.valueOf(AppConstants.LIMIT));
-        map.put("type", AppConstants.TODAY);
-        AppLogger.d("Searching : Trespasser", page + " : " + search);
+        if (getNavigator().isNetworkConnected()) {
+            Map<String, String> map = new HashMap<>();
+            map.put("accountId", getDataManager().getAccountId());
+            if (!search.isEmpty())
+                map.put("search", search);
+            map.put("page", "" + page);
+            map.put("size", String.valueOf(AppConstants.LIMIT));
+            map.put("type", AppConstants.TODAY);
+            AppLogger.d("Searching : Trespasser", page + " : " + search);
 
-        getDataManager().doGetAllTrespasserSP(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                getNavigator().hideLoading();
-                getNavigator().hideSwipeToRefresh();
-                try {
-                    if (response.code() == 200) {
-                        assert response.body() != null;
-                        TrespasserResponse registeredHKResponse = getDataManager().getGson().fromJson(response.body().string(), TrespasserResponse.class);
-                        if (registeredHKResponse.getContent() != null) {
-                            AppLogger.d("Searching : Size", "" + registeredHKResponse.getContent().size());
-                            getNavigator().onTrespasserSuccess(registeredHKResponse.getContent());
-                        }
-                    } else if (response.code() == 401) {
-                        getNavigator().openActivityOnTokenExpire();
-                    } else getNavigator().handleApiError(response.errorBody());
-                } catch (Exception e) {
-                    getNavigator().showAlert(R.string.alert, R.string.alert_error);
+            getDataManager().doGetAllTrespasserSP(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                    getNavigator().hideLoading();
+                    getNavigator().hideSwipeToRefresh();
+                    try {
+                        if (response.code() == 200) {
+                            assert response.body() != null;
+                            TrespasserResponse registeredHKResponse = getDataManager().getGson().fromJson(response.body().string(), TrespasserResponse.class);
+                            if (registeredHKResponse.getContent() != null) {
+                                AppLogger.d("Searching : Size", "" + registeredHKResponse.getContent().size());
+                                getNavigator().onTrespasserSuccess(registeredHKResponse.getContent());
+                            }
+                        } else if (response.code() == 401) {
+                            getNavigator().openActivityOnTokenExpire();
+                        } else getNavigator().handleApiError(response.errorBody());
+                    } catch (Exception e) {
+                        getNavigator().showAlert(R.string.alert, R.string.alert_error);
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                getNavigator().hideSwipeToRefresh();
-                getNavigator().hideLoading();
-                getNavigator().handleApiFailure(t);
-            }
-        });
+                @Override
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                    getNavigator().hideSwipeToRefresh();
+                    getNavigator().hideLoading();
+                    getNavigator().handleApiFailure(t);
+                }
+            });
+        }else {
+            getNavigator().hideSwipeToRefresh();
+            getNavigator().hideLoading();
+        }
     }
 
 }

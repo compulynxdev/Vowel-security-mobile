@@ -142,7 +142,8 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
                 .setPositiveBtnLabel(getString(R.string.approve_by_call))
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
-                    showCallDialog();
+                    if (isNetworkConnected(true))
+                        showCallDialog();
                 });
 
 
@@ -155,7 +156,8 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
                     .setNegativeBtnLabel(getString(R.string.send_notification))
                     .setOnNegativeClickListener(dialog1 -> {
                         dialog1.dismiss();
-                        getViewModel().sendNotification();
+                        if (isNetworkConnected(true))
+                            getViewModel().sendNotification();
                     })
                     .show(getFragmentManager());
         }
@@ -175,7 +177,8 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
                 })
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
-                    getViewModel().approveByCall();
+                    if (isNetworkConnected(true))
+                        getViewModel().approveByCall();
                 }).show(getFragmentManager());
     }
 

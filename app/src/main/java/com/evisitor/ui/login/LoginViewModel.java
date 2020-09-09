@@ -82,6 +82,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                         getDataManager().setAccessToken(object.getString("id_token"));
                         getDataManager().setAccountId(object.getString("accountId"));
                         getDataManager().setIdentifyFeature(object.getBoolean("identityFeature"));
+                        getDataManager().setLevelName(object.getString("levelName"));
                         getDataManager().setUserId(object.getString("userId"));
                         doGetUserDetail(isRemember);
                     } catch (Exception e) {

@@ -122,6 +122,16 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public String getLevelName() {
+        return preferenceHelper.getLevelName();
+    }
+
+    @Override
+    public void setLevelName(String levelName) {
+        preferenceHelper.setLevelName(levelName);
+    }
+
+    @Override
     public String getLanguage() {
         return preferenceHelper.getLanguage();
     }

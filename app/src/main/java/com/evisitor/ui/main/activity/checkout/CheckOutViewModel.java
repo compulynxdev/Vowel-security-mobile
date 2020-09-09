@@ -27,31 +27,35 @@ public class CheckOutViewModel extends BaseViewModel<ActivityNavigator> {
     }
 
     void getCheckOutData(int page, String search, int listOf) {
-        Map<String, String> map = new HashMap<>();
-        map.put("accountId", getDataManager().getAccountId());
-        if (!search.isEmpty())
-            map.put("search", search);
-        map.put("page", "" + page);
-        map.put("size", String.valueOf(AppConstants.LIMIT));
-        map.put("type", AppConstants.CHECK_OUT);
+        if (getNavigator().isNetworkConnected()) {
+            Map<String, String> map = new HashMap<>();
+            map.put("accountId", getDataManager().getAccountId());
+            if (!search.isEmpty())
+                map.put("search", search);
+            map.put("page", "" + page);
+            map.put("size", String.valueOf(AppConstants.LIMIT));
+            map.put("type", AppConstants.CHECK_OUT);
 
-        switch (listOf){
-            case 0:
-                getGuestList(map);
-                AppLogger.d("Searching : CheckOutViewModel ExpectedGuest", page + " : " + search);
-                break;
+            switch (listOf) {
+                case 0:
+                    getGuestList(map);
+                    AppLogger.d("Searching : CheckOutViewModel ExpectedGuest", page + " : " + search);
+                    break;
 
-            case 1:
-                getHouseKeeperList(map);
-                AppLogger.d("Searching : CheckOutViewModel ExpectedHK", page + " : " + search);
-                break;
+                case 1:
+                    getHouseKeeperList(map);
+                    AppLogger.d("Searching : CheckOutViewModel ExpectedHK", page + " : " + search);
+                    break;
 
-            case 2:
-                getServiceProviderList(map);
-                AppLogger.d("Searching : CheckOutViewModel ExpectedSP", page + " : " + search);
-                break;
+                case 2:
+                    getServiceProviderList(map);
+                    AppLogger.d("Searching : CheckOutViewModel ExpectedSP", page + " : " + search);
+                    break;
+            }
+        }else {
+            getNavigator().hideSwipeToRefresh();
+            getNavigator().hideLoading();
         }
-
     }
 
     private void getGuestList(Map<String, String> map) {

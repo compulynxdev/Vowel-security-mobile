@@ -33,42 +33,48 @@ public class ExpectedGuestViewModel extends BaseCheckInOutViewModel<ExpectedGues
     }
 
     void getGuestListData(int page, String search) {
-        Map<String, String> map = new HashMap<>();
-        map.put("accountId", getDataManager().getAccountId());
-        if (!search.isEmpty())
-            map.put("search", search);
-        map.put("page", "" + page);
-        map.put("size", String.valueOf(AppConstants.LIMIT));
-        map.put("type",AppConstants.EXPECTED);
-        AppLogger.d("Searching : ExpectedGuest", page + " : " + search);
+        if (getNavigator().isNetworkConnected()){
+            Map<String, String> map = new HashMap<>();
+            map.put("accountId", getDataManager().getAccountId());
+            if (!search.isEmpty())
+                map.put("search", search);
+            map.put("page", "" + page);
+            map.put("size", String.valueOf(AppConstants.LIMIT));
+            map.put("type",AppConstants.EXPECTED);
+            AppLogger.d("Searching : ExpectedGuest", page + " : " + search);
 
-        getDataManager().doGetExpectedGuestListDetail(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                getNavigator().hideLoading();
-                getNavigator().hideSwipeToRefresh();
-                try {
-                    if (response.code() == 200) {
-                        assert response.body() != null;
-                        GuestsResponse guestsResponse = getDataManager().getGson().fromJson(response.body().string(), GuestsResponse.class);
-                        if (guestsResponse.getContent() != null) {
-                            getNavigator().onExpectedGuestSuccess(guestsResponse.getContent());
-                        }
-                    } else if (response.code() == 401) {
-                        getNavigator().openActivityOnTokenExpire();
-                    } else getNavigator().handleApiError(response.errorBody());
-                } catch (Exception e) {
-                    getNavigator().showAlert(R.string.alert, R.string.alert_error);
+            getDataManager().doGetExpectedGuestListDetail(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                    getNavigator().hideLoading();
+                    getNavigator().hideSwipeToRefresh();
+                    try {
+                        if (response.code() == 200) {
+                            assert response.body() != null;
+                            GuestsResponse guestsResponse = getDataManager().getGson().fromJson(response.body().string(), GuestsResponse.class);
+                            if (guestsResponse.getContent() != null) {
+                                getNavigator().onExpectedGuestSuccess(guestsResponse.getContent());
+                            }
+                        } else if (response.code() == 401) {
+                            getNavigator().openActivityOnTokenExpire();
+                        } else getNavigator().handleApiError(response.errorBody());
+                    } catch (Exception e) {
+                        getNavigator().showAlert(R.string.alert, R.string.alert_error);
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                getNavigator().hideSwipeToRefresh();
-                getNavigator().hideLoading();
-                getNavigator().handleApiFailure(t);
-            }
-        });
+                @Override
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                    getNavigator().hideSwipeToRefresh();
+                    getNavigator().hideLoading();
+                    getNavigator().handleApiFailure(t);
+                }
+            });
+        }else {
+            getNavigator().hideLoading();
+            getNavigator().hideSwipeToRefresh();
+            getNavigator().showAlert(getNavigator().getContext().getString(R.string.alert),getNavigator().getContext().getString(R.string.alert_internet));
+        }
     }
 
     List<VisitorProfileBean> setClickVisitorDetail(Guests guests) {

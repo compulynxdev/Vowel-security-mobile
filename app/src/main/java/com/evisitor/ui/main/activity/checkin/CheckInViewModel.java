@@ -40,29 +40,35 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
     }
 
     void getCheckInData(int page, String search, int listOf) {
-        Map<String, String> map = new HashMap<>();
-        map.put("accountId", getDataManager().getAccountId());
-        if (!search.isEmpty())
-            map.put("search", search);
-        map.put("page", "" + page);
-        map.put("size", String.valueOf(AppConstants.LIMIT));
-        map.put("type",AppConstants.CHECK_IN);
+        if (getNavigator().isNetworkConnected()) {
+            Map<String, String> map = new HashMap<>();
+            map.put("accountId", getDataManager().getAccountId());
+            if (!search.isEmpty())
+                map.put("search", search);
+            map.put("page", "" + page);
+            map.put("size", String.valueOf(AppConstants.LIMIT));
+            map.put("type", AppConstants.CHECK_IN);
 
-        switch (listOf){
-            case 0:
-                getGuestList(map);
-                AppLogger.d("Searching : CheckInViewModel ExpectedGuest", page + " : " + search);
-                break;
+            switch (listOf) {
+                case 0:
+                    getGuestList(map);
+                    AppLogger.d("Searching : CheckInViewModel ExpectedGuest", page + " : " + search);
+                    break;
 
-            case 1:
-                getHouseKeeperList(map);
-                AppLogger.d("Searching : CheckInViewModel ExpectedHK", page + " : " + search);
-                break;
+                case 1:
+                    getHouseKeeperList(map);
+                    AppLogger.d("Searching : CheckInViewModel ExpectedHK", page + " : " + search);
+                    break;
 
-            case 2:
-                getServiceProviderList(map);
-                AppLogger.d("Searching : CheckInViewModel ExpectedSP", page + " : " + search);
-                break;
+                case 2:
+                    getServiceProviderList(map);
+                    AppLogger.d("Searching : CheckInViewModel ExpectedSP", page + " : " + search);
+                    break;
+            }
+        }else {
+            getNavigator().hideSwipeToRefresh();
+            getNavigator().hideLoading();
+            getNavigator().showAlert(getNavigator().getContext().getString(R.string.alert),getNavigator().getContext().getString(R.string.alert_internet));
         }
     }
 

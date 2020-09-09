@@ -32,6 +32,7 @@ public class AppPreferenceHelper implements PreferenceHelper {
     private static final String USER_ADDRESS = "USER_ADDRESS";
     private static final String USER_CONTACT = "USER_CONTACT";
     private static final String IDENTIFY_FEATURE = "IDENTIFY_FEATURE";
+    private static final String LEVEL_NAME = "LEVEL_NAME";
 
     private final SharedPreferences mPrefs;
 
@@ -161,6 +162,16 @@ public class AppPreferenceHelper implements PreferenceHelper {
     public void setIdentifyFeature(boolean notificationStatus) {
         mPrefs.edit().putBoolean(IDENTIFY_FEATURE,notificationStatus).apply();
 
+    }
+
+    @Override
+    public String getLevelName() {
+        return mPrefs.getString(LEVEL_NAME, "");
+    }
+
+    @Override
+    public void setLevelName(String levelName) {
+        mPrefs.edit().putString(LEVEL_NAME,levelName).apply();
     }
 
 }

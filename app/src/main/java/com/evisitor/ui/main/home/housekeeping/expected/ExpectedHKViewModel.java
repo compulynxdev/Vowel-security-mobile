@@ -33,42 +33,48 @@ public class ExpectedHKViewModel extends BaseCheckInOutViewModel<ExpectedHKNavig
     }
 
     void getExpectedHKListData(int page, String search) {
-        Map<String, String> map = new HashMap<>();
-        map.put("accountId", getDataManager().getAccountId());
-        map.put("type", "expected");
-        if (!search.isEmpty())
-            map.put("search", search);
-        map.put("page", "" + page);
-        map.put("size", String.valueOf(AppConstants.LIMIT));
-        AppLogger.d("Searching : ExpectedHK", page + " : " + search);
+        if (getNavigator().isNetworkConnected()) {
+            Map<String, String> map = new HashMap<>();
+            map.put("accountId", getDataManager().getAccountId());
+            map.put("type", "expected");
+            if (!search.isEmpty())
+                map.put("search", search);
+            map.put("page", "" + page);
+            map.put("size", String.valueOf(AppConstants.LIMIT));
+            AppLogger.d("Searching : ExpectedHK", page + " : " + search);
 
-        getDataManager().doGetRegisteredHKList(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                getNavigator().hideLoading();
-                getNavigator().hideSwipeToRefresh();
-                try {
-                    if (response.code() == 200) {
-                        assert response.body() != null;
-                        HouseKeepingResponse houseKeepingResponse = getDataManager().getGson().fromJson(response.body().string(), HouseKeepingResponse.class);
-                        if (houseKeepingResponse.getContent() != null) {
-                            getNavigator().onExpectedHKSuccess(houseKeepingResponse.getContent());
-                        }
-                    } else if (response.code() == 401) {
-                        getNavigator().openActivityOnTokenExpire();
-                    } else getNavigator().handleApiError(response.errorBody());
-                } catch (Exception e) {
-                    getNavigator().showAlert(R.string.alert, R.string.alert_error);
+            getDataManager().doGetRegisteredHKList(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                    getNavigator().hideLoading();
+                    getNavigator().hideSwipeToRefresh();
+                    try {
+                        if (response.code() == 200) {
+                            assert response.body() != null;
+                            HouseKeepingResponse houseKeepingResponse = getDataManager().getGson().fromJson(response.body().string(), HouseKeepingResponse.class);
+                            if (houseKeepingResponse.getContent() != null) {
+                                getNavigator().onExpectedHKSuccess(houseKeepingResponse.getContent());
+                            }
+                        } else if (response.code() == 401) {
+                            getNavigator().openActivityOnTokenExpire();
+                        } else getNavigator().handleApiError(response.errorBody());
+                    } catch (Exception e) {
+                        getNavigator().showAlert(R.string.alert, R.string.alert_error);
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                getNavigator().hideSwipeToRefresh();
-                getNavigator().hideLoading();
-                getNavigator().handleApiFailure(t);
-            }
-        });
+                @Override
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                    getNavigator().hideSwipeToRefresh();
+                    getNavigator().hideLoading();
+                    getNavigator().handleApiFailure(t);
+                }
+            });
+        }else {
+            getNavigator().hideSwipeToRefresh();
+            getNavigator().hideLoading();
+            getNavigator().showAlert(getNavigator().getContext().getString(R.string.alert),getNavigator().getContext().getString(R.string.alert_internet));
+        }
     }
 
     List<VisitorProfileBean> setClickVisitorDetail(HouseKeepingResponse.ContentBean hkBean) {
