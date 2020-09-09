@@ -57,6 +57,12 @@ public interface ApiHelper {
     @GET(WebServices.GET_BLACK_LIST_VISITORS)
     Call<ResponseBody> doGetBlackListVisitors(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
 
+    @GET(WebServices.GET_ALL_TRESPASSER_GUEST)
+    Call<ResponseBody> doGetAllTrespasserGuest(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+
+    @GET(WebServices.GET_ALL_TRESPSSER_SP)
+    Call<ResponseBody> doGetAllTrespasserSP(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+
     @GET(WebServices.GET_VISITOR_COUNT)
     Call<ResponseBody> doGetVisitorCount(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
 }

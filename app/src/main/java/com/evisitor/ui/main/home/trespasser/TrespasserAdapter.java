@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.evisitor.R;
-import com.evisitor.data.model.TrespassserResponse;
+import com.evisitor.data.model.TrespasserResponse;
 import com.evisitor.ui.base.BaseViewHolder;
 import com.evisitor.util.CalenderUtils;
 import com.evisitor.util.pagination.FooterLoader;
@@ -19,12 +19,12 @@ import java.util.List;
 
 public class TrespasserAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
-    private List<TrespassserResponse.ContentBean> list;
+    private List<TrespasserResponse.ContentBean> list;
     private static final int VIEWTYPE_ITEM = 1;
     private static final int VIEWTYPE_LOADER =2 ;
     private boolean showLoader;
 
-    TrespasserAdapter(List<TrespassserResponse.ContentBean> list) {
+    public TrespasserAdapter(List<TrespasserResponse.ContentBean> list) {
         this.list = list;
     }
 
@@ -96,7 +96,7 @@ public class TrespasserAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         @Override
         public void onBind(int position) {
-            TrespassserResponse.ContentBean bean = list.get(position);
+            TrespasserResponse.ContentBean bean = list.get(position);
             name.setText(name.getContext().getString(R.string.data_name,bean.getFullName()));
             if (bean.getDocumentId()!=null && !bean.getDocumentId().isEmpty()){
                 docId.setVisibility(View.VISIBLE);
@@ -120,7 +120,7 @@ public class TrespasserAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
             if (bean.getCheckInTime()!=null && !bean.getCheckInTime().isEmpty()){
                 checkInTime.setVisibility(View.VISIBLE);
-                checkInTime.setText(checkInTime.getContext().getString(R.string.data_type, CalenderUtils.formatDate(bean.getCheckInTime(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIMESTAMP_FORMAT)));
+                checkInTime.setText(checkInTime.getContext().getString(R.string.data_time_in, CalenderUtils.formatDate(bean.getCheckInTime(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIMESTAMP_FORMAT)));
             }else checkInTime.setVisibility(View.GONE);
 
         }

@@ -116,6 +116,16 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
+    public Call<ResponseBody> doGetAllTrespasserGuest(String authToken, Map<String, String> partMap) {
+        return getApiInterface().doGetAllTrespasserGuest(authToken, partMap);
+    }
+
+    @Override
+    public Call<ResponseBody> doGetAllTrespasserSP(String authToken, Map<String, String> partMap) {
+        return getApiInterface().doGetAllTrespasserSP(authToken, partMap);
+    }
+
+    @Override
     public Call<ResponseBody> doGetVisitorCount(String authToken, Map<String, String> partMap) {
         return getApiInterface().doGetVisitorCount(authToken, partMap);
     }

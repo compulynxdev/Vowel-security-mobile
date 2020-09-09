@@ -3,6 +3,9 @@ package com.evisitor.ui.main.home.trespasser;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
+
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import com.evisitor.R;
@@ -10,9 +13,18 @@ import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.ActivityTrespasserBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.base.BaseNavigator;
+import com.evisitor.ui.main.home.trespasser.guests.TrespasserGuestFragment;
+import com.evisitor.ui.main.home.trespasser.services.TrespasserSPFragment;
 import com.evisitor.util.ViewPagerAdapter;
 
 public class TrespasserActivity extends BaseActivity<ActivityTrespasserBinding,TrespasserViewModel> implements BaseNavigator,View.OnClickListener {
+
+    private TrespasserSPFragment trespasserSPFragment;
+    private TrespasserGuestFragment trespasserGuestFragment;
+
+    public static Intent getStartIntent(Context context) {
+        return new Intent(context,TrespasserActivity.class);
+    }
 
     @Override
     public int getBindingVariable() {
@@ -41,7 +53,7 @@ public class TrespasserActivity extends BaseActivity<ActivityTrespasserBinding,T
 
 
     private void initView() {
-        getViewDataBinding().header.tvTitle.setText(R.string.title_house_keeping);
+        getViewDataBinding().header.tvTitle.setText(R.string.title_trespasser_visitor);
         getViewDataBinding().header.imgBack.setVisibility(View.VISIBLE);
         getViewDataBinding().header.imgBack.setOnClickListener(v -> onBackPressed());
 
@@ -51,10 +63,10 @@ public class TrespasserActivity extends BaseActivity<ActivityTrespasserBinding,T
 
     private void setUpPagerAdapter() {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        /*expectedHKFragment = ExpectedHKFragment.newInstance();
-        adapter.addFragment(expectedHKFragment);
-        registeredHKFragment = RegisteredHKFragment.newInstance();
-        adapter.addFragment(registeredHKFragment);*/
+        trespasserGuestFragment = TrespasserGuestFragment.newInstance();
+        adapter.addFragment(trespasserGuestFragment);
+        trespasserSPFragment = TrespasserSPFragment.newInstance();
+        adapter.addFragment(trespasserSPFragment);
         getViewDataBinding().viewPager.setOffscreenPageLimit(2);
 
         getViewDataBinding().viewPager.setAdapter(adapter);
@@ -97,10 +109,10 @@ public class TrespasserActivity extends BaseActivity<ActivityTrespasserBinding,T
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (newText.trim().isEmpty() || newText.trim().length() >= 3) {
-                    /*if (getViewDataBinding().viewPager.getCurrentItem() == 0)
-                        expectedHKFragment.setSearch(newText);
+                    if (getViewDataBinding().viewPager.getCurrentItem() == 0)
+                        trespasserGuestFragment.setSearch(newText);
                     else
-                        registeredHKFragment.setSearch(newText);*/
+                        trespasserSPFragment.setSearch(newText);
                 }
                 return false;
             }
