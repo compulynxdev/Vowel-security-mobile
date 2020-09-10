@@ -52,7 +52,7 @@ public class HouseKeepingActivity extends BaseActivity<ActivityHkBinding, HKView
     }
 
     private void initView() {
-        getViewDataBinding().header.tvTitle.setText(R.string.title_house_keeping);
+        getViewDataBinding().header.tvTitle.setText(R.string.title_domestic_staff);
         getViewDataBinding().header.imgBack.setVisibility(View.VISIBLE);
         getViewDataBinding().header.imgBack.setOnClickListener(v -> onBackPressed());
 

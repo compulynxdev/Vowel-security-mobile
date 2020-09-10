@@ -53,24 +53,31 @@ public class GuestActivity extends BaseActivity<ActivityExpectedGuestBinding, Gu
         guestFragment = ExpectedGuestFragment.newInstance();
         replaceFragment(guestFragment, R.id.guest_frame);
 
-        getViewDataBinding().fabAdd.setOnClickListener(v -> AlertDialog.newInstance()
-                .setNegativeBtnShow(true)
-                .setCloseBtnShow(true)
-                .setTitle(getString(R.string.check_in))
-                .setMsg(getString(R.string.msg_add_guest_option))
-                .setNegativeBtnColor(R.color.colorPrimary)
-                .setPositiveBtnLabel(getString(R.string.manually))
-                .setNegativeBtnLabel(getString(R.string.scan_id))
-                .setOnNegativeClickListener(dialog1 -> {
-                    dialog1.dismiss();
-                    Intent i = ScanIDActivity.getStartIntent(getContext());
-                    startActivityForResult(i, SCAN_RESULT);
-                })
-                .setOnPositiveClickListener(dialog12 -> {
-                    dialog12.dismiss();
-                    Intent i = AddGuestActivity.getStartIntent(this);
-                    startActivity(i);
-                }).show(getSupportFragmentManager()));
+        getViewDataBinding().fabAdd.setOnClickListener(v -> {
+            if (getViewModel().getDataManager().isIdentifyFeature()){
+                AlertDialog.newInstance()
+                        .setNegativeBtnShow(true)
+                        .setCloseBtnShow(true)
+                        .setTitle(getString(R.string.check_in))
+                        .setMsg(getString(R.string.msg_add_guest_option))
+                        .setNegativeBtnColor(R.color.colorPrimary)
+                        .setPositiveBtnLabel(getString(R.string.manually))
+                        .setNegativeBtnLabel(getString(R.string.scan_id))
+                        .setOnNegativeClickListener(dialog1 -> {
+                            dialog1.dismiss();
+                            Intent i = ScanIDActivity.getStartIntent(getContext());
+                            startActivityForResult(i, SCAN_RESULT);
+                        })
+                        .setOnPositiveClickListener(dialog12 -> {
+                            dialog12.dismiss();
+                            Intent i = AddGuestActivity.getStartIntent(this);
+                            startActivity(i);
+                        }).show(getSupportFragmentManager());
+            }else {
+                Intent i = AddGuestActivity.getStartIntent(this);
+                startActivity(i);
+            }
+        });
     }
 
     private void setUpSearch() {

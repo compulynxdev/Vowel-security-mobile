@@ -180,6 +180,8 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
         setOnClickListener(imgBack, getViewDataBinding().tvIdentity, getViewDataBinding().tvGender, getViewDataBinding().tvOwner, getViewDataBinding().tvHost
                 , getViewDataBinding().frameImg, getViewDataBinding().btnAdd);
 
+        if (getViewModel().getDataManager().isIdentifyFeature())
+            getViewDataBinding().etIdentity.setVisibility(View.VISIBLE);
         getViewDataBinding().etIdentity.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

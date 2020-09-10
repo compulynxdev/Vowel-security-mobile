@@ -65,6 +65,7 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         public void onBind(int position) {
             HomeBean mainBean = list.get(position);
             tv_count.setVisibility(mainBean.getCount().equals("0") ? View.GONE : View.VISIBLE);
+            img.setImageDrawable(img.getContext().getResources().getDrawable(mainBean.getIcon()));
             tv_title.setText(mainBean.getTitle());
             tv_count.setText(mainBean.getCount());
         }
