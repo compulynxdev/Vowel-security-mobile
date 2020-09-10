@@ -53,7 +53,7 @@
                     android:fontFamily="@font/futura_round_medium"
                     android:gravity="center"
                     android:textSize="18sp"
-                    android:text="@string/title_house_keeping2"
+                    android:text="@string/title_domestic_staff"
                     android:textColor="@color/black"
                     />
 
