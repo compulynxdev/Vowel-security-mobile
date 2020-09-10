@@ -16,6 +16,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.evisitor.R;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.ui.base.BaseViewHolder;
+import com.evisitor.ui.base.ItemClickCallback;
 import com.evisitor.util.CalenderUtils;
 import com.evisitor.util.pagination.FooterLoader;
 
@@ -26,11 +27,11 @@ public class ServiceProviderCheckOutAdapter extends RecyclerView.Adapter<BaseVie
     private static final int VIEWTYPE_ITEM = 1;
     private static final int VIEWTYPE_LOADER =2 ;
     private boolean showLoader;
-    private Context context;
+    private ItemClickCallback callback;
 
-    public ServiceProviderCheckOutAdapter(List<ServiceProvider> list, Context context) {
+    public ServiceProviderCheckOutAdapter(List<ServiceProvider> list, ItemClickCallback callback) {
         this.list = list;
-        this.context = context;
+        this.callback = callback;
     }
 
     @NonNull
@@ -96,11 +97,17 @@ public class ServiceProviderCheckOutAdapter extends RecyclerView.Adapter<BaseVie
             imgVisitor = itemView.findViewById(R.id.img_visitor);
             timeOut.setVisibility(View.VISIBLE);
 
+            itemView.setOnClickListener(v -> {
+                if (callback != null && getAdapterPosition() != -1) {
+                    callback.onItemClick(getAdapterPosition());
+                }
+            });
         }
 
         @Override
         public void onBind(int position) {
             ServiceProvider bean = list.get(position);
+            Context context = name.getContext();
             name.setText(context.getString(R.string.data_name,bean.getName()));
             timeIn.setText(context.getString(R.string.data_time_in,CalenderUtils.formatDate(bean.getCheckInTime(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIMESTAMP_FORMAT)));
             timeOut.setText(context.getString(R.string.data_time_out,CalenderUtils.formatDate(bean.getCheckOutTime(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIMESTAMP_FORMAT)));
@@ -124,7 +131,7 @@ public class ServiceProviderCheckOutAdapter extends RecyclerView.Adapter<BaseVie
                         .into(imgVisitor);
             } else {
                 Glide.with(imgVisitor.getContext())
-                        .load(bean.getImageUrl())
+                        .load(getImageUrl(bean.getImageUrl()))
                         .centerCrop()
                         .placeholder(R.drawable.ic_person)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)

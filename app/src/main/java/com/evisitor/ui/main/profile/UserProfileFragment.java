@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.FragmentUserProfileBinding;
@@ -53,6 +55,21 @@ public class UserProfileFragment extends BaseFragment<FragmentUserProfileBinding
             getViewDataBinding().tvGender.setText(userDetail.getGender());
             getViewDataBinding().tvContact.setText(userDetail.getContactNo());
             getViewDataBinding().tvAddress.setText(userDetail.getAddress());
+
+            if (userDetail.getImageUrl().isEmpty()) {
+                Glide.with(this)
+                        .load(R.drawable.ic_person)
+                        .centerCrop()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(getViewDataBinding().imgUser);
+            } else {
+                Glide.with(this)
+                        .load(getViewModel().getDataManager().getImageBaseURL().concat(userDetail.getImageUrl()))
+                        .centerCrop()
+                        .placeholder(R.drawable.ic_person)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(getViewDataBinding().imgUser);
+            }
         });
     }
 }

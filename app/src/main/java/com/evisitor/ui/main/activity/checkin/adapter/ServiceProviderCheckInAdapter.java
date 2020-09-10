@@ -128,7 +128,7 @@ public class ServiceProviderCheckInAdapter extends RecyclerView.Adapter<BaseView
                         .into(imgVisitor);
             } else {
                 Glide.with(imgVisitor.getContext())
-                        .load(bean.getImageUrl())
+                        .load(getImageUrl(bean.getImageUrl()))
                         .centerCrop()
                         .placeholder(R.drawable.ic_person)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)

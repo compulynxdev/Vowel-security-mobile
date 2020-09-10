@@ -96,7 +96,7 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
                         }
                     }).show(getFragmentManager());
                 }
-            }).setBtnLabel(getString(R.string.check_in)).show(getFragmentManager());
+            }).setImage(guestsList.get(pos).getImageUrl()).setBtnLabel(getString(R.string.check_in)).show(getFragmentManager());
         });
         adapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(adapter);

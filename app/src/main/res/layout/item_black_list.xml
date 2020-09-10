@@ -71,13 +71,6 @@
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:visibility="gone"
-            android:id="@+id/tv_reason"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:visibility="gone"
             android:id="@+id/tv_type"/>
 
     </LinearLayout>

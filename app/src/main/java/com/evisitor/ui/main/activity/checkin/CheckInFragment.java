@@ -148,7 +148,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                     if (isNetworkConnected(true))
                     getViewModel().checkOut(1);
                 }
-            }).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
+            }).setImage(houseKeeping.getImageUrl()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
         });
     }
 
@@ -160,7 +160,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                 if (serviceProvider.isCheckOutFeature() && !serviceProvider.isHostCheckOut())
                     showCallDialog(2);
                 else getViewModel().checkOut(2);
-            }).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
+            }).setImage(serviceProvider.getImageUrl()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
         });
     }
 
@@ -173,7 +173,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                 if (guests.isCheckOutFeature() && !guests.isHostCheckOut())
                     showCallDialog(0);
                 else getViewModel().checkOut(0);
-            }).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
+            }).setImage(guests.getImageUrl()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
         });
 
         getViewDataBinding().recyclerView.setAdapter(guestAdapter);

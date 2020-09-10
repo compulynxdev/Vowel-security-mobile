@@ -8,6 +8,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.VisitorProfileBean;
@@ -22,6 +24,7 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
     private VisitorProfileCallback callback;
     private List<VisitorProfileBean> visitorInfoList;
     private String btnLabel = "";
+    private String image = "";
     private boolean isBtnVisible = true;
 
     public static VisitorProfileDialog newInstance(List<VisitorProfileBean> visitorInfoList, VisitorProfileCallback callback) {
@@ -57,6 +60,11 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
         return this;
     }
 
+    public VisitorProfileDialog setImage(String image) {
+        this.image = image;
+        return this;
+    }
+
     @Override
     public VisitorProfileViewModel getViewModel() {
         return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(VisitorProfileViewModel.class);
@@ -76,6 +84,21 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
 
         if (!btnLabel.isEmpty()) {
             getViewDataBinding().btnOk.setText(btnLabel);
+        }
+
+        if (image.isEmpty()) {
+            Glide.with(this)
+                    .load(R.drawable.ic_person)
+                    .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(getViewDataBinding().imgProfile);
+        } else {
+            Glide.with(this)
+                    .load(getViewModel().getDataManager().getImageBaseURL().concat(image))
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_person)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(getViewDataBinding().imgProfile);
         }
 
         setUpAdapter();

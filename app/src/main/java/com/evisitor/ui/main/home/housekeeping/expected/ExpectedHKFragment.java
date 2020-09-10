@@ -101,7 +101,7 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
                     }).show(getFragmentManager());
                 }
 
-            }).setBtnLabel(getString(R.string.check_in)).show(getFragmentManager());
+            }).setImage(list.get(pos).getImageUrl()).setBtnLabel(getString(R.string.check_in)).show(getFragmentManager());
         });
         adapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(adapter);

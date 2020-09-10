@@ -101,7 +101,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                     }).show(getFragmentManager());
                 }
 
-            }).setBtnLabel(getString(R.string.check_in)).show(getFragmentManager());
+            }).setImage(spList.get(pos).getImageUrl()).setBtnLabel(getString(R.string.check_in)).show(getFragmentManager());
         });
         adapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(adapter);

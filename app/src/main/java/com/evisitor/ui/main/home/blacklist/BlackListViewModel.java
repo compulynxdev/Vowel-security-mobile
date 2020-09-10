@@ -1,16 +1,21 @@
 package com.evisitor.ui.main.home.blacklist;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.MutableLiveData;
+
 import com.evisitor.R;
 import com.evisitor.data.DataManager;
 import com.evisitor.data.model.BlackListVisitorResponse;
+import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.ui.base.BaseViewModel;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppLogger;
+import com.evisitor.util.CalenderUtils;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -58,6 +63,21 @@ public class BlackListViewModel extends BaseViewModel<BlackListNavigtor> {
                 getNavigator().handleApiFailure(t);
             }
         });
+    }
 
+    List<VisitorProfileBean> getVisitorDetail(BlackListVisitorResponse.ContentBean visitorResponse) {
+        getNavigator().showLoading();
+        List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, visitorResponse.getFullName())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_profile, visitorResponse.getProfile())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_type, visitorResponse.getType())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, visitorResponse.getContactNo())));
+
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_blacklisted_by, visitorResponse.getLastModifiedBy())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_blacklisted_date, CalenderUtils.formatDate(visitorResponse.getLastModifiedDate(), CalenderUtils.SERVER_DATE_FORMAT2, CalenderUtils.CUSTOM_TIMESTAMP_FORMAT_SLASH))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_reason, visitorResponse.getReason().isEmpty() ? getNavigator().getContext().getString(R.string.na) : visitorResponse.getReason())));
+
+        getNavigator().hideLoading();
+        return visitorProfileBeanList;
     }
 }

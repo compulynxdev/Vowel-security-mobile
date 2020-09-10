@@ -26,6 +26,7 @@ public class AppPreferenceHelper implements PreferenceHelper {
 
     /*User Detail*/
     private static final String USER_FULL_NAME = "USER_FULL_NAME";
+    private static final String USER_IMAGE = "USER_IMAGE";
     private static final String USER_EMAIL = "USER_EMAIL";
     private static final String USER_COUNTRY = "USER_COUNTRY";
     private static final String USER_GENDER = "USER_GENDER";
@@ -125,6 +126,7 @@ public class AppPreferenceHelper implements PreferenceHelper {
         UserDetail userDetail = new UserDetail();
         userDetail.setId(Integer.parseInt(getUserId()));
         userDetail.setUsername(getUsername());
+        userDetail.setImageUrl(mPrefs.getString(USER_IMAGE, ""));
         userDetail.setFullName(mPrefs.getString(USER_FULL_NAME, ""));
         userDetail.setEmail(mPrefs.getString(USER_EMAIL, ""));
         userDetail.setGender(mPrefs.getString(USER_GENDER, ""));
@@ -137,6 +139,7 @@ public class AppPreferenceHelper implements PreferenceHelper {
     @Override
     public void setUserDetail(UserDetail userDetail) {
         mPrefs.edit().putString(USER_FULL_NAME, userDetail.getFullName()).apply();
+        mPrefs.edit().putString(USER_IMAGE, userDetail.getImageUrl()).apply();
         mPrefs.edit().putString(USER_EMAIL, userDetail.getEmail()).apply();
         mPrefs.edit().putString(USER_GENDER, userDetail.getGender()).apply();
         mPrefs.edit().putString(USER_CONTACT, userDetail.getContactNo()).apply();

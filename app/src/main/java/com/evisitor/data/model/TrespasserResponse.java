@@ -333,7 +333,7 @@ public class TrespasserResponse {
         }
 
         public String getDocumentId() {
-            return documentId;
+            return documentId == null ? "" : documentId;
         }
 
         public void setDocumentId(String documentId) {

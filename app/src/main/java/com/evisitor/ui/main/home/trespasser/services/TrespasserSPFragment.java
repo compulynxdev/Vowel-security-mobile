@@ -1,10 +1,12 @@
 package com.evisitor.ui.main.home.trespasser.services;
 
 import android.os.Bundle;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
-import android.view.View;
+
 import com.evisitor.BR;
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
@@ -12,7 +14,9 @@ import com.evisitor.data.model.TrespasserResponse;
 import com.evisitor.databinding.FragmentTrespasserSBinding;
 import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.main.home.trespasser.TrespasserAdapter;
+import com.evisitor.ui.main.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,7 +68,7 @@ public class TrespasserSPFragment extends BaseFragment<FragmentTrespasserSBindin
 
     private void setUpAdapter() {
         list = new ArrayList<>();
-        adapter = new TrespasserAdapter(list);
+        adapter = new TrespasserAdapter(list, pos -> VisitorProfileDialog.newInstance(getViewModel().getVisitorDetail(list.get(pos)), null).setBtnVisible(false).show(getChildFragmentManager()));
         adapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(adapter);
 

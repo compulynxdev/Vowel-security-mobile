@@ -132,7 +132,7 @@ public class ExpectedGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                         .into(imgVisitor);
             } else {
                 Glide.with(imgVisitor.getContext())
-                        .load(bean.getImageUrl())
+                        .load(getImageUrl(bean.getImageUrl()))
                         .centerCrop()
                         .placeholder(R.drawable.ic_person)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)

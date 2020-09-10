@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.evisitor.R;
 import com.evisitor.data.model.TrespasserResponse;
 import com.evisitor.ui.base.BaseViewHolder;
+import com.evisitor.ui.base.ItemClickCallback;
 import com.evisitor.util.CalenderUtils;
 import com.evisitor.util.pagination.FooterLoader;
 
@@ -22,10 +23,12 @@ public class TrespasserAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private List<TrespasserResponse.ContentBean> list;
     private static final int VIEWTYPE_ITEM = 1;
     private static final int VIEWTYPE_LOADER =2 ;
+    private ItemClickCallback callback;
     private boolean showLoader;
 
-    public TrespasserAdapter(List<TrespasserResponse.ContentBean> list) {
+    public TrespasserAdapter(List<TrespasserResponse.ContentBean> list, ItemClickCallback callback) {
         this.list = list;
+        this.callback = callback;
     }
 
     @Override
@@ -92,6 +95,12 @@ public class TrespasserAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             vehicleNo = itemView.findViewById(R.id.tv_vehicle);
             checkInTime = itemView.findViewById(R.id.tv_check);
             imgVisitor = itemView.findViewById(R.id.img_visitor);
+
+            itemView.setOnClickListener(v -> {
+                if (callback != null && getAdapterPosition() != -1) {
+                    callback.onItemClick(getAdapterPosition());
+                }
+            });
         }
 
         @Override
@@ -113,10 +122,10 @@ public class TrespasserAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 contact.setText(contact.getContext().getString(R.string.data_mobile,bean.getContactNo()));
             }else contact.setVisibility(View.GONE);
 
-            if (bean.getEnteredVehicleNo()!=null && !bean.getEnteredVehicleNo().isEmpty()){
+           /* if (bean.getEnteredVehicleNo()!=null && !bean.getEnteredVehicleNo().isEmpty()){
                 vehicleNo.setVisibility(View.VISIBLE);
                 vehicleNo.setText(vehicleNo.getContext().getString(R.string.data_vehicle,bean.getEnteredVehicleNo()));
-            }else vehicleNo.setVisibility(View.GONE);
+            }else vehicleNo.setVisibility(View.GONE);*/
 
             if (bean.getCheckInTime()!=null && !bean.getCheckInTime().isEmpty()){
                 checkInTime.setVisibility(View.VISIBLE);

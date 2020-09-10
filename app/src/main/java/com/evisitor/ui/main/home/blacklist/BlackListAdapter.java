@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.evisitor.R;
 import com.evisitor.data.model.BlackListVisitorResponse;
 import com.evisitor.ui.base.BaseViewHolder;
-import com.evisitor.util.CalenderUtils;
+import com.evisitor.ui.base.ItemClickCallback;
 import com.evisitor.util.pagination.FooterLoader;
 
 import java.util.List;
@@ -22,10 +22,12 @@ public class BlackListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private List<BlackListVisitorResponse.ContentBean> list;
     private static final int VIEWTYPE_ITEM = 1;
     private static final int VIEWTYPE_LOADER =2 ;
+    private ItemClickCallback callback;
     private boolean showLoader;
 
-    BlackListAdapter(List<BlackListVisitorResponse.ContentBean> list) {
+    BlackListAdapter(List<BlackListVisitorResponse.ContentBean> list, ItemClickCallback callback) {
         this.list = list;
+        this.callback = callback;
     }
 
     @Override
@@ -82,16 +84,21 @@ public class BlackListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public class ViewHolder extends BaseViewHolder {
         ImageView imgVisitor;
-        TextView name,docId,profile,contact,reason,type;
+        TextView name, docId, profile, contact, type;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_name);
             docId = itemView.findViewById(R.id.tv_doc_id);
             profile = itemView.findViewById(R.id.tv_profile);
             contact = itemView.findViewById(R.id.tv_contact);
-            reason = itemView.findViewById(R.id.tv_reason);
             type = itemView.findViewById(R.id.tv_type);
             imgVisitor = itemView.findViewById(R.id.img_visitor);
+
+            itemView.setOnClickListener(v -> {
+                if (callback != null && getAdapterPosition() != -1) {
+                    callback.onItemClick(getAdapterPosition());
+                }
+            });
         }
 
         @Override
@@ -112,11 +119,6 @@ public class BlackListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 contact.setVisibility(View.VISIBLE);
                 contact.setText(contact.getContext().getString(R.string.data_mobile,bean.getContactNo()));
             }else contact.setVisibility(View.GONE);
-
-            if (bean.getReason()!=null && !bean.getReason().isEmpty()){
-                reason.setVisibility(View.VISIBLE);
-                reason.setText(reason.getContext().getString(R.string.data_reason,bean.getReason()));
-            }else reason.setVisibility(View.GONE);
 
             if (bean.getType()!=null && !bean.getType().isEmpty()){
                 type.setVisibility(View.VISIBLE);

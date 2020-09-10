@@ -1,19 +1,23 @@
 package com.evisitor.ui.main.home.blacklist;
 
-import androidx.appcompat.widget.SearchView;
-import androidx.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.SearchView;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.BlackListVisitorResponse;
 import com.evisitor.databinding.ActivityBlackListVisitorBinding;
 import com.evisitor.ui.base.BaseActivity;
+import com.evisitor.ui.main.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,7 +82,7 @@ public class BlackListVisitorActivity extends BaseActivity<ActivityBlackListVisi
 
     private void setUpAdapter() {
         list = new ArrayList<>();
-        adapter = new BlackListAdapter(list);
+        adapter = new BlackListAdapter(list, pos -> VisitorProfileDialog.newInstance(getViewModel().getVisitorDetail(list.get(pos)), null).setBtnVisible(false).show(getSupportFragmentManager()));
         adapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(adapter);
         updateUI();

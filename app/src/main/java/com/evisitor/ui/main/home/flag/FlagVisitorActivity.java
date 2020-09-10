@@ -13,6 +13,7 @@ import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.FlaggedVisitorResponse;
 import com.evisitor.databinding.ActivityFlagVisitorBinding;
 import com.evisitor.ui.base.BaseActivity;
+import com.evisitor.ui.main.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
 
 import java.util.ArrayList;
@@ -73,7 +74,7 @@ public class FlagVisitorActivity extends BaseActivity<ActivityFlagVisitorBinding
 
     private void setUpAdapter() {
         list = new ArrayList<>();
-        adapter = new FlagVisitorAdapter(list);
+        adapter = new FlagVisitorAdapter(list, pos -> VisitorProfileDialog.newInstance(getViewModel().getVisitorDetail(list.get(pos)), null).setBtnVisible(false).show(getSupportFragmentManager()));
         adapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(adapter);
         updateUI();

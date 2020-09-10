@@ -55,7 +55,9 @@
     <!--Visitor Profile-->
     <string name="check_in">Check In</string>
     <string name="check_out">Check Out</string>
+    <string name="na">N/A</string>
     <string name="data_name">Name : %s</string>
+    <string name="data_gender">Gender : %s</string>
     <string name="data_profile">Profile : %s</string>
     <string name="data_vehicle">Vehicle No : %s</string>
     <string name="vehicle_col">Vehicle No :</string>
@@ -69,6 +71,14 @@
     <string name="data_mobile">Mobile : %s</string>
     <string name="data_register_by">Registered By : %s</string>
     <string name="data_register_date">Registered Date : %s</string>
+    <string name="data_type">Visitor Type : %s</string>
+    <string name="data_host_checkout_time">Host Check Out Time : %s</string>
+    <string name="data_reason">Reason : %s</string>
+    <string name="data_blacklisted_by">BlackListed By : %s</string>
+    <string name="data_blacklisted_date">BlackListed Date : %s</string>
+
+    <string name="data_flagged_by">Flagged By : %s</string>
+    <string name="data_flagged_date">Flagged Date : %s</string>
 
     <!--Check-In Dialog-->
     <string name="msg_add_guest_option">Please select Check In option.</string>
@@ -195,8 +205,5 @@
     <string name="registered">Registered</string>
     <string name="check_out_rejected">Check Out Rejected.</string>
     <string name="msg_check_out_call">Resident didn\'t checkout yet, Please call manually and wait for resident confirmation and select option according to resident.</string>
-    <string name="data_reason">Reason : %s</string>
-    <string name="data_type">Visitor Type : %s</string>
-    <string name="data_host_checkout_time">Host Check Out Time : %s</string>
 
 </resources>

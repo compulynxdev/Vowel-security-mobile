@@ -1,5 +1,7 @@
 package com.evisitor.data.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class UserDetail {
 
     /**
@@ -23,6 +25,8 @@ public class UserDetail {
     private String country;
     private String gender;
     private String role;
+    @SerializedName("image")
+    private String imageUrl;
 
     public String getUsername() {
         return username;
@@ -94,5 +98,13 @@ public class UserDetail {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getImageUrl() {
+        return imageUrl == null ? "" : imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
