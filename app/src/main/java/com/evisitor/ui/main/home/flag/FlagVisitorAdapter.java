@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.evisitor.R;
 import com.evisitor.data.model.FlaggedVisitorResponse;
 import com.evisitor.ui.base.BaseViewHolder;
@@ -122,6 +124,20 @@ public class FlagVisitorAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 type.setText(type.getContext().getString(R.string.data_type, bean.getType()));
             } else type.setVisibility(View.GONE);
 
+            if (bean.getImageUrl().isEmpty()) {
+                Glide.with(imgVisitor.getContext())
+                        .load(R.drawable.ic_person)
+                        .centerCrop()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(imgVisitor);
+            } else {
+                Glide.with(imgVisitor.getContext())
+                        .load(getImageUrl(bean.getImageUrl()))
+                        .centerCrop()
+                        .placeholder(R.drawable.ic_person)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(imgVisitor);
+            }
         }
     }
 

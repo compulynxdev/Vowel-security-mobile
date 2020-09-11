@@ -21,6 +21,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed">
 
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_circle"
+            android:src="@drawable/ic_person"
+            tools:ignore="ContentDescription" />
+
         <TextView
             android:id="@+id/tv_count"
             android:layout_width="20dp"
@@ -33,16 +43,6 @@
             android:textColor="@color/white"
             android:textSize="10sp"
             tools:ignore="SmallSp" />
-
-        <ImageView
-            android:id="@+id/img"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:layout_marginTop="16dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/bg_circle"
-            android:src="@drawable/ic_person"
-            tools:ignore="ContentDescription" />
 
     </FrameLayout>
 

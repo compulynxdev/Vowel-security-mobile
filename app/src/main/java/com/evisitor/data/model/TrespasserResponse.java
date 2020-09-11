@@ -1,5 +1,7 @@
 package com.evisitor.data.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class TrespasserResponse {
@@ -283,6 +285,8 @@ public class TrespasserResponse {
         private String enteredVehicleNo;
         private String contactNo;
         private int id;
+        @SerializedName("image")
+        private String imageUrl;
 
         public String getFullName() {
             return fullName;
@@ -370,6 +374,14 @@ public class TrespasserResponse {
 
         public void setId(int id) {
             this.id = id;
+        }
+
+        public String getImageUrl() {
+            return imageUrl == null ? "" : imageUrl;
+        }
+
+        public void setImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
         }
     }
 

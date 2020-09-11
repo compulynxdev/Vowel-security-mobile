@@ -1,5 +1,7 @@
 package com.evisitor.data.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class BlackListVisitorResponse {
@@ -287,6 +289,8 @@ public class BlackListVisitorResponse {
         private boolean status;
         private String contactNo;
         private int id;
+        @SerializedName("image")
+        private String imageUrl;
 
         public String getReason() {
             return reason;
@@ -398,6 +402,14 @@ public class BlackListVisitorResponse {
 
         public void setId(int id) {
             this.id = id;
+        }
+
+        public String getImageUrl() {
+            return imageUrl == null ? "" : imageUrl;
+        }
+
+        public void setImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
         }
     }
 

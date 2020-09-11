@@ -63,7 +63,6 @@ public class BlackListVisitorActivity extends BaseActivity<ActivityBlackListVisi
             @Override
             public void onLoadMore() {
                 setAdapterLoading(true);
-                adapter.notifyDataSetChanged();
                 page++;
                 doSearch(search);
             }
@@ -82,7 +81,7 @@ public class BlackListVisitorActivity extends BaseActivity<ActivityBlackListVisi
 
     private void setUpAdapter() {
         list = new ArrayList<>();
-        adapter = new BlackListAdapter(list, pos -> VisitorProfileDialog.newInstance(getViewModel().getVisitorDetail(list.get(pos)), null).setBtnVisible(false).show(getSupportFragmentManager()));
+        adapter = new BlackListAdapter(list, pos -> VisitorProfileDialog.newInstance(getViewModel().getVisitorDetail(list.get(pos)), null).setImage(list.get(pos).getImageUrl()).setBtnVisible(false).show(getSupportFragmentManager()));
         adapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(adapter);
         updateUI();

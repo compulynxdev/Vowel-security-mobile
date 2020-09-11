@@ -70,6 +70,7 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
         setUp();
         setUpHouseNoSearch();
         setIntentData(getIntent());
+        randomCheckInObserver();
     }
 
     private void setIntentData(Intent intent) {
@@ -263,40 +264,50 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
                         , getViewDataBinding().etAddress.getText().toString().trim(), getViewDataBinding().tvGender.getText().toString()
                         , houseId, ownerId, residentId)) {
 
-                    AlertDialog.newInstance()
-                            .setNegativeBtnShow(true)
-                            .setCloseBtnShow(false)
-                            .setTitle(getString(R.string.check_in))
-                            .setMsg(getString(R.string.msg_check_in_call))
-                            .setPositiveBtnLabel(getString(R.string.approve))
-                            .setNegativeBtnLabel(getString(R.string.reject))
-                            .setOnNegativeClickListener(dialog1 -> {
-                                dialog1.dismiss();
-
-                                AlertDialog.newInstance()
-                                        .setCloseBtnShow(false)
-                                        .setNegativeBtnShow(false)
-                                        .setTitle(getString(R.string.alert))
-                                        .setMsg(getString(R.string.check_in_rejected))
-                                        .setOnPositiveClickListener(dialog12 -> {
-                                            dialog12.dismiss();
-                                            Intent intent = MainActivity.newIntent(this);
-                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                            startActivity(intent);
-                                            finish();
-                                        }).show(getSupportFragmentManager());
-                            })
-                            .setOnPositiveClickListener(dialog12 -> {
-                                dialog12.dismiss();
-                                getViewModel().doAddGuest(bmp_profile, getViewDataBinding().etIdentity.getText().toString().trim(), idType, getViewDataBinding().etName.getText().toString()
-                                        , getViewDataBinding().etVehicle.getText().toString().trim(), getViewDataBinding().etContact.getText().toString()
-                                        , getViewDataBinding().etAddress.getText().toString(), getViewDataBinding().tvGender.getText().toString()
-                                        , getViewDataBinding().actvHouseNo.getText().toString()
-                                        , houseId, ownerId, residentId);
-                            }).show(getSupportFragmentManager());
+                    getViewModel().doCheckGuestStatus(getViewDataBinding().etIdentity.getText().toString().trim());
                 }
                 break;
         }
+    }
+
+    private void randomCheckInObserver() {
+        getViewModel().getGuestStatusMutableData().observe(this, isBlock -> {
+            if (isBlock) {
+                showAlert(R.string.alert, R.string.msg_block);
+            } else {
+                AlertDialog.newInstance()
+                        .setNegativeBtnShow(true)
+                        .setCloseBtnShow(false)
+                        .setTitle(getString(R.string.check_in))
+                        .setMsg(getString(R.string.msg_check_in_call))
+                        .setPositiveBtnLabel(getString(R.string.approve))
+                        .setNegativeBtnLabel(getString(R.string.reject))
+                        .setOnNegativeClickListener(dialog1 -> {
+                            dialog1.dismiss();
+
+                            AlertDialog.newInstance()
+                                    .setCloseBtnShow(false)
+                                    .setNegativeBtnShow(false)
+                                    .setTitle(getString(R.string.alert))
+                                    .setMsg(getString(R.string.check_in_rejected))
+                                    .setOnPositiveClickListener(dialog12 -> {
+                                        dialog12.dismiss();
+                                        Intent intent = MainActivity.newIntent(getContext());
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(intent);
+                                        finish();
+                                    }).show(getSupportFragmentManager());
+                        })
+                        .setOnPositiveClickListener(dialog12 -> {
+                            dialog12.dismiss();
+                            getViewModel().doAddGuest(bmp_profile, getViewDataBinding().etIdentity.getText().toString().trim(), idType, getViewDataBinding().etName.getText().toString()
+                                    , getViewDataBinding().etVehicle.getText().toString().trim(), getViewDataBinding().etContact.getText().toString()
+                                    , getViewDataBinding().etAddress.getText().toString(), getViewDataBinding().tvGender.getText().toString()
+                                    , getViewDataBinding().actvHouseNo.getText().toString()
+                                    , houseId, ownerId, residentId);
+                        }).show(getSupportFragmentManager());
+            }
+        });
     }
 
     @Override

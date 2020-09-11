@@ -26,6 +26,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     private final static int ID_NOTIFICATION = 3;
     private final static int ID_SETTINGS = 4;
     private final static int ID_PROFILE = 5;
+    int count = 0;
 
     public static Intent newIntent(Context context) {
         return new Intent(context, MainActivity.class);
@@ -61,11 +62,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         });
         getViewDataBinding().bottomNavigation.setOnReselectListener(item -> {
         });
-        getViewDataBinding().bottomNavigation.setOnShowListener(item -> {
 
+        //HomeFragment Initialise one time because setOnShowListener run many time during initialization
+        HomeFragment homeFragment = HomeFragment.newInstance();
+        getViewDataBinding().bottomNavigation.setOnShowListener(item -> {
             switch (item.getId()) {
                 case ID_HOME:
-                    replaceFragment(HomeFragment.newInstance(), R.id.frame_layout);
+                    replaceFragment(homeFragment, R.id.frame_layout);
                     break;
 
                 case ID_ACTIVITY:
@@ -85,7 +88,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                     break;
             }
         });
-        getViewDataBinding().bottomNavigation.setCount(ID_NOTIFICATION, "2");
+        //getViewDataBinding().bottomNavigation.setCount(ID_NOTIFICATION, "0");
         getViewDataBinding().bottomNavigation.show(ID_HOME, true);
     }
 }

@@ -63,7 +63,7 @@ public class TrespasserGuestFragment extends BaseFragment<FragmentTrespasserGues
 
     private void setUpAdapter() {
         list = new ArrayList<>();
-        adapter = new TrespasserAdapter(list, pos -> VisitorProfileDialog.newInstance(getViewModel().getVisitorDetail(list.get(pos)), null).setBtnVisible(false).show(getChildFragmentManager()));
+        adapter = new TrespasserAdapter(list, pos -> VisitorProfileDialog.newInstance(getViewModel().getVisitorDetail(list.get(pos)), null).setImage(list.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
         adapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(adapter);
 

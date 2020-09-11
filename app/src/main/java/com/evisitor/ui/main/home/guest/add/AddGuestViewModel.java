@@ -34,6 +34,7 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
 
     private MutableLiveData<List<HouseDetailBean>> houseDetailMutableList = new MutableLiveData<>();
     private MutableLiveData<List<HostDetailBean>> hostDetailMutableList = new MutableLiveData<>();
+    private MutableLiveData<Boolean> guestStatusMutableData = new MutableLiveData<>();
     private List<String> genderList = new ArrayList<>();
     private List<IdentityBean> identityTypeList = new ArrayList<>();
 
@@ -187,6 +188,44 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
                             assert response.body() != null;
                             AppLogger.e("Response", response.body().string());
                             getNavigator().onSuccess();
+                        } catch (Exception e) {
+                            getNavigator().showAlert(R.string.alert, R.string.alert_error);
+                        }
+                    } else {
+                        getNavigator().handleApiError(response.errorBody());
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                    getNavigator().hideLoading();
+                    getNavigator().handleApiFailure(t);
+                }
+            });
+        }
+    }
+
+    MutableLiveData<Boolean> getGuestStatusMutableData() {
+        return guestStatusMutableData;
+    }
+
+    void doCheckGuestStatus(String identity) {
+        if (getNavigator().isNetworkConnected(true)) {
+            getNavigator().showLoading();
+            Map<String, String> map = new HashMap<>();
+            map.put("accountId", getDataManager().getAccountId());
+            map.put("documentId", identity);
+            getDataManager().doCheckGuestStatus(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                    getNavigator().hideLoading();
+                    if (response.code() == 200) {
+                        try {
+                            assert response.body() != null;
+                            JSONObject jsonObject = new JSONObject(response.body().string());
+                            if (jsonObject.has("result"))
+                                guestStatusMutableData.setValue(jsonObject.getBoolean("result"));
+                            else getNavigator().showAlert(R.string.alert, R.string.alert_error);
                         } catch (Exception e) {
                             getNavigator().showAlert(R.string.alert, R.string.alert_error);
                         }

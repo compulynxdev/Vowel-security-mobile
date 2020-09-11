@@ -296,4 +296,9 @@ public class AppDataManager implements DataManager {
     public Call<ResponseBody> doGetVisitorCount(String authToken, Map<String, String> partMap) {
         return apiHelper.doGetVisitorCount(authToken, partMap);
     }
+
+    @Override
+    public Call<ResponseBody> doCheckGuestStatus(String authToken, Map<String, String> partMap) {
+        return apiHelper.doCheckGuestStatus(authToken, partMap);
+    }
 }

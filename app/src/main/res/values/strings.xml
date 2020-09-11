@@ -192,8 +192,6 @@
     <string name="ok">OK</string>
     <string name="select_identity_type">Select Identity Type</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="submit">Submit</string>
     <string name="or">OR</string>
     <string name="alert_id">Please enter valid identity number</string>
@@ -205,5 +203,6 @@
     <string name="registered">Registered</string>
     <string name="check_out_rejected">Check Out Rejected.</string>
     <string name="msg_check_out_call">Resident didn\'t checkout yet, Please call manually and wait for resident confirmation and select option according to resident.</string>
+    <string name="msg_block">The guest associated with this identity number is blocked by admin.</string>
 
 </resources>
