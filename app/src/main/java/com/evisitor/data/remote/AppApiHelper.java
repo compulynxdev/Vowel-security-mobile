@@ -134,4 +134,9 @@ public class AppApiHelper implements ApiHelper {
     public Call<ResponseBody> doGetVisitorCount(String authToken, Map<String, String> partMap) {
         return getApiInterface().doGetVisitorCount(authToken, partMap);
     }
+
+    @Override
+    public Call<ResponseBody> doCheckGuestStatus(String authToken, Map<String, String> partMap) {
+        return getApiInterface().doCheckGuestStatus(authToken, partMap);
+    }
 }

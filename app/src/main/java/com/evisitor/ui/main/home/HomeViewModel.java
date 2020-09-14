@@ -60,12 +60,11 @@ public class HomeViewModel extends BaseViewModel<BaseNavigator> {
             getDataManager().doGetVisitorCount(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                    getNavigator().hideLoading();
                     try {
                         if (response.code() == 200) {
                             assert response.body() != null;
                             JSONObject jsonObject = new JSONObject(response.body().string());
-                            if (list.isEmpty()) {
+                            if (!list.isEmpty()) {
                                 int guestCount = jsonObject.getInt("guest");
                                 int hkCount = jsonObject.getInt("staff");
                                 int spCount = jsonObject.getInt("serviceProvider");
@@ -86,7 +85,6 @@ public class HomeViewModel extends BaseViewModel<BaseNavigator> {
 
                 @Override
                 public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                    getNavigator().hideLoading();
                     getNavigator().handleApiFailure(t);
                 }
             });

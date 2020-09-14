@@ -2,10 +2,10 @@ package com.evisitor.ui.main.profile;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -50,8 +50,16 @@ public class UserProfileFragment extends BaseFragment<FragmentUserProfileBinding
         tvTitle.setText(R.string.title_profile);
 
         getViewDataBinding().toolbar.imgSearch.setVisibility(View.VISIBLE);
-        getViewDataBinding().toolbar.imgSearch.setImageDrawable(getResources().getDrawable(R.drawable.ic_logout_icon));
-        getViewDataBinding().toolbar.imgSearch.setOnClickListener(v -> getViewModel().getDataManager().logout(getBaseActivity()));
+        getViewDataBinding().toolbar.imgSearch.setPadding(3, 3, 3, 3);
+        getViewDataBinding().toolbar.imgSearch.setImageDrawable(getResources().getDrawable(R.drawable.ic_logout_2));
+        getViewDataBinding().toolbar.imgSearch.setOnClickListener(v -> showAlert(R.string.logout, R.string.logout_msg)
+                .setNegativeBtnShow(true)
+                .setPositiveBtnLabel(getString(R.string.yes))
+                .setNegativeBtnLabel(getString(R.string.no))
+                .setOnPositiveClickListener(dialog -> {
+                    dialog.dismiss();
+                    openActivityOnTokenExpire();
+                }).setOnNegativeClickListener(DialogFragment::dismiss));
 
         getViewModel().getUserDetail().observe(this, userDetail -> {
             getViewDataBinding().tvName.setText(userDetail.getFullName());

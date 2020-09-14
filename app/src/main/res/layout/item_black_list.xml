@@ -10,9 +10,12 @@
     android:background="@drawable/bg_card_corner"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:layout_width="65dp"
-        android:layout_height="65dp"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="@dimen/dimens_item_image_width"
+        android:layout_height="@dimen/dimens_item_image_height"
+        app:civ_border_color="@color/colorPrimary"
+        app:civ_border_width="2dp"
+        app:civ_circle_background_color="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -24,7 +27,7 @@
     <androidx.constraintlayout.widget.Guideline
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintGuide_begin="70dp"
+        app:layout_constraintGuide_begin="@dimen/dimens_image_guideline"
         android:orientation="vertical"
         app:layout_constraintStart_toEndOf="@+id/img_visitor"
         android:id="@+id/guideline"/>

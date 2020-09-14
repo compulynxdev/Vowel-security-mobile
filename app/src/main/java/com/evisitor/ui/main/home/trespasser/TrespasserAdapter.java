@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.evisitor.R;
 import com.evisitor.data.model.TrespasserResponse;
 import com.evisitor.ui.base.BaseViewHolder;
@@ -131,6 +133,21 @@ public class TrespasserAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 checkInTime.setVisibility(View.VISIBLE);
                 checkInTime.setText(checkInTime.getContext().getString(R.string.data_time_in, CalenderUtils.formatDate(bean.getCheckInTime(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIMESTAMP_FORMAT)));
             }else checkInTime.setVisibility(View.GONE);
+
+            if (bean.getImageUrl().isEmpty()) {
+                Glide.with(imgVisitor.getContext())
+                        .load(R.drawable.ic_person)
+                        .centerCrop()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(imgVisitor);
+            } else {
+                Glide.with(imgVisitor.getContext())
+                        .load(getImageUrl(bean.getImageUrl()))
+                        .centerCrop()
+                        .placeholder(R.drawable.ic_person)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(imgVisitor);
+            }
 
         }
     }

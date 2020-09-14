@@ -74,7 +74,7 @@ public class FlagVisitorActivity extends BaseActivity<ActivityFlagVisitorBinding
 
     private void setUpAdapter() {
         list = new ArrayList<>();
-        adapter = new FlagVisitorAdapter(list, pos -> VisitorProfileDialog.newInstance(getViewModel().getVisitorDetail(list.get(pos)), null).setBtnVisible(false).show(getSupportFragmentManager()));
+        adapter = new FlagVisitorAdapter(list, pos -> VisitorProfileDialog.newInstance(getViewModel().getVisitorDetail(list.get(pos)), null).setImage(list.get(pos).getImageUrl()).setBtnVisible(false).show(getSupportFragmentManager()));
         adapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(adapter);
         updateUI();

@@ -68,4 +68,7 @@ public interface ApiHelper {
 
     @GET(WebServices.GET_VISITOR_COUNT)
     Call<ResponseBody> doGetVisitorCount(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+
+    @GET(WebServices.CHECK_GUEST_STATUS)
+    Call<ResponseBody> doCheckGuestStatus(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
 }

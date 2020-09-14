@@ -12,7 +12,6 @@ import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.HomeBean;
 import com.evisitor.databinding.FragmentHomeBinding;
 import com.evisitor.ui.base.BaseFragment;
-import com.evisitor.ui.base.BaseNavigator;
 import com.evisitor.ui.main.home.blacklist.BlackListVisitorActivity;
 import com.evisitor.ui.main.home.flag.FlagVisitorActivity;
 import com.evisitor.ui.main.home.guest.GuestActivity;
@@ -24,7 +23,7 @@ import com.evisitor.ui.main.home.trespasser.TrespasserActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel> implements BaseNavigator {
+public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel> {
 
     private List<HomeBean> homeList;
 
@@ -101,6 +100,11 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             homeAdapter.notifyDataSetChanged();
         });
         getViewModel().setupHomeList();
-        //getViewModel().getVisitorCount();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        getViewModel().getVisitorCount();
     }
 }
