@@ -77,14 +77,19 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                     try {
                         assert response.body() != null;
                         JSONObject object = new JSONObject(response.body().string());
-                        getDataManager().setUsername(userName);
-                        getDataManager().setUserPassword(password);
-                        getDataManager().setAccessToken(object.getString("id_token"));
-                        getDataManager().setAccountId(object.getString("accountId"));
-                        getDataManager().setIdentifyFeature(object.getBoolean("identityFeature"));
-                        getDataManager().setLevelName(object.getString("levelName"));
-                        getDataManager().setUserId(object.getString("userId"));
-                        doGetUserDetail(isRemember);
+                        if (object.has("role") && object.getString("role").equals("DEVICE_ADMIN")) {
+                            getDataManager().setUsername(userName);
+                            getDataManager().setUserPassword(password);
+                            getDataManager().setAccessToken(object.getString("id_token"));
+                            getDataManager().setAccountId(object.getString("accountId"));
+                            getDataManager().setIdentifyFeature(object.getBoolean("identityFeature"));
+                            getDataManager().setLevelName(object.getString("levelName"));
+                            getDataManager().setUserId(object.getString("userId"));
+                            doGetUserDetail(isRemember);
+                        } else {
+                            getNavigator().hideLoading();
+                            getNavigator().showAlert(R.string.alert, R.string.alert_invalid_role);
+                        }
                     } catch (Exception e) {
                         getNavigator().hideLoading();
                         getNavigator().showAlert(R.string.alert, R.string.alert_error);

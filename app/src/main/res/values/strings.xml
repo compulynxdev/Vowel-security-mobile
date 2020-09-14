@@ -25,6 +25,7 @@
     <string name="password">Password</string>
     <string name="remember_me">Remember me</string>
     <string name="welcome_msg">Welcome To Login</string>
+    <string name="alert_invalid_role">No device user found with these credentials, Please contact with admin.</string>
 
     <!--Login Validations-->
     <string name="alert_empty_username">Please enter username.</string>
@@ -73,10 +74,12 @@
     <string name="data_register_date">Registered Date : %s</string>
     <string name="data_type">Visitor Type : %s</string>
     <string name="data_host_checkout_time">Host Check Out Time : %s</string>
+    <string name="data_time_in">Time In : %s</string>
+    <string name="data_time_out">Time Out : %s</string>
+    <string name="data_is_checkout">Host Check Out : %b</string>
     <string name="data_reason">Reason : %s</string>
     <string name="data_blacklisted_by">BlackListed By : %s</string>
     <string name="data_blacklisted_date">BlackListed Date : %s</string>
-
     <string name="data_flagged_by">Flagged By : %s</string>
     <string name="data_flagged_date">Flagged Date : %s</string>
 
@@ -161,12 +164,12 @@
     <string name="contact">Contact</string>
     <string name="address">Address</string>
     <string name="email">E-mail</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
 
     <!--Profile Dummy Data-->
     <string name="dummy_name">Hrithik Kaushal</string>
     <string name="dummy_username">Hrithik</string>
-    <string name="male">Male</string>
-    <string name="female">Female</string>
     <string name="dummy_contact">9876452310</string>
     <string name="dummy_address">Rajendra nagar, Indore</string>
     <string name="dummy_email">user@gmail.com</string>
@@ -184,7 +187,6 @@
 
     <!--Other-->
     <string name="image">IMAGE</string>
-    <string name="selectCheckinOption">Select Check In Option</string>
     <string name="success">Success</string>
     <string name="check_in_rejected">Check In Rejected.</string>
     <string name="check_in_success">Check In Successfully.</string>
@@ -196,9 +198,6 @@
     <string name="or">OR</string>
     <string name="alert_id">Please enter valid identity number</string>
     <string name="please_verify_identity_card_for_check_in">Please verify identity card \nfor check-in</string>
-    <string name="data_time_in">Time In : %s</string>
-    <string name="data_time_out">Time Out : %s</string>
-    <string name="data_is_checkout">Host Check Out : %b</string>
     <string name="expected">Expected</string>
     <string name="registered">Registered</string>
     <string name="check_out_rejected">Check Out Rejected.</string>

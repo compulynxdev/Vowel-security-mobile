@@ -26,7 +26,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     private final static int ID_NOTIFICATION = 3;
     private final static int ID_SETTINGS = 4;
     private final static int ID_PROFILE = 5;
-    int count = 0;
 
     public static Intent newIntent(Context context) {
         return new Intent(context, MainActivity.class);
