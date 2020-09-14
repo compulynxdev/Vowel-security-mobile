@@ -103,7 +103,9 @@ public abstract class BaseFragment <T extends ViewDataBinding, V extends BaseVie
     @Nullable
     @Override
     public Context getContext() {
-        return mActivity.getContext();
+        if (mActivity != null)
+            return mActivity.getContext();
+        else return getActivity();
     }
 
     @Override
@@ -158,17 +160,24 @@ public abstract class BaseFragment <T extends ViewDataBinding, V extends BaseVie
 
     @Override
     public AlertDialog showAlert(@StringRes int title, @StringRes int msg) {
-        return showAlert(getString(title), getString(msg));
+        if (isAdded())
+            return showAlert(getString(title), getString(msg));
+        else return null;
     }
 
     @Override
     public AlertDialog showAlert(@StringRes int title, String msg) {
-        return showAlert(getString(title), msg);
+        if (isAdded())
+            return showAlert(getString(title), msg);
+        else return null;
     }
 
+    //or we can use this one AlertDialog.newInstance() instead of null but this will create new instance every time
     @Override
     public AlertDialog showAlert(String title, @StringRes int msg) {
-        return showAlert(title, getString(msg));
+        if (isAdded())
+            return showAlert(title, getString(msg));
+        else return null;
     }
 
     @Override
@@ -202,6 +211,11 @@ public abstract class BaseFragment <T extends ViewDataBinding, V extends BaseVie
     public void handleApiError(ResponseBody response) {
         if (mActivity != null)
             mActivity.handleApiError(response);
+    }
+
+    public void showFullImage(String imageUrl) {
+        if (mActivity != null)
+            mActivity.showFullImage(imageUrl);
     }
 
     public void setupSearchSetting(SearchView searchView) {

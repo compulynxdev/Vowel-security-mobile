@@ -4,13 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.main.profile.UserProfileFragment">
 
-    <data>
-        <import type="android.view.View"/>
-        <variable
-            name="viewModel"
-            type="com.evisitor.ui.main.profile.UserProfileViewModel" />
-    </data>
-
     <ScrollView
         android:layout_width="match_parent"
         android:fillViewport="true"

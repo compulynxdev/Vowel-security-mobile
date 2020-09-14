@@ -2,7 +2,6 @@ package com.evisitor.ui.main.profile;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -19,6 +18,7 @@ import com.evisitor.ui.base.BaseNavigator;
 
 public class UserProfileFragment extends BaseFragment<FragmentUserProfileBinding, UserProfileViewModel> implements BaseNavigator {
 
+    private String imageUrl = "";
 
     public static Fragment newInstance() {
         UserProfileFragment fragment = new UserProfileFragment();
@@ -46,12 +46,13 @@ public class UserProfileFragment extends BaseFragment<FragmentUserProfileBinding
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getViewModel().setNavigator(this);
-        TextView tvTitle = view.findViewById(R.id.tv_title);
-        tvTitle.setText(R.string.title_profile);
+        getViewDataBinding().toolbar.tvTitle.setText(R.string.title_profile);
 
         getViewDataBinding().toolbar.imgSearch.setVisibility(View.VISIBLE);
         getViewDataBinding().toolbar.imgSearch.setPadding(3, 3, 3, 3);
         getViewDataBinding().toolbar.imgSearch.setImageDrawable(getResources().getDrawable(R.drawable.ic_logout_2));
+        getViewDataBinding().imgUser.setOnClickListener(v -> showFullImage(imageUrl));
+
         getViewDataBinding().toolbar.imgSearch.setOnClickListener(v -> showAlert(R.string.logout, R.string.logout_msg)
                 .setNegativeBtnShow(true)
                 .setPositiveBtnLabel(getString(R.string.yes))
@@ -69,6 +70,7 @@ public class UserProfileFragment extends BaseFragment<FragmentUserProfileBinding
             getViewDataBinding().tvContact.setText(userDetail.getContactNo());
             getViewDataBinding().tvAddress.setText(userDetail.getAddress());
 
+            imageUrl = userDetail.getImageUrl();
             if (userDetail.getImageUrl().isEmpty()) {
                 Glide.with(this)
                         .load(R.drawable.ic_person)

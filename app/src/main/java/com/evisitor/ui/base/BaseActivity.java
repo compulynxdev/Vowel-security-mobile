@@ -3,6 +3,7 @@ package com.evisitor.ui.base;
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,6 +28,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.evisitor.R;
 import com.evisitor.ui.dialog.AlertDialog;
+import com.evisitor.ui.image.ImageViewActivity;
+import com.evisitor.util.AppConstants;
 import com.evisitor.util.CommonUtils;
 import com.evisitor.util.NetworkUtils;
 
@@ -258,6 +261,12 @@ implements BaseFragment.Callback, BaseNavigator{
         } catch (Exception e) {
             showAlert(getString(R.string.alert), R.string.alert_error);
         }
+    }
+
+    public void showFullImage(String imageUrl) {
+        Intent intent = ImageViewActivity.newIntent(this);
+        intent.putExtra(AppConstants.IMAGE_VIEW_URL, imageUrl);
+        startActivity(intent);
     }
 
     public void setupSearchSetting(SearchView searchView) {

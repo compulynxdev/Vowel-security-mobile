@@ -95,11 +95,15 @@ public class HouseKeepingCheckInAdapter extends RecyclerView.Adapter<BaseViewHol
             visitorType = itemView.findViewById(R.id.tv_type);
             imgVisitor = itemView.findViewById(R.id.img_visitor);
 
-            itemView.findViewById(R.id.constraint).setOnClickListener(v -> {
-                if (listener!=null)
+            itemView.setOnClickListener(v -> {
+                if (listener != null && getAdapterPosition() != -1)
                     listener.ItemClick(list.get(getAdapterPosition()));
             });
 
+            imgVisitor.setOnClickListener(v -> {
+                if (getAdapterPosition() != -1)
+                    showFullImage(list.get(getAdapterPosition()).getImageUrl());
+            });
         }
 
         @Override

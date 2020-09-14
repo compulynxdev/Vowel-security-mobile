@@ -35,10 +35,10 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
         return version;
     }
 
-    void doVerifyAndLogin(String userName, String password, boolean isRemember) {
+    void doVerifyAndLogin(String userName, String password, String token, boolean isRemember) {
         if (getNavigator().isNetworkConnected(true)) {
             if (verifyInput(userName, password)) {
-                doLogin(userName, password, isRemember);
+                doLogin(userName, password, token, isRemember);
             }
         }
     }
@@ -60,12 +60,13 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
     }
 
 
-    private void doLogin(String userName, String password, boolean isRemember) {
+    private void doLogin(String userName, String password, String token, boolean isRemember) {
         getNavigator().showLoading();
         JSONObject object = new JSONObject();
         try {
             object.put("username", userName);
             object.put("password", password);
+            object.put("fcmToken", token);
         } catch (Exception e) {
             e.printStackTrace();
         }

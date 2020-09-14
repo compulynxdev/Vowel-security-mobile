@@ -12,6 +12,7 @@ public final class AppConstants {
     public static final int REQUEST_GALLERY = 52;
     public static final int LIMIT = 20;
 
+    public static final String IMAGE_VIEW_URL = "IMAGE_VIEW_URL";
     public static final String ACTIVITY_ABOUT_US = "ACTIVITY_ABOUT_US";
     public static final String ACTIVITY_PRIVACY = "ACTIVITY_PRIVACY";
     public static final String CHECK_IN = "CHECK_IN";

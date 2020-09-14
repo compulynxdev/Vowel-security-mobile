@@ -81,6 +81,7 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
         getViewDataBinding().imgClose.setOnClickListener(this);
         getViewDataBinding().btnOk.setVisibility(isBtnVisible ? View.VISIBLE : View.GONE);
         getViewDataBinding().btnOk.setOnClickListener(this);
+        getViewDataBinding().imgProfile.setOnClickListener(this);
 
         if (!btnLabel.isEmpty()) {
             getViewDataBinding().btnOk.setText(btnLabel);
@@ -124,6 +125,10 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
 
             case R.id.img_close:
                 dismissDialog(TAG);
+                break;
+
+            case R.id.img_profile:
+                showFullImage(image);
                 break;
         }
     }

@@ -200,4 +200,9 @@ public abstract class BaseDialog<T extends ViewDataBinding, V extends BaseViewMo
             mActivity.handleApiError(response);
     }
 
+    public void showFullImage(String imageUrl) {
+        if (mActivity != null)
+            mActivity.showFullImage(imageUrl);
+    }
+
 }

@@ -99,9 +99,13 @@ public class FlagVisitorAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             imgVisitor = itemView.findViewById(R.id.img_visitor);
 
             itemView.setOnClickListener(v -> {
-                if (callback != null && getAdapterPosition() != -1) {
+                if (callback != null && getAdapterPosition() != -1)
                     callback.onItemClick(getAdapterPosition());
-                }
+            });
+
+            imgVisitor.setOnClickListener(v -> {
+                if (getAdapterPosition() != -1)
+                    showFullImage(list.get(getAdapterPosition()).getImageUrl());
             });
         }
 

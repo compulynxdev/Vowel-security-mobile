@@ -97,9 +97,13 @@ public class GuestCheckOutAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             timeOut.setVisibility(View.VISIBLE);
 
             itemView.setOnClickListener(v -> {
-                if (callback != null && getAdapterPosition() != -1) {
+                if (callback != null && getAdapterPosition() != -1)
                     callback.onItemClick(getAdapterPosition());
-                }
+            });
+
+            imgVisitor.setOnClickListener(v -> {
+                if (getAdapterPosition() != -1)
+                    showFullImage(list.get(getAdapterPosition()).getImageUrl());
             });
         }
 

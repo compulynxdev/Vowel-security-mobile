@@ -1,4 +1,4 @@
-package com.evisitor.ui.notification;
+package com.evisitor.ui.fcm;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -9,17 +9,20 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
+
 import com.evisitor.R;
 import com.evisitor.ui.main.MainActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
 import java.util.Objects;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
-    public static String NOTIFICATION_CHANNEL_ID = "com.evisitor";
-    public static final int NOTIFICATION_ID = 1;
+    private static final int NOTIFICATION_ID = 1;
+
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
@@ -35,38 +38,28 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         PendingIntent pi = PendingIntent.getActivity(context, 0, ii,PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Notification notification;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notification = new NotificationCompat.Builder(this,NOTIFICATION_CHANNEL_ID)
-                    .setSmallIcon(getNotificationIcon())
-                    .setContentText(message)
-                    .setAutoCancel(true)
-                   .setContentIntent(pi)
-                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-                    .setCategory(Notification.CATEGORY_SERVICE)
-                    .setWhen(System.currentTimeMillis())
-                    .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                    .setContentTitle(title).build();
+        String NOTIFICATION_CHANNEL_ID = "com.evisitor";
+        Notification notification = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
+                .setSmallIcon(getNotificationIcon())
+                .setContentText(message)
+                .setAutoCancel(true)
+                .setContentIntent(pi)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(Notification.CATEGORY_SERVICE)
+                .setWhen(System.currentTimeMillis())
+                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                .setContentTitle(title)
+                .build();
 
-            NotificationManager notificationManager = (NotificationManager) context.getSystemService(
-                    Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(
+                Context.NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID,title, NotificationManager.IMPORTANCE_DEFAULT);
             assert notificationManager != null;
             notificationManager.createNotificationChannel(notificationChannel);
-            notificationManager.notify(NOTIFICATION_ID, notification);
-        }else{
-            notification = new NotificationCompat.Builder(this)
-                    .setSmallIcon(getNotificationIcon())
-                    .setAutoCancel(true)
-                    .setContentText(message)
-                    .setContentIntent(pi)
-                    .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                    .setContentTitle(title).build();
-            NotificationManager notificationManager = (NotificationManager) context.getSystemService(
-                    Context.NOTIFICATION_SERVICE);
-            assert notificationManager != null;
-            notificationManager.notify(NOTIFICATION_ID, notification);
         }
+        assert notificationManager != null;
+        notificationManager.notify(NOTIFICATION_ID, notification);
     }
 
     private int getNotificationIcon() {

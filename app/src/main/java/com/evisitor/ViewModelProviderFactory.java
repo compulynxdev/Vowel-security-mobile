@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.evisitor.data.DataManager;
 import com.evisitor.ui.dialog.AlertViewModel;
 import com.evisitor.ui.dialog.ImagePickViewModel;
+import com.evisitor.ui.image.ImageViewModel;
 import com.evisitor.ui.login.LoginViewModel;
 import com.evisitor.ui.main.MainViewModel;
 import com.evisitor.ui.main.activity.ActivityViewModel;
@@ -164,6 +165,9 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(FlagVisitorViewModel.class)) {
             //noinspection unchecked
             return (T) new FlagVisitorViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(ImageViewModel.class)) {
+            //noinspection unchecked
+            return (T) new ImageViewModel(dataManager);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
