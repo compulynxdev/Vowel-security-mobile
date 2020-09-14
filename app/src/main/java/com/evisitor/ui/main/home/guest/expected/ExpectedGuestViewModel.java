@@ -82,7 +82,7 @@ public class ExpectedGuestViewModel extends BaseCheckInOutViewModel<ExpectedGues
         List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
         getDataManager().setGuestDetail(guests);
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, guests.getName())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), guests.getExpectedVehicleNo(), true));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), guests.getExpectedVehicleNo(), VisitorProfileBean.VIEW_TYPE_EDITABLE));
         if (!guests.getContactNo().isEmpty())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, guests.getContactNo())));
         if (!guests.getIdentityNo().isEmpty())

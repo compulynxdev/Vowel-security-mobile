@@ -68,4 +68,11 @@
         <item name="textAllCaps">false</item>
         <item name="android:fontFamily">@font/futura_round_medium</item>
     </style>
+
+    <style name="chipTextAppearance" parent="TextAppearance.MaterialComponents.Chip">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:fontFamily">@font/futura_round_bold</item>
+    </style>
 </resources>

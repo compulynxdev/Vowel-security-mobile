@@ -106,7 +106,7 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
     }
 
     private void setUpAdapter() {
-        VisitorProfileAdapter infoAdapter = new VisitorProfileAdapter(visitorInfoList);
+        VisitorProfileAdapter infoAdapter = new VisitorProfileAdapter(getBaseActivity(), visitorInfoList);
         getViewDataBinding().recyclerView.setAdapter(infoAdapter);
     }
 
