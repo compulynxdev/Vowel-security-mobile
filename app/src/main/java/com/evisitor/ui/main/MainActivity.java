@@ -90,4 +90,5 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         //getViewDataBinding().bottomNavigation.setCount(ID_NOTIFICATION, "0");
         getViewDataBinding().bottomNavigation.show(ID_HOME, true);
     }
+
 }

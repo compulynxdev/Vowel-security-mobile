@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
@@ -99,5 +100,8 @@ dependencies {
 
     // MRZ Reader
     implementation project(path: ':mrzreader')
+
+    //Firebase messaging
+    implementation 'com.google.firebase:firebase-messaging:20.2.4'
 
 }
