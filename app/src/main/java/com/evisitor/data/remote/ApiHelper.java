@@ -71,4 +71,7 @@ public interface ApiHelper {
 
     @GET(WebServices.CHECK_GUEST_STATUS)
     Call<ResponseBody> doCheckGuestStatus(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+
+    @GET(WebServices.GET_NOTIFICATIONS)
+    Call<ResponseBody> doGetNotifications(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
 }

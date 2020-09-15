@@ -7,6 +7,7 @@ import com.evisitor.BuildConfig;
  */
 class WebServices {
 
+    static final String GET_NOTIFICATIONS = "notification/get_device_notification";
     static final String BASE_URL = BuildConfig.BASE_URL + "e-visitor-system/api/";
     //static final String BASE_URL = BuildConfig.BASE_URL + "api/"; //Local Server
 

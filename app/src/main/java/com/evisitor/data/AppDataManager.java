@@ -301,4 +301,9 @@ public class AppDataManager implements DataManager {
     public Call<ResponseBody> doCheckGuestStatus(String authToken, Map<String, String> partMap) {
         return apiHelper.doCheckGuestStatus(authToken, partMap);
     }
+
+    @Override
+    public Call<ResponseBody> doGetNotifications(String authToken, Map<String, String> partMap) {
+        return apiHelper.doGetNotifications(authToken, partMap);
+    }
 }

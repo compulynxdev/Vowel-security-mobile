@@ -139,4 +139,9 @@ public class AppApiHelper implements ApiHelper {
     public Call<ResponseBody> doCheckGuestStatus(String authToken, Map<String, String> partMap) {
         return getApiInterface().doCheckGuestStatus(authToken, partMap);
     }
+
+    @Override
+    public Call<ResponseBody> doGetNotifications(String authToken, Map<String, String> partMap) {
+        return getApiInterface().doGetNotifications(authToken, partMap);
+    }
 }

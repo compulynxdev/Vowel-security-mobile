@@ -203,5 +203,7 @@
     <string name="check_out_rejected">Check Out Rejected.</string>
     <string name="msg_check_out_call">Resident didn\'t checkout yet, Please call manually and wait for resident confirmation and select option according to resident.</string>
     <string name="msg_block">The guest associated with this identity number is blocked by admin.</string>
+    <string name="data_check_in_status">Check In Status : %s</string>
+    <string name="by">by % s</string>
 
 </resources>
