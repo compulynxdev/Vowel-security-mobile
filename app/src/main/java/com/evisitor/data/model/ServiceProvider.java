@@ -69,6 +69,17 @@ public class ServiceProvider {
     @SerializedName("notificationStatus")
     private boolean notificationStatus;
 
+    @SerializedName("checkInStatus")
+    private String checkInStatus;
+
+    public String getCheckInStatus() {
+        return checkInStatus==null ? "PENDING" : checkInStatus;
+    }
+
+    public void setCheckInStatus(String checkInStatus) {
+        this.checkInStatus = checkInStatus;
+    }
+
     public boolean isNotificationStatus() {
         return notificationStatus;
     }

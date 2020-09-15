@@ -9,8 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.evisitor.R;
-import com.evisitor.data.model.Notifications;
+import com.evisitor.data.model.NotificationResponse;
 import com.evisitor.ui.base.BaseViewHolder;
+import com.evisitor.util.CalenderUtils;
 import com.evisitor.util.pagination.FooterLoader;
 
 import java.util.List;
@@ -20,9 +21,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private static final int VIEWTYPE_ITEM = 1;
     private static final int VIEWTYPE_LOADER =2 ;
     private boolean showLoader;
-    private List<Notifications> notifications;
+    private List<NotificationResponse.ContentBean> notifications;
 
-    NotificationAdapter(List<Notifications> text) {
+    NotificationAdapter(List<NotificationResponse.ContentBean> text) {
         this.notifications = text;
     }
 
@@ -83,10 +84,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         @Override
         public void onBind(int position) {
-            Notifications notification = notifications.get(position);
-            tvTitle.setText(notification.getTitle());
-            tvTime.setText(notification.getTime());
-            tvMsg.setText(notification.getMsg());
+            NotificationResponse.ContentBean notification = notifications.get(position);
+            tvTitle.setText(notification.getFullName().concat("(").concat(notification.getType()).concat(")"));
+            tvTime.setText(CalenderUtils.formatDate(notification.getCreatedDate(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIMESTAMP_FORMAT));
+            tvMsg.setText(tvMsg.getContext().getString(R.string.check_in).concat(" ").concat(notification.getNotificationStatus())
+                    .concat(tvMsg.getContext().getString(R.string.by,notification.getCreatedBy())));
         }
     }
 }
