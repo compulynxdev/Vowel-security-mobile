@@ -285,22 +285,15 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
                         .setOnNegativeClickListener(dialog1 -> {
                             dialog1.dismiss();
 
-                            AlertDialog.newInstance()
-                                    .setCloseBtnShow(false)
-                                    .setNegativeBtnShow(false)
-                                    .setTitle(getString(R.string.alert))
-                                    .setMsg(getString(R.string.check_in_rejected))
-                                    .setOnPositiveClickListener(dialog12 -> {
-                                        dialog12.dismiss();
-                                        Intent intent = MainActivity.newIntent(getContext());
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                        startActivity(intent);
-                                        finish();
-                                    }).show(getSupportFragmentManager());
+                            getViewModel().doAddGuest(false, bmp_profile, getViewDataBinding().etIdentity.getText().toString().trim(), idType, getViewDataBinding().etName.getText().toString()
+                                    , getViewDataBinding().etVehicle.getText().toString().trim(), getViewDataBinding().etContact.getText().toString()
+                                    , getViewDataBinding().etAddress.getText().toString(), getViewDataBinding().tvGender.getText().toString()
+                                    , getViewDataBinding().actvHouseNo.getText().toString()
+                                    , houseId, ownerId, residentId);
                         })
                         .setOnPositiveClickListener(dialog12 -> {
                             dialog12.dismiss();
-                            getViewModel().doAddGuest(bmp_profile, getViewDataBinding().etIdentity.getText().toString().trim(), idType, getViewDataBinding().etName.getText().toString()
+                            getViewModel().doAddGuest(true, bmp_profile, getViewDataBinding().etIdentity.getText().toString().trim(), idType, getViewDataBinding().etName.getText().toString()
                                     , getViewDataBinding().etVehicle.getText().toString().trim(), getViewDataBinding().etContact.getText().toString()
                                     , getViewDataBinding().etAddress.getText().toString(), getViewDataBinding().tvGender.getText().toString()
                                     , getViewDataBinding().actvHouseNo.getText().toString()
@@ -311,19 +304,34 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
     }
 
     @Override
-    public void onSuccess() {
-        AlertDialog.newInstance()
-                .setCloseBtnShow(false)
-                .setNegativeBtnShow(false)
-                .setTitle(getString(R.string.success))
-                .setMsg(getString(R.string.check_in_success))
-                .setOnPositiveClickListener(dialog12 -> {
-                    dialog12.dismiss();
-                    Intent intent = MainActivity.newIntent(this);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                    finish();
-                }).show(getSupportFragmentManager());
+    public void onSuccess(boolean isAccept) {
+        if (isAccept) {
+            AlertDialog.newInstance()
+                    .setCloseBtnShow(false)
+                    .setNegativeBtnShow(false)
+                    .setTitle(getString(R.string.success))
+                    .setMsg(getString(R.string.check_in_success))
+                    .setOnPositiveClickListener(dialog12 -> {
+                        dialog12.dismiss();
+                        Intent intent = MainActivity.newIntent(this);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        finish();
+                    }).show(getSupportFragmentManager());
+        } else {
+            AlertDialog.newInstance()
+                    .setCloseBtnShow(false)
+                    .setNegativeBtnShow(false)
+                    .setTitle(getString(R.string.alert))
+                    .setMsg(getString(R.string.check_in_rejected))
+                    .setOnPositiveClickListener(dialog12 -> {
+                        dialog12.dismiss();
+                        Intent intent = MainActivity.newIntent(getContext());
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        finish();
+                    }).show(getSupportFragmentManager());
+        }
     }
 
     @Override

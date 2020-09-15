@@ -25,6 +25,9 @@ public final class AppConstants {
     public static final String FLAG = "flag";
     public static final String TODAY = "today";
 
+    public static final String ACCEPT = "ACCEPT";
+    public static final String REJECT = "REJECT";
+
     public static String CONTENT_TYPE_TEXT = "text/plain";
     public static String CONTENT_TYPE_JSON="application/json; charset=utf-8";
     public static String bearer = "Bearer";

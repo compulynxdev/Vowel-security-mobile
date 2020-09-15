@@ -1,5 +1,7 @@
 package com.evisitor.ui.main.home.trespasser.services;
 
+import android.text.format.DateUtils;
+
 import androidx.annotation.NonNull;
 
 import com.evisitor.R;
@@ -12,6 +14,7 @@ import com.evisitor.util.AppLogger;
 import com.evisitor.util.CalenderUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,6 +81,10 @@ public class TrespasserSPViewModel extends BaseViewModel<TrespasserSPNavigator> 
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, visitorResponse.getDocumentId())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_gender, visitorResponse.getGender())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, visitorResponse.getContactNo())));
+        Date hostCheckoutTime = CalenderUtils.getDateFormat(visitorResponse.getHostCheckOutTime(), CalenderUtils.SERVER_DATE_FORMAT);
+        if (hostCheckoutTime != null) {
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_elapsed, DateUtils.getRelativeTimeSpanString(hostCheckoutTime.getTime()))));
+        }
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time_in, CalenderUtils.formatDate(visitorResponse.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT))));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_house, visitorResponse.getFlatNo())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, visitorResponse.getCreatedBy())));

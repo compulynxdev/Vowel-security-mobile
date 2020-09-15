@@ -270,7 +270,7 @@ public class TrespasserResponse {
          "documentId" : "121212",
          "id" : 1,
          "enteredVehicleNo" : 1,
-         "hostCheckoutTime" : 1,
+         "hostCheckOutTime" : 1,
          "contactNo" : "978784664"*/
 
 
@@ -278,7 +278,7 @@ public class TrespasserResponse {
         private String flatNo;
         private String createdDate;
         private String createdBy;
-        private String hostCheckoutTime;
+        private String hostCheckOutTime;
         private String checkInTime;
         private String documentId;
         private String gender;
@@ -320,12 +320,12 @@ public class TrespasserResponse {
             this.createdBy = createdBy;
         }
 
-        public String getHostCheckoutTime() {
-            return hostCheckoutTime;
+        public String getHostCheckOutTime() {
+            return hostCheckOutTime;
         }
 
-        public void setHostCheckoutTime(String hostCheckoutTime) {
-            this.hostCheckoutTime = hostCheckoutTime;
+        public void setHostCheckOutTime(String hostCheckOutTime) {
+            this.hostCheckOutTime = hostCheckOutTime;
         }
 
         public String getCheckInTime() {

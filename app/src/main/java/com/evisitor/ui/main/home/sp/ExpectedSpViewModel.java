@@ -114,13 +114,15 @@ public class ExpectedSpViewModel extends BaseCheckInOutViewModel<ExpectedSPNavig
         sendNotification(body, this);
     }
 
-    void approveByCall() {
+    void approveByCall(boolean isAccept) {
         JSONObject object = new JSONObject();
         try {
             object.put("id", getDataManager().getSpDetail().getServiceProviderId());
             object.put("enteredVehicleNo", getDataManager().getSpDetail().getEnteredVehicleNo());
             object.put("type", AppConstants.CHECK_IN);
             object.put("visitor", AppConstants.SERVICE_PROVIDER);
+            object.put("state", isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

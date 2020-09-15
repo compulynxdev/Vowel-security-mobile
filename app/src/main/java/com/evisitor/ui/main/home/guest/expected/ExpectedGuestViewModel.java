@@ -113,13 +113,14 @@ public class ExpectedGuestViewModel extends BaseCheckInOutViewModel<ExpectedGues
         sendNotification(body, this);
     }
 
-    void approveByCall() {
+    void approveByCall(boolean isAccept) {
         JSONObject object = new JSONObject();
         try {
             object.put("id",getDataManager().getGuestDetail().getGuestId());
             object.put("enteredVehicleNo", getDataManager().getGuestDetail().getEnteredVehicleNo());
             object.put("type", AppConstants.CHECK_IN);
             object.put("visitor", AppConstants.GUEST);
+            object.put("state", isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);
         } catch (JSONException e) {
             e.printStackTrace();
         }

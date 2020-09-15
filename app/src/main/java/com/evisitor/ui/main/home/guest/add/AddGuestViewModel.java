@@ -150,7 +150,7 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
         } else return true;
     }
 
-    void doAddGuest(Bitmap bmp_profile, String identityNo, String idType, String name, String vehicleNo, String contact, String address, String gender, String houseNumber, String houseId, String ownerId, String residentId) {
+    void doAddGuest(boolean isAccept, Bitmap bmp_profile, String identityNo, String idType, String name, String vehicleNo, String contact, String address, String gender, String houseNumber, String houseId, String ownerId, String residentId) {
 
         if (getNavigator().isNetworkConnected(true)) {
             getNavigator().showLoading();
@@ -174,6 +174,7 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
                 object.put("cardId", "");
                 object.put("dob", "");
                 object.put("image", bmp_profile == null ? "" : AppUtils.getBitmapToBase64(bmp_profile));
+                object.put("state", isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -187,7 +188,7 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
                         try {
                             assert response.body() != null;
                             AppLogger.e("Response", response.body().string());
-                            getNavigator().onSuccess();
+                            getNavigator().onSuccess(isAccept);
                         } catch (Exception e) {
                             getNavigator().showAlert(R.string.alert, R.string.alert_error);
                         }

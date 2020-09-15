@@ -116,7 +116,7 @@ public class ExpectedHKViewModel extends BaseCheckInOutViewModel<ExpectedHKNavig
         sendNotification(body, this);
     }
 
-    void approveByCall() {
+    void approveByCall(boolean isAccept) {
         JSONObject object = new JSONObject();
         try {
             object.put("accountId", getDataManager().getAccountId());
@@ -124,6 +124,7 @@ public class ExpectedHKViewModel extends BaseCheckInOutViewModel<ExpectedHKNavig
             object.put("enteredVehicleNo", getDataManager().getHouseKeeping().getEnteredVehicleNo());
             object.put("type", AppConstants.CHECK_IN);
             object.put("visitor", AppConstants.HOUSE_HELP);
+            object.put("state", isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);
         } catch (JSONException e) {
             e.printStackTrace();
         }

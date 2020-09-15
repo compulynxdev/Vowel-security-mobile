@@ -1,5 +1,6 @@
 package com.evisitor.ui.main.home.trespasser;
 
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.evisitor.ui.base.ItemClickCallback;
 import com.evisitor.util.CalenderUtils;
 import com.evisitor.util.pagination.FooterLoader;
 
+import java.util.Date;
 import java.util.List;
 
 public class TrespasserAdapter extends RecyclerView.Adapter<BaseViewHolder> {
@@ -87,13 +89,13 @@ public class TrespasserAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public class ViewHolder extends BaseViewHolder {
         ImageView imgVisitor;
-        TextView name,docId, flat,contact, vehicleNo, checkInTime;
+        TextView name, docId, flat, tv_elapsed_time, vehicleNo, checkInTime;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_name);
             docId = itemView.findViewById(R.id.tv_doc_id);
             flat = itemView.findViewById(R.id.tv_flat);
-            contact = itemView.findViewById(R.id.tv_contact);
+            tv_elapsed_time = itemView.findViewById(R.id.tv_elapsed_time);
             vehicleNo = itemView.findViewById(R.id.tv_vehicle);
             checkInTime = itemView.findViewById(R.id.tv_check);
             imgVisitor = itemView.findViewById(R.id.img_visitor);
@@ -123,10 +125,13 @@ public class TrespasserAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 flat.setText(flat.getContext().getString(R.string.data_house,bean.getFlatNo()));
             }else flat.setVisibility(View.GONE);
 
-            if (bean.getContactNo()!=null && !bean.getContactNo().isEmpty()){
-                contact.setVisibility(View.VISIBLE);
-                contact.setText(contact.getContext().getString(R.string.data_mobile,bean.getContactNo()));
-            }else contact.setVisibility(View.GONE);
+            if (bean.getHostCheckOutTime() != null && !bean.getHostCheckOutTime().isEmpty()) {
+                Date hostCheckoutTime = CalenderUtils.getDateFormat(bean.getHostCheckOutTime(), CalenderUtils.SERVER_DATE_FORMAT);
+                if (hostCheckoutTime != null) {
+                    tv_elapsed_time.setVisibility(View.VISIBLE);
+                    tv_elapsed_time.setText(tv_elapsed_time.getContext().getString(R.string.data_elapsed, DateUtils.getRelativeTimeSpanString(hostCheckoutTime.getTime())));
+                }
+            } else tv_elapsed_time.setVisibility(View.GONE);
 
            /* if (bean.getEnteredVehicleNo()!=null && !bean.getEnteredVehicleNo().isEmpty()){
                 vehicleNo.setVisibility(View.VISIBLE);

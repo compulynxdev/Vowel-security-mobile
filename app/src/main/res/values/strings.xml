@@ -70,6 +70,7 @@
     <string name="data_expected_time">Expected Time : %s</string>
     <string name="data_identity">Identity No : %s</string>
     <string name="data_mobile">Mobile : %s</string>
+    <string name="data_elapsed">Elapsed Time : %s</string>
     <string name="data_register_by">Registered By : %s</string>
     <string name="data_register_date">Registered Date : %s</string>
     <string name="data_type">Visitor Type : %s</string>

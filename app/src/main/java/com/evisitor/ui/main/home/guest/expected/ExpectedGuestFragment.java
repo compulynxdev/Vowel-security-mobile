@@ -169,12 +169,13 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
                 .setNegativeBtnLabel(getString(R.string.reject))
                 .setOnNegativeClickListener(dialog1 -> {
                     dialog1.dismiss();
-                    showAlert(R.string.alert,R.string.check_in_rejected);
+                    if (isNetworkConnected(true))
+                        getViewModel().approveByCall(false);
                 })
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
                     if (isNetworkConnected(true))
-                        getViewModel().approveByCall();
+                        getViewModel().approveByCall(true);
                 }).show(getFragmentManager());
     }
 

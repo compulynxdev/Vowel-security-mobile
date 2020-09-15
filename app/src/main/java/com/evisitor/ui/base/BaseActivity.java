@@ -43,7 +43,7 @@ import okhttp3.ResponseBody;
  */
 
 public abstract class BaseActivity <T extends ViewDataBinding,V extends BaseViewModel> extends AppCompatActivity
-implements BaseFragment.Callback, BaseNavigator{
+        implements BaseFragment.Callback, BaseNavigator {
 
     private static final String TAG = "BaseActivity";
     // this can probably depend on isLoading variable of BaseViewModel,
@@ -250,11 +250,11 @@ implements BaseFragment.Callback, BaseNavigator{
                 showAlert(R.string.alert, R.string.alert_error);
             } else {
                 JSONObject object = new JSONObject(data);
-                if (object.has("detail"))
-                    showAlert(object.getString("title"), object.getString("detail"));
-                else if (object.has("message")) {
+                if (object.has("message")) {
                     showAlert(object.getString("title"), object.getString("message"));
-                } else {
+                } else if (object.has("detail"))
+                    showAlert(object.getString("title"), object.getString("detail"));
+                else {
                     showAlert(R.string.alert, R.string.alert_error);
                 }
             }
