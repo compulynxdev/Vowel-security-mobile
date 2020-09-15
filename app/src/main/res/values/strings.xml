@@ -66,7 +66,7 @@
     <string name="data_host">Host : %s</string>
     <string name="data_time">Time : %s</string>
     <string name="data_time_slot">Time : %s - %s</string>
-    <string name="data_days_slot">Days :</string>
+    <string name="data_days_slot">Working Days</string>
     <string name="data_expected_time">Expected Time : %s</string>
     <string name="data_identity">Identity No : %s</string>
     <string name="data_mobile">Mobile : %s</string>

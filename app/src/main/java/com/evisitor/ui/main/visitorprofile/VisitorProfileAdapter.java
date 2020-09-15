@@ -41,7 +41,7 @@ public class VisitorProfileAdapter extends RecyclerView.Adapter<BaseViewHolder> 
     public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (viewType) {
             case VisitorProfileBean.VIEW_TYPE_DAYS:
-                return new ChipViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_days, parent, false));
+                return new DaysViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_days, parent, false));
 
             case VisitorProfileBean.VIEW_TYPE_EDITABLE:
                 return new EditableViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_editable, parent, false));
@@ -138,13 +138,13 @@ public class VisitorProfileAdapter extends RecyclerView.Adapter<BaseViewHolder> 
         }
     }
 
-    public class ChipViewHolder extends BaseViewHolder {
+    public class DaysViewHolder extends BaseViewHolder {
 
         TextView tv_name;
         LinearLayout ll_days;
         ConstraintLayout constraint_main;
 
-        ChipViewHolder(@NonNull View itemView) {
+        DaysViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_name = itemView.findViewById(R.id.tv_name);
             ll_days = itemView.findViewById(R.id.ll_days);

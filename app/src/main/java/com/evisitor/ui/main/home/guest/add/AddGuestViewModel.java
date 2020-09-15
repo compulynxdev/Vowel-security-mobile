@@ -211,6 +211,11 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
     }
 
     void doCheckGuestStatus(String identity) {
+        if (!getDataManager().isIdentifyFeature()) {
+            guestStatusMutableData.setValue(false);
+            return;
+        }
+
         if (getNavigator().isNetworkConnected(true)) {
             getNavigator().showLoading();
             Map<String, String> map = new HashMap<>();

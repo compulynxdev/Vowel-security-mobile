@@ -15,27 +15,21 @@
         android:fontFamily="@font/futura_book"
         android:textColor="@color/black"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/ll_days"
-        app:layout_constraintEnd_toStartOf="@+id/spacer"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/ll_days" />
-
-    <Space
-        android:id="@+id/spacer"
-        android:layout_width="3dp"
-        android:layout_height="match_parent"
-        app:layout_constraintEnd_toStartOf="@+id/ll_days"
-        app:layout_constraintStart_toEndOf="@+id/tv_name" />
+        app:layout_constraintBottom_toTopOf="@+id/ll_days"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/ll_days"
+        android:layout_marginTop="4dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/spacer"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
