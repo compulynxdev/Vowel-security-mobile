@@ -73,15 +73,15 @@ public class Guests {
     @SerializedName("image")
     private String imageUrl;
 
-    @SerializedName("checkInStatus")
-    private String checkInStatus;
+    @SerializedName("state")
+    private String status;
 
-    public String getCheckInStatus() {
-        return checkInStatus==null ? "PENDING" : checkInStatus;
+    public String getStatus() {
+        return status ==null ? "PENDING" : status;
     }
 
-    public void setCheckInStatus(String checkInStatus) {
-        this.checkInStatus = checkInStatus;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public boolean isCheckOutFeature() {

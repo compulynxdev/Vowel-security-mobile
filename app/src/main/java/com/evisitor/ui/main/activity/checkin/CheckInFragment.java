@@ -186,11 +186,11 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                 .setTitle(getString(R.string.check_out))
                 .setMsg(getString(R.string.msg_check_out_call))
                 .setPositiveBtnLabel(getString(R.string.approve))
-                .setNegativeBtnLabel(getString(R.string.reject))
+                /*.setNegativeBtnLabel(getString(R.string.reject))
                 .setOnNegativeClickListener(dialog1 -> {
                     dialog1.dismiss();
                     showAlert(R.string.alert, R.string.check_out_rejected);
-                })
+                })*/
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
                     if (isNetworkConnected(true))

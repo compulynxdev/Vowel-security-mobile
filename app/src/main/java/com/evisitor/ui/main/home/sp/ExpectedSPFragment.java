@@ -73,7 +73,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
         spList = new ArrayList<>();
         adapter = new ExpectedSPAdapter(spList, pos -> {
             List<VisitorProfileBean> visitorProfileBeanList = getViewModel().setClickVisitorDetail(spList.get(pos));
-            VisitorProfileDialog.newInstance(visitorProfileBeanList, visitorProfileDialog -> {
+            VisitorProfileDialog dialog = VisitorProfileDialog.newInstance(visitorProfileBeanList, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
 
                 ServiceProvider tmpBean = getViewModel().getDataManager().getSpDetail();
@@ -101,7 +101,11 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                     }).show(getFragmentManager());
                 }
 
-            }).setImage(spList.get(pos).getImageUrl()).setBtnLabel(getString(R.string.check_in)).show(getFragmentManager());
+            }).setImage(spList.get(pos).getImageUrl());
+
+            if (!spList.get(pos).getStatus().equalsIgnoreCase("reject"))
+                dialog.setBtnLabel(getString(R.string.check_in));
+            dialog.show(getFragmentManager());
         });
         adapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(adapter);
