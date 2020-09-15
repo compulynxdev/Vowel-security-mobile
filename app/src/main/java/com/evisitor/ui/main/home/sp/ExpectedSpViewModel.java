@@ -94,8 +94,8 @@ public class ExpectedSpViewModel extends BaseCheckInOutViewModel<ExpectedSPNavig
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_house, spBean.getHouseNo())));
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, spBean.getHost())));
         }
-        if (spBean.getCheckInStatus()!=null)
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_check_in_status, spBean.getCheckInStatus())));
+        if (spBean.getStatus()!=null)
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.status, spBean.getStatus())));
 
         getNavigator().hideLoading();
         return visitorProfileBeanList;

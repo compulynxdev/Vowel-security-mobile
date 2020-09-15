@@ -94,7 +94,7 @@ public class ExpectedGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public class ViewHolder extends BaseViewHolder {
         ImageView imgVisitor;
-        TextView name,time,houseNo,host,vehicle;
+        TextView name,time,houseNo,host,vehicle,status;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_name);
@@ -102,6 +102,7 @@ public class ExpectedGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             houseNo = itemView.findViewById(R.id.tv_house_no);
             host = itemView.findViewById(R.id.tv_host);
             vehicle = itemView.findViewById(R.id.tv_vehicle);
+            status = itemView.findViewById(R.id.tv_status);
             imgVisitor = itemView.findViewById(R.id.img_visitor);
 
             itemView.setOnClickListener(v -> {
@@ -119,6 +120,7 @@ public class ExpectedGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         public void onBind(int position) {
             Guests bean = list.get(position);
             name.setText(context.getString(R.string.data_name, bean.getName()));
+            status.setText(status.getContext().getString(R.string.status,bean.getStatus()));
             if (bean.getTime()!=null && !bean.getTime().isEmpty())
                 time.setText(context.getString(R.string.data_time, CalenderUtils.formatDate(bean.getTime(), CalenderUtils.SERVER_DATE_FORMAT,
                         CalenderUtils.TIMESTAMP_FORMAT)));

@@ -206,5 +206,6 @@
     <string name="msg_block">The guest associated with this identity number is blocked by admin.</string>
     <string name="data_check_in_status">Check In Status : %s</string>
     <string name="by">by % s</string>
+    <string name="status">Status : %s</string>
 
 </resources>
