@@ -207,5 +207,7 @@
     <string name="data_check_in_status">Check In Status : %s</string>
     <string name="by">by % s</string>
     <string name="status">Status : %s</string>
+    <string name="no_owner_found">No owner found</string>
+    <string name="no_host_found">No host found</string>
 
 </resources>

@@ -14,6 +14,16 @@ public class HostDetailBean {
     private String fullName;
     private boolean isOwner;
 
+    public HostDetailBean() {
+
+    }
+
+    public HostDetailBean(int id, String fullName, boolean isOwner) {
+        this.id = id;
+        this.fullName = fullName;
+        this.isOwner = isOwner;
+    }
+
     public int getId() {
         return id;
     }

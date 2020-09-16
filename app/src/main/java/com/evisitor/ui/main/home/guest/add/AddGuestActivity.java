@@ -151,25 +151,33 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
         getViewModel().doGetHostDetails().observe(this, hostDetailList -> {
             this.hostDetailList = hostDetailList;
             getViewDataBinding().hostGroup.setVisibility(View.VISIBLE);
-            setUpOwner(hostDetailList, false);
+            setUpOwner(false);
         });
     }
 
-    private void setUpOwner(List<HostDetailBean> hostDetailList, boolean isDialogShow) {
+    private void setUpOwner(boolean isDialogShow) {
+        if (hostDetailList == null) return;
+
         List<HostDetailBean> ownerList = new ArrayList<>();
         for (HostDetailBean tmp : hostDetailList) {
             if (tmp.isIsOwner()) ownerList.add(tmp);
         }
 
-        if (ownerList.size() == 1) {
+        if (ownerList.size() == 1 && ownerList.get(0).getId() != -1) {
             HostDetailBean bean = ownerList.get(0);
             ownerId = String.valueOf(bean.getId());
             getViewDataBinding().tvOwner.setText(bean.getFullName());
         } else {
             if (isDialogShow) {
+                if (ownerList.isEmpty()) {
+                    //if flat not assigned to owner
+                    ownerList.add(new HostDetailBean(-1, getString(R.string.no_owner_found), true));
+                }
                 HostPickerBottomSheetDialog.newInstance(ownerList, bean -> {
-                    ownerId = String.valueOf(bean.getId());
-                    getViewDataBinding().tvOwner.setText(bean.getFullName());
+                    if (bean.getId() != -1) {
+                        ownerId = String.valueOf(bean.getId());
+                        getViewDataBinding().tvOwner.setText(bean.getFullName());
+                    }
                 }).show(getSupportFragmentManager());
             }
         }
@@ -245,15 +253,19 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
                 break;
 
             case R.id.tv_owner:
-                if (hostDetailList != null)
-                    setUpOwner(hostDetailList, true);
+                setUpOwner(true);
                 break;
 
             case R.id.tv_host:
                 if (hostDetailList != null) {
+                    if (hostDetailList.isEmpty()) {
+                        hostDetailList.add(new HostDetailBean(-1, getString(R.string.no_host_found), false));
+                    }
                     HostPickerBottomSheetDialog.newInstance(hostDetailList, bean -> {
-                        residentId = String.valueOf(bean.getId());
-                        getViewDataBinding().tvHost.setText(bean.getFullName());
+                        if (bean.getId() != -1) {
+                            residentId = String.valueOf(bean.getId());
+                            getViewDataBinding().tvHost.setText(bean.getFullName());
+                        }
                     }).show(getSupportFragmentManager());
                 }
                 break;
