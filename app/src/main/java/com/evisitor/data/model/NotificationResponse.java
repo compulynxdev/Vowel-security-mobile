@@ -5,28 +5,28 @@ import java.util.List;
 public class NotificationResponse {
 
     /**
-     * content : [{"country":null,"address":null,"documentType":null,"workingDays":["sunday","monday"],"profile":"Driver","fullName":"SURESH RAINA","employment":"self","timeOut":"18:20:02","createdDate":"2020-09-01T08:54:18Z","flatNo":"zxcvbdcfv","createdBy":"superadmin","residentName":"zxdcfvb","documentId":null,"flatId":2,"residentId":1,"id":8,"email":null,"timeIn":"09:20:02","contactNo":"89655552633"}]
-     * pageable : {"sort":{"sorted":true,"unsorted":false,"empty":false},"offset":0,"pageNumber":0,"pageSize":10,"unpaged":false,"paged":true}
+     * content : [{"reason":"Check in notification","notificationStatus":"PENDING","createdDate":"2020-09-16T12:38:38Z","flatNo":"200","createdBy":"hemant","residentName":"RESIDENT","id":4,"type":"HOUSE_HELP"},{"reason":"Check in notification","notificationStatus":"ACCEPT","createdDate":"2020-09-16T11:47:45Z","flatNo":"200","createdBy":"hemant","residentName":"RESIDENT","fullName":"GUEST","id":3,"type":"GUEST"},{"reason":"Check in notification","notificationStatus":"ACCEPT","createdDate":"2020-09-16T11:10:25Z","flatNo":"200","createdBy":"hemant","residentName":"RESIDENT","fullName":"Guest 2","id":2,"type":"GUEST"},{"reason":"Check in notification","notificationStatus":"REJECT","createdDate":"2020-09-16T11:10:07Z","flatNo":"200","createdBy":"hemant","residentName":"RESIDENT","fullName":"Guest 3","id":1,"type":"GUEST"}]
+     * pageable : {"sort":{"sorted":true,"unsorted":false,"empty":false},"pageNumber":0,"pageSize":20,"offset":0,"paged":true,"unpaged":false}
      * last : true
-     * totalElements : 8
      * totalPages : 1
-     * size : 10
-     * number : 0
-     * sort : {"sorted":true,"unsorted":false,"empty":false}
-     * numberOfElements : 8
+     * totalElements : 4
+     * numberOfElements : 4
      * first : true
+     * sort : {"sorted":true,"unsorted":false,"empty":false}
+     * size : 20
+     * number : 0
      * empty : false
      */
 
     private PageableBean pageable;
     private boolean last;
-    private int totalElements;
     private int totalPages;
-    private int size;
-    private int number;
-    private SortBeanX sort;
+    private int totalElements;
     private int numberOfElements;
     private boolean first;
+    private SortBeanX sort;
+    private int size;
+    private int number;
     private boolean empty;
     private List<ContentBean> content;
 
@@ -46,14 +46,6 @@ public class NotificationResponse {
         this.last = last;
     }
 
-    public int getTotalElements() {
-        return totalElements;
-    }
-
-    public void setTotalElements(int totalElements) {
-        this.totalElements = totalElements;
-    }
-
     public int getTotalPages() {
         return totalPages;
     }
@@ -62,28 +54,12 @@ public class NotificationResponse {
         this.totalPages = totalPages;
     }
 
-    public int getSize() {
-        return size;
+    public int getTotalElements() {
+        return totalElements;
     }
 
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
-    public SortBeanX getSort() {
-        return sort;
-    }
-
-    public void setSort(SortBeanX sort) {
-        this.sort = sort;
+    public void setTotalElements(int totalElements) {
+        this.totalElements = totalElements;
     }
 
     public int getNumberOfElements() {
@@ -100,6 +76,30 @@ public class NotificationResponse {
 
     public void setFirst(boolean first) {
         this.first = first;
+    }
+
+    public SortBeanX getSort() {
+        return sort;
+    }
+
+    public void setSort(SortBeanX sort) {
+        this.sort = sort;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 
     public boolean isEmpty() {
@@ -121,34 +121,26 @@ public class NotificationResponse {
     public static class PageableBean {
         /**
          * sort : {"sorted":true,"unsorted":false,"empty":false}
-         * offset : 0
          * pageNumber : 0
-         * pageSize : 10
-         * unpaged : false
+         * pageSize : 20
+         * offset : 0
          * paged : true
+         * unpaged : false
          */
 
-        private PageableBean.SortBean sort;
-        private int offset;
+        private SortBean sort;
         private int pageNumber;
         private int pageSize;
-        private boolean unpaged;
+        private int offset;
         private boolean paged;
+        private boolean unpaged;
 
-        public PageableBean.SortBean getSort() {
+        public SortBean getSort() {
             return sort;
         }
 
-        public void setSort(PageableBean.SortBean sort) {
+        public void setSort(SortBean sort) {
             this.sort = sort;
-        }
-
-        public int getOffset() {
-            return offset;
-        }
-
-        public void setOffset(int offset) {
-            this.offset = offset;
         }
 
         public int getPageNumber() {
@@ -167,12 +159,12 @@ public class NotificationResponse {
             this.pageSize = pageSize;
         }
 
-        public boolean isUnpaged() {
-            return unpaged;
+        public int getOffset() {
+            return offset;
         }
 
-        public void setUnpaged(boolean unpaged) {
-            this.unpaged = unpaged;
+        public void setOffset(int offset) {
+            this.offset = offset;
         }
 
         public boolean isPaged() {
@@ -181,6 +173,14 @@ public class NotificationResponse {
 
         public void setPaged(boolean paged) {
             this.paged = paged;
+        }
+
+        public boolean isUnpaged() {
+            return unpaged;
+        }
+
+        public void setUnpaged(boolean unpaged) {
+            this.unpaged = unpaged;
         }
 
         public static class SortBean {
@@ -257,26 +257,27 @@ public class NotificationResponse {
     }
 
     public static class ContentBean {
-        /**"reason": sdf,
-        "notificationStatus": PENDING,
-        "createdDate": 2020-09-15T05:40:19Z,
-        "flatNo": Zxcvb,
-        "createdBy": asdfg,
-        "residentName": Zxcvb,
-        "fullName": dfgfdg,
-        "id": 1,
-        "type": GUEST*/
+        /**
+         * reason : Check in notification
+         * notificationStatus : PENDING
+         * createdDate : 2020-09-16T12:38:38Z
+         * flatNo : 200
+         * createdBy : hemant
+         * residentName : RESIDENT
+         * id : 4
+         * type : HOUSE_HELP
+         * fullName : GUEST
+         */
 
         private String reason;
         private String notificationStatus;
         private String createdDate;
         private String flatNo;
         private String createdBy;
-        private String fullName;
         private String residentName;
-        private String timeOut;
-        private String id;
+        private int id;
         private String type;
+        private String fullName;
 
         public String getReason() {
             return reason;
@@ -318,14 +319,6 @@ public class NotificationResponse {
             this.createdBy = createdBy;
         }
 
-        public String getFullName() {
-            return fullName;
-        }
-
-        public void setFullName(String fullName) {
-            this.fullName = fullName;
-        }
-
         public String getResidentName() {
             return residentName;
         }
@@ -334,19 +327,11 @@ public class NotificationResponse {
             this.residentName = residentName;
         }
 
-        public String getTimeOut() {
-            return timeOut;
-        }
-
-        public void setTimeOut(String timeOut) {
-            this.timeOut = timeOut;
-        }
-
-        public String getId() {
+        public int getId() {
             return id;
         }
 
-        public void setId(String id) {
+        public void setId(int id) {
             this.id = id;
         }
 
@@ -356,6 +341,14 @@ public class NotificationResponse {
 
         public void setType(String type) {
             this.type = type;
+        }
+
+        public String getFullName() {
+            return fullName == null ? "" : fullName;
+        }
+
+        public void setFullName(String fullName) {
+            this.fullName = fullName;
         }
     }
 }

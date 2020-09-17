@@ -72,8 +72,9 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
     private void setUpAdapter() {
         spList = new ArrayList<>();
         adapter = new ExpectedSPAdapter(spList, pos -> {
-            List<VisitorProfileBean> visitorProfileBeanList = getViewModel().setClickVisitorDetail(spList.get(pos));
-            VisitorProfileDialog dialog = VisitorProfileDialog.newInstance(visitorProfileBeanList, visitorProfileDialog -> {
+            ServiceProvider spBean = spList.get(pos);
+            List<VisitorProfileBean> visitorProfileBeanList = getViewModel().setClickVisitorDetail(spBean);
+            VisitorProfileDialog.newInstance(visitorProfileBeanList, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
 
                 ServiceProvider tmpBean = getViewModel().getDataManager().getSpDetail();
@@ -101,11 +102,8 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                     }).show(getFragmentManager());
                 }
 
-            }).setImage(spList.get(pos).getImageUrl());
-
-            if (!spList.get(pos).getStatus().equalsIgnoreCase("reject"))
-                dialog.setBtnLabel(getString(R.string.check_in));
-            dialog.show(getFragmentManager());
+            }).setBtnLabel(getString(R.string.check_in)).setBtnVisible(spBean.getStatus().equalsIgnoreCase("PENDING"))
+                    .setImage(spBean.getImageUrl()).show(getFragmentManager());
         });
         adapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(adapter);
@@ -147,7 +145,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
                     if (isNetworkConnected(true))
-                    showCallDialog();
+                        showCallDialog();
                 });
 
 
@@ -161,7 +159,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                     .setOnNegativeClickListener(dialog1 -> {
                         dialog1.dismiss();
                         if (isNetworkConnected(true))
-                        getViewModel().sendNotification();
+                            getViewModel().sendNotification();
                     })
                     .show(getFragmentManager());
         }

@@ -18,7 +18,6 @@ import androidx.annotation.StringRes;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -172,10 +171,6 @@ public abstract class BaseDialog<T extends ViewDataBinding, V extends BaseViewMo
 
     public void show(FragmentManager fragmentManager) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        Fragment prevFragment = fragmentManager.findFragmentByTag(TAG);
-        if (prevFragment != null) {
-            transaction.remove(prevFragment);
-        }
         fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         transaction.addToBackStack(null);
         show(transaction, TAG);

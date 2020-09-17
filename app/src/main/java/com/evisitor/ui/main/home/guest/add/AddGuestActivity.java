@@ -276,7 +276,7 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
                         , getViewDataBinding().etAddress.getText().toString().trim(), getViewDataBinding().tvGender.getText().toString()
                         , houseId, ownerId, residentId)) {
 
-                    getViewModel().doCheckGuestStatus(getViewDataBinding().etIdentity.getText().toString().trim());
+                    getViewModel().doCheckGuestStatus(getViewDataBinding().etIdentity.getText().toString().trim(), idType);
                 }
                 break;
         }
@@ -300,16 +300,14 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
                             getViewModel().doAddGuest(false, bmp_profile, getViewDataBinding().etIdentity.getText().toString().trim(), idType, getViewDataBinding().etName.getText().toString()
                                     , getViewDataBinding().etVehicle.getText().toString().trim(), getViewDataBinding().etContact.getText().toString()
                                     , getViewDataBinding().etAddress.getText().toString(), getViewDataBinding().tvGender.getText().toString()
-                                    , getViewDataBinding().actvHouseNo.getText().toString()
-                                    , houseId, ownerId, residentId);
+                                    , houseId, residentId);
                         })
                         .setOnPositiveClickListener(dialog12 -> {
                             dialog12.dismiss();
                             getViewModel().doAddGuest(true, bmp_profile, getViewDataBinding().etIdentity.getText().toString().trim(), idType, getViewDataBinding().etName.getText().toString()
                                     , getViewDataBinding().etVehicle.getText().toString().trim(), getViewDataBinding().etContact.getText().toString()
                                     , getViewDataBinding().etAddress.getText().toString(), getViewDataBinding().tvGender.getText().toString()
-                                    , getViewDataBinding().actvHouseNo.getText().toString()
-                                    , houseId, ownerId, residentId);
+                                    , houseId, residentId);
                         }).show(getSupportFragmentManager());
             }
         });

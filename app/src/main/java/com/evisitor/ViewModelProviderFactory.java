@@ -32,7 +32,7 @@ import com.evisitor.ui.main.home.trespasser.TrespasserViewModel;
 import com.evisitor.ui.main.home.trespasser.guests.TrespasserGuestViewModel;
 import com.evisitor.ui.main.home.trespasser.services.TrespasserSPViewModel;
 import com.evisitor.ui.main.idverification.IdVerificationViewModel;
-import com.evisitor.ui.main.notifications.NotificationsFragmentViewModel;
+import com.evisitor.ui.main.notifications.NotificationsViewModel;
 import com.evisitor.ui.main.profile.UserProfileViewModel;
 import com.evisitor.ui.main.settings.SettingsViewModel;
 import com.evisitor.ui.main.settings.content.ContentViewModel;
@@ -78,9 +78,9 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(ActivityViewModel.class)) {
             //noinspection unchecked
             return (T) new ActivityViewModel(dataManager);
-        } else if (modelClass.isAssignableFrom(NotificationsFragmentViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(NotificationsViewModel.class)) {
             //noinspection unchecked
-            return (T) new NotificationsFragmentViewModel(dataManager);
+            return (T) new NotificationsViewModel(dataManager);
         } else if (modelClass.isAssignableFrom(SettingsViewModel.class)) {
             //noinspection unchecked
             return (T) new SettingsViewModel(dataManager);

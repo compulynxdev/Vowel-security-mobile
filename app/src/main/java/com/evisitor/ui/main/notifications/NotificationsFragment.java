@@ -2,19 +2,22 @@ package com.evisitor.ui.main.notifications;
 
 import android.os.Bundle;
 import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
+
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.NotificationResponse;
 import com.evisitor.databinding.FragmentNotificationsBinding;
 import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotificationsFragment extends BaseFragment<FragmentNotificationsBinding, NotificationsFragmentViewModel> implements NotificationNavigator {
+public class NotificationsFragment extends BaseFragment<FragmentNotificationsBinding, NotificationsViewModel> implements NotificationNavigator {
     private List<NotificationResponse.ContentBean> notificationsList;
     private RecyclerViewScrollListener scrollListener;
     private NotificationAdapter adapter;
@@ -38,20 +41,19 @@ public class NotificationsFragment extends BaseFragment<FragmentNotificationsBin
     }
 
     @Override
-    public NotificationsFragmentViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(NotificationsFragmentViewModel.class);
+    public NotificationsViewModel getViewModel() {
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(NotificationsViewModel.class);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getViewModel().setNavigator(this);
+        getViewDataBinding().header.tvTitle.setText(R.string.title_notification);
 
-        setUpSearch();
         notificationsList = new ArrayList<>();
         adapter = new NotificationAdapter(notificationsList);
-
-        adapter.setHasStableIds(true);
+        //adapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(adapter);
 
         scrollListener = new RecyclerViewScrollListener() {
@@ -72,7 +74,6 @@ public class NotificationsFragment extends BaseFragment<FragmentNotificationsBin
 
 
     private void setUpSearch() {
-        getViewDataBinding().header.tvTitle.setText(R.string.title_notification);
         getViewDataBinding().header.imgSearch.setVisibility(View.VISIBLE);
         getViewDataBinding().header.imgSearch.setOnClickListener(v -> {
             hideKeyboard();

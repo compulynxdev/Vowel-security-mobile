@@ -1,13 +1,10 @@
 package com.evisitor.ui.fcm;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Build;
 
 import androidx.annotation.NonNull;
@@ -21,7 +18,6 @@ import com.google.firebase.messaging.RemoteMessage;
 import java.util.Objects;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
-    private static final int NOTIFICATION_ID = 1;
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
@@ -30,40 +26,45 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     private void showNotification(Context context, String title, String message) {
-        Intent ii;
-        ii = new Intent(context, MainActivity.class);
-        ii.setData((Uri.parse("custom://" + System.currentTimeMillis())));
-        ii.setAction("actionstring" + System.currentTimeMillis());
-        ii.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Intent intent = new Intent(context, MainActivity.class);
 
-        PendingIntent pi = PendingIntent.getActivity(context, 0, ii,PendingIntent.FLAG_UPDATE_CURRENT);
+        int iUniqueId = (int) (System.currentTimeMillis() & 0xfffffff);
+        PendingIntent pendingIntent = PendingIntent.getActivities(this, iUniqueId, new Intent[]{intent}, PendingIntent.FLAG_ONE_SHOT);
+        String CHANNEL_ID = "com.evisitor";
 
-        String NOTIFICATION_CHANNEL_ID = "com.evisitor";
-        Notification notification = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-                .setSmallIcon(getNotificationIcon())
-                .setContentText(message)
-                .setAutoCancel(true)
-                .setContentIntent(pi)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setCategory(Notification.CATEGORY_SERVICE)
-                .setWhen(System.currentTimeMillis())
-                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                .setContentTitle(title)
-                .build();
-
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(
-                Context.NOTIFICATION_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID,title, NotificationManager.IMPORTANCE_DEFAULT);
-            assert notificationManager != null;
-            notificationManager.createNotificationChannel(notificationChannel);
+        CharSequence name = "Abc";// The user-visible name of the channel.
+        int importance = 0;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            importance = NotificationManager.IMPORTANCE_HIGH;
         }
-        assert notificationManager != null;
-        notificationManager.notify(NOTIFICATION_ID, notification);
-    }
 
-    private int getNotificationIcon() {
-        boolean useWhiteIcon = (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP);
-        return useWhiteIcon ? R.mipmap.ic_launcher : R.mipmap.ic_launcher;
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle(title)//title
+                .setContentText(message)//body
+                .setAutoCancel(true)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setContentIntent(pendingIntent)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(message)); //body
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            notificationBuilder.setSmallIcon(R.mipmap.ic_launcher);
+            notificationBuilder.setColor(getResources().getColor(R.color.colorPrimary));
+        } else {
+            notificationBuilder.setSmallIcon(R.mipmap.ic_launcher);
+        }
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+            mChannel.setShowBadge(true);
+            mChannel.enableLights(true);
+            assert notificationManager != null;
+            notificationManager.createNotificationChannel(mChannel);
+        }
+
+        assert notificationManager != null;
+        notificationManager.notify(0, notificationBuilder.build());
     }
 }

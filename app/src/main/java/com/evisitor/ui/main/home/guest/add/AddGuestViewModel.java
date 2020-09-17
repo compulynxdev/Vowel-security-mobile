@@ -150,7 +150,7 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
         } else return true;
     }
 
-    void doAddGuest(boolean isAccept, Bitmap bmp_profile, String identityNo, String idType, String name, String vehicleNo, String contact, String address, String gender, String houseNumber, String houseId, String ownerId, String residentId) {
+    void doAddGuest(boolean isAccept, Bitmap bmp_profile, String identityNo, String idType, String name, String vehicleNo, String contact, String address, String gender, String houseId, String residentId) {
 
         if (getNavigator().isNetworkConnected(true)) {
             getNavigator().showLoading();
@@ -210,7 +210,7 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
         return guestStatusMutableData;
     }
 
-    void doCheckGuestStatus(String identity) {
+    void doCheckGuestStatus(String identity, String docType) {
         if (!getDataManager().isIdentifyFeature()) {
             guestStatusMutableData.setValue(false);
             return;
@@ -221,6 +221,7 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
             Map<String, String> map = new HashMap<>();
             map.put("accountId", getDataManager().getAccountId());
             map.put("documentId", identity);
+            map.put("documentType", docType);
             getDataManager().doCheckGuestStatus(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {

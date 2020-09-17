@@ -68,8 +68,9 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
     private void setUpAdapter() {
         guestsList = new ArrayList<>();
         adapter = new ExpectedGuestAdapter(guestsList, getContext(), pos -> {
-            List<VisitorProfileBean> visitorProfileBeanList = getViewModel().setClickVisitorDetail(guestsList.get(pos));
-           VisitorProfileDialog dialog =  VisitorProfileDialog.newInstance(visitorProfileBeanList, visitorProfileDialog -> {
+            Guests guestBean = guestsList.get(pos);
+            List<VisitorProfileBean> visitorProfileBeanList = getViewModel().setClickVisitorDetail(guestBean);
+            VisitorProfileDialog.newInstance(visitorProfileBeanList, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
 
                 Guests tmpBean = getViewModel().getDataManager().getGuestDetail();
@@ -96,11 +97,8 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
                         }
                     }).show(getFragmentManager());
                 }
-            }).setImage(guestsList.get(pos).getImageUrl());
-
-           if (!guestsList.get(pos).getStatus().equalsIgnoreCase("reject"))
-               dialog.setBtnLabel(getString(R.string.check_in));
-           dialog.show(getFragmentManager());
+            }).setBtnLabel(getString(R.string.check_in)).setBtnVisible(guestBean.getStatus().equalsIgnoreCase("PENDING"))
+                    .setImage(guestBean.getImageUrl()).show(getFragmentManager());
         });
         adapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(adapter);

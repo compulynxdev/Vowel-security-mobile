@@ -1,21 +1,24 @@
 package com.evisitor.ui.main.notifications;
 
 import androidx.annotation.NonNull;
+
 import com.evisitor.R;
 import com.evisitor.data.DataManager;
 import com.evisitor.data.model.NotificationResponse;
 import com.evisitor.ui.base.BaseViewModel;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppLogger;
+
 import java.util.HashMap;
 import java.util.Map;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class NotificationsFragmentViewModel extends BaseViewModel<NotificationNavigator> {
-    public NotificationsFragmentViewModel(DataManager dataManager) {
+public class NotificationsViewModel extends BaseViewModel<NotificationNavigator> {
+    public NotificationsViewModel(DataManager dataManager) {
         super(dataManager);
     }
 

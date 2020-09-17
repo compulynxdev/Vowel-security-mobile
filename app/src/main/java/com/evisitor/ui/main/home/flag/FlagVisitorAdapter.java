@@ -54,6 +54,11 @@ public class FlagVisitorAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     @Override
+    public long getItemId(int position) {
+        return list.get(position).getId();
+    }
+
+    @Override
     public int getItemViewType(int position) {
         if (position == list.size() - 1) {
             return showLoader ? VIEWTYPE_LOADER : VIEWTYPE_ITEM;
