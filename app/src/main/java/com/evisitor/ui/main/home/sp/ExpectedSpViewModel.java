@@ -107,7 +107,7 @@ public class ExpectedSpViewModel extends BaseCheckInOutViewModel<ExpectedSPNavig
                 object.put("accountId", getDataManager().getAccountId());
                 object.put("residentId", getDataManager().getSpDetail().getResidentId());
                 object.put("premiseHierarchyDetailsId", getDataManager().getSpDetail().getFlatId());
-                object.put("enteredVehicleNo", getDataManager().getHouseKeeping().getEnteredVehicleNo());
+                object.put("enteredVehicleNo", getDataManager().getSpDetail().getEnteredVehicleNo());
                 object.put("type", AppConstants.SERVICE_PROVIDER);
             } catch (JSONException e) {
                 e.printStackTrace();

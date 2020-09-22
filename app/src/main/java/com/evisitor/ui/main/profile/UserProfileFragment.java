@@ -63,12 +63,12 @@ public class UserProfileFragment extends BaseFragment<FragmentUserProfileBinding
                 }).setOnNegativeClickListener(DialogFragment::dismiss));
 
         getViewModel().getUserDetail().observe(this, userDetail -> {
-            getViewDataBinding().tvName.setText(userDetail.getFullName());
-            getViewDataBinding().tvUsername.setText(userDetail.getUsername());
-            getViewDataBinding().tvEmail.setText(userDetail.getEmail());
-            getViewDataBinding().tvGender.setText(userDetail.getGender());
-            getViewDataBinding().tvContact.setText(userDetail.getContactNo());
-            getViewDataBinding().tvAddress.setText(userDetail.getAddress());
+            getViewDataBinding().tvName.setText(userDetail.getFullName().isEmpty() ? getString(R.string.na) : userDetail.getFullName());
+            getViewDataBinding().tvUsername.setText(userDetail.getUsername().isEmpty() ? getString(R.string.na) : userDetail.getUsername());
+            getViewDataBinding().tvEmail.setText(userDetail.getEmail().isEmpty() ? getString(R.string.na) : userDetail.getEmail());
+            getViewDataBinding().tvGender.setText(userDetail.getGender().isEmpty() ? getString(R.string.na) : userDetail.getGender());
+            getViewDataBinding().tvContact.setText(userDetail.getContactNo().isEmpty() ? getString(R.string.na) : userDetail.getContactNo());
+            getViewDataBinding().tvAddress.setText(userDetail.getAddress().isEmpty() ? getString(R.string.na) : userDetail.getAddress());
 
             imageUrl = userDetail.getImageUrl();
             if (userDetail.getImageUrl().isEmpty()) {

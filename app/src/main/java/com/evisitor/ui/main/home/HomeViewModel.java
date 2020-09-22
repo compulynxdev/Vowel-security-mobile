@@ -60,6 +60,7 @@ public class HomeViewModel extends BaseViewModel<BaseNavigator> {
     void getVisitorCount() {
         if (getNavigator().isNetworkConnected()) {
             Map<String, String> map = new HashMap<>();
+            map.put("username", getDataManager().getUsername());
             map.put("accountId", getDataManager().getAccountId());
 
             getDataManager().doGetVisitorCount(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {

@@ -250,7 +250,9 @@ public abstract class BaseActivity <T extends ViewDataBinding,V extends BaseView
                 showAlert(R.string.alert, R.string.alert_error);
             } else {
                 JSONObject object = new JSONObject(data);
-                if (object.has("message")) {
+                if (object.has("detail")) {
+                    showAlert(R.string.alert, object.getString("detail"));
+                } else if (object.has("message")) {
                     showAlert(R.string.alert, object.getString("message"));
                 } else if (object.has("respMessage"))
                     showAlert(R.string.alert, object.getString("respMessage"));
