@@ -144,4 +144,14 @@ public class AppApiHelper implements ApiHelper {
     public Call<ResponseBody> doGetNotifications(String authToken, Map<String, String> partMap) {
         return getApiInterface().doGetNotifications(authToken, partMap);
     }
+
+    @Override
+    public Call<ResponseBody> doReadAllNotification(String authToken, Map<String, String> partMap) {
+        return getApiInterface().doReadAllNotification(authToken, partMap);
+    }
+
+    @Override
+    public Call<ResponseBody> doGetHouseInfo(String authToken, Map<String, String> partMap) {
+        return getApiInterface().doGetHouseInfo(authToken, partMap);
+    }
 }

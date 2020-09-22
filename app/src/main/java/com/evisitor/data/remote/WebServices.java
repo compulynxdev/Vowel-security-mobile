@@ -36,6 +36,8 @@ class WebServices {
     static final String GET_ALL_FLAG_VISITORS = "flag/get_all_flag_list"; //?page=0&size=10&sortBy=&direction=&search=&accountId=1&type=flag
 
     static final String GET_NOTIFICATIONS = "notification/get_device_notification";
+    static final String READ_ALL_NOTIFICATIONS = "notification/read_notification"; //?username=test&accountId=1
+    static final String GET_HOUSE_INFO = "premise/get_flat_level"; //??flatId=11&accountId=2
 
     private WebServices() {
     }

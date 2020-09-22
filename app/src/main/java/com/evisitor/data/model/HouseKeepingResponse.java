@@ -304,6 +304,8 @@ public class HouseKeepingResponse {
         private boolean notificationStatus;
         private String expectedVehicleNo;
         private String enteredVehicleNo = "";
+        private boolean checkInStatus;
+
         private List<String> workingDays;
 
         public String getImageUrl() {
@@ -488,6 +490,14 @@ public class HouseKeepingResponse {
 
         public void setNotificationStatus(boolean notificationStatus) {
             this.notificationStatus = notificationStatus;
+        }
+
+        public boolean getCheckInStatus() {
+            return checkInStatus;
+        }
+
+        public void setCheckInStatus(boolean checkInStatus) {
+            this.checkInStatus = checkInStatus;
         }
     }
 }

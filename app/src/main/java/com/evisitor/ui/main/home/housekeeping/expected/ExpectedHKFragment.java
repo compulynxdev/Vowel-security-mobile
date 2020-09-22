@@ -75,33 +75,8 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
             List<VisitorProfileBean> visitorProfileBeanList = getViewModel().setClickVisitorDetail(list.get(pos));
             VisitorProfileDialog.newInstance(visitorProfileBeanList, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
-
-                HouseKeepingResponse.ContentBean tmpBean = getViewModel().getDataManager().getHouseKeeping();
-                if (tmpBean.getDocumentId().isEmpty()) {
-                    showCheckinOptions();
-                } else {
-                    IdVerificationDialog.newInstance(new IdVerificationCallback() {
-                        @Override
-                        public void onScanClick(IdVerificationDialog dialog) {
-                            dialog.dismiss();
-                            Intent i = ScanIDActivity.getStartIntent(getContext());
-                            startActivityForResult(i, SCAN_RESULT);
-                        }
-
-                        @Override
-                        public void onSubmitClick(IdVerificationDialog dialog, String id) {
-                            dialog.dismiss();
-
-                            if (tmpBean.getDocumentId().equals(id))
-                                showCheckinOptions();
-                            else {
-                                showToast(R.string.alert_id);
-                            }
-                        }
-                    }).show(getFragmentManager());
-                }
-
-            }).setImage(list.get(pos).getImageUrl()).setBtnLabel(getString(R.string.check_in)).show(getFragmentManager());
+                decideNextProcess();
+            }).setFlatId(String.valueOf(list.get(pos).getFlatId())).setImage(list.get(pos).getImageUrl()).setBtnLabel(getString(R.string.check_in)).show(getFragmentManager());
         });
         adapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(adapter);
@@ -120,6 +95,37 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
         getViewDataBinding().swipeToRefresh.setOnRefreshListener(this::updateUI);
         getViewDataBinding().swipeToRefresh.setColorSchemeResources(R.color.colorPrimary);
         updateUI();
+    }
+
+    private void decideNextProcess() {
+        HouseKeepingResponse.ContentBean tmpBean = getViewModel().getDataManager().getHouseKeeping();
+        if (tmpBean.getCheckInStatus()) {
+            getViewModel().approveByCall(true);
+        } else {
+            if (tmpBean.getDocumentId().isEmpty()) {
+                showCheckinOptions();
+            } else {
+                IdVerificationDialog.newInstance(new IdVerificationCallback() {
+                    @Override
+                    public void onScanClick(IdVerificationDialog dialog) {
+                        dialog.dismiss();
+                        Intent i = ScanIDActivity.getStartIntent(getContext());
+                        startActivityForResult(i, SCAN_RESULT);
+                    }
+
+                    @Override
+                    public void onSubmitClick(IdVerificationDialog dialog, String id) {
+                        dialog.dismiss();
+
+                        if (tmpBean.getDocumentId().equals(id))
+                            showCheckinOptions();
+                        else {
+                            showToast(R.string.alert_id);
+                        }
+                    }
+                }).show(getFragmentManager());
+            }
+        }
     }
 
     private void updateUI() {
@@ -142,8 +148,7 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
                 .setPositiveBtnLabel(getString(R.string.approve_by_call))
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
-                    if (isNetworkConnected(true))
-                        showCallDialog();
+                    showCallDialog();
                 });
 
 
@@ -156,8 +161,7 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
                     .setNegativeBtnLabel(getString(R.string.send_notification))
                     .setOnNegativeClickListener(dialog1 -> {
                         dialog1.dismiss();
-                        if (isNetworkConnected(true))
-                            getViewModel().sendNotification();
+                        getViewModel().sendNotification();
                     })
                     .show(getFragmentManager());
         }
@@ -173,13 +177,11 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
                 .setNegativeBtnLabel(getString(R.string.reject))
                 .setOnNegativeClickListener(dialog1 -> {
                     dialog1.dismiss();
-                    if (isNetworkConnected(true))
-                        getViewModel().approveByCall(false);
+                    getViewModel().approveByCall(false);
                 })
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
-                    if (isNetworkConnected(true))
-                        getViewModel().approveByCall(true);
+                    getViewModel().approveByCall(true);
                 }).show(getFragmentManager());
     }
 

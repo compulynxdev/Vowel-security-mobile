@@ -83,16 +83,13 @@ public class ExpectedGuestViewModel extends BaseCheckInOutViewModel<ExpectedGues
         getDataManager().setGuestDetail(guests);
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, guests.getName())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), guests.getExpectedVehicleNo(), VisitorProfileBean.VIEW_TYPE_EDITABLE));
-        if (!guests.getContactNo().isEmpty())
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, guests.getContactNo())));
-        if (!guests.getIdentityNo().isEmpty())
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, guests.getIdentityNo())));
-        if (!guests.getHouseNo().isEmpty())
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_house, guests.getHouseNo())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, guests.getContactNo().isEmpty() ? R.string.na : guests.getContactNo())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, guests.getIdentityNo().isEmpty() ? R.string.na : guests.getIdentityNo())));
+        visitorProfileBeanList.add(new VisitorProfileBean(1, getNavigator().getContext().getString(R.string.data_house, guests.getHouseNo().isEmpty() ? R.string.na : guests.getHouseNo())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, guests.getHost().isEmpty() ? guests.getCreatedBy() : guests.getHost())));
         if (guests.isCheckOutFeature())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_is_checkout, guests.isHostCheckOut())));
-        if (guests.getStatus()!=null)
+        if (!guests.getStatus().equalsIgnoreCase("PENDING"))
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.status, guests.getStatus())));
 
         getNavigator().hideLoading();
@@ -100,35 +97,40 @@ public class ExpectedGuestViewModel extends BaseCheckInOutViewModel<ExpectedGues
     }
 
     void sendNotification() {
-        JSONObject object = new JSONObject();
-        try {
-            object.put("id", getDataManager().getGuestDetail().getGuestId());
-            object.put("accountId", getDataManager().getAccountId());
-            object.put("residentId", getDataManager().getGuestDetail().getResidentId());
-            object.put("premiseHierarchyDetailsId", getDataManager().getGuestDetail().getFlatId());
-            object.put("type", AppConstants.GUEST);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        if (getNavigator().isNetworkConnected(true)) {
+            JSONObject object = new JSONObject();
+            try {
+                object.put("id", getDataManager().getGuestDetail().getGuestId());
+                object.put("accountId", getDataManager().getAccountId());
+                object.put("residentId", getDataManager().getGuestDetail().getResidentId());
+                object.put("premiseHierarchyDetailsId", getDataManager().getGuestDetail().getFlatId());
+                object.put("enteredVehicleNo", getDataManager().getGuestDetail().getEnteredVehicleNo());
+                object.put("type", AppConstants.GUEST);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
-        RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON,object.toString());
-        sendNotification(body, this);
+            RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
+            sendNotification(body, this);
+        }
     }
 
     void approveByCall(boolean isAccept) {
-        JSONObject object = new JSONObject();
-        try {
-            object.put("id",getDataManager().getGuestDetail().getGuestId());
-            object.put("enteredVehicleNo", getDataManager().getGuestDetail().getEnteredVehicleNo());
-            object.put("type", AppConstants.CHECK_IN);
-            object.put("visitor", AppConstants.GUEST);
-            object.put("state", isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        if (getNavigator().isNetworkConnected(true)) {
+            JSONObject object = new JSONObject();
+            try {
+                object.put("id", getDataManager().getGuestDetail().getGuestId());
+                object.put("enteredVehicleNo", getDataManager().getGuestDetail().getEnteredVehicleNo());
+                object.put("type", AppConstants.CHECK_IN);
+                object.put("visitor", AppConstants.GUEST);
+                object.put("state", isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
-        RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON,object.toString());
-        doCheckInOut(body, this);
+            RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
+            doCheckInOut(body, this);
+        }
     }
 
     @Override

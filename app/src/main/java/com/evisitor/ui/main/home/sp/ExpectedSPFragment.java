@@ -76,33 +76,8 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
             List<VisitorProfileBean> visitorProfileBeanList = getViewModel().setClickVisitorDetail(spBean);
             VisitorProfileDialog.newInstance(visitorProfileBeanList, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
-
-                ServiceProvider tmpBean = getViewModel().getDataManager().getSpDetail();
-                if (tmpBean.getIdentityNo().isEmpty()) {
-                    showCheckinOptions();
-                } else {
-                    IdVerificationDialog.newInstance(new IdVerificationCallback() {
-                        @Override
-                        public void onScanClick(IdVerificationDialog dialog) {
-                            dialog.dismiss();
-                            Intent i = ScanIDActivity.getStartIntent(getContext());
-                            startActivityForResult(i, SCAN_RESULT);
-                        }
-
-                        @Override
-                        public void onSubmitClick(IdVerificationDialog dialog, String id) {
-                            dialog.dismiss();
-
-                            if (tmpBean.getIdentityNo().equals(id))
-                                showCheckinOptions();
-                            else {
-                                showToast(R.string.alert_id);
-                            }
-                        }
-                    }).show(getFragmentManager());
-                }
-
-            }).setBtnLabel(getString(R.string.check_in)).setBtnVisible(spBean.getStatus().equalsIgnoreCase("PENDING"))
+                decideNextProcess();
+            }).setFlatId(spBean.getFlatId()).setBtnLabel(getString(R.string.check_in)).setBtnVisible(spBean.getStatus().equalsIgnoreCase("PENDING"))
                     .setImage(spBean.getImageUrl()).show(getFragmentManager());
         });
         adapter.setHasStableIds(true);
@@ -122,6 +97,37 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
         getViewDataBinding().swipeToRefresh.setOnRefreshListener(this::updateUI);
         getViewDataBinding().swipeToRefresh.setColorSchemeResources(R.color.colorPrimary);
         updateUI();
+    }
+
+    private void decideNextProcess() {
+        ServiceProvider tmpBean = getViewModel().getDataManager().getSpDetail();
+        if (tmpBean.getCheckInStatus()) {
+            getViewModel().approveByCall(true);
+        } else {
+            if (tmpBean.getIdentityNo().isEmpty()) {
+                showCheckinOptions();
+            } else {
+                IdVerificationDialog.newInstance(new IdVerificationCallback() {
+                    @Override
+                    public void onScanClick(IdVerificationDialog dialog) {
+                        dialog.dismiss();
+                        Intent i = ScanIDActivity.getStartIntent(getContext());
+                        startActivityForResult(i, SCAN_RESULT);
+                    }
+
+                    @Override
+                    public void onSubmitClick(IdVerificationDialog dialog, String id) {
+                        dialog.dismiss();
+
+                        if (tmpBean.getIdentityNo().equals(id))
+                            showCheckinOptions();
+                        else {
+                            showToast(R.string.alert_id);
+                        }
+                    }
+                }).show(getFragmentManager());
+            }
+        }
     }
 
     private void updateUI() {
@@ -144,7 +150,6 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                 .setPositiveBtnLabel(getString(R.string.approve_by_call))
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
-                    if (isNetworkConnected(true))
                         showCallDialog();
                 });
 
@@ -158,7 +163,6 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                     .setNegativeBtnLabel(getString(R.string.send_notification))
                     .setOnNegativeClickListener(dialog1 -> {
                         dialog1.dismiss();
-                        if (isNetworkConnected(true))
                             getViewModel().sendNotification();
                     })
                     .show(getFragmentManager());
@@ -175,12 +179,10 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                 .setNegativeBtnLabel(getString(R.string.reject))
                 .setOnNegativeClickListener(dialog1 -> {
                     dialog1.dismiss();
-                    if (isNetworkConnected(true))
                         getViewModel().approveByCall(false);
                 })
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
-                    if (isNetworkConnected(true))
                         getViewModel().approveByCall(true);
                 }).show(getFragmentManager());
     }

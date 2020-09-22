@@ -12,8 +12,15 @@ public class VisitorProfileBean {
     private int view_type = VIEW_TYPE_ITEM;
     private List<String> dataList;
 
+    private int pos = -1;
+
     public VisitorProfileBean(String title) {
         this.title = title;
+    }
+
+    public VisitorProfileBean(int pos, String title) {
+        this.title = title;
+        this.pos = pos;
     }
 
     public VisitorProfileBean(String title, String value, int view_type) {
@@ -58,5 +65,9 @@ public class VisitorProfileBean {
 
     public void setDataList(List<String> dataList) {
         this.dataList = dataList;
+    }
+
+    public int getPos() {
+        return pos;
     }
 }

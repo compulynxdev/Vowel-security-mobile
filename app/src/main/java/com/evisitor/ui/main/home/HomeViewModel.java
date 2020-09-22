@@ -31,6 +31,7 @@ public class HomeViewModel extends BaseViewModel<BaseNavigator> {
     static final int TRESPASSER_VIEW = 5;
     static final int FLAGGED_VIEW = 6;
     private MutableLiveData<List<HomeBean>> homeListData = new MutableLiveData<>();
+    private MutableLiveData<Integer> notificationCountData = new MutableLiveData<>();
     private List<HomeBean> list = new ArrayList<>();
 
     public HomeViewModel(DataManager dataManager) {
@@ -39,6 +40,10 @@ public class HomeViewModel extends BaseViewModel<BaseNavigator> {
 
     MutableLiveData<List<HomeBean>> getHomeListData() {
         return homeListData;
+    }
+
+    MutableLiveData<Integer> getNotificationCountData() {
+        return notificationCountData;
     }
 
     void setupHomeList() {
@@ -65,6 +70,10 @@ public class HomeViewModel extends BaseViewModel<BaseNavigator> {
                             assert response.body() != null;
                             JSONObject jsonObject = new JSONObject(response.body().string());
                             if (!list.isEmpty()) {
+                                if (jsonObject.has("notification")) {
+                                    int notificationCount = jsonObject.getInt("notification");
+                                    notificationCountData.setValue(notificationCount);
+                                }
                                 int guestCount = jsonObject.getInt("guest");
                                 int hkCount = jsonObject.getInt("staff");
                                 int spCount = jsonObject.getInt("serviceProvider");

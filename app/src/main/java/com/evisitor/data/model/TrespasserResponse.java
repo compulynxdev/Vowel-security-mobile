@@ -280,6 +280,7 @@ public class TrespasserResponse {
         private String createdBy;
         private String hostCheckOutTime;
         private String checkInTime;
+        private String checkOutTime;
         private String documentId;
         private String gender;
         private String enteredVehicleNo;
@@ -334,6 +335,14 @@ public class TrespasserResponse {
 
         public void setCheckInTime(String checkInTime) {
             this.checkInTime = checkInTime;
+        }
+
+        public String getCheckOutTime() {
+            return checkOutTime;
+        }
+
+        public void setCheckOutTime(String checkOutTime) {
+            this.checkOutTime = checkOutTime;
         }
 
         public String getDocumentId() {

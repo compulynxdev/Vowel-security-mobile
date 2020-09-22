@@ -120,6 +120,7 @@ public class ExpectedGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         public void onBind(int position) {
             Guests bean = list.get(position);
             name.setText(context.getString(R.string.data_name, bean.getName()));
+            status.setVisibility(bean.getStatus().equalsIgnoreCase("PENDING") ? View.GONE : View.VISIBLE);
             status.setText(status.getContext().getString(R.string.status,bean.getStatus()));
             if (bean.getTime()!=null && !bean.getTime().isEmpty())
                 time.setText(context.getString(R.string.data_time, CalenderUtils.formatDate(bean.getTime(), CalenderUtils.SERVER_DATE_FORMAT,

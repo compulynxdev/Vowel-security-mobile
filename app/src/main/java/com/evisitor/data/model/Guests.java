@@ -76,6 +76,9 @@ public class Guests {
     @SerializedName("state")
     private String status;
 
+    @SerializedName("checkInStatus")
+    private boolean checkInStatus;
+
     public String getStatus() {
         return status ==null ? "PENDING" : status;
     }
@@ -235,5 +238,13 @@ public class Guests {
 
     public void setEnteredVehicleNo(String enteredVehicleNo) {
         this.enteredVehicleNo = enteredVehicleNo;
+    }
+
+    public boolean getCheckInStatus() {
+        return checkInStatus;
+    }
+
+    public void setCheckInStatus(boolean checkInStatus) {
+        this.checkInStatus = checkInStatus;
     }
 }

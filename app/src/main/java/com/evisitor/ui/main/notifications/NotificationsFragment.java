@@ -70,6 +70,7 @@ public class NotificationsFragment extends BaseFragment<FragmentNotificationsBin
         getViewDataBinding().swipeToRefresh.setOnRefreshListener(this::updateUI);
         getViewDataBinding().swipeToRefresh.setColorSchemeResources(R.color.colorPrimary);
         updateUI();
+        getViewModel().doReadAllNotification();
     }
 
 

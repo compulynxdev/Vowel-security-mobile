@@ -121,6 +121,7 @@ public class ExpectedSPAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             ServiceProvider bean = list.get(position);
             Context context = name.getContext();
             name.setText(context.getString(R.string.data_name, bean.getName()));
+            status.setVisibility(bean.getStatus().equalsIgnoreCase("PENDING") ? View.GONE : View.VISIBLE);
             status.setText(status.getContext().getString(R.string.status,bean.getStatus()));
             profile.setText(context.getString(R.string.data_profile, bean.getProfile()));
             if (bean.getTime() != null && !bean.getTime().isEmpty())

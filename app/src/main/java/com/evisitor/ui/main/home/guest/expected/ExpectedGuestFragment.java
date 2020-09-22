@@ -72,32 +72,8 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
             List<VisitorProfileBean> visitorProfileBeanList = getViewModel().setClickVisitorDetail(guestBean);
             VisitorProfileDialog.newInstance(visitorProfileBeanList, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
-
-                Guests tmpBean = getViewModel().getDataManager().getGuestDetail();
-                if (!getViewModel().getDataManager().isIdentifyFeature() || tmpBean.getIdentityNo().isEmpty()) {
-                    showCheckinOptions();
-                } else {
-                    IdVerificationDialog.newInstance(new IdVerificationCallback() {
-                        @Override
-                        public void onScanClick(IdVerificationDialog dialog) {
-                            dialog.dismiss();
-                            Intent i = ScanIDActivity.getStartIntent(getContext());
-                            startActivityForResult(i, 101);
-                        }
-
-                        @Override
-                        public void onSubmitClick(IdVerificationDialog dialog, String id) {
-                            dialog.dismiss();
-
-                            if (tmpBean.getIdentityNo().equals(id))
-                                showCheckinOptions();
-                            else {
-                                showToast(R.string.alert_id);
-                            }
-                        }
-                    }).show(getFragmentManager());
-                }
-            }).setBtnLabel(getString(R.string.check_in)).setBtnVisible(guestBean.getStatus().equalsIgnoreCase("PENDING"))
+                decideNextProcess();
+            }).setFlatId(guestBean.getFlatId()).setBtnLabel(getString(R.string.check_in)).setBtnVisible(guestBean.getStatus().equalsIgnoreCase("PENDING"))
                     .setImage(guestBean.getImageUrl()).show(getFragmentManager());
         });
         adapter.setHasStableIds(true);
@@ -117,6 +93,37 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
         getViewDataBinding().swipeToRefresh.setOnRefreshListener(this::updateUI);
         getViewDataBinding().swipeToRefresh.setColorSchemeResources(R.color.colorPrimary);
         updateUI();
+    }
+
+    private void decideNextProcess() {
+        Guests tmpBean = getViewModel().getDataManager().getGuestDetail();
+        if (tmpBean.getCheckInStatus()) {
+            getViewModel().approveByCall(true);
+        } else {
+            if (!getViewModel().getDataManager().isIdentifyFeature() || tmpBean.getIdentityNo().isEmpty()) {
+                showCheckinOptions();
+            } else {
+                IdVerificationDialog.newInstance(new IdVerificationCallback() {
+                    @Override
+                    public void onScanClick(IdVerificationDialog dialog) {
+                        dialog.dismiss();
+                        Intent i = ScanIDActivity.getStartIntent(getContext());
+                        startActivityForResult(i, 101);
+                    }
+
+                    @Override
+                    public void onSubmitClick(IdVerificationDialog dialog, String id) {
+                        dialog.dismiss();
+
+                        if (tmpBean.getIdentityNo().equals(id))
+                            showCheckinOptions();
+                        else {
+                            showToast(R.string.alert_id);
+                        }
+                    }
+                }).show(getFragmentManager());
+            }
+        }
     }
 
     private void updateUI() {
@@ -140,10 +147,8 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
                 .setPositiveBtnLabel(getString(R.string.approve_by_call))
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
-                    if (isNetworkConnected(true))
-                        showCallDialog();
+                    showCallDialog();
                 });
-
 
         Guests bean = getViewModel().getDataManager().getGuestDetail();
         if (!bean.isNotificationStatus() || bean.getHouseNo().isEmpty()) {
@@ -154,8 +159,7 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
                     .setNegativeBtnLabel(getString(R.string.send_notification))
                     .setOnNegativeClickListener(dialog1 -> {
                         dialog1.dismiss();
-                        if (isNetworkConnected(true))
-                            getViewModel().sendNotification();
+                        getViewModel().sendNotification();
                     })
                     .show(getFragmentManager());
         }
@@ -171,13 +175,11 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
                 .setNegativeBtnLabel(getString(R.string.reject))
                 .setOnNegativeClickListener(dialog1 -> {
                     dialog1.dismiss();
-                    if (isNetworkConnected(true))
-                        getViewModel().approveByCall(false);
+                    getViewModel().approveByCall(false);
                 })
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
-                    if (isNetworkConnected(true))
-                        getViewModel().approveByCall(true);
+                    getViewModel().approveByCall(true);
                 }).show(getFragmentManager());
     }
 

@@ -84,16 +84,13 @@ public class ExpectedHKViewModel extends BaseCheckInOutViewModel<ExpectedHKNavig
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, hkBean.getFullName())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_profile, hkBean.getProfile())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time_slot, CalenderUtils.formatDate(hkBean.getTimeIn(), CalenderUtils.TIME_FORMAT, CalenderUtils.TIME_FORMAT_AM), CalenderUtils.formatDate(hkBean.getTimeOut(), CalenderUtils.TIME_FORMAT, CalenderUtils.TIME_FORMAT_AM))));
-
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), hkBean.getExpectedVehicleNo(), VisitorProfileBean.VIEW_TYPE_EDITABLE));
-        if (!hkBean.getContactNo().isEmpty())
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, hkBean.getContactNo())));
-        if (!hkBean.getDocumentId().isEmpty())
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, hkBean.getDocumentId())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, hkBean.getContactNo().isEmpty() ? R.string.na : hkBean.getContactNo())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, hkBean.getDocumentId().isEmpty() ? R.string.na : hkBean.getDocumentId())));
         if (hkBean.getFlatNo().isEmpty()) {
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, hkBean.getCreatedBy())));
         } else {
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_house, hkBean.getFlatNo())));
+            visitorProfileBeanList.add(new VisitorProfileBean(1, getNavigator().getContext().getString(R.string.data_house, hkBean.getFlatNo())));
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, hkBean.getResidentName())));
         }
         getNavigator().hideLoading();
@@ -101,35 +98,40 @@ public class ExpectedHKViewModel extends BaseCheckInOutViewModel<ExpectedHKNavig
     }
 
     void sendNotification() {
-        JSONObject object = new JSONObject();
-        try {
-            object.put("id", String.valueOf(getDataManager().getHouseKeeping().getId()));
-            object.put("accountId", getDataManager().getAccountId());
-            object.put("residentId", getDataManager().getHouseKeeping().getResidentId());
-            object.put("premiseHierarchyDetailsId", getDataManager().getHouseKeeping().getFlatId());
-            object.put("type", AppConstants.HOUSE_HELP);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        if (getNavigator().isNetworkConnected(true)) {
+            JSONObject object = new JSONObject();
+            try {
+                object.put("id", String.valueOf(getDataManager().getHouseKeeping().getId()));
+                object.put("accountId", getDataManager().getAccountId());
+                object.put("residentId", getDataManager().getHouseKeeping().getResidentId());
+                object.put("premiseHierarchyDetailsId", getDataManager().getHouseKeeping().getFlatId());
+                object.put("enteredVehicleNo", getDataManager().getHouseKeeping().getEnteredVehicleNo());
+                object.put("type", AppConstants.HOUSE_HELP);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
-        RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
-        sendNotification(body, this);
+            RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
+            sendNotification(body, this);
+        }
     }
 
     void approveByCall(boolean isAccept) {
-        JSONObject object = new JSONObject();
-        try {
-            object.put("accountId", getDataManager().getAccountId());
-            object.put("staffId", String.valueOf(getDataManager().getHouseKeeping().getId()));
-            object.put("enteredVehicleNo", getDataManager().getHouseKeeping().getEnteredVehicleNo());
-            object.put("type", AppConstants.CHECK_IN);
-            object.put("visitor", AppConstants.HOUSE_HELP);
-            object.put("state", isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if (getNavigator().isNetworkConnected(true)) {
+            JSONObject object = new JSONObject();
+            try {
+                object.put("accountId", getDataManager().getAccountId());
+                object.put("staffId", String.valueOf(getDataManager().getHouseKeeping().getId()));
+                object.put("enteredVehicleNo", getDataManager().getHouseKeeping().getEnteredVehicleNo());
+                object.put("type", AppConstants.CHECK_IN);
+                object.put("visitor", AppConstants.HOUSE_HELP);
+                object.put("state", isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
+            doCheckInOut(body, this);
         }
-        RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
-        doCheckInOut(body, this);
     }
 
     @Override

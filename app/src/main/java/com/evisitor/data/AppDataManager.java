@@ -306,4 +306,14 @@ public class AppDataManager implements DataManager {
     public Call<ResponseBody> doGetNotifications(String authToken, Map<String, String> partMap) {
         return apiHelper.doGetNotifications(authToken, partMap);
     }
+
+    @Override
+    public Call<ResponseBody> doReadAllNotification(String authToken, Map<String, String> partMap) {
+        return apiHelper.doReadAllNotification(authToken, partMap);
+    }
+
+    @Override
+    public Call<ResponseBody> doGetHouseInfo(String authToken, Map<String, String> partMap) {
+        return apiHelper.doGetHouseInfo(authToken, partMap);
+    }
 }

@@ -87,7 +87,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                     break;
             }
         });
-        //getViewDataBinding().bottomNavigation.setCount(ID_NOTIFICATION, "0");
+        homeFragment.setInteraction(count -> {
+            if (count > 0) {
+                getViewDataBinding().bottomNavigation.setCount(ID_NOTIFICATION, String.valueOf(count));
+            } else getViewDataBinding().bottomNavigation.clearCount(ID_NOTIFICATION);
+        });
         getViewDataBinding().bottomNavigation.show(ID_HOME, true);
     }
 

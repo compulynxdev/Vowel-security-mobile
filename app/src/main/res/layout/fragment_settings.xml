@@ -38,7 +38,7 @@
                     android:id="@+id/image"
                     android:layout_width="55dp"
                     android:layout_height="55dp"
-                    android:background="@drawable/bg_circle"
+
                     android:contentDescription="@string/image"
                     android:padding="8dp"
                     android:src="@drawable/ic_info"
@@ -88,10 +88,56 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
+                android:id="@+id/premise_info_constraint"
+                android:layout_height="wrap_content"
+                android:layout_margin="18dp"
+                android:padding="8dp"
+                android:background="@drawable/bg_card_corner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/info_constraint">
+
+                <ImageView
+                    android:id="@+id/image6"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:contentDescription="@string/image"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_property"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/futura_round_medium"
+                    android:text="@string/property_info"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/image6"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:rotation="180"
+                    android:src="@drawable/ic_back2"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_margin="18dp"
                 android:padding="8dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/info_constraint"
+                app:layout_constraintTop_toBottomOf="@+id/premise_info_constraint"
                 android:id="@+id/language_constraint"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:background="@drawable/bg_card_corner"
@@ -103,7 +149,7 @@
                     android:layout_height="55dp"
                     android:contentDescription="@string/image"
                     android:padding="8dp"
-                    android:background="@drawable/bg_circle"
+
                     android:src="@drawable/ic_global_language"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -165,7 +211,7 @@
                     android:layout_height="55dp"
                     android:contentDescription="@string/image"
                     android:padding="8dp"
-                    android:background="@drawable/bg_circle"
+
                     android:src="@drawable/ic_question"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -195,7 +241,6 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 app:layout_constraintTop_toBottomOf="@+id/aboutus_constraint"
@@ -213,7 +258,7 @@
                     android:layout_height="55dp"
                     android:contentDescription="@string/image"
                     android:padding="8dp"
-                    android:background="@drawable/bg_circle"
+
                     android:src="@drawable/ic_privacy"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -261,7 +306,7 @@
                     android:layout_height="55dp"
                     android:contentDescription="@string/image"
                     android:padding="8dp"
-                    android:background="@drawable/bg_circle"
+
                     android:src="@drawable/ic_logout"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

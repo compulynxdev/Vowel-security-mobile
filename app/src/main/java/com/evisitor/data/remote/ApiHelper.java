@@ -74,4 +74,10 @@ public interface ApiHelper {
 
     @GET(WebServices.GET_NOTIFICATIONS)
     Call<ResponseBody> doGetNotifications(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+
+    @GET(WebServices.READ_ALL_NOTIFICATIONS)
+    Call<ResponseBody> doReadAllNotification(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+
+    @GET(WebServices.GET_HOUSE_INFO)
+    Call<ResponseBody> doGetHouseInfo(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
 }

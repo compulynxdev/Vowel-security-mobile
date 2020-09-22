@@ -18,12 +18,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class NotificationsViewModel extends BaseViewModel<NotificationNavigator> {
+    private static final String TAG = "NotificationsViewModel";
+
     public NotificationsViewModel(DataManager dataManager) {
         super(dataManager);
     }
 
-    void getNotifications(int page, String search)
-    {
+    void getNotifications(int page, String search) {
         if (getNavigator().isNetworkConnected()){
             Map<String, String> map = new HashMap<>();
             map.put("accountId", getDataManager().getAccountId());
@@ -68,4 +69,27 @@ public class NotificationsViewModel extends BaseViewModel<NotificationNavigator>
         }
     }
 
+    void doReadAllNotification() {
+        if (getNavigator().isNetworkConnected()) {
+            Map<String, String> map = new HashMap<>();
+            map.put("accountId", getDataManager().getAccountId());
+            map.put("username", "" + getDataManager().getUsername());
+
+            getDataManager().doReadAllNotification(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                    if (response.code() == 200) {
+                        AppLogger.e(TAG, "Notification read success");
+                    } else {
+                        AppLogger.e(TAG, "" + response.errorBody());
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                    //not require already manage in getNotification call
+                }
+            });
+        }
+    }
 }

@@ -2,7 +2,6 @@ package com.evisitor.ui.main.home;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
@@ -26,12 +25,17 @@ import java.util.List;
 public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel> {
 
     private List<HomeBean> homeList;
+    private HomeFragmentInteraction interaction;
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public void setInteraction(HomeFragmentInteraction interaction) {
+        this.interaction = interaction;
     }
 
     @Override
@@ -53,10 +57,13 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getViewModel().setNavigator(this);
-        TextView tvTitle = view.findViewById(R.id.tv_title);
-        tvTitle.setText(R.string.title_home);
+        getViewDataBinding().toolbar.tvTitle.setText(R.string.title_home);
 
         setupAdapter();
+        getViewModel().getNotificationCountData().observe(this, count -> {
+            if (interaction != null)
+                interaction.onReceiveNotificationCount(count);
+        });
     }
 
     private void setupAdapter() {
@@ -106,5 +113,9 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     public void onStart() {
         super.onStart();
         getViewModel().getVisitorCount();
+    }
+
+    public interface HomeFragmentInteraction {
+        void onReceiveNotificationCount(int count);
     }
 }

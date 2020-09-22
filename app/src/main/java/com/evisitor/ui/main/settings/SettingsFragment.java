@@ -52,7 +52,7 @@ public class SettingsFragment extends BaseFragment<FragmentSettingsBinding, Sett
         tvTitle.setText(R.string.title_settings);
         getViewDataBinding().tvLang.setText(getViewModel().getDataManager().getLanguage());
 
-        setOnClickListener(getViewDataBinding().infoConstraint, getViewDataBinding().languageConstraint, getViewDataBinding().aboutusConstraint
+        setOnClickListener(getViewDataBinding().infoConstraint, getViewDataBinding().premiseInfoConstraint, getViewDataBinding().languageConstraint, getViewDataBinding().aboutusConstraint
                 , getViewDataBinding().privacyConstraint, getViewDataBinding().logoutConstraint);
     }
 
@@ -66,6 +66,10 @@ public class SettingsFragment extends BaseFragment<FragmentSettingsBinding, Sett
         switch (v.getId()) {
             case R.id.info_constraint:
                 DeviceInfoDialog.newInstance().show(getChildFragmentManager());
+                break;
+
+            case R.id.premise_info_constraint:
+                showToast(R.string.under_development);
                 break;
 
             case R.id.language_constraint:

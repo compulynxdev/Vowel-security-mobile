@@ -72,6 +72,9 @@ public class ServiceProvider {
     @SerializedName("state")
     private String status;
 
+    @SerializedName("checkInStatus")
+    private boolean checkInStatus;
+
     public String getStatus() {
         return status ==null ? "PENDING" : status;
     }
@@ -209,7 +212,7 @@ public class ServiceProvider {
     }
 
     public String getFlatId() {
-        return flatId;
+        return flatId.isEmpty() ? "" : flatId;
     }
 
     public void setFlatId(String flatId) {
@@ -246,5 +249,13 @@ public class ServiceProvider {
 
     public void setEnteredVehicleNo(String enteredVehicleNo) {
         this.enteredVehicleNo = enteredVehicleNo;
+    }
+
+    public boolean getCheckInStatus() {
+        return checkInStatus;
+    }
+
+    public void setCheckInStatus(boolean checkInStatus) {
+        this.checkInStatus = checkInStatus;
     }
 }

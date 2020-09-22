@@ -25,6 +25,7 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
     private List<VisitorProfileBean> visitorInfoList;
     private String btnLabel = "";
     private String image = "";
+    private String flatId = "";
     private boolean isBtnVisible = true;
 
     public static VisitorProfileDialog newInstance(List<VisitorProfileBean> visitorInfoList, VisitorProfileCallback callback) {
@@ -65,6 +66,11 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
         return this;
     }
 
+    public VisitorProfileDialog setFlatId(String flatId) {
+        this.flatId = flatId;
+        return this;
+    }
+
     @Override
     public VisitorProfileViewModel getViewModel() {
         return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(VisitorProfileViewModel.class);
@@ -101,13 +107,26 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(getViewDataBinding().imgProfile);
         }
-
+        getViewModel().getHouseInfo(flatId);
         setUpAdapter();
     }
 
     private void setUpAdapter() {
         VisitorProfileAdapter infoAdapter = new VisitorProfileAdapter(getBaseActivity(), visitorInfoList);
         getViewDataBinding().recyclerView.setAdapter(infoAdapter);
+        getViewModel().getHouseNoInfo().observe(this, strHouseNo -> {
+            if (!flatId.isEmpty()) {
+                for (int i = 0; i < visitorInfoList.size(); i++) {
+                    VisitorProfileBean tmpBean = visitorInfoList.get(i);
+                    if (tmpBean.getPos() == 1) {
+                        tmpBean.setTitle(getString(R.string.data_house, strHouseNo));
+                        visitorInfoList.set(i, tmpBean);
+                        infoAdapter.notifyItemChanged(i);
+                        break;
+                    }
+                }
+            }
+        });
     }
 
     public void show(FragmentManager fragmentManager) {
