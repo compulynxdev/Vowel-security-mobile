@@ -61,7 +61,7 @@ public class HouseKeeping {
     private String residentId;
 
     @SerializedName("flatId")
-    private String flatId;
+    private String flatId = "";
 
     @SerializedName("checkOutFeature")
     private boolean checkOutFeature;

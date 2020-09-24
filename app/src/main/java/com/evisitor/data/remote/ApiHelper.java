@@ -80,4 +80,7 @@ public interface ApiHelper {
 
     @GET(WebServices.GET_HOUSE_INFO)
     Call<ResponseBody> doGetHouseInfo(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+
+    @GET(WebServices.GET_PROPERTY_INFO)
+    Call<ResponseBody> doGetPropertyInfo(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
 }

@@ -13,4 +13,6 @@ interface NotificationNavigator extends BaseNavigator {
     void onNotificationSuccess(List<NotificationResponse.ContentBean> content);
 
     void refreshList();
+
+    void onReadAllNotification();
 }

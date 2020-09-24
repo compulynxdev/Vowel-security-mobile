@@ -148,7 +148,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                     if (isNetworkConnected(true))
                     getViewModel().checkOut(1);
                 }
-            }).setImage(houseKeeping.getImageUrl()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
+            }).setFlatId(houseKeeping.getFlatId()).setImage(houseKeeping.getImageUrl()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
         });
     }
 
@@ -160,7 +160,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                 if (serviceProvider.isCheckOutFeature() && !serviceProvider.isHostCheckOut())
                     showCallDialog(2);
                 else getViewModel().checkOut(2);
-            }).setImage(serviceProvider.getImageUrl()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
+            }).setFlatId(serviceProvider.getFlatId()).setImage(serviceProvider.getImageUrl()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
         });
     }
 
@@ -173,7 +173,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                 if (guests.isCheckOutFeature() && !guests.isHostCheckOut())
                     showCallDialog(0);
                 else getViewModel().checkOut(0);
-            }).setImage(guests.getImageUrl()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
+            }).setFlatId(guests.getFlatId2()).setImage(guests.getImageUrl()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
         });
 
         getViewDataBinding().recyclerView.setAdapter(guestAdapter);
@@ -181,7 +181,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
 
     private void showCallDialog(int type) {
         AlertDialog.newInstance()
-                .setNegativeBtnShow(true)
+                .setNegativeBtnShow(false)
                 .setCloseBtnShow(true)
                 .setTitle(getString(R.string.check_out))
                 .setMsg(getString(R.string.msg_check_out_call))

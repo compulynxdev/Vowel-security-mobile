@@ -64,6 +64,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
         //HomeFragment Initialise one time because setOnShowListener run many time during initialization
         HomeFragment homeFragment = HomeFragment.newInstance();
+        NotificationsFragment notificationsFragment = NotificationsFragment.newInstance(() -> getViewDataBinding().bottomNavigation.clearCount(ID_NOTIFICATION));
         getViewDataBinding().bottomNavigation.setOnShowListener(item -> {
             switch (item.getId()) {
                 case ID_HOME:
@@ -75,7 +76,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                     break;
 
                 case ID_NOTIFICATION:
-                    replaceFragment(NotificationsFragment.newInstance(), R.id.frame_layout);
+                    replaceFragment(notificationsFragment, R.id.frame_layout);
                     break;
 
                 case ID_SETTINGS:

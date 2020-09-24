@@ -136,17 +136,17 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
     }
 
     private void setUpHouseKeeperAdapter() {
-        houseKeepingAdapter = new HouseKeepingCheckOutAdapter(houseKeepingList, pos -> VisitorProfileDialog.newInstance(getViewModel().getHouseKeepingCheckInProfileBean(houseKeepingList.get(pos)), null).setImage(houseKeepingList.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
+        houseKeepingAdapter = new HouseKeepingCheckOutAdapter(houseKeepingList, pos -> VisitorProfileDialog.newInstance(getViewModel().getHouseKeepingCheckInProfileBean(houseKeepingList.get(pos)), null).setFlatId(houseKeepingList.get(pos).getFlatId()).setImage(houseKeepingList.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
         houseKeepingAdapter.setHasStableIds(true);
     }
 
     private void setUpServiceProviderAdapter() {
-        serviceProviderAdapter = new ServiceProviderCheckOutAdapter(serviceProviderList, pos -> VisitorProfileDialog.newInstance(getViewModel().getServiceProviderCheckInProfileBean(serviceProviderList.get(pos)), null).setImage(serviceProviderList.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
+        serviceProviderAdapter = new ServiceProviderCheckOutAdapter(serviceProviderList, pos -> VisitorProfileDialog.newInstance(getViewModel().getServiceProviderCheckInProfileBean(serviceProviderList.get(pos)), null).setFlatId(serviceProviderList.get(pos).getFlatId()).setImage(serviceProviderList.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
         serviceProviderAdapter.setHasStableIds(true);
     }
 
     private void setUpGuestAdapter() {
-        guestAdapter = new GuestCheckOutAdapter(guestsList, pos -> VisitorProfileDialog.newInstance(getViewModel().getGuestCheckInProfileBean(guestsList.get(pos)), null).setImage(guestsList.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
+        guestAdapter = new GuestCheckOutAdapter(guestsList, pos -> VisitorProfileDialog.newInstance(getViewModel().getGuestCheckInProfileBean(guestsList.get(pos)), null).setFlatId(guestsList.get(pos).getFlatId()).setImage(guestsList.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
         guestAdapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(guestAdapter);
     }

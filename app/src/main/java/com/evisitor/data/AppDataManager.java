@@ -316,4 +316,9 @@ public class AppDataManager implements DataManager {
     public Call<ResponseBody> doGetHouseInfo(String authToken, Map<String, String> partMap) {
         return apiHelper.doGetHouseInfo(authToken, partMap);
     }
+
+    @Override
+    public Call<ResponseBody> doGetPropertyInfo(String authToken, Map<String, String> partMap) {
+        return apiHelper.doGetPropertyInfo(authToken, partMap);
+    }
 }

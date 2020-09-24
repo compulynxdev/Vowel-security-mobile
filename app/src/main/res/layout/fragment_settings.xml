@@ -38,7 +38,6 @@
                     android:id="@+id/image"
                     android:layout_width="55dp"
                     android:layout_height="55dp"
-
                     android:contentDescription="@string/image"
                     android:padding="8dp"
                     android:src="@drawable/ic_info"
@@ -68,7 +67,7 @@
                     android:fontFamily="@font/futura_round"
                     android:text="@{@string/app_version(viewModel.version)}"
                     android:textColor="@color/black"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/image"
                     app:layout_constraintTop_toBottomOf="@id/tv_info" />
@@ -149,7 +148,6 @@
                     android:layout_height="55dp"
                     android:contentDescription="@string/image"
                     android:padding="8dp"
-
                     android:src="@drawable/ic_global_language"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -176,7 +174,7 @@
                     android:fontFamily="@font/futura_round"
                     android:textColor="@color/black"
                     android:id="@+id/tv_lang"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     app:layout_constraintTop_toBottomOf="@id/language"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/image1" />
@@ -211,7 +209,6 @@
                     android:layout_height="55dp"
                     android:contentDescription="@string/image"
                     android:padding="8dp"
-
                     android:src="@drawable/ic_question"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -258,7 +255,6 @@
                     android:layout_height="55dp"
                     android:contentDescription="@string/image"
                     android:padding="8dp"
-
                     android:src="@drawable/ic_privacy"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -306,7 +302,6 @@
                     android:layout_height="55dp"
                     android:contentDescription="@string/image"
                     android:padding="8dp"
-
                     android:src="@drawable/ic_logout"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

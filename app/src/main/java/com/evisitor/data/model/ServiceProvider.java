@@ -39,7 +39,7 @@ public class ServiceProvider {
     private String residentId;
 
     @SerializedName("flatId")
-    private String flatId;
+    private String flatId = "";
 
     @SerializedName("id")
     private String serviceProviderId;

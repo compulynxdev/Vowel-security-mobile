@@ -79,6 +79,7 @@ public class NotificationsViewModel extends BaseViewModel<NotificationNavigator>
                 @Override
                 public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                     if (response.code() == 200) {
+                        getNavigator().onReadAllNotification();
                         AppLogger.e(TAG, "Notification read success");
                     } else {
                         AppLogger.e(TAG, "" + response.errorBody());

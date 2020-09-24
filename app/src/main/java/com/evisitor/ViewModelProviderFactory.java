@@ -38,6 +38,7 @@ import com.evisitor.ui.main.settings.SettingsViewModel;
 import com.evisitor.ui.main.settings.content.ContentViewModel;
 import com.evisitor.ui.main.settings.info.DeviceInfoViewModel;
 import com.evisitor.ui.main.settings.language.LanguageDialogViewModel;
+import com.evisitor.ui.main.settings.propertyinfo.PropertyInfoViewModel;
 import com.evisitor.ui.main.visitorprofile.VisitorProfileViewModel;
 import com.evisitor.ui.splash.SplashViewModel;
 
@@ -168,6 +169,9 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(ImageViewModel.class)) {
             //noinspection unchecked
             return (T) new ImageViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(PropertyInfoViewModel.class)) {
+            //noinspection unchecked
+            return (T) new PropertyInfoViewModel(dataManager);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

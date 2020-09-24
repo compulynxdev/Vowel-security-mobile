@@ -154,4 +154,9 @@ public class AppApiHelper implements ApiHelper {
     public Call<ResponseBody> doGetHouseInfo(String authToken, Map<String, String> partMap) {
         return getApiInterface().doGetHouseInfo(authToken, partMap);
     }
+
+    @Override
+    public Call<ResponseBody> doGetPropertyInfo(String authToken, Map<String, String> partMap) {
+        return getApiInterface().doGetPropertyInfo(authToken, partMap);
+    }
 }

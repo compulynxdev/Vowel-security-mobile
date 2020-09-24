@@ -55,7 +55,10 @@ public class Guests {
     private String checkOutTime;
 
     @SerializedName("premiseHierarchyDetailsId")
-    private String flatId;
+    private String flatId = "";
+
+    @SerializedName("flatId")  //for guest check in/out list
+    private String flatId2 = "";
 
     @SerializedName("id")
     private String guestId;
@@ -246,5 +249,13 @@ public class Guests {
 
     public void setCheckInStatus(boolean checkInStatus) {
         this.checkInStatus = checkInStatus;
+    }
+
+    public String getFlatId2() {
+        return flatId2 == null ? "" : flatId2;
+    }
+
+    public void setFlatId2(String flatId2) {
+        this.flatId2 = flatId2;
     }
 }

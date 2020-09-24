@@ -211,5 +211,8 @@
     <string name="no_host_found">No host found</string>
     <string name="invalid_credentials">Invalid username or password!!</string>
     <string name="property_info">Property Info</string>
+    <string name="property_type">Property Type</string>
+    <string name="mobile">Mobile</string>
+    <string name="msg_property_image">Property photo not available at \nthe moment!!</string>
 
 </resources>

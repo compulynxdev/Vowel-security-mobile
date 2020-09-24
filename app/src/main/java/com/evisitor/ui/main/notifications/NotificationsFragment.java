@@ -23,11 +23,18 @@ public class NotificationsFragment extends BaseFragment<FragmentNotificationsBin
     private NotificationAdapter adapter;
     private String search = "";
     private int page = 0;
-    public static NotificationsFragment newInstance() {
+    private NotificationFragmentInteraction interaction;
+
+    public static NotificationsFragment newInstance(NotificationFragmentInteraction interaction) {
         NotificationsFragment fragment = new NotificationsFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
+        fragment.setInteraction(interaction);
         return fragment;
+    }
+
+    public void setInteraction(NotificationFragmentInteraction interaction) {
+        this.interaction = interaction;
     }
 
     @Override
@@ -69,8 +76,8 @@ public class NotificationsFragment extends BaseFragment<FragmentNotificationsBin
 
         getViewDataBinding().swipeToRefresh.setOnRefreshListener(this::updateUI);
         getViewDataBinding().swipeToRefresh.setColorSchemeResources(R.color.colorPrimary);
-        updateUI();
         getViewModel().doReadAllNotification();
+        updateUI();
     }
 
 
@@ -138,5 +145,14 @@ public class NotificationsFragment extends BaseFragment<FragmentNotificationsBin
     @Override
     public void refreshList() {
         doSearch(search);
+    }
+
+    @Override
+    public void onReadAllNotification() {
+        if (interaction != null) interaction.onReadAllNotification();
+    }
+
+    public interface NotificationFragmentInteraction {
+        void onReadAllNotification();
     }
 }

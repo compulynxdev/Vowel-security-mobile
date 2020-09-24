@@ -17,6 +17,7 @@ import com.evisitor.ui.base.BaseNavigator;
 import com.evisitor.ui.main.settings.content.ContentActivity;
 import com.evisitor.ui.main.settings.info.DeviceInfoDialog;
 import com.evisitor.ui.main.settings.language.LanguageDialog;
+import com.evisitor.ui.main.settings.propertyinfo.PropertyInfoActivity;
 import com.evisitor.util.AppConstants;
 
 public class SettingsFragment extends BaseFragment<FragmentSettingsBinding, SettingsViewModel> implements BaseNavigator, View.OnClickListener {
@@ -69,7 +70,7 @@ public class SettingsFragment extends BaseFragment<FragmentSettingsBinding, Sett
                 break;
 
             case R.id.premise_info_constraint:
-                showToast(R.string.under_development);
+                startActivity(PropertyInfoActivity.newIntent(getBaseActivity()));
                 break;
 
             case R.id.language_constraint:
