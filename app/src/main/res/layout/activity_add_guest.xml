@@ -257,6 +257,7 @@
 
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/tv_owner"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
@@ -297,7 +298,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
-                    app:constraint_referenced_ids="tv_host,tv_owner" />
+                    app:constraint_referenced_ids="tv_host" />
 
                 <Button
                     android:id="@+id/btn_add"

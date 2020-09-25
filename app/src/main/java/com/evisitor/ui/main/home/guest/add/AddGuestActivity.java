@@ -29,14 +29,13 @@ import com.evisitor.ui.main.home.guest.add.dialogs.PickerBottomSheetDialog;
 import com.evisitor.util.PermissionUtils;
 import com.sharma.mrzreader.MrzRecord;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGuestViewModel> implements AddGuestNavigator, View.OnClickListener {
 
     private String houseId = "";  //also called flat id
     private String residentId = "";  //also called host id
-    private String ownerId = "";  //also called house owner id
+    // private String ownerId = "";  //also called house owner id
     private Bitmap bmp_profile;
     private List<HostDetailBean> hostDetailList;
     private String idType = "";
@@ -138,8 +137,8 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
                 getViewDataBinding().actvHouseNo.setText(houseDetailBean.getName());
 
                 /*Reset Data once House Info Change*/
-                ownerId = "";
-                getViewDataBinding().tvOwner.setText("");
+                //ownerId = "";
+                //getViewDataBinding().tvOwner.setText("");
                 residentId = "";
                 getViewDataBinding().tvHost.setText("");
 
@@ -151,11 +150,11 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
         getViewModel().doGetHostDetails().observe(this, hostDetailList -> {
             this.hostDetailList = hostDetailList;
             getViewDataBinding().hostGroup.setVisibility(View.VISIBLE);
-            setUpOwner(false);
+            //setUpOwner(false);
         });
     }
 
-    private void setUpOwner(boolean isDialogShow) {
+    /*private void setUpOwner(boolean isDialogShow) {
         if (hostDetailList == null) return;
 
         List<HostDetailBean> ownerList = new ArrayList<>();
@@ -181,7 +180,7 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
                 }).show(getSupportFragmentManager());
             }
         }
-    }
+    }*/
 
     private void setUp() {
         ImageView imgBack = findViewById(R.id.img_back);
@@ -253,13 +252,13 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
                 break;
 
             case R.id.tv_owner:
-                setUpOwner(true);
+                //setUpOwner(true);
                 break;
 
             case R.id.tv_host:
                 if (hostDetailList != null) {
                     if (hostDetailList.isEmpty()) {
-                        hostDetailList.add(new HostDetailBean(-1, getString(R.string.no_host_found), false));
+                        hostDetailList.add(new HostDetailBean(-1, getString(R.string.no_host_found)));
                     }
                     HostPickerBottomSheetDialog.newInstance(hostDetailList, bean -> {
                         if (bean.getId() != -1) {
@@ -274,7 +273,7 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
                 if (getViewModel().doVerifyInputs(getViewDataBinding().etIdentity.getText().toString().trim(), idType
                         , getViewDataBinding().etName.getText().toString().trim(), getViewDataBinding().etContact.getText().toString().trim()
                         , getViewDataBinding().etAddress.getText().toString().trim(), getViewDataBinding().tvGender.getText().toString()
-                        , houseId, ownerId, residentId)) {
+                        , houseId, /*ownerId*/"", residentId)) {
 
                     getViewModel().doCheckGuestStatus(getViewDataBinding().etIdentity.getText().toString().trim(), idType);
                 }

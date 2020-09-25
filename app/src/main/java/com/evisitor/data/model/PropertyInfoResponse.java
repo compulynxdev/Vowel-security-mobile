@@ -31,7 +31,7 @@ public class PropertyInfoResponse {
     private String country = "";
 
     public String getContactNo() {
-        return contactNo;
+        return contactNo == null ? "" : contactNo;
     }
 
     public void setContactNo(String contactNo) {
@@ -39,7 +39,7 @@ public class PropertyInfoResponse {
     }
 
     public String getExtensionNo() {
-        return extensionNo;
+        return extensionNo == null ? "" : extensionNo;
     }
 
     public void setExtensionNo(String extensionNo) {
@@ -63,7 +63,7 @@ public class PropertyInfoResponse {
     }
 
     public String getImage() {
-        return image;
+        return image == null ? "" : image;
     }
 
     public void setImage(String image) {
@@ -95,7 +95,7 @@ public class PropertyInfoResponse {
     }
 
     public String getFullName() {
-        return fullName;
+        return fullName == null ? "" : fullName;
     }
 
     public void setFullName(String fullName) {
@@ -111,7 +111,7 @@ public class PropertyInfoResponse {
     }
 
     public String getAddress() {
-        return address;
+        return address == null ? "" : address;
     }
 
     public void setAddress(String address) {
@@ -119,7 +119,7 @@ public class PropertyInfoResponse {
     }
 
     public String getCountry() {
-        return country;
+        return country == null ? "" : country;
     }
 
     public void setCountry(String country) {

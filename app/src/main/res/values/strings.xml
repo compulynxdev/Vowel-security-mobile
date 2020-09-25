@@ -214,5 +214,6 @@
     <string name="property_type">Property Type</string>
     <string name="mobile">Mobile</string>
     <string name="msg_property_image">Property photo not available at \nthe moment!!</string>
+    <string name="extention_no">Extension No</string>
 
 </resources>

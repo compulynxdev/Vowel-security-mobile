@@ -141,10 +141,10 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
         } else if (houseId.isEmpty()) {
             getNavigator().showToast(R.string.alert_select_house_no);
             return false;
-        } else if (ownerId.isEmpty()) {
+        }/* else if (ownerId.isEmpty()) {
             getNavigator().showToast(R.string.alert_select_owner);
             return false;
-        } else if (residentId.isEmpty()) {
+        } */ else if (residentId.isEmpty()) {
             getNavigator().showToast(R.string.alert_select_host);
             return false;
         } else return true;
