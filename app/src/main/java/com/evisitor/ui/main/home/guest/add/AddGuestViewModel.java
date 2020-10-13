@@ -254,6 +254,8 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
         if (genderList.isEmpty()) {
             genderList.add("Male");
             genderList.add("Female");
+            genderList.add("Third Gender");
+            genderList.add("Prefer not to disclose");
         }
         return genderList;
     }
