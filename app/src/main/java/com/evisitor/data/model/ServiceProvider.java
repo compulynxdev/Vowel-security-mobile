@@ -212,7 +212,7 @@ public class ServiceProvider {
     }
 
     public String getFlatId() {
-        return flatId.isEmpty() ? "" : flatId;
+        return flatId==null || flatId.isEmpty() ? "" : flatId;
     }
 
     public void setFlatId(String flatId) {

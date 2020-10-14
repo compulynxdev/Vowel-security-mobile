@@ -107,7 +107,8 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(getViewDataBinding().imgProfile);
         }
-        getViewModel().getHouseInfo(flatId);
+        if (flatId!=null && !flatId.isEmpty())
+            getViewModel().getHouseInfo(flatId);
         setUpAdapter();
     }
 
