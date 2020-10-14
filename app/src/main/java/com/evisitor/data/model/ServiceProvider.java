@@ -148,7 +148,7 @@ public class ServiceProvider {
     }
 
     public String getHouseNo() {
-        return houseNo == null || houseNo.isEmpty() ? "" : houseNo;
+        return houseNo == null ? "" : houseNo;
     }
 
     public void setHouseNo(String houseNo) {
