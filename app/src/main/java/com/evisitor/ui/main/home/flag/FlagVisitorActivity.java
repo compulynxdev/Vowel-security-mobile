@@ -113,6 +113,7 @@ public class FlagVisitorActivity extends BaseActivity<ActivityFlagVisitorBinding
     @Override
     public void hideSwipeToRefresh() {
         setAdapterLoading(false);
+        getViewDataBinding().recyclerView.getRecycledViewPool().clear();
         getViewDataBinding().swipeToRefresh.setRefreshing(false);
     }
 

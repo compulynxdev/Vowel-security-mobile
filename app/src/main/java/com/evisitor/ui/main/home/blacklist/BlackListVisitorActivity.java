@@ -117,6 +117,7 @@ public class BlackListVisitorActivity extends BaseActivity<ActivityBlackListVisi
     @Override
     public void hideSwipeToRefresh() {
         setAdapterLoading(false);
+        getViewDataBinding().recyclerView.getRecycledViewPool().clear();
         getViewDataBinding().swipeToRefresh.setRefreshing(false);
     }
 
