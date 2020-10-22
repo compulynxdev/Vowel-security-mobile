@@ -381,7 +381,7 @@ public class HouseKeepingResponse {
         }
 
         public String getFlatNo() {
-            return flatNo;
+            return flatNo==null ? "" : flatNo;
         }
 
         public void setFlatNo(String flatNo) {
