@@ -9,7 +9,5 @@ public interface BlackListNavigtor extends BaseNavigator {
 
     void hideSwipeToRefresh();
 
-    void refreshList();
-
     void OnSuccessBlackList(List<BlackListVisitorResponse.ContentBean> beans);
 }

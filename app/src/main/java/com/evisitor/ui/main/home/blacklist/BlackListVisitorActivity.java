@@ -59,24 +59,11 @@ public class BlackListVisitorActivity extends BaseActivity<ActivityBlackListVisi
         imgBack.setVisibility(View.VISIBLE);
         imgBack.setOnClickListener(v -> onBackPressed());
 
-        scrollListener = new RecyclerViewScrollListener() {
-            @Override
-            public void onLoadMore() {
-                setAdapterLoading(true);
-                page++;
-                doSearch(search);
-            }
-        };
-        getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
         setUpSearch();
         setUpAdapter();
 
         getViewDataBinding().swipeToRefresh.setOnRefreshListener(this::updateUI);
         getViewDataBinding().swipeToRefresh.setColorSchemeResources(R.color.colorPrimary);
-
-        updateUI();
-
-
     }
 
     private void setUpAdapter() {
@@ -84,6 +71,15 @@ public class BlackListVisitorActivity extends BaseActivity<ActivityBlackListVisi
         adapter = new BlackListAdapter(list, pos -> VisitorProfileDialog.newInstance(getViewModel().getVisitorDetail(list.get(pos)), null).setImage(list.get(pos).getImageUrl()).setBtnVisible(false).show(getSupportFragmentManager()));
         adapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(adapter);
+        scrollListener = new RecyclerViewScrollListener() {
+            @Override
+            public void onLoadMore() {
+                setAdapterLoading(true);
+                page++;
+                getViewModel().getData(page,search);
+            }
+        };
+        getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
         updateUI();
     }
 
@@ -122,11 +118,6 @@ public class BlackListVisitorActivity extends BaseActivity<ActivityBlackListVisi
     public void hideSwipeToRefresh() {
         setAdapterLoading(false);
         getViewDataBinding().swipeToRefresh.setRefreshing(false);
-    }
-
-    @Override
-    public void refreshList() {
-        doSearch(search);
     }
 
     @Override

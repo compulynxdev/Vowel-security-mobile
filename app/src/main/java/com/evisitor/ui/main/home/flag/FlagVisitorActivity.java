@@ -53,23 +53,11 @@ public class FlagVisitorActivity extends BaseActivity<ActivityFlagVisitorBinding
         getViewDataBinding().header.tvTitle.setText(R.string.title_flagged_visitor);
         getViewDataBinding().header.imgBack.setVisibility(View.VISIBLE);
         getViewDataBinding().header.imgBack.setOnClickListener(v -> onBackPressed());
-
-        scrollListener = new RecyclerViewScrollListener() {
-            @Override
-            public void onLoadMore() {
-                setAdapterLoading(true);
-                page++;
-                doSearch(search);
-            }
-        };
-        getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
         setUpSearch();
         setUpAdapter();
 
         getViewDataBinding().swipeToRefresh.setOnRefreshListener(this::updateUI);
         getViewDataBinding().swipeToRefresh.setColorSchemeResources(R.color.colorPrimary);
-
-        updateUI();
     }
 
     private void setUpAdapter() {
@@ -77,7 +65,18 @@ public class FlagVisitorActivity extends BaseActivity<ActivityFlagVisitorBinding
         adapter = new FlagVisitorAdapter(list, pos -> VisitorProfileDialog.newInstance(getViewModel().getVisitorDetail(list.get(pos)), null).setImage(list.get(pos).getImageUrl()).setBtnVisible(false).show(getSupportFragmentManager()));
         adapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(adapter);
+        scrollListener = new RecyclerViewScrollListener() {
+            @Override
+            public void onLoadMore() {
+                setAdapterLoading(true);
+                page++;
+                getViewModel().getData(page,search);
+            }
+        };
+        getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
+
         updateUI();
+
     }
 
     private void setUpSearch() {
@@ -118,11 +117,6 @@ public class FlagVisitorActivity extends BaseActivity<ActivityFlagVisitorBinding
     }
 
     @Override
-    public void refreshList() {
-        doSearch(search);
-    }
-
-    @Override
     public void onSuccessFlagList(List<FlaggedVisitorResponse.ContentBean> beans) {
         if (page == 0) this.list.clear();
 
@@ -134,7 +128,9 @@ public class FlagVisitorActivity extends BaseActivity<ActivityFlagVisitorBinding
         scrollListener.onDataCleared();
         this.list.clear();
         this.page = 0;
-        getViewModel().getData(page, search);
+        if (isNetworkConnected(true))
+            getViewModel().getData(page,search);
+        else getViewDataBinding().swipeToRefresh.setRefreshing(false);
     }
 
     private void setAdapterLoading(boolean isShowLoader) {

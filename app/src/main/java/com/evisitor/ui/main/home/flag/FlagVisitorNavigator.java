@@ -9,7 +9,5 @@ public interface FlagVisitorNavigator extends BaseNavigator {
 
     void hideSwipeToRefresh();
 
-    void refreshList();
-
     void onSuccessFlagList(List<FlaggedVisitorResponse.ContentBean> beans);
 }
