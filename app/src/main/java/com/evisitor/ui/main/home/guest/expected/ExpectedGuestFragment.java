@@ -20,12 +20,16 @@ import com.evisitor.ui.main.idverification.IdVerificationCallback;
 import com.evisitor.ui.main.idverification.IdVerificationDialog;
 import com.evisitor.ui.main.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
+import com.sharma.mrzreader.MrzRecord;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
+
 public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBinding, ExpectedGuestViewModel> implements ExpectedGuestNavigator {
     private List<Guests> guestsList;
+    private final int SCAN_RESULT = 101;
     private RecyclerViewScrollListener scrollListener;
     private ExpectedGuestAdapter adapter;
     private String search = "";
@@ -108,7 +112,7 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
                     public void onScanClick(IdVerificationDialog dialog) {
                         dialog.dismiss();
                         Intent i = ScanIDActivity.getStartIntent(getContext());
-                        startActivityForResult(i, 101);
+                        startActivityForResult(i, SCAN_RESULT);
                     }
 
                     @Override
@@ -122,6 +126,22 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
                         }
                     }
                 }).show(getFragmentManager());
+            }
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SCAN_RESULT && data != null) {
+                MrzRecord mrzRecord = (MrzRecord) data.getSerializableExtra("Record");
+                assert mrzRecord != null;
+                if (getViewModel().getDataManager().getGuestDetail().getIdentityNo().equals(mrzRecord.getDocumentNumber()))
+                    showCheckinOptions();
+                else {
+                    showToast(R.string.alert_id);
+                }
             }
         }
     }

@@ -150,7 +150,7 @@ public class HouseKeeping {
     }
 
     public String getHouseNo() {
-        return houseNo;
+        return houseNo==null ? "" : houseNo;
     }
 
     public void setHouseNo(String houseNo) {

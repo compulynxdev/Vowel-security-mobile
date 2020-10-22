@@ -32,7 +32,6 @@ public class HouseKeepingCheckOutAdapter extends RecyclerView.Adapter<BaseViewHo
         this.list = list;
         this.callback = callback;
     }
-
     @NonNull
     @Override
     public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
