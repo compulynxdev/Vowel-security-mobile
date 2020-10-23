@@ -180,6 +180,9 @@
     <string name="check_in_with_count">Check In : %s</string>
     <string name="search">Search</string>
     <string name="search_data">Name,Vehicle,Host Name,House No.</string>
+    <string name="search_data_black">Name,Black Listed By</string>
+    <string name="search_data_flag">Name,Flagged By</string>
+    <string name="search_data_trespasser">Name,House No.</string>
     <string name="time_in">Time In </string>
     <string name="house_no">House No.</string>
     <string name="host">Host</string>

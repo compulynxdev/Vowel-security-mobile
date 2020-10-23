@@ -93,6 +93,7 @@ public class BlackListVisitorActivity extends BaseActivity<ActivityBlackListVisi
             getViewDataBinding().customSearchView.searchView.setQuery("", false);
         });
         setupSearchSetting(getViewDataBinding().customSearchView.searchView);
+        getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_data_black));
         getViewDataBinding().customSearchView.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

@@ -100,6 +100,7 @@ public class TrespasserActivity extends BaseActivity<ActivityTrespasserBinding,T
         getViewDataBinding().header.imgSearch.setOnClickListener(this);
 
         setupSearchSetting(getViewDataBinding().customSearchView.searchView);
+        getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_data_trespasser));
         getViewDataBinding().customSearchView.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
