@@ -26,6 +26,7 @@ import com.evisitor.ui.dialog.ImagePickCallback;
 import com.evisitor.ui.main.MainActivity;
 import com.evisitor.ui.main.home.guest.add.dialogs.HostPickerBottomSheetDialog;
 import com.evisitor.ui.main.home.guest.add.dialogs.PickerBottomSheetDialog;
+import com.evisitor.ui.main.home.guest.country.CountrySelectionDialog;
 import com.evisitor.util.PermissionUtils;
 import com.sharma.mrzreader.MrzRecord;
 
@@ -33,6 +34,7 @@ import java.util.List;
 
 public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGuestViewModel> implements AddGuestNavigator, View.OnClickListener {
 
+    private String countryCode = "254";
     private String houseId = "";  //also called flat id
     private String residentId = "";  //also called host id
     // private String ownerId = "";  //also called house owner id
@@ -186,8 +188,8 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
         ImageView imgBack = findViewById(R.id.img_back);
         imgBack.setVisibility(View.VISIBLE);
         setOnClickListener(imgBack, getViewDataBinding().tvIdentity, getViewDataBinding().tvGender, getViewDataBinding().tvOwner, getViewDataBinding().tvHost
-                , getViewDataBinding().frameImg, getViewDataBinding().btnAdd);
-
+                , getViewDataBinding().frameImg, getViewDataBinding().btnAdd, getViewDataBinding().rlCode);
+        getViewDataBinding().tvCode.setText("+".concat(countryCode));
         if (getViewModel().getDataManager().isIdentifyFeature())
             getViewDataBinding().etIdentity.setVisibility(View.VISIBLE);
         getViewDataBinding().etIdentity.addTextChangedListener(new TextWatcher() {
@@ -278,6 +280,13 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
                     getViewModel().doCheckGuestStatus(getViewDataBinding().etIdentity.getText().toString().trim(), idType);
                 }
                 break;
+
+            case R.id.rl_code:
+                CountrySelectionDialog.newInstance(code -> {
+                    countryCode = code;
+                    getViewDataBinding().tvCode.setText("+".concat(countryCode));
+                }).show(getSupportFragmentManager());
+                break;
         }
     }
 
@@ -297,14 +306,14 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
                             dialog1.dismiss();
 
                             getViewModel().doAddGuest(false, bmp_profile, getViewDataBinding().etIdentity.getText().toString().trim(), idType, getViewDataBinding().etName.getText().toString()
-                                    , getViewDataBinding().etVehicle.getText().toString().trim(), getViewDataBinding().etContact.getText().toString()
+                                    , getViewDataBinding().etVehicle.getText().toString().trim(), getViewDataBinding().etContact.getText().toString(), countryCode
                                     , getViewDataBinding().etAddress.getText().toString(), getViewDataBinding().tvGender.getText().toString()
                                     , houseId, residentId);
                         })
                         .setOnPositiveClickListener(dialog12 -> {
                             dialog12.dismiss();
                             getViewModel().doAddGuest(true, bmp_profile, getViewDataBinding().etIdentity.getText().toString().trim(), idType, getViewDataBinding().etName.getText().toString()
-                                    , getViewDataBinding().etVehicle.getText().toString().trim(), getViewDataBinding().etContact.getText().toString()
+                                    , getViewDataBinding().etVehicle.getText().toString().trim(), getViewDataBinding().etContact.getText().toString(), countryCode
                                     , getViewDataBinding().etAddress.getText().toString(), getViewDataBinding().tvGender.getText().toString()
                                     , houseId, residentId);
                         }).show(getSupportFragmentManager());

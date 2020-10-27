@@ -21,6 +21,7 @@ public class UserDetail {
     private int id;
     private String address;
     private String contactNo;
+    private String dialingCode;
     private String fullName;
     private String country;
     private String gender;
@@ -106,5 +107,13 @@ public class UserDetail {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getDialingCode() {
+        return dialingCode == null ? "" : dialingCode;
+    }
+
+    public void setDialingCode(String dialingCode) {
+        this.dialingCode = dialingCode;
     }
 }

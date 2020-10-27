@@ -40,6 +40,9 @@ public class Guests {
     @SerializedName("contactNo")
     private String contactNo;
 
+    @SerializedName("dialingCode")
+    private String dialingCode;
+
     public String getCheckInTime() {
         return checkInTime;
     }
@@ -257,5 +260,13 @@ public class Guests {
 
     public void setFlatId2(String flatId2) {
         this.flatId2 = flatId2;
+    }
+
+    public String getDialingCode() {
+        return dialingCode == null ? "" : dialingCode;
+    }
+
+    public void setDialingCode(String dialingCode) {
+        this.dialingCode = dialingCode;
     }
 }

@@ -30,6 +30,9 @@ public class HouseKeeping {
     @SerializedName("contactNo")
     private String contactNo;
 
+    @SerializedName("dialingCode")
+    private String dialingCode;
+
     @SerializedName("createdBy")
     private String createdBy;
 
@@ -227,5 +230,13 @@ public class HouseKeeping {
 
     public void setEnteredVehicleNo(String enteredVehicleNo) {
         this.enteredVehicleNo = enteredVehicleNo;
+    }
+
+    public String getDialingCode() {
+        return dialingCode == null ? "" : dialingCode;
+    }
+
+    public void setDialingCode(String dialingCode) {
+        this.dialingCode = dialingCode;
     }
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.evisitor.BuildConfig;
 import com.evisitor.data.local.prefs.AppPreferenceHelper;
+import com.evisitor.data.model.CountryResponse;
 import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.HouseKeepingResponse;
 import com.evisitor.data.model.ServiceProvider;
@@ -14,6 +15,7 @@ import com.evisitor.util.AppConstants;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.RequestBody;
@@ -32,6 +34,7 @@ public class AppDataManager implements DataManager {
     private Guests guests;
     private ServiceProvider spDetail;
     private HouseKeepingResponse.ContentBean houseKeeping;
+    private List<CountryResponse> countryResponseList;
 
     private AppDataManager(Context context) {
         apiHelper = AppApiHelper.getAppApiInstance();
@@ -90,6 +93,16 @@ public class AppDataManager implements DataManager {
     @Override
     public String getImageBaseURL() {
         return BuildConfig.BASE_URL + "images/";
+    }
+
+    @Override
+    public List<CountryResponse> getCountryResponseList() {
+        return countryResponseList;
+    }
+
+    @Override
+    public void setCountryResponse(List<CountryResponse> countryResponseList) {
+        this.countryResponseList = countryResponseList;
     }
 
     @Override

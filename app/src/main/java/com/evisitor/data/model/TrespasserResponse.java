@@ -285,6 +285,8 @@ public class TrespasserResponse {
         private String gender;
         private String enteredVehicleNo;
         private String contactNo;
+        private String dialingCode;
+
         private int id;
         @SerializedName("image")
         private String imageUrl;
@@ -392,6 +394,15 @@ public class TrespasserResponse {
         public void setImageUrl(String imageUrl) {
             this.imageUrl = imageUrl;
         }
+
+        public String getDialingCode() {
+            return dialingCode == null ? "" : dialingCode;
+        }
+
+        public void setDialingCode(String dialingCode) {
+            this.dialingCode = dialingCode;
+        }
+
     }
 
 }

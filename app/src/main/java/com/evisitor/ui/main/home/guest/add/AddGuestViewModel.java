@@ -150,7 +150,7 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
         } else return true;
     }
 
-    void doAddGuest(boolean isAccept, Bitmap bmp_profile, String identityNo, String idType, String name, String vehicleNo, String contact, String address, String gender, String houseId, String residentId) {
+    void doAddGuest(boolean isAccept, Bitmap bmp_profile, String identityNo, String idType, String name, String vehicleNo, String contact, String dialingCode, String address, String gender, String houseId, String residentId) {
 
         if (getNavigator().isNetworkConnected(true)) {
             getNavigator().showLoading();
@@ -162,6 +162,7 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
                 object.put("email", "");
                 object.put("documentType", identityNo.isEmpty() ? "" : idType);
                 object.put("documentId", identityNo);
+                object.put("dialingCode", dialingCode);
                 object.put("contactNo", contact);
                 object.put("guestType", "RANDOM_VISITOR");
                 object.put("address", address);

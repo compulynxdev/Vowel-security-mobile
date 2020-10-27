@@ -29,6 +29,8 @@ public class PropertyInfoResponse {
     private String zipCode = "";
     private String address = "";
     private String country = "";
+    private String dialingCode = "";
+    private String extDialingCode = "";
 
     public String getContactNo() {
         return contactNo == null ? "" : contactNo;
@@ -124,5 +126,21 @@ public class PropertyInfoResponse {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public String getDialingCode() {
+        return dialingCode == null ? "" : dialingCode;
+    }
+
+    public void setDialingCode(String dialingCode) {
+        this.dialingCode = dialingCode;
+    }
+
+    public String getExtDialingCode() {
+        return extDialingCode == null ? "" : extDialingCode;
+    }
+
+    public void setExtDialingCode(String extDialingCode) {
+        this.extDialingCode = extDialingCode;
     }
 }

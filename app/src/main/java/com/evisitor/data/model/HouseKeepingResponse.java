@@ -301,6 +301,7 @@ public class HouseKeepingResponse {
         private String email;
         private String timeIn;
         private String contactNo;
+        private String dialingCode;
         private boolean notificationStatus;
         private String expectedVehicleNo;
         private String enteredVehicleNo = "";
@@ -498,6 +499,14 @@ public class HouseKeepingResponse {
 
         public void setCheckInStatus(boolean checkInStatus) {
             this.checkInStatus = checkInStatus;
+        }
+
+        public String getDialingCode() {
+            return dialingCode == null ? "" : dialingCode;
+        }
+
+        public void setDialingCode(String dialingCode) {
+            this.dialingCode = dialingCode;
         }
     }
 }

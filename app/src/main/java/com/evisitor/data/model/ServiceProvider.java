@@ -35,6 +35,9 @@ public class ServiceProvider {
     @SerializedName("contactNo")
     private String contactNo;
 
+    @SerializedName("dialingCode")
+    private String dialingCode;
+
     @SerializedName("residentId")
     private String residentId;
 
@@ -257,5 +260,13 @@ public class ServiceProvider {
 
     public void setCheckInStatus(boolean checkInStatus) {
         this.checkInStatus = checkInStatus;
+    }
+
+    public String getDialingCode() {
+        return dialingCode == null ? "" : dialingCode;
+    }
+
+    public void setDialingCode(String dialingCode) {
+        this.dialingCode = dialingCode;
     }
 }

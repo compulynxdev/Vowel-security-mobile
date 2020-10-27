@@ -218,5 +218,6 @@
     <string name="mobile">Mobile</string>
     <string name="msg_property_image">Property photo not available at \nthe moment!!</string>
     <string name="extention_no">Extension No</string>
+    <string name="search_here">Search…</string>
 
 </resources>

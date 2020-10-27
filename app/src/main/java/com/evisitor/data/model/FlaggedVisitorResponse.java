@@ -288,6 +288,7 @@ public class FlaggedVisitorResponse {
         private int id;
         private int guestId;
         private String contactNo;
+        private String dialingCode;
         @SerializedName("image")
         private String imageUrl;
 
@@ -401,6 +402,14 @@ public class FlaggedVisitorResponse {
 
         public void setImageUrl(String imageUrl) {
             this.imageUrl = imageUrl;
+        }
+
+        public String getDialingCode() {
+            return dialingCode == null ? "" : dialingCode;
+        }
+
+        public void setDialingCode(String dialingCode) {
+            this.dialingCode = dialingCode;
         }
     }
 }

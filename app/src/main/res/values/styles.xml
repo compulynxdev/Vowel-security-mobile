@@ -75,4 +75,8 @@
         <item name="android:textColor">@color/colorPrimaryDark</item>
         <item name="android:fontFamily">@font/futura_round_bold</item>
     </style>
+
+    <style name="etTheme">
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+    </style>
 </resources>

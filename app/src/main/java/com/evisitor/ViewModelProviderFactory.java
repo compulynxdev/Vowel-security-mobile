@@ -20,6 +20,7 @@ import com.evisitor.ui.main.home.guest.GuestViewModel;
 import com.evisitor.ui.main.home.guest.add.AddGuestViewModel;
 import com.evisitor.ui.main.home.guest.add.dialogs.HostPickerViewModel;
 import com.evisitor.ui.main.home.guest.add.dialogs.PickerViewModel;
+import com.evisitor.ui.main.home.guest.country.CountrySelectionDialogViewModel;
 import com.evisitor.ui.main.home.guest.expected.ExpectedGuestViewModel;
 import com.evisitor.ui.main.home.housekeeping.HKViewModel;
 import com.evisitor.ui.main.home.housekeeping.expected.ExpectedHKViewModel;
@@ -172,6 +173,9 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(PropertyInfoViewModel.class)) {
             //noinspection unchecked
             return (T) new PropertyInfoViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(CountrySelectionDialogViewModel.class)) {
+            //noinspection unchecked
+            return (T) new CountrySelectionDialogViewModel(dataManager);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
