@@ -95,7 +95,7 @@ public class ServiceProvider {
     }
 
     public String getName() {
-        return name;
+        return name==null ? "" : name;
     }
 
     public void setName(String name) {
@@ -111,7 +111,7 @@ public class ServiceProvider {
     }
 
     public String getCheckInTime() {
-        return checkInTime;
+        return checkInTime==null ? "" : checkInTime;
     }
 
     public boolean isCheckOutFeature() {
@@ -143,7 +143,7 @@ public class ServiceProvider {
     }
 
     public String getCheckOutTime() {
-        return checkOutTime;
+        return checkOutTime == null? "" : checkOutTime;
     }
 
     public void setCheckOutTime(String checkOutTime) {
@@ -167,7 +167,7 @@ public class ServiceProvider {
     }
 
     public String getExpectedVehicleNo() {
-        return expectedVehicleNo;
+        return expectedVehicleNo==null? "" : expectedVehicleNo;
     }
 
     public void setExpectedVehicleNo(String expectedVehicleNo) {
@@ -175,7 +175,7 @@ public class ServiceProvider {
     }
 
     public String getIdentityNo() {
-        return identityNo;
+        return identityNo==null? "" : identityNo;
     }
 
     public void setIdentityNo(String identityNo) {
@@ -183,7 +183,7 @@ public class ServiceProvider {
     }
 
     public String getContactNo() {
-        return contactNo;
+        return contactNo == null? "" : contactNo;
     }
 
     public void setContactNo(String contactNo) {
@@ -207,7 +207,7 @@ public class ServiceProvider {
     }
 
     public String getResidentId() {
-        return residentId;
+        return residentId==null ? "" : residentId;
     }
 
     public void setResidentId(String residentId) {
@@ -231,7 +231,7 @@ public class ServiceProvider {
     }
 
     public String getProfile() {
-        return profile;
+        return profile==null ? "" : profile;
     }
 
     public void setProfile(String profile) {

@@ -37,7 +37,7 @@ public class HouseKeeping {
     private String createdBy;
 
     public String getProfile() {
-        return profile;
+        return profile==null ? "" : profile;
     }
 
     public void setProfile(String profile) {
@@ -169,7 +169,7 @@ public class HouseKeeping {
     }
 
     public String getIdentityNo() {
-        return identityNo;
+        return identityNo==null ? "" : identityNo;
     }
 
     public void setIdentityNo(String identityNo) {
@@ -177,7 +177,7 @@ public class HouseKeeping {
     }
 
     public String getContactNo() {
-        return contactNo;
+        return contactNo == null? "" : contactNo;
     }
 
     public void setContactNo(String contactNo) {
@@ -193,7 +193,7 @@ public class HouseKeeping {
     }
 
     public String getResidentId() {
-        return residentId;
+        return residentId==null ? "" : residentId;
     }
 
     public void setResidentId(String residentId) {

@@ -48,6 +48,7 @@ public final class CalenderUtils {
         try {
             SimpleDateFormat parseFormat = new SimpleDateFormat(pFormat, Locale.US);
             SimpleDateFormat displayFormat = new SimpleDateFormat(dFormat, Locale.US);
+            parseFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
             Date dTime = parseFormat.parse(date);
             assert dTime != null;
             return displayFormat.format(dTime);
