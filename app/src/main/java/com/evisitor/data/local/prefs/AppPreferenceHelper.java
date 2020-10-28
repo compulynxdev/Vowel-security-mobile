@@ -32,6 +32,7 @@ public class AppPreferenceHelper implements PreferenceHelper {
     private static final String USER_GENDER = "USER_GENDER";
     private static final String USER_ADDRESS = "USER_ADDRESS";
     private static final String USER_CONTACT = "USER_CONTACT";
+    private static final String USER_DIALING_CODE = "USER_DIALING_CODE";
     private static final String IDENTIFY_FEATURE = "IDENTIFY_FEATURE";
     private static final String LEVEL_NAME = "LEVEL_NAME";
 
@@ -131,6 +132,7 @@ public class AppPreferenceHelper implements PreferenceHelper {
         userDetail.setEmail(mPrefs.getString(USER_EMAIL, ""));
         userDetail.setGender(mPrefs.getString(USER_GENDER, ""));
         userDetail.setContactNo(mPrefs.getString(USER_CONTACT, ""));
+        userDetail.setDialingCode(mPrefs.getString(USER_DIALING_CODE, ""));
         userDetail.setAddress(mPrefs.getString(USER_ADDRESS, ""));
         userDetail.setCountry(mPrefs.getString(USER_COUNTRY, ""));
         return userDetail;
@@ -143,6 +145,7 @@ public class AppPreferenceHelper implements PreferenceHelper {
         mPrefs.edit().putString(USER_EMAIL, userDetail.getEmail()).apply();
         mPrefs.edit().putString(USER_GENDER, userDetail.getGender()).apply();
         mPrefs.edit().putString(USER_CONTACT, userDetail.getContactNo()).apply();
+        mPrefs.edit().putString(USER_DIALING_CODE, userDetail.getDialingCode()).apply();
         mPrefs.edit().putString(USER_ADDRESS, userDetail.getAddress()).apply();
         mPrefs.edit().putString(USER_COUNTRY, userDetail.getCountry()).apply();
     }
