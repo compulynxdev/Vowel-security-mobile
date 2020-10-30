@@ -190,9 +190,26 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == SCAN_RESULT && data != null) {
+                String identityNo = "";
                 MrzRecord mrzRecord = (MrzRecord) data.getSerializableExtra("Record");
                 assert mrzRecord != null;
-                if (getViewModel().getDataManager().getHouseKeeping().getDocumentId().equals(mrzRecord.getDocumentNumber()))
+
+                String code = mrzRecord.getCode1() + "" + mrzRecord.getCode2();
+                switch (code.toLowerCase()) {
+                    case "p<":
+                    case "p":
+                        identityNo = mrzRecord.getDocumentNumber();
+                        break;
+
+                    case "ac":
+                    case "id":
+                        identityNo = mrzRecord.getOptional2().length() == 9 ?
+                                mrzRecord.getOptional2().substring(0, mrzRecord.getOptional2().length() - 1) :
+                                mrzRecord.getOptional2();
+                        break;
+                }
+
+                if (getViewModel().getDataManager().getHouseKeeping().getDocumentId().equals(identityNo))
                     showCheckinOptions();
                 else {
                     showToast(R.string.alert_id);
