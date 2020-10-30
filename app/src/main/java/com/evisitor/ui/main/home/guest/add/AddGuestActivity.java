@@ -86,6 +86,7 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
                     IdentityBean bean = (IdentityBean) getViewModel().getIdentityTypeList().get(1);
                     getViewDataBinding().tvIdentity.setText(bean.getTitle());
                     idType = bean.getKey();
+                    getViewDataBinding().etIdentity.setText(mrzRecord.getDocumentNumber());
                     break;
 
                 case "ac":
@@ -93,12 +94,14 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
                     bean = (IdentityBean) getViewModel().getIdentityTypeList().get(0);
                     getViewDataBinding().tvIdentity.setText(bean.getTitle());
                     idType = bean.getKey();
+
+                    getViewDataBinding().etIdentity.setText(mrzRecord.getOptional2().length() == 9 ?
+                            mrzRecord.getOptional2().substring(0, mrzRecord.getOptional2().length() - 1) :
+                            mrzRecord.getOptional2());
                     break;
             }
 
             //getViewDataBinding().tvIdentity.setText(mrzRecord.getCode().toString().concat(" [").concat(mrzRecord.getCode1() + "").concat(mrzRecord.getCode2() + "]"));
-
-            getViewDataBinding().etIdentity.setText(mrzRecord.getDocumentNumber());
             getViewDataBinding().etName.setText(mrzRecord.getGivenNames().concat(" ").concat(mrzRecord.getSurname()));
             //tv_dob.setText(CalenderUtils.formatDate(mrzRecord.getDateOfBirth().toString(), "dd/MM/yy", "dd/MM/yyyy"));
 
