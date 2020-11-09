@@ -30,6 +30,7 @@ public class HomeViewModel extends BaseViewModel<BaseNavigator> {
     static final int BLACKLISTED_VISITOR_VIEW = 4;
     static final int TRESPASSER_VIEW = 5;
     static final int FLAGGED_VIEW = 6;
+    static final int REJECTED_VIEW = 7;
     private MutableLiveData<List<HomeBean>> homeListData = new MutableLiveData<>();
     private MutableLiveData<Integer> notificationCountData = new MutableLiveData<>();
     private List<HomeBean> list = new ArrayList<>();
@@ -54,6 +55,7 @@ public class HomeViewModel extends BaseViewModel<BaseNavigator> {
         list.add(new HomeBean(BLACKLISTED_VISITOR_VIEW, R.drawable.ic_black_visitor, getNavigator().getContext().getString(R.string.title_blacklisted_visitor)));
         list.add(new HomeBean(TRESPASSER_VIEW, R.drawable.ic_trespasser, getNavigator().getContext().getString(R.string.title_trespasser_visitor)));
         list.add(new HomeBean(FLAGGED_VIEW, R.drawable.ic_flag_visitor, getNavigator().getContext().getString(R.string.title_flagged_visitor)));
+        list.add(new HomeBean(REJECTED_VIEW, R.drawable.ic_flag_visitor, getNavigator().getContext().getString(R.string.title_rejected_visitor)));
         homeListData.setValue(list);
     }
 

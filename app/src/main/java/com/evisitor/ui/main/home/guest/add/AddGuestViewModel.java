@@ -168,8 +168,8 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
                 object.put("address", address);
                 object.put("country", "");
                 object.put("premiseHierarchyDetailsId", houseId);  //house or flat id
-                object.put("expectedVehicleNo", vehicleNo);
-                object.put("enteredVehicleNo", vehicleNo);
+                object.put("expectedVehicleNo", vehicleNo.toUpperCase());
+                object.put("enteredVehicleNo", vehicleNo.toUpperCase());
                 object.put("gender", gender);
                 object.put("residentId", residentId); //host id
                 object.put("cardId", "");
@@ -255,7 +255,7 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
         if (genderList.isEmpty()) {
             genderList.add("Male");
             genderList.add("Female");
-            genderList.add("Third Gender");
+            genderList.add("Transgender");
             genderList.add("Prefer not to disclose");
         }
         return genderList;

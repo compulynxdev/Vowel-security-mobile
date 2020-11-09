@@ -49,6 +49,7 @@
     <string name="title_blacklisted_visitor">Blacklisted Visitors</string>
     <string name="title_trespasser_visitor">Trespasser Visitors</string>
     <string name="title_flagged_visitor">Flagged Visitors</string>
+    <string name="title_rejected_visitor">Rejected Visitors</string>
 
     <string name="title_house_keeping2">House \Help</string>
     <string name="title_service_provider2">Service \nProvider</string>
@@ -219,5 +220,6 @@
     <string name="msg_property_image">Property photo not available at \nthe moment!!</string>
     <string name="extention_no">Extension No</string>
     <string name="search_here">Search…</string>
+    <string name="country">Country</string>
 
 </resources>

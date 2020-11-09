@@ -97,6 +97,10 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
                 case HomeViewModel.FLAGGED_VIEW:
                     startActivity(FlagVisitorActivity.getStartIntent(getContext()));
                     break;
+
+                case HomeViewModel.REJECTED_VIEW:
+                    showToast(R.string.under_development);
+                    break;
             }
         });
         getViewDataBinding().recyclerView.setAdapter(homeAdapter);

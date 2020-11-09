@@ -108,7 +108,8 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
             if (mrzRecord.getSex() != null) {
                 if (mrzRecord.getSex().toString().equalsIgnoreCase("M") || mrzRecord.getSex().toString().equalsIgnoreCase("Male"))
                     getViewDataBinding().tvGender.setText(R.string.male);
-                else getViewDataBinding().tvGender.setText(R.string.female);
+                else if (mrzRecord.getSex().toString().equalsIgnoreCase("F") || mrzRecord.getSex().toString().equalsIgnoreCase("Female"))
+                    getViewDataBinding().tvGender.setText(R.string.female);
             }
         }
     }
@@ -133,7 +134,7 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
 
         getViewModel().doGetHouseDetails().observe(AddGuestActivity.this, houseDetailList -> {
             ArrayAdapter<HouseDetailBean> arrayAdapter = new ArrayAdapter<>(AddGuestActivity.this, android.R.layout.simple_list_item_1, houseDetailList);
-            getViewDataBinding().actvHouseNo.setThreshold(2);
+            getViewDataBinding().actvHouseNo.setThreshold(1);
             getViewDataBinding().actvHouseNo.setAdapter(arrayAdapter);
 
             getViewDataBinding().actvHouseNo.setOnItemClickListener((adapterView, view, i, l) -> {

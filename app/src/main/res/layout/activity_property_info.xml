@@ -55,7 +55,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="20dp"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                    app:layout_constraintDimensionRatio="w,3:5"
+                    app:layout_constraintDimensionRatio="w,3:4"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_property"
@@ -176,6 +176,47 @@
                         app:layout_constraintTop_toBottomOf="@+id/tv_address_label" />
 
                     <TextView
+                        android:id="@+id/tv_country_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/futura_round_medium"
+                        android:gravity="center"
+                        android:text="@string/country"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="@+id/tv_property_type_label"
+                        app:layout_constraintTop_toBottomOf="@+id/view_address"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/tv_country"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/futura_round_medium"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_country_label"
+                        app:layout_constraintEnd_toEndOf="@+id/view_country"
+                        app:layout_constraintStart_toStartOf="@+id/tv_property_type" />
+
+                    <View
+                        android:id="@+id/view_country"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.8dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@color/gray"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_country_label" />
+
+                    <TextView
                         android:id="@+id/tv_phone_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -186,7 +227,7 @@
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="14sp"
                         app:layout_constraintStart_toStartOf="@+id/tv_property_type_label"
-                        app:layout_constraintTop_toBottomOf="@+id/view_address"
+                        app:layout_constraintTop_toBottomOf="@+id/view_country"
                         tools:ignore="ContentDescription" />
 
                     <TextView
