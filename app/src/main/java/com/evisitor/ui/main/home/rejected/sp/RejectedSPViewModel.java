@@ -1,0 +1,95 @@
+package com.evisitor.ui.main.home.rejected.sp;
+
+import androidx.annotation.NonNull;
+
+import com.evisitor.R;
+import com.evisitor.data.DataManager;
+import com.evisitor.data.model.ServiceProvider;
+import com.evisitor.data.model.ServiceProviderResponse;
+import com.evisitor.data.model.VisitorProfileBean;
+import com.evisitor.ui.base.BaseViewModel;
+import com.evisitor.util.AppConstants;
+import com.evisitor.util.AppLogger;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class RejectedSPViewModel extends BaseViewModel<RejectedSPNavigator> {
+    public RejectedSPViewModel(DataManager dataManager) {
+        super(dataManager);
+    }
+
+    void getSP(int page, String search) {
+        if (getNavigator().isNetworkConnected()) {
+            Map<String, String> map = new HashMap<>();
+            map.put("accountId", getDataManager().getAccountId());
+            if (!search.isEmpty())
+                map.put("search", search);
+            map.put("page", "" + page);
+            map.put("size", String.valueOf(AppConstants.LIMIT));
+            map.put("type", "sp");
+
+            getDataManager().doGetRejectedVisitors(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                    getNavigator().hideLoading();
+                    getNavigator().hideSwipeToRefresh();
+                    try {
+                        if (response.code() == 200) {
+                            assert response.body() != null;
+                            ServiceProviderResponse spResponse = getDataManager().getGson().fromJson(response.body().string(), ServiceProviderResponse.class);
+                            if (spResponse != null) {
+                                AppLogger.d("Searching : Size", "" + spResponse.getContent().size());
+                                getNavigator().onSuccess(spResponse.getContent());
+                            }
+                        } else if (response.code() == 401) {
+                            getNavigator().openActivityOnTokenExpire();
+                        } else getNavigator().handleApiError(response.errorBody());
+                    } catch (Exception e) {
+                        getNavigator().showAlert(R.string.alert, R.string.alert_error);
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                    getNavigator().hideSwipeToRefresh();
+                    getNavigator().hideLoading();
+                    getNavigator().handleApiFailure(t);
+                }
+            });
+        }else {
+            getNavigator().hideSwipeToRefresh();
+            getNavigator().hideLoading();
+            getNavigator().showAlert(getNavigator().getContext().getString(R.string.alert),getNavigator().getContext().getString(R.string.alert_internet));
+        }
+    }
+
+    List<VisitorProfileBean> getVisitorDetail(ServiceProvider spBean) {
+        getNavigator().showLoading();
+        List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, spBean.getName())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_profile, spBean.getProfile())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), spBean.getExpectedVehicleNo(), VisitorProfileBean.VIEW_TYPE_EDITABLE));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, spBean.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : spBean.getDialingCode().concat(spBean.getContactNo()))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, spBean.getIdentityNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : spBean.getIdentityNo())));
+        if (spBean.getHouseNo().isEmpty()) {
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, spBean.getCreatedBy())));
+        } else {
+            visitorProfileBeanList.add(new VisitorProfileBean(1, getNavigator().getContext().getString(R.string.data_house, spBean.getHouseNo())));
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, spBean.getHost())));
+        }
+
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.rejected_by,spBean.getRejectedBy().isEmpty() ? getNavigator().getContext().getString(R.string.na) :  spBean.getRejectedBy())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_reason,spBean.getRejectedReason().isEmpty() ? getNavigator().getContext().getString(R.string.na) :  spBean.getRejectedReason())));
+        getNavigator().hideLoading();
+        return visitorProfileBeanList;
+    }
+
+}

@@ -22,6 +22,10 @@ import com.evisitor.ui.main.home.guest.expected.ExpectedGuestViewModel;
 import com.evisitor.ui.main.home.housekeeping.HKViewModel;
 import com.evisitor.ui.main.home.housekeeping.expected.ExpectedHKViewModel;
 import com.evisitor.ui.main.home.housekeeping.registered.RegisteredHKViewModel;
+import com.evisitor.ui.main.home.rejected.RejectedVisitorViewModel;
+import com.evisitor.ui.main.home.rejected.guest.RejectedGuestViewModel;
+import com.evisitor.ui.main.home.rejected.sp.RejectedSPViewModel;
+import com.evisitor.ui.main.home.rejected.staff.RejectedStaffViewModel;
 import com.evisitor.ui.main.home.scan.ScanIDViewModel;
 import com.evisitor.ui.main.home.sp.ExpectedSpViewModel;
 import com.evisitor.ui.main.home.sp.SPViewModel;
@@ -172,6 +176,18 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(CountrySelectionDialogViewModel.class)) {
             //noinspection unchecked
             return (T) new CountrySelectionDialogViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(RejectedVisitorViewModel.class)) {
+            //noinspection unchecked
+            return (T) new RejectedVisitorViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(RejectedGuestViewModel.class)) {
+            //noinspection unchecked
+            return (T) new RejectedGuestViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(RejectedSPViewModel.class)) {
+            //noinspection unchecked
+            return (T) new RejectedSPViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(RejectedStaffViewModel.class)) {
+            //noinspection unchecked
+            return (T) new RejectedStaffViewModel(dataManager);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

@@ -83,4 +83,7 @@ public interface ApiHelper {
 
     @GET(WebServices.GET_PROPERTY_INFO)
     Call<ResponseBody> doGetPropertyInfo(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+
+    @GET(WebServices.GET_REJECT_VISITORS)
+    Call<ResponseBody> doGetRejectedVisitors(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
 }

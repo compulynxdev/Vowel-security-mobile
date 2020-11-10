@@ -305,8 +305,9 @@ public class HouseKeepingResponse {
         private boolean notificationStatus;
         private String expectedVehicleNo;
         private String enteredVehicleNo = "";
+        private String rejectedBy = "";
+        private String rejectedReason = "";
         private boolean checkInStatus;
-
         private List<String> workingDays;
 
         public String getImageUrl() {
@@ -507,6 +508,22 @@ public class HouseKeepingResponse {
 
         public void setDialingCode(String dialingCode) {
             this.dialingCode = dialingCode;
+        }
+
+        public String getRejectedBy() {
+            return rejectedBy == null ? "" : rejectedBy;
+        }
+
+        public void setRejectedBy(String rejectedBy) {
+            this.rejectedBy = rejectedBy;
+        }
+
+        public String getRejectedReason() {
+            return rejectedReason == null ? "" : rejectedReason;
+        }
+
+        public void setRejectedReason(String rejectedReason) {
+            this.rejectedReason = rejectedReason;
         }
     }
 }

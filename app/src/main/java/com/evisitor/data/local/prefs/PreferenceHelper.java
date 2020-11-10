@@ -42,6 +42,10 @@ public interface PreferenceHelper {
 
     void setUserId(String userId);
 
+    String getAccountName();
+
+    void setAccountName(String accountName);
+
     UserDetail getUserDetail();
 
     void setUserDetail(UserDetail userDetail);

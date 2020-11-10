@@ -159,4 +159,9 @@ public class AppApiHelper implements ApiHelper {
     public Call<ResponseBody> doGetPropertyInfo(String authToken, Map<String, String> partMap) {
         return getApiInterface().doGetPropertyInfo(authToken, partMap);
     }
+
+    @Override
+    public Call<ResponseBody> doGetRejectedVisitors(String authToken, Map<String, String> partMap) {
+        return getApiInterface().doGetRejectedVisitors(authToken, partMap);
+    }
 }

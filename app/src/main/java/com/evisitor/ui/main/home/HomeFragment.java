@@ -15,6 +15,7 @@ import com.evisitor.ui.main.home.blacklist.BlackListVisitorActivity;
 import com.evisitor.ui.main.home.flag.FlagVisitorActivity;
 import com.evisitor.ui.main.home.guest.GuestActivity;
 import com.evisitor.ui.main.home.housekeeping.HouseKeepingActivity;
+import com.evisitor.ui.main.home.rejected.RejectedVisitorActivity;
 import com.evisitor.ui.main.home.sp.SPActivity;
 import com.evisitor.ui.main.home.total.TotalVisitorsActivity;
 import com.evisitor.ui.main.home.trespasser.TrespasserActivity;
@@ -99,7 +100,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
                     break;
 
                 case HomeViewModel.REJECTED_VIEW:
-                    showToast(R.string.under_development);
+                    startActivity(RejectedVisitorActivity.getStartIntent(getContext()));
                     break;
             }
         });

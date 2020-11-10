@@ -20,6 +20,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ui.main.home.rejected.RejectedVisitorActivity"
+            android:configChanges="orientation|screenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/DashboardTheme"  />
         <activity
             android:name=".ui.image.ImageViewActivity"
             android:configChanges="orientation|screenSize"
@@ -32,7 +37,8 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/DashboardTheme" />
-        <activity android:name=".ui.main.home.trespasser.TrespasserActivity"
+        <activity
+            android:name=".ui.main.home.trespasser.TrespasserActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -97,8 +103,8 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait"
             android:theme="@style/DashboardTheme"
             android:windowSoftInputMode="adjustNothing" />
         <activity
@@ -118,7 +124,7 @@
             android:name=".ui.fcm.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
