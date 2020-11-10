@@ -53,7 +53,7 @@ public class RejectedVisitorActivity extends BaseActivity<ActivityRejectedVisito
 
 
     private void initView() {
-        getViewDataBinding().header.tvTitle.setText(R.string.title_trespasser_visitor);
+        getViewDataBinding().header.tvTitle.setText(R.string.title_rejected_visitor);
         getViewDataBinding().header.imgBack.setVisibility(View.VISIBLE);
         getViewDataBinding().header.imgBack.setOnClickListener(v -> onBackPressed());
 
