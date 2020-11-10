@@ -2,6 +2,7 @@ package com.evisitor.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HouseKeepingResponse {
@@ -309,6 +310,10 @@ public class HouseKeepingResponse {
         private String rejectedReason = "";
         private boolean checkInStatus;
         private List<String> workingDays;
+        private String companyName;
+        private String companyAddress;
+        private String premiseName;
+
 
         public String getImageUrl() {
             return imageUrl == null ? "" : imageUrl;
@@ -319,7 +324,7 @@ public class HouseKeepingResponse {
         }
 
         public String getCountry() {
-            return country;
+            return country == null ? "" : country;
         }
 
         public void setCountry(String country) {
@@ -327,7 +332,7 @@ public class HouseKeepingResponse {
         }
 
         public String getAddress() {
-            return address;
+            return address == null ? "" : address;
         }
 
         public void setAddress(String address) {
@@ -335,7 +340,7 @@ public class HouseKeepingResponse {
         }
 
         public String getDocumentType() {
-            return documentType;
+            return documentType == null ? "" : documentType;
         }
 
         public void setDocumentType(String documentType) {
@@ -343,7 +348,7 @@ public class HouseKeepingResponse {
         }
 
         public String getProfile() {
-            return profile;
+            return profile == null ? "" : profile;
         }
 
         public void setProfile(String profile) {
@@ -351,7 +356,7 @@ public class HouseKeepingResponse {
         }
 
         public String getFullName() {
-            return fullName;
+            return fullName == null ? "" : fullName;
         }
 
         public void setFullName(String fullName) {
@@ -359,7 +364,7 @@ public class HouseKeepingResponse {
         }
 
         public String getEmployment() {
-            return employment;
+            return employment == null ? "" : employment;
         }
 
         public void setEmployment(String employment) {
@@ -375,7 +380,7 @@ public class HouseKeepingResponse {
         }
 
         public String getCreatedDate() {
-            return createdDate;
+            return createdDate == null ? "" : createdDate;
         }
 
         public void setCreatedDate(String createdDate) {
@@ -391,7 +396,7 @@ public class HouseKeepingResponse {
         }
 
         public String getCreatedBy() {
-            return createdBy;
+            return createdBy == null ? "" : createdBy;
         }
 
         public void setCreatedBy(String createdBy) {
@@ -399,7 +404,7 @@ public class HouseKeepingResponse {
         }
 
         public String getResidentName() {
-            return residentName;
+            return residentName == null ? "" : residentName;
         }
 
         public void setResidentName(String residentName) {
@@ -407,7 +412,7 @@ public class HouseKeepingResponse {
         }
 
         public String getDocumentId() {
-            return documentId;
+            return documentId == null ? "" : documentId;
         }
 
         public void setDocumentId(String documentId) {
@@ -439,7 +444,7 @@ public class HouseKeepingResponse {
         }
 
         public String getEmail() {
-            return email;
+            return email == null ? "" : email;
         }
 
         public void setEmail(String email) {
@@ -455,7 +460,7 @@ public class HouseKeepingResponse {
         }
 
         public String getContactNo() {
-            return contactNo;
+            return contactNo == null ? "" : contactNo;
         }
 
         public void setContactNo(String contactNo) {
@@ -463,7 +468,7 @@ public class HouseKeepingResponse {
         }
 
         public List<String> getWorkingDays() {
-            return workingDays;
+            return workingDays == null ? new ArrayList<>() : workingDays;
         }
 
         public void setWorkingDays(List<String> workingDays) {
@@ -524,6 +529,30 @@ public class HouseKeepingResponse {
 
         public void setRejectedReason(String rejectedReason) {
             this.rejectedReason = rejectedReason;
+        }
+
+        public String getCompanyName() {
+            return companyName == null ? "" : companyName;
+        }
+
+        public void setCompanyName(String companyName) {
+            this.companyName = companyName;
+        }
+
+        public String getCompanyAddress() {
+            return companyAddress == null ? "" : companyAddress;
+        }
+
+        public void setCompanyAddress(String companyAddress) {
+            this.companyAddress = companyAddress;
+        }
+
+        public String getPremiseName() {
+            return premiseName == null ? "" : premiseName;
+        }
+
+        public void setPremiseName(String premiseName) {
+            this.premiseName = premiseName;
         }
     }
 }

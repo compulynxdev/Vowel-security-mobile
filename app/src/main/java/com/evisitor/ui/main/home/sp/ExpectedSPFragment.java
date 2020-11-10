@@ -77,7 +77,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
             VisitorProfileDialog.newInstance(visitorProfileBeanList, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
                 decideNextProcess();
-            }).setFlatId(spBean.getFlatId()).setBtnLabel(getString(R.string.check_in)).setBtnVisible(spBean.getStatus().equalsIgnoreCase("PENDING"))
+            }).setBtnLabel(getString(R.string.check_in)).setBtnVisible(spBean.getStatus().equalsIgnoreCase("PENDING"))
                     .setImage(spBean.getImageUrl()).show(getFragmentManager());
         });
         adapter.setHasStableIds(true);

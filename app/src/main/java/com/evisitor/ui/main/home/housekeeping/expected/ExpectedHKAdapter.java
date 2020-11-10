@@ -127,7 +127,7 @@ public class ExpectedHKAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 host.setText(context.getString(R.string.data_host, bean.getCreatedBy()));
             } else {
                 houseNo.setVisibility(View.VISIBLE);
-                houseNo.setText(context.getString(R.string.data_house, bean.getFlatNo()));
+                houseNo.setText(context.getString(R.string.data_house, bean.getPremiseName()));
                 host.setText(context.getString(R.string.data_host, bean.getResidentName()));
             }
             time.setText(context.getString(R.string.data_time_slot, CalenderUtils.formatDate(bean.getTimeIn(), CalenderUtils.TIME_FORMAT, CalenderUtils.TIME_FORMAT_AM), CalenderUtils.formatDate(bean.getTimeOut(), CalenderUtils.TIME_FORMAT, CalenderUtils.TIME_FORMAT_AM)));

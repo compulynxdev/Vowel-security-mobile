@@ -94,6 +94,15 @@ public class HouseKeeping {
     @SerializedName("rejectedReason")
     private String rejectedReason;
 
+    @SerializedName("companyName")
+    private String companyName;
+
+    @SerializedName("companyAddress")
+    private String companyAddress;
+
+    @SerializedName("premiseName")
+    private String premiseName;
+
 
     public String getImageUrl() {
         return imageUrl == null ? "" : imageUrl;
@@ -104,7 +113,7 @@ public class HouseKeeping {
     }
 
     public String getName() {
-        return name;
+        return name == null ? "" : name;
     }
 
     public void setName(String name) {
@@ -112,7 +121,7 @@ public class HouseKeeping {
     }
 
     public String getCreatedDate() {
-        return createdDate;
+        return createdDate == null ? "" : createdDate;
     }
 
     public void setCreatedDate(String createdDate) {
@@ -120,7 +129,7 @@ public class HouseKeeping {
     }
 
     public String getCheckInTime() {
-        return checkInTime;
+        return checkInTime == null ? "" : checkInTime;
     }
 
     public void setCheckInTime(String checkInTime) {
@@ -128,7 +137,7 @@ public class HouseKeeping {
     }
 
     public String getCheckOutTime() {
-        return checkOutTime;
+        return checkOutTime == null ? "" : checkOutTime;
     }
 
     public boolean isCheckOutFeature() {
@@ -140,7 +149,7 @@ public class HouseKeeping {
     }
 
     public String getHostCheckOutTime() {
-        return hostCheckOutTime;
+        return hostCheckOutTime == null ? "" : hostCheckOutTime;
     }
 
     public void setHostCheckOutTime(String hostCheckOutTime) {
@@ -192,7 +201,7 @@ public class HouseKeeping {
     }
 
     public String getHouseKeeperId() {
-        return houseKeeperId;
+        return houseKeeperId == null ? "0" : houseKeeperId;
     }
 
     public void setHouseKeeperId(String houseKeeperId) {
@@ -261,5 +270,29 @@ public class HouseKeeping {
 
     public void setRejectedReason(String rejectedReason) {
         this.rejectedReason = rejectedReason;
+    }
+
+    public String getCompanyName() {
+        return companyName == null ? "" : companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getCompanyAddress() {
+        return companyAddress == null ? "" : companyAddress;
+    }
+
+    public void setCompanyAddress(String companyAddress) {
+        this.companyAddress = companyAddress;
+    }
+
+    public String getPremiseName() {
+        return premiseName == null ? "" : premiseName;
+    }
+
+    public void setPremiseName(String premiseName) {
+        this.premiseName = premiseName;
     }
 }

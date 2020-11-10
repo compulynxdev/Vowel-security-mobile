@@ -114,7 +114,7 @@ public class HouseKeepingCheckOutAdapter extends RecyclerView.Adapter<BaseViewHo
             timeOut.setText(context.getString(R.string.data_time_out,CalenderUtils.formatDate(bean.getCheckOutTime(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIMESTAMP_FORMAT)));
             if (!bean.getHouseNo().isEmpty()) {
                 houseNo.setVisibility(View.VISIBLE);
-                houseNo.setText(context.getString(R.string.data_house, bean.getHouseNo()));
+                houseNo.setText(context.getString(R.string.data_house, bean.getPremiseName()));
                 host.setText(context.getString(R.string.data_host,bean.getHost()));
             } else {
                 houseNo.setVisibility(View.GONE);

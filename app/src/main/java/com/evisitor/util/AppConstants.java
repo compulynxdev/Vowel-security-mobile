@@ -27,6 +27,11 @@ public final class AppConstants {
 
     public static final String ACCEPT = "ACCEPT";
     public static final String REJECT = "REJECT";
+    public static final int SCAN_RESULT = 101;
+    public static final String FROM = "FROM";
+    public static final String CONTROLLER_HOME = "CONTROLLER_HOME";
+    public static final String CONTROLLER_GUEST = "CONTROLLER_GUEST";
+    public static final String CONTROLLER_SP = "CONTROLLER_SP";
 
     public static String CONTENT_TYPE_TEXT = "text/plain";
     public static String CONTENT_TYPE_JSON="application/json; charset=utf-8";

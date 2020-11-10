@@ -5,8 +5,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.evisitor.R;
@@ -14,6 +16,7 @@ import com.evisitor.data.model.Guests;
 import com.evisitor.ui.base.BaseViewHolder;
 import com.evisitor.ui.base.ItemClickCallback;
 import com.evisitor.util.pagination.FooterLoader;
+
 import java.util.List;
 
 public class RejectedGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
@@ -111,7 +114,7 @@ public class ViewHolder extends BaseViewHolder {
         name.setText(name.getContext().getString(R.string.data_name, bean.getName()));
         reject.setVisibility(bean.getRejectedBy().isEmpty() ? View.GONE : View.VISIBLE);
         reject.setText(reject.getContext().getString(R.string.rejected_by,bean.getRejectedBy()));
-        houseNo.setText(houseNo.getContext().getString(R.string.data_house, bean.getHouseNo()));
+        houseNo.setText(houseNo.getContext().getString(R.string.data_house, bean.getPremiseName()));
         host.setText(host.getContext().getString(R.string.data_host, bean.getHost()));
         if (!bean.getExpectedVehicleNo().isEmpty())
             vehicle.setText(vehicle.getContext().getString(R.string.data_vehicle, bean.getExpectedVehicleNo()));

@@ -122,7 +122,7 @@ public class TrespasserAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
             if (bean.getFlatNo()!=null && !bean.getFlatNo().isEmpty()){
                 flat.setVisibility(View.VISIBLE);
-                flat.setText(flat.getContext().getString(R.string.data_house,bean.getFlatNo()));
+                flat.setText(flat.getContext().getString(R.string.data_house, bean.getPremiseName()));
             }else flat.setVisibility(View.GONE);
 
             if (bean.getCheckOutTime() != null && !bean.getCheckOutTime().isEmpty()) {

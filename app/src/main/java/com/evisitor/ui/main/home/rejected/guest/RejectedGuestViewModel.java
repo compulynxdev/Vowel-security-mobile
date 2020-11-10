@@ -2,6 +2,7 @@ package com.evisitor.ui.main.home.rejected.guest;
 
 
 import androidx.annotation.NonNull;
+
 import com.evisitor.R;
 import com.evisitor.data.DataManager;
 import com.evisitor.data.model.Guests;
@@ -10,10 +11,12 @@ import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.ui.base.BaseViewModel;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppLogger;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -79,7 +82,7 @@ public class RejectedGuestViewModel extends BaseViewModel<RejectedGuestNavigator
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), guests.getExpectedVehicleNo(), VisitorProfileBean.VIEW_TYPE_EDITABLE));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, guests.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getDialingCode().concat(guests.getContactNo()))));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, guests.getIdentityNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getIdentityNo())));
-        visitorProfileBeanList.add(new VisitorProfileBean(1, getNavigator().getContext().getString(R.string.data_house, guests.getHouseNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getHouseNo())));
+        visitorProfileBeanList.add(new VisitorProfileBean(1, getNavigator().getContext().getString(R.string.data_house, guests.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getPremiseName())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, guests.getHost().isEmpty() ? guests.getCreatedBy() : guests.getHost())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.rejected_by,guests.getRejectedBy().isEmpty() ? getNavigator().getContext().getString(R.string.na) :  guests.getRejectedBy())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_reason,guests.getRejectedReason().isEmpty() ? getNavigator().getContext().getString(R.string.na) :  guests.getRejectedReason())));

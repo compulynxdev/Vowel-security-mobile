@@ -23,14 +23,15 @@ import retrofit2.Response;
 
 public class HomeViewModel extends BaseViewModel<BaseNavigator> {
 
-    static final int GUEST_VIEW = 0;
-    static final int HOUSE_KEEPING_VIEW = 1;
-    static final int SERVICE_PROVIDER_VIEW = 2;
-    static final int TOTAL_VISITOR_VIEW = 3;
-    static final int BLACKLISTED_VISITOR_VIEW = 4;
-    static final int TRESPASSER_VIEW = 5;
-    static final int FLAGGED_VIEW = 6;
-    static final int REJECTED_VIEW = 7;
+    static final int ADD_VISITOR_VIEW = 0;
+    static final int GUEST_VIEW = 1;
+    static final int HOUSE_KEEPING_VIEW = 2;
+    static final int SERVICE_PROVIDER_VIEW = 3;
+    static final int TOTAL_VISITOR_VIEW = 4;
+    static final int BLACKLISTED_VISITOR_VIEW = 5;
+    static final int TRESPASSER_VIEW = 6;
+    static final int FLAGGED_VIEW = 7;
+    static final int REJECTED_VIEW = 8;
     private MutableLiveData<List<HomeBean>> homeListData = new MutableLiveData<>();
     private MutableLiveData<Integer> notificationCountData = new MutableLiveData<>();
     private List<HomeBean> list = new ArrayList<>();
@@ -48,6 +49,7 @@ public class HomeViewModel extends BaseViewModel<BaseNavigator> {
     }
 
     void setupHomeList() {
+        list.add(new HomeBean(ADD_VISITOR_VIEW, R.drawable.ic_add_button, getNavigator().getContext().getString(R.string.title_add_visitor)));
         list.add(new HomeBean(GUEST_VIEW, R.drawable.ic_guest, getNavigator().getContext().getString(R.string.title_guests)));
         list.add(new HomeBean(HOUSE_KEEPING_VIEW, R.drawable.ic_maid, getNavigator().getContext().getString(R.string.title_domestic_staff)));
         list.add(new HomeBean(SERVICE_PROVIDER_VIEW, R.drawable.ic_assistance, getNavigator().getContext().getString(R.string.title_service_provider)));

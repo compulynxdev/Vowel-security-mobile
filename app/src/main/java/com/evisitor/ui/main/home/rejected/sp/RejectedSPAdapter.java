@@ -129,7 +129,7 @@ public class ViewHolder extends BaseViewHolder {
             host.setText(context.getString(R.string.data_host, bean.getCreatedBy()));
         } else {
             houseNo.setVisibility(View.VISIBLE);
-            houseNo.setText(context.getString(R.string.data_house, bean.getHouseNo()));
+            houseNo.setText(context.getString(R.string.data_house, bean.getPremiseName()));
             host.setText(context.getString(R.string.data_host, bean.getHost()));
         }
         if (!bean.getExpectedVehicleNo().isEmpty())

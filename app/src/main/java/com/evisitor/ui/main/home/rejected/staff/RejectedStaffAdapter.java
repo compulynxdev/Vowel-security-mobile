@@ -13,9 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.evisitor.R;
-import com.evisitor.data.model.HouseKeeping;
 import com.evisitor.data.model.HouseKeepingResponse;
-import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.ui.base.BaseViewHolder;
 import com.evisitor.ui.base.ItemClickCallback;
 import com.evisitor.util.CalenderUtils;
@@ -128,7 +126,7 @@ public class ViewHolder extends BaseViewHolder {
             host.setText(context.getString(R.string.data_host, bean.getCreatedBy()));
         } else {
             houseNo.setVisibility(View.VISIBLE);
-            houseNo.setText(context.getString(R.string.data_house, bean.getFlatNo()));
+            houseNo.setText(context.getString(R.string.data_house, bean.getPremiseName()));
             host.setText(context.getString(R.string.data_host, bean.getResidentName()));
         }
         time.setText(context.getString(R.string.data_time_slot, CalenderUtils.formatDate(bean.getTimeIn(), CalenderUtils.TIME_FORMAT, CalenderUtils.TIME_FORMAT_AM), CalenderUtils.formatDate(bean.getTimeOut(), CalenderUtils.TIME_FORMAT, CalenderUtils.TIME_FORMAT_AM)));

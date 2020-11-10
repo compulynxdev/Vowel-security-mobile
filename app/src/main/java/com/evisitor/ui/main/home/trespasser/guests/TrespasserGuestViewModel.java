@@ -87,7 +87,7 @@ public class TrespasserGuestViewModel extends BaseViewModel<TrespasserGuestNavig
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_elapsed, DateUtils.getRelativeTimeSpanString(hostCheckoutTime.getTime()))));
         }
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time_in, CalenderUtils.formatDate(visitorResponse.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT))));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_house, visitorResponse.getFlatNo())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_house, visitorResponse.getPremiseName())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, visitorResponse.getCreatedBy())));
 
         getNavigator().hideLoading();

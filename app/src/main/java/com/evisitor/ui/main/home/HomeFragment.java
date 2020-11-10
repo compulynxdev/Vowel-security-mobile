@@ -1,5 +1,6 @@
 package com.evisitor.ui.main.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -19,6 +20,8 @@ import com.evisitor.ui.main.home.rejected.RejectedVisitorActivity;
 import com.evisitor.ui.main.home.sp.SPActivity;
 import com.evisitor.ui.main.home.total.TotalVisitorsActivity;
 import com.evisitor.ui.main.home.trespasser.TrespasserActivity;
+import com.evisitor.ui.main.home.visitor.AddVisitorActivity;
+import com.evisitor.util.AppConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +74,12 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         homeList = new ArrayList<>();
         HomeAdapter homeAdapter = new HomeAdapter(homeList, pos -> {
             switch (homeList.get(pos).getPos()) {
+                case HomeViewModel.ADD_VISITOR_VIEW:
+                    Intent i = AddVisitorActivity.getStartIntent(getContext());
+                    i.putExtra(AppConstants.FROM, AppConstants.CONTROLLER_HOME);
+                    startActivity(i);
+                    break;
+
                 case HomeViewModel.GUEST_VIEW:
                     startActivity(GuestActivity.getStartIntent(getContext()));
                     break;

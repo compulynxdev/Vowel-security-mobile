@@ -290,6 +290,7 @@ public class TrespasserResponse {
         private int id;
         @SerializedName("image")
         private String imageUrl;
+        private String premiseName;
 
         public String getFullName() {
             return fullName;
@@ -401,6 +402,14 @@ public class TrespasserResponse {
 
         public void setDialingCode(String dialingCode) {
             this.dialingCode = dialingCode;
+        }
+
+        public String getPremiseName() {
+            return premiseName == null ? "" : premiseName;
+        }
+
+        public void setPremiseName(String premiseName) {
+            this.premiseName = premiseName;
         }
 
     }

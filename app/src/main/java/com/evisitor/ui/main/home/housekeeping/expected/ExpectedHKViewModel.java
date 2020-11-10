@@ -87,11 +87,11 @@ public class ExpectedHKViewModel extends BaseCheckInOutViewModel<ExpectedHKNavig
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), hkBean.getExpectedVehicleNo(), VisitorProfileBean.VIEW_TYPE_EDITABLE));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, hkBean.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : hkBean.getDialingCode().concat(hkBean.getContactNo()))));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, hkBean.getDocumentId().isEmpty() ? getNavigator().getContext().getString(R.string.na) : hkBean.getDocumentId())));
-        //visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_comp_name, hkBean.getCom().isEmpty() ? getNavigator().getContext().getString(R.string.na) : hkBean.getCom())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_comp_name, hkBean.getCompanyName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : hkBean.getCompanyName())));
         if (hkBean.getFlatNo().isEmpty()) {
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, hkBean.getCreatedBy())));
         } else {
-            visitorProfileBeanList.add(new VisitorProfileBean(1, getNavigator().getContext().getString(R.string.data_house, hkBean.getFlatNo())));
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_house, hkBean.getPremiseName())));
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, hkBean.getResidentName())));
         }
         getNavigator().hideLoading();

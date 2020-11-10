@@ -91,6 +91,9 @@ public class Guests {
     @SerializedName("rejectedReason")
     private String rejectedReason;
 
+    @SerializedName("premiseName")
+    private String premiseName;
+
     public String getStatus() {
         return status ==null ? "PENDING" : status;
     }
@@ -290,5 +293,13 @@ public class Guests {
 
     public void setRejectedReason(String rejectedReason) {
         this.rejectedReason = rejectedReason;
+    }
+
+    public String getPremiseName() {
+        return premiseName == null ? "" : premiseName;
+    }
+
+    public void setPremiseName(String premiseName) {
+        this.premiseName = premiseName;
     }
 }

@@ -4,15 +4,11 @@ import androidx.annotation.NonNull;
 
 import com.evisitor.R;
 import com.evisitor.data.DataManager;
-import com.evisitor.data.model.HouseKeeping;
 import com.evisitor.data.model.HouseKeepingResponse;
-import com.evisitor.data.model.ServiceProvider;
-import com.evisitor.data.model.ServiceProviderResponse;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.ui.base.BaseViewModel;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppLogger;
-import com.evisitor.util.CalenderUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -86,7 +82,7 @@ public class RejectedStaffViewModel extends BaseViewModel<RejectedStaffNavigator
         if (hkBean.getFlatNo().isEmpty()) {
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, hkBean.getCreatedBy())));
         } else {
-            visitorProfileBeanList.add(new VisitorProfileBean(1, getNavigator().getContext().getString(R.string.data_house, hkBean.getFlatNo())));
+            visitorProfileBeanList.add(new VisitorProfileBean(1, getNavigator().getContext().getString(R.string.data_house, hkBean.getPremiseName())));
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, hkBean.getResidentName())));
         }
 

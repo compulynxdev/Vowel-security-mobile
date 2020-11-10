@@ -41,6 +41,8 @@
     <string name="title_profile">Profile</string>
 
     <!--Home-->
+    <string name="title_add_visitor">Add Visitor</string>
+    <string name="title_add_sp">Add Service Provider</string>
     <string name="title_guests">Guests</string>
     <string name="title_domestic_staff">Domestic Staff</string>
     <string name="title_service_provider">Service Provider</string>
@@ -87,7 +89,7 @@
     <string name="data_flagged_date">Flagged Date : %s</string>
 
     <!--Check-In Dialog-->
-    <string name="msg_add_guest_option">Please select Check In option.</string>
+    <string name="msg_add_option">Please select Check In option.</string>
     <string name="scan_id">Scan Id</string>
     <string name="manually">Manually</string>
 

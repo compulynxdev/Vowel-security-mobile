@@ -84,9 +84,18 @@ public class ServiceProvider {
     @SerializedName("rejectedReason")
     private String rejectedReason;
 
+    @SerializedName("companyName")
+    private String companyName;
+
+    @SerializedName("companyAddress")
+    private String companyAddress;
+
+    @SerializedName("premiseName")
+    private String premiseName;
+
 
     public String getStatus() {
-        return status ==null ? "PENDING" : status;
+        return status == null ? "PENDING" : status;
     }
 
     public void setStatus(String status) {
@@ -102,7 +111,7 @@ public class ServiceProvider {
     }
 
     public String getName() {
-        return name==null ? "" : name;
+        return name == null ? "" : name;
     }
 
     public void setName(String name) {
@@ -110,7 +119,7 @@ public class ServiceProvider {
     }
 
     public String getCreatedDate() {
-        return createdDate;
+        return createdDate == null ? "" : createdDate;
     }
 
     public void setCreatedDate(String createdDate) {
@@ -118,7 +127,7 @@ public class ServiceProvider {
     }
 
     public String getCheckInTime() {
-        return checkInTime==null ? "" : checkInTime;
+        return checkInTime == null ? "" : checkInTime;
     }
 
     public boolean isCheckOutFeature() {
@@ -130,7 +139,7 @@ public class ServiceProvider {
     }
 
     public String getHostCheckOutTime() {
-        return hostCheckOutTime;
+        return hostCheckOutTime == null ? "" : hostCheckOutTime;
     }
 
     public void setHostCheckOutTime(String hostCheckOutTime) {
@@ -174,7 +183,7 @@ public class ServiceProvider {
     }
 
     public String getExpectedVehicleNo() {
-        return expectedVehicleNo==null? "" : expectedVehicleNo;
+        return expectedVehicleNo == null ? "" : expectedVehicleNo;
     }
 
     public void setExpectedVehicleNo(String expectedVehicleNo) {
@@ -222,7 +231,7 @@ public class ServiceProvider {
     }
 
     public String getFlatId() {
-        return flatId==null || flatId.isEmpty() ? "" : flatId;
+        return flatId == null ? "" : flatId;
     }
 
     public void setFlatId(String flatId) {
@@ -230,7 +239,7 @@ public class ServiceProvider {
     }
 
     public String getCreatedBy() {
-        return createdBy;
+        return createdBy == null ? "" : createdBy;
     }
 
     public void setCreatedBy(String createdBy) {
@@ -238,7 +247,7 @@ public class ServiceProvider {
     }
 
     public String getProfile() {
-        return profile==null ? "" : profile;
+        return profile == null ? "" : profile;
     }
 
     public void setProfile(String profile) {
@@ -246,7 +255,7 @@ public class ServiceProvider {
     }
 
     public String getTime() {
-        return time;
+        return time == null ? "" : time;
     }
 
     public void setTime(String time) {
@@ -291,5 +300,29 @@ public class ServiceProvider {
 
     public void setRejectedReason(String rejectedReason) {
         this.rejectedReason = rejectedReason;
+    }
+
+    public String getCompanyName() {
+        return companyName == null ? "" : companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getCompanyAddress() {
+        return companyAddress == null ? "" : companyAddress;
+    }
+
+    public void setCompanyAddress(String companyAddress) {
+        this.companyAddress = companyAddress;
+    }
+
+    public String getPremiseName() {
+        return premiseName == null ? "" : premiseName;
+    }
+
+    public void setPremiseName(String premiseName) {
+        this.premiseName = premiseName;
     }
 }

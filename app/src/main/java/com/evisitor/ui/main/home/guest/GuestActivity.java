@@ -17,11 +17,13 @@ import com.evisitor.ui.dialog.AlertDialog;
 import com.evisitor.ui.main.home.guest.expected.ExpectedGuestFragment;
 import com.evisitor.ui.main.home.scan.ScanIDActivity;
 import com.evisitor.ui.main.home.visitor.AddVisitorActivity;
+import com.evisitor.util.AppConstants;
 import com.sharma.mrzreader.MrzRecord;
+
+import static com.evisitor.util.AppConstants.SCAN_RESULT;
 
 public class GuestActivity extends BaseActivity<ActivityExpectedGuestBinding, GuestViewModel> {
 
-    private final int SCAN_RESULT = 101;
     private ExpectedGuestFragment guestFragment;
 
     public static Intent getStartIntent(Context context){
@@ -59,7 +61,7 @@ public class GuestActivity extends BaseActivity<ActivityExpectedGuestBinding, Gu
                         .setNegativeBtnShow(true)
                         .setCloseBtnShow(true)
                         .setTitle(getString(R.string.check_in))
-                        .setMsg(getString(R.string.msg_add_guest_option))
+                        .setMsg(getString(R.string.msg_add_option))
                         .setNegativeBtnColor(R.color.colorPrimary)
                         .setPositiveBtnLabel(getString(R.string.manually))
                         .setNegativeBtnLabel(getString(R.string.scan_id))
@@ -71,10 +73,12 @@ public class GuestActivity extends BaseActivity<ActivityExpectedGuestBinding, Gu
                         .setOnPositiveClickListener(dialog12 -> {
                             dialog12.dismiss();
                             Intent i = AddVisitorActivity.getStartIntent(this);
+                            i.putExtra(AppConstants.FROM, AppConstants.CONTROLLER_GUEST);
                             startActivity(i);
                         }).show(getSupportFragmentManager());
             }else {
                 Intent i = AddVisitorActivity.getStartIntent(this);
+                i.putExtra(AppConstants.FROM, AppConstants.CONTROLLER_GUEST);
                 startActivity(i);
             }
         });
@@ -115,6 +119,7 @@ public class GuestActivity extends BaseActivity<ActivityExpectedGuestBinding, Gu
                 MrzRecord mrzRecord = (MrzRecord) data.getSerializableExtra("Record");
                 Intent intent = AddVisitorActivity.getStartIntent(this);
                 intent.putExtra("Record", mrzRecord);
+                intent.putExtra(AppConstants.FROM, AppConstants.CONTROLLER_GUEST);
                 startActivity(intent);
             }
         }

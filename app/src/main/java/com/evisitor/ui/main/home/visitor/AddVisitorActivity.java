@@ -9,7 +9,6 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -26,6 +25,7 @@ import com.evisitor.ui.dialog.ImagePickCallback;
 import com.evisitor.ui.dialog.country.CountrySelectionDialog;
 import com.evisitor.ui.main.MainActivity;
 import com.evisitor.ui.main.home.visitor.dialogs.SelectionBottomSheetDialog;
+import com.evisitor.util.AppConstants;
 import com.evisitor.util.PermissionUtils;
 import com.sharma.mrzreader.MrzRecord;
 
@@ -64,8 +64,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getViewModel().setNavigator(this);
-        TextView tvTitle = findViewById(R.id.tv_title);
-        tvTitle.setText(R.string.title_add_guest);
+        getViewDataBinding().toolbar.tvTitle.setText(R.string.title_add_visitor);
 
         setUp();
         setUpHouseNoSearch();
@@ -74,7 +73,23 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
     }
 
     private void setIntentData(Intent intent) {
-        if (getIntent().hasExtra("Record")) {
+        if (intent.hasExtra(AppConstants.FROM)) {
+            String from = intent.getStringExtra(AppConstants.FROM);
+
+            if (from == null) from = "";
+
+            switch (from) {
+                case AppConstants.CONTROLLER_GUEST:
+                    getViewDataBinding().toolbar.tvTitle.setText(R.string.title_add_guest);
+                    break;
+
+                case AppConstants.CONTROLLER_SP:
+                    getViewDataBinding().toolbar.tvTitle.setText(R.string.title_add_sp);
+                    break;
+            }
+        }
+
+        if (intent.hasExtra("Record")) {
             MrzRecord mrzRecord = (MrzRecord) intent.getSerializableExtra("Record");
             assert mrzRecord != null;
 

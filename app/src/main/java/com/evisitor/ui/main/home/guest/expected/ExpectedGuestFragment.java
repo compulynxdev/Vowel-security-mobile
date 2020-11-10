@@ -77,7 +77,7 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
             VisitorProfileDialog.newInstance(visitorProfileBeanList, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
                 decideNextProcess();
-            }).setFlatId(guestBean.getFlatId()).setBtnLabel(getString(R.string.check_in)).setBtnVisible(guestBean.getStatus().equalsIgnoreCase("PENDING"))
+            }).setBtnLabel(getString(R.string.check_in)).setBtnVisible(guestBean.getStatus().equalsIgnoreCase("PENDING"))
                     .setImage(guestBean.getImageUrl()).show(getFragmentManager());
         });
         adapter.setHasStableIds(true);

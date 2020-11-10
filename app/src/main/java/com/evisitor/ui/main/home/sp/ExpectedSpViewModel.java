@@ -86,11 +86,11 @@ public class ExpectedSpViewModel extends BaseCheckInOutViewModel<ExpectedSPNavig
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), spBean.getExpectedVehicleNo(), VisitorProfileBean.VIEW_TYPE_EDITABLE));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, spBean.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : spBean.getDialingCode().concat(spBean.getContactNo()))));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, spBean.getIdentityNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : spBean.getIdentityNo())));
-        //visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_comp_name, spBean.getCom().isEmpty() ? getNavigator().getContext().getString(R.string.na) : spBean.getCom())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_comp_name, spBean.getCompanyName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : spBean.getCompanyName())));
         if (spBean.getHouseNo().isEmpty()) {
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, spBean.getCreatedBy())));
         } else {
-            visitorProfileBeanList.add(new VisitorProfileBean(1, getNavigator().getContext().getString(R.string.data_house, spBean.getHouseNo())));
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_house, spBean.getPremiseName())));
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, spBean.getHost())));
         }
         if (!spBean.getStatus().equalsIgnoreCase("PENDING"))
