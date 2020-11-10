@@ -81,21 +81,42 @@ public class NotificationAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         return notificationList.size();
     }
 
+    private String getVisitorType(TextView tvCompany, NotificationResponse.ContentBean notification) {
+        switch (notification.getType().toUpperCase()) {
+            case "SERVICE_PROVIDER":
+                tvCompany.setVisibility(View.VISIBLE);
+                tvCompany.setText(tvCompany.getContext().getString(R.string.data_comp_name, notification.getCompanyName().isEmpty() ? tvCompany.getContext().getString(R.string.na) : notification.getCompanyName()));
+                return "Service Provider";
+
+            case "STAFF":
+                tvCompany.setVisibility(View.VISIBLE);
+                tvCompany.setText(tvCompany.getContext().getString(R.string.data_comp_name, notification.getCompanyName().isEmpty() ? tvCompany.getContext().getString(R.string.na) : notification.getCompanyName()));
+                return "Domestic Staff";
+
+            default:
+                tvCompany.setVisibility(View.GONE);
+                return AppUtils.capitaliseFirstLetter(notification.getType());
+        }
+    }
+
     public class ViewHolder extends BaseViewHolder {
-        TextView tvTitle, tvTime, tvMsg;
+        TextView tvTitle, tvTime, tvMsg, tvType, tvCompany;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tv_title);
             tvTime = itemView.findViewById(R.id.tv_time);
+            tvType = itemView.findViewById(R.id.tv_type);
             tvMsg = itemView.findViewById(R.id.tv_msg);
+            tvCompany = itemView.findViewById(R.id.tv_company);
         }
 
         @Override
         public void onBind(int position) {
             NotificationResponse.ContentBean notification = notificationList.get(position);
-            tvTitle.setText(notification.getFullName().concat(" (").concat(notification.getType()).concat(")"));
+            tvTitle.setText(notification.getFullName());
             tvTime.setText(CalenderUtils.formatDate(notification.getCreatedDate(), CalenderUtils.SERVER_DATE_FORMAT2, CalenderUtils.TIME_FORMAT_AM));
             tvMsg.setText(tvMsg.getContext().getString(R.string.msg_notification, AppUtils.capitaliseFirstLetter(notification.getNotificationStatus()), notification.getCreatedBy()));
+            tvType.setText(tvType.getContext().getString(R.string.data_type, getVisitorType(tvCompany, notification)));
         }
     }
 }

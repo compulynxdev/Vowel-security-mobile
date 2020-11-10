@@ -1,4 +1,4 @@
-package com.evisitor.ui.main.home.guest.add;
+package com.evisitor.ui.main.home.visitor;
 
 import android.graphics.Bitmap;
 
@@ -30,7 +30,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
+public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
 
     private MutableLiveData<List<HouseDetailBean>> houseDetailMutableList = new MutableLiveData<>();
     private MutableLiveData<List<HostDetailBean>> hostDetailMutableList = new MutableLiveData<>();
@@ -38,7 +38,7 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
     private List<String> genderList = new ArrayList<>();
     private List<IdentityBean> identityTypeList = new ArrayList<>();
 
-    public AddGuestViewModel(DataManager dataManager) {
+    public AddVisitorViewModel(DataManager dataManager) {
         super(dataManager);
     }
 
@@ -264,8 +264,8 @@ public class AddGuestViewModel extends BaseViewModel<AddGuestNavigator> {
     List getIdentityTypeList() {
         if (identityTypeList.isEmpty()) {
             identityTypeList.add(new IdentityBean("National ID", "nationalId"));
-            identityTypeList.add(new IdentityBean("Passport", "passport"));
             identityTypeList.add(new IdentityBean("Driving Licence", "dl"));
+            identityTypeList.add(new IdentityBean("Passport", "passport"));
         }
         return identityTypeList;
     }

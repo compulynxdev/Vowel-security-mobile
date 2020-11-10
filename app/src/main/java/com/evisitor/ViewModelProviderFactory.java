@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.evisitor.data.DataManager;
 import com.evisitor.ui.dialog.AlertViewModel;
 import com.evisitor.ui.dialog.ImagePickViewModel;
+import com.evisitor.ui.dialog.country.CountrySelectionDialogViewModel;
 import com.evisitor.ui.image.ImageViewModel;
 import com.evisitor.ui.login.LoginViewModel;
 import com.evisitor.ui.main.MainViewModel;
@@ -17,10 +18,6 @@ import com.evisitor.ui.main.home.HomeViewModel;
 import com.evisitor.ui.main.home.blacklist.BlackListViewModel;
 import com.evisitor.ui.main.home.flag.FlagVisitorViewModel;
 import com.evisitor.ui.main.home.guest.GuestViewModel;
-import com.evisitor.ui.main.home.guest.add.AddGuestViewModel;
-import com.evisitor.ui.main.home.guest.add.dialogs.HostPickerViewModel;
-import com.evisitor.ui.main.home.guest.add.dialogs.PickerViewModel;
-import com.evisitor.ui.main.home.guest.country.CountrySelectionDialogViewModel;
 import com.evisitor.ui.main.home.guest.expected.ExpectedGuestViewModel;
 import com.evisitor.ui.main.home.housekeeping.HKViewModel;
 import com.evisitor.ui.main.home.housekeeping.expected.ExpectedHKViewModel;
@@ -32,6 +29,8 @@ import com.evisitor.ui.main.home.total.TotalVisitorsViewModel;
 import com.evisitor.ui.main.home.trespasser.TrespasserViewModel;
 import com.evisitor.ui.main.home.trespasser.guests.TrespasserGuestViewModel;
 import com.evisitor.ui.main.home.trespasser.services.TrespasserSPViewModel;
+import com.evisitor.ui.main.home.visitor.AddVisitorViewModel;
+import com.evisitor.ui.main.home.visitor.dialogs.SelectionViewModel;
 import com.evisitor.ui.main.idverification.IdVerificationViewModel;
 import com.evisitor.ui.main.notifications.NotificationsViewModel;
 import com.evisitor.ui.main.profile.UserProfileViewModel;
@@ -113,18 +112,15 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(GuestViewModel.class)) {
             //noinspection unchecked
             return (T) new GuestViewModel(dataManager);
-        } else if (modelClass.isAssignableFrom(AddGuestViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(AddVisitorViewModel.class)) {
             //noinspection unchecked
-            return (T) new AddGuestViewModel(dataManager);
-        } else if (modelClass.isAssignableFrom(PickerViewModel.class)) {
+            return (T) new AddVisitorViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(SelectionViewModel.class)) {
             //noinspection unchecked
-            return (T) new PickerViewModel(dataManager);
+            return (T) new SelectionViewModel(dataManager);
         } else if (modelClass.isAssignableFrom(ImagePickViewModel.class)) {
             //noinspection unchecked
             return (T) new ImagePickViewModel(dataManager);
-        } else if (modelClass.isAssignableFrom(HostPickerViewModel.class)) {
-            //noinspection unchecked
-            return (T) new HostPickerViewModel(dataManager);
         } else if (modelClass.isAssignableFrom(ScanIDViewModel.class)) {
             //noinspection unchecked
             return (T) new ScanIDViewModel(dataManager);

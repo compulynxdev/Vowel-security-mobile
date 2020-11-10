@@ -23,9 +23,9 @@ class WebServices {
     static final String GET_EXPECTED_SP_LIST = "serviceprovider/get_all_expected_service_provider";
     static final String GET_REGISTERED_HOUSE_KEEPING_LIST = "staff/get_all_staff"; //?accountId=1&page=0&size=10&type=expected&search=a
 
-    static final String GET_GUEST_CHECKIN_LIST = "guest/get_guest_check_in_check_out";
-    static final String GET_HOUSEKEEPING_CHECKIN_LIST = "staff/get_staff_check_in";
-    static final String GET_SERVICE_PROVIDER_CHECKIN_LIST = "serviceprovider/get_service_provider_check_in_check_out";
+    static final String GET_GUEST_CHECKIN_CHECKOUT_LIST = "guest/get_guest_check_in_check_out";
+    static final String GET_HOUSEKEEPING_CHECKIN_CHECKOUT_LIST = "staff/get_staff_check_in";
+    static final String GET_SERVICE_PROVIDER_CHECKIN_CHECKOUT_LIST = "serviceprovider/get_service_provider_check_in_check_out";
 
     static final String CHECKIN_CHECKOUT = "guest/check_in_check_out";
     static final String GET_VISITOR_COUNT = "guest/get_visitor_count"; //?accountId=1

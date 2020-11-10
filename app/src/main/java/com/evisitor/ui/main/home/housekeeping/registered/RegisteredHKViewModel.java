@@ -83,6 +83,7 @@ public class RegisteredHKViewModel extends BaseViewModel<RegisteredHKNavigator> 
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, bean.getDialingCode().concat(bean.getContactNo()))));
         if (!bean.getDocumentId().isEmpty())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, bean.getDocumentId())));
+        //visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_comp_name, bean.getCom().isEmpty() ? getNavigator().getContext().getString(R.string.na) : bean.getCom())));
         if(bean.getResidentName()!=null && !bean.getResidentName().isEmpty())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_register_by, bean.getResidentName())));
         else if(bean.getCreatedBy()!=null && !bean.getCreatedBy().isEmpty())

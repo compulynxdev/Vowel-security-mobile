@@ -1,4 +1,4 @@
-package com.evisitor.ui.main.home.guest.add;
+package com.evisitor.ui.main.home.visitor;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,21 +18,20 @@ import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.HostDetailBean;
 import com.evisitor.data.model.HouseDetailBean;
 import com.evisitor.data.model.IdentityBean;
-import com.evisitor.databinding.ActivityAddGuestBinding;
+import com.evisitor.databinding.ActivityAddVisitorBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.dialog.AlertDialog;
 import com.evisitor.ui.dialog.ImagePickBottomSheetDialog;
 import com.evisitor.ui.dialog.ImagePickCallback;
+import com.evisitor.ui.dialog.country.CountrySelectionDialog;
 import com.evisitor.ui.main.MainActivity;
-import com.evisitor.ui.main.home.guest.add.dialogs.HostPickerBottomSheetDialog;
-import com.evisitor.ui.main.home.guest.add.dialogs.PickerBottomSheetDialog;
-import com.evisitor.ui.main.home.guest.country.CountrySelectionDialog;
+import com.evisitor.ui.main.home.visitor.dialogs.SelectionBottomSheetDialog;
 import com.evisitor.util.PermissionUtils;
 import com.sharma.mrzreader.MrzRecord;
 
 import java.util.List;
 
-public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGuestViewModel> implements AddGuestNavigator, View.OnClickListener {
+public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, AddVisitorViewModel> implements AddVisitorNavigator, View.OnClickListener {
 
     private String countryCode = "254";
     private String houseId = "";  //also called flat id
@@ -43,7 +42,7 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
     private String idType = "";
 
     public static Intent getStartIntent(Context context){
-        return new Intent(context,AddGuestActivity.class);
+        return new Intent(context, AddVisitorActivity.class);
     }
 
     @Override
@@ -53,12 +52,12 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_add_guest;
+        return R.layout.activity_add_visitor;
     }
 
     @Override
-    public AddGuestViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(AddGuestViewModel.class);
+    public AddVisitorViewModel getViewModel() {
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(AddVisitorViewModel.class);
     }
 
     @Override
@@ -132,8 +131,8 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
             }
         });
 
-        getViewModel().doGetHouseDetails().observe(AddGuestActivity.this, houseDetailList -> {
-            ArrayAdapter<HouseDetailBean> arrayAdapter = new ArrayAdapter<>(AddGuestActivity.this, android.R.layout.simple_list_item_1, houseDetailList);
+        getViewModel().doGetHouseDetails().observe(AddVisitorActivity.this, houseDetailList -> {
+            ArrayAdapter<HouseDetailBean> arrayAdapter = new ArrayAdapter<>(AddVisitorActivity.this, android.R.layout.simple_list_item_1, houseDetailList);
             getViewDataBinding().actvHouseNo.setThreshold(1);
             getViewDataBinding().actvHouseNo.setAdapter(arrayAdapter);
 
@@ -246,7 +245,7 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
                 break;
 
             case R.id.tv_identity:
-                PickerBottomSheetDialog.newInstance(getViewModel().getIdentityTypeList()).setItemSelectedListener(pos -> {
+                SelectionBottomSheetDialog.newInstance(getString(R.string.select_identity_type), getViewModel().getIdentityTypeList()).setItemSelectedListener(pos -> {
                     IdentityBean bean = (IdentityBean) getViewModel().getIdentityTypeList().get(pos);
                     getViewDataBinding().tvIdentity.setText(bean.getTitle());
                     idType = bean.getKey();
@@ -254,7 +253,7 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
                 break;
 
             case R.id.tv_gender:
-                PickerBottomSheetDialog.newInstance(getViewModel().getGenderList()).setItemSelectedListener(pos -> getViewDataBinding().tvGender.setText(getViewModel().getGenderList().get(pos))).show(getSupportFragmentManager());
+                SelectionBottomSheetDialog.newInstance(getString(R.string.select_gender), getViewModel().getGenderList()).setItemSelectedListener(pos -> getViewDataBinding().tvGender.setText(getViewModel().getGenderList().get(pos))).show(getSupportFragmentManager());
                 break;
 
             case R.id.tv_owner:
@@ -266,7 +265,8 @@ public class AddGuestActivity extends BaseActivity<ActivityAddGuestBinding,AddGu
                     if (hostDetailList.isEmpty()) {
                         hostDetailList.add(new HostDetailBean(-1, getString(R.string.no_host_found)));
                     }
-                    HostPickerBottomSheetDialog.newInstance(hostDetailList, bean -> {
+                    SelectionBottomSheetDialog.newInstance(getString(R.string.select_host), hostDetailList).setItemSelectedListener(pos -> {
+                        HostDetailBean bean = hostDetailList.get(pos);
                         if (bean.getId() != -1) {
                             residentId = String.valueOf(bean.getId());
                             getViewDataBinding().tvHost.setText(bean.getFullName());

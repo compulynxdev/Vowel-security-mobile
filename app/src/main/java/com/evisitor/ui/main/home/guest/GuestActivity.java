@@ -14,9 +14,9 @@ import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.ActivityExpectedGuestBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.dialog.AlertDialog;
-import com.evisitor.ui.main.home.guest.add.AddGuestActivity;
 import com.evisitor.ui.main.home.guest.expected.ExpectedGuestFragment;
 import com.evisitor.ui.main.home.scan.ScanIDActivity;
+import com.evisitor.ui.main.home.visitor.AddVisitorActivity;
 import com.sharma.mrzreader.MrzRecord;
 
 public class GuestActivity extends BaseActivity<ActivityExpectedGuestBinding, GuestViewModel> {
@@ -70,11 +70,11 @@ public class GuestActivity extends BaseActivity<ActivityExpectedGuestBinding, Gu
                         })
                         .setOnPositiveClickListener(dialog12 -> {
                             dialog12.dismiss();
-                            Intent i = AddGuestActivity.getStartIntent(this);
+                            Intent i = AddVisitorActivity.getStartIntent(this);
                             startActivity(i);
                         }).show(getSupportFragmentManager());
             }else {
-                Intent i = AddGuestActivity.getStartIntent(this);
+                Intent i = AddVisitorActivity.getStartIntent(this);
                 startActivity(i);
             }
         });
@@ -113,7 +113,7 @@ public class GuestActivity extends BaseActivity<ActivityExpectedGuestBinding, Gu
         if (resultCode == RESULT_OK) {
             if (requestCode == SCAN_RESULT && data != null) {
                 MrzRecord mrzRecord = (MrzRecord) data.getSerializableExtra("Record");
-                Intent intent = AddGuestActivity.getStartIntent(this);
+                Intent intent = AddVisitorActivity.getStartIntent(this);
                 intent.putExtra("Record", mrzRecord);
                 startActivity(intent);
             }

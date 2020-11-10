@@ -261,18 +261,18 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Call<ResponseBody> doGetGuestCheckInList(String authToken, Map<String, String> partMap) {
-        return apiHelper.doGetGuestCheckInList(authToken, partMap);
+    public Call<ResponseBody> doGetGuestCheckInOutList(String authToken, Map<String, String> partMap) {
+        return apiHelper.doGetGuestCheckInOutList(authToken, partMap);
     }
 
     @Override
-    public Call<ResponseBody> doGetHouseKeepingCheckInList(String authToken, Map<String, String> partMap) {
-        return apiHelper.doGetHouseKeepingCheckInList(authToken, partMap);
+    public Call<ResponseBody> doGetHouseKeepingCheckInOutList(String authToken, Map<String, String> partMap) {
+        return apiHelper.doGetHouseKeepingCheckInOutList(authToken, partMap);
     }
 
     @Override
-    public Call<ResponseBody> doGetServiceProviderCheckInList(String authToken, Map<String, String> partMap) {
-        return apiHelper.doGetServiceProviderCheckInList(authToken, partMap);
+    public Call<ResponseBody> doGetServiceProviderCheckInOutList(String authToken, Map<String, String> partMap) {
+        return apiHelper.doGetServiceProviderCheckInOutList(authToken, partMap);
     }
 
     @Override

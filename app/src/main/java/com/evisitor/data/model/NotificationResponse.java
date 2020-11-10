@@ -1,5 +1,6 @@
 package com.evisitor.data.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NotificationResponse {
@@ -111,7 +112,7 @@ public class NotificationResponse {
     }
 
     public List<ContentBean> getContent() {
-        return content;
+        return content == null ? new ArrayList<>() : content;
     }
 
     public void setContent(List<ContentBean> content) {
@@ -278,9 +279,11 @@ public class NotificationResponse {
         private int id;
         private String type;
         private String fullName;
+        private String companyName;
+        private String companyAddress;
 
         public String getReason() {
-            return reason;
+            return reason == null ? "" : reason;
         }
 
         public void setReason(String reason) {
@@ -288,7 +291,7 @@ public class NotificationResponse {
         }
 
         public String getNotificationStatus() {
-            return notificationStatus;
+            return notificationStatus == null ? "" : notificationStatus;
         }
 
         public void setNotificationStatus(String notificationStatus) {
@@ -296,7 +299,7 @@ public class NotificationResponse {
         }
 
         public String getCreatedDate() {
-            return createdDate;
+            return createdDate == null ? "" : createdDate;
         }
 
         public void setCreatedDate(String createdDate) {
@@ -304,7 +307,7 @@ public class NotificationResponse {
         }
 
         public String getFlatNo() {
-            return flatNo;
+            return flatNo == null ? "" : flatNo;
         }
 
         public void setFlatNo(String flatNo) {
@@ -312,7 +315,7 @@ public class NotificationResponse {
         }
 
         public String getCreatedBy() {
-            return createdBy;
+            return createdBy == null ? "" : createdBy;
         }
 
         public void setCreatedBy(String createdBy) {
@@ -320,7 +323,7 @@ public class NotificationResponse {
         }
 
         public String getResidentName() {
-            return residentName;
+            return residentName == null ? "" : residentName;
         }
 
         public void setResidentName(String residentName) {
@@ -336,7 +339,7 @@ public class NotificationResponse {
         }
 
         public String getType() {
-            return type;
+            return type == null ? "" : type;
         }
 
         public void setType(String type) {
@@ -349,6 +352,22 @@ public class NotificationResponse {
 
         public void setFullName(String fullName) {
             this.fullName = fullName;
+        }
+
+        public String getCompanyName() {
+            return companyName == null ? "" : companyName;
+        }
+
+        public void setCompanyName(String companyName) {
+            this.companyName = companyName;
+        }
+
+        public String getCompanyAddress() {
+            return companyAddress == null ? "" : companyAddress;
+        }
+
+        public void setCompanyAddress(String companyAddress) {
+            this.companyAddress = companyAddress;
         }
     }
 }

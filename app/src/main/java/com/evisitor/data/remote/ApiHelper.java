@@ -39,14 +39,14 @@ public interface ApiHelper {
     @POST(WebServices.GUEST_SEND_NOTIFICTION)
     Call<ResponseBody> doGuestSendNotification(@Header("authorization") String authToken, @Body RequestBody body);
 
-    @GET(WebServices.GET_GUEST_CHECKIN_LIST)
-    Call<ResponseBody> doGetGuestCheckInList(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+    @GET(WebServices.GET_GUEST_CHECKIN_CHECKOUT_LIST)
+    Call<ResponseBody> doGetGuestCheckInOutList(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
 
-    @GET(WebServices.GET_HOUSEKEEPING_CHECKIN_LIST)
-    Call<ResponseBody> doGetHouseKeepingCheckInList(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+    @GET(WebServices.GET_HOUSEKEEPING_CHECKIN_CHECKOUT_LIST)
+    Call<ResponseBody> doGetHouseKeepingCheckInOutList(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
 
-    @GET(WebServices.GET_SERVICE_PROVIDER_CHECKIN_LIST)
-    Call<ResponseBody> doGetServiceProviderCheckInList(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+    @GET(WebServices.GET_SERVICE_PROVIDER_CHECKIN_CHECKOUT_LIST)
+    Call<ResponseBody> doGetServiceProviderCheckInOutList(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
 
     @GET(WebServices.GET_EXPECTED_SP_LIST)
     Call<ResponseBody> doGetExpectedSPList(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);

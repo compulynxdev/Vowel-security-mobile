@@ -86,18 +86,18 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Call<ResponseBody> doGetGuestCheckInList(String authToken, Map<String, String> partMap) {
-        return getApiInterface().doGetGuestCheckInList(authToken,partMap);
+    public Call<ResponseBody> doGetGuestCheckInOutList(String authToken, Map<String, String> partMap) {
+        return getApiInterface().doGetGuestCheckInOutList(authToken, partMap);
     }
 
     @Override
-    public Call<ResponseBody> doGetHouseKeepingCheckInList(String authToken, Map<String, String> partMap) {
-        return getApiInterface().doGetHouseKeepingCheckInList(authToken, partMap);
+    public Call<ResponseBody> doGetHouseKeepingCheckInOutList(String authToken, Map<String, String> partMap) {
+        return getApiInterface().doGetHouseKeepingCheckInOutList(authToken, partMap);
     }
 
     @Override
-    public Call<ResponseBody> doGetServiceProviderCheckInList(String authToken, Map<String, String> partMap) {
-        return getApiInterface().doGetServiceProviderCheckInList(authToken, partMap);
+    public Call<ResponseBody> doGetServiceProviderCheckInOutList(String authToken, Map<String, String> partMap) {
+        return getApiInterface().doGetServiceProviderCheckInOutList(authToken, partMap);
     }
 
     @Override

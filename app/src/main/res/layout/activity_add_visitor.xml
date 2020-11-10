@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.main.home.guest.add.AddGuestActivity">
+    tools:context=".ui.main.home.visitor.AddVisitorActivity">
 
     <data>
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="com.evisitor.ui.main.home.guest.add.AddGuestViewModel" />
+            type="com.evisitor.ui.main.home.visitor.AddVisitorViewModel" />
     </data>
 
     <ScrollView

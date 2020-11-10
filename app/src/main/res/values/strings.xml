@@ -75,6 +75,7 @@
     <string name="data_register_by">Registered By : %s</string>
     <string name="data_register_date">Registered Date : %s</string>
     <string name="data_type">Visitor Type : %s</string>
+    <string name="data_comp_name">Company Name : %s</string>
     <string name="data_host_checkout_time">Host Check Out Time : %s</string>
     <string name="data_time_in">Time In : %s</string>
     <string name="data_time_out">Time Out : %s</string>

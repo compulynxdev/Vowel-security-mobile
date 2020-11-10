@@ -1,4 +1,4 @@
-package com.evisitor.ui.main.home.guest.country;
+package com.evisitor.ui.dialog.country;
 
 public interface CountrySelectionCallback {
     void onSelect(String code);
