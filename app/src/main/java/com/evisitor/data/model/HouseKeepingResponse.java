@@ -313,7 +313,7 @@ public class HouseKeepingResponse {
         private String companyName;
         private String companyAddress;
         private String premiseName;
-
+        private String rejectedOn;
 
         public String getImageUrl() {
             return imageUrl == null ? "" : imageUrl;
@@ -553,6 +553,14 @@ public class HouseKeepingResponse {
 
         public void setPremiseName(String premiseName) {
             this.premiseName = premiseName;
+        }
+
+        public String getRejectedOn() {
+            return rejectedOn ==null ? "" : rejectedOn;
+        }
+
+        public void setRejectedOn(String rejectedOn) {
+            this.rejectedOn = rejectedOn;
         }
     }
 }

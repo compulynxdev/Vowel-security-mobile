@@ -9,6 +9,7 @@ import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.ui.base.BaseViewModel;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppLogger;
+import com.evisitor.util.CalenderUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -76,10 +77,10 @@ public class RejectedStaffViewModel extends BaseViewModel<RejectedStaffNavigator
         List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, hkBean.getFullName())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_profile, hkBean.getProfile())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), hkBean.getExpectedVehicleNo(), VisitorProfileBean.VIEW_TYPE_EDITABLE));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), hkBean.getExpectedVehicleNo(), VisitorProfileBean.VIEW_TYPE_ITEM));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, hkBean.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : hkBean.getDialingCode().concat(hkBean.getContactNo()))));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, hkBean.getDocumentId().isEmpty() ? getNavigator().getContext().getString(R.string.na) : hkBean.getDocumentId())));
-        if (hkBean.getFlatNo().isEmpty()) {
+        if (hkBean.getPremiseName().isEmpty()) {
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, hkBean.getCreatedBy())));
         } else {
             visitorProfileBeanList.add(new VisitorProfileBean(1, getNavigator().getContext().getString(R.string.data_house, hkBean.getPremiseName())));
@@ -88,6 +89,7 @@ public class RejectedStaffViewModel extends BaseViewModel<RejectedStaffNavigator
 
 
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.rejected_by,hkBean.getRejectedBy().isEmpty() ? getNavigator().getContext().getString(R.string.na) :  hkBean.getRejectedBy())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.rejected_on , hkBean.getRejectedOn().isEmpty() ? getNavigator().getContext().getString(R.string.na) :CalenderUtils.formatDate(hkBean.getRejectedOn(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIMESTAMP_FORMAT))));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_reason,hkBean.getRejectedReason().isEmpty() ? getNavigator().getContext().getString(R.string.na) :  hkBean.getRejectedReason())));
         getNavigator().hideLoading();
         return visitorProfileBeanList;

@@ -38,6 +38,7 @@ import com.evisitor.ui.main.home.visitor.dialogs.SelectionViewModel;
 import com.evisitor.ui.main.idverification.IdVerificationViewModel;
 import com.evisitor.ui.main.notifications.NotificationsViewModel;
 import com.evisitor.ui.main.profile.UserProfileViewModel;
+import com.evisitor.ui.main.rejectreason.InputDialogViewModel;
 import com.evisitor.ui.main.settings.SettingsViewModel;
 import com.evisitor.ui.main.settings.content.ContentViewModel;
 import com.evisitor.ui.main.settings.info.DeviceInfoViewModel;
@@ -188,6 +189,9 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(RejectedStaffViewModel.class)) {
             //noinspection unchecked
             return (T) new RejectedStaffViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(InputDialogViewModel.class)) {
+            //noinspection unchecked
+            return (T) new InputDialogViewModel(dataManager);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

@@ -88,8 +88,11 @@ public class Guests {
     @SerializedName("rejectedBy")
     private String rejectedBy;
 
-    @SerializedName("rejectedReason")
+    @SerializedName("rejectReason")
     private String rejectedReason;
+
+    @SerializedName("rejectedOn")
+    private String rejectedOn;
 
     @SerializedName("premiseName")
     private String premiseName;
@@ -301,5 +304,14 @@ public class Guests {
 
     public void setPremiseName(String premiseName) {
         this.premiseName = premiseName;
+    }
+
+
+    public String getRejectedOn() {
+        return rejectedOn == null ? "" : rejectedOn;
+    }
+
+    public void setRejectedOn(String rejectedOn) {
+        this.rejectedOn = rejectedOn;
     }
 }

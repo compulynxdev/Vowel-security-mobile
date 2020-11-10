@@ -81,7 +81,7 @@ public class ServiceProvider {
     @SerializedName("rejectedBy")
     private String rejectedBy;
 
-    @SerializedName("rejectedReason")
+    @SerializedName("rejectReason")
     private String rejectedReason;
 
     @SerializedName("companyName")
@@ -93,6 +93,8 @@ public class ServiceProvider {
     @SerializedName("premiseName")
     private String premiseName;
 
+    @SerializedName("rejectedOn")
+    private String rejectedOn;
 
     public String getStatus() {
         return status == null ? "PENDING" : status;
@@ -324,5 +326,13 @@ public class ServiceProvider {
 
     public void setPremiseName(String premiseName) {
         this.premiseName = premiseName;
+    }
+
+    public String getRejectedOn() {
+        return rejectedOn == null ? "" : rejectedOn;
+    }
+
+    public void setRejectedOn(String rejectedOn) {
+        this.rejectedOn = rejectedOn;
     }
 }

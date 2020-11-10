@@ -18,6 +18,7 @@ import com.evisitor.ui.dialog.AlertDialog;
 import com.evisitor.ui.main.home.scan.ScanIDActivity;
 import com.evisitor.ui.main.idverification.IdVerificationCallback;
 import com.evisitor.ui.main.idverification.IdVerificationDialog;
+import com.evisitor.ui.main.rejectreason.InputDialog;
 import com.evisitor.ui.main.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
 import com.sharma.mrzreader.MrzRecord;
@@ -100,7 +101,7 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
     private void decideNextProcess() {
         HouseKeepingResponse.ContentBean tmpBean = getViewModel().getDataManager().getHouseKeeping();
         if (tmpBean.getCheckInStatus()) {
-            getViewModel().approveByCall(true);
+            getViewModel().approveByCall(true,null);
         } else {
             if (tmpBean.getDocumentId().isEmpty()) {
                 showCheckinOptions();
@@ -177,11 +178,19 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
                 .setNegativeBtnLabel(getString(R.string.reject))
                 .setOnNegativeClickListener(dialog1 -> {
                     dialog1.dismiss();
-                    getViewModel().approveByCall(false);
+                    showReasonDialog();
                 })
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
-                    getViewModel().approveByCall(true);
+                    getViewModel().approveByCall(true,null);
+                }).show(getFragmentManager());
+    }
+
+    private void showReasonDialog() {
+        InputDialog.newInstance().setTitle(getString(R.string.are_you_sure))
+                .setOnPositiveClickListener((dialog, input) -> {
+                    dialog.dismiss();
+                    getViewModel().approveByCall(false,input);
                 }).show(getFragmentManager());
     }
 
