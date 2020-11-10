@@ -28,6 +28,7 @@ public class AppPreferenceHelper implements PreferenceHelper {
     private static final String USER_FULL_NAME = "USER_FULL_NAME";
     private static final String USER_IMAGE = "USER_IMAGE";
     private static final String USER_EMAIL = "USER_EMAIL";
+    private static final String GROUP_NAME = "GROUP_NAME";
     private static final String USER_COUNTRY = "USER_COUNTRY";
     private static final String USER_GENDER = "USER_GENDER";
     private static final String USER_ADDRESS = "USER_ADDRESS";
@@ -35,6 +36,7 @@ public class AppPreferenceHelper implements PreferenceHelper {
     private static final String USER_DIALING_CODE = "USER_DIALING_CODE";
     private static final String IDENTIFY_FEATURE = "IDENTIFY_FEATURE";
     private static final String LEVEL_NAME = "LEVEL_NAME";
+    private static final String ACCOUNT_NAME = "ACCOUNT_NAME";
 
     private final SharedPreferences mPrefs;
 
@@ -123,6 +125,16 @@ public class AppPreferenceHelper implements PreferenceHelper {
     }
 
     @Override
+    public String getAccountName() {
+        return mPrefs.getString(ACCOUNT_NAME, "");
+    }
+
+    @Override
+    public void setAccountName(String accountName) {
+        mPrefs.edit().putString(ACCOUNT_NAME, accountName).apply();
+    }
+
+    @Override
     public UserDetail getUserDetail() {
         UserDetail userDetail = new UserDetail();
         userDetail.setId(Integer.parseInt(getUserId()));
@@ -135,6 +147,7 @@ public class AppPreferenceHelper implements PreferenceHelper {
         userDetail.setDialingCode(mPrefs.getString(USER_DIALING_CODE, ""));
         userDetail.setAddress(mPrefs.getString(USER_ADDRESS, ""));
         userDetail.setCountry(mPrefs.getString(USER_COUNTRY, ""));
+        userDetail.setGroupName(mPrefs.getString(GROUP_NAME, ""));
         return userDetail;
     }
 
@@ -148,6 +161,7 @@ public class AppPreferenceHelper implements PreferenceHelper {
         mPrefs.edit().putString(USER_DIALING_CODE, userDetail.getDialingCode()).apply();
         mPrefs.edit().putString(USER_ADDRESS, userDetail.getAddress()).apply();
         mPrefs.edit().putString(USER_COUNTRY, userDetail.getCountry()).apply();
+        mPrefs.edit().putString(GROUP_NAME, userDetail.getGroupName()).apply();
     }
 
     @Override

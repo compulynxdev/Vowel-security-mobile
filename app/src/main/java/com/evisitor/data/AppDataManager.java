@@ -211,6 +211,16 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public String getAccountName() {
+        return preferenceHelper.getAccountName();
+    }
+
+    @Override
+    public void setAccountName(String accountName) {
+        preferenceHelper.setAccountName(accountName);
+    }
+
+    @Override
     public UserDetail getUserDetail() {
         return preferenceHelper.getUserDetail();
     }
@@ -333,5 +343,10 @@ public class AppDataManager implements DataManager {
     @Override
     public Call<ResponseBody> doGetPropertyInfo(String authToken, Map<String, String> partMap) {
         return apiHelper.doGetPropertyInfo(authToken, partMap);
+    }
+
+    @Override
+    public Call<ResponseBody> doGetRejectedVisitors(String authToken, Map<String, String> partMap) {
+        return apiHelper.doGetRejectedVisitors(authToken, partMap);
     }
 }

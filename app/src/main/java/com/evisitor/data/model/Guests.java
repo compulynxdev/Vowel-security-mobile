@@ -85,6 +85,12 @@ public class Guests {
     @SerializedName("checkInStatus")
     private boolean checkInStatus;
 
+    @SerializedName("rejectedBy")
+    private String rejectedBy;
+
+    @SerializedName("rejectedReason")
+    private String rejectedReason;
+
     public String getStatus() {
         return status ==null ? "PENDING" : status;
     }
@@ -268,5 +274,21 @@ public class Guests {
 
     public void setDialingCode(String dialingCode) {
         this.dialingCode = dialingCode;
+    }
+
+    public String getRejectedBy() {
+        return rejectedBy == null ? "" : rejectedBy;
+    }
+
+    public void setRejectedBy(String rejectedBy) {
+        this.rejectedBy = rejectedBy;
+    }
+
+    public String getRejectedReason() {
+        return rejectedReason == null ? "" : rejectedReason;
+    }
+
+    public void setRejectedReason(String rejectedReason) {
+        this.rejectedReason = rejectedReason;
     }
 }

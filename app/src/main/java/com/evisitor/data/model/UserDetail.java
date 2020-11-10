@@ -26,6 +26,7 @@ public class UserDetail {
     private String country;
     private String gender;
     private String role;
+    private String groupName;
     @SerializedName("image")
     private String imageUrl;
 
@@ -115,5 +116,13 @@ public class UserDetail {
 
     public void setDialingCode(String dialingCode) {
         this.dialingCode = dialingCode;
+    }
+
+    public String getGroupName() {
+        return groupName == null ? "" : groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 }

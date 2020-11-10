@@ -40,6 +40,8 @@ class WebServices {
     static final String GET_HOUSE_INFO = "premise/get_flat_level"; //?flatId=11&accountId=2
     static final String GET_PROPERTY_INFO = "account/get_account_by_id"; //?accountId=1
 
+    static final String GET_REJECT_VISITORS = "guest/get_all_rejected_visitor"; //?accountId=1&residentId=1&type=guest
+
     private WebServices() {
     }
 }

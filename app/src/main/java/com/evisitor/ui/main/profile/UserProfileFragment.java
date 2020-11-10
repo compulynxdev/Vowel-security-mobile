@@ -6,6 +6,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
@@ -69,6 +70,8 @@ public class UserProfileFragment extends BaseFragment<FragmentUserProfileBinding
             getViewDataBinding().tvGender.setText(userDetail.getGender().isEmpty() ? getString(R.string.na) : userDetail.getGender());
             getViewDataBinding().tvContact.setText(userDetail.getContactNo().isEmpty() ? getString(R.string.na) : userDetail.getDialingCode().concat(userDetail.getContactNo()));
             getViewDataBinding().tvAddress.setText(userDetail.getAddress().isEmpty() ? getString(R.string.na) : userDetail.getAddress());
+            getViewDataBinding().tvGroup.setText(userDetail.getGroupName().isEmpty() ? getString(R.string.na) : userDetail.getGroupName());
+
 
             imageUrl = userDetail.getImageUrl();
             if (userDetail.getImageUrl().isEmpty()) {
@@ -86,5 +89,7 @@ public class UserProfileFragment extends BaseFragment<FragmentUserProfileBinding
                         .into(getViewDataBinding().imgUser);
             }
         });
+
+        getViewModel().getAccountName().observe(this, s -> getViewDataBinding().tvProperty.setText(s.isEmpty() ? getString(R.string.na) : s));
     }
 }

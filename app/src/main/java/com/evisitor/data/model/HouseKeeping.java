@@ -88,6 +88,13 @@ public class HouseKeeping {
     @SerializedName("enteredVehicleNo")
     private String enteredVehicleNo = "";
 
+    @SerializedName("rejectedBy")
+    private String rejectedBy;
+
+    @SerializedName("rejectedReason")
+    private String rejectedReason;
+
+
     public String getImageUrl() {
         return imageUrl == null ? "" : imageUrl;
     }
@@ -238,5 +245,21 @@ public class HouseKeeping {
 
     public void setDialingCode(String dialingCode) {
         this.dialingCode = dialingCode;
+    }
+
+    public String getRejectedBy() {
+        return rejectedBy == null ? "" : rejectedBy;
+    }
+
+    public void setRejectedBy(String rejectedBy) {
+        this.rejectedBy = rejectedBy;
+    }
+
+    public String getRejectedReason() {
+        return rejectedReason == null ? "" : rejectedReason;
+    }
+
+    public void setRejectedReason(String rejectedReason) {
+        this.rejectedReason = rejectedReason;
     }
 }
