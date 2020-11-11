@@ -293,7 +293,7 @@ public class TrespasserResponse {
         private String premiseName;
 
         public String getFullName() {
-            return fullName;
+            return fullName == null ? "" : fullName;
         }
 
         public void setFullName(String fullName) {
@@ -301,7 +301,7 @@ public class TrespasserResponse {
         }
 
         public String getFlatNo() {
-            return flatNo;
+            return flatNo == null ? "" : flatNo;
         }
 
         public void setFlatNo(String flatNo) {
@@ -317,7 +317,7 @@ public class TrespasserResponse {
         }
 
         public String getCreatedBy() {
-            return createdBy;
+            return createdBy== null ? "" : createdBy;
         }
 
         public void setCreatedBy(String createdBy) {
@@ -325,7 +325,7 @@ public class TrespasserResponse {
         }
 
         public String getHostCheckOutTime() {
-            return hostCheckOutTime;
+            return hostCheckOutTime == null ? "" : hostCheckOutTime;
         }
 
         public void setHostCheckOutTime(String hostCheckOutTime) {
@@ -333,7 +333,7 @@ public class TrespasserResponse {
         }
 
         public String getCheckInTime() {
-            return checkInTime;
+            return checkInTime== null ? "" : checkInTime;
         }
 
         public void setCheckInTime(String checkInTime) {
@@ -341,7 +341,7 @@ public class TrespasserResponse {
         }
 
         public String getCheckOutTime() {
-            return checkOutTime;
+            return checkOutTime == null ? "" : checkOutTime;
         }
 
         public void setCheckOutTime(String checkOutTime) {
@@ -357,7 +357,7 @@ public class TrespasserResponse {
         }
 
         public String getGender() {
-            return gender;
+            return gender== null ? "" : gender;
         }
 
         public void setGender(String gender) {
@@ -365,7 +365,7 @@ public class TrespasserResponse {
         }
 
         public String getEnteredVehicleNo() {
-            return enteredVehicleNo;
+            return enteredVehicleNo == null ? "" : enteredVehicleNo;
         }
 
         public void setEnteredVehicleNo(String enteredVehicleNo) {
@@ -373,7 +373,7 @@ public class TrespasserResponse {
         }
 
         public String getContactNo() {
-            return contactNo;
+            return contactNo == null ? "" : contactNo;
         }
 
         public void setContactNo(String contactNo) {

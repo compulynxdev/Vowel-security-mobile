@@ -59,7 +59,7 @@ public class RejectedVisitorActivity extends BaseActivity<ActivityRejectedVisito
 
         getViewDataBinding().tvService.setOnClickListener(this);
         getViewDataBinding().tvGuest.setOnClickListener(this);
-        getViewDataBinding().tvStaff.setOnClickListener(this);
+        getViewDataBinding().tvHouse.setOnClickListener(this);
     }
 
     private void setUpPagerAdapter() {
@@ -84,15 +84,15 @@ public class RejectedVisitorActivity extends BaseActivity<ActivityRejectedVisito
 
                 if (position == 0) {
                     getViewDataBinding().tvGuest.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                    getViewDataBinding().tvStaff.setTextColor(getResources().getColor(R.color.black));
+                    getViewDataBinding().tvHouse.setTextColor(getResources().getColor(R.color.black));
                     getViewDataBinding().tvService.setTextColor(getResources().getColor(R.color.black));
                 }else if (position == 1) {
                     getViewDataBinding().tvGuest.setTextColor(getResources().getColor(R.color.black));
-                    getViewDataBinding().tvStaff.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                    getViewDataBinding().tvHouse.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                     getViewDataBinding().tvService.setTextColor(getResources().getColor(R.color.black));
                 } else {
                     getViewDataBinding().tvGuest.setTextColor(getResources().getColor(R.color.black));
-                    getViewDataBinding().tvStaff.setTextColor(getResources().getColor(R.color.black));
+                    getViewDataBinding().tvHouse.setTextColor(getResources().getColor(R.color.black));
                     getViewDataBinding().tvService.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                 }
             }
@@ -138,7 +138,7 @@ public class RejectedVisitorActivity extends BaseActivity<ActivityRejectedVisito
                 getViewDataBinding().viewPager.setCurrentItem(0, true);
                 break;
 
-            case R.id.tv_staff:
+            case R.id.tv_house:
                 getViewDataBinding().viewPager.setCurrentItem(1, true);
                 break;
 
