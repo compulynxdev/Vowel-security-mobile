@@ -1,12 +1,12 @@
 package com.evisitor.ui.main.home.visitor;
 
-import android.graphics.Bitmap;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.evisitor.R;
 import com.evisitor.data.DataManager;
+import com.evisitor.data.model.AddVisitorData;
+import com.evisitor.data.model.GuestConfigurationResponse;
 import com.evisitor.data.model.HostDetailBean;
 import com.evisitor.data.model.HouseDetailBean;
 import com.evisitor.data.model.IdentityBean;
@@ -34,11 +34,13 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
 
     private MutableLiveData<List<HouseDetailBean>> houseDetailMutableList = new MutableLiveData<>();
     private MutableLiveData<List<HostDetailBean>> hostDetailMutableList = new MutableLiveData<>();
+    private MutableLiveData<GuestConfigurationResponse> guestConfigurationMutable = new MutableLiveData<>();
     private MutableLiveData<Boolean> guestStatusMutableData = new MutableLiveData<>();
     private List<String> genderList = new ArrayList<>();
     private List<IdentityBean> identityTypeList = new ArrayList<>();
-    private List<IdentityBean> assignedToList = new ArrayList<>();
-    private List<IdentityBean> employmentList = new ArrayList<>();
+    private List<String> visitorTypeList = new ArrayList<>();
+    private List<String> assignedToList = new ArrayList<>();
+    private List<String> employmentList = new ArrayList<>();
 
     public AddVisitorViewModel(DataManager dataManager) {
         super(dataManager);
@@ -118,70 +120,69 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
         }
     }
 
-    boolean doVerifyInputs(String identityNo, String idType, String name, String contact, String address, String gender, String houseId, String ownerId, String residentId) {
-        if (getDataManager().isIdentifyFeature() && identityNo.isEmpty()) {
+    boolean doVerifyGuestInputs(AddVisitorData visitorData, GuestConfigurationResponse configurationResponse) {
+        if (getDataManager().isIdentifyFeature() && visitorData.identityNo.isEmpty()) {
             getNavigator().showToast(R.string.alert_empty_id);
             return false;
-        } else if (!identityNo.isEmpty() && idType.isEmpty()) {
+        } else if (!visitorData.identityNo.isEmpty() && visitorData.idType.isEmpty()) {
             getNavigator().showToast(R.string.alert_select_id);
             return false;
-        } else if (name.isEmpty()) {
+        } else if (visitorData.name.isEmpty()) {
             getNavigator().showToast(R.string.alert_empty_name);
             return false;
-        } else if (contact.isEmpty()) {
+        } else if (configurationResponse.getGuestFields().isContactNo() && visitorData.contact.isEmpty()) {
             getNavigator().showToast(R.string.alert_empty_contact);
             return false;
-        } else if (contact.length() < 7 || contact.length() > 12) {
+        } else if (configurationResponse.getGuestFields().isContactNo() && (visitorData.contact.length() < 7 || visitorData.contact.length() > 12)) {
             getNavigator().showToast(R.string.alert_contact_length);
             return false;
-        } else if (address.isEmpty()) {
+        } else if (configurationResponse.getGuestFields().isAddress() && visitorData.address.isEmpty()) {
             getNavigator().showToast(R.string.alert_empty_address);
             return false;
-        } else if (gender.isEmpty()) {
+        } else if (configurationResponse.getGuestFields().isGender() && visitorData.gender.isEmpty()) {
             getNavigator().showToast(R.string.alert_select_gender);
             return false;
-        } else if (houseId.isEmpty()) {
+        } else if (visitorData.houseId.isEmpty()) {
             getNavigator().showToast(R.string.alert_select_house_no);
             return false;
-        }/* else if (ownerId.isEmpty()) {
-            getNavigator().showToast(R.string.alert_select_owner);
-            return false;
-        } */ else if (residentId.isEmpty()) {
+        } else if (visitorData.residentId.isEmpty()) {
             getNavigator().showToast(R.string.alert_select_host);
             return false;
         } else return true;
     }
 
-    void doAddGuest(boolean isAccept, Bitmap bmp_profile, String identityNo, String idType, String name, String vehicleNo, String contact, String dialingCode, String address, String gender, String houseId, String residentId) {
+    void doAddGuest(AddVisitorData addVisitorData) {
 
         if (getNavigator().isNetworkConnected(true)) {
             getNavigator().showLoading();
 
             JSONObject object = new JSONObject();
             try {
-                object.put("fullName", name);
+                object.put("fullName", addVisitorData.name);
                 object.put("accountId", getDataManager().getAccountId());
                 object.put("email", "");
-                object.put("documentType", identityNo.isEmpty() ? "" : idType);
-                object.put("documentId", identityNo);
-                object.put("dialingCode", dialingCode);
-                object.put("contactNo", contact);
+                object.put("documentType", addVisitorData.identityNo.isEmpty() ? "" : addVisitorData.idType);
+                object.put("documentId", addVisitorData.identityNo);
+                object.put("dialingCode", addVisitorData.dialingCode);
+                object.put("contactNo", addVisitorData.contact);
                 object.put("guestType", "RANDOM_VISITOR");
-                object.put("address", address);
+                object.put("type", "random");
+                object.put("address", addVisitorData.address);
                 object.put("country", "");
-                object.put("premiseHierarchyDetailsId", houseId);  //house or flat id
-                object.put("expectedVehicleNo", vehicleNo.toUpperCase());
-                object.put("enteredVehicleNo", vehicleNo.toUpperCase());
-                object.put("gender", gender);
-                object.put("residentId", residentId); //host id
+                object.put("premiseHierarchyDetailsId", addVisitorData.houseId);  //house or flat id
+                object.put("expectedVehicleNo", addVisitorData.vehicleNo.toUpperCase());
+                object.put("enteredVehicleNo", addVisitorData.vehicleNo.toUpperCase());
+                object.put("gender", addVisitorData.gender);
+                object.put("residentId", addVisitorData.residentId); //host id
                 object.put("cardId", "");
                 object.put("dob", "");
-                object.put("image", bmp_profile == null ? "" : AppUtils.getBitmapToBase64(bmp_profile));
-                object.put("state", isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);
+                object.put("image", addVisitorData.bmp_profile == null ? "" : AppUtils.getBitmapToBase64(addVisitorData.bmp_profile));
+                object.put("state", addVisitorData.isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
+            //AppLogger.e("What : Guest", object.toString());
             RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
             getDataManager().doAddGuest(getDataManager().getHeader(), body).enqueue(new Callback<ResponseBody>() {
                 @Override
@@ -191,7 +192,118 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                         try {
                             assert response.body() != null;
                             AppLogger.e("Response", response.body().string());
-                            getNavigator().onSuccess(isAccept);
+                            getNavigator().onSuccess(addVisitorData.isAccept);
+                        } catch (Exception e) {
+                            getNavigator().showAlert(R.string.alert, R.string.alert_error);
+                        }
+                    } else {
+                        getNavigator().handleApiError(response.errorBody());
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                    getNavigator().hideLoading();
+                    getNavigator().handleApiFailure(t);
+                }
+            });
+        }
+    }
+
+    boolean doVerifySPInputs(AddVisitorData visitorData) {
+        if (visitorData.assignedTo.isEmpty()) {
+            getNavigator().showToast(R.string.alert_select_assigned_to);
+            return false;
+        } else if (visitorData.identityNo.isEmpty()) {
+            getNavigator().showToast(R.string.alert_empty_id);
+            return false;
+        } else if (visitorData.idType.isEmpty()) {
+            getNavigator().showToast(R.string.alert_select_id);
+            return false;
+        } else if (visitorData.name.isEmpty()) {
+            getNavigator().showToast(R.string.alert_empty_name);
+            return false;
+        } else if (visitorData.contact.isEmpty()) {
+            getNavigator().showToast(R.string.alert_empty_contact);
+            return false;
+        } else if (visitorData.contact.length() < 7 || visitorData.contact.length() > 12) {
+            getNavigator().showToast(R.string.alert_contact_length);
+            return false;
+        } else if (visitorData.address.isEmpty()) {
+            getNavigator().showToast(R.string.alert_empty_address);
+            return false;
+        } else if (visitorData.gender.isEmpty()) {
+            getNavigator().showToast(R.string.alert_select_gender);
+            return false;
+        } else if (visitorData.isResident && visitorData.houseId.isEmpty()) {
+            getNavigator().showToast(R.string.alert_select_house_no);
+            return false;
+        } else if (visitorData.isResident && visitorData.residentId.isEmpty()) {
+            getNavigator().showToast(R.string.alert_select_host);
+            return false;
+        } else if (visitorData.employment.isEmpty()) {
+            getNavigator().showToast(R.string.alert_select_employment);
+            return false;
+        } else if (visitorData.profile.isEmpty()) {
+            getNavigator().showToast(R.string.alert_enter_profile);
+            return false;
+        } else if (visitorData.isCompany && visitorData.companyName.isEmpty()) {
+            getNavigator().showToast(R.string.alert_enter_comp_name);
+            return false;
+        } else if (visitorData.isCompany && visitorData.companyAddress.isEmpty()) {
+            getNavigator().showToast(R.string.alert_enter_comp_address);
+            return false;
+        } else return true;
+    }
+
+    void doAddSp(AddVisitorData visitorData) {
+
+        if (getNavigator().isNetworkConnected(true)) {
+            getNavigator().showLoading();
+
+            JSONObject object = new JSONObject();
+            try {
+                object.put("visitorType", visitorData.visitorType);
+                object.put("isVip", false);
+                object.put("employment", visitorData.employment);
+                object.put("profile", visitorData.profile);
+                object.put("companyName", visitorData.companyName);
+                object.put("companyAddress", visitorData.companyAddress);
+
+                object.put("fullName", visitorData.name);
+                object.put("accountId", getDataManager().getAccountId());
+                object.put("email", "");
+                object.put("documentType", visitorData.identityNo.isEmpty() ? "" : visitorData.idType);
+                object.put("documentId", visitorData.identityNo);
+                object.put("dialingCode", visitorData.dialingCode);
+                object.put("contactNo", visitorData.contact);
+                object.put("type", "random");
+                object.put("address", visitorData.address);
+                object.put("country", "");
+                //object.put("expectedDate", new Date());
+                object.put("premiseHierarchyDetailsId", visitorData.houseId);  //house or flat id  //->
+                object.put("expectedVehicle", visitorData.vehicleNo.toUpperCase());
+                object.put("enteredVehicleNo", visitorData.vehicleNo.toUpperCase());
+                object.put("gender", visitorData.gender);
+                object.put("residentId", visitorData.residentId); //host id   //-> send null in case of property
+                object.put("image", visitorData.bmp_profile == null ? "" : AppUtils.getBitmapToBase64(visitorData.bmp_profile));
+                object.put("state", visitorData.isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            //AppLogger.e("What : Sp", object.toString());
+
+            RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
+            getDataManager().doAddSP(getDataManager().getHeader(), body).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                    getNavigator().hideLoading();
+                    if (response.code() == 200) {
+                        try {
+                            assert response.body() != null;
+                            AppLogger.e("Response", response.body().string());
+                            getNavigator().onSuccess(visitorData.isAccept);
                         } catch (Exception e) {
                             getNavigator().showAlert(R.string.alert, R.string.alert_error);
                         }
@@ -253,6 +365,41 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
         }
     }
 
+    /*Guest Configuration Data*/
+    MutableLiveData<GuestConfigurationResponse> doGetGuestConfigurationObserver() {
+        return guestConfigurationMutable;
+    }
+
+    void doGetGuestConfiguration() {
+        if (getNavigator().isNetworkConnected(true)) {
+            Map<String, String> map = new HashMap<>();
+            map.put("accountId", getDataManager().getAccountId());
+            getDataManager().doGetGuestConfiguration(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                    getNavigator().hideLoading();
+                    if (response.code() == 200) {
+                        try {
+                            assert response.body() != null;
+                            GuestConfigurationResponse configurationResponse = getDataManager().getGson().fromJson(response.body().string(), GuestConfigurationResponse.class);
+                            guestConfigurationMutable.setValue(configurationResponse);
+                        } catch (Exception e) {
+                            getNavigator().showAlert(R.string.alert, R.string.alert_error);
+                        }
+                    } else {
+                        getNavigator().handleApiError(response.errorBody());
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                    getNavigator().hideLoading();
+                    getNavigator().handleApiFailure(t);
+                }
+            });
+        }
+    }
+
     List<String> getGenderList() {
         if (genderList.isEmpty()) {
             genderList.add("Male");
@@ -272,18 +419,26 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
         return identityTypeList;
     }
 
+    List getVisitorTypeList() {
+        if (visitorTypeList.isEmpty()) {
+            visitorTypeList.add("Guest");
+            visitorTypeList.add("Service Provider");
+        }
+        return visitorTypeList;
+    }
+
     List getAssignedToList() {
         if (assignedToList.isEmpty()) {
-            assignedToList.add(new IdentityBean("Property", "property"));
-            assignedToList.add(new IdentityBean("Resident", "resident"));
+            assignedToList.add("Property");
+            assignedToList.add("Resident");
         }
         return assignedToList;
     }
 
     List getEmploymentTypeList() {
         if (employmentList.isEmpty()) {
-            employmentList.add(new IdentityBean("Self", "self"));
-            employmentList.add(new IdentityBean("Other", "other"));
+            employmentList.add("Self");
+            employmentList.add("Other");
         }
         return employmentList;
     }

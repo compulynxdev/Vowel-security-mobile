@@ -12,7 +12,9 @@ class WebServices {
 
     static final String LOGIN_AUTH = "authenticate";
     static final String GET_USER_DETAIL = "usermaster/get_user_details"; //?username=ram
+    static final String GET_GUEST_CONFIGURATION = "accountconfiguration/get_field_configuration"; //?accountId=1
     static final String ADD_GUEST = "guest/register_guest";
+    static final String ADD_SP = "serviceprovider/register_service_provider";
     static final String GET_HOUSE_LIST = "premise/get_all_flat_list"; //?accountId=1&search=a
     static final String GET_HOST_LIST = "resident/get_resident_by_flat_id"; //?accountId=1&flatId=6
 

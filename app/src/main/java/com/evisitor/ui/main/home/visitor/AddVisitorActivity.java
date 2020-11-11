@@ -14,6 +14,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
+import com.evisitor.data.model.AddVisitorData;
+import com.evisitor.data.model.GuestConfigurationResponse;
 import com.evisitor.data.model.HostDetailBean;
 import com.evisitor.data.model.HouseDetailBean;
 import com.evisitor.data.model.IdentityBean;
@@ -40,6 +42,8 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
     private Bitmap bmp_profile;
     private List<HostDetailBean> hostDetailList;
     private String idType = "";
+    private Boolean isGuest = null;
+    private GuestConfigurationResponse configurationResponse;
 
     public static Intent getStartIntent(Context context){
         return new Intent(context, AddVisitorActivity.class);
@@ -67,9 +71,19 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
         getViewDataBinding().toolbar.tvTitle.setText(R.string.title_add_visitor);
 
         setUp();
-        setUpHouseNoSearch();
         setIntentData(getIntent());
+        guestConfigurationObserver();
+        setUpHouseNoSearch();
         randomCheckInObserver();
+    }
+
+    private void guestConfigurationObserver() {
+        getViewModel().doGetGuestConfigurationObserver().observe(this, guestConfiguration -> {
+            configurationResponse = guestConfiguration;
+            getViewDataBinding().llNumber.setVisibility(guestConfiguration.getGuestFields().isContactNo() ? View.VISIBLE : View.GONE);
+            getViewDataBinding().etAddress.setVisibility(guestConfiguration.getGuestFields().isAddress() ? View.VISIBLE : View.GONE);
+            getViewDataBinding().tvGender.setVisibility(guestConfiguration.getGuestFields().isGender() ? View.VISIBLE : View.GONE);
+        });
     }
 
     private void setIntentData(Intent intent) {
@@ -81,10 +95,21 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
             switch (from) {
                 case AppConstants.CONTROLLER_GUEST:
                     getViewDataBinding().toolbar.tvTitle.setText(R.string.title_add_guest);
+                    getViewDataBinding().tvVisitorType.setVisibility(View.GONE);
+                    getViewDataBinding().tvAssignedTo.setVisibility(View.GONE);
+                    updateVisitorUI(getViewModel().getVisitorTypeList().get(0).toString());
+                    getViewModel().doGetGuestConfiguration();
                     break;
 
                 case AppConstants.CONTROLLER_SP:
                     getViewDataBinding().toolbar.tvTitle.setText(R.string.title_add_sp);
+                    getViewDataBinding().tvVisitorType.setVisibility(View.GONE);
+                    getViewDataBinding().tvAssignedTo.setVisibility(View.VISIBLE);
+                    updateVisitorUI(getViewModel().getVisitorTypeList().get(1).toString());
+                    break;
+
+                default:
+                    getViewModel().doGetGuestConfiguration();
                     break;
             }
         }
@@ -205,7 +230,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
     private void setUp() {
         ImageView imgBack = findViewById(R.id.img_back);
         imgBack.setVisibility(View.VISIBLE);
-        setOnClickListener(imgBack, getViewDataBinding().tvAssignedTo, getViewDataBinding().tvIdentity, getViewDataBinding().tvGender, getViewDataBinding().tvOwner, getViewDataBinding().tvHost
+        setOnClickListener(imgBack, getViewDataBinding().tvVisitorType, getViewDataBinding().tvAssignedTo, getViewDataBinding().tvEmployment, getViewDataBinding().tvIdentity, getViewDataBinding().tvGender, getViewDataBinding().tvOwner, getViewDataBinding().tvHost
                 , getViewDataBinding().frameImg, getViewDataBinding().btnAdd, getViewDataBinding().rlCode);
         getViewDataBinding().tvCode.setText("+".concat(countryCode));
         if (getViewModel().getDataManager().isIdentifyFeature())
@@ -259,9 +284,22 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                 }
                 break;
 
+            case R.id.tv_visitor_type:
+                SelectionBottomSheetDialog.newInstance(getString(R.string.select_visitor_type), getViewModel().getVisitorTypeList()).setItemSelectedListener(pos -> {
+                    String value = getViewModel().getVisitorTypeList().get(pos).toString();
+                    updateVisitorUI(value);
+                }).show(getSupportFragmentManager());
+                break;
+
             case R.id.tv_assigned_to:
                 SelectionBottomSheetDialog.newInstance(getString(R.string.select_assigned_to), getViewModel().getAssignedToList()).setItemSelectedListener(pos -> {
-
+                    String value = getViewModel().getAssignedToList().get(pos).toString();
+                    getViewDataBinding().tvAssignedTo.setText(value);
+                    if (value.equals("Property")) {
+                        getViewDataBinding().groupResident.setVisibility(View.GONE);
+                    } else {
+                        getViewDataBinding().groupResident.setVisibility(View.VISIBLE);
+                    }
                 }).show(getSupportFragmentManager());
                 break;
 
@@ -305,19 +343,94 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
 
             case R.id.tv_employment:
                 SelectionBottomSheetDialog.newInstance(getString(R.string.select_employment), getViewModel().getEmploymentTypeList()).setItemSelectedListener(pos -> {
-
+                    String value = getViewModel().getEmploymentTypeList().get(pos).toString();
+                    getViewDataBinding().tvEmployment.setText(value);
+                    if (value.equals("Self")) {
+                        getViewDataBinding().groupEmployment.setVisibility(View.GONE);
+                    } else {
+                        getViewDataBinding().groupEmployment.setVisibility(View.VISIBLE);
+                    }
                 }).show(getSupportFragmentManager());
                 break;
 
             case R.id.btn_add:
-                if (getViewModel().doVerifyInputs(getViewDataBinding().etIdentity.getText().toString().trim(), idType
-                        , getViewDataBinding().etName.getText().toString().trim(), getViewDataBinding().etContact.getText().toString().trim()
-                        , getViewDataBinding().etAddress.getText().toString().trim(), getViewDataBinding().tvGender.getText().toString()
-                        , houseId, /*ownerId*/"", residentId)) {
+                if (isGuest == null) {
+                    showToast(R.string.alert_select_visitor);
+                    return;
+                }
 
-                    getViewModel().doCheckGuestStatus(getViewDataBinding().etIdentity.getText().toString().trim(), idType);
+                AddVisitorData visitorData = new AddVisitorData();
+                visitorData.isGuest = isGuest;
+                visitorData.identityNo = getViewDataBinding().etIdentity.getText().toString().trim();
+                visitorData.idType = idType;
+                visitorData.name = getViewDataBinding().etName.getText().toString().trim();
+                visitorData.contact = getViewDataBinding().etContact.getText().toString().trim();
+                visitorData.address = getViewDataBinding().etAddress.getText().toString().trim();
+                visitorData.gender = getViewDataBinding().tvGender.getText().toString();
+                visitorData.houseId = houseId;
+                visitorData.residentId = residentId;
+                if (isGuest) {
+                    if (configurationResponse == null)
+                        configurationResponse = new GuestConfigurationResponse();
+                    if (getViewModel().doVerifyGuestInputs(visitorData, configurationResponse)) {
+                        getViewModel().doCheckGuestStatus(getViewDataBinding().etIdentity.getText().toString().trim(), idType);
+                    }
+                } else {
+                    visitorData.assignedTo = getViewDataBinding().tvAssignedTo.getText().toString();
+                    visitorData.isResident = !visitorData.assignedTo.equalsIgnoreCase("Property");
+                    visitorData.visitorType = getViewDataBinding().tvVisitorType.getText().toString();
+                    visitorData.employment = getViewDataBinding().tvEmployment.getText().toString();
+                    visitorData.isCompany = !visitorData.employment.equalsIgnoreCase("Self");
+                    visitorData.profile = getViewDataBinding().etWorkProfile.getText().toString().trim();
+                    visitorData.companyName = getViewDataBinding().etCompanyName.getText().toString().trim();
+                    visitorData.companyAddress = getViewDataBinding().etCompanyAddress.getText().toString().trim();
+
+
+                    if (getViewModel().doVerifySPInputs(visitorData)) {
+                        if (visitorData.isResident) {
+                            AlertDialog.newInstance()
+                                    .setNegativeBtnShow(true)
+                                    .setCloseBtnShow(false)
+                                    .setTitle(getString(R.string.check_in))
+                                    .setMsg(getString(R.string.msg_check_in_call))
+                                    .setPositiveBtnLabel(getString(R.string.approve))
+                                    .setNegativeBtnLabel(getString(R.string.reject))
+                                    .setOnNegativeClickListener(dialog1 -> {
+                                        dialog1.dismiss();
+                                        doAddSp(false, visitorData);
+                                    })
+                                    .setOnPositiveClickListener(dialog12 -> {
+                                        dialog12.dismiss();
+                                        doAddSp(true, visitorData);
+                                    }).show(getSupportFragmentManager());
+                        } else {
+                            //for property there is no reject option
+                            doAddSp(true, visitorData);
+                        }
+                    }
                 }
                 break;
+        }
+    }
+
+    private void doAddSp(boolean isAccept, AddVisitorData visitorData) {
+        visitorData.bmp_profile = bmp_profile;
+        visitorData.vehicleNo = getViewDataBinding().etVehicle.getText().toString().trim();
+        visitorData.dialingCode = countryCode;
+        visitorData.isAccept = isAccept;
+        getViewModel().doAddSp(visitorData);
+    }
+
+    private void updateVisitorUI(String visitorType) {
+        getViewDataBinding().tvVisitorType.setText(visitorType);
+        if (visitorType.equals("Guest")) {
+            isGuest = true;
+            getViewDataBinding().groupResident.setVisibility(View.VISIBLE);
+            getViewDataBinding().groupSp.setVisibility(View.GONE);
+        } else {
+            isGuest = false;
+            getViewDataBinding().groupResident.setVisibility(View.GONE);
+            getViewDataBinding().groupSp.setVisibility(View.VISIBLE);
         }
     }
 
@@ -335,21 +448,31 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                         .setNegativeBtnLabel(getString(R.string.reject))
                         .setOnNegativeClickListener(dialog1 -> {
                             dialog1.dismiss();
-
-                            getViewModel().doAddGuest(false, bmp_profile, getViewDataBinding().etIdentity.getText().toString().trim(), idType, getViewDataBinding().etName.getText().toString()
-                                    , getViewDataBinding().etVehicle.getText().toString().trim(), getViewDataBinding().etContact.getText().toString(), countryCode
-                                    , getViewDataBinding().etAddress.getText().toString(), getViewDataBinding().tvGender.getText().toString()
-                                    , houseId, residentId);
+                            doAddGuest(false);
                         })
                         .setOnPositiveClickListener(dialog12 -> {
                             dialog12.dismiss();
-                            getViewModel().doAddGuest(true, bmp_profile, getViewDataBinding().etIdentity.getText().toString().trim(), idType, getViewDataBinding().etName.getText().toString()
-                                    , getViewDataBinding().etVehicle.getText().toString().trim(), getViewDataBinding().etContact.getText().toString(), countryCode
-                                    , getViewDataBinding().etAddress.getText().toString(), getViewDataBinding().tvGender.getText().toString()
-                                    , houseId, residentId);
+                            doAddGuest(true);
                         }).show(getSupportFragmentManager());
             }
         });
+    }
+
+    private void doAddGuest(boolean isAccept) {
+        AddVisitorData addVisitorData = new AddVisitorData();
+        addVisitorData.isAccept = isAccept;
+        addVisitorData.bmp_profile = bmp_profile;
+        addVisitorData.identityNo = getViewDataBinding().etIdentity.getText().toString().trim();
+        addVisitorData.idType = idType;
+        addVisitorData.name = getViewDataBinding().etName.getText().toString();
+        addVisitorData.vehicleNo = getViewDataBinding().etVehicle.getText().toString().trim();
+        addVisitorData.contact = getViewDataBinding().etContact.getText().toString();
+        addVisitorData.dialingCode = countryCode;
+        addVisitorData.address = getViewDataBinding().etAddress.getText().toString();
+        addVisitorData.gender = (configurationResponse == null || configurationResponse.getGuestFields().isGender()) ? getViewDataBinding().tvGender.getText().toString() : "";
+        addVisitorData.houseId = houseId;
+        addVisitorData.residentId = residentId;
+        getViewModel().doAddGuest(addVisitorData);
     }
 
     @Override

@@ -241,8 +241,18 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public Call<ResponseBody> doGetGuestConfiguration(String authToken, Map<String, String> partMap) {
+        return apiHelper.doGetGuestConfiguration(authToken, partMap);
+    }
+
+    @Override
     public Call<ResponseBody> doAddGuest(String authToken, RequestBody requestBody) {
         return apiHelper.doAddGuest(authToken, requestBody);
+    }
+
+    @Override
+    public Call<ResponseBody> doAddSP(String authToken, RequestBody requestBody) {
+        return apiHelper.doAddSP(authToken, requestBody);
     }
 
     @Override
