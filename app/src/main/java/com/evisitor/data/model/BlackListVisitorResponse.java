@@ -294,7 +294,7 @@ public class BlackListVisitorResponse {
         private String imageUrl;
 
         public String getReason() {
-            return reason;
+            return reason == null ? "" : reason;
         }
 
         public void setReason(String reason) {
@@ -302,7 +302,7 @@ public class BlackListVisitorResponse {
         }
 
         public String getLastModifiedDate() {
-            return lastModifiedDate;
+            return lastModifiedDate == null ? "" : lastModifiedDate;
         }
 
         public void setLastModifiedDate(String lastModifiedDate) {
@@ -310,7 +310,7 @@ public class BlackListVisitorResponse {
         }
 
         public String getLastModifiedBy() {
-            return lastModifiedBy;
+            return lastModifiedBy == null ? "" : lastModifiedBy;
         }
 
         public void setLastModifiedBy(String lastModifiedBy) {
@@ -318,7 +318,7 @@ public class BlackListVisitorResponse {
         }
 
         public String getProfile() {
-            return profile;
+            return profile == null ? "" : profile;
         }
 
         public void setProfile(String profile) {
@@ -326,7 +326,7 @@ public class BlackListVisitorResponse {
         }
 
         public String getFullName() {
-            return fullName;
+            return fullName == null ? "" : fullName;
         }
 
         public void setFullName(String fullName) {
@@ -334,7 +334,7 @@ public class BlackListVisitorResponse {
         }
 
         public String getType() {
-            return type;
+            return type == null ? "" : type;
         }
 
         public void setType(String type) {
@@ -350,7 +350,7 @@ public class BlackListVisitorResponse {
         }
 
         public String getCreatedBy() {
-            return createdBy;
+            return createdBy == null ? "" : createdBy;
         }
 
         public void setCreatedBy(String createdBy) {
@@ -358,7 +358,7 @@ public class BlackListVisitorResponse {
         }
 
         public String getResidentName() {
-            return residentName;
+            return residentName == null ? "" :residentName;
         }
 
         public void setResidentName(String residentName) {
@@ -366,7 +366,7 @@ public class BlackListVisitorResponse {
         }
 
         public String getDocumentId() {
-            return documentId;
+            return documentId == null ? "" : documentId;
         }
 
         public void setDocumentId(String documentId) {
@@ -390,7 +390,7 @@ public class BlackListVisitorResponse {
         }
 
         public String getContactNo() {
-            return contactNo;
+            return contactNo == null ? "" : contactNo;
         }
 
         public void setContactNo(String contactNo) {

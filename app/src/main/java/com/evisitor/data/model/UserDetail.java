@@ -39,7 +39,7 @@ public class UserDetail {
     }
 
     public String getEmail() {
-        return email;
+        return email == null ? "" : email;
     }
 
     public void setEmail(String email) {
@@ -55,7 +55,7 @@ public class UserDetail {
     }
 
     public String getAddress() {
-        return address;
+        return address == null ? "" : address;
     }
 
     public void setAddress(String address) {
@@ -63,7 +63,7 @@ public class UserDetail {
     }
 
     public String getContactNo() {
-        return contactNo;
+        return contactNo == null ? "" : contactNo;
     }
 
     public void setContactNo(String contactNo) {
@@ -71,7 +71,7 @@ public class UserDetail {
     }
 
     public String getFullName() {
-        return fullName;
+        return fullName == null ? "" : fullName;
     }
 
     public void setFullName(String fullName) {
@@ -79,7 +79,7 @@ public class UserDetail {
     }
 
     public String getCountry() {
-        return country;
+        return country == null  ? "" : country;
     }
 
     public void setCountry(String country) {
@@ -87,7 +87,7 @@ public class UserDetail {
     }
 
     public String getGender() {
-        return gender;
+        return gender == null ? "" : gender;
     }
 
     public void setGender(String gender) {

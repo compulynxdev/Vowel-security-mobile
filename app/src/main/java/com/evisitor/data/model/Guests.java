@@ -223,7 +223,7 @@ public class Guests {
     }
 
     public String getCheckOutTime() {
-        return checkOutTime;
+        return checkOutTime == null ? "" : checkOutTime;
     }
 
     public void setCheckOutTime(String checkOutTime) {
@@ -243,7 +243,7 @@ public class Guests {
     }
 
     public String getCreatedBy() {
-        return createdBy;
+        return createdBy == null ?  "" : createdBy;
     }
 
     public void setCreatedBy(String createdBy) {
