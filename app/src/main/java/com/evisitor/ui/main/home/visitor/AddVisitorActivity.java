@@ -81,10 +81,22 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
     private void guestConfigurationObserver() {
         getViewModel().doGetGuestConfigurationObserver().observe(this, guestConfiguration -> {
             configurationResponse = guestConfiguration;
-            getViewDataBinding().llNumber.setVisibility(guestConfiguration.getGuestFields().isContactNo() ? View.VISIBLE : View.GONE);
-            getViewDataBinding().etAddress.setVisibility(guestConfiguration.getGuestFields().isAddress() ? View.VISIBLE : View.GONE);
-            getViewDataBinding().tvGender.setVisibility(guestConfiguration.getGuestFields().isGender() ? View.VISIBLE : View.GONE);
+            updateFieldConfigurationUI();
         });
+    }
+
+    private void updateFieldConfigurationUI() {
+        if (configurationResponse == null) configurationResponse = new GuestConfigurationResponse();
+
+        if (isGuest == null || isGuest) {
+            getViewDataBinding().llNumber.setVisibility(configurationResponse.getGuestFields().isContactNo() ? View.VISIBLE : View.GONE);
+            getViewDataBinding().etAddress.setVisibility(configurationResponse.getGuestFields().isAddress() ? View.VISIBLE : View.GONE);
+            getViewDataBinding().tvGender.setVisibility(configurationResponse.getGuestFields().isGender() ? View.VISIBLE : View.GONE);
+        } else {
+            getViewDataBinding().llNumber.setVisibility(View.VISIBLE);
+            getViewDataBinding().etAddress.setVisibility(View.VISIBLE);
+            getViewDataBinding().tvGender.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setIntentData(Intent intent) {
@@ -443,6 +455,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
             getViewDataBinding().groupResident.setVisibility(View.GONE);
             getViewDataBinding().groupSp.setVisibility(View.VISIBLE);
         }
+        updateFieldConfigurationUI();
     }
 
     private void randomCheckInObserver() {
