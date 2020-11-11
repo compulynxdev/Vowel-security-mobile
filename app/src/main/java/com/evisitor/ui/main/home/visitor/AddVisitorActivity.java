@@ -27,6 +27,7 @@ import com.evisitor.ui.dialog.ImagePickCallback;
 import com.evisitor.ui.dialog.country.CountrySelectionDialog;
 import com.evisitor.ui.main.MainActivity;
 import com.evisitor.ui.main.home.visitor.dialogs.SelectionBottomSheetDialog;
+import com.evisitor.ui.main.rejectreason.InputDialog;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.PermissionUtils;
 import com.sharma.mrzreader.MrzRecord;
@@ -397,7 +398,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                                     .setNegativeBtnLabel(getString(R.string.reject))
                                     .setOnNegativeClickListener(dialog1 -> {
                                         dialog1.dismiss();
-                                        doAddSp(false, visitorData);
+                                        showReasonSPDialog(visitorData);
                                     })
                                     .setOnPositiveClickListener(dialog12 -> {
                                         dialog12.dismiss();
@@ -412,6 +413,16 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                 break;
         }
     }
+
+    private void showReasonSPDialog(AddVisitorData visitorData) {
+        InputDialog.newInstance().setTitle(getString(R.string.are_you_sure))
+                .setOnPositiveClickListener((dialog, input) -> {
+                    dialog.dismiss();
+                    visitorData.rejectedReason = input;
+                    doAddSp(false,visitorData);
+                }).show(getSupportFragmentManager());
+    }
+
 
     private void doAddSp(boolean isAccept, AddVisitorData visitorData) {
         visitorData.bmp_profile = bmp_profile;
@@ -448,17 +459,26 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                         .setNegativeBtnLabel(getString(R.string.reject))
                         .setOnNegativeClickListener(dialog1 -> {
                             dialog1.dismiss();
-                            doAddGuest(false);
+                            showReasonGuestDialog();
                         })
                         .setOnPositiveClickListener(dialog12 -> {
                             dialog12.dismiss();
-                            doAddGuest(true);
+                            doAddGuest(true,null);
                         }).show(getSupportFragmentManager());
             }
         });
     }
 
-    private void doAddGuest(boolean isAccept) {
+
+    private void showReasonGuestDialog() {
+        InputDialog.newInstance().setTitle(getString(R.string.are_you_sure))
+                .setOnPositiveClickListener((dialog, input) -> {
+                    dialog.dismiss();
+                    doAddGuest(false,input);
+                }).show(getSupportFragmentManager());
+    }
+
+    private void doAddGuest(boolean isAccept, String input) {
         AddVisitorData addVisitorData = new AddVisitorData();
         addVisitorData.isAccept = isAccept;
         addVisitorData.bmp_profile = bmp_profile;
@@ -472,6 +492,10 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
         addVisitorData.gender = (configurationResponse == null || configurationResponse.getGuestFields().isGender()) ? getViewDataBinding().tvGender.getText().toString() : "";
         addVisitorData.houseId = houseId;
         addVisitorData.residentId = residentId;
+
+        if(!isAccept){
+            addVisitorData.rejectedReason = input;
+        }
         getViewModel().doAddGuest(addVisitorData);
     }
 

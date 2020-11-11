@@ -18,6 +18,8 @@ public class AddVisitorData {
     public String gender;
     public String houseId;
     public String residentId;
+    //reject reason
+    public String rejectedReason;
 
     //sp data
     public boolean isResident;

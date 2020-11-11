@@ -178,6 +178,10 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                 object.put("dob", "");
                 object.put("image", addVisitorData.bmp_profile == null ? "" : AppUtils.getBitmapToBase64(addVisitorData.bmp_profile));
                 object.put("state", addVisitorData.isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);
+                if(!addVisitorData.isAccept){
+                    object.put("rejectedBy" , getDataManager().getUserDetail().getFullName());
+                    object.put("rejectReason" , addVisitorData.rejectedReason);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -288,6 +292,10 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                 object.put("residentId", visitorData.residentId); //host id   //-> send null in case of property
                 object.put("image", visitorData.bmp_profile == null ? "" : AppUtils.getBitmapToBase64(visitorData.bmp_profile));
                 object.put("state", visitorData.isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);
+                if(!visitorData.isAccept){
+                    object.put("rejectedBy" , getDataManager().getUserDetail().getFullName());
+                    object.put("rejectReason" , visitorData.rejectedReason);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
