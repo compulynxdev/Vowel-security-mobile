@@ -106,7 +106,7 @@ dependencies {
 
     // Google OCR
     implementation 'com.google.android.gms:play-services-vision:20.1.0'
-    
+
     //Firebase messaging
     implementation 'com.google.firebase:firebase-messaging:20.2.4'
 

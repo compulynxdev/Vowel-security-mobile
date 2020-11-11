@@ -119,7 +119,7 @@ public class ExpectedSpViewModel extends BaseCheckInOutViewModel<ExpectedSPNavig
         }
     }
 
-    void approveByCall(boolean isAccept) {
+    void approveByCall(boolean isAccept,String input) {
         if (getNavigator().isNetworkConnected(true)) {
             JSONObject object = new JSONObject();
             try {
@@ -128,7 +128,8 @@ public class ExpectedSpViewModel extends BaseCheckInOutViewModel<ExpectedSPNavig
                 object.put("type", AppConstants.CHECK_IN);
                 object.put("visitor", AppConstants.SERVICE_PROVIDER);
                 object.put("state", isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);
-
+                object.put("rejectedBy",isAccept ? null : getDataManager().getUserDetail().getFullName());
+                object.put("rejectReason",input);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

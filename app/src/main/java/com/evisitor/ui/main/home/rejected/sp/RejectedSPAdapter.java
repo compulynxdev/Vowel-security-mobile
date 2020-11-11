@@ -120,11 +120,13 @@ public class ViewHolder extends BaseViewHolder {
         reject.setVisibility(bean.getRejectedBy().isEmpty() ? View.GONE : View.VISIBLE);
         reject.setText(reject.getContext().getString(R.string.rejected_by,bean.getRejectedBy()));
         profile.setText(context.getString(R.string.data_profile, bean.getProfile()));
-        if (bean.getTime() != null && !bean.getTime().isEmpty())
-            time.setText(context.getString(R.string.data_time, CalenderUtils.formatDate(bean.getTime(), CalenderUtils.SERVER_DATE_FORMAT,
-                    CalenderUtils.TIMESTAMP_FORMAT)));
-        else time.setVisibility(View.GONE);
-        if (bean.getHouseNo().isEmpty()) {
+        if(bean.getRejectedOn().isEmpty()){
+            time.setVisibility(View.GONE);
+        }else {
+            time.setVisibility(View.VISIBLE);
+            time.setText(time.getContext().getString(R.string.rejected_on ,CalenderUtils.formatDate(bean.getRejectedOn(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIMESTAMP_FORMAT)));
+        }
+        if (bean.getPremiseName().isEmpty()) {
             houseNo.setVisibility(View.GONE);
             host.setText(context.getString(R.string.data_host, bean.getCreatedBy()));
         } else {

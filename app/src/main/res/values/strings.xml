@@ -235,5 +235,9 @@
     <string name="enter_company_name">Enter Company Name</string>
     <string name="work_profile">Work Profile</string>
     <string name="select_employment">Select Employment</string>
+    <string name="enter_reason">Enter Reason</string>
+    <string name="reason_cannot_be_empty">Reason cannot be empty!!</string>
+    <string name="are_you_sure">Are you sure you want to REJECT? \n If yes then enter the valid reason. </string>
+    <string name="rejected_on">Rejected On : %s</string>
 
 </resources>

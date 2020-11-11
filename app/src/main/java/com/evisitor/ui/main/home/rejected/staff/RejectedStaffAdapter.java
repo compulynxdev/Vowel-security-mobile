@@ -121,7 +121,13 @@ public class ViewHolder extends BaseViewHolder {
         profile.setText(context.getString(R.string.data_profile, bean.getProfile()));
         reject.setVisibility(bean.getRejectedBy().isEmpty() ? View.GONE : View.VISIBLE);
         reject.setText(context.getString(R.string.rejected_by,bean.getRejectedBy()));
-        if (bean.getFlatNo().isEmpty()) {
+        if(bean.getRejectedOn().isEmpty()){
+            time.setVisibility(View.GONE);
+        }else {
+            time.setVisibility(View.VISIBLE);
+            time.setText(time.getContext().getString(R.string.rejected_on ,CalenderUtils.formatDate(bean.getRejectedOn(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIMESTAMP_FORMAT)));
+        }
+        if (bean.getPremiseName().isEmpty()) {
             houseNo.setVisibility(View.GONE);
             host.setText(context.getString(R.string.data_host, bean.getCreatedBy()));
         } else {
@@ -129,7 +135,6 @@ public class ViewHolder extends BaseViewHolder {
             houseNo.setText(context.getString(R.string.data_house, bean.getPremiseName()));
             host.setText(context.getString(R.string.data_host, bean.getResidentName()));
         }
-        time.setText(context.getString(R.string.data_time_slot, CalenderUtils.formatDate(bean.getTimeIn(), CalenderUtils.TIME_FORMAT, CalenderUtils.TIME_FORMAT_AM), CalenderUtils.formatDate(bean.getTimeOut(), CalenderUtils.TIME_FORMAT, CalenderUtils.TIME_FORMAT_AM)));
         if (bean.getImageUrl().isEmpty()) {
             Glide.with(imgVisitor.getContext())
                     .load(R.drawable.ic_person)

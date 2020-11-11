@@ -91,7 +91,7 @@ public class HouseKeeping {
     @SerializedName("rejectedBy")
     private String rejectedBy;
 
-    @SerializedName("rejectedReason")
+    @SerializedName("rejectReason")
     private String rejectedReason;
 
     @SerializedName("companyName")

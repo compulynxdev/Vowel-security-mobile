@@ -117,7 +117,7 @@ public class ExpectedHKViewModel extends BaseCheckInOutViewModel<ExpectedHKNavig
         }
     }
 
-    void approveByCall(boolean isAccept) {
+    void approveByCall(boolean isAccept,String input) {
         if (getNavigator().isNetworkConnected(true)) {
             JSONObject object = new JSONObject();
             try {
@@ -127,6 +127,8 @@ public class ExpectedHKViewModel extends BaseCheckInOutViewModel<ExpectedHKNavig
                 object.put("type", AppConstants.CHECK_IN);
                 object.put("visitor", AppConstants.HOUSE_HELP);
                 object.put("state", isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);
+                object.put("rejectedBy",isAccept ? null : getDataManager().getUserDetail().getFullName());
+                object.put("rejectReason",input);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
