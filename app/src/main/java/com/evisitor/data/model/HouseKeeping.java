@@ -201,7 +201,7 @@ public class HouseKeeping {
     }
 
     public String getHouseKeeperId() {
-        return houseKeeperId == null ? "0" : houseKeeperId;
+        return houseKeeperId;
     }
 
     public void setHouseKeeperId(String houseKeeperId) {

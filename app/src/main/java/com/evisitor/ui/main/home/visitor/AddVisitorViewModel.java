@@ -37,6 +37,8 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
     private MutableLiveData<Boolean> guestStatusMutableData = new MutableLiveData<>();
     private List<String> genderList = new ArrayList<>();
     private List<IdentityBean> identityTypeList = new ArrayList<>();
+    private List<IdentityBean> assignedToList = new ArrayList<>();
+    private List<IdentityBean> employmentList = new ArrayList<>();
 
     public AddVisitorViewModel(DataManager dataManager) {
         super(dataManager);
@@ -268,5 +270,21 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
             identityTypeList.add(new IdentityBean("Passport", "passport"));
         }
         return identityTypeList;
+    }
+
+    List getAssignedToList() {
+        if (assignedToList.isEmpty()) {
+            assignedToList.add(new IdentityBean("Property", "property"));
+            assignedToList.add(new IdentityBean("Resident", "resident"));
+        }
+        return assignedToList;
+    }
+
+    List getEmploymentTypeList() {
+        if (employmentList.isEmpty()) {
+            employmentList.add(new IdentityBean("Self", "self"));
+            employmentList.add(new IdentityBean("Other", "other"));
+        }
+        return employmentList;
     }
 }

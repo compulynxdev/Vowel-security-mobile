@@ -169,7 +169,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
 
         getViewModel().doGetHostDetails().observe(this, hostDetailList -> {
             this.hostDetailList = hostDetailList;
-            getViewDataBinding().hostGroup.setVisibility(View.VISIBLE);
+            getViewDataBinding().tvHost.setVisibility(View.VISIBLE);
             //setUpOwner(false);
         });
     }
@@ -205,7 +205,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
     private void setUp() {
         ImageView imgBack = findViewById(R.id.img_back);
         imgBack.setVisibility(View.VISIBLE);
-        setOnClickListener(imgBack, getViewDataBinding().tvIdentity, getViewDataBinding().tvGender, getViewDataBinding().tvOwner, getViewDataBinding().tvHost
+        setOnClickListener(imgBack, getViewDataBinding().tvAssignedTo, getViewDataBinding().tvIdentity, getViewDataBinding().tvGender, getViewDataBinding().tvOwner, getViewDataBinding().tvHost
                 , getViewDataBinding().frameImg, getViewDataBinding().btnAdd, getViewDataBinding().rlCode);
         getViewDataBinding().tvCode.setText("+".concat(countryCode));
         if (getViewModel().getDataManager().isIdentifyFeature())
@@ -259,6 +259,12 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                 }
                 break;
 
+            case R.id.tv_assigned_to:
+                SelectionBottomSheetDialog.newInstance(getString(R.string.select_assigned_to), getViewModel().getAssignedToList()).setItemSelectedListener(pos -> {
+
+                }).show(getSupportFragmentManager());
+                break;
+
             case R.id.tv_identity:
                 SelectionBottomSheetDialog.newInstance(getString(R.string.select_identity_type), getViewModel().getIdentityTypeList()).setItemSelectedListener(pos -> {
                     IdentityBean bean = (IdentityBean) getViewModel().getIdentityTypeList().get(pos);
@@ -290,6 +296,19 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                 }
                 break;
 
+            case R.id.rl_code:
+                CountrySelectionDialog.newInstance(code -> {
+                    countryCode = code;
+                    getViewDataBinding().tvCode.setText("+".concat(countryCode));
+                }).show(getSupportFragmentManager());
+                break;
+
+            case R.id.tv_employment:
+                SelectionBottomSheetDialog.newInstance(getString(R.string.select_employment), getViewModel().getEmploymentTypeList()).setItemSelectedListener(pos -> {
+
+                }).show(getSupportFragmentManager());
+                break;
+
             case R.id.btn_add:
                 if (getViewModel().doVerifyInputs(getViewDataBinding().etIdentity.getText().toString().trim(), idType
                         , getViewDataBinding().etName.getText().toString().trim(), getViewDataBinding().etContact.getText().toString().trim()
@@ -298,13 +317,6 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
 
                     getViewModel().doCheckGuestStatus(getViewDataBinding().etIdentity.getText().toString().trim(), idType);
                 }
-                break;
-
-            case R.id.rl_code:
-                CountrySelectionDialog.newInstance(code -> {
-                    countryCode = code;
-                    getViewDataBinding().tvCode.setText("+".concat(countryCode));
-                }).show(getSupportFragmentManager());
                 break;
         }
     }
