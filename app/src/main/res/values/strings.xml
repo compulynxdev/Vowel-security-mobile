@@ -201,6 +201,7 @@
     <string name="send_notification_success">Notification send successfully</string>
     <string name="ok">OK</string>
     <string name="select_identity_type">Select Identity Type</string>
+    <string name="select_assigned_to">Select Assigned To</string>
 
     <string name="submit">Submit</string>
     <string name="or">OR</string>
@@ -230,6 +231,10 @@
     <string name="group">Group</string>
     <string name="rejected_by">Rejected By : %s</string>
     <string name="property">Property</string>
+    <string name="enter_company_address">Enter Company Address</string>
+    <string name="enter_company_name">Enter Company Name</string>
+    <string name="work_profile">Work Profile</string>
+    <string name="select_employment">Select Employment</string>
     <string name="enter_reason">Enter Reason</string>
     <string name="reason_cannot_be_empty">Reason cannot be empty!!</string>
     <string name="are_you_sure">Are you sure you want to REJECT? \n If yes then enter the valid reason. </string>
