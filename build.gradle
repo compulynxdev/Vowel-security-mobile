@@ -38,7 +38,7 @@ ext {
     targetSdkVersion = 29
     compileSdkVersion = 29
     buildToolsVersion = '29.0.3'
-    constraintLayoutVersion = '2.0.4'
+    constraintLayoutVersion = '2.0.1'
     recyclerViewVersion = '1.1.0'
 
     // App dependencies
