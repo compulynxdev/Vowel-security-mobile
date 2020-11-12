@@ -77,17 +77,17 @@ public class TrespasserSPViewModel extends BaseViewModel<TrespasserSPNavigator> 
     List<VisitorProfileBean> getVisitorDetail(TrespasserResponse.ContentBean visitorResponse) {
         getNavigator().showLoading();
         List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, visitorResponse.getFullName())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, visitorResponse.getDocumentId())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_gender, visitorResponse.getGender())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, visitorResponse.getDialingCode().concat(visitorResponse.getContactNo()))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, visitorResponse.getFullName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : visitorResponse.getFullName())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity,visitorResponse.getDocumentId().isEmpty() ? getNavigator().getContext().getString(R.string.na) :  visitorResponse.getDocumentId())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_gender,visitorResponse.getGender().isEmpty() ? getNavigator().getContext().getString(R.string.na) :  visitorResponse.getGender())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile,visitorResponse.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(visitorResponse.getDialingCode()).concat(" ").concat(visitorResponse.getContactNo()))));
         Date hostCheckoutTime = CalenderUtils.getDateFormat(visitorResponse.getHostCheckOutTime(), CalenderUtils.SERVER_DATE_FORMAT);
         if (hostCheckoutTime != null) {
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_elapsed, DateUtils.getRelativeTimeSpanString(hostCheckoutTime.getTime()))));
         }
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time_in, CalenderUtils.formatDate(visitorResponse.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT))));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_house, visitorResponse.getPremiseName())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, visitorResponse.getCreatedBy())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time_in, visitorResponse.getCheckInTime().isEmpty() ? getNavigator().getContext().getString(R.string.na) : CalenderUtils.formatDate(visitorResponse.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_house, visitorResponse.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : visitorResponse.getPremiseName())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host,visitorResponse.getCreatedBy().isEmpty() ? getNavigator().getContext().getString(R.string.na) :  visitorResponse.getCreatedBy())));
 
         getNavigator().hideLoading();
         return visitorProfileBeanList;
