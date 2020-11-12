@@ -3,17 +3,17 @@ package com.evisitor.data.model;
 public class GuestConfigurationResponse {
 
     /**
-     * guestFields : {"contactNo":true,"email":true,"gender":true,"address":true}
+     * guestField : {"contactNo":true,"email":true,"gender":true,"address":true}
      */
 
-    private GuestFieldsBean guestFields;
+    private GuestFieldsBean guestField;
 
-    public GuestFieldsBean getGuestFields() {
-        return guestFields == null ? new GuestFieldsBean() : guestFields;
+    public GuestFieldsBean getGuestField() {
+        return guestField == null ? new GuestFieldsBean() : guestField;
     }
 
-    public void setGuestFields(GuestFieldsBean guestFields) {
-        this.guestFields = guestFields;
+    public void setGuestField(GuestFieldsBean guestField) {
+        this.guestField = guestField;
     }
 
     public static class GuestFieldsBean {

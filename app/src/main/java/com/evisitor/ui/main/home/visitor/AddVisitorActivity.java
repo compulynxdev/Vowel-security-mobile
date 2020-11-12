@@ -89,9 +89,9 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
         if (configurationResponse == null) configurationResponse = new GuestConfigurationResponse();
 
         if (isGuest == null || isGuest) {
-            getViewDataBinding().llNumber.setVisibility(configurationResponse.getGuestFields().isContactNo() ? View.VISIBLE : View.GONE);
-            getViewDataBinding().etAddress.setVisibility(configurationResponse.getGuestFields().isAddress() ? View.VISIBLE : View.GONE);
-            getViewDataBinding().tvGender.setVisibility(configurationResponse.getGuestFields().isGender() ? View.VISIBLE : View.GONE);
+            getViewDataBinding().llNumber.setVisibility(configurationResponse.getGuestField().isContactNo() ? View.VISIBLE : View.GONE);
+            getViewDataBinding().etAddress.setVisibility(configurationResponse.getGuestField().isAddress() ? View.VISIBLE : View.GONE);
+            getViewDataBinding().tvGender.setVisibility(configurationResponse.getGuestField().isGender() ? View.VISIBLE : View.GONE);
         } else {
             getViewDataBinding().llNumber.setVisibility(View.VISIBLE);
             getViewDataBinding().etAddress.setVisibility(View.VISIBLE);
@@ -502,7 +502,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
         addVisitorData.contact = getViewDataBinding().etContact.getText().toString();
         addVisitorData.dialingCode = countryCode;
         addVisitorData.address = getViewDataBinding().etAddress.getText().toString();
-        addVisitorData.gender = (configurationResponse == null || configurationResponse.getGuestFields().isGender()) ? getViewDataBinding().tvGender.getText().toString() : "";
+        addVisitorData.gender = (configurationResponse == null || configurationResponse.getGuestField().isGender()) ? getViewDataBinding().tvGender.getText().toString() : "";
         addVisitorData.houseId = houseId;
         addVisitorData.residentId = residentId;
 

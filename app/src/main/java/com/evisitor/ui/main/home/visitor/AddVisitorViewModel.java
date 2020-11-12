@@ -130,16 +130,16 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
         } else if (visitorData.name.isEmpty()) {
             getNavigator().showToast(R.string.alert_empty_name);
             return false;
-        } else if (configurationResponse.getGuestFields().isContactNo() && visitorData.contact.isEmpty()) {
+        } else if (configurationResponse.getGuestField().isContactNo() && visitorData.contact.isEmpty()) {
             getNavigator().showToast(R.string.alert_empty_contact);
             return false;
-        } else if (configurationResponse.getGuestFields().isContactNo() && (visitorData.contact.length() < 7 || visitorData.contact.length() > 12)) {
+        } else if (configurationResponse.getGuestField().isContactNo() && (visitorData.contact.length() < 7 || visitorData.contact.length() > 12)) {
             getNavigator().showToast(R.string.alert_contact_length);
             return false;
-        } else if (configurationResponse.getGuestFields().isAddress() && visitorData.address.isEmpty()) {
+        } else if (configurationResponse.getGuestField().isAddress() && visitorData.address.isEmpty()) {
             getNavigator().showToast(R.string.alert_empty_address);
             return false;
-        } else if (configurationResponse.getGuestFields().isGender() && visitorData.gender.isEmpty()) {
+        } else if (configurationResponse.getGuestField().isGender() && visitorData.gender.isEmpty()) {
             getNavigator().showToast(R.string.alert_select_gender);
             return false;
         } else if (visitorData.houseId.isEmpty()) {
@@ -285,11 +285,11 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                 object.put("address", visitorData.address);
                 object.put("country", "");
                 //object.put("expectedDate", new Date());
-                object.put("premiseHierarchyDetailsId", visitorData.houseId);  //house or flat id  //->
+                object.put("premiseHierarchyDetailsId", visitorData.isResident ? visitorData.houseId : null);  //house or flat id  //->
                 object.put("expectedVehicle", visitorData.vehicleNo.toUpperCase());
                 object.put("enteredVehicleNo", visitorData.vehicleNo.toUpperCase());
                 object.put("gender", visitorData.gender);
-                object.put("residentId", visitorData.residentId); //host id   //-> send null in case of property
+                object.put("residentId", visitorData.isResident ? visitorData.residentId : null); //host id   //-> send null in case of property
                 object.put("image", visitorData.bmp_profile == null ? "" : AppUtils.getBitmapToBase64(visitorData.bmp_profile));
                 object.put("state", visitorData.isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);
                 if(!visitorData.isAccept){
