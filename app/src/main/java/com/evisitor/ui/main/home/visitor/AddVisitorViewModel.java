@@ -136,10 +136,10 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
         } else if (configurationResponse.getGuestField().isContactNo() && (visitorData.contact.length() < 7 || visitorData.contact.length() > 12)) {
             getNavigator().showToast(R.string.alert_contact_length);
             return false;
-        } else if (configurationResponse.getGuestField().isAddress() && visitorData.address.isEmpty()) {
+        }/* else if (configurationResponse.getGuestField().isAddress() && visitorData.address.isEmpty()) {
             getNavigator().showToast(R.string.alert_empty_address);
             return false;
-        } else if (configurationResponse.getGuestField().isGender() && visitorData.gender.isEmpty()) {
+        } */ else if (configurationResponse.getGuestField().isGender() && visitorData.gender.isEmpty()) {
             getNavigator().showToast(R.string.alert_select_gender);
             return false;
         } else if (visitorData.houseId.isEmpty()) {
@@ -233,10 +233,10 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
         } else if (visitorData.contact.length() < 7 || visitorData.contact.length() > 12) {
             getNavigator().showToast(R.string.alert_contact_length);
             return false;
-        } else if (visitorData.address.isEmpty()) {
+        }/* else if (visitorData.address.isEmpty()) {
             getNavigator().showToast(R.string.alert_empty_address);
             return false;
-        } else if (visitorData.gender.isEmpty()) {
+        } */ else if (visitorData.gender.isEmpty()) {
             getNavigator().showToast(R.string.alert_select_gender);
             return false;
         } else if (visitorData.isResident && visitorData.houseId.isEmpty()) {

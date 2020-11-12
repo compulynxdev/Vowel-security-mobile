@@ -1,5 +1,6 @@
 package com.evisitor.ui.main.notifications;
 
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.evisitor.util.AppUtils;
 import com.evisitor.util.CalenderUtils;
 import com.evisitor.util.pagination.FooterLoader;
 
+import java.util.Date;
 import java.util.List;
 
 public class NotificationAdapter extends RecyclerView.Adapter<BaseViewHolder> {
@@ -114,7 +116,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         public void onBind(int position) {
             NotificationResponse.ContentBean notification = notificationList.get(position);
             tvTitle.setText(notification.getFullName());
-            tvTime.setText(CalenderUtils.formatDate(notification.getCreatedDate(), CalenderUtils.SERVER_DATE_FORMAT2, CalenderUtils.TIME_FORMAT_AM));
+            Date date = CalenderUtils.getDateFormat(notification.getCreatedDate(), CalenderUtils.SERVER_DATE_FORMAT2);
+            tvTime.setText(DateUtils.getRelativeTimeSpanString(date == null ? new Date().getTime() : date.getTime()));
             tvMsg.setText(tvMsg.getContext().getString(R.string.msg_notification, AppUtils.capitaliseFirstLetter(notification.getNotificationStatus()), notification.getCreatedBy()));
             tvType.setText(tvType.getContext().getString(R.string.data_type, getVisitorType(tvCompany, notification)));
         }
