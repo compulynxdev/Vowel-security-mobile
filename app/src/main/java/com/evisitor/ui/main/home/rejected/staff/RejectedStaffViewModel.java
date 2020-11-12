@@ -77,8 +77,8 @@ public class RejectedStaffViewModel extends BaseViewModel<RejectedStaffNavigator
         List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, hkBean.getFullName())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_profile, hkBean.getProfile())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), hkBean.getExpectedVehicleNo(), VisitorProfileBean.VIEW_TYPE_ITEM));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, hkBean.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : hkBean.getDialingCode().concat(hkBean.getContactNo()))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col),hkBean.getExpectedVehicleNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : hkBean.getExpectedVehicleNo(), VisitorProfileBean.VIEW_TYPE_ITEM));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile,hkBean.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(hkBean.getDialingCode()).concat(" ").concat(hkBean.getContactNo()))));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, hkBean.getDocumentId().isEmpty() ? getNavigator().getContext().getString(R.string.na) : hkBean.getDocumentId())));
         if (hkBean.getPremiseName().isEmpty()) {
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, hkBean.getCreatedBy())));
