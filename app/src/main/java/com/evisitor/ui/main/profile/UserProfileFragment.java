@@ -68,7 +68,7 @@ public class UserProfileFragment extends BaseFragment<FragmentUserProfileBinding
             getViewDataBinding().tvUsername.setText(userDetail.getUsername().isEmpty() ? getString(R.string.na) : userDetail.getUsername());
             getViewDataBinding().tvEmail.setText(userDetail.getEmail().isEmpty() ? getString(R.string.na) : userDetail.getEmail());
             getViewDataBinding().tvGender.setText(userDetail.getGender().isEmpty() ? getString(R.string.na) : userDetail.getGender());
-            getViewDataBinding().tvContact.setText(userDetail.getContactNo().isEmpty() ? getString(R.string.na) : userDetail.getDialingCode().concat(userDetail.getContactNo()));
+            getViewDataBinding().tvContact.setText(userDetail.getContactNo().isEmpty() ? getString(R.string.na) : "+ ".concat(userDetail.getDialingCode()).concat(userDetail.getContactNo()));
             getViewDataBinding().tvAddress.setText(userDetail.getAddress().isEmpty() ? getString(R.string.na) : userDetail.getAddress());
             getViewDataBinding().tvGroup.setText(userDetail.getGroupName().isEmpty() ? getString(R.string.na) : userDetail.getGroupName());
 
