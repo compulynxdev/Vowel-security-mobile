@@ -127,10 +127,10 @@ public class TrespasserAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
             if (!bean.getCheckOutTime().isEmpty()) {
                 Date checkOutTime = CalenderUtils.getDateFormat(bean.getCheckOutTime(), CalenderUtils.SERVER_DATE_FORMAT);
-                Date checkInTime = CalenderUtils.getDateFormat(bean.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT);
-                if (checkOutTime != null && checkInTime != null) {
+                Date hostCheckOutTime = CalenderUtils.getDateFormat(bean.getHostCheckOutTime(), CalenderUtils.SERVER_DATE_FORMAT);
+                if (checkOutTime != null && hostCheckOutTime != null) {
                     tv_elapsed_time.setVisibility(View.VISIBLE);
-                    tv_elapsed_time.setText(tv_elapsed_time.getContext().getString(R.string.data_elapsed, DateUtils.getRelativeTimeSpanString(checkInTime.getTime(), checkOutTime.getTime(), DateUtils.MINUTE_IN_MILLIS)));
+                    tv_elapsed_time.setText(tv_elapsed_time.getContext().getString(R.string.data_elapsed, DateUtils.getRelativeTimeSpanString(hostCheckOutTime.getTime(), checkOutTime.getTime(), DateUtils.MINUTE_IN_MILLIS)));
                 }
             } else if (!bean.getHostCheckOutTime().isEmpty()) {
                 Date hostCheckoutTime = CalenderUtils.getDateFormat(bean.getHostCheckOutTime(), CalenderUtils.SERVER_DATE_FORMAT);
