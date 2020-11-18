@@ -108,7 +108,11 @@ dependencies {
     implementation 'com.google.android.gms:play-services-vision:20.1.0'
 
     //Firebase messaging
-    implementation 'com.google.firebase:firebase-messaging:20.2.4'
+    implementation 'com.google.firebase:firebase-messaging:21.0.0'
+
+    implementation platform('com.google.firebase:firebase-bom:26.1.0')
+
+    implementation 'com.google.firebase:firebase-analytics'
 
     // MRZ Reader
     implementation project(path: ':mrzreader')
