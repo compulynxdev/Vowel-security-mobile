@@ -50,7 +50,7 @@ public class PropertyInfoActivity extends BaseActivity<ActivityPropertyInfoBindi
             getViewDataBinding().tvAddress.setText(propertyInfoResponse.getAddress().concat(", ").concat(propertyInfoResponse.getZipCode()));
             getViewDataBinding().tvCountry.setText(propertyInfoResponse.getCountry().isEmpty() ? getString(R.string.na) : propertyInfoResponse.getCountry());
             getViewDataBinding().tvPhone.setText(propertyInfoResponse.getContactNo().isEmpty() ? getString(R.string.na) : "+ ".concat(propertyInfoResponse.getDialingCode()).concat(propertyInfoResponse.getContactNo()));
-            getViewDataBinding().tvExt.setText(propertyInfoResponse.getExtensionNo().isEmpty() ? getString(R.string.na) : propertyInfoResponse.getExtDialingCode().concat(propertyInfoResponse.getExtensionNo()));
+            getViewDataBinding().tvExt.setText(propertyInfoResponse.getExtensionNo().isEmpty() ? getString(R.string.na) : "+ ".concat(propertyInfoResponse.getExtDialingCode().concat(propertyInfoResponse.getExtensionNo())));
             getViewDataBinding().tvEmail.setText(propertyInfoResponse.getEmail().isEmpty() ? getString(R.string.na) : propertyInfoResponse.getEmail());
 
             if (propertyInfoResponse.getImage().isEmpty()) {
