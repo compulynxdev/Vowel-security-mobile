@@ -307,7 +307,7 @@ public class HouseKeepingResponse {
         private String expectedVehicleNo;
         private String enteredVehicleNo = "";
         private String rejectedBy = "";
-        private String rejectedReason = "";
+        private String rejectReason = "";
         private boolean checkInStatus;
         private List<String> workingDays;
         private String companyName;
@@ -523,12 +523,12 @@ public class HouseKeepingResponse {
             this.rejectedBy = rejectedBy;
         }
 
-        public String getRejectedReason() {
-            return rejectedReason == null ? "" : rejectedReason;
+        public String getRejectReason() {
+            return rejectReason == null ? "" : rejectReason;
         }
 
-        public void setRejectedReason(String rejectedReason) {
-            this.rejectedReason = rejectedReason;
+        public void setRejectReason(String rejectReason) {
+            this.rejectReason = rejectReason;
         }
 
         public String getCompanyName() {

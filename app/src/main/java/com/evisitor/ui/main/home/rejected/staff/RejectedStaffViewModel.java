@@ -90,7 +90,7 @@ public class RejectedStaffViewModel extends BaseViewModel<RejectedStaffNavigator
 
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.rejected_by,hkBean.getRejectedBy().isEmpty() ? getNavigator().getContext().getString(R.string.na) :  hkBean.getRejectedBy())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.rejected_on , hkBean.getRejectedOn().isEmpty() ? getNavigator().getContext().getString(R.string.na) :CalenderUtils.formatDate(hkBean.getRejectedOn(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIMESTAMP_FORMAT))));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_reason,hkBean.getRejectedReason().isEmpty() ? getNavigator().getContext().getString(R.string.na) :  hkBean.getRejectedReason())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_reason,hkBean.getRejectReason().isEmpty() ? getNavigator().getContext().getString(R.string.na) :  hkBean.getRejectReason())));
         getNavigator().hideLoading();
         return visitorProfileBeanList;
     }
