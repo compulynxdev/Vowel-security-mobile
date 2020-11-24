@@ -6,6 +6,7 @@ public class GuestConfigurationResponse {
      * guestField : {"contactNo":true,"email":true,"gender":true,"address":true}
      */
 
+    public boolean isDataUpdated = false;
     private GuestFieldsBean guestField;
 
     public GuestFieldsBean getGuestField() {

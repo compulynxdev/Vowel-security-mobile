@@ -68,6 +68,9 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             if (interaction != null)
                 interaction.onReceiveNotificationCount(count);
         });
+
+        //update guest configuration in data manager
+        getViewModel().doGetGuestConfiguration(null);
     }
 
     private void setupAdapter() {

@@ -2,6 +2,7 @@ package com.evisitor.data;
 
 import com.evisitor.data.local.prefs.PreferenceHelper;
 import com.evisitor.data.model.CountryResponse;
+import com.evisitor.data.model.GuestConfigurationResponse;
 import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.HouseKeepingResponse;
 import com.evisitor.data.model.ServiceProvider;
@@ -35,4 +36,8 @@ public interface DataManager extends ApiHelper, PreferenceHelper {
     List<CountryResponse> getCountryResponseList();
 
     void setCountryResponse(List<CountryResponse> countryResponseList);
+
+    GuestConfigurationResponse getGuestConfiguration();
+
+    void setGuestConfiguration(GuestConfigurationResponse configurationResponse);
 }

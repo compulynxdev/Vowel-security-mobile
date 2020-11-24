@@ -23,6 +23,7 @@ import com.evisitor.data.model.IdentityBean;
 import com.evisitor.data.model.ProfileBean;
 import com.evisitor.databinding.ActivityAddVisitorBinding;
 import com.evisitor.ui.base.BaseActivity;
+import com.evisitor.ui.base.BaseViewModel;
 import com.evisitor.ui.dialog.AlertDialog;
 import com.evisitor.ui.dialog.ImagePickBottomSheetDialog;
 import com.evisitor.ui.dialog.ImagePickCallback;
@@ -36,7 +37,7 @@ import com.sharma.mrzreader.MrzRecord;
 
 import java.util.List;
 
-public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, AddVisitorViewModel> implements AddVisitorNavigator, View.OnClickListener {
+public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, AddVisitorViewModel> implements AddVisitorNavigator, View.OnClickListener, BaseViewModel.GuestConfigurationCallback {
 
     private String countryCode = "254";
     private String houseId = "";  //also called flat id
@@ -46,7 +47,6 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
     private List<HostDetailBean> hostDetailList;
     private String idType = "";
     private Boolean isGuest = null;
-    private GuestConfigurationResponse configurationResponse;
 
     public static Intent getStartIntent(Context context){
         return new Intent(context, AddVisitorActivity.class);
@@ -75,27 +75,18 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
 
         setUp();
         setIntentData(getIntent());
-        guestConfigurationObserver();
         setUpHouseNoSearch();
         randomCheckInObserver();
         setUpProfileSearch();
         setUpCompanySearch();
     }
 
-    private void guestConfigurationObserver() {
-        getViewModel().doGetGuestConfigurationObserver().observe(this, guestConfiguration -> {
-            configurationResponse = guestConfiguration;
-            updateFieldConfigurationUI();
-        });
-    }
-
     private void updateFieldConfigurationUI() {
-        if (configurationResponse == null) configurationResponse = new GuestConfigurationResponse();
-
+        GuestConfigurationResponse guestConfiguration = getViewModel().getDataManager().getGuestConfiguration();
         if (isGuest == null || isGuest) {
-            getViewDataBinding().llNumber.setVisibility(configurationResponse.getGuestField().isContactNo() ? View.VISIBLE : View.GONE);
-            getViewDataBinding().etAddress.setVisibility(configurationResponse.getGuestField().isAddress() ? View.VISIBLE : View.GONE);
-            getViewDataBinding().tvGender.setVisibility(configurationResponse.getGuestField().isGender() ? View.VISIBLE : View.GONE);
+            getViewDataBinding().llNumber.setVisibility(guestConfiguration.getGuestField().isContactNo() ? View.VISIBLE : View.GONE);
+            getViewDataBinding().etAddress.setVisibility(guestConfiguration.getGuestField().isAddress() ? View.VISIBLE : View.GONE);
+            getViewDataBinding().tvGender.setVisibility(guestConfiguration.getGuestField().isGender() ? View.VISIBLE : View.GONE);
         } else {
             getViewDataBinding().llNumber.setVisibility(View.VISIBLE);
             getViewDataBinding().etAddress.setVisibility(View.VISIBLE);
@@ -115,7 +106,9 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                     getViewDataBinding().tvVisitorType.setVisibility(View.GONE);
                     getViewDataBinding().tvAssignedTo.setVisibility(View.GONE);
                     updateVisitorUI(getViewModel().getVisitorTypeList().get(0).toString());
-                    getViewModel().doGetGuestConfiguration();
+                    if (!getViewModel().getDataManager().getGuestConfiguration().isDataUpdated) {
+                        getViewModel().doGetGuestConfiguration(this);
+                    }
                     break;
 
                 case AppConstants.CONTROLLER_SP:
@@ -126,7 +119,9 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                     break;
 
                 default:
-                    getViewModel().doGetGuestConfiguration();
+                    if (!getViewModel().getDataManager().getGuestConfiguration().isDataUpdated) {
+                        getViewModel().doGetGuestConfiguration(this);
+                    }
                     break;
             }
         }
@@ -445,9 +440,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                 visitorData.houseId = houseId;
                 visitorData.residentId = residentId;
                 if (isGuest) {
-                    if (configurationResponse == null)
-                        configurationResponse = new GuestConfigurationResponse();
-                    if (getViewModel().doVerifyGuestInputs(visitorData, configurationResponse)) {
+                    if (getViewModel().doVerifyGuestInputs(visitorData, getViewModel().getDataManager().getGuestConfiguration())) {
                         getViewModel().doCheckGuestStatus(getViewDataBinding().etIdentity.getText().toString().trim(), idType);
                     }
                 } else {
@@ -564,7 +557,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
         addVisitorData.contact = getViewDataBinding().etContact.getText().toString();
         addVisitorData.dialingCode = countryCode;
         addVisitorData.address = getViewDataBinding().etAddress.getText().toString();
-        addVisitorData.gender = (configurationResponse == null || configurationResponse.getGuestField().isGender()) ? getViewDataBinding().tvGender.getText().toString() : "";
+        addVisitorData.gender = (getViewModel().getDataManager().getGuestConfiguration().getGuestField().isGender()) ? getViewDataBinding().tvGender.getText().toString() : "";
         addVisitorData.houseId = houseId;
         addVisitorData.residentId = residentId;
 
@@ -609,5 +602,10 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntentData(intent);
+    }
+
+    @Override
+    public void onSuccess(GuestConfigurationResponse configurationResponse) {
+        updateFieldConfigurationUI();
     }
 }
