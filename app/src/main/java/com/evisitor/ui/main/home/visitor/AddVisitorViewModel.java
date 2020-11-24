@@ -34,7 +34,6 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
 
     private MutableLiveData<List<HouseDetailBean>> houseDetailMutableList = new MutableLiveData<>();
     private MutableLiveData<List<HostDetailBean>> hostDetailMutableList = new MutableLiveData<>();
-    private MutableLiveData<GuestConfigurationResponse> guestConfigurationMutable = new MutableLiveData<>();
     private MutableLiveData<Boolean> guestStatusMutableData = new MutableLiveData<>();
     private List<String> genderList = new ArrayList<>();
     private List<IdentityBean> identityTypeList = new ArrayList<>();
@@ -356,41 +355,6 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                             if (jsonObject.has("result"))
                                 guestStatusMutableData.setValue(jsonObject.getBoolean("result"));
                             else getNavigator().showAlert(R.string.alert, R.string.alert_error);
-                        } catch (Exception e) {
-                            getNavigator().showAlert(R.string.alert, R.string.alert_error);
-                        }
-                    } else {
-                        getNavigator().handleApiError(response.errorBody());
-                    }
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                    getNavigator().hideLoading();
-                    getNavigator().handleApiFailure(t);
-                }
-            });
-        }
-    }
-
-    /*Guest Configuration Data*/
-    MutableLiveData<GuestConfigurationResponse> doGetGuestConfigurationObserver() {
-        return guestConfigurationMutable;
-    }
-
-    void doGetGuestConfiguration() {
-        if (getNavigator().isNetworkConnected(true)) {
-            Map<String, String> map = new HashMap<>();
-            map.put("accountId", getDataManager().getAccountId());
-            getDataManager().doGetGuestConfiguration(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                    getNavigator().hideLoading();
-                    if (response.code() == 200) {
-                        try {
-                            assert response.body() != null;
-                            GuestConfigurationResponse configurationResponse = getDataManager().getGson().fromJson(response.body().string(), GuestConfigurationResponse.class);
-                            guestConfigurationMutable.setValue(configurationResponse);
                         } catch (Exception e) {
                             getNavigator().showAlert(R.string.alert, R.string.alert_error);
                         }

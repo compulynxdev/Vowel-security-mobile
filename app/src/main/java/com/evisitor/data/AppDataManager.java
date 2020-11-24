@@ -6,6 +6,7 @@ import android.content.Context;
 import com.evisitor.BuildConfig;
 import com.evisitor.data.local.prefs.AppPreferenceHelper;
 import com.evisitor.data.model.CountryResponse;
+import com.evisitor.data.model.GuestConfigurationResponse;
 import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.HouseKeepingResponse;
 import com.evisitor.data.model.ServiceProvider;
@@ -35,6 +36,7 @@ public class AppDataManager implements DataManager {
     private ServiceProvider spDetail;
     private HouseKeepingResponse.ContentBean houseKeeping;
     private List<CountryResponse> countryResponseList;
+    private GuestConfigurationResponse configurationResponse;
 
     private AppDataManager(Context context) {
         apiHelper = AppApiHelper.getAppApiInstance();
@@ -103,6 +105,16 @@ public class AppDataManager implements DataManager {
     @Override
     public void setCountryResponse(List<CountryResponse> countryResponseList) {
         this.countryResponseList = countryResponseList;
+    }
+
+    @Override
+    public GuestConfigurationResponse getGuestConfiguration() {
+        return configurationResponse == null ? new GuestConfigurationResponse() : configurationResponse;
+    }
+
+    @Override
+    public void setGuestConfiguration(GuestConfigurationResponse configurationResponse) {
+        this.configurationResponse = configurationResponse;
     }
 
     @Override

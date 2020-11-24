@@ -79,9 +79,15 @@ public class TrespasserGuestViewModel extends BaseViewModel<TrespasserGuestNavig
         getNavigator().showLoading();
         List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, visitorResponse.getFullName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : visitorResponse.getFullName())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity,visitorResponse.getDocumentId().isEmpty() ? getNavigator().getContext().getString(R.string.na) :  visitorResponse.getDocumentId())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_gender,visitorResponse.getGender().isEmpty() ? getNavigator().getContext().getString(R.string.na) :  visitorResponse.getGender())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile,visitorResponse.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(visitorResponse.getDialingCode()).concat(" ").concat(visitorResponse.getContactNo()))));
+
+        if (getDataManager().isIdentifyFeature())
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity,visitorResponse.getDocumentId().isEmpty() ? getNavigator().getContext().getString(R.string.na) :  visitorResponse.getDocumentId())));
+
+        if (getDataManager().getGuestConfiguration().getGuestField().isGender())
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_gender,visitorResponse.getGender().isEmpty() ? getNavigator().getContext().getString(R.string.na) :  visitorResponse.getGender())));
+
+        if (getDataManager().getGuestConfiguration().getGuestField().isContactNo())
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile,visitorResponse.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(visitorResponse.getDialingCode()).concat(" ").concat(visitorResponse.getContactNo()))));
         Date hostCheckoutTime = CalenderUtils.getDateFormat(visitorResponse.getHostCheckOutTime(), CalenderUtils.SERVER_DATE_FORMAT);
         if (hostCheckoutTime != null) {
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_elapsed, DateUtils.getRelativeTimeSpanString(hostCheckoutTime.getTime()))));
