@@ -359,4 +359,14 @@ public class AppDataManager implements DataManager {
     public Call<ResponseBody> doGetRejectedVisitors(String authToken, Map<String, String> partMap) {
         return apiHelper.doGetRejectedVisitors(authToken, partMap);
     }
+
+    @Override
+    public Call<ResponseBody> doGetProfileSuggestions(String authToken, Map<String, String> partMap) {
+        return apiHelper.doGetProfileSuggestions(authToken, partMap);
+    }
+
+    @Override
+    public Call<ResponseBody> doGetCompanySuggestions(String authToken, Map<String, String> partMap) {
+        return apiHelper.doGetCompanySuggestions(authToken, partMap);
+    }
 }

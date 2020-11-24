@@ -422,23 +422,23 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_host" />
 
-                <EditText
-                    android:id="@+id/et_work_profile"
+                <AutoCompleteTextView
+                    android:id="@+id/actv_work_profile"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
+                    android:gravity="center_vertical"
+                    android:imeOptions="actionDone"
+                    android:paddingStart="16dp"
                     android:autofillHints="name"
                     android:background="@drawable/bg_search"
                     android:fontFamily="@font/futura_round_medium"
-                    android:gravity="center_vertical"
                     android:hint="@string/work_profile"
-                    android:imeOptions="actionNext"
-                    android:inputType="textPersonName"
-                    android:paddingStart="16dp"
                     android:paddingEnd="8dp"
+                    android:inputType="textPersonName"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black40p"
                     android:textSize="16sp"
@@ -449,33 +449,32 @@
                     tools:ignore="LabelFor"
                     tools:targetApi="o" />
 
-                <EditText
-                    android:id="@+id/et_company_name"
+                <AutoCompleteTextView
+                    android:id="@+id/actv_company_name"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
+                    android:gravity="center_vertical"
+                    android:imeOptions="actionDone"
+                    android:paddingStart="16dp"
                     android:autofillHints="name"
                     android:background="@drawable/bg_search"
                     android:fontFamily="@font/futura_round_medium"
-                    android:gravity="center_vertical"
                     android:hint="@string/enter_company_name"
-                    android:imeOptions="actionNext"
-                    android:inputType="textPersonName"
-                    android:paddingStart="16dp"
                     android:paddingEnd="8dp"
+                    android:inputType="textPersonName"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black40p"
                     android:textSize="16sp"
                     android:theme="@style/EditTextTheme"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/et_work_profile"
+                    app:layout_constraintTop_toBottomOf="@id/actv_work_profile"
                     tools:ignore="LabelFor"
                     tools:targetApi="o" />
-
                 <EditText
                     android:id="@+id/et_company_address"
                     android:layout_width="match_parent"
@@ -499,7 +498,7 @@
                     android:theme="@style/EditTextTheme"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/et_company_name"
+                    app:layout_constraintTop_toBottomOf="@id/actv_company_name"
                     tools:ignore="LabelFor"
                     tools:targetApi="o" />
 
@@ -528,14 +527,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
-                    app:constraint_referenced_ids="tv_assigned_to,tv_employment,et_work_profile" />
+                    app:constraint_referenced_ids="tv_assigned_to,tv_employment,actv_work_profile" />
 
                 <androidx.constraintlayout.widget.Group
                     android:id="@+id/group_employment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
-                    app:constraint_referenced_ids="et_company_name,et_company_address" />
+                    app:constraint_referenced_ids="actv_company_name,et_company_address" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

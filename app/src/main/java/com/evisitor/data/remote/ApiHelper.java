@@ -92,4 +92,10 @@ public interface ApiHelper {
 
     @GET(WebServices.GET_REJECT_VISITORS)
     Call<ResponseBody> doGetRejectedVisitors(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+
+    @GET(WebServices.GET_PROFILES_SUGGESTIONS)
+    Call<ResponseBody> doGetProfileSuggestions(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+
+    @GET(WebServices.GET_COMPANY_SUGGESTIONS)
+    Call<ResponseBody> doGetCompanySuggestions(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
 }

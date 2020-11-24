@@ -6,10 +6,12 @@ import androidx.lifecycle.MutableLiveData;
 import com.evisitor.R;
 import com.evisitor.data.DataManager;
 import com.evisitor.data.model.AddVisitorData;
+import com.evisitor.data.model.CompanyBean;
 import com.evisitor.data.model.GuestConfigurationResponse;
 import com.evisitor.data.model.HostDetailBean;
 import com.evisitor.data.model.HouseDetailBean;
 import com.evisitor.data.model.IdentityBean;
+import com.evisitor.data.model.ProfileBean;
 import com.evisitor.ui.base.BaseViewModel;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppLogger;
@@ -41,6 +43,8 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
     private List<String> visitorTypeList = new ArrayList<>();
     private List<String> assignedToList = new ArrayList<>();
     private List<String> employmentList = new ArrayList<>();
+    private MutableLiveData<List<ProfileBean>> profileBeanList = new MutableLiveData<>();
+    private MutableLiveData<List<CompanyBean>> companyBeanList = new MutableLiveData<>();
 
     public AddVisitorViewModel(DataManager dataManager) {
         super(dataManager);
@@ -449,5 +453,75 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
             employmentList.add("Other");
         }
         return employmentList;
+    }
+
+    MutableLiveData<List<ProfileBean>> getProfileSuggestions() {
+        return profileBeanList;
+    }
+
+    void doGetProfileSuggestions(String search) {
+        if (getNavigator().isNetworkConnected(true)) {
+            Map<String, String> map = new HashMap<>();
+            map.put("search", search);
+            getDataManager().doGetProfileSuggestions(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                    if (response.code() == 200) {
+                        try {
+                            assert response.body() != null;
+                            Type listType = new TypeToken<List<ProfileBean>>() {
+                            }.getType();
+                            List<ProfileBean> profileBeans = getDataManager().getGson().fromJson(response.body().string(), listType);
+                            profileBeanList.setValue(profileBeans);
+                        } catch (Exception e) {
+                            getNavigator().showAlert(R.string.alert, R.string.alert_error);
+                        }
+                    } else {
+                        getNavigator().handleApiError(response.errorBody());
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                    getNavigator().hideLoading();
+                    getNavigator().handleApiFailure(t);
+                }
+            });
+        }
+    }
+
+    MutableLiveData<List<CompanyBean>> getCompanySuggestions() {
+        return companyBeanList;
+    }
+
+    void doGetCompanySuggestions(String search) {
+        if (getNavigator().isNetworkConnected(true)) {
+            Map<String, String> map = new HashMap<>();
+            map.put("search", search);
+            getDataManager().doGetCompanySuggestions(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                    if (response.code() == 200) {
+                        try {
+                            assert response.body() != null;
+                            Type listType = new TypeToken<List<CompanyBean>>() {
+                            }.getType();
+                            List<CompanyBean> companyBeans = getDataManager().getGson().fromJson(response.body().string(), listType);
+                            companyBeanList.setValue(companyBeans);
+                        } catch (Exception e) {
+                            getNavigator().showAlert(R.string.alert, R.string.alert_error);
+                        }
+                    } else {
+                        getNavigator().handleApiError(response.errorBody());
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                    getNavigator().hideLoading();
+                    getNavigator().handleApiFailure(t);
+                }
+            });
+        }
     }
 }

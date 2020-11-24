@@ -44,6 +44,10 @@ class WebServices {
 
     static final String GET_REJECT_VISITORS = "guest/get_all_rejected_visitor"; //?accountId=1&residentId=1&type=guest
 
+    static final String GET_PROFILES_SUGGESTIONS = "usermaster/get_profile_list";//http://localhost:8085/api/usermaster/get_profile_list?search=
+
+    static final String GET_COMPANY_SUGGESTIONS = "usermaster/get_company_list";//http://localhost:8085/api/usermaster/get_company_list?search=
+
     private WebServices() {
     }
 }

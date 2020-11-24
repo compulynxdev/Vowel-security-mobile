@@ -9,14 +9,18 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+
 import androidx.lifecycle.ViewModelProvider;
+
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.AddVisitorData;
+import com.evisitor.data.model.CompanyBean;
 import com.evisitor.data.model.GuestConfigurationResponse;
 import com.evisitor.data.model.HostDetailBean;
 import com.evisitor.data.model.HouseDetailBean;
 import com.evisitor.data.model.IdentityBean;
+import com.evisitor.data.model.ProfileBean;
 import com.evisitor.databinding.ActivityAddVisitorBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.dialog.AlertDialog;
@@ -74,6 +78,8 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
         guestConfigurationObserver();
         setUpHouseNoSearch();
         randomCheckInObserver();
+        setUpProfileSearch();
+        setUpCompanySearch();
     }
 
     private void guestConfigurationObserver() {
@@ -207,6 +213,64 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
             this.hostDetailList = hostDetailList;
             getViewDataBinding().tvHost.setVisibility(View.VISIBLE);
             //setUpOwner(false);
+        });
+    }
+
+    private void setUpProfileSearch() {
+        getViewDataBinding().actvWorkProfile.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                getViewModel().doGetProfileSuggestions(s.toString());
+            }
+        });
+
+        getViewModel().getProfileSuggestions().observe(AddVisitorActivity.this, profileBeanList -> {
+            ArrayAdapter<ProfileBean> arrayAdapter = new ArrayAdapter<>(AddVisitorActivity.this, android.R.layout.simple_list_item_1, profileBeanList);
+            getViewDataBinding().actvWorkProfile.setThreshold(1);
+            getViewDataBinding().actvWorkProfile.setAdapter(arrayAdapter);
+            getViewDataBinding().actvWorkProfile.setOnItemClickListener((adapterView, view, i, l) -> {
+                ProfileBean profileBean = (ProfileBean) adapterView.getItemAtPosition(i);
+                getViewDataBinding().actvWorkProfile.setText(profileBean.getProfileName());
+            });
+        });
+    }
+
+    private void setUpCompanySearch() {
+        getViewDataBinding().actvCompanyName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                getViewModel().doGetCompanySuggestions(s.toString());
+            }
+        });
+
+        getViewModel().getCompanySuggestions().observe(AddVisitorActivity.this, companyBeanList -> {
+            ArrayAdapter<CompanyBean> arrayAdapter = new ArrayAdapter<>(AddVisitorActivity.this, android.R.layout.simple_list_item_1, companyBeanList);
+            getViewDataBinding().actvCompanyName.setThreshold(1);
+            getViewDataBinding().actvCompanyName.setAdapter(arrayAdapter);
+            getViewDataBinding().actvCompanyName.setOnItemClickListener((adapterView, view, i, l) -> {
+                CompanyBean companyBean = (CompanyBean) adapterView.getItemAtPosition(i);
+                getViewDataBinding().actvCompanyName.setText(companyBean.getCompanyName());
+            });
         });
     }
 
@@ -392,8 +456,8 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                     visitorData.visitorType = getViewDataBinding().tvVisitorType.getText().toString();
                     visitorData.employment = getViewDataBinding().tvEmployment.getText().toString();
                     visitorData.isCompany = !visitorData.employment.equalsIgnoreCase("Self");
-                    visitorData.profile = getViewDataBinding().etWorkProfile.getText().toString().trim();
-                    visitorData.companyName = getViewDataBinding().etCompanyName.getText().toString().trim();
+                    visitorData.profile = getViewDataBinding().actvWorkProfile.getText().toString().trim();
+                    visitorData.companyName = getViewDataBinding().actvCompanyName.getText().toString().trim();
                     visitorData.companyAddress = getViewDataBinding().etCompanyAddress.getText().toString().trim();
 
 

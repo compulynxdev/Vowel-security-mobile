@@ -174,4 +174,14 @@ public class AppApiHelper implements ApiHelper {
     public Call<ResponseBody> doGetRejectedVisitors(String authToken, Map<String, String> partMap) {
         return getApiInterface().doGetRejectedVisitors(authToken, partMap);
     }
+
+    @Override
+    public Call<ResponseBody> doGetProfileSuggestions(String authToken, Map<String, String> partMap) {
+        return getApiInterface().doGetProfileSuggestions(authToken, partMap);
+    }
+
+    @Override
+    public Call<ResponseBody> doGetCompanySuggestions(String authToken, Map<String, String> partMap) {
+        return getApiInterface().doGetCompanySuggestions(authToken, partMap);
+    }
 }
