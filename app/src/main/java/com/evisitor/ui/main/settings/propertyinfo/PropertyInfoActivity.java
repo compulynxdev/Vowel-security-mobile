@@ -43,7 +43,6 @@ public class PropertyInfoActivity extends BaseActivity<ActivityPropertyInfoBindi
 
         getViewDataBinding().toolbar.imgBack.setVisibility(View.VISIBLE);
         getViewDataBinding().toolbar.imgBack.setOnClickListener(v -> onBackPressed());
-
         getViewModel().getPropertyInfo().observe(this, propertyInfoResponse -> {
             getViewDataBinding().tvProperty.setText(propertyInfoResponse.getFullName());
             getViewDataBinding().tvPropertyType.setText(propertyInfoResponse.getPropertyTypeName());
@@ -62,6 +61,8 @@ public class PropertyInfoActivity extends BaseActivity<ActivityPropertyInfoBindi
                         .centerCrop()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(getViewDataBinding().imageView);
+
+                getViewDataBinding().imageView.setOnClickListener(v -> showFullImage(propertyInfoResponse.getImage()));
             }
         });
     }
