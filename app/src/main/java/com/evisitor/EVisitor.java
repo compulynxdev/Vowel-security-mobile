@@ -2,6 +2,8 @@ package com.evisitor;
 
 import android.app.Application;
 
+import androidx.multidex.MultiDex;
+
 import com.evisitor.data.AppDataManager;
 
 /**
@@ -28,6 +30,7 @@ public class EVisitor extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        MultiDex.install(this);
         appInstance = AppDataManager.getInstance(this);
     }
 

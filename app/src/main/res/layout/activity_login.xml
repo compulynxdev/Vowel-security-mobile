@@ -30,7 +30,7 @@
                 android:layout_height="30dp"
                 android:layout_gravity="end"
                 android:layout_margin="15dp"
-                android:src="@drawable/ic_info"
+                android:src="@drawable/ic_information"
                 tools:ignore="ContentDescription" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
