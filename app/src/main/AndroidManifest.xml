@@ -64,6 +64,7 @@
         <activity
             android:name=".ui.main.home.visitor.AddVisitorActivity"
             android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="stateHidden|adjustResize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/DashboardTheme" />
