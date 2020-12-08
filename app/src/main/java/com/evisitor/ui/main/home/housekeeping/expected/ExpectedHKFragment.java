@@ -67,6 +67,7 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getViewModel().setCheckInOutNavigator(this);
+        getViewDataBinding().tvNoData.setText(getString(R.string.no_expedted_hk));
         setUpAdapter();
     }
 
@@ -233,6 +234,14 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
 
         this.list.addAll(houseKeepingList);
         adapter.notifyDataSetChanged();
+
+        if(this.list.size()==0){
+            getViewDataBinding().recyclerView.setVisibility(View.GONE);
+            getViewDataBinding().tvNoData.setVisibility(View.VISIBLE);
+        }else{
+            getViewDataBinding().tvNoData.setVisibility(View.GONE);
+            getViewDataBinding().recyclerView.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

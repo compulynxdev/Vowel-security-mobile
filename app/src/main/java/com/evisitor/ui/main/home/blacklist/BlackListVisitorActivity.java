@@ -128,6 +128,14 @@ public class BlackListVisitorActivity extends BaseActivity<ActivityBlackListVisi
 
             this.list.addAll(beans);
             adapter.notifyDataSetChanged();
+
+        if(this.list.size()==0){
+            getViewDataBinding().recyclerView.setVisibility(View.GONE);
+            getViewDataBinding().tvNoData.setVisibility(View.VISIBLE);
+        }else{
+            getViewDataBinding().tvNoData.setVisibility(View.GONE);
+            getViewDataBinding().recyclerView.setVisibility(View.VISIBLE);
+        }
     }
 
     private void doSearch(String search) {

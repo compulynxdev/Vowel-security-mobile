@@ -99,7 +99,15 @@ import java.util.List;
 
                 this.list.addAll(beans);
                 adapter.notifyDataSetChanged();
+
+                if(this.list.size()==0){
+                        getViewDataBinding().recyclerView.setVisibility(View.GONE);
+                        getViewDataBinding().tvNoData.setVisibility(View.VISIBLE);
+                }else{
+                        getViewDataBinding().tvNoData.setVisibility(View.GONE);
+                        getViewDataBinding().recyclerView.setVisibility(View.VISIBLE);
                 }
+        }
 
         @Override
         public void hideSwipeToRefresh() {

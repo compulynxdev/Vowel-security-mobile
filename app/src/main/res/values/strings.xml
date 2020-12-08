@@ -249,4 +249,17 @@
     <string name="are_you_sure">Are you sure you want to REJECT? \n If yes then enter the valid reason. </string>
     <string name="rejected_on">Rejected On : %s</string>
 
+    <string name="no_expected_guest">You don\'t have any expected guests visitors today!</string>
+    <string name="no_expected_sp">You don\'t have any expected service providers today!</string>
+    <string name="no_expedted_hk">You don\'t have any expected domestic staff today!</string>
+    <string name="no_registerd_hk">You don\'t have any registered domestic staff!</string>
+    <string name="no_blacklisted">You don\'t have any black listed visitors!</string>
+    <string name="no_flagged">You don\'t have any flagged visitors!</string>
+    <string name="no_trespasser_guest">You don\'t have any trespasser guests visitors!</string>
+    <string name="no_trespasser_sp">You don\'t have any trespasser service provider visitors!</string>
+    <string name="no_rejected_sp">You don\'t have any rejected service provider visitors!</string>
+    <string name="no_rejected_guest">You don\'t have any rejected guest visitors!</string>
+    <string name="no_rejected_staff">You don\'t have any rejected domestic staff!</string>
+    <string name="revisit">Keep visiting this page to see new updates!</string>
+
 </resources>

@@ -33,6 +33,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/header" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/tv_no_data"
+            android:fontFamily="@font/futura_round"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="22sp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="@string/no_blacklisted"
+            />
+
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -47,9 +61,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:overScrollMode="never"
+                android:visibility = "gone"
                 android:paddingStart="8dp"
-                android:paddingTop="18dp"
                 android:paddingEnd="8dp"
+                android:paddingTop="18dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_black_list" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -133,6 +133,14 @@ public class NotificationsFragment extends BaseFragment<FragmentNotificationsBin
 
         notificationsList.addAll(content);
         adapter.notifyDataSetChanged();
+
+        if(notificationsList.size()==0){
+            getViewDataBinding().recyclerView.setVisibility(View.GONE);
+            getViewDataBinding().tvNoData.setVisibility(View.VISIBLE);
+        }else{
+            getViewDataBinding().tvNoData.setVisibility(View.GONE);
+            getViewDataBinding().recyclerView.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setAdapterLoading(boolean isShowLoader) {

@@ -235,6 +235,14 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
 
         this.spList.addAll(spList);
         adapter.notifyDataSetChanged();
+
+        if(spList.size()==0){
+            getViewDataBinding().recyclerView.setVisibility(View.GONE);
+            getViewDataBinding().tvNoData.setVisibility(View.VISIBLE);
+        }else{
+            getViewDataBinding().tvNoData.setVisibility(View.GONE);
+            getViewDataBinding().recyclerView.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

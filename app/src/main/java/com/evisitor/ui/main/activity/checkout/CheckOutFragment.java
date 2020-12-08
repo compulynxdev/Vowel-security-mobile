@@ -182,6 +182,14 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
         guestsList.addAll(tmpGuestsList);
         guestAdapter.notifyDataSetChanged();
 
+        if(guestsList.size()==0){
+            getViewDataBinding().recyclerView.setVisibility(View.GONE);
+            getViewDataBinding().tvNoData.setVisibility(View.VISIBLE);
+        }else{
+            getViewDataBinding().tvNoData.setVisibility(View.GONE);
+            getViewDataBinding().recyclerView.setVisibility(View.VISIBLE);
+        }
+
         if (listOf == 0) listener.totalCount(guestsList.size());
     }
 
@@ -191,6 +199,14 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
 
         houseKeepingList.addAll(tmpHouseKeepingList);
         houseKeepingAdapter.notifyDataSetChanged();
+
+        if(houseKeepingList.size()==0){
+            getViewDataBinding().recyclerView.setVisibility(View.GONE);
+            getViewDataBinding().tvNoData.setVisibility(View.VISIBLE);
+        }else{
+            getViewDataBinding().tvNoData.setVisibility(View.GONE);
+            getViewDataBinding().recyclerView.setVisibility(View.VISIBLE);
+        }
         if (listOf == 1) listener.totalCount(houseKeepingList.size());
     }
 
@@ -200,7 +216,13 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
 
         serviceProviderList.addAll(tmpSPList);
         serviceProviderAdapter.notifyDataSetChanged();
-
+        if(serviceProviderList.size()==0){
+            getViewDataBinding().recyclerView.setVisibility(View.GONE);
+            getViewDataBinding().tvNoData.setVisibility(View.VISIBLE);
+        }else{
+            getViewDataBinding().tvNoData.setVisibility(View.GONE);
+            getViewDataBinding().recyclerView.setVisibility(View.VISIBLE);
+        }
         if (listOf == 2) listener.totalCount(serviceProviderList.size());
     }
 
@@ -256,4 +278,5 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
     public interface OnFragmentInteraction{
         void totalCount(int size);
     }
+
 }

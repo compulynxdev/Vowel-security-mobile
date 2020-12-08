@@ -234,6 +234,14 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
 
         guestsList.addAll(tmpGuestsList);
         adapter.notifyDataSetChanged();
+
+        if(guestsList.size()==0){
+            getViewDataBinding().recyclerView.setVisibility(View.GONE);
+            getViewDataBinding().tvNoData.setVisibility(View.VISIBLE);
+        }else{
+            getViewDataBinding().tvNoData.setVisibility(View.GONE);
+            getViewDataBinding().recyclerView.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

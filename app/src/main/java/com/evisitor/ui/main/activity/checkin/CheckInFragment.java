@@ -229,6 +229,14 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
         guestsList.addAll(tmpGuestsList);
         guestAdapter.notifyDataSetChanged();
 
+        if(guestsList.size()==0){
+            getViewDataBinding().recyclerView.setVisibility(View.GONE);
+            getViewDataBinding().tvNoData.setVisibility(View.VISIBLE);
+        }else{
+            getViewDataBinding().tvNoData.setVisibility(View.GONE);
+            getViewDataBinding().recyclerView.setVisibility(View.VISIBLE);
+        }
+
         if (listOf == 0) listener.totalCount(guestsList.size());
     }
 
@@ -239,6 +247,14 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
         houseKeepingList.addAll(tmpHouseKeepingList);
         houseKeepingAdapter.notifyDataSetChanged();
 
+        if(houseKeepingList.size()==0){
+            getViewDataBinding().recyclerView.setVisibility(View.GONE);
+            getViewDataBinding().tvNoData.setVisibility(View.VISIBLE);
+        }else{
+            getViewDataBinding().tvNoData.setVisibility(View.GONE);
+            getViewDataBinding().recyclerView.setVisibility(View.VISIBLE);
+        }
+
         if (listOf == 1) listener.totalCount(houseKeepingList.size());
     }
 
@@ -248,6 +264,14 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
 
         serviceProviderList.addAll(tmpSPList);
         serviceProviderAdapter.notifyDataSetChanged();
+
+        if(serviceProviderList.size()==0){
+            getViewDataBinding().recyclerView.setVisibility(View.GONE);
+            getViewDataBinding().tvNoData.setVisibility(View.VISIBLE);
+        }else{
+            getViewDataBinding().tvNoData.setVisibility(View.GONE);
+            getViewDataBinding().recyclerView.setVisibility(View.VISIBLE);
+        }
 
         if (listOf == 2) listener.totalCount(serviceProviderList.size());
     }
