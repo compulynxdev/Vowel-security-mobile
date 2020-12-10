@@ -88,7 +88,7 @@ public int getItemCount() {
 
 public class ViewHolder extends BaseViewHolder {
     ImageView imgVisitor;
-    TextView name, profile, time, houseNo, host, vehicle,reject,rejectStatus;
+    TextView name, profile, time, houseNo, host, vehicle,reject;
 
     ViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -100,7 +100,6 @@ public class ViewHolder extends BaseViewHolder {
         vehicle = itemView.findViewById(R.id.tv_vehicle);
         reject = itemView.findViewById(R.id.tv_status);
         imgVisitor = itemView.findViewById(R.id.img_visitor);
-        rejectStatus = itemView.findViewById(R.id.tv_reject_status);
 
         itemView.setOnClickListener(v -> {
             if (callback != null && getAdapterPosition() != -1)
@@ -120,9 +119,6 @@ public class ViewHolder extends BaseViewHolder {
         name.setText(context.getString(R.string.data_name, bean.getName()));
         reject.setVisibility(bean.getRejectedBy().isEmpty() ? View.GONE : View.VISIBLE);
         reject.setText(reject.getContext().getString(R.string.rejected_by,bean.getRejectedBy()));
-
-        rejectStatus.setVisibility(bean.getRejectedReason().isEmpty() ? View.GONE : View.VISIBLE);
-        rejectStatus.setText(rejectStatus.getContext().getString(R.string.data_reason,bean.getRejectedReason()));
 
         profile.setText(context.getString(R.string.data_profile, bean.getProfile()));
         if(bean.getRejectedOn().isEmpty()){

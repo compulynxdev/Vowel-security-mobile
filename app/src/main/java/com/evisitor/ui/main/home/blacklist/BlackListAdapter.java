@@ -86,7 +86,7 @@ public class BlackListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public class ViewHolder extends BaseViewHolder {
         ImageView imgVisitor;
-        TextView name, docId, profile, contact, type,reason;
+        TextView name, docId, profile, contact, type;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_name);
@@ -95,7 +95,6 @@ public class BlackListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             contact = itemView.findViewById(R.id.tv_contact);
             type = itemView.findViewById(R.id.tv_type);
             imgVisitor = itemView.findViewById(R.id.img_visitor);
-            reason = itemView.findViewById(R.id.tv_reason);
 
             itemView.setOnClickListener(v -> {
                 if (callback != null && getAdapterPosition() != -1)
@@ -131,9 +130,6 @@ public class BlackListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 type.setVisibility(View.VISIBLE);
                 type.setText(type.getContext().getString(R.string.data_type,bean.getType()));
             }else type.setVisibility(View.GONE);
-
-            reason.setVisibility(bean.getReason()==null || bean.getReason().isEmpty() ? View.GONE : View.VISIBLE);
-            reason.setText(reason.getContext().getString(R.string.data_reason,bean.getReason()));
 
             if (bean.getImageUrl().isEmpty()) {
                 Glide.with(imgVisitor.getContext())
