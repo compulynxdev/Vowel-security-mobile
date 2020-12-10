@@ -20,11 +20,18 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.main.home.rejected.RejectedVisitorActivity"
+        <activity android:name=".ui.main.home.tutorial.TutorialScanActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/DashboardTheme"  />
+            android:theme="@style/DashboardTheme"
+            />
+        <activity
+            android:name=".ui.main.home.rejected.RejectedVisitorActivity"
+            android:configChanges="orientation|screenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/DashboardTheme" />
         <activity
             android:name=".ui.image.ImageViewActivity"
             android:configChanges="orientation|screenSize"
@@ -64,10 +71,10 @@
         <activity
             android:name=".ui.main.home.visitor.AddVisitorActivity"
             android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="stateHidden|adjustResize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/DashboardTheme" />
+            android:theme="@style/DashboardTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".ui.main.home.scan.ScanIDActivity"
             android:configChanges="orientation|screenSize"

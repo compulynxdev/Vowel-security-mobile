@@ -261,5 +261,8 @@
     <string name="no_rejected_guest">You don\'t have any rejected guest visitors!</string>
     <string name="no_rejected_staff">You don\'t have any rejected domestic staff!</string>
     <string name="revisit">Keep visiting this page to see new updates!</string>
+    <string name="continue_">Continue</string>
+    <string name="title_tutorial">How to SCAN ID ?</string>
+    <string name="note_data"> 1. Hold card in-front of camera and try not to move the cards. \n \n  2. Focus only the area of MRZ ID to be scanned. \n \n 3. Click continue to scan id.</string>
 
 </resources>

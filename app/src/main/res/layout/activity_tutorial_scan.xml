@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.main.home.tutorial.TutorialScanActivity">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.evisitor.ui.main.home.tutorial.TutorialScanViewModel" />
+    </data>
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:background="@color/colorDashboard"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <include layout="@layout/header"
+            android:id="@+id/header"/>
+
+        <ImageView
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/header"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:src = "@drawable/mrz"
+            app:layout_constraintBottom_toTopOf="@+id/tv_note"
+            android:id = "@+id/img_mrz"
+            android:layout_margin="10dp"
+            tools:ignore="ContentDescription"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_note"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_mrz"
+            app:layout_constraintBottom_toTopOf="@id/btn_continue"
+            android:text="@string/note_data"
+            android:fontFamily="@font/futura_round"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            style="@style/PrimaryButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id = "@+id/btn_continue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_note"
+            android:textColor="@color/white"
+            android:text="@string/continue_"
+            android:layout_margin="30dp"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
+</layout>

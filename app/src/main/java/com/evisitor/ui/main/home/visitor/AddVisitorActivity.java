@@ -46,7 +46,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
     private Bitmap bmp_profile;
     private List<HostDetailBean> hostDetailList;
     private String idType = "";
-    private Boolean isGuest = null;
+    private Boolean isGuest = false;
 
     public static Intent getStartIntent(Context context){
         return new Intent(context, AddVisitorActivity.class);
@@ -303,7 +303,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
         setOnClickListener(imgBack, getViewDataBinding().tvVisitorType, getViewDataBinding().tvAssignedTo, getViewDataBinding().tvEmployment, getViewDataBinding().tvIdentity, getViewDataBinding().tvGender, getViewDataBinding().tvOwner, getViewDataBinding().tvHost
                 , getViewDataBinding().frameImg, getViewDataBinding().btnAdd, getViewDataBinding().rlCode);
         getViewDataBinding().tvCode.setText("+".concat(countryCode));
-        if (getViewModel().getDataManager().isIdentifyFeature())
+        if (getViewModel().getDataManager().isIdentifyFeature() || !isGuest)
             getViewDataBinding().etIdentity.setVisibility(View.VISIBLE);
         getViewDataBinding().etIdentity.addTextChangedListener(new TextWatcher() {
             @Override
