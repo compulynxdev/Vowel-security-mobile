@@ -75,11 +75,7 @@ public class InputDialog extends BaseDialog<DialogInputBinding, InputDialogViewM
 
             case R.id.btn_positive:
                 if(getViewDataBinding().etInput.getText().toString().isEmpty()){
-                    AlertDialog.newInstance()
-                            .setTitle(getString(R.string.alert))
-                            .setMsg(getString(R.string.reason_cannot_be_empty))
-                            .setPositiveBtnLabel(getString(R.string.ok))
-                            .setOnPositiveClickListener(DialogFragment::dismiss).show(getFragmentManager());
+                    getBaseActivity().showToast(getString(R.string.reason_cannot_be_empty));
                 }else{
                     if (positiveListener != null) {
                         positiveListener.onPositiveClick(this,getViewDataBinding().etInput.getText().toString());
