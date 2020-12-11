@@ -303,8 +303,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
         setOnClickListener(imgBack, getViewDataBinding().tvVisitorType, getViewDataBinding().tvAssignedTo, getViewDataBinding().tvEmployment, getViewDataBinding().tvIdentity, getViewDataBinding().tvGender, getViewDataBinding().tvOwner, getViewDataBinding().tvHost
                 , getViewDataBinding().frameImg, getViewDataBinding().btnAdd, getViewDataBinding().rlCode);
         getViewDataBinding().tvCode.setText("+".concat(countryCode));
-        if (getViewModel().getDataManager().isIdentifyFeature() || !isGuest)
-            getViewDataBinding().etIdentity.setVisibility(View.VISIBLE);
+        setIdentity();
         getViewDataBinding().etIdentity.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -510,7 +509,14 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
             getViewDataBinding().groupResident.setVisibility(View.GONE);
             getViewDataBinding().groupSp.setVisibility(View.VISIBLE);
         }
+        setIdentity();
         updateFieldConfigurationUI();
+    }
+
+    void setIdentity(){
+        if (getViewModel().getDataManager().isIdentifyFeature() || !isGuest)
+            getViewDataBinding().etIdentity.setVisibility(View.VISIBLE);
+        else getViewDataBinding().etIdentity.setVisibility(View.GONE);
     }
 
     private void randomCheckInObserver() {

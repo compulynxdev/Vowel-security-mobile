@@ -29,7 +29,7 @@
             app:layout_constraintTop_toBottomOf="@id/header"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:src = "@drawable/mrz"
+            android:src = "@drawable/img_visitor"
             app:layout_constraintBottom_toTopOf="@+id/tv_note"
             android:id = "@+id/img_mrz"
             android:layout_margin="10dp"
