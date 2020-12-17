@@ -6,7 +6,6 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
@@ -40,7 +39,7 @@ public class UserProfileFragment extends BaseFragment<FragmentUserProfileBinding
 
     @Override
     public UserProfileViewModel getViewModel() {
-        return new ViewModelProvider(this,ViewModelProviderFactory.getInstance()).get(UserProfileViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(UserProfileViewModel.class);
     }
 
     @Override

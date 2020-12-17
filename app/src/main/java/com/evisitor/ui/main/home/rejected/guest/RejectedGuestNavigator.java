@@ -5,7 +5,7 @@ import com.evisitor.ui.base.BaseNavigator;
 
 import java.util.List;
 
-public interface RejectedGuestNavigator extends BaseNavigator {
+interface RejectedGuestNavigator extends BaseNavigator {
 
     void onSuccess(List<Guests> beans);
 

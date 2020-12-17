@@ -259,19 +259,20 @@ public class TrespasserResponse {
 
     public static class ContentBean {
         /**
-         "createdDate" : "2020-09-07T04:49:18Z",
-         "fullName" : "account",
-         "flatNo" : "200",
-         "checkOutTime" : "RANDOM_VISITOR",
-         "gender" : "Male",
-         "createdBy" : "GUEST",
-         "checkInTime" : "2020-09-04T04:43:27Z",
-         "createdBy" : "account",
-         "documentId" : "121212",
-         "id" : 1,
-         "enteredVehicleNo" : 1,
-         "hostCheckOutTime" : 1,
-         "contactNo" : "978784664"*/
+         * "createdDate" : "2020-09-07T04:49:18Z",
+         * "fullName" : "account",
+         * "flatNo" : "200",
+         * "checkOutTime" : "RANDOM_VISITOR",
+         * "gender" : "Male",
+         * "createdBy" : "GUEST",
+         * "checkInTime" : "2020-09-04T04:43:27Z",
+         * "createdBy" : "account",
+         * "documentId" : "121212",
+         * "id" : 1,
+         * "enteredVehicleNo" : 1,
+         * "hostCheckOutTime" : 1,
+         * "contactNo" : "978784664"
+         */
 
 
         private String fullName;
@@ -317,7 +318,7 @@ public class TrespasserResponse {
         }
 
         public String getCreatedBy() {
-            return createdBy== null ? "" : createdBy;
+            return createdBy == null ? "" : createdBy;
         }
 
         public void setCreatedBy(String createdBy) {
@@ -333,7 +334,7 @@ public class TrespasserResponse {
         }
 
         public String getCheckInTime() {
-            return checkInTime== null ? "" : checkInTime;
+            return checkInTime == null ? "" : checkInTime;
         }
 
         public void setCheckInTime(String checkInTime) {
@@ -357,7 +358,7 @@ public class TrespasserResponse {
         }
 
         public String getGender() {
-            return gender== null ? "" : gender;
+            return gender == null ? "" : gender;
         }
 
         public void setGender(String gender) {

@@ -180,7 +180,7 @@ public class AppPreferenceHelper implements PreferenceHelper {
 
     @Override
     public void setIdentifyFeature(boolean notificationStatus) {
-        mPrefs.edit().putBoolean(IDENTIFY_FEATURE,notificationStatus).apply();
+        mPrefs.edit().putBoolean(IDENTIFY_FEATURE, notificationStatus).apply();
 
     }
 
@@ -191,7 +191,7 @@ public class AppPreferenceHelper implements PreferenceHelper {
 
     @Override
     public void setLevelName(String levelName) {
-        mPrefs.edit().putString(LEVEL_NAME,levelName).apply();
+        mPrefs.edit().putString(LEVEL_NAME, levelName).apply();
     }
 
 }

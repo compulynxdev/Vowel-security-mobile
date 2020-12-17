@@ -4,6 +4,6 @@
     android:thickness="0dp">
     <solid android:color="@color/white" />
 
-    <corners android:radius="24dp"/>
+    <corners android:radius="24dp" />
 
 </shape>

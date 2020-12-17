@@ -5,7 +5,9 @@
     tools:context=".ui.main.home.total.TotalVisitorsActivity">
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.evisitor.ui.main.home.total.TotalVisitorsViewModel" />
@@ -13,70 +15,68 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="@color/colorDashboard"
         android:layout_height="match_parent"
-        android:animateLayoutChanges="true">
+        android:animateLayoutChanges="true"
+        android:background="@color/colorDashboard">
 
-        <include layout="@layout/header"
-            android:id="@+id/header"/>
+        <include
+            android:id="@+id/header"
+            layout="@layout/header" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            app:layout_constraintTop_toBottomOf="@+id/header"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:background="@drawable/bg_card_corner"
             android:id="@+id/relative"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
             android:layout_marginStart="6dp"
+            android:layout_marginTop="18dp"
             android:layout_marginEnd="6dp"
             android:layout_marginBottom="18dp"
+            android:background="@drawable/bg_card_corner"
             android:orientation="horizontal"
             android:weightSum="3"
-            android:layout_marginTop="18dp"
-            android:layout_height="55dp">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/header">
 
             <TextView
-                android:layout_width="0dp"
                 android:id="@+id/title_guest"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:paddingStart="3dp"
-                android:paddingEnd="3dp"
                 android:fontFamily="@font/futura_round_medium"
                 android:gravity="center"
-                android:textSize="18sp"
+                android:paddingStart="3dp"
+                android:paddingEnd="3dp"
                 android:text="@string/title_guests"
                 android:textColor="@color/colorPrimaryDark"
-                />
+                android:textSize="18sp" />
 
 
             <TextView
+                android:id="@+id/title_house"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:paddingStart="3dp"
-                android:paddingEnd="3dp"
-                android:id="@+id/title_house"
                 android:fontFamily="@font/futura_round_medium"
                 android:gravity="center"
-                android:textSize="18sp"
+                android:paddingStart="3dp"
+                android:paddingEnd="3dp"
                 android:text="@string/title_domestic_staff"
                 android:textColor="@color/black"
-                />
+                android:textSize="18sp" />
 
             <TextView
+                android:id="@+id/title_service"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:paddingStart="3dp"
-                android:paddingEnd="3dp"
-                android:id="@+id/title_service"
                 android:fontFamily="@font/futura_round_medium"
                 android:gravity="center"
-                android:textSize="18sp"
+                android:paddingStart="3dp"
+                android:paddingEnd="3dp"
                 android:text="@string/title_service_provider2"
                 android:textColor="@color/black"
-                />
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -93,14 +93,14 @@
             app:layout_constraintTop_toBottomOf="@+id/relative" />
 
         <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/custom_search_view"
-            android:id="@+id/viewPager"
             android:paddingBottom="12dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/custom_search_view" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

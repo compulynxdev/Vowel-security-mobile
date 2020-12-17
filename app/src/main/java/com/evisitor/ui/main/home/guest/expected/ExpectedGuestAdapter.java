@@ -22,9 +22,9 @@ import com.evisitor.util.pagination.FooterLoader;
 import java.util.List;
 
 public class ExpectedGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
-    private List<Guests> list;
     private static final int VIEWTYPE_ITEM = 1;
-    private static final int VIEWTYPE_LOADER =2 ;
+    private static final int VIEWTYPE_LOADER = 2;
+    private List<Guests> list;
     private boolean showLoader;
     private Context context;
     private ItemClickCallback listener;
@@ -32,7 +32,7 @@ public class ExpectedGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     ExpectedGuestAdapter(List<Guests> list, Context context, ItemClickCallback callback) {
         this.list = list;
         this.context = context;
-        this.listener=callback;
+        this.listener = callback;
     }
 
     @Override
@@ -63,7 +63,7 @@ public class ExpectedGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        if (position == list.size()-1) {
+        if (position == list.size() - 1) {
             return showLoader ? VIEWTYPE_LOADER : VIEWTYPE_ITEM;
         }
         return VIEWTYPE_ITEM;
@@ -94,7 +94,8 @@ public class ExpectedGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public class ViewHolder extends BaseViewHolder {
         ImageView imgVisitor;
-        TextView name,time,houseNo,host,vehicle,status;
+        TextView name, time, houseNo, host, vehicle, status;
+
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_name);
@@ -121,8 +122,8 @@ public class ExpectedGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             Guests bean = list.get(position);
             name.setText(context.getString(R.string.data_name, bean.getName()));
             status.setVisibility(bean.getStatus().equalsIgnoreCase("PENDING") ? View.GONE : View.VISIBLE);
-            status.setText(status.getContext().getString(R.string.status,bean.getStatus()));
-            if (bean.getTime()!=null && !bean.getTime().isEmpty())
+            status.setText(status.getContext().getString(R.string.status, bean.getStatus()));
+            if (bean.getTime() != null && !bean.getTime().isEmpty())
                 time.setText(context.getString(R.string.data_time, CalenderUtils.formatDate(bean.getTime(), CalenderUtils.SERVER_DATE_FORMAT,
                         CalenderUtils.TIMESTAMP_FORMAT)));
             else time.setVisibility(View.GONE);

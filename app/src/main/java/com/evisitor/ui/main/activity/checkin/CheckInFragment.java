@@ -37,7 +37,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
     private OnFragmentInteraction listener;
     private RecyclerViewScrollListener scrollListener;
     private int guestPage, hkPage, spPage;
-    private int listOf=0;
+    private int listOf = 0;
     private String search = "";
 
     public static CheckInFragment newInstance(int listOf, OnFragmentInteraction listener) {
@@ -55,7 +55,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
 
     public void setCheckInList(int listOf) {
         this.listOf = listOf;
-        switch (listOf){
+        switch (listOf) {
             //guest
             case 0:
                 getViewDataBinding().recyclerView.setAdapter(guestAdapter);
@@ -107,20 +107,20 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
         scrollListener = new RecyclerViewScrollListener() {
             @Override
             public void onLoadMore() {
-                switch (listOf){
-                    case 0 :
+                switch (listOf) {
+                    case 0:
                         setGuestAdapterLoading(true);
                         guestPage++;
                         getViewModel().getCheckInData(guestPage, search, listOf);
                         break;
 
-                    case 1 :
+                    case 1:
                         setHKAdapterLoading(true);
                         hkPage++;
                         getViewModel().getCheckInData(hkPage, search, listOf);
                         break;
 
-                    case 2 :
+                    case 2:
                         setSPAdapterLoading(true);
                         spPage++;
                         getViewModel().getCheckInData(spPage, search, listOf);
@@ -146,7 +146,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                     showCallDialog(1);
                 else {
                     if (isNetworkConnected(true))
-                    getViewModel().checkOut(1);
+                        getViewModel().checkOut(1);
                 }
             }).setImage(houseKeeping.getImageUrl()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
         });
@@ -194,7 +194,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
                     if (isNetworkConnected(true))
-                    getViewModel().checkOut(type);
+                        getViewModel().checkOut(type);
                 }).show(getFragmentManager());
     }
 
@@ -229,10 +229,10 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
         guestsList.addAll(tmpGuestsList);
         guestAdapter.notifyDataSetChanged();
 
-        if(guestsList.size()==0){
+        if (guestsList.size() == 0) {
             getViewDataBinding().recyclerView.setVisibility(View.GONE);
             getViewDataBinding().tvNoData.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             getViewDataBinding().tvNoData.setVisibility(View.GONE);
             getViewDataBinding().recyclerView.setVisibility(View.VISIBLE);
         }
@@ -247,10 +247,10 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
         houseKeepingList.addAll(tmpHouseKeepingList);
         houseKeepingAdapter.notifyDataSetChanged();
 
-        if(houseKeepingList.size()==0){
+        if (houseKeepingList.size() == 0) {
             getViewDataBinding().recyclerView.setVisibility(View.GONE);
             getViewDataBinding().tvNoData.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             getViewDataBinding().tvNoData.setVisibility(View.GONE);
             getViewDataBinding().recyclerView.setVisibility(View.VISIBLE);
         }
@@ -265,10 +265,10 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
         serviceProviderList.addAll(tmpSPList);
         serviceProviderAdapter.notifyDataSetChanged();
 
-        if(serviceProviderList.size()==0){
+        if (serviceProviderList.size() == 0) {
             getViewDataBinding().recyclerView.setVisibility(View.GONE);
             getViewDataBinding().tvNoData.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             getViewDataBinding().tvNoData.setVisibility(View.GONE);
             getViewDataBinding().recyclerView.setVisibility(View.VISIBLE);
         }
@@ -325,7 +325,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
         doSearch(search);
     }
 
-    public interface OnFragmentInteraction{
+    public interface OnFragmentInteraction {
         void totalCount(int size);
     }
 }

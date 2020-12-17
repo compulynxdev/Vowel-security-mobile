@@ -260,19 +260,20 @@ public class BlackListVisitorResponse {
 
     public static class ContentBean {
         /**
-         "reason" : "Suspected Guest",
-         "lastModifiedDate" : "2020-09-07T04:49:18Z",
-         "lastModifiedBy" : "account",
-         "profile" : "RANDOM_VISITOR",
-         "fullName" : "raja",
-         "type" : "GUEST",
-         "createdDate" : "2020-09-04T04:43:27Z",
-         "createdBy" : "account",
-         "documentId" : "121212",
-         "id" : 1,
-         "guestId" : 3,
-         "status" : true,
-         "contactNo" : "978784664"*/
+         * "reason" : "Suspected Guest",
+         * "lastModifiedDate" : "2020-09-07T04:49:18Z",
+         * "lastModifiedBy" : "account",
+         * "profile" : "RANDOM_VISITOR",
+         * "fullName" : "raja",
+         * "type" : "GUEST",
+         * "createdDate" : "2020-09-04T04:43:27Z",
+         * "createdBy" : "account",
+         * "documentId" : "121212",
+         * "id" : 1,
+         * "guestId" : 3,
+         * "status" : true,
+         * "contactNo" : "978784664"
+         */
 
 
         private String reason;
@@ -358,7 +359,7 @@ public class BlackListVisitorResponse {
         }
 
         public String getResidentName() {
-            return residentName == null ? "" :residentName;
+            return residentName == null ? "" : residentName;
         }
 
         public void setResidentName(String residentName) {

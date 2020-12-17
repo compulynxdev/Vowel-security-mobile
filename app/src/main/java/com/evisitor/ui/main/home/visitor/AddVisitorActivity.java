@@ -48,7 +48,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
     private String idType = "";
     private Boolean isGuest = false;
 
-    public static Intent getStartIntent(Context context){
+    public static Intent getStartIntent(Context context) {
         return new Intent(context, AddVisitorActivity.class);
     }
 
@@ -331,7 +331,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.img_back:
                 onBackPressed();
                 break;
@@ -485,7 +485,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                 .setOnPositiveClickListener((dialog, input) -> {
                     dialog.dismiss();
                     visitorData.rejectedReason = input;
-                    doAddSp(false,visitorData);
+                    doAddSp(false, visitorData);
                 }).show(getSupportFragmentManager());
     }
 
@@ -513,7 +513,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
         updateFieldConfigurationUI();
     }
 
-    void setIdentity(){
+    private void setIdentity() {
         if (getViewModel().getDataManager().isIdentifyFeature() || !isGuest)
             getViewDataBinding().etIdentity.setVisibility(View.VISIBLE);
         else getViewDataBinding().etIdentity.setVisibility(View.GONE);
@@ -537,7 +537,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                         })
                         .setOnPositiveClickListener(dialog12 -> {
                             dialog12.dismiss();
-                            doAddGuest(true,null);
+                            doAddGuest(true, null);
                         }).show(getSupportFragmentManager());
             }
         });
@@ -548,7 +548,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
         InputDialog.newInstance().setTitle(getString(R.string.are_you_sure))
                 .setOnPositiveClickListener((dialog, input) -> {
                     dialog.dismiss();
-                    doAddGuest(false,input);
+                    doAddGuest(false, input);
                 }).show(getSupportFragmentManager());
     }
 
@@ -567,7 +567,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
         addVisitorData.houseId = houseId;
         addVisitorData.residentId = residentId;
 
-        if(!isAccept){
+        if (!isAccept) {
             addVisitorData.rejectedReason = input;
         }
         getViewModel().doAddGuest(addVisitorData);

@@ -35,17 +35,48 @@ public class HouseKeeping {
 
     @SerializedName("createdBy")
     private String createdBy;
+    @SerializedName("profile")
+    private String profile;
+    @SerializedName("id")
+    private String houseKeeperId;
+    @SerializedName("residentId")
+    private String residentId;
+    @SerializedName("flatId")
+    private String flatId = "";
+    @SerializedName("checkOutFeature")
+    private boolean checkOutFeature;
+    /* @SerializedName("premiseHierarchyDetailsId")
+        private String flatId;*/
+    @SerializedName("hostCheckOutTime")
+    private String hostCheckOutTime;
+    @SerializedName("isHostCheckOut")
+    private boolean isHostCheckOut;
+    @SerializedName("notificationStatus")
+    private boolean notificationStatus;
+    @SerializedName("image")
+    private String imageUrl;
+    @SerializedName("expectedVehicleNo")
+    private String expectedVehicleNo;
+    @SerializedName("enteredVehicleNo")
+    private String enteredVehicleNo = "";
+    @SerializedName("rejectedBy")
+    private String rejectedBy;
+    @SerializedName("rejectReason")
+    private String rejectedReason;
+    @SerializedName("companyName")
+    private String companyName;
+    @SerializedName("companyAddress")
+    private String companyAddress;
+    @SerializedName("premiseName")
+    private String premiseName;
 
     public String getProfile() {
-        return profile==null ? "" : profile;
+        return profile == null ? "" : profile;
     }
 
     public void setProfile(String profile) {
         this.profile = profile;
     }
-
-    @SerializedName("profile")
-    private String profile;
 
     public String getCreatedBy() {
         return createdBy;
@@ -54,55 +85,6 @@ public class HouseKeeping {
     public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
     }
-/* @SerializedName("premiseHierarchyDetailsId")
-    private String flatId;*/
-
-    @SerializedName("id")
-    private String houseKeeperId;
-
-    @SerializedName("residentId")
-    private String residentId;
-
-    @SerializedName("flatId")
-    private String flatId = "";
-
-    @SerializedName("checkOutFeature")
-    private boolean checkOutFeature;
-
-    @SerializedName("hostCheckOutTime")
-    private String hostCheckOutTime;
-
-    @SerializedName("isHostCheckOut")
-    private boolean isHostCheckOut;
-
-
-    @SerializedName("notificationStatus")
-    private boolean notificationStatus;
-
-    @SerializedName("image")
-    private String imageUrl;
-
-    @SerializedName("expectedVehicleNo")
-    private String expectedVehicleNo;
-
-    @SerializedName("enteredVehicleNo")
-    private String enteredVehicleNo = "";
-
-    @SerializedName("rejectedBy")
-    private String rejectedBy;
-
-    @SerializedName("rejectReason")
-    private String rejectedReason;
-
-    @SerializedName("companyName")
-    private String companyName;
-
-    @SerializedName("companyAddress")
-    private String companyAddress;
-
-    @SerializedName("premiseName")
-    private String premiseName;
-
 
     public String getImageUrl() {
         return imageUrl == null ? "" : imageUrl;
@@ -140,6 +122,10 @@ public class HouseKeeping {
         return checkOutTime == null ? "" : checkOutTime;
     }
 
+    public void setCheckOutTime(String checkOutTime) {
+        this.checkOutTime = checkOutTime;
+    }
+
     public boolean isCheckOutFeature() {
         return checkOutFeature;
     }
@@ -164,12 +150,8 @@ public class HouseKeeping {
         isHostCheckOut = hostCheckOut;
     }
 
-    public void setCheckOutTime(String checkOutTime) {
-        this.checkOutTime = checkOutTime;
-    }
-
     public String getHouseNo() {
-        return houseNo==null ? "" : houseNo;
+        return houseNo == null ? "" : houseNo;
     }
 
     public void setHouseNo(String houseNo) {
@@ -177,7 +159,7 @@ public class HouseKeeping {
     }
 
     public String getHost() {
-        return host==null ? "": host;
+        return host == null ? "" : host;
     }
 
     public void setHost(String host) {
@@ -185,7 +167,7 @@ public class HouseKeeping {
     }
 
     public String getIdentityNo() {
-        return identityNo==null ? "" : identityNo;
+        return identityNo == null ? "" : identityNo;
     }
 
     public void setIdentityNo(String identityNo) {
@@ -193,7 +175,7 @@ public class HouseKeeping {
     }
 
     public String getContactNo() {
-        return contactNo == null? "" : contactNo;
+        return contactNo == null ? "" : contactNo;
     }
 
     public void setContactNo(String contactNo) {
@@ -209,7 +191,7 @@ public class HouseKeeping {
     }
 
     public String getResidentId() {
-        return residentId==null ? "" : residentId;
+        return residentId == null ? "" : residentId;
     }
 
     public void setResidentId(String residentId) {

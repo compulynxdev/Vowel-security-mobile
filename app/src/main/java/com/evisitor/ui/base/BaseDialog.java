@@ -36,9 +36,9 @@ public abstract class BaseDialog<T extends ViewDataBinding, V extends BaseViewMo
 
     private static final String TAG = "BaseDialog";
     private BaseActivity mActivity;
-    private View mRootView;
     private T mViewDataBinding;
     private V mViewModel;
+    private int defaultView = ViewGroup.LayoutParams.WRAP_CONTENT;
 
     /**
      * Override for set binding variable
@@ -60,8 +60,6 @@ public abstract class BaseDialog<T extends ViewDataBinding, V extends BaseViewMo
      * @return view model instance
      */
     public abstract V getViewModel();
-
-    private int defaultView = ViewGroup.LayoutParams.WRAP_CONTENT;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -88,8 +86,7 @@ public abstract class BaseDialog<T extends ViewDataBinding, V extends BaseViewMo
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mViewDataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
-        mRootView = mViewDataBinding.getRoot();
-        return mRootView;
+        return mViewDataBinding.getRoot();
     }
 
     @Override
@@ -190,12 +187,12 @@ public abstract class BaseDialog<T extends ViewDataBinding, V extends BaseViewMo
     }
 
     public void handleApiFailure(@NonNull Throwable t) {
-        if(mActivity!=null)
+        if (mActivity != null)
             mActivity.handleApiFailure(t);
     }
 
     public void handleApiError(ResponseBody response) {
-        if(mActivity!=null)
+        if (mActivity != null)
             mActivity.handleApiError(response);
     }
 

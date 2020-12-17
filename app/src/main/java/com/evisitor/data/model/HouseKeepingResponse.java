@@ -388,7 +388,7 @@ public class HouseKeepingResponse {
         }
 
         public String getFlatNo() {
-            return flatNo==null ? "" : flatNo;
+            return flatNo == null ? "" : flatNo;
         }
 
         public void setFlatNo(String flatNo) {
@@ -556,7 +556,7 @@ public class HouseKeepingResponse {
         }
 
         public String getRejectedOn() {
-            return rejectedOn ==null ? "" : rejectedOn;
+            return rejectedOn == null ? "" : rejectedOn;
         }
 
         public void setRejectedOn(String rejectedOn) {

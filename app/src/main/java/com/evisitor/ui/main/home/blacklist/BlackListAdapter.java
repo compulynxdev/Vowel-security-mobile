@@ -21,9 +21,9 @@ import java.util.List;
 
 public class BlackListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
-    private List<BlackListVisitorResponse.ContentBean> list;
     private static final int VIEWTYPE_ITEM = 1;
-    private static final int VIEWTYPE_LOADER =2 ;
+    private static final int VIEWTYPE_LOADER = 2;
+    private List<BlackListVisitorResponse.ContentBean> list;
     private ItemClickCallback callback;
     private boolean showLoader;
 
@@ -55,7 +55,7 @@ public class BlackListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        if (position == list.size()-1) {
+        if (position == list.size() - 1) {
             return showLoader ? VIEWTYPE_LOADER : VIEWTYPE_ITEM;
         }
         return VIEWTYPE_ITEM;
@@ -87,6 +87,7 @@ public class BlackListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public class ViewHolder extends BaseViewHolder {
         ImageView imgVisitor;
         TextView name, docId, profile, contact, type;
+
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_name);
@@ -110,26 +111,26 @@ public class BlackListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         public void onBind(int position) {
             BlackListVisitorResponse.ContentBean bean = list.get(position);
-            name.setText(name.getContext().getString(R.string.data_name,bean.getFullName()));
-            if (bean.getDocumentId()!=null && !bean.getDocumentId().isEmpty()){
+            name.setText(name.getContext().getString(R.string.data_name, bean.getFullName()));
+            if (bean.getDocumentId() != null && !bean.getDocumentId().isEmpty()) {
                 docId.setVisibility(View.VISIBLE);
-                docId.setText(docId.getContext().getString(R.string.data_identity,bean.getDocumentId()));
-            }else docId.setVisibility(View.GONE);
+                docId.setText(docId.getContext().getString(R.string.data_identity, bean.getDocumentId()));
+            } else docId.setVisibility(View.GONE);
 
-            if (bean.getProfile()!=null && !bean.getProfile().isEmpty()){
+            if (bean.getProfile() != null && !bean.getProfile().isEmpty()) {
                 profile.setVisibility(View.VISIBLE);
-                profile.setText(profile.getContext().getString(R.string.data_profile,bean.getProfile()));
-            }else profile.setVisibility(View.GONE);
+                profile.setText(profile.getContext().getString(R.string.data_profile, bean.getProfile()));
+            } else profile.setVisibility(View.GONE);
 
-            if (bean.getContactNo()!=null && !bean.getContactNo().isEmpty()){
+            if (bean.getContactNo() != null && !bean.getContactNo().isEmpty()) {
                 contact.setVisibility(View.VISIBLE);
                 contact.setText(contact.getContext().getString(R.string.data_mobile, bean.getDialingCode().concat(bean.getContactNo())));
-            }else contact.setVisibility(View.GONE);
+            } else contact.setVisibility(View.GONE);
 
-            if (bean.getType()!=null && !bean.getType().isEmpty()){
+            if (bean.getType() != null && !bean.getType().isEmpty()) {
                 type.setVisibility(View.VISIBLE);
-                type.setText(type.getContext().getString(R.string.data_type,bean.getType()));
-            }else type.setVisibility(View.GONE);
+                type.setText(type.getContext().getString(R.string.data_type, bean.getType()));
+            } else type.setVisibility(View.GONE);
 
             if (bean.getImageUrl().isEmpty()) {
                 Glide.with(imgVisitor.getContext())

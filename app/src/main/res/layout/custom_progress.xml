@@ -4,8 +4,8 @@
     android:layout_width="75dp"
     android:layout_height="75dp"
     android:layout_gravity="center"
-    android:indeterminateTint="@color/colorPrimaryDark"
     android:background="@android:color/transparent"
     android:focusable="true"
     android:indeterminate="true"
+    android:indeterminateTint="@color/colorPrimaryDark"
     android:orientation="vertical" />

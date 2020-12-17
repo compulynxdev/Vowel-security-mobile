@@ -11,6 +11,7 @@ public class UserProfileViewModel extends BaseViewModel<BaseNavigator> {
     private MutableLiveData<UserDetail> userDetailMutableLiveData = new MutableLiveData<>();
 
     private MutableLiveData<String> accountName = new MutableLiveData<>();
+
     public UserProfileViewModel(DataManager dataManager) {
         super(dataManager);
     }
@@ -20,8 +21,8 @@ public class UserProfileViewModel extends BaseViewModel<BaseNavigator> {
         return userDetailMutableLiveData;
     }
 
-    MutableLiveData<String> getAccountName(){
+    MutableLiveData<String> getAccountName() {
         accountName.setValue(getDataManager().getAccountName());
-        return  accountName;
+        return accountName;
     }
 }

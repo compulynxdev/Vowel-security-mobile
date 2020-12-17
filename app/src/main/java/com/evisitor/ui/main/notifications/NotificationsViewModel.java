@@ -25,7 +25,7 @@ public class NotificationsViewModel extends BaseViewModel<NotificationNavigator>
     }
 
     void getNotifications(int page, String search) {
-        if (getNavigator().isNetworkConnected()){
+        if (getNavigator().isNetworkConnected()) {
             Map<String, String> map = new HashMap<>();
             map.put("accountId", getDataManager().getAccountId());
             if (!search.isEmpty())
@@ -62,10 +62,10 @@ public class NotificationsViewModel extends BaseViewModel<NotificationNavigator>
                     getNavigator().handleApiFailure(t);
                 }
             });
-        }else {
+        } else {
             getNavigator().hideLoading();
             getNavigator().hideSwipeToRefresh();
-            getNavigator().showAlert(getNavigator().getContext().getString(R.string.alert),getNavigator().getContext().getString(R.string.alert_internet));
+            getNavigator().showAlert(getNavigator().getContext().getString(R.string.alert), getNavigator().getContext().getString(R.string.alert_internet));
         }
     }
 

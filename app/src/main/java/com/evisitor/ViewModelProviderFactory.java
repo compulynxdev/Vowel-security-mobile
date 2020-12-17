@@ -60,7 +60,7 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         this.dataManager = dataManager;
     }
 
-    public static synchronized ViewModelProviderFactory getInstance(){
+    public static synchronized ViewModelProviderFactory getInstance() {
         if (instance == null) {
             instance = new ViewModelProviderFactory(EVisitor.getInstance().getDataManager());
         }

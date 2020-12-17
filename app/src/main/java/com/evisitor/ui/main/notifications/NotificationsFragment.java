@@ -33,7 +33,7 @@ public class NotificationsFragment extends BaseFragment<FragmentNotificationsBin
         return fragment;
     }
 
-    public void setInteraction(NotificationFragmentInteraction interaction) {
+    private void setInteraction(NotificationFragmentInteraction interaction) {
         this.interaction = interaction;
     }
 
@@ -134,10 +134,10 @@ public class NotificationsFragment extends BaseFragment<FragmentNotificationsBin
         notificationsList.addAll(content);
         adapter.notifyDataSetChanged();
 
-        if(notificationsList.size()==0){
+        if (notificationsList.size() == 0) {
             getViewDataBinding().recyclerView.setVisibility(View.GONE);
             getViewDataBinding().tvNoData.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             getViewDataBinding().tvNoData.setVisibility(View.GONE);
             getViewDataBinding().recyclerView.setVisibility(View.VISIBLE);
         }

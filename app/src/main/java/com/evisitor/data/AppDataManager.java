@@ -28,10 +28,10 @@ import retrofit2.Call;
  */
 public class AppDataManager implements DataManager {
 
-    private AppApiHelper apiHelper;
-    private AppPreferenceHelper preferenceHelper;
     private static AppDataManager instance;
     private final Gson mGson;
+    private AppApiHelper apiHelper;
+    private AppPreferenceHelper preferenceHelper;
     private Guests guests;
     private ServiceProvider spDetail;
     private HouseKeepingResponse.ContentBean houseKeeping;
@@ -44,16 +44,11 @@ public class AppDataManager implements DataManager {
         mGson = new GsonBuilder().create();
     }
 
-    public static synchronized AppDataManager getInstance(Context context){
-        if (instance==null){
+    public static synchronized AppDataManager getInstance(Context context) {
+        if (instance == null) {
             instance = new AppDataManager(context);
         }
         return instance;
-    }
-
-    @Override
-    public void setGuestDetail(Guests guest) {
-        this.guests = guest;
     }
 
     @Override
@@ -61,6 +56,10 @@ public class AppDataManager implements DataManager {
         return guests;
     }
 
+    @Override
+    public void setGuestDetail(Guests guest) {
+        this.guests = guest;
+    }
 
     @Override
     public Gson getGson() {

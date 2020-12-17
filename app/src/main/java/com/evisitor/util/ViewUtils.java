@@ -1,5 +1,3 @@
-
-
 package com.evisitor.util;
 
 import android.content.res.Resources;

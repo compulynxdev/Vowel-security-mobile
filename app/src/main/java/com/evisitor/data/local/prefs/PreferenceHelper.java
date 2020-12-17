@@ -2,7 +2,6 @@ package com.evisitor.data.local.prefs;
 
 import android.app.Activity;
 
-import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.UserDetail;
 
 /**

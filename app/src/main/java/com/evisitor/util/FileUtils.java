@@ -23,10 +23,10 @@ import java.util.Objects;
 public final class FileUtils {
     public static final String MIME_TYPE_AUDIO = "audio/*";
     public static final String MIME_TYPE_TEXT = "text/*";
-    public static final String MIME_TYPE_IMAGE = "image/*";
     public static final String MIME_TYPE_VIDEO = "video/*";
     public static final String MIME_TYPE_APP = "application/*";
-    public static final String HIDDEN_PREFIX = ".";
+    private static final String MIME_TYPE_IMAGE = "image/*";
+    private static final String HIDDEN_PREFIX = ".";
     /**
      * TAG for log messages.
      */
@@ -67,7 +67,7 @@ public final class FileUtils {
      * @return Extension including the dot("."); "" if there is no extension;
      * null if uri was null.
      */
-    public static String getExtension(String uri) {
+    private static String getExtension(String uri) {
         if (uri == null) {
             return null;
         }
@@ -84,14 +84,14 @@ public final class FileUtils {
     /**
      * @return Whether the URI is a local one.
      */
-    public static boolean isLocal(String url) {
+    private static boolean isLocal(String url) {
         return url != null && !url.startsWith("http://") && !url.startsWith("https://");
     }
 
     /**
      * @return True if Uri is a MediaStore Uri.
      */
-    public static boolean isMediaUri(Uri uri) {
+    private static boolean isMediaUri(Uri uri) {
         return "media".equalsIgnoreCase(uri.getAuthority());
     }
 
@@ -101,7 +101,7 @@ public final class FileUtils {
      * @param file
      * @return uri
      */
-    public static Uri getUri(File file) {
+    private static Uri getUri(File file) {
         if (file != null) {
             return Uri.fromFile(file);
         }
@@ -124,12 +124,12 @@ public final class FileUtils {
                 String filepath = file.getAbsolutePath();
 
                 // Construct path without file name.
-                String pathwithoutname = filepath.substring(0,
+                String pathWithoutName = filepath.substring(0,
                         filepath.length() - filename.length());
-                if (pathwithoutname.endsWith("/")) {
-                    pathwithoutname = pathwithoutname.substring(0, pathwithoutname.length() - 1);
+                if (pathWithoutName.endsWith("/")) {
+                    pathWithoutName = pathWithoutName.substring(0, pathWithoutName.length() - 1);
                 }
-                return new File(pathwithoutname);
+                return new File(pathWithoutName);
             }
         }
         return null;
@@ -138,7 +138,7 @@ public final class FileUtils {
     /**
      * @return The MIME type for the given file.
      */
-    public static String getMimeType(File file) {
+    private static String getMimeType(File file) {
 
         String extension = getExtension(file.getName());
 
@@ -151,8 +151,8 @@ public final class FileUtils {
     /**
      * @return The MIME type for the give Uri.
      */
-    public static String getMimeType(Context context, Uri uri) {
-        File file = new File(getPath(context, uri));
+    private static String getMimeType(Context context, Uri uri) {
+        File file = new File(Objects.requireNonNull(getPath(context, uri)));
         return getMimeType(file);
     }
 
@@ -160,7 +160,7 @@ public final class FileUtils {
      * @param uri The Uri to check.
      * @return Whether the Uri authority is ExternalStorageProvider.
      */
-    public static boolean isExternalStorageDocument(Uri uri) {
+    private static boolean isExternalStorageDocument(Uri uri) {
         return "com.android.externalstorage.documents".equals(uri.getAuthority());
     }
 
@@ -168,7 +168,7 @@ public final class FileUtils {
      * @param uri The Uri to check.
      * @return Whether the Uri authority is DownloadsProvider.
      */
-    public static boolean isDownloadsDocument(Uri uri) {
+    private static boolean isDownloadsDocument(Uri uri) {
         return "com.android.providers.downloads.documents".equals(uri.getAuthority());
     }
 
@@ -176,7 +176,7 @@ public final class FileUtils {
      * @param uri The Uri to check.
      * @return Whether the Uri authority is MediaProvider.
      */
-    public static boolean isMediaDocument(Uri uri) {
+    private static boolean isMediaDocument(Uri uri) {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
 
@@ -184,7 +184,7 @@ public final class FileUtils {
      * @param uri The Uri to check.
      * @return Whether the Uri authority is Google Photos.
      */
-    public static boolean isGooglePhotosUri(Uri uri) {
+    private static boolean isGooglePhotosUri(Uri uri) {
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
 
@@ -198,18 +198,15 @@ public final class FileUtils {
      * @param selectionArgs (Optional) Selection arguments used in the query.
      * @return The value of the _data column, which is typically a file path.
      */
-    public static String getDataColumn(Context context, Uri uri, String selection,
-                                       String[] selectionArgs) {
+    private static String getDataColumn(Context context, Uri uri, String selection,
+                                        String[] selectionArgs) {
 
-        Cursor cursor = null;
         final String column = "_data";
         final String[] projection = {
                 column
         };
-
-        try {
-            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
-                    null);
+        try (Cursor cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
+                null)) {
             if (cursor != null && cursor.moveToFirst()) {
                 if (DEBUG)
                     DatabaseUtils.dumpCursor(cursor);
@@ -217,9 +214,6 @@ public final class FileUtils {
                 final int column_index = cursor.getColumnIndexOrThrow(column);
                 return cursor.getString(column_index);
             }
-        } finally {
-            if (cursor != null)
-                cursor.close();
         }
         return null;
     }
@@ -319,7 +313,7 @@ public final class FileUtils {
      * Uri is unsupported or pointed to a remote resource.
      * @see #getPath(Context, Uri)
      */
-    public static File getFile(Context context, Uri uri) {
+    static File getFile(Context context, Uri uri) {
         if (uri != null) {
             String path = getPath(context, uri);
             if (isLocal(path)) {
@@ -392,7 +386,7 @@ public final class FileUtils {
      * @param mimeType
      * @return
      */
-    public static Bitmap getThumbnail(Context context, Uri uri, String mimeType) {
+    private static Bitmap getThumbnail(Context context, Uri uri, String mimeType) {
         if (DEBUG)
             Log.d(TAG, "Attempting to get thumbnail");
 

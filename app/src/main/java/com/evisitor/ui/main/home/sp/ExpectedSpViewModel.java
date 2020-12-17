@@ -33,7 +33,7 @@ public class ExpectedSpViewModel extends BaseCheckInOutViewModel<ExpectedSPNavig
     }
 
     void getSpListData(int page, String search) {
-        if (getNavigator().isNetworkConnected()){
+        if (getNavigator().isNetworkConnected()) {
             Map<String, String> map = new HashMap<>();
             map.put("accountId", getDataManager().getAccountId());
             if (!search.isEmpty())
@@ -69,10 +69,10 @@ public class ExpectedSpViewModel extends BaseCheckInOutViewModel<ExpectedSPNavig
                     getNavigator().handleApiFailure(t);
                 }
             });
-        }else {
+        } else {
             getNavigator().hideSwipeToRefresh();
             getNavigator().hideLoading();
-            getNavigator().showAlert(getNavigator().getContext().getString(R.string.alert),getNavigator().getContext().getString(R.string.alert_internet));
+            getNavigator().showAlert(getNavigator().getContext().getString(R.string.alert), getNavigator().getContext().getString(R.string.alert_internet));
         }
 
     }
@@ -84,7 +84,7 @@ public class ExpectedSpViewModel extends BaseCheckInOutViewModel<ExpectedSPNavig
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, spBean.getName())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_profile, spBean.getProfile())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), spBean.getExpectedVehicleNo(), VisitorProfileBean.VIEW_TYPE_EDITABLE));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile,spBean.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(spBean.getDialingCode()).concat(" ").concat(spBean.getContactNo()))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, spBean.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(spBean.getDialingCode()).concat(" ").concat(spBean.getContactNo()))));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, spBean.getIdentityNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : spBean.getIdentityNo())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_comp_name, spBean.getCompanyName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : spBean.getCompanyName())));
         if (spBean.getHouseNo().isEmpty()) {
@@ -119,7 +119,7 @@ public class ExpectedSpViewModel extends BaseCheckInOutViewModel<ExpectedSPNavig
         }
     }
 
-    void approveByCall(boolean isAccept,String input) {
+    void approveByCall(boolean isAccept, String input) {
         if (getNavigator().isNetworkConnected(true)) {
             JSONObject object = new JSONObject();
             try {
@@ -128,8 +128,8 @@ public class ExpectedSpViewModel extends BaseCheckInOutViewModel<ExpectedSPNavig
                 object.put("type", AppConstants.CHECK_IN);
                 object.put("visitor", AppConstants.SERVICE_PROVIDER);
                 object.put("state", isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);
-                object.put("rejectedBy",isAccept ? null : getDataManager().getUserDetail().getFullName());
-                object.put("rejectReason",input);
+                object.put("rejectedBy", isAccept ? null : getDataManager().getUserDetail().getFullName());
+                object.put("rejectReason", input);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

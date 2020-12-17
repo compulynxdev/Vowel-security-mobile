@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.main.rejectreason.InputDialog">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,14 +34,14 @@
             android:cursorVisible="true"
             android:fontFamily="@font/futura_round"
             android:hint="@string/enter_reason"
+            android:importantForAutofill="no"
+            android:inputType="text"
             android:textColor="@color/black"
-            android:textSize="18sp"
             android:textCursorDrawable="@null"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_title"
-            android:importantForAutofill="no"
-            android:inputType="text"
             tools:ignore="LabelFor" />
 
         <View

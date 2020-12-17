@@ -25,10 +25,9 @@ import okhttp3.ResponseBody;
  * Date: 15/07/20
  */
 
-public abstract class BaseFragment <T extends ViewDataBinding, V extends BaseViewModel> extends Fragment implements BaseNavigator {
+public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseViewModel> extends Fragment implements BaseNavigator {
 
     private BaseActivity mActivity;
-    private View mRootView;
     private T mViewDataBinding;
     private V mViewModel;
 
@@ -74,8 +73,7 @@ public abstract class BaseFragment <T extends ViewDataBinding, V extends BaseVie
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mViewDataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
-        mRootView = mViewDataBinding.getRoot();
-        return mRootView;
+        return mViewDataBinding.getRoot();
     }
 
     @Override

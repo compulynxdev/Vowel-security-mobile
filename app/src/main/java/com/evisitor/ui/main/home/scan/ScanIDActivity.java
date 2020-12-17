@@ -25,9 +25,7 @@ import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
-import com.sharma.mrzreader.MrzParseException;
 import com.sharma.mrzreader.MrzParser;
-import com.sharma.mrzreader.MrzRange;
 import com.sharma.mrzreader.MrzRecord;
 
 import java.io.IOException;
@@ -44,7 +42,7 @@ public class ScanIDActivity extends BaseActivity<ActivityScanIdBinding, ScanIDVi
         return new Intent(context, ScanIDActivity.class);
     }
 
-    public static String getLastLines(String string, int numLines) {
+    private static String getLastLines(String string, int numLines) {
         StringBuilder mrzCode = new StringBuilder();
         String[] lines = string.split("\n");
         int startPos = Math.max(0, lines.length - numLines);
@@ -118,7 +116,7 @@ public class ScanIDActivity extends BaseActivity<ActivityScanIdBinding, ScanIDVi
                     .build();
             getViewDataBinding().surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
                 @Override
-                public void surfaceCreated(SurfaceHolder surfaceHolder) {
+                public void surfaceCreated(@NonNull SurfaceHolder surfaceHolder) {
 
                     try {
                         if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -135,11 +133,11 @@ public class ScanIDActivity extends BaseActivity<ActivityScanIdBinding, ScanIDVi
                 }
 
                 @Override
-                public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+                public void surfaceChanged(@NonNull SurfaceHolder surfaceHolder, int i, int i1, int i2) {
                 }
 
                 @Override
-                public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+                public void surfaceDestroyed(@NonNull SurfaceHolder surfaceHolder) {
                     cameraSource.stop();
                 }
             });
@@ -210,11 +208,12 @@ public class ScanIDActivity extends BaseActivity<ActivityScanIdBinding, ScanIDVi
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            if (ex instanceof MrzParseException) {
+           /* if (ex instanceof MrzParseException) {
                 final MrzParseException mpe = (MrzParseException) ex;
                 final MrzRange r = mpe.getRange();
+                Log.e("MRX", r.toString());
                 //mpe..select(toPos(r.column, r.row, m), toPos(r.columnTo, r.row, m));
-            }
+            }*/
         }
     }
 

@@ -102,7 +102,7 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
     private void decideNextProcess() {
         HouseKeepingResponse.ContentBean tmpBean = getViewModel().getDataManager().getHouseKeeping();
         if (tmpBean.getCheckInStatus()) {
-            getViewModel().approveByCall(true,null);
+            getViewModel().approveByCall(true, null);
         } else {
             if (tmpBean.getDocumentId().isEmpty()) {
                 showCheckinOptions();
@@ -183,7 +183,7 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
                 })
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
-                    getViewModel().approveByCall(true,null);
+                    getViewModel().approveByCall(true, null);
                 }).show(getFragmentManager());
     }
 
@@ -191,7 +191,7 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
         InputDialog.newInstance().setTitle(getString(R.string.are_you_sure))
                 .setOnPositiveClickListener((dialog, input) -> {
                     dialog.dismiss();
-                    getViewModel().approveByCall(false,input);
+                    getViewModel().approveByCall(false, input);
                 }).show(getFragmentManager());
     }
 
@@ -235,10 +235,10 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
         this.list.addAll(houseKeepingList);
         adapter.notifyDataSetChanged();
 
-        if(this.list.size()==0){
+        if (this.list.size() == 0) {
             getViewDataBinding().recyclerView.setVisibility(View.GONE);
             getViewDataBinding().tvNoData.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             getViewDataBinding().tvNoData.setVisibility(View.GONE);
             getViewDataBinding().recyclerView.setVisibility(View.VISIBLE);
         }

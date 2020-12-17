@@ -19,9 +19,9 @@ public interface DataManager extends ApiHelper, PreferenceHelper {
 
     String getHeader();
 
-    void setGuestDetail(Guests guest) ;
+    Guests getGuestDetail();
 
-     Guests getGuestDetail() ;
+    void setGuestDetail(Guests guest);
 
     void setSPDetail(ServiceProvider spDetail);
 

@@ -2,6 +2,7 @@ package com.evisitor.ui.login;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
+
 import com.evisitor.EVisitor;
 import com.evisitor.R;
 import com.evisitor.data.DataManager;
@@ -9,9 +10,12 @@ import com.evisitor.data.model.UserDetail;
 import com.evisitor.ui.base.BaseViewModel;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppUtils;
+
 import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
+
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -92,19 +96,19 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                         getNavigator().hideLoading();
                         getNavigator().showAlert(R.string.alert, R.string.alert_error);
                     }
-                }else if (response.code()==401){
+                } else if (response.code() == 401) {
                     getNavigator().hideLoading();
                     try {
                         assert response.errorBody() != null;
                         JSONObject data = new JSONObject(response.errorBody().string());
                         if (data.has("detail"))
-                            getNavigator().showAlert(R.string.alert,R.string.invalid_credentials);
-                        else getNavigator().showAlert(R.string.alert,data.getString("respMessage"));
+                            getNavigator().showAlert(R.string.alert, R.string.invalid_credentials);
+                        else
+                            getNavigator().showAlert(R.string.alert, data.getString("respMessage"));
                     } catch (Exception e) {
                         getNavigator().showAlert(R.string.alert, R.string.alert_error);
                     }
-                }
-                else {
+                } else {
                     getNavigator().hideLoading();
                     getNavigator().handleApiError(response.errorBody());
                 }

@@ -19,7 +19,7 @@ import com.evisitor.util.pagination.RecyclerViewScrollListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TrespasserGuestFragment extends BaseFragment<FragmentTrespasserGuestBinding,TrespasserGuestViewModel> implements TrespasserGuestNavigator {
+public class TrespasserGuestFragment extends BaseFragment<FragmentTrespasserGuestBinding, TrespasserGuestViewModel> implements TrespasserGuestNavigator {
     private RecyclerViewScrollListener scrollListener;
     private TrespasserAdapter adapter;
     private String search = "";
@@ -38,6 +38,7 @@ public class TrespasserGuestFragment extends BaseFragment<FragmentTrespasserGues
         this.search = search;
         doSearch(search);
     }
+
     @Override
     public int getBindingVariable() {
         return BR.viewModel;
@@ -102,10 +103,10 @@ public class TrespasserGuestFragment extends BaseFragment<FragmentTrespasserGues
         this.list.addAll(beans);
         adapter.notifyDataSetChanged();
 
-        if(this.list.size()==0){
+        if (this.list.size() == 0) {
             getViewDataBinding().recyclerView.setVisibility(View.GONE);
             getViewDataBinding().tvNoData.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             getViewDataBinding().tvNoData.setVisibility(View.GONE);
             getViewDataBinding().recyclerView.setVisibility(View.VISIBLE);
         }

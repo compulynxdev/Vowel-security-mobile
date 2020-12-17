@@ -25,14 +25,14 @@ import com.evisitor.ui.main.home.sp.ExpectedSPFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBinding,TotalVisitorsViewModel> implements BaseNavigator ,View.OnClickListener{
+public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBinding, TotalVisitorsViewModel> implements BaseNavigator, View.OnClickListener {
 
     private ExpectedGuestFragment expectedGuestFragment;
     private ExpectedHKFragment expectedHKFragment;
     private ExpectedSPFragment expectedSPFragment;
 
     public static Intent getStartIntent(Context context) {
-        return new Intent(context,TotalVisitorsActivity.class);
+        return new Intent(context, TotalVisitorsActivity.class);
     }
 
     @Override
@@ -92,11 +92,11 @@ public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBin
                     getViewDataBinding().titleGuest.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                     getViewDataBinding().titleHouse.setTextColor(getResources().getColor(R.color.black));
                     getViewDataBinding().titleService.setTextColor(getResources().getColor(R.color.black));
-                } else if (position==1){
+                } else if (position == 1) {
                     getViewDataBinding().titleGuest.setTextColor(getResources().getColor(R.color.black));
                     getViewDataBinding().titleHouse.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                     getViewDataBinding().titleService.setTextColor(getResources().getColor(R.color.black));
-                }else {
+                } else {
                     getViewDataBinding().titleGuest.setTextColor(getResources().getColor(R.color.black));
                     getViewDataBinding().titleHouse.setTextColor(getResources().getColor(R.color.black));
                     getViewDataBinding().titleService.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
@@ -114,13 +114,13 @@ public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBin
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
 
             case R.id.img_back:
                 onBackPressed();
                 break;
 
-            case R.id.img_search :
+            case R.id.img_search:
                 hideKeyboard();
                 getViewDataBinding().customSearchView.llSearchBar.setVisibility(getViewDataBinding().customSearchView.llSearchBar.getVisibility() == View.GONE
                         ? View.VISIBLE : View.GONE);
@@ -186,7 +186,6 @@ public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBin
     }
 
 
-
     class ViewPagerAdapter extends FragmentPagerAdapter {
 
         private final List<Fragment> fragmentList = new ArrayList<>();
@@ -206,7 +205,7 @@ public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBin
             return fragmentList.size();
         }
 
-        void addFragment(Fragment fragment){
+        void addFragment(Fragment fragment) {
             fragmentList.add(fragment);
         }
     }

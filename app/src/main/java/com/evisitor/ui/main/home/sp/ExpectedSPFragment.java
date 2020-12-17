@@ -32,7 +32,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
     private final int SCAN_RESULT = 101;
     private RecyclerViewScrollListener scrollListener;
     private ExpectedSPAdapter adapter;
-    private String search ="";
+    private String search = "";
     private int page = 0;
     private List<ServiceProvider> spList;
 
@@ -43,7 +43,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
         return fragment;
     }
 
-    public void setSearch(String search){
+    public void setSearch(String search) {
         this.search = search;
         doSearch(search);
     }
@@ -103,7 +103,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
     private void decideNextProcess() {
         ServiceProvider tmpBean = getViewModel().getDataManager().getSpDetail();
         if (tmpBean.getCheckInStatus()) {
-            getViewModel().approveByCall(true,null);
+            getViewModel().approveByCall(true, null);
         } else {
             if (tmpBean.getIdentityNo().isEmpty()) {
                 showCheckinOptions();
@@ -151,7 +151,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                 .setPositiveBtnLabel(getString(R.string.approve_by_call))
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
-                        showCallDialog();
+                    showCallDialog();
                 });
 
 
@@ -164,7 +164,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                     .setNegativeBtnLabel(getString(R.string.send_notification))
                     .setOnNegativeClickListener(dialog1 -> {
                         dialog1.dismiss();
-                            getViewModel().sendNotification();
+                        getViewModel().sendNotification();
                     })
                     .show(getFragmentManager());
         }
@@ -184,7 +184,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                 })
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
-                        getViewModel().approveByCall(true,null);
+                    getViewModel().approveByCall(true, null);
                 }).show(getFragmentManager());
     }
 
@@ -192,7 +192,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
         InputDialog.newInstance().setTitle(getString(R.string.are_you_sure))
                 .setOnPositiveClickListener((dialog, input) -> {
                     dialog.dismiss();
-                    getViewModel().approveByCall(false,input);
+                    getViewModel().approveByCall(false, input);
                 }).show(getFragmentManager());
     }
 
@@ -236,10 +236,10 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
         this.spList.addAll(spList);
         adapter.notifyDataSetChanged();
 
-        if(this.spList.size()==0){
+        if (this.spList.size() == 0) {
             getViewDataBinding().recyclerView.setVisibility(View.GONE);
             getViewDataBinding().tvNoData.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             getViewDataBinding().tvNoData.setVisibility(View.GONE);
             getViewDataBinding().recyclerView.setVisibility(View.VISIBLE);
         }
