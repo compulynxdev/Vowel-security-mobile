@@ -24,9 +24,9 @@ import java.util.List;
 
 public class TrespasserAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
-    private List<TrespasserResponse.ContentBean> list;
     private static final int VIEWTYPE_ITEM = 1;
-    private static final int VIEWTYPE_LOADER =2 ;
+    private static final int VIEWTYPE_LOADER = 2;
+    private List<TrespasserResponse.ContentBean> list;
     private ItemClickCallback callback;
     private boolean showLoader;
 
@@ -58,7 +58,7 @@ public class TrespasserAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        if (position == list.size()-1) {
+        if (position == list.size() - 1) {
             return showLoader ? VIEWTYPE_LOADER : VIEWTYPE_ITEM;
         }
         return VIEWTYPE_ITEM;
@@ -90,6 +90,7 @@ public class TrespasserAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public class ViewHolder extends BaseViewHolder {
         ImageView imgVisitor;
         TextView name, docId, flat, tv_elapsed_time, vehicleNo, checkInTime;
+
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_name);
@@ -114,16 +115,16 @@ public class TrespasserAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         public void onBind(int position) {
             TrespasserResponse.ContentBean bean = list.get(position);
-            name.setText(name.getContext().getString(R.string.data_name,bean.getFullName()));
-            if (bean.getDocumentId()!=null && !bean.getDocumentId().isEmpty()){
+            name.setText(name.getContext().getString(R.string.data_name, bean.getFullName()));
+            if (bean.getDocumentId() != null && !bean.getDocumentId().isEmpty()) {
                 docId.setVisibility(View.VISIBLE);
-                docId.setText(docId.getContext().getString(R.string.data_identity,bean.getDocumentId()));
-            }else docId.setVisibility(View.GONE);
+                docId.setText(docId.getContext().getString(R.string.data_identity, bean.getDocumentId()));
+            } else docId.setVisibility(View.GONE);
 
-            if (bean.getFlatNo()!=null && !bean.getFlatNo().isEmpty()){
+            if (bean.getFlatNo() != null && !bean.getFlatNo().isEmpty()) {
                 flat.setVisibility(View.VISIBLE);
                 flat.setText(flat.getContext().getString(R.string.data_house, bean.getPremiseName()));
-            }else flat.setVisibility(View.GONE);
+            } else flat.setVisibility(View.GONE);
 
             if (!bean.getCheckOutTime().isEmpty()) {
                 Date checkOutTime = CalenderUtils.getDateFormat(bean.getCheckOutTime(), CalenderUtils.SERVER_DATE_FORMAT);
@@ -145,10 +146,10 @@ public class TrespasserAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 vehicleNo.setText(vehicleNo.getContext().getString(R.string.data_vehicle,bean.getEnteredVehicleNo()));
             }else vehicleNo.setVisibility(View.GONE);*/
 
-            if (bean.getCheckInTime()!=null && !bean.getCheckInTime().isEmpty()){
+            if (bean.getCheckInTime() != null && !bean.getCheckInTime().isEmpty()) {
                 checkInTime.setVisibility(View.VISIBLE);
-                checkInTime.setText(checkInTime.getContext().getString(R.string.data_time_in, CalenderUtils.formatDate(bean.getCheckInTime(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIMESTAMP_FORMAT)));
-            }else checkInTime.setVisibility(View.GONE);
+                checkInTime.setText(checkInTime.getContext().getString(R.string.data_time_in, CalenderUtils.formatDate(bean.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT)));
+            } else checkInTime.setVisibility(View.GONE);
 
             if (bean.getImageUrl().isEmpty()) {
                 Glide.with(imgVisitor.getContext())

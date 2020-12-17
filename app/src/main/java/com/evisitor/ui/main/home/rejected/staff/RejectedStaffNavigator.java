@@ -1,13 +1,11 @@
 package com.evisitor.ui.main.home.rejected.staff;
 
-import com.evisitor.data.model.HouseKeeping;
 import com.evisitor.data.model.HouseKeepingResponse;
-import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.ui.base.BaseNavigator;
 
 import java.util.List;
 
-public interface RejectedStaffNavigator extends BaseNavigator {
+interface RejectedStaffNavigator extends BaseNavigator {
 
     void onSuccess(List<HouseKeepingResponse.ContentBean> beans);
 

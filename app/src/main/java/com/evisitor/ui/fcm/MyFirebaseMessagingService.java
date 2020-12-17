@@ -22,7 +22,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        showNotification(MyFirebaseMessagingService.this.getApplicationContext(), Objects.requireNonNull(remoteMessage.getNotification()).getTitle(),remoteMessage.getNotification().getBody());
+        showNotification(MyFirebaseMessagingService.this.getApplicationContext(), Objects.requireNonNull(remoteMessage.getNotification()).getTitle(), remoteMessage.getNotification().getBody());
     }
 
     private void showNotification(Context context, String title, String message) {

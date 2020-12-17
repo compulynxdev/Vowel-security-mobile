@@ -132,6 +132,10 @@ public class ServiceProvider {
         return checkInTime == null ? "" : checkInTime;
     }
 
+    public void setCheckInTime(String checkInTime) {
+        this.checkInTime = checkInTime;
+    }
+
     public boolean isCheckOutFeature() {
         return checkOutFeature;
     }
@@ -156,12 +160,8 @@ public class ServiceProvider {
         isHostCheckOut = hostCheckOut;
     }
 
-    public void setCheckInTime(String checkInTime) {
-        this.checkInTime = checkInTime;
-    }
-
     public String getCheckOutTime() {
-        return checkOutTime == null? "" : checkOutTime;
+        return checkOutTime == null ? "" : checkOutTime;
     }
 
     public void setCheckOutTime(String checkOutTime) {
@@ -193,7 +193,7 @@ public class ServiceProvider {
     }
 
     public String getIdentityNo() {
-        return identityNo==null? "" : identityNo;
+        return identityNo == null ? "" : identityNo;
     }
 
     public void setIdentityNo(String identityNo) {
@@ -201,7 +201,7 @@ public class ServiceProvider {
     }
 
     public String getContactNo() {
-        return contactNo == null? "" : contactNo;
+        return contactNo == null ? "" : contactNo;
     }
 
     public void setContactNo(String contactNo) {
@@ -225,7 +225,7 @@ public class ServiceProvider {
     }
 
     public String getResidentId() {
-        return residentId==null ? "" : residentId;
+        return residentId == null ? "" : residentId;
     }
 
     public void setResidentId(String residentId) {

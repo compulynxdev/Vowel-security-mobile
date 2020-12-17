@@ -21,7 +21,7 @@ import com.evisitor.util.pagination.RecyclerViewScrollListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlackListVisitorActivity extends BaseActivity<ActivityBlackListVisitorBinding,BlackListViewModel> implements BlackListNavigtor {
+public class BlackListVisitorActivity extends BaseActivity<ActivityBlackListVisitorBinding, BlackListViewModel> implements BlackListNavigator {
 
     private List<BlackListVisitorResponse.ContentBean> list;
     private RecyclerViewScrollListener scrollListener;
@@ -30,7 +30,7 @@ public class BlackListVisitorActivity extends BaseActivity<ActivityBlackListVisi
     private BlackListAdapter adapter;
 
     public static Intent getStartIntent(Context context) {
-        return new Intent(context,BlackListVisitorActivity.class);
+        return new Intent(context, BlackListVisitorActivity.class);
     }
 
     @Override
@@ -76,7 +76,7 @@ public class BlackListVisitorActivity extends BaseActivity<ActivityBlackListVisi
             public void onLoadMore() {
                 setAdapterLoading(true);
                 page++;
-                getViewModel().getData(page,search);
+                getViewModel().getData(page, search);
             }
         };
         getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
@@ -103,7 +103,7 @@ public class BlackListVisitorActivity extends BaseActivity<ActivityBlackListVisi
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (newText.trim().isEmpty() || newText.trim().length() >= 3) {
-                        doSearch(newText);
+                    doSearch(newText);
                 }
                 return false;
             }
@@ -124,15 +124,15 @@ public class BlackListVisitorActivity extends BaseActivity<ActivityBlackListVisi
 
     @Override
     public void OnSuccessBlackList(List<BlackListVisitorResponse.ContentBean> beans) {
-            if (page==0) this.list.clear();
+        if (page == 0) this.list.clear();
 
-            this.list.addAll(beans);
-            adapter.notifyDataSetChanged();
+        this.list.addAll(beans);
+        adapter.notifyDataSetChanged();
 
-        if(this.list.size()==0){
+        if (this.list.size() == 0) {
             getViewDataBinding().recyclerView.setVisibility(View.GONE);
             getViewDataBinding().tvNoData.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             getViewDataBinding().tvNoData.setVisibility(View.GONE);
             getViewDataBinding().recyclerView.setVisibility(View.VISIBLE);
         }
@@ -143,7 +143,7 @@ public class BlackListVisitorActivity extends BaseActivity<ActivityBlackListVisi
         this.list.clear();
         this.page = 0;
         if (isNetworkConnected(true))
-            getViewModel().getData(page,search);
+            getViewModel().getData(page, search);
         else getViewDataBinding().swipeToRefresh.setRefreshing(false);
 
     }

@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="136dp"
-    app:layout_constrainedHeight="true"
-    app:layout_constraintHeight_min="136dp"
     android:layout_marginStart="12dp"
     android:layout_marginEnd="12dp"
     android:layout_marginBottom="10dp"
-    android:background="@drawable/bg_card_corner">
+    android:background="@drawable/bg_card_corner"
+    android:minHeight="136dp"
+    app:layout_constrainedHeight="true"
+    app:layout_constraintHeight_min="136dp">
 
     <FrameLayout
         android:id="@+id/frame_top"

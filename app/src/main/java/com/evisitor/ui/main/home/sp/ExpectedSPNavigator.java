@@ -5,7 +5,7 @@ import com.evisitor.ui.base.BaseNavigator;
 
 import java.util.List;
 
-public interface ExpectedSPNavigator extends BaseNavigator {
+interface ExpectedSPNavigator extends BaseNavigator {
     void onExpectedSPSuccess(List<ServiceProvider> spList);
 
     void hideSwipeToRefresh();

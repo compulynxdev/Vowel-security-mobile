@@ -19,8 +19,6 @@ public final class CalenderUtils {
     public static final String CUSTOM_TIMESTAMP_FORMAT_SLASH = "dd/MM/yyyy";
     public static final String CUSTOM_TIMESTAMP_FORMAT_AM = "EEE MMM, dd hh:mm a";
     public static final String CUSTOM_TIMESTAMP_FORMAT_DASH = "yyyy-MM-dd";
-    //public static final String CUSTOM_TIMESTAMP_FORMAT = "dd MMMM, yyyy";
-    public static final String DB_TIMESTAMP_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static final String DB_TIMESTAMP_FORMAT_DASH = "yyyy-MM-dd";
     public static final String TIME_FORMAT = "HH:mm";
     public static final String TIME_FORMAT_SEC = "HH:mm:ss";
@@ -30,6 +28,8 @@ public final class CalenderUtils {
     //public static final String SERVER_DATE_FORMAT = "E MMM dd HH:mm:ss Z yyyy";
     public static final String SERVER_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
     public static final String SERVER_DATE_FORMAT2 = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+    //public static final String CUSTOM_TIMESTAMP_FORMAT = "dd MMMM, yyyy";
+    private static final String DB_TIMESTAMP_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
 
     private CalenderUtils() {

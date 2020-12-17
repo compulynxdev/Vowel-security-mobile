@@ -1,12 +1,14 @@
 package com.evisitor.ui.main.home.rejected;
 
-import androidx.appcompat.widget.SearchView;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.viewpager.widget.ViewPager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.appcompat.widget.SearchView;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager.widget.ViewPager;
+
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.ActivityRejectedVisitorBinding;
@@ -17,13 +19,14 @@ import com.evisitor.ui.main.home.rejected.sp.RejectedSPFragment;
 import com.evisitor.ui.main.home.rejected.staff.RejectedStaffFragment;
 import com.evisitor.util.ViewPagerAdapter;
 
-public class RejectedVisitorActivity extends BaseActivity<ActivityRejectedVisitorBinding, RejectedVisitorViewModel> implements BaseNavigator,View.OnClickListener {
+public class RejectedVisitorActivity extends BaseActivity<ActivityRejectedVisitorBinding, RejectedVisitorViewModel> implements BaseNavigator, View.OnClickListener {
 
-    RejectedGuestFragment rejectedGuestFragment;
-    RejectedSPFragment rejectedSPFragment;
-    RejectedStaffFragment rejectedStaffFragment;
+    private RejectedGuestFragment rejectedGuestFragment;
+    private RejectedSPFragment rejectedSPFragment;
+    private RejectedStaffFragment rejectedStaffFragment;
+
     public static Intent getStartIntent(Context context) {
-        return  new Intent(context,RejectedVisitorActivity.class);
+        return new Intent(context, RejectedVisitorActivity.class);
     }
 
     @Override
@@ -49,7 +52,6 @@ public class RejectedVisitorActivity extends BaseActivity<ActivityRejectedVisito
         setUpSearch();
         setUpPagerAdapter();
     }
-
 
 
     private void initView() {
@@ -86,7 +88,7 @@ public class RejectedVisitorActivity extends BaseActivity<ActivityRejectedVisito
                     getViewDataBinding().tvGuest.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                     getViewDataBinding().tvHouse.setTextColor(getResources().getColor(R.color.black));
                     getViewDataBinding().tvService.setTextColor(getResources().getColor(R.color.black));
-                }else if (position == 1) {
+                } else if (position == 1) {
                     getViewDataBinding().tvGuest.setTextColor(getResources().getColor(R.color.black));
                     getViewDataBinding().tvHouse.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                     getViewDataBinding().tvService.setTextColor(getResources().getColor(R.color.black));
@@ -123,7 +125,7 @@ public class RejectedVisitorActivity extends BaseActivity<ActivityRejectedVisito
                         rejectedGuestFragment.setSearch(newText);
                     else if (getViewDataBinding().viewPager.getCurrentItem() == 1)
                         rejectedStaffFragment.setSearch(newText);
-                      else  rejectedSPFragment.setSearch(newText);
+                    else rejectedSPFragment.setSearch(newText);
                 }
                 return false;
             }

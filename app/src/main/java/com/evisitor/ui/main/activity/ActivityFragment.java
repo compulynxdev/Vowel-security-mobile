@@ -17,7 +17,7 @@ import com.evisitor.ui.main.activity.checkin.CheckInFragment;
 import com.evisitor.ui.main.activity.checkout.CheckOutFragment;
 import com.evisitor.util.ViewPagerAdapter;
 
-public class ActivityFragment extends BaseFragment<FragmentActivityBinding, ActivityViewModel> implements BaseNavigator,View.OnClickListener {
+public class ActivityFragment extends BaseFragment<FragmentActivityBinding, ActivityViewModel> implements BaseNavigator, View.OnClickListener {
     private int listOf;
     private CheckInFragment checkInFragment;
     private CheckOutFragment checkOutFragment;
@@ -129,16 +129,16 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.tv_in :
-                getViewDataBinding().viewPager.setCurrentItem(0,true);
+        switch (v.getId()) {
+            case R.id.tv_in:
+                getViewDataBinding().viewPager.setCurrentItem(0, true);
                 break;
 
-            case R.id.tv_out :
-                getViewDataBinding().viewPager.setCurrentItem(1,true);
+            case R.id.tv_out:
+                getViewDataBinding().viewPager.setCurrentItem(1, true);
                 break;
 
-            case R.id.img_search :
+            case R.id.img_search:
                 hideKeyboard();
                 getViewDataBinding().customSearchView.llSearchBar.setVisibility(getViewDataBinding().customSearchView.llSearchBar.getVisibility() == View.GONE
                         ? View.VISIBLE : View.GONE);
@@ -168,7 +168,7 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
                 listOf = 2;
                 checkInFragment.setCheckInList(listOf);
                 checkOutFragment.setCheckOutList(listOf);
-                getViewDataBinding(). titleGuest.setTextColor(getResources().getColor(R.color.black));
+                getViewDataBinding().titleGuest.setTextColor(getResources().getColor(R.color.black));
                 getViewDataBinding().titleService.setTextColor(getResources().getColor(R.color.colorPrimary));
                 getViewDataBinding().titleHouse.setTextColor(getResources().getColor(R.color.black));
                 break;

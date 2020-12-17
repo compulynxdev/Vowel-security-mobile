@@ -22,7 +22,7 @@ import java.util.List;
 public class NotificationAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     private static final int VIEWTYPE_ITEM = 1;
-    private static final int VIEWTYPE_LOADER =2 ;
+    private static final int VIEWTYPE_LOADER = 2;
     private boolean showLoader;
     private List<NotificationResponse.ContentBean> notificationList;
 
@@ -64,6 +64,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public void showLoading(boolean status) {
         showLoader = status;
     }
+
     @Override
     public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
         if (holder instanceof FooterLoader) {
@@ -103,6 +104,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public class ViewHolder extends BaseViewHolder {
         TextView tvTitle, tvTime, tvMsg, tvType, tvCompany;
+
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tv_title);

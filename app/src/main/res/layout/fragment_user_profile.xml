@@ -6,29 +6,30 @@
 
     <ScrollView
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:fillViewport="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_height="match_parent">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <include layout="@layout/header"
-                android:id="@+id/toolbar"/>
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/header" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/img_user"
                 android:layout_width="125dp"
                 android:layout_height="125dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_margin="20dp"
-                app:civ_circle_background_color="@color/white"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar"
                 android:src="@drawable/ic_person"
                 app:civ_border_color="@color/colorPrimary"
                 app:civ_border_width="2dp"
+                app:civ_circle_background_color="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar"
                 tools:ignore="ContentDescription" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -59,11 +60,11 @@
                     android:id="@+id/tv_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/futura_round_medium"
+                    android:text="@string/dummy_name"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/dummy_name"
                     app:layout_constraintTop_toBottomOf="@id/tv_name_label" />
 
                 <View
@@ -80,9 +81,9 @@
                     android:id="@+id/tv_username_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/futura_round_medium"
                     android:text="@string/username"
-                    android:layout_marginTop="5dp"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -94,9 +95,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/futura_round_medium"
+                    android:text="@string/dummy_username"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:text="@string/dummy_username"
                     app:layout_constraintTop_toBottomOf="@id/tv_username_label" />
 
                 <View
@@ -110,29 +111,27 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_username" />
 
                 <TextView
+                    android:id="@+id/tv_email_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/view_username"
                     android:layout_marginTop="5dp"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:id="@+id/tv_email_label"
-                    android:textColor="@color/black"
                     android:fontFamily="@font/futura_round_medium"
                     android:text="@string/email"
-                    />
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/view_username" />
 
                 <TextView
+                    android:id="@+id/tv_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/tv_email_label"
-                    android:textSize="16sp"
                     android:layout_marginTop="5dp"
-                    android:id="@+id/tv_email"
-                    android:textColor="@color/black"
-                    android:text="@string/dummy_email"
                     android:fontFamily="@font/futura_round_medium"
-                    />
+                    android:text="@string/dummy_email"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_email_label" />
 
                 <View
                     android:id="@+id/view_email"
@@ -142,8 +141,7 @@
                     android:layout_marginBottom="5dp"
                     android:background="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_email"
-                    />
+                    app:layout_constraintTop_toBottomOf="@id/tv_email" />
 
                 <TextView
                     android:id="@+id/tv_gender_label"
@@ -160,12 +158,12 @@
                 <TextView
                     android:id="@+id/tv_gender"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="5dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/futura_round_medium"
+                    android:text="@string/male"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:text="@string/male"
                     app:layout_constraintTop_toBottomOf="@id/tv_gender_label" />
 
                 <View
@@ -182,8 +180,8 @@
                 <TextView
                     android:id="@+id/tv_contact_label"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="5dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/futura_round_medium"
                     android:text="@string/contact"
                     android:textColor="@color/black"
@@ -194,12 +192,12 @@
                 <TextView
                     android:id="@+id/tv_contact"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="5dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/futura_round_medium"
+                    android:text="@string/dummy_contact"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:text="@string/dummy_contact"
                     app:layout_constraintTop_toBottomOf="@id/tv_contact_label" />
 
                 <View
@@ -215,8 +213,8 @@
                 <TextView
                     android:id="@+id/tv_group_label"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="5dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/futura_round_medium"
                     android:text="@string/group"
                     android:textColor="@color/black"
@@ -227,12 +225,12 @@
                 <TextView
                     android:id="@+id/tv_group"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="5dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/futura_round_medium"
+                    android:text="@string/dummy_contact"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:text="@string/dummy_contact"
                     app:layout_constraintTop_toBottomOf="@id/tv_group_label" />
 
 
@@ -249,8 +247,8 @@
                 <TextView
                     android:id="@+id/tv_property_label"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="5dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/futura_round_medium"
                     android:text="@string/property"
                     android:textColor="@color/black"
@@ -261,12 +259,12 @@
                 <TextView
                     android:id="@+id/tv_property"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="5dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/futura_round_medium"
+                    android:text="@string/dummy_contact"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:text="@string/dummy_contact"
                     app:layout_constraintTop_toBottomOf="@id/tv_property_label" />
 
 
@@ -295,12 +293,12 @@
                 <TextView
                     android:id="@+id/tv_address"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="5dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/futura_round_medium"
+                    android:text="@string/dummy_address"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:text="@string/dummy_address"
                     app:layout_constraintTop_toBottomOf="@id/tv_address_label" />
 
                 <View

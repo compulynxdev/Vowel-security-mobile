@@ -22,9 +22,9 @@ import com.evisitor.util.pagination.FooterLoader;
 import java.util.List;
 
 public class HouseKeepingCheckOutAdapter extends RecyclerView.Adapter<BaseViewHolder> {
-    private List<HouseKeeping> list;
     private static final int VIEWTYPE_ITEM = 1;
-    private static final int VIEWTYPE_LOADER =2 ;
+    private static final int VIEWTYPE_LOADER = 2;
+    private List<HouseKeeping> list;
     private boolean showLoader;
     private ItemClickCallback callback;
 
@@ -32,6 +32,7 @@ public class HouseKeepingCheckOutAdapter extends RecyclerView.Adapter<BaseViewHo
         this.list = list;
         this.callback = callback;
     }
+
     @NonNull
     @Override
     public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -50,7 +51,7 @@ public class HouseKeepingCheckOutAdapter extends RecyclerView.Adapter<BaseViewHo
 
     @Override
     public int getItemViewType(int position) {
-        if (position == list.size()-1) {
+        if (position == list.size() - 1) {
             return showLoader ? VIEWTYPE_LOADER : VIEWTYPE_ITEM;
         }
         return VIEWTYPE_ITEM;
@@ -82,7 +83,8 @@ public class HouseKeepingCheckOutAdapter extends RecyclerView.Adapter<BaseViewHo
     public class ViewHolder extends BaseViewHolder {
 
         ImageView imgVisitor;
-        TextView name, timeIn,timeOut,houseNo,host,visitorType;
+        TextView name, timeIn, timeOut, houseNo, host, visitorType;
+
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_name);
@@ -109,17 +111,17 @@ public class HouseKeepingCheckOutAdapter extends RecyclerView.Adapter<BaseViewHo
         public void onBind(int position) {
             HouseKeeping bean = list.get(position);
             Context context = name.getContext();
-            name.setText(context.getString(R.string.data_name,bean.getName()));
-            timeIn.setText(context.getString(R.string.data_time_in,CalenderUtils.formatDate(bean.getCheckInTime(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIMESTAMP_FORMAT)));
-            timeOut.setText(context.getString(R.string.data_time_out,CalenderUtils.formatDate(bean.getCheckOutTime(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIMESTAMP_FORMAT)));
+            name.setText(context.getString(R.string.data_name, bean.getName()));
+            timeIn.setText(context.getString(R.string.data_time_in, CalenderUtils.formatDate(bean.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT)));
+            timeOut.setText(context.getString(R.string.data_time_out, CalenderUtils.formatDate(bean.getCheckOutTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT)));
             if (!bean.getHouseNo().isEmpty()) {
                 houseNo.setVisibility(View.VISIBLE);
                 houseNo.setText(context.getString(R.string.data_house, bean.getPremiseName()));
-                host.setText(context.getString(R.string.data_host,bean.getHost()));
+                host.setText(context.getString(R.string.data_host, bean.getHost()));
             } else {
                 houseNo.setVisibility(View.GONE);
                 houseNo.setText("");
-                host.setText(context.getString(R.string.data_host,bean.getCreatedBy()));
+                host.setText(context.getString(R.string.data_host, bean.getCreatedBy()));
 
             }
 

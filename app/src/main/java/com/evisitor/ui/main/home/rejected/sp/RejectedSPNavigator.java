@@ -1,12 +1,11 @@
 package com.evisitor.ui.main.home.rejected.sp;
 
-import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.ui.base.BaseNavigator;
 
 import java.util.List;
 
-public interface RejectedSPNavigator extends BaseNavigator {
+interface RejectedSPNavigator extends BaseNavigator {
 
     void onSuccess(List<ServiceProvider> beans);
 

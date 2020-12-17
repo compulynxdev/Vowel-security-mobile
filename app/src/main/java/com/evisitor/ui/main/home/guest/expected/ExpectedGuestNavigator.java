@@ -5,7 +5,7 @@ import com.evisitor.ui.base.BaseNavigator;
 
 import java.util.List;
 
-public interface ExpectedGuestNavigator extends BaseNavigator {
+interface ExpectedGuestNavigator extends BaseNavigator {
     void onExpectedGuestSuccess(List<Guests> guestsList);
 
     void hideSwipeToRefresh();

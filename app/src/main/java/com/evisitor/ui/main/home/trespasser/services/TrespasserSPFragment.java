@@ -20,7 +20,7 @@ import com.evisitor.util.pagination.RecyclerViewScrollListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TrespasserSPFragment extends BaseFragment<FragmentTrespasserSBinding,TrespasserSPViewModel> implements TrespasserSPNavigator {
+public class TrespasserSPFragment extends BaseFragment<FragmentTrespasserSBinding, TrespasserSPViewModel> implements TrespasserSPNavigator {
 
     private RecyclerViewScrollListener scrollListener;
     private TrespasserAdapter adapter;
@@ -32,7 +32,7 @@ public class TrespasserSPFragment extends BaseFragment<FragmentTrespasserSBindin
     public static TrespasserSPFragment newInstance() {
         TrespasserSPFragment fragment = new TrespasserSPFragment();
         Bundle args = new Bundle();
-       fragment.setArguments(args);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -62,8 +62,6 @@ public class TrespasserSPFragment extends BaseFragment<FragmentTrespasserSBindin
         getViewModel().setNavigator(this);
         setUpAdapter();
     }
-
-
 
 
     private void setUpAdapter() {
@@ -108,10 +106,10 @@ public class TrespasserSPFragment extends BaseFragment<FragmentTrespasserSBindin
         this.list.addAll(beans);
         adapter.notifyDataSetChanged();
 
-        if(this.list.size()==0){
+        if (this.list.size() == 0) {
             getViewDataBinding().recyclerView.setVisibility(View.GONE);
             getViewDataBinding().tvNoData.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             getViewDataBinding().tvNoData.setVisibility(View.GONE);
             getViewDataBinding().recyclerView.setVisibility(View.VISIBLE);
         }

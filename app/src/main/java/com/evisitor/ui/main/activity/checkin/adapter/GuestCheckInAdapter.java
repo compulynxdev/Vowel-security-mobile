@@ -22,9 +22,9 @@ import com.evisitor.util.pagination.FooterLoader;
 import java.util.List;
 
 public class GuestCheckInAdapter extends RecyclerView.Adapter<BaseViewHolder> {
-    private List<Guests> list;
     private static final int VIEWTYPE_ITEM = 1;
-    private static final int VIEWTYPE_LOADER =2 ;
+    private static final int VIEWTYPE_LOADER = 2;
+    private List<Guests> list;
     private boolean showLoader;
     private Context context;
     private ItemClickCallback listener;
@@ -53,7 +53,7 @@ public class GuestCheckInAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        if (position == list.size()-1) {
+        if (position == list.size() - 1) {
             return showLoader ? VIEWTYPE_LOADER : VIEWTYPE_ITEM;
         }
         return VIEWTYPE_ITEM;
@@ -86,7 +86,8 @@ public class GuestCheckInAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public class ViewHolder extends BaseViewHolder {
 
         ImageView imgVisitor;
-        TextView name,time,houseNo,host,visitorType;
+        TextView name, time, houseNo, host, visitorType;
+
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_name);
@@ -111,17 +112,17 @@ public class GuestCheckInAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         public void onBind(int position) {
             Guests bean = list.get(position);
-            name.setText(context.getString(R.string.data_name,bean.getName()));
-            time.setText(context.getString(R.string.data_time_in,CalenderUtils.formatDate(bean.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT)));
+            name.setText(context.getString(R.string.data_name, bean.getName()));
+            time.setText(context.getString(R.string.data_time_in, CalenderUtils.formatDate(bean.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT)));
             if (!bean.getHouseNo().isEmpty()) {
                 houseNo.setVisibility(View.VISIBLE);
                 houseNo.setText(context.getString(R.string.data_house, bean.getPremiseName()));
-                host.setText(context.getString(R.string.data_host,bean.getHost()));
+                host.setText(context.getString(R.string.data_host, bean.getHost()));
 
             } else {
                 houseNo.setVisibility(View.GONE);
                 houseNo.setText("");
-                host.setText(context.getString(R.string.data_host,bean.getCreatedBy()));
+                host.setText(context.getString(R.string.data_host, bean.getCreatedBy()));
 
             }
 

@@ -21,13 +21,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BlackListViewModel extends BaseViewModel<BlackListNavigtor> {
+public class BlackListViewModel extends BaseViewModel<BlackListNavigator> {
     public BlackListViewModel(DataManager dataManager) {
         super(dataManager);
     }
 
 
-    void getData(int page, String search){
+    void getData(int page, String search) {
         AppLogger.e("MYPage", page + " : " + search);
         Map<String, String> map = new HashMap<>();
         map.put("accountId", getDataManager().getAccountId());
@@ -35,7 +35,7 @@ public class BlackListViewModel extends BaseViewModel<BlackListNavigtor> {
             map.put("search", search);
         map.put("page", "" + page);
         map.put("size", String.valueOf(AppConstants.LIMIT));
-        map.put("type",AppConstants.BLACK);
+        map.put("type", AppConstants.BLACK);
         AppLogger.d("Searching : BlackList", "" + page);
         getDataManager().doGetBlackListVisitors(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
             @Override
@@ -69,11 +69,11 @@ public class BlackListViewModel extends BaseViewModel<BlackListNavigtor> {
         getNavigator().showLoading();
         List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, visitorResponse.getFullName())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_profile,visitorResponse.getProfile().isEmpty() ? getNavigator().getContext().getString(R.string.na) : visitorResponse.getProfile())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_type, visitorResponse.getType().isEmpty() ? getNavigator().getContext().getString(R.string.na) :visitorResponse.getType())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile,visitorResponse.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(visitorResponse.getDialingCode()).concat(" ").concat(visitorResponse.getContactNo()))));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_blacklisted_by,visitorResponse.getLastModifiedBy().isEmpty() ? getNavigator().getContext().getString(R.string.na) : visitorResponse.getLastModifiedBy())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_blacklisted_date,visitorResponse.getLastModifiedDate().isEmpty() ? getNavigator().getContext().getString(R.string.na) : CalenderUtils.formatDate(visitorResponse.getLastModifiedDate(), CalenderUtils.SERVER_DATE_FORMAT2, CalenderUtils.CUSTOM_TIMESTAMP_FORMAT_SLASH))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_profile, visitorResponse.getProfile().isEmpty() ? getNavigator().getContext().getString(R.string.na) : visitorResponse.getProfile())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_type, visitorResponse.getType().isEmpty() ? getNavigator().getContext().getString(R.string.na) : visitorResponse.getType())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, visitorResponse.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(visitorResponse.getDialingCode()).concat(" ").concat(visitorResponse.getContactNo()))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_blacklisted_by, visitorResponse.getLastModifiedBy().isEmpty() ? getNavigator().getContext().getString(R.string.na) : visitorResponse.getLastModifiedBy())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_blacklisted_date, visitorResponse.getLastModifiedDate().isEmpty() ? getNavigator().getContext().getString(R.string.na) : CalenderUtils.formatDate(visitorResponse.getLastModifiedDate(), CalenderUtils.SERVER_DATE_FORMAT2, CalenderUtils.CUSTOM_TIMESTAMP_FORMAT_SLASH))));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_reason, visitorResponse.getReason().isEmpty() ? getNavigator().getContext().getString(R.string.na) : visitorResponse.getReason())));
 
         getNavigator().hideLoading();

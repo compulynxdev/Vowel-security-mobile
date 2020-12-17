@@ -36,7 +36,6 @@ import okhttp3.ResponseBody;
 public abstract class BaseBottomSheetDialog<T extends ViewDataBinding, V extends BaseViewModel> extends BottomSheetDialogFragment implements BaseNavigator, View.OnFocusChangeListener {
 
     private BaseActivity mActivity;
-    private View mRootView;
     private T mViewDataBinding;
     private V mViewModel;
 
@@ -82,8 +81,7 @@ public abstract class BaseBottomSheetDialog<T extends ViewDataBinding, V extends
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mViewDataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
-        mRootView = mViewDataBinding.getRoot();
-        return mRootView;
+        return mViewDataBinding.getRoot();
     }
 
     @NonNull
@@ -223,13 +221,13 @@ public abstract class BaseBottomSheetDialog<T extends ViewDataBinding, V extends
 
     @Override
     public void handleApiFailure(@NonNull Throwable t) {
-        if(mActivity!=null)
+        if (mActivity != null)
             mActivity.handleApiFailure(t);
     }
 
     @Override
     public void handleApiError(ResponseBody response) {
-        if(mActivity!=null)
+        if (mActivity != null)
             mActivity.handleApiError(response);
     }
 

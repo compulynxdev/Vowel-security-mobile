@@ -29,7 +29,6 @@ public class RejectedGuestViewModel extends BaseViewModel<RejectedGuestNavigator
     }
 
 
-
     void getGuest(int page, String search) {
         if (getNavigator().isNetworkConnected()) {
             Map<String, String> map = new HashMap<>();
@@ -38,7 +37,7 @@ public class RejectedGuestViewModel extends BaseViewModel<RejectedGuestNavigator
                 map.put("search", search);
             map.put("page", "" + page);
             map.put("size", String.valueOf(AppConstants.LIMIT));
-            map.put("type","guest");
+            map.put("type", "guest");
             AppLogger.d("Searching : Trespasser", page + " : " + search);
 
             getDataManager().doGetRejectedVisitors(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
@@ -69,10 +68,10 @@ public class RejectedGuestViewModel extends BaseViewModel<RejectedGuestNavigator
                     getNavigator().handleApiFailure(t);
                 }
             });
-        }else {
+        } else {
             getNavigator().hideSwipeToRefresh();
             getNavigator().hideLoading();
-            getNavigator().showAlert(getNavigator().getContext().getString(R.string.alert),getNavigator().getContext().getString(R.string.alert_internet));
+            getNavigator().showAlert(getNavigator().getContext().getString(R.string.alert), getNavigator().getContext().getString(R.string.alert_internet));
         }
     }
 
@@ -83,16 +82,16 @@ public class RejectedGuestViewModel extends BaseViewModel<RejectedGuestNavigator
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_vehicle, guests.getExpectedVehicleNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getExpectedVehicleNo())));
 
         if (getDataManager().getGuestConfiguration().getGuestField().isContactNo())
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile,guests.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(guests.getDialingCode()).concat(" ").concat(guests.getContactNo()))));
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, guests.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(guests.getDialingCode()).concat(" ").concat(guests.getContactNo()))));
 
         if (getDataManager().isIdentifyFeature())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, guests.getIdentityNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getIdentityNo())));
 
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_house, guests.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getPremiseName())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, guests.getHost().isEmpty() ? guests.getCreatedBy() : guests.getHost())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.rejected_by,guests.getRejectedBy().isEmpty() ? getNavigator().getContext().getString(R.string.na) :  guests.getRejectedBy())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.rejected_on , guests.getRejectedOn().isEmpty() ? getNavigator().getContext().getString(R.string.na) : CalenderUtils.formatDate(guests.getRejectedOn(),CalenderUtils.SERVER_DATE_FORMAT,CalenderUtils.TIMESTAMP_FORMAT))));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_reason,guests.getRejectedReason().isEmpty() ? getNavigator().getContext().getString(R.string.na) :  guests.getRejectedReason())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.rejected_by, guests.getRejectedBy().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getRejectedBy())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.rejected_on, guests.getRejectedOn().isEmpty() ? getNavigator().getContext().getString(R.string.na) : CalenderUtils.formatDate(guests.getRejectedOn(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_reason, guests.getRejectedReason().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getRejectedReason())));
         getNavigator().hideLoading();
         return visitorProfileBeanList;
     }

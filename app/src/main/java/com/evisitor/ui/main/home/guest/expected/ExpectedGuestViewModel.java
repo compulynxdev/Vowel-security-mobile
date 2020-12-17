@@ -33,14 +33,14 @@ public class ExpectedGuestViewModel extends BaseCheckInOutViewModel<ExpectedGues
     }
 
     void getGuestListData(int page, String search) {
-        if (getNavigator().isNetworkConnected()){
+        if (getNavigator().isNetworkConnected()) {
             Map<String, String> map = new HashMap<>();
             map.put("accountId", getDataManager().getAccountId());
             if (!search.isEmpty())
                 map.put("search", search);
             map.put("page", "" + page);
             map.put("size", String.valueOf(AppConstants.LIMIT));
-            map.put("type",AppConstants.EXPECTED);
+            map.put("type", AppConstants.EXPECTED);
             AppLogger.d("Searching : ExpectedGuest", page + " : " + search);
 
             getDataManager().doGetExpectedGuestListDetail(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
@@ -70,10 +70,10 @@ public class ExpectedGuestViewModel extends BaseCheckInOutViewModel<ExpectedGues
                     getNavigator().handleApiFailure(t);
                 }
             });
-        }else {
+        } else {
             getNavigator().hideLoading();
             getNavigator().hideSwipeToRefresh();
-            getNavigator().showAlert(getNavigator().getContext().getString(R.string.alert),getNavigator().getContext().getString(R.string.alert_internet));
+            getNavigator().showAlert(getNavigator().getContext().getString(R.string.alert), getNavigator().getContext().getString(R.string.alert_internet));
         }
     }
 
@@ -85,7 +85,7 @@ public class ExpectedGuestViewModel extends BaseCheckInOutViewModel<ExpectedGues
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), guests.getExpectedVehicleNo(), VisitorProfileBean.VIEW_TYPE_EDITABLE));
 
         if (getDataManager().getGuestConfiguration().getGuestField().isContactNo())
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile,guests.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(guests.getDialingCode()).concat(" ").concat(guests.getContactNo()))));
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, guests.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(guests.getDialingCode()).concat(" ").concat(guests.getContactNo()))));
 
         if (getDataManager().isIdentifyFeature())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, guests.getIdentityNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getIdentityNo())));
@@ -120,7 +120,7 @@ public class ExpectedGuestViewModel extends BaseCheckInOutViewModel<ExpectedGues
         }
     }
 
-    void approveByCall(boolean isAccept,String input) {
+    void approveByCall(boolean isAccept, String input) {
         if (getNavigator().isNetworkConnected(true)) {
             JSONObject object = new JSONObject();
             try {
@@ -129,8 +129,8 @@ public class ExpectedGuestViewModel extends BaseCheckInOutViewModel<ExpectedGues
                 object.put("type", AppConstants.CHECK_IN);
                 object.put("visitor", AppConstants.GUEST);
                 object.put("state", isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);
-                object.put("rejectedBy",isAccept ? null : getDataManager().getUserDetail().getFullName());
-                object.put("rejectReason",input);
+                object.put("rejectedBy", isAccept ? null : getDataManager().getUserDetail().getFullName());
+                object.put("rejectReason", input);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

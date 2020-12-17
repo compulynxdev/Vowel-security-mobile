@@ -1,13 +1,14 @@
 package com.evisitor.ui.main.home.trespasser;
 
-import androidx.appcompat.widget.SearchView;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.viewpager.widget.ViewPager;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.appcompat.widget.SearchView;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager.widget.ViewPager;
+
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.ActivityTrespasserBinding;
@@ -17,13 +18,13 @@ import com.evisitor.ui.main.home.trespasser.guests.TrespasserGuestFragment;
 import com.evisitor.ui.main.home.trespasser.services.TrespasserSPFragment;
 import com.evisitor.util.ViewPagerAdapter;
 
-public class TrespasserActivity extends BaseActivity<ActivityTrespasserBinding,TrespasserViewModel> implements BaseNavigator,View.OnClickListener {
+public class TrespasserActivity extends BaseActivity<ActivityTrespasserBinding, TrespasserViewModel> implements BaseNavigator, View.OnClickListener {
 
     private TrespasserSPFragment trespasserSPFragment;
     private TrespasserGuestFragment trespasserGuestFragment;
 
     public static Intent getStartIntent(Context context) {
-        return new Intent(context,TrespasserActivity.class);
+        return new Intent(context, TrespasserActivity.class);
     }
 
     @Override
@@ -49,7 +50,6 @@ public class TrespasserActivity extends BaseActivity<ActivityTrespasserBinding,T
         setUpSearch();
         setUpPagerAdapter();
     }
-
 
 
     private void initView() {

@@ -42,7 +42,7 @@ import okhttp3.ResponseBody;
  * Date: 15/07/20
  */
 
-public abstract class BaseActivity <T extends ViewDataBinding,V extends BaseViewModel> extends AppCompatActivity
+public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseViewModel> extends AppCompatActivity
         implements BaseFragment.Callback, BaseNavigator {
 
     private static final String TAG = "BaseActivity";

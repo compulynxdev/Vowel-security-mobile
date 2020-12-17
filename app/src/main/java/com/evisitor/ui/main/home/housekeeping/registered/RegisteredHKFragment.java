@@ -104,10 +104,10 @@ public class RegisteredHKFragment extends BaseFragment<FragmentExpectedBinding, 
         this.list.addAll(houseKeepingList);
         adapter.notifyDataSetChanged();
 
-        if(this.list.size()==0){
+        if (this.list.size() == 0) {
             getViewDataBinding().recyclerView.setVisibility(View.GONE);
             getViewDataBinding().tvNoData.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             getViewDataBinding().tvNoData.setVisibility(View.GONE);
             getViewDataBinding().recyclerView.setVisibility(View.VISIBLE);
         }

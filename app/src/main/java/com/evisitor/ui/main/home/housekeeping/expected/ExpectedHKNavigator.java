@@ -5,7 +5,7 @@ import com.evisitor.ui.base.BaseNavigator;
 
 import java.util.List;
 
-public interface ExpectedHKNavigator extends BaseNavigator {
+interface ExpectedHKNavigator extends BaseNavigator {
     void onExpectedHKSuccess(List<HouseKeepingResponse.ContentBean> houseKeepingList);
 
     void hideSwipeToRefresh();

@@ -79,7 +79,7 @@ public class UserDetail {
     }
 
     public String getCountry() {
-        return country == null  ? "" : country;
+        return country == null ? "" : country;
     }
 
     public void setCountry(String country) {

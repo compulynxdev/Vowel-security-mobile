@@ -29,8 +29,8 @@ import java.util.List;
 import static android.app.Activity.RESULT_OK;
 
 public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBinding, ExpectedGuestViewModel> implements ExpectedGuestNavigator {
-    private List<Guests> guestsList;
     private final int SCAN_RESULT = 101;
+    private List<Guests> guestsList;
     private RecyclerViewScrollListener scrollListener;
     private ExpectedGuestAdapter adapter;
     private String search = "";
@@ -103,7 +103,7 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
     private void decideNextProcess() {
         Guests tmpBean = getViewModel().getDataManager().getGuestDetail();
         if (tmpBean.getCheckInStatus()) {
-            getViewModel().approveByCall(true,null);
+            getViewModel().approveByCall(true, null);
         } else {
             if (!getViewModel().getDataManager().isIdentifyFeature() || tmpBean.getIdentityNo().isEmpty()) {
                 showCheckinOptions();
@@ -216,7 +216,7 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
                 })
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
-                    getViewModel().approveByCall(true,null);
+                    getViewModel().approveByCall(true, null);
                 }).show(getFragmentManager());
     }
 
@@ -224,7 +224,7 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
         InputDialog.newInstance().setTitle(getString(R.string.are_you_sure))
                 .setOnPositiveClickListener((dialog, input) -> {
                     dialog.dismiss();
-                    getViewModel().approveByCall(false,input);
+                    getViewModel().approveByCall(false, input);
                 }).show(getFragmentManager());
     }
 
@@ -235,10 +235,10 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
         guestsList.addAll(tmpGuestsList);
         adapter.notifyDataSetChanged();
 
-        if(guestsList.size()==0){
+        if (guestsList.size() == 0) {
             getViewDataBinding().recyclerView.setVisibility(View.GONE);
             getViewDataBinding().tvNoData.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             getViewDataBinding().tvNoData.setVisibility(View.GONE);
             getViewDataBinding().recyclerView.setVisibility(View.VISIBLE);
         }

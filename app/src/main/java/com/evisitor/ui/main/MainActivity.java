@@ -80,7 +80,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                     break;
 
                 case ID_SETTINGS:
-                    replaceFragment(SettingsFragment.newInstance(),R.id.frame_layout);
+                    replaceFragment(SettingsFragment.newInstance(), R.id.frame_layout);
                     break;
 
                 case ID_PROFILE:

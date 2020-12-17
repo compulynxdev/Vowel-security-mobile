@@ -6,15 +6,16 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.lifecycle.ViewModelProvider;
+
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.ActivityTutorialScanBinding;
 import com.evisitor.ui.base.BaseActivity;
 
-public class TutorialScanActivity extends BaseActivity<ActivityTutorialScanBinding,TutorialScanViewModel> implements TutorialScanNavigator {
+public class TutorialScanActivity extends BaseActivity<ActivityTutorialScanBinding, TutorialScanViewModel> implements TutorialScanNavigator {
 
     public static Intent getStartIntent(Context context) {
-        return new Intent(context,TutorialScanActivity.class);
+        return new Intent(context, TutorialScanActivity.class);
     }
 
     @Override
@@ -29,7 +30,7 @@ public class TutorialScanActivity extends BaseActivity<ActivityTutorialScanBindi
 
     @Override
     public TutorialScanViewModel getViewModel() {
-        return new ViewModelProvider(this,ViewModelProviderFactory.getInstance()).get(TutorialScanViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(TutorialScanViewModel.class);
     }
 
     @Override
@@ -39,11 +40,8 @@ public class TutorialScanActivity extends BaseActivity<ActivityTutorialScanBindi
         getViewDataBinding().header.imgBack.setVisibility(View.VISIBLE);
         getViewDataBinding().header.imgBack.setOnClickListener(v -> onBackPressed());
 
-        getViewDataBinding().btnContinue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        getViewDataBinding().btnContinue.setOnClickListener(view -> {
 
-            }
         });
     }
 

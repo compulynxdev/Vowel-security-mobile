@@ -70,7 +70,7 @@ public class FlagVisitorActivity extends BaseActivity<ActivityFlagVisitorBinding
             public void onLoadMore() {
                 setAdapterLoading(true);
                 page++;
-                getViewModel().getData(page,search);
+                getViewModel().getData(page, search);
             }
         };
         getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
@@ -125,10 +125,10 @@ public class FlagVisitorActivity extends BaseActivity<ActivityFlagVisitorBinding
         this.list.addAll(beans);
         adapter.notifyDataSetChanged();
 
-        if(this.list.size()==0){
+        if (this.list.size() == 0) {
             getViewDataBinding().recyclerView.setVisibility(View.GONE);
             getViewDataBinding().tvNoData.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             getViewDataBinding().tvNoData.setVisibility(View.GONE);
             getViewDataBinding().recyclerView.setVisibility(View.VISIBLE);
         }
@@ -140,7 +140,7 @@ public class FlagVisitorActivity extends BaseActivity<ActivityFlagVisitorBinding
         this.list.clear();
         this.page = 0;
         if (isNetworkConnected(true))
-            getViewModel().getData(page,search);
+            getViewModel().getData(page, search);
         else getViewDataBinding().swipeToRefresh.setRefreshing(false);
     }
 

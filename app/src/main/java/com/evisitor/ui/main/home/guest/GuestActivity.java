@@ -26,9 +26,10 @@ public class GuestActivity extends BaseActivity<ActivityExpectedGuestBinding, Gu
 
     private ExpectedGuestFragment guestFragment;
 
-    public static Intent getStartIntent(Context context){
+    public static Intent getStartIntent(Context context) {
         return new Intent(context, GuestActivity.class);
     }
+
     @Override
     public int getBindingVariable() {
         return com.evisitor.BR.viewModel;
@@ -56,7 +57,7 @@ public class GuestActivity extends BaseActivity<ActivityExpectedGuestBinding, Gu
         replaceFragment(guestFragment, R.id.guest_frame);
 
         getViewDataBinding().fabAdd.setOnClickListener(v -> {
-            if (getViewModel().getDataManager().isIdentifyFeature()){
+            if (getViewModel().getDataManager().isIdentifyFeature()) {
                 AlertDialog.newInstance()
                         .setNegativeBtnShow(true)
                         .setCloseBtnShow(true)
@@ -76,7 +77,7 @@ public class GuestActivity extends BaseActivity<ActivityExpectedGuestBinding, Gu
                             i.putExtra(AppConstants.FROM, AppConstants.CONTROLLER_GUEST);
                             startActivity(i);
                         }).show(getSupportFragmentManager());
-            }else {
+            } else {
                 Intent i = AddVisitorActivity.getStartIntent(this);
                 i.putExtra(AppConstants.FROM, AppConstants.CONTROLLER_GUEST);
                 startActivity(i);

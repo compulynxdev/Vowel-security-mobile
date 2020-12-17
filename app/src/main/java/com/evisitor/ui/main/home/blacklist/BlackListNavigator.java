@@ -5,7 +5,7 @@ import com.evisitor.ui.base.BaseNavigator;
 
 import java.util.List;
 
-public interface BlackListNavigtor extends BaseNavigator {
+interface BlackListNavigator extends BaseNavigator {
 
     void hideSwipeToRefresh();
 

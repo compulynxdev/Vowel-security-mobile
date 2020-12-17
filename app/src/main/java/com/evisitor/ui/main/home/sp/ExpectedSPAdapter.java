@@ -92,7 +92,7 @@ public class ExpectedSPAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public class ViewHolder extends BaseViewHolder {
         ImageView imgVisitor;
-        TextView name, profile, time, houseNo, host, vehicle,status;
+        TextView name, profile, time, houseNo, host, vehicle, status;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -122,7 +122,7 @@ public class ExpectedSPAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             Context context = name.getContext();
             name.setText(context.getString(R.string.data_name, bean.getName()));
             status.setVisibility(bean.getStatus().equalsIgnoreCase("PENDING") ? View.GONE : View.VISIBLE);
-            status.setText(status.getContext().getString(R.string.status,bean.getStatus()));
+            status.setText(status.getContext().getString(R.string.status, bean.getStatus()));
             profile.setText(context.getString(R.string.data_profile, bean.getProfile()));
             if (bean.getTime() != null && !bean.getTime().isEmpty())
                 time.setText(context.getString(R.string.data_time, CalenderUtils.formatDate(bean.getTime(), CalenderUtils.SERVER_DATE_FORMAT,

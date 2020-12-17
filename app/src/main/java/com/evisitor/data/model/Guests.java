@@ -42,6 +42,36 @@ public class Guests {
 
     @SerializedName("dialingCode")
     private String dialingCode;
+    @SerializedName("checkInTime")
+    private String checkInTime;
+    @SerializedName("checkOutTime")
+    private String checkOutTime;
+    @SerializedName("premiseHierarchyDetailsId")
+    private String flatId = "";
+    @SerializedName("flatId")  //for guest check in/out list
+    private String flatId2 = "";
+    @SerializedName("id")
+    private String guestId;
+    @SerializedName("checkOutFeature")
+    private boolean checkOutFeature;
+    @SerializedName("hostCheckOutTime")
+    private String hostCheckOutTime;
+    @SerializedName("isHostCheckOut")
+    private boolean isHostCheckOut;
+    @SerializedName("image")
+    private String imageUrl;
+    @SerializedName("state")
+    private String status;
+    @SerializedName("checkInStatus")
+    private boolean checkInStatus;
+    @SerializedName("rejectedBy")
+    private String rejectedBy;
+    @SerializedName("rejectReason")
+    private String rejectedReason;
+    @SerializedName("rejectedOn")
+    private String rejectedOn;
+    @SerializedName("premiseName")
+    private String premiseName;
 
     public String getCheckInTime() {
         return checkInTime;
@@ -51,54 +81,8 @@ public class Guests {
         this.checkInTime = checkInTime;
     }
 
-    @SerializedName("checkInTime")
-    private String checkInTime;
-
-    @SerializedName("checkOutTime")
-    private String checkOutTime;
-
-    @SerializedName("premiseHierarchyDetailsId")
-    private String flatId = "";
-
-    @SerializedName("flatId")  //for guest check in/out list
-    private String flatId2 = "";
-
-    @SerializedName("id")
-    private String guestId;
-
-
-    @SerializedName("checkOutFeature")
-    private boolean checkOutFeature;
-
-    @SerializedName("hostCheckOutTime")
-    private String hostCheckOutTime;
-
-    @SerializedName("isHostCheckOut")
-    private boolean isHostCheckOut;
-
-    @SerializedName("image")
-    private String imageUrl;
-
-    @SerializedName("state")
-    private String status;
-
-    @SerializedName("checkInStatus")
-    private boolean checkInStatus;
-
-    @SerializedName("rejectedBy")
-    private String rejectedBy;
-
-    @SerializedName("rejectReason")
-    private String rejectedReason;
-
-    @SerializedName("rejectedOn")
-    private String rejectedOn;
-
-    @SerializedName("premiseName")
-    private String premiseName;
-
     public String getStatus() {
-        return status ==null ? "PENDING" : status;
+        return status == null ? "PENDING" : status;
     }
 
     public void setStatus(String status) {
@@ -163,7 +147,7 @@ public class Guests {
     }
 
     public String getContactNo() {
-        return contactNo==null? "": contactNo;
+        return contactNo == null ? "" : contactNo;
     }
 
     public void setContactNo(String contactNo) {
@@ -171,7 +155,7 @@ public class Guests {
     }
 
     public String getFlatId() {
-        return flatId==null? "": flatId;
+        return flatId == null ? "" : flatId;
     }
 
     public void setFlatId(String flatId) {
@@ -179,7 +163,7 @@ public class Guests {
     }
 
     public String getGuestId() {
-        return guestId==null?"": guestId;
+        return guestId == null ? "" : guestId;
     }
 
     public void setGuestId(String guestId) {
@@ -203,7 +187,7 @@ public class Guests {
     }
 
     public String getExpectedVehicleNo() {
-        return expectedVehicleNo ==null? "" : expectedVehicleNo;
+        return expectedVehicleNo == null ? "" : expectedVehicleNo;
     }
 
     public void setExpectedVehicleNo(String expectedVehicleNo) {
@@ -211,7 +195,7 @@ public class Guests {
     }
 
     public String getTime() {
-        return time==null?"": time;
+        return time == null ? "" : time;
     }
 
     public void setTime(String time) {
@@ -219,7 +203,11 @@ public class Guests {
     }
 
     public String getHouseNo() {
-        return houseNo== null? "" : houseNo;
+        return houseNo == null ? "" : houseNo;
+    }
+
+    public void setHouseNo(String houseNo) {
+        this.houseNo = houseNo;
     }
 
     public String getCheckOutTime() {
@@ -230,12 +218,8 @@ public class Guests {
         this.checkOutTime = checkOutTime;
     }
 
-    public void setHouseNo(String houseNo) {
-        this.houseNo = houseNo;
-    }
-
     public String getHost() {
-        return host==null ? "" : host;
+        return host == null ? "" : host;
     }
 
     public void setHost(String host) {
@@ -243,7 +227,7 @@ public class Guests {
     }
 
     public String getCreatedBy() {
-        return createdBy == null ?  "" : createdBy;
+        return createdBy == null ? "" : createdBy;
     }
 
     public void setCreatedBy(String createdBy) {

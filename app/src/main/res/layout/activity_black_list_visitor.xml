@@ -6,7 +6,9 @@
 
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.evisitor.ui.main.home.blacklist.BlackListViewModel" />
@@ -14,12 +16,13 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="@color/colorDashboard"
+        android:layout_height="match_parent"
         android:animateLayoutChanges="true"
-        android:layout_height="match_parent">
+        android:background="@color/colorDashboard">
 
-        <include layout="@layout/header"
-            android:id="@+id/header"/>
+        <include
+            android:id="@+id/header"
+            layout="@layout/header" />
 
         <include
             android:id="@+id/custom_search_view"
@@ -34,37 +37,36 @@
             app:layout_constraintTop_toBottomOf="@+id/header" />
 
         <TextView
+            android:id="@+id/tv_no_data"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/tv_no_data"
             android:fontFamily="@font/futura_round"
-            android:textColor="@color/white"
-            android:textAlignment="center"
             android:gravity="center"
-            android:textSize="22sp"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:text="@string/no_blacklisted"
-            />
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeToRefresh"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:id="@+id/swipeToRefresh"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/custom_search_view"
             app:layout_constraintStart_toStartOf="parent"
-            >
+            app:layout_constraintTop_toBottomOf="@id/custom_search_view">
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:overScrollMode="never"
-                android:visibility = "gone"
                 android:paddingStart="8dp"
-                android:paddingEnd="8dp"
                 android:paddingTop="18dp"
+                android:paddingEnd="8dp"
+                android:visibility="gone"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_black_list" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

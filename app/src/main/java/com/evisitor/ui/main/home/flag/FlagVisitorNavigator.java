@@ -5,7 +5,7 @@ import com.evisitor.ui.base.BaseNavigator;
 
 import java.util.List;
 
-public interface FlagVisitorNavigator extends BaseNavigator {
+interface FlagVisitorNavigator extends BaseNavigator {
 
     void hideSwipeToRefresh();
 

@@ -1,17 +1,17 @@
 package com.evisitor.ui.main.rejectreason;
 
 import android.os.Bundle;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
-import android.view.View;
+
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.DialogInputBinding;
 import com.evisitor.ui.base.BaseDialog;
-import com.evisitor.ui.dialog.AlertDialog;
 
 public class InputDialog extends BaseDialog<DialogInputBinding, InputDialogViewModel> implements View.OnClickListener {
 
@@ -74,11 +74,11 @@ public class InputDialog extends BaseDialog<DialogInputBinding, InputDialogViewM
                 break;
 
             case R.id.btn_positive:
-                if(getViewDataBinding().etInput.getText().toString().isEmpty()){
+                if (getViewDataBinding().etInput.getText().toString().isEmpty()) {
                     getBaseActivity().showToast(getString(R.string.reason_cannot_be_empty));
-                }else{
+                } else {
                     if (positiveListener != null) {
-                        positiveListener.onPositiveClick(this,getViewDataBinding().etInput.getText().toString());
+                        positiveListener.onPositiveClick(this, getViewDataBinding().etInput.getText().toString());
                     }
                 }
                 break;

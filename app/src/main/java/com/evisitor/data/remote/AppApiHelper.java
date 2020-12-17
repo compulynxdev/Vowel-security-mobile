@@ -23,15 +23,15 @@ public class AppApiHelper implements ApiHelper {
             .writeTimeout(30, TimeUnit.SECONDS)
             .build();
 
+    private AppApiHelper() {
+
+    }
+
     public synchronized static AppApiHelper getAppApiInstance() {
         if (apiHelper == null) {
             apiHelper = new AppApiHelper();
         }
         return apiHelper;
-    }
-
-    private AppApiHelper() {
-
     }
 
     private static ApiHelper getApiInterface() {

@@ -5,7 +5,7 @@ import com.evisitor.ui.base.BaseNavigator;
 
 import java.util.List;
 
-public interface TrespasserGuestNavigator extends BaseNavigator {
+interface TrespasserGuestNavigator extends BaseNavigator {
 
     void onTrespasserSuccess(List<TrespasserResponse.ContentBean> beans);
 

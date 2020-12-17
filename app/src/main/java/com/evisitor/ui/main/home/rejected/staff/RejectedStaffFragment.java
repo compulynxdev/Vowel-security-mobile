@@ -1,9 +1,11 @@
 package com.evisitor.ui.main.home.rejected.staff;
 
 import android.os.Bundle;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
-import android.view.View;
+
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.HouseKeepingResponse;
@@ -11,10 +13,11 @@ import com.evisitor.databinding.FragmentRejectedStaffBinding;
 import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.main.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class RejectedStaffFragment  extends BaseFragment<FragmentRejectedStaffBinding,RejectedStaffViewModel> implements RejectedStaffNavigator {
+public class RejectedStaffFragment extends BaseFragment<FragmentRejectedStaffBinding, RejectedStaffViewModel> implements RejectedStaffNavigator {
     private RecyclerViewScrollListener scrollListener;
     private RejectedStaffAdapter adapter;
     private String search = "";
@@ -33,6 +36,7 @@ public class RejectedStaffFragment  extends BaseFragment<FragmentRejectedStaffBi
         this.search = search;
         doSearch(search);
     }
+
     @Override
     public int getBindingVariable() {
         return com.evisitor.BR.viewModel;
@@ -98,10 +102,10 @@ public class RejectedStaffFragment  extends BaseFragment<FragmentRejectedStaffBi
         this.list.addAll(beans);
         adapter.notifyDataSetChanged();
 
-        if(this.list.size()==0){
+        if (this.list.size() == 0) {
             getViewDataBinding().recyclerView.setVisibility(View.GONE);
             getViewDataBinding().tvNoData.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             getViewDataBinding().tvNoData.setVisibility(View.GONE);
             getViewDataBinding().recyclerView.setVisibility(View.VISIBLE);
         }

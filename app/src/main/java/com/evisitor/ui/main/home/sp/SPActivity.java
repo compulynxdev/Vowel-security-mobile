@@ -71,7 +71,7 @@ public class SPActivity extends BaseActivity<ActivitySpBinding, SPViewModel> {
         setUpSearch();
 
         fragment = ExpectedSPFragment.newInstance();
-        replaceFragment(fragment,R.id.frame_layout);
+        replaceFragment(fragment, R.id.frame_layout);
     }
 
     private void setUpSearch() {
