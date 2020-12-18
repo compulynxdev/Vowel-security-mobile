@@ -48,7 +48,6 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         getViewModel().setNavigator(this);
 
         getViewDataBinding().btnLogin.setOnClickListener(this);
-        getViewDataBinding().imgInfo.setOnClickListener(this);
         initFcmToken();
 
         if (getViewModel().getDataManager().isRememberMe()) {
@@ -85,8 +84,6 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
             getViewModel().doVerifyAndLogin(Objects.requireNonNull(getViewDataBinding().etUsername.getText()).toString(),
                     Objects.requireNonNull(getViewDataBinding().etPassword.getText()).toString(), fcmToken,
                     getViewDataBinding().cbRemember.isChecked());
-        } else if (v.getId() == R.id.img_info) {
-            DeviceInfoDialog.newInstance().show(getSupportFragmentManager());
         }
     }
 }

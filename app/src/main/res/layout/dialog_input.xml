@@ -32,6 +32,7 @@
             android:layout_marginTop="18dp"
             android:layout_marginEnd="20dp"
             android:cursorVisible="true"
+            android:maxLength="@integer/address_length"
             android:fontFamily="@font/futura_round"
             android:hint="@string/enter_reason"
             android:importantForAutofill="no"
