@@ -37,6 +37,7 @@ public class AppPreferenceHelper implements PreferenceHelper {
     private static final String IDENTIFY_FEATURE = "IDENTIFY_FEATURE";
     private static final String LEVEL_NAME = "LEVEL_NAME";
     private static final String ACCOUNT_NAME = "ACCOUNT_NAME";
+    private static final String COMMERCIAL = "COMMERCIAL";
 
     private final SharedPreferences mPrefs;
 
@@ -192,6 +193,16 @@ public class AppPreferenceHelper implements PreferenceHelper {
     @Override
     public void setLevelName(String levelName) {
         mPrefs.edit().putString(LEVEL_NAME, levelName).apply();
+    }
+
+    @Override
+    public boolean isCommercial() {
+        return mPrefs.getBoolean(COMMERCIAL, false);
+    }
+
+    @Override
+    public void setCommercial(boolean isCommercial) {
+        mPrefs.edit().putBoolean(COMMERCIAL, isCommercial).apply();
     }
 
 }

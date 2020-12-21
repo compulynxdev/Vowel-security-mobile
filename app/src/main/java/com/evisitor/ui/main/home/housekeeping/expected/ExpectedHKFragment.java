@@ -67,7 +67,7 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getViewModel().setCheckInOutNavigator(this);
-        getViewDataBinding().tvNoData.setText(getString(R.string.no_expedted_hk));
+        getViewDataBinding().tvNoData.setText(getViewModel().getDataManager().isCommercial() ? getString(R.string.no_expected_ofc_staff) : getString(R.string.no_expedted_hk));
         setUpAdapter();
     }
 

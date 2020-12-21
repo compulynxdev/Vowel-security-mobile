@@ -57,6 +57,7 @@ public class RejectedStaffFragment extends BaseFragment<FragmentRejectedStaffBin
         super.onViewCreated(view, savedInstanceState);
         getViewModel().setNavigator(this);
         setUpAdapter();
+        getViewDataBinding().tvNoData.setText(getViewModel().getDataManager().isCommercial() ? getString(R.string.no_rejected_ofc_staff) : getString(R.string.no_rejected_staff));
     }
 
 

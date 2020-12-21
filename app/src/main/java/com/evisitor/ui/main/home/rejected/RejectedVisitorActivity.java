@@ -62,6 +62,9 @@ public class RejectedVisitorActivity extends BaseActivity<ActivityRejectedVisito
         getViewDataBinding().tvService.setOnClickListener(this);
         getViewDataBinding().tvGuest.setOnClickListener(this);
         getViewDataBinding().tvHouse.setOnClickListener(this);
+
+        if (getViewModel().getDataManager().isCommercial())
+            getViewDataBinding().tvHouse.setText(getString(R.string.title_office_staff));
     }
 
     private void setUpPagerAdapter() {

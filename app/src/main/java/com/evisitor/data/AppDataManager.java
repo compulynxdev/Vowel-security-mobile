@@ -162,6 +162,16 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public boolean isCommercial() {
+        return preferenceHelper.isCommercial();
+    }
+
+    @Override
+    public void setCommercial(boolean isCommercial) {
+        preferenceHelper.setCommercial(isCommercial);
+    }
+
+    @Override
     public String getLanguage() {
         return preferenceHelper.getLanguage();
     }

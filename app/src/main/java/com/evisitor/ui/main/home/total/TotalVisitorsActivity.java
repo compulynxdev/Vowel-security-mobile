@@ -66,6 +66,9 @@ public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBin
         getViewDataBinding().titleGuest.setOnClickListener(this);
         getViewDataBinding().titleService.setOnClickListener(this);
         getViewDataBinding().titleHouse.setOnClickListener(this);
+
+        if (getViewModel().getDataManager().isCommercial())
+            getViewDataBinding().titleHouse.setText(getString(R.string.title_office_staff));
     }
 
     private void setUpPagerAdapter() {

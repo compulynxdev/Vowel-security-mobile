@@ -59,4 +59,8 @@ public interface PreferenceHelper {
 
     void setLevelName(String levelName);
 
+    boolean isCommercial();
+
+    void setCommercial(boolean isCommercial);
+
 }
