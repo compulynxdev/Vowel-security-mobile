@@ -16,7 +16,7 @@ public class AddVisitorData {
     public String dialingCode;
     public String address;
     public String gender;
-    public String houseId;
+    public String houseId;//department for commercial
     public String residentId;
     //reject reason
     public String rejectedReason;
@@ -30,4 +30,7 @@ public class AddVisitorData {
     public String profile;
     public String companyName = "";
     public String companyAddress = "";
+
+    //commercial
+    public String purpose;
 }

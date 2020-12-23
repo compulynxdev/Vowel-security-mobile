@@ -88,6 +88,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                             getDataManager().setAccountName(object.getString("accountName"));
                             if (object.has("type") && object.getString("type").equalsIgnoreCase("COMMERCIAL"))
                                 getDataManager().setCommercial(true);
+                            getDataManager().setCommercial(true);
                             getDataManager().setUserId(object.getString("userId"));
                             doGetUserDetail(isRemember);
                         } else {

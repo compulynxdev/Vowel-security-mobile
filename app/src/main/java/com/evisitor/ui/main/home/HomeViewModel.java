@@ -55,7 +55,8 @@ public class HomeViewModel extends BaseViewModel<BaseNavigator> {
         list.add(new HomeBean(SERVICE_PROVIDER_VIEW, R.drawable.ic_assistance, getNavigator().getContext().getString(R.string.title_service_provider)));
         list.add(new HomeBean(TOTAL_VISITOR_VIEW, R.drawable.ic_group, getNavigator().getContext().getString(R.string.title_ttl_expected_visitor)));
         list.add(new HomeBean(BLACKLISTED_VISITOR_VIEW, R.drawable.ic_black_visitor, getNavigator().getContext().getString(R.string.title_blacklisted_visitor)));
-        list.add(new HomeBean(TRESPASSER_VIEW, R.drawable.ic_trespasser, getNavigator().getContext().getString(R.string.title_trespasser_visitor)));
+        if (!getDataManager().isCommercial())
+            list.add(new HomeBean(TRESPASSER_VIEW, R.drawable.ic_trespasser, getNavigator().getContext().getString(R.string.title_trespasser_visitor)));
         list.add(new HomeBean(FLAGGED_VIEW, R.drawable.ic_flag_visitor, getNavigator().getContext().getString(R.string.title_flagged_visitor)));
         list.add(new HomeBean(REJECTED_VIEW, R.drawable.ic_rejected, getNavigator().getContext().getString(R.string.title_rejected_visitor)));
         homeListData.setValue(list);

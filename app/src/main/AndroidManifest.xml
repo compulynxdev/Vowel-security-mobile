@@ -20,12 +20,18 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.main.home.tutorial.TutorialScanActivity"
+        <activity
+            android:name=".ui.main.home.visitor.commercialvisitor.CommercialAddVisitorActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/DashboardTheme"
-            />
+            android:theme="@style/DashboardTheme" />
+        <activity
+            android:name=".ui.main.home.tutorial.TutorialScanActivity"
+            android:configChanges="orientation|screenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/DashboardTheme" />
         <activity
             android:name=".ui.main.home.rejected.RejectedVisitorActivity"
             android:configChanges="orientation|screenSize"
@@ -125,6 +131,12 @@
             android:theme="@style/DashboardTheme" />
         <activity
             android:name=".ui.main.settings.propertyinfo.PropertyInfoActivity"
+            android:configChanges="orientation|screenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/DashboardTheme" />
+        <activity
+            android:name=".ui.main.home.visitor.gadgetsdialog.GadgetsInputActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"

@@ -16,6 +16,7 @@ import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.dialog.AlertDialog;
 import com.evisitor.ui.main.home.scan.ScanIDActivity;
 import com.evisitor.ui.main.home.visitor.AddVisitorActivity;
+import com.evisitor.ui.main.home.visitor.commercialvisitor.CommercialAddVisitorActivity;
 import com.evisitor.util.AppConstants;
 import com.sharma.mrzreader.MrzRecord;
 
@@ -64,7 +65,7 @@ public class SPActivity extends BaseActivity<ActivitySpBinding, SPViewModel> {
                 })
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
-                    Intent i = AddVisitorActivity.getStartIntent(this);
+                    Intent i = getViewModel().getDataManager().isCommercial() ? CommercialAddVisitorActivity.getStartIntent(this) : AddVisitorActivity.getStartIntent(this);
                     i.putExtra(AppConstants.FROM, AppConstants.CONTROLLER_SP);
                     startActivity(i);
                 }).show(getSupportFragmentManager()));
@@ -109,7 +110,7 @@ public class SPActivity extends BaseActivity<ActivitySpBinding, SPViewModel> {
         if (resultCode == RESULT_OK) {
             if (requestCode == AppConstants.SCAN_RESULT && data != null) {
                 MrzRecord mrzRecord = (MrzRecord) data.getSerializableExtra("Record");
-                Intent intent = AddVisitorActivity.getStartIntent(this);
+                Intent intent = getViewModel().getDataManager().isCommercial() ? CommercialAddVisitorActivity.getStartIntent(this) : AddVisitorActivity.getStartIntent(this);
                 intent.putExtra("Record", mrzRecord);
                 intent.putExtra(AppConstants.FROM, AppConstants.CONTROLLER_SP);
                 startActivity(intent);

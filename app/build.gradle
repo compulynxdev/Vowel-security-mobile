@@ -63,6 +63,7 @@ dependencies {
     implementation "com.google.android.material:material:$rootProject.materialVersion"
 
     // Local unit tests
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     testImplementation "junit:junit:$rootProject.junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.junitExtVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
