@@ -98,4 +98,8 @@ public interface ApiHelper {
 
     @GET(WebServices.GET_COMPANY_SUGGESTIONS)
     Call<ResponseBody> doGetCompanySuggestions(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+
+    @POST(WebServices.ADD_COMMERCIAL_GUEST)
+    Call<ResponseBody> doAddCommercialGuest(@Header("authorization") String authToken, @Body RequestBody requestBody);
+
 }

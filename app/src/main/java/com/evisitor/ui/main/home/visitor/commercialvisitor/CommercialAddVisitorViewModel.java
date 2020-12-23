@@ -15,8 +15,10 @@ import com.evisitor.ui.base.BaseViewModel;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppLogger;
 import com.evisitor.util.AppUtils;
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
@@ -36,7 +38,6 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
     private List<String> genderList = new ArrayList<>();
     private List<IdentityBean> identityTypeList = new ArrayList<>();
     private List<String> visitorTypeList = new ArrayList<>();
-    private List<String> assignedToList = new ArrayList<>();
     private MutableLiveData<List<HouseDetailBean>> houseDetailMutableList = new MutableLiveData<>();
     private List<String> employmentList = new ArrayList<>();
     private MutableLiveData<List<ProfileBean>> profileBeanList = new MutableLiveData<>();
@@ -62,19 +63,16 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
         } else if (configurationResponse.getGuestField().isContactNo() && (visitorData.contact.length() < 7 || visitorData.contact.length() > 12)) {
             getNavigator().showToast(R.string.alert_contact_length);
             return false;
-        }/* else if (configurationResponse.getGuestField().isAddress() && visitorData.address.isEmpty()) {
-            getNavigator().showToast(R.string.alert_empty_address);
-            return false;
-        } */ else if (configurationResponse.getGuestField().isGender() && visitorData.gender.isEmpty()) {
+        } else if (configurationResponse.getGuestField().isGender() && visitorData.gender.isEmpty()) {
             getNavigator().showToast(R.string.alert_select_gender);
             return false;
         } else if (visitorData.houseId.isEmpty()) {
-            getNavigator().showToast(R.string.alert_select_house_no);
+            getNavigator().showToast(getNavigator().getContext().getString(R.string.please_select).concat(" ").concat(getDataManager().getLevelName()));
             return false;
-        } /*else if (visitorData.residentId.isEmpty()) {
-            getNavigator().showToast(R.string.alert_select_host);
+        } else if (visitorData.purpose.isEmpty()) {
+            getNavigator().showToast(R.string.please_enter_purpose);
             return false;
-        } */ else return true;
+        } else return true;
     }
 
     void doAddGuest(AddVisitorData addVisitorData) {
@@ -104,6 +102,9 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
                 object.put("dob", "");
                 object.put("image", addVisitorData.bmp_profile == null ? "" : AppUtils.getBitmapToBase64(addVisitorData.bmp_profile));
                 object.put("state", addVisitorData.isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);
+                object.put("purposeOfVisit", addVisitorData.purpose);
+                JSONArray deviceList = new JSONArray(new Gson().toJson(addVisitorData.deviceBeanList));
+                object.put("deviceList", deviceList);
                 if (!addVisitorData.isAccept) {
                     object.put("rejectedBy", getDataManager().getUserDetail().getFullName());
                     object.put("rejectReason", addVisitorData.rejectedReason);
@@ -112,9 +113,8 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
                 e.printStackTrace();
             }
 
-            //AppLogger.e("What : Guest", object.toString());
             RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
-            getDataManager().doAddGuest(getDataManager().getHeader(), body).enqueue(new Callback<ResponseBody>() {
+            getDataManager().doAddCommercialGuest(getDataManager().getHeader(), body).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                     getNavigator().hideLoading();
@@ -159,19 +159,13 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
         } else if (visitorData.contact.length() < 7 || visitorData.contact.length() > 12) {
             getNavigator().showToast(R.string.alert_contact_length);
             return false;
-        }/* else if (visitorData.address.isEmpty()) {
-            getNavigator().showToast(R.string.alert_empty_address);
-            return false;
-        } */ else if (visitorData.gender.isEmpty()) {
+        } else if (visitorData.gender.isEmpty()) {
             getNavigator().showToast(R.string.alert_select_gender);
             return false;
-        } else if (visitorData.isResident && visitorData.houseId.isEmpty()) {
-            getNavigator().showToast(R.string.alert_select_house_no);
+        } else if (visitorData.houseId.isEmpty()) {
+            getNavigator().showToast(getNavigator().getContext().getString(R.string.please_select).concat(" ").concat(getDataManager().getLevelName()));
             return false;
-        }/* else if (visitorData.isResident && visitorData.residentId.isEmpty()) {
-            getNavigator().showToast(R.string.alert_select_host);
-            return false;
-        } */ else if (visitorData.employment.isEmpty()) {
+        } else if (visitorData.employment.isEmpty()) {
             getNavigator().showToast(R.string.alert_select_employment);
             return false;
         } else if (visitorData.profile.isEmpty()) {
@@ -199,7 +193,6 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
                 object.put("profile", visitorData.profile);
                 object.put("companyName", visitorData.companyName);
                 object.put("companyAddress", visitorData.companyAddress);
-
                 object.put("fullName", visitorData.name);
                 object.put("accountId", getDataManager().getAccountId());
                 object.put("email", "");
@@ -210,12 +203,10 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
                 object.put("type", "random");
                 object.put("address", visitorData.address);
                 object.put("country", "");
-                //object.put("expectedDate", new Date());
-                object.put("premiseHierarchyDetailsId", visitorData.isResident ? visitorData.houseId : null);  //house or flat id  //->
+                object.put("premiseHierarchyDetailsId", visitorData.houseId);  //house or flat id  //->
                 object.put("expectedVehicle", visitorData.vehicleNo.toUpperCase());
                 object.put("enteredVehicleNo", visitorData.vehicleNo.toUpperCase());
                 object.put("gender", visitorData.gender);
-                object.put("residentId", visitorData.isResident ? visitorData.residentId : null); //host id   //-> send null in case of property
                 object.put("image", visitorData.bmp_profile == null ? "" : AppUtils.getBitmapToBase64(visitorData.bmp_profile));
                 object.put("state", visitorData.isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);
                 if (!visitorData.isAccept) {
@@ -324,14 +315,6 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
             visitorTypeList.add("Service Provider");
         }
         return visitorTypeList;
-    }
-
-    List getAssignedToList() {
-        if (assignedToList.isEmpty()) {
-            assignedToList.add("Property");
-            //assignedToList.add("Resident");
-        }
-        return assignedToList;
     }
 
     List getEmploymentTypeList() {

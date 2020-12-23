@@ -2,47 +2,47 @@ package com.evisitor.data.model;
 
 public class DeviceBean {
     private String sNo;
-    private String name;
-    private String type;
+    private String deviceName;
+    private String deviceType;
     private String manufacturer;
     private String tagNo;
     private String serialNo;
 
     public DeviceBean(String sNo, String name, String type, String manufacturer, String tagNo, String serialNo) {
         this.sNo = sNo;
-        this.name = name;
-        this.type = type;
+        this.deviceName = name;
+        this.deviceType = type;
         this.manufacturer = manufacturer;
         this.tagNo = tagNo;
         this.serialNo = serialNo;
     }
 
     public String getsNo() {
-        return sNo;
+        return sNo == null ? "" : sNo;
     }
 
     public void setsNo(String sNo) {
         this.sNo = sNo;
     }
 
-    public String getName() {
-        return name;
+    public String getDeviceName() {
+        return deviceName == null ? "" : deviceName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDeviceName(String deviceName) {
+        this.deviceName = deviceName;
     }
 
     public String getType() {
-        return type;
+        return deviceType == null ? "" : deviceType;
     }
 
     public void setType(String type) {
-        this.type = type;
+        this.deviceType = type;
     }
 
     public String getManufacturer() {
-        return manufacturer;
+        return manufacturer == null ? "" : manufacturer;
     }
 
     public void setManufacturer(String manufacturer) {
@@ -50,7 +50,7 @@ public class DeviceBean {
     }
 
     public String getTagNo() {
-        return tagNo;
+        return tagNo == null ? "" : tagNo;
     }
 
     public void setTagNo(String tagNo) {
@@ -58,10 +58,11 @@ public class DeviceBean {
     }
 
     public String getSerialNo() {
-        return serialNo;
+        return serialNo == null ? "" : serialNo;
     }
 
     public void setSerialNo(String serialNo) {
         this.serialNo = serialNo;
     }
+
 }

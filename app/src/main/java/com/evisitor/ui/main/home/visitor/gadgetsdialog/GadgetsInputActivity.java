@@ -15,6 +15,7 @@ import com.evisitor.data.model.DeviceBean;
 import com.evisitor.databinding.GadgetsInputDialogBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.util.AppLogger;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,11 +59,9 @@ public class GadgetsInputActivity extends BaseActivity<GadgetsInputDialogBinding
         imgSearch.setImageDrawable(getDrawable(R.drawable.ic_add));
         imgSearch.setVisibility(View.VISIBLE);
         imgSearch.setOnClickListener(this);
-
         getViewDataBinding().btnOk.setOnClickListener(this);
         beans = new ArrayList<>();
         beans.add(new DeviceBean("Device 1", "", "", "", "", ""));
-
         adapter = new GadgetsAdapter(beans, deviceList -> beans = deviceList);
         getViewDataBinding().recyclerView.setAdapter(adapter);
     }
@@ -75,19 +74,31 @@ public class GadgetsInputActivity extends BaseActivity<GadgetsInputDialogBinding
                 break;
 
             case R.id.btn_ok:
-                //TOdo add validtion logic
-                AppLogger.e("", beans.toString());
-                Intent intent = getIntent();
-                intent.putExtra("List", beans.toString());
-                setResult(RESULT_OK, intent);
-                finish();
+                if (!beans.isEmpty()) {
+                    if (getViewModel().verifyDeviceDetails(beans)) {
+                        Intent intent = getIntent();
+                        Bundle bundle = new Bundle();
+                        String yourListAsString = new Gson().toJson(beans);
+                        AppLogger.i("Device List", yourListAsString);
+                        bundle.putString("data", yourListAsString);
+                        intent.putExtras(bundle);
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    } else {
+                        showAlert(R.string.alert, R.string.please_fill_details).show(getSupportFragmentManager());
+                    }
+                }
                 break;
 
             case R.id.img_search:
-                if (beans.size() < 5)
-                    beans.add(new DeviceBean("Device ".concat(String.valueOf(beans.size() + 1)), "", "", "", "", ""));
-                else showToast(R.string.can_enter_more_device);
-                adapter.notifyDataSetChanged();
+                if (beans.size() < 5) {
+                    if (getViewModel().verifyDeviceDetails(beans)) {
+                        beans.add(new DeviceBean("Device ".concat(String.valueOf(beans.size() + 1)), "", "", "", "", ""));
+                        adapter.notifyDataSetChanged();
+                    } else
+                        showAlert(R.string.alert, R.string.please_fill_details).show(getSupportFragmentManager());
+                } else
+                    showAlert(R.string.alert, R.string.can_enter_more_device).show(getSupportFragmentManager());
                 break;
         }
     }

@@ -65,6 +65,11 @@ public class GadgetsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         public void onBind(int position) {
             DeviceBean bean = list.get(position);
             tv_title.setText(bean.getsNo());
+            etDeviceName.setText(bean.getDeviceName().isEmpty() ? "" : bean.getDeviceName());
+            etDeviceType.setText(bean.getType().isEmpty() ? "" : bean.getType());
+            etDeviceTag.setText(bean.getTagNo().isEmpty() ? "" : bean.getTagNo());
+            etDeviceSerial.setText(bean.getSerialNo().isEmpty() ? "" : bean.getSerialNo());
+            etDeviceManufacturer.setText(bean.getManufacturer().isEmpty() ? "" : bean.getManufacturer());
             etDeviceName.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -78,7 +83,7 @@ public class GadgetsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    bean.setName(s.toString());
+                    bean.setDeviceName(s.toString());
                     list.set(position, bean);
                     callback.onChangeList(list);
                 }
@@ -102,6 +107,7 @@ public class GadgetsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                     callback.onChangeList(list);
                 }
             });
+
             etDeviceSerial.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -120,6 +126,7 @@ public class GadgetsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                     callback.onChangeList(list);
                 }
             });
+
             etDeviceTag.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -133,7 +140,7 @@ public class GadgetsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    bean.setType(s.toString());
+                    bean.setTagNo(s.toString());
                     list.set(position, bean);
                     callback.onChangeList(list);
                 }

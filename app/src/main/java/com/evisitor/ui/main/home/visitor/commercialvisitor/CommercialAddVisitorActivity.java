@@ -36,9 +36,13 @@ import com.evisitor.ui.main.rejectreason.InputDialog;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppUtils;
 import com.evisitor.util.PermissionUtils;
+import com.google.gson.reflect.TypeToken;
 import com.sharma.mrzreader.MrzRecord;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static com.evisitor.util.AppConstants.SCAN_RESULT;
 
@@ -237,6 +241,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
     }
 
     private void setUp() {
+        deviceBeanList = new ArrayList<>();
         ImageView imgBack = findViewById(R.id.img_back);
         imgBack.setVisibility(View.VISIBLE);
         setOnClickListener(imgBack, getViewDataBinding().tvVisitorType, getViewDataBinding().tvEmployment, getViewDataBinding().tvIdentity, getViewDataBinding().tvGender, getViewDataBinding().tvDepartment
@@ -361,6 +366,9 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
                 visitorData.gender = getViewDataBinding().tvGender.getText().toString();
                 visitorData.houseId = houseId;
                 if (isGuest) {
+                    visitorData.purpose = getViewDataBinding().etPurpose.getText().toString();
+                    visitorData.deviceBeanList.clear();
+                    visitorData.deviceBeanList.addAll(deviceBeanList);
                     if (getViewModel().doVerifyGuestInputs(visitorData, getViewModel().getDataManager().getGuestConfiguration())) {
                         getViewModel().doCheckGuestStatus(getViewDataBinding().etIdentity.getText().toString().trim(), idType);
                     }
@@ -423,9 +431,11 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
         getViewDataBinding().tvVisitorType.setText(visitorType);
         if (visitorType.equals("Guest")) {
             isGuest = true;
+            getViewDataBinding().groupGuestCommercial.setVisibility(View.VISIBLE);
             getViewDataBinding().groupSp.setVisibility(View.GONE);
         } else {
             isGuest = false;
+            getViewDataBinding().groupGuestCommercial.setVisibility(View.GONE);
             getViewDataBinding().groupSp.setVisibility(View.VISIBLE);
         }
         setIdentity();
@@ -483,6 +493,9 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
         addVisitorData.dialingCode = countryCode;
         addVisitorData.address = getViewDataBinding().etAddress.getText().toString();
         addVisitorData.houseId = houseId;
+        addVisitorData.purpose = getViewDataBinding().etPurpose.getText().toString();
+        addVisitorData.deviceBeanList.clear();
+        addVisitorData.deviceBeanList.addAll(deviceBeanList);
         addVisitorData.gender = (getViewModel().getDataManager().getGuestConfiguration().getGuestField().isGender()) ? getViewDataBinding().tvGender.getText().toString() : "";
         if (!isAccept) {
             addVisitorData.rejectedReason = input;
@@ -537,7 +550,10 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == SCAN_RESULT && data != null) {
-
+                Type listType = new TypeToken<List<DeviceBean>>() {
+                }.getType();
+                deviceBeanList.clear();
+                deviceBeanList.addAll(Objects.requireNonNull(getViewModel().getDataManager().getGson().fromJson(data.getStringExtra("data"), listType)));
             }
         }
     }

@@ -75,7 +75,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:autofillHints="name"
+                android:autofillHints="deviceName"
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:hint="@string/search_here"

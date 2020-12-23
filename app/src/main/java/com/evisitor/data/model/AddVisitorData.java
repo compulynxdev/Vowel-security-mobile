@@ -2,6 +2,9 @@ package com.evisitor.data.model;
 
 import android.graphics.Bitmap;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AddVisitorData {
     public boolean isGuest;
 
@@ -33,4 +36,5 @@ public class AddVisitorData {
 
     //commercial
     public String purpose;
+    public List<DeviceBean> deviceBeanList = new ArrayList<>();
 }

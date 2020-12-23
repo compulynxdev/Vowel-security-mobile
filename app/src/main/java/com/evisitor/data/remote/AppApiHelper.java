@@ -184,4 +184,9 @@ public class AppApiHelper implements ApiHelper {
     public Call<ResponseBody> doGetCompanySuggestions(String authToken, Map<String, String> partMap) {
         return getApiInterface().doGetCompanySuggestions(authToken, partMap);
     }
+
+    @Override
+    public Call<ResponseBody> doAddCommercialGuest(String authToken, RequestBody requestBody) {
+        return getApiInterface().doAddCommercialGuest(authToken, requestBody);
+    }
 }
