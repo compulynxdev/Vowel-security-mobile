@@ -265,9 +265,9 @@
     <string name="note_data"> 1. Hold card in-front of camera and try not to move the cards. \n \n  2. Focus only the area of MRZ ID to be scanned. \n \n 3. Click continue to scan id.</string>
 
     <!--input types added-->
-    <string name="id_value">0,1,2,3,4,5,6,7,8,9, ,qwertzuiopasdfghjklyxcvbnm</string>
-    <string name="contact_value">0,1,2,3,4,5,6,7,8,9</string>
-    <string name="name_value"> ,qwertzuiopasdfghjklyxcvbnm</string>
+    <string name="id_value">0123456789qwertzuiopasdfghjklyxcvbnm</string>
+    <string name="contact_value">0123456789</string>
+    <string name="name_value"> qwertzuiopasdfghjklyxcvbnm</string>
 
 
     <!--office staff labels-->
