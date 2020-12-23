@@ -21,6 +21,7 @@ import com.evisitor.ui.main.home.sp.SPActivity;
 import com.evisitor.ui.main.home.total.TotalVisitorsActivity;
 import com.evisitor.ui.main.home.trespasser.TrespasserActivity;
 import com.evisitor.ui.main.home.visitor.AddVisitorActivity;
+import com.evisitor.ui.main.home.visitor.commercialvisitor.CommercialAddVisitorActivity;
 import com.evisitor.util.AppConstants;
 
 import java.util.ArrayList;
@@ -78,7 +79,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         HomeAdapter homeAdapter = new HomeAdapter(homeList, pos -> {
             switch (homeList.get(pos).getPos()) {
                 case HomeViewModel.ADD_VISITOR_VIEW:
-                    Intent i = AddVisitorActivity.getStartIntent(getContext());
+                    Intent i = getViewModel().getDataManager().isCommercial() ? CommercialAddVisitorActivity.getStartIntent(getContext()) : AddVisitorActivity.getStartIntent(getContext());
                     i.putExtra(AppConstants.FROM, AppConstants.CONTROLLER_HOME);
                     startActivity(i);
                     break;
