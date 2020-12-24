@@ -133,7 +133,7 @@ public class ExpectedCommercialGuestAdapter extends RecyclerView.Adapter<BaseVie
                 houseNo.setText(context.getString(R.string.data_dynamic_premise, getPremiseLastLevel(), bean.getPremiseName()));
             } else {
                 //For Residential System
-                houseNo.setText(context.getString(R.string.data_house, bean.getPremiseName()));
+                houseNo.setText(context.getString(R.string.data_dynamic_premise, getPremiseLastLevel(), bean.getPremiseName()));
                 host.setText(context.getString(R.string.data_host, bean.getHost()));
             }
             if (!bean.getExpectedVehicleNo().isEmpty())
