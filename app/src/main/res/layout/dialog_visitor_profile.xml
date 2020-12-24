@@ -53,6 +53,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recycler_view" />
 
+        <TextView
+            android:id="@+id/tv_gadgets_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/futura_round_medium"
+            android:text="@string/view_gadgets_info"
+            android:textAlignment="center"
+            android:textColor="@color/blue"
+            android:textSize="20sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/btn_ok"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spacer" />
+
         <Button
             android:id="@+id/btn_ok"
             style="?android:attr/borderlessButtonStyle"
@@ -69,7 +85,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spacer" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_gadgets_info" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

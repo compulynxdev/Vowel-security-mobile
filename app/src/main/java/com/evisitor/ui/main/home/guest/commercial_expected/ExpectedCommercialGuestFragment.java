@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.CommercialGuestResponse;
-import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.databinding.FragmentExpectedCommercialGuestBinding;
 import com.evisitor.ui.base.BaseFragment;
@@ -102,7 +101,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
     }
 
     private void decideNextProcess() {
-        Guests tmpBean = getViewModel().getDataManager().getGuestDetail();
+        CommercialGuestResponse.CommercialGuest tmpBean = getViewModel().getDataManager().getCommercialGuestDetail();
         if (tmpBean.getCheckInStatus()) {
             getViewModel().approveByCall(true, null);
         } else {
@@ -188,7 +187,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
                     showCallDialog();
                 });
 
-        Guests bean = getViewModel().getDataManager().getGuestDetail();
+        CommercialGuestResponse.CommercialGuest bean = getViewModel().getDataManager().getCommercialGuestDetail();
         if (!bean.isNotificationStatus() || bean.getHouseNo().isEmpty()) {
             alert.setNegativeBtnShow(false).show(getFragmentManager());
         } else {

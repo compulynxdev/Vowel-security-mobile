@@ -66,7 +66,7 @@ public class GadgetsInputActivity extends BaseActivity<GadgetsInputDialogBinding
 
     private void setUpAdapter() {
         if (beans.isEmpty())
-            beans.add(new DeviceBean("Device 1", "", "", "", "", ""));
+            beans.add(new DeviceBean(getString(R.string.device).concat(" ").concat("1"), "", "", "", "", ""));
         adapter = new GadgetsAdapter(beans, deviceList -> beans = deviceList);
         getViewDataBinding().recyclerView.setAdapter(adapter);
     }
@@ -110,7 +110,7 @@ public class GadgetsInputActivity extends BaseActivity<GadgetsInputDialogBinding
             case R.id.img_search:
                 if (beans.size() < 5) {
                     if (getViewModel().verifyDeviceDetails(beans)) {
-                        beans.add(new DeviceBean("Device ".concat(String.valueOf(beans.size() + 1)), "", "", "", "", ""));
+                        beans.add(new DeviceBean(getString(R.string.device).concat(" ").concat(String.valueOf(beans.size() + 1)), "", "", "", "", ""));
                         adapter.notifyDataSetChanged();
                     } else
                         showAlert(R.string.alert, R.string.please_fill_details).show(getSupportFragmentManager());

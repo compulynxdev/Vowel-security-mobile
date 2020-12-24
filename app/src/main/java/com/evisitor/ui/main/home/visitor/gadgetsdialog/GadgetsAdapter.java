@@ -64,7 +64,7 @@ public class GadgetsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         public void onBind(int position) {
             DeviceBean bean = list.get(position);
-            tv_title.setText(bean.getsNo());
+            tv_title.setText(bean.getsNo().isEmpty() ? tv_title.getContext().getString(R.string.device).concat(" ").concat(String.valueOf(position + 1)) : bean.getsNo());
             etDeviceName.setText(bean.getDeviceName().isEmpty() ? "" : bean.getDeviceName());
             etDeviceType.setText(bean.getType().isEmpty() ? "" : bean.getType());
             etDeviceTag.setText(bean.getTagNo().isEmpty() ? "" : bean.getTagNo());

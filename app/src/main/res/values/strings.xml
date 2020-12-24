@@ -291,5 +291,7 @@
     <string name="please_fill_details">Please fill the device details first, if you have device then device deviceName and device serial number is mandatory!!</string>
     <string name="please_select">Please select</string>
     <string name="please_enter_purpose">Please enter purpose of visist!</string>
+    <string name="view_gadgets_info">View gadgets information</string>
+    <string name="device">Device</string>
 
 </resources>

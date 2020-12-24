@@ -10,7 +10,9 @@ import com.evisitor.ui.main.BaseCheckInOutViewModel;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppLogger;
 import com.evisitor.util.AppUtils;
+import com.google.gson.Gson;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -78,6 +80,7 @@ public class ExpectedCommercialGuestViewModel extends BaseCheckInOutViewModel<Ex
 
     List<VisitorProfileBean> setClickVisitorDetail(CommercialGuestResponse.CommercialGuest guests) {
         getNavigator().showLoading();
+        getDataManager().setCommercialGuestDetail(guests);
         List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, guests.getName())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), guests.getExpectedVehicleNo(), VisitorProfileBean.VIEW_TYPE_EDITABLE));
@@ -93,7 +96,6 @@ public class ExpectedCommercialGuestViewModel extends BaseCheckInOutViewModel<Ex
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_is_checkout, guests.isHostCheckOut())));
         if (!guests.getStatus().equalsIgnoreCase("PENDING"))
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.status, guests.getStatus())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.gadgets_info)));
         getNavigator().hideLoading();
         return visitorProfileBeanList;
     }
@@ -102,11 +104,13 @@ public class ExpectedCommercialGuestViewModel extends BaseCheckInOutViewModel<Ex
         if (getNavigator().isNetworkConnected(true)) {
             JSONObject object = new JSONObject();
             try {
-                object.put("id", getDataManager().getGuestDetail().getGuestId());
+                object.put("id", getDataManager().getCommercialGuestDetail().getGuestId());
                 object.put("accountId", getDataManager().getAccountId());
-                object.put("residentId", getDataManager().getGuestDetail().getResidentId());
-                object.put("premiseHierarchyDetailsId", getDataManager().getGuestDetail().getFlatId());
-                object.put("enteredVehicleNo", getDataManager().getGuestDetail().getEnteredVehicleNo());
+                //object.put("residentId", getDataManager().getCommercialGuestDetail().getResidentId());
+                object.put("premiseHierarchyDetailsId", getDataManager().getCommercialGuestDetail().getFlatId());
+                object.put("enteredVehicleNo", getDataManager().getCommercialGuestDetail().getEnteredVehicleNo());
+                JSONArray deviceList = new JSONArray(new Gson().toJson(getDataManager().getCommercialGuestDetail().getDeviceBeanList()));
+                object.put("deviceList", deviceList);
                 object.put("type", AppConstants.GUEST);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -121,8 +125,11 @@ public class ExpectedCommercialGuestViewModel extends BaseCheckInOutViewModel<Ex
         if (getNavigator().isNetworkConnected(true)) {
             JSONObject object = new JSONObject();
             try {
-                object.put("id", getDataManager().getGuestDetail().getGuestId());
-                object.put("enteredVehicleNo", getDataManager().getGuestDetail().getEnteredVehicleNo());
+                object.put("id", getDataManager().getCommercialGuestDetail().getGuestId());
+                object.put("enteredVehicleNo", getDataManager().getCommercialGuestDetail().getEnteredVehicleNo());
+                object.put("accountId", getDataManager().getAccountId());
+                JSONArray deviceList = new JSONArray(new Gson().toJson(getDataManager().getCommercialGuestDetail().getDeviceBeanList()));
+                object.put("deviceList", deviceList);
                 object.put("type", AppConstants.CHECK_IN);
                 object.put("visitor", AppConstants.GUEST);
                 object.put("state", isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);

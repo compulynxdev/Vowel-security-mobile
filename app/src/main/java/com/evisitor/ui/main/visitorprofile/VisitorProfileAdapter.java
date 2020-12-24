@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.evisitor.EVisitor;
 import com.evisitor.R;
 import com.evisitor.data.DataManager;
+import com.evisitor.data.model.CommercialGuestResponse;
 import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.HouseKeepingResponse;
 import com.evisitor.data.model.ServiceProvider;
@@ -115,11 +116,20 @@ public class VisitorProfileAdapter extends RecyclerView.Adapter<BaseViewHolder> 
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    Guests guests = dataManager.getGuestDetail();
-                    if (guests != null) {
-                        guests.setEnteredVehicleNo(et_data.getText().toString());
-                        dataManager.setGuestDetail(guests);
-                        return;
+                    if (dataManager.isCommercial()) {
+                        CommercialGuestResponse.CommercialGuest guests = dataManager.getCommercialGuestDetail();
+                        if (guests != null) {
+                            guests.setEnteredVehicleNo(et_data.getText().toString());
+                            dataManager.setCommercialGuestDetail(guests);
+                            return;
+                        }
+                    } else {
+                        Guests guests = dataManager.getGuestDetail();
+                        if (guests != null) {
+                            guests.setEnteredVehicleNo(et_data.getText().toString());
+                            dataManager.setGuestDetail(guests);
+                            return;
+                        }
                     }
 
                     ServiceProvider spBean = dataManager.getSpDetail();
