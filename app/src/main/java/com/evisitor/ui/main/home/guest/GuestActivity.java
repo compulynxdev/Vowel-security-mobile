@@ -14,6 +14,7 @@ import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.ActivityExpectedGuestBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.dialog.AlertDialog;
+import com.evisitor.ui.main.home.guest.commercial_expected.ExpectedCommercialGuestFragment;
 import com.evisitor.ui.main.home.guest.expected.ExpectedGuestFragment;
 import com.evisitor.ui.main.home.scan.ScanIDActivity;
 import com.evisitor.ui.main.home.visitor.AddVisitorActivity;
@@ -26,6 +27,7 @@ import static com.evisitor.util.AppConstants.SCAN_RESULT;
 public class GuestActivity extends BaseActivity<ActivityExpectedGuestBinding, GuestViewModel> {
 
     private ExpectedGuestFragment guestFragment;
+    private ExpectedCommercialGuestFragment commercialGuestFragment;
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, GuestActivity.class);
@@ -54,9 +56,13 @@ public class GuestActivity extends BaseActivity<ActivityExpectedGuestBinding, Gu
         getViewDataBinding().header.imgBack.setVisibility(View.VISIBLE);
         getViewDataBinding().header.imgBack.setOnClickListener(v -> onBackPressed());
         setUpSearch();
-        guestFragment = ExpectedGuestFragment.newInstance();
-        replaceFragment(guestFragment, R.id.guest_frame);
-
+        if (getViewModel().getDataManager().isCommercial()) {
+            commercialGuestFragment = ExpectedCommercialGuestFragment.newInstance();
+            replaceFragment(commercialGuestFragment, R.id.guest_frame);
+        } else {
+            guestFragment = ExpectedGuestFragment.newInstance();
+            replaceFragment(guestFragment, R.id.guest_frame);
+        }
         getViewDataBinding().fabAdd.setOnClickListener(v -> {
             if (getViewModel().getDataManager().isIdentifyFeature()) {
                 AlertDialog.newInstance()
@@ -106,7 +112,9 @@ public class GuestActivity extends BaseActivity<ActivityExpectedGuestBinding, Gu
             public boolean onQueryTextChange(String newText) {
                 String txt = newText.trim();
                 if (txt.isEmpty() || txt.length() >= 3) {
-                    guestFragment.setSearch(txt);
+                    if (getViewModel().getDataManager().isCommercial()) {
+                        commercialGuestFragment.setSearch(txt);
+                    } else guestFragment.setSearch(txt);
                 }
                 return false;
             }

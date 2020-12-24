@@ -18,6 +18,7 @@ import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.ActivityTotalVisitorsBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.base.BaseNavigator;
+import com.evisitor.ui.main.home.guest.commercial_expected.ExpectedCommercialGuestFragment;
 import com.evisitor.ui.main.home.guest.expected.ExpectedGuestFragment;
 import com.evisitor.ui.main.home.housekeeping.expected.ExpectedHKFragment;
 import com.evisitor.ui.main.home.sp.ExpectedSPFragment;
@@ -28,6 +29,7 @@ import java.util.List;
 public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBinding, TotalVisitorsViewModel> implements BaseNavigator, View.OnClickListener {
 
     private ExpectedGuestFragment expectedGuestFragment;
+    private ExpectedCommercialGuestFragment commercialGuestFragment;
     private ExpectedHKFragment expectedHKFragment;
     private ExpectedSPFragment expectedSPFragment;
 
@@ -73,8 +75,13 @@ public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBin
 
     private void setUpPagerAdapter() {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        expectedGuestFragment = ExpectedGuestFragment.newInstance();
-        adapter.addFragment(expectedGuestFragment);
+        if (getViewModel().getDataManager().isCommercial()) {
+            commercialGuestFragment = ExpectedCommercialGuestFragment.newInstance();
+            adapter.addFragment(commercialGuestFragment);
+        } else {
+            expectedGuestFragment = ExpectedGuestFragment.newInstance();
+            adapter.addFragment(expectedGuestFragment);
+        }
         expectedHKFragment = ExpectedHKFragment.newInstance();
         adapter.addFragment(expectedHKFragment);
         expectedSPFragment = ExpectedSPFragment.newInstance();
@@ -171,7 +178,9 @@ public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBin
                 if (txt.isEmpty() || txt.length() >= 3) {
                     switch (getViewDataBinding().viewPager.getCurrentItem()) {
                         case 0:
-                            expectedGuestFragment.setSearch(txt);
+                            if (getViewModel().getDataManager().isCommercial()) {
+                                commercialGuestFragment.setSearch(txt);
+                            } else expectedGuestFragment.setSearch(txt);
                             break;
 
                         case 1:

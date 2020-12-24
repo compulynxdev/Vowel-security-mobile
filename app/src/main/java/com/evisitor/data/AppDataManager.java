@@ -395,4 +395,9 @@ public class AppDataManager implements DataManager {
     public Call<ResponseBody> doAddCommercialGuest(String authToken, RequestBody requestBody) {
         return apiHelper.doAddCommercialGuest(authToken, requestBody);
     }
+
+    @Override
+    public Call<ResponseBody> doGetExpectedCommercialGuestListDetail(String authToken, Map<String, String> partMap) {
+        return apiHelper.doGetExpectedCommercialGuestListDetail(authToken, partMap);
+    }
 }

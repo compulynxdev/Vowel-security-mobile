@@ -16,9 +16,12 @@ import com.evisitor.databinding.GadgetsInputDialogBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.util.AppLogger;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class GadgetsInputActivity extends BaseActivity<GadgetsInputDialogBinding, GadgetsInputViewModel> implements View.OnClickListener {
 
@@ -48,6 +51,24 @@ public class GadgetsInputActivity extends BaseActivity<GadgetsInputDialogBinding
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setUp();
+        setUpIntent(getIntent());
+        setUpAdapter();
+    }
+
+    private void setUpIntent(Intent intent) {
+        beans = new ArrayList<>();
+        if (intent.hasExtra("list")) {
+            Type listType = new TypeToken<List<DeviceBean>>() {
+            }.getType();
+            beans.addAll(Objects.requireNonNull(getViewModel().getDataManager().getGson().fromJson(intent.getStringExtra("list"), listType)));
+        }
+    }
+
+    private void setUpAdapter() {
+        if (beans.isEmpty())
+            beans.add(new DeviceBean("Device 1", "", "", "", "", ""));
+        adapter = new GadgetsAdapter(beans, deviceList -> beans = deviceList);
+        getViewDataBinding().recyclerView.setAdapter(adapter);
     }
 
     private void setUp() {
@@ -60,10 +81,6 @@ public class GadgetsInputActivity extends BaseActivity<GadgetsInputDialogBinding
         imgSearch.setVisibility(View.VISIBLE);
         imgSearch.setOnClickListener(this);
         getViewDataBinding().btnOk.setOnClickListener(this);
-        beans = new ArrayList<>();
-        beans.add(new DeviceBean("Device 1", "", "", "", "", ""));
-        adapter = new GadgetsAdapter(beans, deviceList -> beans = deviceList);
-        getViewDataBinding().recyclerView.setAdapter(adapter);
     }
 
     @Override

@@ -102,4 +102,8 @@ public interface ApiHelper {
     @POST(WebServices.ADD_COMMERCIAL_GUEST)
     Call<ResponseBody> doAddCommercialGuest(@Header("authorization") String authToken, @Body RequestBody requestBody);
 
+    @GET(WebServices.GET_EXPECTED_COMMERCIAL_GUEST_LIST)
+    Call<ResponseBody> doGetExpectedCommercialGuestListDetail(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+
+
 }
