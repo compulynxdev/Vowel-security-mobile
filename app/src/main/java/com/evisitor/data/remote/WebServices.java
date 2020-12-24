@@ -23,6 +23,7 @@ class WebServices {
     static final String CHECK_GUEST_STATUS = "guest/check_blacklist_guest"; //?accountId=1&documentId=44444
 
     static final String GET_EXPECTED_GUEST_LIST = "guest/get_all_booked_guest";
+    static final String GET_EXPECTED_COMMERCIAL_GUEST_LIST = "guest/get_all_commercial_booked_guest";//?page=0&size=10&sortBy=&direction=&search=&accountId=1
     static final String GET_EXPECTED_SP_LIST = "serviceprovider/get_all_expected_service_provider";
     static final String GET_REGISTERED_HOUSE_KEEPING_LIST = "staff/get_all_staff"; //?accountId=1&page=0&size=10&type=expected&search=a
 

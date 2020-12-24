@@ -18,6 +18,7 @@ import com.evisitor.ui.main.home.HomeViewModel;
 import com.evisitor.ui.main.home.blacklist.BlackListViewModel;
 import com.evisitor.ui.main.home.flag.FlagVisitorViewModel;
 import com.evisitor.ui.main.home.guest.GuestViewModel;
+import com.evisitor.ui.main.home.guest.commercial_expected.ExpectedCommercialGuestViewModel;
 import com.evisitor.ui.main.home.guest.expected.ExpectedGuestViewModel;
 import com.evisitor.ui.main.home.housekeeping.HKViewModel;
 import com.evisitor.ui.main.home.housekeeping.expected.ExpectedHKViewModel;
@@ -204,6 +205,9 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(GadgetsInputViewModel.class)) {
             //noinspection unchecked
             return (T) new GadgetsInputViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(ExpectedCommercialGuestViewModel.class)) {
+            //noinspection unchecked
+            return (T) new ExpectedCommercialGuestViewModel(dataManager);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

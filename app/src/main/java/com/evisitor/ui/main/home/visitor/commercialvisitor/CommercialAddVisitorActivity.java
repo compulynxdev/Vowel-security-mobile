@@ -36,6 +36,7 @@ import com.evisitor.ui.main.rejectreason.InputDialog;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppUtils;
 import com.evisitor.util.PermissionUtils;
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sharma.mrzreader.MrzRecord;
 
@@ -347,6 +348,8 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
 
             case R.id.tv_gadgets:
                 Intent i = GadgetsInputActivity.getStartIntent(this);
+                if (!deviceBeanList.isEmpty())
+                    i.putExtra("list", new Gson().toJson(deviceBeanList));
                 startActivityForResult(i, SCAN_RESULT);
                 break;
 
