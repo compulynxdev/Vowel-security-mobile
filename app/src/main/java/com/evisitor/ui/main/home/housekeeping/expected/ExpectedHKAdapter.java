@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.evisitor.EVisitor;
 import com.evisitor.R;
 import com.evisitor.data.model.HouseKeepingResponse;
 import com.evisitor.ui.base.BaseViewHolder;
@@ -127,7 +126,7 @@ public class ExpectedHKAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
             if (isCommercial()) {
                 host.setVisibility(View.GONE);
-                houseNo.setText(context.getString(R.string.data_dynamic_premise, getPremiseLastLevel(), bean.getPremiseName()));
+                houseNo.setVisibility(View.GONE);
             }else {
                 //For Residential System
                 if (bean.getFlatNo().isEmpty()) {
@@ -135,7 +134,7 @@ public class ExpectedHKAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                     host.setText(context.getString(R.string.data_host, bean.getCreatedBy()));
                 } else {
                     houseNo.setVisibility(View.VISIBLE);
-                    houseNo.setText(context.getString(R.string.data_house, bean.getPremiseName()));
+                    houseNo.setText(context.getString(R.string.data_dynamic_premise, getPremiseLastLevel(), bean.getPremiseName()));
                     host.setText(context.getString(R.string.data_host, bean.getResidentName()));
                 }
             }

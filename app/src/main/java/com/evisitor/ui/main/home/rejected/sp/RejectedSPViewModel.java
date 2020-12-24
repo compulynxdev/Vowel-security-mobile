@@ -81,13 +81,11 @@ public class RejectedSPViewModel extends BaseViewModel<RejectedSPNavigator> {
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, spBean.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(spBean.getDialingCode()).concat(" ").concat(spBean.getContactNo()))));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, spBean.getIdentityNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : spBean.getIdentityNo())));
 
-        if (getDataManager().isCommercial()) {
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), spBean.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : spBean.getPremiseName())));
-        } else {
+        if (!getDataManager().isCommercial()) {
             if (spBean.getPremiseName().isEmpty()) {
                 visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, spBean.getCreatedBy())));
             } else {
-                visitorProfileBeanList.add(new VisitorProfileBean(1, getNavigator().getContext().getString(R.string.data_house, spBean.getPremiseName())));
+                visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), spBean.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : spBean.getPremiseName())));
                 visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, spBean.getHost())));
             }
         }

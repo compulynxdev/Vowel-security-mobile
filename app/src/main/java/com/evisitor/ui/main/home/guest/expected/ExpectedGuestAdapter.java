@@ -127,7 +127,7 @@ public class ExpectedGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 time.setText(context.getString(R.string.data_time, CalenderUtils.formatDate(bean.getTime(), CalenderUtils.SERVER_DATE_FORMAT,
                         CalenderUtils.TIMESTAMP_FORMAT)));
             else time.setVisibility(View.GONE);
-            houseNo.setText(context.getString(R.string.data_house, bean.getPremiseName()));
+            houseNo.setText(context.getString(R.string.data_dynamic_premise, getPremiseLastLevel(), bean.getPremiseName()));
             host.setText(context.getString(R.string.data_host, bean.getHost()));
             if (!bean.getExpectedVehicleNo().isEmpty())
                 vehicle.setText(context.getString(R.string.data_vehicle, bean.getExpectedVehicleNo()));

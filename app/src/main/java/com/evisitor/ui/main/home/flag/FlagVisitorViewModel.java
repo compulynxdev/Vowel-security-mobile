@@ -9,6 +9,7 @@ import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.ui.base.BaseViewModel;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.CalenderUtils;
+import com.evisitor.util.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,7 +69,7 @@ public class FlagVisitorViewModel extends BaseViewModel<FlagVisitorNavigator> {
         List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, visitorResponse.getFullName())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_profile, visitorResponse.getProfile().isEmpty() ? getNavigator().getContext().getString(R.string.na) : visitorResponse.getProfile())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_type, visitorResponse.getType().isEmpty() ? getNavigator().getContext().getString(R.string.na) : visitorResponse.getType())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_type, visitorResponse.getType().isEmpty() ? getNavigator().getContext().getString(R.string.na) : CommonUtils.getVisitorType(visitorResponse.getType()))));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, visitorResponse.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(visitorResponse.getDialingCode()).concat(" ").concat(visitorResponse.getContactNo()))));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_flagged_by, visitorResponse.getLastModifiedBy().isEmpty() ? getNavigator().getContext().getString(R.string.na) : visitorResponse.getLastModifiedBy())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_flagged_date, visitorResponse.getLastModifiedDate().isEmpty() ? getNavigator().getContext().getString(R.string.na) : CalenderUtils.formatDate(visitorResponse.getLastModifiedDate(), CalenderUtils.SERVER_DATE_FORMAT2, CalenderUtils.CUSTOM_TIMESTAMP_FORMAT_SLASH))));

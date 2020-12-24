@@ -15,6 +15,7 @@ import com.evisitor.R;
 import com.evisitor.data.model.BlackListVisitorResponse;
 import com.evisitor.ui.base.BaseViewHolder;
 import com.evisitor.ui.base.ItemClickCallback;
+import com.evisitor.util.CommonUtils;
 import com.evisitor.util.pagination.FooterLoader;
 
 import java.util.List;
@@ -129,7 +130,7 @@ public class BlackListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
             if (bean.getType() != null && !bean.getType().isEmpty()) {
                 type.setVisibility(View.VISIBLE);
-                type.setText(type.getContext().getString(R.string.data_type, bean.getType()));
+                type.setText(type.getContext().getString(R.string.data_type, CommonUtils.getVisitorType(bean.getType())));
             } else type.setVisibility(View.GONE);
 
             if (bean.getImageUrl().isEmpty()) {

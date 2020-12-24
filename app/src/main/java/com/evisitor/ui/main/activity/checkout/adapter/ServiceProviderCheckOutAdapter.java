@@ -116,16 +116,20 @@ public class ServiceProviderCheckOutAdapter extends RecyclerView.Adapter<BaseVie
             name.setText(context.getString(R.string.data_name, bean.getName()));
             timeIn.setText(context.getString(R.string.data_time_in, CalenderUtils.formatDate(bean.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT)));
             timeOut.setText(context.getString(R.string.data_time_out, CalenderUtils.formatDate(bean.getCheckOutTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT)));
-            if (!bean.getHouseNo().isEmpty()) {
-                houseNo.setVisibility(View.VISIBLE);
-                houseNo.setText(context.getString(R.string.data_house, bean.getPremiseName()));
-                host.setText(context.getString(R.string.data_host, bean.getHost()));
 
-            } else {
+            if (isCommercial()) {
+                host.setVisibility(View.GONE);
                 houseNo.setVisibility(View.GONE);
-                houseNo.setText("");
-                host.setText(context.getString(R.string.data_host, bean.getCreatedBy()));
-
+            } else {
+                if (!bean.getHouseNo().isEmpty()) {
+                    houseNo.setVisibility(View.VISIBLE);
+                    houseNo.setText(context.getString(R.string.data_dynamic_premise, getPremiseLastLevel(), bean.getPremiseName()));
+                    host.setText(context.getString(R.string.data_host, bean.getHost()));
+                } else {
+                    houseNo.setVisibility(View.GONE);
+                    houseNo.setText("");
+                    host.setText(context.getString(R.string.data_host, bean.getCreatedBy()));
+                }
             }
 
             if (bean.getImageUrl().isEmpty()) {

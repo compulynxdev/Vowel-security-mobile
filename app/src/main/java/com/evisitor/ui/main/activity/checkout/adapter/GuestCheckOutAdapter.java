@@ -118,14 +118,12 @@ public class GuestCheckOutAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
             if (!bean.getHouseNo().isEmpty()) {
                 houseNo.setVisibility(View.VISIBLE);
-                houseNo.setText(context.getString(R.string.data_house, bean.getPremiseName()));
+                houseNo.setText(context.getString(R.string.data_dynamic_premise, getPremiseLastLevel(), bean.getPremiseName()));
                 host.setText(context.getString(R.string.data_host, bean.getHost()));
-
             } else {
                 houseNo.setVisibility(View.GONE);
                 houseNo.setText("");
                 host.setText(context.getString(R.string.data_host, bean.getCreatedBy()));
-
             }
 
             if (bean.getImageUrl().isEmpty()) {

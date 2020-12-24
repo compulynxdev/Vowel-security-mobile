@@ -58,4 +58,11 @@ public final class CommonUtils {
         progressDialog.setCanceledOnTouchOutside(false);
         return progressDialog;
     }
+
+    public static String getVisitorType(String type) {
+        if (AppConstants.SERVICE_PROVIDER.equalsIgnoreCase(type)) {
+            return "Service Provider";
+        }
+        return AppUtils.capitaliseFirstLetter(type);
+    }
 }

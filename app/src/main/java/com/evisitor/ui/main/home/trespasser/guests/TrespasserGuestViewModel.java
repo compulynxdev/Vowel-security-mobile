@@ -93,7 +93,7 @@ public class TrespasserGuestViewModel extends BaseViewModel<TrespasserGuestNavig
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_elapsed, DateUtils.getRelativeTimeSpanString(hostCheckoutTime.getTime()))));
         }
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time_in, visitorResponse.getCheckInTime().isEmpty() ? getNavigator().getContext().getString(R.string.na) : CalenderUtils.formatDate(visitorResponse.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT))));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_house, visitorResponse.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : visitorResponse.getPremiseName())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), visitorResponse.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : visitorResponse.getPremiseName())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, visitorResponse.getCreatedBy().isEmpty() ? getNavigator().getContext().getString(R.string.na) : visitorResponse.getCreatedBy())));
 
         getNavigator().hideLoading();
