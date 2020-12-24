@@ -115,8 +115,6 @@ public class RejectedGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             name.setText(name.getContext().getString(R.string.data_name, bean.getName()));
             reject.setVisibility(bean.getRejectedBy().isEmpty() ? View.GONE : View.VISIBLE);
             reject.setText(reject.getContext().getString(R.string.rejected_by, bean.getRejectedBy()));
-            houseNo.setText(houseNo.getContext().getString(R.string.data_house, bean.getPremiseName()));
-            host.setText(host.getContext().getString(R.string.data_host, bean.getHost()));
             if (bean.getRejectedOn().isEmpty()) {
                 time.setVisibility(View.GONE);
             } else {
@@ -127,6 +125,14 @@ public class RejectedGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 vehicle.setText(vehicle.getContext().getString(R.string.data_vehicle, bean.getExpectedVehicleNo()));
             else vehicle.setVisibility(View.GONE);
 
+            if (isCommercial()) {
+                host.setVisibility(View.GONE);
+                houseNo.setText(houseNo.getContext().getString(R.string.data_dynamic_premise, getPremiseLastLevel(), bean.getPremiseName()));
+            }else {
+                //For Residential System
+                houseNo.setText(houseNo.getContext().getString(R.string.data_house, bean.getPremiseName()));
+                host.setText(host.getContext().getString(R.string.data_host, bean.getHost()));
+            }
 
             if (bean.getImageUrl().isEmpty()) {
                 Glide.with(imgVisitor.getContext())

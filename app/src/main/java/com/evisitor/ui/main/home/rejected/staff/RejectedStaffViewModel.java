@@ -80,11 +80,16 @@ public class RejectedStaffViewModel extends BaseViewModel<RejectedStaffNavigator
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_vehicle, hkBean.getExpectedVehicleNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : hkBean.getExpectedVehicleNo())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, hkBean.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(hkBean.getDialingCode()).concat(" ").concat(hkBean.getContactNo()))));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, hkBean.getDocumentId().isEmpty() ? getNavigator().getContext().getString(R.string.na) : hkBean.getDocumentId())));
-        if (hkBean.getPremiseName().isEmpty()) {
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, hkBean.getCreatedBy())));
-        } else {
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_house, hkBean.getPremiseName())));
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, hkBean.getResidentName())));
+
+        if (getDataManager().isCommercial()) {
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), hkBean.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : hkBean.getPremiseName())));
+        }else {
+            if (hkBean.getPremiseName().isEmpty()) {
+                visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, hkBean.getCreatedBy())));
+            } else {
+                visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_house, hkBean.getPremiseName())));
+                visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, hkBean.getResidentName())));
+            }
         }
 
 

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.evisitor.EVisitor;
 import com.evisitor.R;
 import com.evisitor.data.model.HouseKeepingResponse;
 import com.evisitor.ui.base.BaseViewHolder;
@@ -122,15 +123,23 @@ public class ExpectedHKAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             name.setText(context.getString(R.string.data_name, bean.getFullName()));
             identity.setText(context.getString(R.string.data_identity, bean.getDocumentId().isEmpty() ? "N?A" : bean.getDocumentId()));
             profile.setText(context.getString(R.string.data_profile, bean.getProfile()));
-            if (bean.getFlatNo().isEmpty()) {
-                houseNo.setVisibility(View.GONE);
-                host.setText(context.getString(R.string.data_host, bean.getCreatedBy()));
-            } else {
-                houseNo.setVisibility(View.VISIBLE);
-                houseNo.setText(context.getString(R.string.data_house, bean.getPremiseName()));
-                host.setText(context.getString(R.string.data_host, bean.getResidentName()));
-            }
             time.setText(context.getString(R.string.data_time_slot, CalenderUtils.formatDate(bean.getTimeIn(), CalenderUtils.TIME_FORMAT, CalenderUtils.TIME_FORMAT_AM), CalenderUtils.formatDate(bean.getTimeOut(), CalenderUtils.TIME_FORMAT, CalenderUtils.TIME_FORMAT_AM)));
+
+            if (isCommercial()) {
+                host.setVisibility(View.GONE);
+                houseNo.setText(context.getString(R.string.data_dynamic_premise, getPremiseLastLevel(), bean.getPremiseName()));
+            }else {
+                //For Residential System
+                if (bean.getFlatNo().isEmpty()) {
+                    houseNo.setVisibility(View.GONE);
+                    host.setText(context.getString(R.string.data_host, bean.getCreatedBy()));
+                } else {
+                    houseNo.setVisibility(View.VISIBLE);
+                    houseNo.setText(context.getString(R.string.data_house, bean.getPremiseName()));
+                    host.setText(context.getString(R.string.data_host, bean.getResidentName()));
+                }
+            }
+
 
             if (bean.getImageUrl().isEmpty()) {
                 Glide.with(imgVisitor.getContext())

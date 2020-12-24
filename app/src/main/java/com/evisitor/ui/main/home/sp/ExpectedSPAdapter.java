@@ -128,17 +128,25 @@ public class ExpectedSPAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 time.setText(context.getString(R.string.data_time, CalenderUtils.formatDate(bean.getTime(), CalenderUtils.SERVER_DATE_FORMAT,
                         CalenderUtils.TIMESTAMP_FORMAT)));
             else time.setVisibility(View.GONE);
-            if (bean.getHouseNo().isEmpty()) {
-                houseNo.setVisibility(View.GONE);
-                host.setText(context.getString(R.string.data_host, bean.getCreatedBy()));
-            } else {
-                houseNo.setVisibility(View.VISIBLE);
-                houseNo.setText(context.getString(R.string.data_house, bean.getPremiseName()));
-                host.setText(context.getString(R.string.data_host, bean.getHost()));
-            }
+
             if (!bean.getExpectedVehicleNo().isEmpty())
                 vehicle.setText(context.getString(R.string.data_vehicle, bean.getExpectedVehicleNo()));
             else vehicle.setVisibility(View.GONE);
+
+            if (isCommercial()) {
+                host.setVisibility(View.GONE);
+                houseNo.setText(context.getString(R.string.data_dynamic_premise, getPremiseLastLevel(), bean.getPremiseName()));
+            }else {
+                //For Residential System
+                if (bean.getHouseNo().isEmpty()) {
+                    houseNo.setVisibility(View.GONE);
+                    host.setText(context.getString(R.string.data_host, bean.getCreatedBy()));
+                } else {
+                    houseNo.setVisibility(View.VISIBLE);
+                    houseNo.setText(context.getString(R.string.data_house, bean.getPremiseName()));
+                    host.setText(context.getString(R.string.data_host, bean.getHost()));
+                }
+            }
 
             if (bean.getImageUrl().isEmpty()) {
                 Glide.with(imgVisitor.getContext())

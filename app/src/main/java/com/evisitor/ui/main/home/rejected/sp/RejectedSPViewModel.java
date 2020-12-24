@@ -80,11 +80,16 @@ public class RejectedSPViewModel extends BaseViewModel<RejectedSPNavigator> {
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_vehicle, spBean.getExpectedVehicleNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : spBean.getExpectedVehicleNo())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, spBean.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(spBean.getDialingCode()).concat(" ").concat(spBean.getContactNo()))));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, spBean.getIdentityNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : spBean.getIdentityNo())));
-        if (spBean.getPremiseName().isEmpty()) {
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, spBean.getCreatedBy())));
+
+        if (getDataManager().isCommercial()) {
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), spBean.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : spBean.getPremiseName())));
         } else {
-            visitorProfileBeanList.add(new VisitorProfileBean(1, getNavigator().getContext().getString(R.string.data_house, spBean.getPremiseName())));
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, spBean.getHost())));
+            if (spBean.getPremiseName().isEmpty()) {
+                visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, spBean.getCreatedBy())));
+            } else {
+                visitorProfileBeanList.add(new VisitorProfileBean(1, getNavigator().getContext().getString(R.string.data_house, spBean.getPremiseName())));
+                visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, spBean.getHost())));
+            }
         }
 
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.rejected_by, spBean.getRejectedBy().isEmpty() ? getNavigator().getContext().getString(R.string.na) : spBean.getRejectedBy())));

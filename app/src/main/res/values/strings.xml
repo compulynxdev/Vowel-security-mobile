@@ -67,6 +67,7 @@
     <string name="data_vehicle">Vehicle No : %s</string>
     <string name="vehicle_col">Vehicle No :</string>
     <string name="data_house">House No : %s</string>
+    <string name="data_dynamic_premise">%s : %s</string>
     <string name="data_host">Host : %s</string>
     <string name="data_time">Time : %s</string>
     <string name="data_time_slot">Time : %s - %s</string>

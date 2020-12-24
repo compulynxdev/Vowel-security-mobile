@@ -122,20 +122,29 @@ public class RejectedStaffAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             profile.setText(context.getString(R.string.data_profile, bean.getProfile()));
             reject.setVisibility(bean.getRejectedBy().isEmpty() ? View.GONE : View.VISIBLE);
             reject.setText(context.getString(R.string.rejected_by, bean.getRejectedBy()));
+
             if (bean.getRejectedOn().isEmpty()) {
                 time.setVisibility(View.GONE);
             } else {
                 time.setVisibility(View.VISIBLE);
                 time.setText(time.getContext().getString(R.string.rejected_on, CalenderUtils.formatDate(bean.getRejectedOn(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT)));
             }
-            if (bean.getPremiseName().isEmpty()) {
-                houseNo.setVisibility(View.GONE);
-                host.setText(context.getString(R.string.data_host, bean.getCreatedBy()));
-            } else {
-                houseNo.setVisibility(View.VISIBLE);
-                houseNo.setText(context.getString(R.string.data_house, bean.getPremiseName()));
-                host.setText(context.getString(R.string.data_host, bean.getResidentName()));
+
+            if (isCommercial()) {
+                host.setVisibility(View.GONE);
+                houseNo.setText(context.getString(R.string.data_dynamic_premise, getPremiseLastLevel(), bean.getPremiseName()));
+            }else {
+                //For Residential System
+                if (bean.getPremiseName().isEmpty()) {
+                    houseNo.setVisibility(View.GONE);
+                    host.setText(context.getString(R.string.data_host, bean.getCreatedBy()));
+                } else {
+                    houseNo.setVisibility(View.VISIBLE);
+                    houseNo.setText(context.getString(R.string.data_house, bean.getPremiseName()));
+                    host.setText(context.getString(R.string.data_host, bean.getResidentName()));
+                }
             }
+
             if (bean.getImageUrl().isEmpty()) {
                 Glide.with(imgVisitor.getContext())
                         .load(R.drawable.ic_person)

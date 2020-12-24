@@ -88,11 +88,16 @@ public class ExpectedHKViewModel extends BaseCheckInOutViewModel<ExpectedHKNavig
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, hkBean.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(hkBean.getDialingCode()).concat(" ").concat(hkBean.getContactNo()))));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, hkBean.getDocumentId().isEmpty() ? getNavigator().getContext().getString(R.string.na) : hkBean.getDocumentId())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_comp_name, hkBean.getCompanyName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : hkBean.getCompanyName())));
-        if (hkBean.getFlatNo().isEmpty()) {
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, hkBean.getCreatedBy())));
-        } else {
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_house, hkBean.getPremiseName())));
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, hkBean.getResidentName())));
+
+        if (getDataManager().isCommercial()) {
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), hkBean.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : hkBean.getPremiseName())));
+        }else {
+            if (hkBean.getFlatNo().isEmpty()) {
+                visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, hkBean.getCreatedBy())));
+            } else {
+                visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_house, hkBean.getPremiseName())));
+                visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, hkBean.getResidentName())));
+            }
         }
         getNavigator().hideLoading();
         return visitorProfileBeanList;

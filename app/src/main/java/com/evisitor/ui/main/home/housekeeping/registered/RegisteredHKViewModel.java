@@ -83,8 +83,13 @@ public class RegisteredHKViewModel extends BaseViewModel<RegisteredHKNavigator> 
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, bean.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(bean.getDialingCode()).concat(" ").concat(bean.getContactNo()))));
         if (!bean.getDocumentId().isEmpty())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, bean.getDocumentId())));
-        if (!bean.getFlatNo().isEmpty()) {
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_house, bean.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : bean.getPremiseName())));
+
+        if (getDataManager().isCommercial()) {
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), bean.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : bean.getPremiseName())));
+        }else {
+            if (!bean.getFlatNo().isEmpty()) {
+                visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_house, bean.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : bean.getPremiseName())));
+            }
         }
 
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_comp_name, bean.getCompanyName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : bean.getCompanyName())));
