@@ -114,10 +114,13 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
         setUpAdapter();
 
         if (getViewModel().getDataManager().isCommercial()) {
-            deviceBeanList = getViewModel().getDataManager().getCommercialGuestDetail().getDeviceBeanList();
-            if (!deviceBeanList.isEmpty()) {
-                getViewDataBinding().tvGadgetsInfo.setVisibility(View.VISIBLE);
-                getViewDataBinding().tvGadgetsInfo.setOnClickListener(this);
+            CommercialGuestResponse.CommercialGuest guest = getViewModel().getDataManager().getCommercialGuestDetail();
+            if (guest != null) {
+                deviceBeanList = guest.getDeviceBeanList();
+                if (deviceBeanList != null && !deviceBeanList.isEmpty()) {
+                    getViewDataBinding().tvGadgetsInfo.setVisibility(View.VISIBLE);
+                    getViewDataBinding().tvGadgetsInfo.setOnClickListener(this);
+                }
             }
         }
 
