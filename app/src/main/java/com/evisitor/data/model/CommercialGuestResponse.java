@@ -20,73 +20,81 @@ public class CommercialGuestResponse {
 
     public class CommercialGuest {
 
+        @SerializedName("employeeName")
+        private String host;
+
+        @SerializedName("image")
+        private String imageUrl;
+
+        @SerializedName("gender")
+        private String gender;
+
+        @SerializedName("checkInTime")
+        private String checkInTime;
+
         @SerializedName("fullName")
         private String name;
-        @SerializedName("expectedVehicleNo")
-        private String expectedVehicleNo;
-
-        @SerializedName("enteredVehicleNo")
-        private String enteredVehicleNo = "";
 
         @SerializedName("expectedDate")
         private String time;
 
+        @SerializedName("enteredVehicleNo")
+        private String enteredVehicleNo = "";
+
+        @SerializedName("dialingCode")
+        private String dialingCode;
+
+        @SerializedName("expectedVehicleNo")
+        private String expectedVehicleNo;
+
+        @SerializedName("createdDate")
+        private String createdDate;
+
         @SerializedName("flatNo")
         private String houseNo;
 
-        @SerializedName("residentName")
-        private String host;
-
-        @SerializedName("isOwner")
-        private boolean isOwner;
-
-        @SerializedName("residentId")
-        private String residentId;
-
-        @SerializedName("notificationStatus")
-        private boolean notificationStatus;
-
-        @SerializedName("documentId")
-        private String identityNo;
+        @SerializedName("checkOutTime")
+        private String checkOutTime;
 
         @SerializedName("createdBy")
         private String createdBy;
 
+        @SerializedName("documentId")
+        private String identityNo;
+
+        @SerializedName("flatId")  //for guest check in/out list
+        private String flatId2 = "";
+
+        @SerializedName("id")
+        private String guestId;
+
+        @SerializedName("state")
+        private String status;
+
+        @SerializedName("guestType")
+        private String guestType;
+
+        @SerializedName("premiseName")
+        private String premiseName;
+
         @SerializedName("contactNo")
         private String contactNo;
 
-        @SerializedName("dialingCode")
-        private String dialingCode;
-        @SerializedName("checkInTime")
-        private String checkInTime;
-        @SerializedName("checkOutTime")
-        private String checkOutTime;
         @SerializedName("premiseHierarchyDetailsId")
         private String flatId = "";
-        @SerializedName("flatId")  //for guest check in/out list
-        private String flatId2 = "";
-        @SerializedName("id")
-        private String guestId;
+
         @SerializedName("checkOutFeature")
         private boolean checkOutFeature;
-        @SerializedName("hostCheckOutTime")
-        private String hostCheckOutTime;
-        @SerializedName("isHostCheckOut")
-        private boolean isHostCheckOut;
-        @SerializedName("image")
-        private String imageUrl;
-        @SerializedName("state")
-        private String status;
+
         @SerializedName("checkInStatus")
         private boolean checkInStatus;
+
         @SerializedName("rejectedBy")
         private String rejectedBy;
         @SerializedName("rejectReason")
         private String rejectedReason;
         @SerializedName("rejectedOn")
         private String rejectedOn;
-        @SerializedName("premiseName")
-        private String premiseName;
 
         @SerializedName("purposeOfExit")
         private String purpose;
@@ -117,47 +125,6 @@ public class CommercialGuestResponse {
 
         public void setCheckOutFeature(boolean checkOutFeature) {
             this.checkOutFeature = checkOutFeature;
-        }
-
-        public String getHostCheckOutTime() {
-            return hostCheckOutTime;
-        }
-
-        public void setHostCheckOutTime(String hostCheckOutTime) {
-            this.hostCheckOutTime = hostCheckOutTime;
-        }
-
-        public boolean isHostCheckOut() {
-            return isHostCheckOut;
-        }
-
-        public void setHostCheckOut(boolean hostCheckOut) {
-            isHostCheckOut = hostCheckOut;
-        }
-
-        public boolean isOwner() {
-            return isOwner;
-        }
-
-        public void setOwner(boolean owner) {
-            isOwner = owner;
-        }
-
-
-        public boolean isNotificationStatus() {
-            return notificationStatus;
-        }
-
-        public void setNotificationStatus(boolean notificationStatus) {
-            this.notificationStatus = notificationStatus;
-        }
-
-        public String getResidentId() {
-            return residentId;
-        }
-
-        public void setResidentId(String residentId) {
-            this.residentId = residentId;
         }
 
         public String getIdentityNo() {

@@ -314,6 +314,11 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public Call<ResponseBody> doGetCommercialGuestCheckInOutList(String authToken, Map<String, String> partMap) {
+        return apiHelper.doGetCommercialGuestCheckInOutList(authToken, partMap);
+    }
+
+    @Override
     public Call<ResponseBody> doGetGuestCheckInOutList(String authToken, Map<String, String> partMap) {
         return apiHelper.doGetGuestCheckInOutList(authToken, partMap);
     }

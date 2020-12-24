@@ -96,6 +96,11 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
+    public Call<ResponseBody> doGetCommercialGuestCheckInOutList(String authToken, Map<String, String> partMap) {
+        return getApiInterface().doGetCommercialGuestCheckInOutList(authToken, partMap);
+    }
+
+    @Override
     public Call<ResponseBody> doGetGuestCheckInOutList(String authToken, Map<String, String> partMap) {
         return getApiInterface().doGetGuestCheckInOutList(authToken, partMap);
     }

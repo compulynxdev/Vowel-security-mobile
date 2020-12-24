@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.evisitor.R;
 import com.evisitor.data.DataManager;
+import com.evisitor.data.model.CommercialGuestResponse;
 import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.GuestsResponse;
 import com.evisitor.data.model.HouseKeeping;
@@ -46,7 +47,9 @@ public class CheckOutViewModel extends BaseViewModel<ActivityNavigator> {
 
             switch (listOf) {
                 case 0:
-                    getGuestList(map);
+                    if (getDataManager().isCommercial())
+                        getCommercialGuestList(map);
+                    else getGuestList(map);
                     AppLogger.d("Searching : CheckOutViewModel ExpectedGuest", page + " : " + search);
                     break;
 
@@ -64,6 +67,36 @@ public class CheckOutViewModel extends BaseViewModel<ActivityNavigator> {
             getNavigator().hideSwipeToRefresh();
             getNavigator().hideLoading();
         }
+    }
+
+    private void getCommercialGuestList(Map<String, String> map) {
+        getDataManager().doGetCommercialGuestCheckInOutList(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                getNavigator().hideLoading();
+                getNavigator().hideSwipeToRefresh();
+                try {
+                    if (response.code() == 200) {
+                        assert response.body() != null;
+                        CommercialGuestResponse commercialGuestResponse = getDataManager().getGson().fromJson(response.body().string(), CommercialGuestResponse.class);
+                        if (commercialGuestResponse.getContent() != null) {
+                            getNavigator().onExpectedCommercialGuestSuccess(commercialGuestResponse.getContent());
+                        }
+                    } else if (response.code() == 401) {
+                        getNavigator().openActivityOnTokenExpire();
+                    } else getNavigator().handleApiError(response.errorBody());
+                } catch (Exception e) {
+                    getNavigator().showAlert(R.string.alert, R.string.alert_error);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                getNavigator().hideSwipeToRefresh();
+                getNavigator().hideLoading();
+                getNavigator().handleApiFailure(t);
+            }
+        });
     }
 
     private void getGuestList(Map<String, String> map) {
@@ -156,6 +189,28 @@ public class CheckOutViewModel extends BaseViewModel<ActivityNavigator> {
             }
         });
 
+    }
+
+    List<VisitorProfileBean> getCommercialGuestCheckInProfileBean(CommercialGuestResponse.CommercialGuest guests) {
+        getNavigator().showLoading();
+        List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, guests.getName())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time_in, CalenderUtils.formatDate(guests.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time_out, CalenderUtils.formatDate(guests.getCheckOutTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_vehicle, guests.getEnteredVehicleNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getEnteredVehicleNo())));
+
+        if (getDataManager().getGuestConfiguration().getGuestField().isContactNo())
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, guests.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(guests.getDialingCode()).concat(" ").concat(guests.getContactNo()))));
+
+        if (getDataManager().isIdentifyFeature())
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, guests.getIdentityNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getIdentityNo())));
+
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), guests.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getPremiseName())));
+
+        if (!guests.getHost().isEmpty())
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, guests.getHost().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getHost())));
+        getNavigator().hideLoading();
+        return visitorProfileBeanList;
     }
 
     List<VisitorProfileBean> getGuestCheckInProfileBean(Guests guests) {

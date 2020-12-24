@@ -1,4 +1,4 @@
-package com.evisitor.ui.main.home.guest.commercial_expected;
+package com.evisitor.ui.main.activity.checkin.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -21,7 +21,7 @@ import com.evisitor.util.pagination.FooterLoader;
 
 import java.util.List;
 
-public class ExpectedCommercialGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
+public class CommercialGuestCheckInAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private static final int VIEWTYPE_ITEM = 1;
     private static final int VIEWTYPE_LOADER = 2;
     private List<CommercialGuestResponse.CommercialGuest> list;
@@ -29,20 +29,10 @@ public class ExpectedCommercialGuestAdapter extends RecyclerView.Adapter<BaseVie
     private Context context;
     private ItemClickCallback listener;
 
-    ExpectedCommercialGuestAdapter(List<CommercialGuestResponse.CommercialGuest> list, Context context, ItemClickCallback callback) {
+    public CommercialGuestCheckInAdapter(List<CommercialGuestResponse.CommercialGuest> list, Context context, ItemClickCallback click) {
         this.list = list;
+        this.listener = click;
         this.context = context;
-        this.listener = callback;
-    }
-
-    @Override
-    public void setHasStableIds(boolean hasStableIds) {
-        super.setHasStableIds(hasStableIds);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return Long.parseLong(list.get(position).getGuestId());
     }
 
     @NonNull
@@ -51,8 +41,8 @@ public class ExpectedCommercialGuestAdapter extends RecyclerView.Adapter<BaseVie
         View view;
         switch (viewType) {
             case VIEWTYPE_ITEM:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_guests, parent, false);
-                return new ExpectedCommercialGuestAdapter.ViewHolder(view);
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_check_in_out, parent, false);
+                return new CommercialGuestCheckInAdapter.ViewHolder(view);
 
             default:
             case VIEWTYPE_LOADER:
@@ -92,18 +82,19 @@ public class ExpectedCommercialGuestAdapter extends RecyclerView.Adapter<BaseVie
         return list.size();
     }
 
+
     public class ViewHolder extends BaseViewHolder {
+
         ImageView imgVisitor;
-        TextView name, time, houseNo, host, vehicle, status;
+        TextView name, time, houseNo, host, visitorType;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_name);
-            time = itemView.findViewById(R.id.tv_time);
+            time = itemView.findViewById(R.id.tv_time_in);
             houseNo = itemView.findViewById(R.id.tv_house_no);
             host = itemView.findViewById(R.id.tv_host);
-            vehicle = itemView.findViewById(R.id.tv_vehicle);
-            status = itemView.findViewById(R.id.tv_status);
+            visitorType = itemView.findViewById(R.id.tv_type);
             imgVisitor = itemView.findViewById(R.id.img_visitor);
 
             itemView.setOnClickListener(v -> {
@@ -115,29 +106,27 @@ public class ExpectedCommercialGuestAdapter extends RecyclerView.Adapter<BaseVie
                 if (getAdapterPosition() != -1)
                     showFullImage(list.get(getAdapterPosition()).getImageUrl());
             });
+
         }
 
         @Override
         public void onBind(int position) {
             CommercialGuestResponse.CommercialGuest bean = list.get(position);
             name.setText(context.getString(R.string.data_name, bean.getName()));
-            status.setVisibility(bean.getStatus().equalsIgnoreCase("PENDING") ? View.GONE : View.VISIBLE);
-            status.setText(status.getContext().getString(R.string.status, bean.getStatus()));
-            if (bean.getTime() != null && !bean.getTime().isEmpty())
-                time.setText(context.getString(R.string.data_time, CalenderUtils.formatDate(bean.getTime(), CalenderUtils.SERVER_DATE_FORMAT,
-                        CalenderUtils.TIMESTAMP_FORMAT)));
-            else time.setVisibility(View.GONE);
+            time.setText(context.getString(R.string.data_time_in, CalenderUtils.formatDate(bean.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT)));
+            if (!bean.getHouseNo().isEmpty()) {
+                houseNo.setVisibility(View.VISIBLE);
+                houseNo.setText(context.getString(R.string.data_dynamic_premise, getPremiseLastLevel(), bean.getPremiseName()));
 
-            houseNo.setText(context.getString(R.string.data_dynamic_premise, getPremiseLastLevel(), bean.getPremiseName()));
-
-            if (!bean.getHost().isEmpty()) {
-                host.setVisibility(View.VISIBLE);
-                host.setText(context.getString(R.string.data_host, bean.getHost()));
-            } else host.setVisibility(View.GONE);
-
-            if (!bean.getExpectedVehicleNo().isEmpty())
-                vehicle.setText(context.getString(R.string.data_vehicle, bean.getExpectedVehicleNo()));
-            else vehicle.setVisibility(View.GONE);
+                if (!bean.getHost().isEmpty()) {
+                    host.setVisibility(View.VISIBLE);
+                    host.setText(context.getString(R.string.data_host, bean.getHost()));
+                } else host.setVisibility(View.GONE);
+            } else {
+                houseNo.setVisibility(View.GONE);
+                houseNo.setText("");
+                host.setText(context.getString(R.string.data_host, bean.getCreatedBy()));
+            }
 
             if (bean.getImageUrl().isEmpty()) {
                 Glide.with(imgVisitor.getContext())
@@ -155,5 +144,4 @@ public class ExpectedCommercialGuestAdapter extends RecyclerView.Adapter<BaseVie
             }
         }
     }
-
 }

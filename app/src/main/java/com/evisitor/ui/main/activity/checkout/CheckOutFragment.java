@@ -8,12 +8,14 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
+import com.evisitor.data.model.CommercialGuestResponse;
 import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.HouseKeeping;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.databinding.FragmentCheckOutBinding;
 import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.main.activity.ActivityNavigator;
+import com.evisitor.ui.main.activity.checkout.adapter.CommercialGuestCheckOutAdapter;
 import com.evisitor.ui.main.activity.checkout.adapter.GuestCheckOutAdapter;
 import com.evisitor.ui.main.activity.checkout.adapter.HouseKeepingCheckOutAdapter;
 import com.evisitor.ui.main.activity.checkout.adapter.ServiceProviderCheckOutAdapter;
@@ -25,11 +27,13 @@ import java.util.List;
 
 public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, CheckOutViewModel> implements ActivityNavigator {
 
+    private List<CommercialGuestResponse.CommercialGuest> commercialGuestList;
     private List<Guests> guestsList;
     private List<ServiceProvider> serviceProviderList;
     private List<HouseKeeping> houseKeepingList;
 
     private GuestCheckOutAdapter guestAdapter;
+    private CommercialGuestCheckOutAdapter commercialGuestCheckOutAdapter;
     private ServiceProviderCheckOutAdapter serviceProviderAdapter;
     private HouseKeepingCheckOutAdapter houseKeepingAdapter;
     private int listOf = 0;
@@ -72,7 +76,9 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
         switch (listOf) {
             //guest
             case 0:
-                getViewDataBinding().recyclerView.setAdapter(guestAdapter);
+                if (getViewModel().getDataManager().isCommercial()) {
+                    getViewDataBinding().recyclerView.setAdapter(commercialGuestCheckOutAdapter);
+                } else getViewDataBinding().recyclerView.setAdapter(guestAdapter);
                 break;
 
             //house
@@ -94,11 +100,14 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
         super.onViewCreated(view, savedInstanceState);
         getViewModel().setNavigator(this);
 
-        guestsList = new ArrayList<>();
         houseKeepingList = new ArrayList<>();
         serviceProviderList = new ArrayList<>();
 
-        setUpGuestAdapter();
+        if (getViewModel().getDataManager().isCommercial()) {
+            setUpCommercialGuestAdapter();
+        } else {
+            setUpGuestAdapter();
+        }
         setUpServiceProviderAdapter();
         setUpHouseKeeperAdapter();
 
@@ -145,7 +154,15 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
         serviceProviderAdapter.setHasStableIds(true);
     }
 
+    private void setUpCommercialGuestAdapter() {
+        commercialGuestList = new ArrayList<>();
+        commercialGuestCheckOutAdapter = new CommercialGuestCheckOutAdapter(commercialGuestList, pos -> VisitorProfileDialog.newInstance(getViewModel().getCommercialGuestCheckInProfileBean(commercialGuestList.get(pos)), null).setImage(commercialGuestList.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
+        commercialGuestCheckOutAdapter.setHasStableIds(true);
+        getViewDataBinding().recyclerView.setAdapter(commercialGuestCheckOutAdapter);
+    }
+
     private void setUpGuestAdapter() {
+        guestsList = new ArrayList<>();
         guestAdapter = new GuestCheckOutAdapter(guestsList, pos -> VisitorProfileDialog.newInstance(getViewModel().getGuestCheckInProfileBean(guestsList.get(pos)), null).setImage(guestsList.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
         guestAdapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(guestAdapter);
@@ -156,7 +173,11 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
         scrollListener.onDataCleared();
         switch (listOf) {
             case 0:
-                guestsList.clear();
+                if (getViewModel().getDataManager().isCommercial())
+                    commercialGuestList.clear();
+                else
+                    guestsList.clear();
+
                 guestPage = 0;
                 getViewModel().getCheckOutData(guestPage, search, listOf);
                 break;
@@ -173,6 +194,24 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
                 getViewModel().getCheckOutData(spPage, search, listOf);
                 break;
         }
+    }
+
+    @Override
+    public void onExpectedCommercialGuestSuccess(List<CommercialGuestResponse.CommercialGuest> tmpGuestsList) {
+        if (guestPage == 0) commercialGuestList.clear();
+
+        commercialGuestList.addAll(tmpGuestsList);
+        commercialGuestCheckOutAdapter.notifyDataSetChanged();
+
+        if (commercialGuestList.size() == 0) {
+            getViewDataBinding().recyclerView.setVisibility(View.GONE);
+            getViewDataBinding().tvNoData.setVisibility(View.VISIBLE);
+        } else {
+            getViewDataBinding().tvNoData.setVisibility(View.GONE);
+            getViewDataBinding().recyclerView.setVisibility(View.VISIBLE);
+        }
+
+        if (listOf == 0) listener.totalCount(commercialGuestList.size());
     }
 
     @Override

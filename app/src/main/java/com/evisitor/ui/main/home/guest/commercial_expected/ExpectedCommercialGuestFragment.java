@@ -188,7 +188,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
                 });
 
         CommercialGuestResponse.CommercialGuest bean = getViewModel().getDataManager().getCommercialGuestDetail();
-        if (!bean.isNotificationStatus() || bean.getHouseNo().isEmpty()) {
+        if (bean.getHouseNo().isEmpty()) {
             alert.setNegativeBtnShow(false).show(getFragmentManager());
         } else {
             alert.setNegativeBtnColor(R.color.colorPrimary)

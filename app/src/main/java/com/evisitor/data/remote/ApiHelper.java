@@ -45,6 +45,9 @@ public interface ApiHelper {
     @POST(WebServices.GUEST_SEND_NOTIFICTION)
     Call<ResponseBody> doGuestSendNotification(@Header("authorization") String authToken, @Body RequestBody body);
 
+    @GET(WebServices.GET_COMMERCIAL_GUEST_CHECKIN_CHECKOUT_LIST)
+    Call<ResponseBody> doGetCommercialGuestCheckInOutList(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+
     @GET(WebServices.GET_GUEST_CHECKIN_CHECKOUT_LIST)
     Call<ResponseBody> doGetGuestCheckInOutList(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
 
