@@ -260,6 +260,7 @@
     <string name="no_trespasser_sp">You don\'t have any trespasser service provider visitors!</string>
     <string name="no_rejected_sp">You don\'t have any rejected service provider visitors!</string>
     <string name="no_rejected_guest">You don\'t have any rejected guest visitors!</string>
+    <string name="no_rejected_visitor">You don\'t have any rejected visitors!</string>
     <string name="no_rejected_staff">You don\'t have any rejected domestic staff!</string>
     <string name="revisit">Keep visiting this page to see new updates!</string>
     <string name="continue_">Continue</string>

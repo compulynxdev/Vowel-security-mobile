@@ -63,6 +63,7 @@ public class RejectedGuestFragment extends BaseFragment<FragmentRejectedGuestBin
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setUpAdapter();
+        getViewDataBinding().tvNoData.setText(mViewModel.getDataManager().isCommercial() ? R.string.no_rejected_visitor : R.string.no_rejected_guest);
     }
 
 
@@ -112,8 +113,8 @@ public class RejectedGuestFragment extends BaseFragment<FragmentRejectedGuestBin
             getViewDataBinding().recyclerView.setVisibility(View.GONE);
             getViewDataBinding().tvNoData.setVisibility(View.VISIBLE);
         } else {
-            getViewDataBinding().tvNoData.setVisibility(View.GONE);
             getViewDataBinding().recyclerView.setVisibility(View.VISIBLE);
+            getViewDataBinding().tvNoData.setVisibility(View.GONE);
         }
     }
 
