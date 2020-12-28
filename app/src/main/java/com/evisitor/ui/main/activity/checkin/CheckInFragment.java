@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
@@ -29,6 +30,7 @@ import java.util.List;
 
 public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckInViewModel> implements ActivityNavigator {
 
+    private CheckInViewModel viewModel;
     private List<CommercialGuestResponse.CommercialGuest> commercialGuestList;
     private List<Guests> guestsList;
     private List<ServiceProvider> serviceProviderList;
@@ -50,6 +52,12 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
         fragment.setData(listOf, listener);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getViewModel().setCheckInOutNavigator(this);
     }
 
     private void setData(int listOf, OnFragmentInteraction interaction) {
@@ -94,14 +102,15 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
 
     @Override
     public CheckInViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(CheckInViewModel.class);
+        if (viewModel == null)
+            viewModel = new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(CheckInViewModel.class);
+
+        return viewModel;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getViewModel().setCheckInOutNavigator(this);
-
         houseKeepingList = new ArrayList<>();
         serviceProviderList = new ArrayList<>();
 
