@@ -36,6 +36,7 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
     private String btnLabel = "";
     private String image = "";
     private boolean isBtnVisible = true;
+    private boolean isCommercialGuest = false;
 
     public static VisitorProfileDialog newInstance(List<VisitorProfileBean> visitorInfoList, VisitorProfileCallback callback) {
         Bundle args = new Bundle();
@@ -72,6 +73,11 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
 
     public VisitorProfileDialog setImage(String image) {
         this.image = image;
+        return this;
+    }
+
+    public VisitorProfileDialog setIsCommercialGuest(boolean isTrue) {
+        this.isCommercialGuest = isTrue;
         return this;
     }
 
@@ -113,7 +119,7 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
         }
         setUpAdapter();
 
-        if (getViewModel().getDataManager().isCommercial()) {
+        if (isCommercialGuest && getViewModel().getDataManager().isCommercial()) {
             CommercialGuestResponse.CommercialGuest guest = getViewModel().getDataManager().getCommercialGuestDetail();
             if (guest != null) {
                 deviceBeanList = guest.getDeviceBeanList();
@@ -121,7 +127,11 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
                     getViewDataBinding().tvGadgetsInfo.setVisibility(View.VISIBLE);
                     getViewDataBinding().tvGadgetsInfo.setOnClickListener(this);
                 }
+            } else {
+                getViewDataBinding().tvGadgetsInfo.setVisibility(View.GONE);
             }
+        } else {
+            getViewDataBinding().tvGadgetsInfo.setVisibility(View.GONE);
         }
 
     }
@@ -156,6 +166,9 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
                 Intent i = GadgetsInputActivity.getStartIntent(getContext());
                 if (!deviceBeanList.isEmpty())
                     i.putExtra("list", new Gson().toJson(deviceBeanList));
+                if (btnLabel.equalsIgnoreCase(getString(R.string.check_in)))
+                    i.putExtra("add", true);
+                else i.putExtra("add", false);
                 startActivityForResult(i, SCAN_RESULT);
                 break;
         }

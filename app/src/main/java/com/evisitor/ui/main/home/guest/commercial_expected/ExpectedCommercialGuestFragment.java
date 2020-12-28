@@ -79,7 +79,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
                 visitorProfileDialog.dismiss();
                 decideNextProcess();
             }).setBtnLabel(getString(R.string.check_in)).setBtnVisible(guestBean.getStatus().equalsIgnoreCase("PENDING"))
-                    .setImage(guestBean.getImageUrl()).show(getFragmentManager());
+                    .setImage(guestBean.getImageUrl()).setIsCommercialGuest(true).show(getFragmentManager());
         });
         adapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(adapter);

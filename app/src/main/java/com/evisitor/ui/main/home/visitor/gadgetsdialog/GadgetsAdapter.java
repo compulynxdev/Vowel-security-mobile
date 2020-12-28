@@ -5,6 +5,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,10 +20,14 @@ import java.util.List;
 public class GadgetsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private List<DeviceBean> list;
     private AdapterCallback callback;
-
+    private boolean isAdd;
     GadgetsAdapter(List<DeviceBean> list, AdapterCallback callback) {
         this.list = list;
         this.callback = callback;
+    }
+
+    void setIsAdd(boolean isAdd) {
+        this.isAdd = isAdd;
     }
 
     @NonNull
@@ -45,11 +50,14 @@ public class GadgetsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public interface AdapterCallback {
         void onChangeList(List<DeviceBean> deviceList);
+
+        void onRemove(int position);
     }
 
     public class ViewHolder extends BaseViewHolder {
 
         TextView tv_title, etDeviceName, etDeviceType, etDeviceTag, etDeviceSerial, etDeviceManufacturer;
+        ImageView img_close;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -59,6 +67,7 @@ public class GadgetsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             etDeviceTag = itemView.findViewById(R.id.et_tag_no);
             etDeviceSerial = itemView.findViewById(R.id.et_serial_no);
             etDeviceManufacturer = itemView.findViewById(R.id.et_manufacturer);
+            img_close = itemView.findViewById(R.id.img_close);
         }
 
         @Override
@@ -70,6 +79,22 @@ public class GadgetsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             etDeviceTag.setText(bean.getTagNo().isEmpty() ? "" : bean.getTagNo());
             etDeviceSerial.setText(bean.getSerialNo().isEmpty() ? "" : bean.getSerialNo());
             etDeviceManufacturer.setText(bean.getManufacturer().isEmpty() ? "" : bean.getManufacturer());
+
+            if (isAdd) {
+                etDeviceManufacturer.setEnabled(true);
+                etDeviceName.setEnabled(true);
+                etDeviceType.setEnabled(true);
+                etDeviceTag.setEnabled(true);
+                etDeviceSerial.setEnabled(true);
+                img_close.setVisibility(View.VISIBLE);
+            } else {
+                etDeviceManufacturer.setEnabled(false);
+                etDeviceName.setEnabled(false);
+                etDeviceType.setEnabled(false);
+                etDeviceTag.setEnabled(false);
+                etDeviceSerial.setEnabled(false);
+                img_close.setVisibility(View.GONE);
+            }
             etDeviceName.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -164,6 +189,9 @@ public class GadgetsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 }
             });
 
+            img_close.setOnClickListener(v -> {
+                callback.onRemove(position);
+            });
         }
     }
 }

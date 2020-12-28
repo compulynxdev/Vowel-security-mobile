@@ -164,7 +164,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
             VisitorProfileDialog.newInstance(beans, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
                 getViewModel().checkOut(0);
-            }).setImage(guests.getImageUrl()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
+            }).setIsCommercialGuest(true).setImage(guests.getImageUrl()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
         });
 
         getViewDataBinding().recyclerView.setAdapter(commercialGuestCheckInAdapter);

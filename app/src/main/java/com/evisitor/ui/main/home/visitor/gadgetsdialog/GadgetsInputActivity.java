@@ -27,6 +27,7 @@ public class GadgetsInputActivity extends BaseActivity<GadgetsInputDialogBinding
 
     List<DeviceBean> beans;
     GadgetsAdapter adapter;
+    boolean isAdd;
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, GadgetsInputActivity.class);
@@ -50,8 +51,8 @@ public class GadgetsInputActivity extends BaseActivity<GadgetsInputDialogBinding
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setUp();
         setUpIntent(getIntent());
+        setUp();
         setUpAdapter();
     }
 
@@ -62,12 +63,25 @@ public class GadgetsInputActivity extends BaseActivity<GadgetsInputDialogBinding
             }.getType();
             beans.addAll(Objects.requireNonNull(getViewModel().getDataManager().getGson().fromJson(intent.getStringExtra("list"), listType)));
         }
+        isAdd = intent.getBooleanExtra("add", false);
     }
 
     private void setUpAdapter() {
         if (beans.isEmpty())
             beans.add(new DeviceBean(getString(R.string.device).concat(" ").concat("1"), "", "", "", "", ""));
-        adapter = new GadgetsAdapter(beans, deviceList -> beans = deviceList);
+        adapter = new GadgetsAdapter(beans, new GadgetsAdapter.AdapterCallback() {
+            @Override
+            public void onChangeList(List<DeviceBean> deviceList) {
+                beans = deviceList;
+            }
+
+            @Override
+            public void onRemove(int position) {
+                beans.remove(position);
+                adapter.notifyDataSetChanged();
+            }
+        });
+        adapter.setIsAdd(isAdd);
         getViewDataBinding().recyclerView.setAdapter(adapter);
     }
 
@@ -78,7 +92,13 @@ public class GadgetsInputActivity extends BaseActivity<GadgetsInputDialogBinding
         imgBack.setOnClickListener(this);
         ImageView imgSearch = findViewById(R.id.img_search);
         imgSearch.setImageDrawable(getDrawable(R.drawable.ic_add));
-        imgSearch.setVisibility(View.VISIBLE);
+        if (isAdd) {
+            imgSearch.setVisibility(View.VISIBLE);
+            getViewDataBinding().btnOk.setVisibility(View.VISIBLE);
+        } else {
+            imgSearch.setVisibility(View.GONE);
+            getViewDataBinding().btnOk.setVisibility(View.GONE);
+        }
         imgSearch.setOnClickListener(this);
         getViewDataBinding().btnOk.setOnClickListener(this);
     }
