@@ -233,7 +233,7 @@
     <string name="property_type">Property Type</string>
     <string name="mobile">Mobile</string>
     <string name="msg_property_image">Property photo not available at \nthe moment!!</string>
-    <string name="extention_no">Extension No</string>
+    <string name="extention_no">Secondary Contact No</string>
     <string name="search_here">Search…</string>
     <string name="country">Country</string>
 
@@ -280,13 +280,13 @@
     <string name="select_department">Select Department</string>
     <string name="gadgets_info">Gadgets Information</string>
 
-    <string name="enter_gadget_info">Enter gadgets information</string>
-    <string name="enter_device_name">Device deviceName</string>
-    <string name="enter_device_type">Device type</string>
+    <string name="enter_gadget_info">Gadgets information</string>
+    <string name="enter_device_name">Name</string>
+    <string name="enter_device_type">Type</string>
     <string name="enter_device_serial">Serial number</string>
     <string name="enter_device_tag">Tag number</string>
     <string name="can_enter_more_device">You can\'t enter more than 5 device details!</string>
-    <string name="enter_device_manufacturer">Device Manufacturer</string>
+    <string name="enter_device_manufacturer">Manufacturer</string>
     <string name="please_fill_details">Please fill the device details first, if you have device then device deviceName and device serial number is mandatory!!</string>
     <string name="please_select">Please select</string>
     <string name="please_enter_purpose">Please enter purpose of visist!</string>

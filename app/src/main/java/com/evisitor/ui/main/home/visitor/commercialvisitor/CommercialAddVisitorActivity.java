@@ -348,8 +348,10 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
 
             case R.id.tv_gadgets:
                 Intent i = GadgetsInputActivity.getStartIntent(this);
-                if (!deviceBeanList.isEmpty())
+                if (!deviceBeanList.isEmpty()) {
                     i.putExtra("list", new Gson().toJson(deviceBeanList));
+                }
+                i.putExtra("add", true);
                 startActivityForResult(i, SCAN_RESULT);
                 break;
 
@@ -557,6 +559,11 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
                 }.getType();
                 deviceBeanList.clear();
                 deviceBeanList.addAll(Objects.requireNonNull(mViewModel.getDataManager().getGson().fromJson(data.getStringExtra("data"), listType)));
+                if (!deviceBeanList.isEmpty())
+                    getViewDataBinding().tvGadgets.setText(getString(R.string.view_gadgets_info).concat(" : ").concat(String.valueOf(deviceBeanList.size())));
+                else {
+                    getViewDataBinding().tvGadgets.setText("");
+                }
             }
         }
     }
