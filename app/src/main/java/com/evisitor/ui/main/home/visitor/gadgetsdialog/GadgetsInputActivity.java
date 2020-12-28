@@ -124,6 +124,15 @@ public class GadgetsInputActivity extends BaseActivity<GadgetsInputDialogBinding
                     } else {
                         showAlert(R.string.alert, R.string.please_fill_details).show(getSupportFragmentManager());
                     }
+                } else {
+                    Intent intent = getIntent();
+                    Bundle bundle = new Bundle();
+                    String yourListAsString = new Gson().toJson(beans);
+                    AppLogger.i("Device List", yourListAsString);
+                    bundle.putString("data", yourListAsString);
+                    intent.putExtras(bundle);
+                    setResult(RESULT_OK, intent);
+                    finish();
                 }
                 break;
 
