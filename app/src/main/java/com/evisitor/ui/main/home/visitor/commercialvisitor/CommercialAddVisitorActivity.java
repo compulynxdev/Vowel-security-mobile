@@ -124,7 +124,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
 
             switch (from) {
                 case AppConstants.CONTROLLER_GUEST:
-                    getViewDataBinding().toolbar.tvTitle.setText(R.string.title_add_guest);
+                    getViewDataBinding().toolbar.tvTitle.setText(R.string.title_add_visitor);
                     getViewDataBinding().tvVisitorType.setVisibility(View.GONE);
                     updateVisitorUI(mViewModel.getVisitorTypeList().get(0).toString());
                     if (!mViewModel.getDataManager().getGuestConfiguration().isDataUpdated) {
@@ -434,7 +434,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
 
     private void updateVisitorUI(String visitorType) {
         getViewDataBinding().tvVisitorType.setText(visitorType);
-        if (visitorType.equals("Guest")) {
+        if (visitorType.equals("Guest") || visitorType.equals("Visitor")) {
             isGuest = true;
             getViewDataBinding().groupGuestCommercial.setVisibility(View.VISIBLE);
             getViewDataBinding().groupSp.setVisibility(View.GONE);

@@ -50,7 +50,7 @@ public class HomeViewModel extends BaseViewModel<BaseNavigator> {
 
     void setupHomeList() {
         list.add(new HomeBean(ADD_VISITOR_VIEW, R.drawable.ic_add_button, getNavigator().getContext().getString(R.string.title_add_visitor)));
-        list.add(new HomeBean(GUEST_VIEW, R.drawable.ic_guest, getNavigator().getContext().getString(R.string.title_guests)));
+        list.add(new HomeBean(GUEST_VIEW, R.drawable.ic_guest, getDataManager().isCommercial() ? getNavigator().getContext().getString(R.string.title_visitor) : getNavigator().getContext().getString(R.string.title_guests)));
         list.add(new HomeBean(HOUSE_KEEPING_VIEW, R.drawable.ic_maid, getDataManager().isCommercial() ? getNavigator().getContext().getString(R.string.title_office_staff) : getNavigator().getContext().getString(R.string.title_domestic_staff)));
         list.add(new HomeBean(SERVICE_PROVIDER_VIEW, R.drawable.ic_assistance, getNavigator().getContext().getString(R.string.title_service_provider)));
         list.add(new HomeBean(TOTAL_VISITOR_VIEW, R.drawable.ic_group, getNavigator().getContext().getString(R.string.title_ttl_expected_visitor)));

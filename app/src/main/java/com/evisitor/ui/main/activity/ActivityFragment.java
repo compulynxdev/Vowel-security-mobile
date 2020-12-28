@@ -95,8 +95,8 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
         getViewDataBinding().titleHouse.setOnClickListener(this);
         getViewDataBinding().titleService.setOnClickListener(this);
 
-        if (mViewModel.getDataManager().isCommercial())
-            getViewDataBinding().titleHouse.setText(getString(R.string.title_office_staff));
+        getViewDataBinding().titleGuest.setText(mViewModel.getDataManager().isCommercial() ? R.string.title_visitor : R.string.title_guests);
+        getViewDataBinding().titleHouse.setText(mViewModel.getDataManager().isCommercial() ? R.string.title_office_staff : R.string.title_domestic_staff);
     }
 
     private void setUpPagerAdapter() {

@@ -311,7 +311,7 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
 
     List getVisitorTypeList() {
         if (visitorTypeList.isEmpty()) {
-            visitorTypeList.add("Guest");
+            visitorTypeList.add("Visitor");
             visitorTypeList.add("Service Provider");
         }
         return visitorTypeList;

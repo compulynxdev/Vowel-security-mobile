@@ -52,7 +52,7 @@ public class GuestActivity extends BaseActivity<ActivityExpectedGuestBinding, Gu
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mViewModel.setNavigator(this);
-        getViewDataBinding().header.tvTitle.setText(R.string.title_expected_guests);
+        getViewDataBinding().header.tvTitle.setText(mViewModel.getDataManager().isCommercial() ? R.string.title_visitor : R.string.title_expected_guests);
         getViewDataBinding().header.imgBack.setVisibility(View.VISIBLE);
         getViewDataBinding().header.imgBack.setOnClickListener(v -> onBackPressed());
         setUpSearch();

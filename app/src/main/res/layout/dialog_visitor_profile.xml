@@ -46,9 +46,9 @@
             tools:listitem="@layout/item_info" />
 
         <Space
-            android:id="@+id/spacer"
+            android:id="@+id/spacer1"
             android:layout_width="match_parent"
-            android:layout_height="28dp"
+            android:layout_height="14dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recycler_view" />
@@ -57,17 +57,26 @@
             android:id="@+id/tv_gadgets_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
             android:fontFamily="@font/futura_round_medium"
             android:text="@string/view_gadgets_info"
             android:textAlignment="center"
             android:textColor="@color/blue"
             android:textSize="20sp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/btn_ok"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/spacer2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spacer" />
+            app:layout_constraintTop_toBottomOf="@+id/spacer1" />
+
+        <Space
+            android:id="@+id/spacer2"
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_gadgets_info" />
 
         <Button
             android:id="@+id/btn_ok"
@@ -85,7 +94,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_gadgets_info" />
+            app:layout_constraintTop_toBottomOf="@+id/spacer2" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
