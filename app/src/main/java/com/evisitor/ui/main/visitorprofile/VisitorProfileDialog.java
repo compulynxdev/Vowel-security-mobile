@@ -130,7 +130,14 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
                 deviceBeanList = guest.getDeviceBeanList();
                 if (deviceBeanList != null && !deviceBeanList.isEmpty()) {
                     getViewDataBinding().tvGadgetsInfo.setVisibility(View.VISIBLE);
+                    getViewDataBinding().tvGadgetsInfo.setText(getString(R.string.view_gadgets_info).concat(" : ").concat(String.valueOf(deviceBeanList.size())));
                     getViewDataBinding().tvGadgetsInfo.setOnClickListener(this);
+                } else if (btnLabel.equalsIgnoreCase(getString(R.string.check_in))) {
+                    getViewDataBinding().tvGadgetsInfo.setVisibility(View.VISIBLE);
+                    getViewDataBinding().tvGadgetsInfo.setText(getString(R.string.add_gadgets_info));
+                    getViewDataBinding().tvGadgetsInfo.setOnClickListener(this);
+                } else {
+                    getViewDataBinding().tvGadgetsInfo.setVisibility(View.GONE);
                 }
             } else {
                 getViewDataBinding().tvGadgetsInfo.setVisibility(View.GONE);
@@ -138,7 +145,6 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
         } else {
             getViewDataBinding().tvGadgetsInfo.setVisibility(View.GONE);
         }
-
     }
 
     private void setUpAdapter() {
@@ -190,6 +196,7 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
             CommercialGuestResponse.CommercialGuest guest = mViewModel.getDataManager().getCommercialGuestDetail();
             guest.setDeviceBeanList(deviceBeanList);
             mViewModel.getDataManager().setCommercialGuestDetail(guest);
+            getViewDataBinding().tvGadgetsInfo.setText(getString(R.string.view_gadgets_info).concat(" : ").concat(String.valueOf(deviceBeanList.size())));
         }
     }
 }

@@ -293,5 +293,6 @@
     <string name="please_enter_purpose">Please enter purpose of visist!</string>
     <string name="view_gadgets_info">View gadgets information</string>
     <string name="device">Device</string>
+    <string name="add_gadgets_info">Add gadgets information</string>
 
 </resources>
