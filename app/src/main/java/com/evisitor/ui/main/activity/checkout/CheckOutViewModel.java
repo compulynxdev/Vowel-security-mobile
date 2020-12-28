@@ -194,6 +194,7 @@ public class CheckOutViewModel extends BaseViewModel<ActivityNavigator> {
     List<VisitorProfileBean> getCommercialGuestCheckInProfileBean(CommercialGuestResponse.CommercialGuest guests) {
         getNavigator().showLoading();
         List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
+        getDataManager().setCommercialGuestDetail(guests);
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, guests.getName())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time_in, CalenderUtils.formatDate(guests.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT))));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time_out, CalenderUtils.formatDate(guests.getCheckOutTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT))));
