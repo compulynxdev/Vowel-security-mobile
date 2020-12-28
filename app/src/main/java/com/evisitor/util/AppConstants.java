@@ -17,6 +17,8 @@ public final class AppConstants {
     public static final String ACTIVITY_PRIVACY = "ACTIVITY_PRIVACY";
     public static final String CHECK_IN = "CHECK_IN";
     public static final String CHECK_OUT = "CHECK_OUT";
+    public static final String VISITOR_LABEL = "Visitor";
+    public static final String SP_LABEL = "Service Provider";
     public static final String GUEST = "GUEST";
     public static final String SERVICE_PROVIDER = "SERVICE_PROVIDER";
     public static final String HOUSE_HELP = "HOUSE_HELP";

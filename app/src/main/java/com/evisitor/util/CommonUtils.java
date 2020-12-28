@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.provider.Settings;
 import android.util.Patterns;
 
+import com.evisitor.EVisitor;
 import com.evisitor.R;
 
 import java.io.IOException;
@@ -61,7 +62,9 @@ public final class CommonUtils {
 
     public static String getVisitorType(String type) {
         if (AppConstants.SERVICE_PROVIDER.equalsIgnoreCase(type)) {
-            return "Service Provider";
+            return AppConstants.SP_LABEL;
+        } else if (AppConstants.GUEST.equalsIgnoreCase(type)) {
+            return EVisitor.getInstance().getDataManager().isCommercial() ? AppConstants.VISITOR_LABEL : AppUtils.capitaliseFirstLetter(type);
         }
         return AppUtils.capitaliseFirstLetter(type);
     }
