@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
@@ -32,6 +33,12 @@ public class RejectedStaffFragment extends BaseFragment<FragmentRejectedStaffBin
         return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mViewModel.setNavigator(this);
+    }
+
     public synchronized void setSearch(String search) {
         this.search = search;
         doSearch(search);
@@ -55,15 +62,14 @@ public class RejectedStaffFragment extends BaseFragment<FragmentRejectedStaffBin
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getViewModel().setNavigator(this);
         setUpAdapter();
-        getViewDataBinding().tvNoData.setText(getViewModel().getDataManager().isCommercial() ? getString(R.string.no_rejected_ofc_staff) : getString(R.string.no_rejected_staff));
+        getViewDataBinding().tvNoData.setText(mViewModel.getDataManager().isCommercial() ? getString(R.string.no_rejected_ofc_staff) : getString(R.string.no_rejected_staff));
     }
 
 
     private void setUpAdapter() {
         list = new ArrayList<>();
-        adapter = new RejectedStaffAdapter(list, pos -> VisitorProfileDialog.newInstance(getViewModel().getVisitorDetail(list.get(pos)), null).setImage(list.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
+        adapter = new RejectedStaffAdapter(list, pos -> VisitorProfileDialog.newInstance(mViewModel.getVisitorDetail(list.get(pos)), null).setImage(list.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
         adapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(adapter);
 
@@ -73,7 +79,7 @@ public class RejectedStaffFragment extends BaseFragment<FragmentRejectedStaffBin
                 setAdapterLoading(true);
                 page++;
 
-                getViewModel().getDomesticStaff(page, search);
+                mViewModel.getDomesticStaff(page, search);
             }
         };
         getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
@@ -92,7 +98,7 @@ public class RejectedStaffFragment extends BaseFragment<FragmentRejectedStaffBin
         scrollListener.onDataCleared();
         list.clear();
         this.page = 0;
-        getViewModel().getDomesticStaff(page, search.trim());
+        mViewModel.getDomesticStaff(page, search.trim());
     }
 
 

@@ -38,18 +38,18 @@ public class PropertyInfoActivity extends BaseActivity<ActivityPropertyInfoBindi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getViewModel().setNavigator(this);
+        mViewModel.setNavigator(this);
         getViewDataBinding().toolbar.tvTitle.setText(R.string.property_info);
 
         getViewDataBinding().toolbar.imgBack.setVisibility(View.VISIBLE);
         getViewDataBinding().toolbar.imgBack.setOnClickListener(v -> onBackPressed());
-        getViewModel().getPropertyInfo().observe(this, propertyInfoResponse -> {
+        mViewModel.getPropertyInfo().observe(this, propertyInfoResponse -> {
             getViewDataBinding().tvProperty.setText(propertyInfoResponse.getFullName());
             getViewDataBinding().tvPropertyType.setText(propertyInfoResponse.getPropertyTypeName());
             getViewDataBinding().tvAddress.setText(propertyInfoResponse.getAddress().concat(", ").concat(propertyInfoResponse.getZipCode()));
             getViewDataBinding().tvCountry.setText(propertyInfoResponse.getCountry().isEmpty() ? getString(R.string.na) : propertyInfoResponse.getCountry());
-            getViewDataBinding().tvPhone.setText(propertyInfoResponse.getContactNo().isEmpty() ? getString(R.string.na) : "+ ".concat(propertyInfoResponse.getDialingCode()).concat(propertyInfoResponse.getContactNo()));
-            getViewDataBinding().tvExt.setText(propertyInfoResponse.getExtensionNo().isEmpty() ? getString(R.string.na) : "+ ".concat(propertyInfoResponse.getExtDialingCode().concat(propertyInfoResponse.getExtensionNo())));
+            getViewDataBinding().tvPhone.setText(propertyInfoResponse.getContactNo().isEmpty() ? getString(R.string.na) : "+".concat(propertyInfoResponse.getDialingCode()).concat(" ").concat(propertyInfoResponse.getContactNo()));
+            getViewDataBinding().tvExt.setText(propertyInfoResponse.getExtensionNo().isEmpty() ? getString(R.string.na) : "+".concat(propertyInfoResponse.getExtDialingCode().concat(" ").concat(propertyInfoResponse.getExtensionNo())));
             getViewDataBinding().tvEmail.setText(propertyInfoResponse.getEmail().isEmpty() ? getString(R.string.na) : propertyInfoResponse.getEmail());
 
             if (propertyInfoResponse.getImage().isEmpty()) {
@@ -57,7 +57,7 @@ public class PropertyInfoActivity extends BaseActivity<ActivityPropertyInfoBindi
             } else {
                 getViewDataBinding().tvImgLabel.setVisibility(View.GONE);
                 Glide.with(this)
-                        .load(getViewModel().getDataManager().getImageBaseURL().concat(propertyInfoResponse.getImage()))
+                        .load(mViewModel.getDataManager().getImageBaseURL().concat(propertyInfoResponse.getImage()))
                         .centerCrop()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(getViewDataBinding().imageView);

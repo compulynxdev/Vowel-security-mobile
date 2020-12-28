@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.BR;
@@ -34,6 +35,12 @@ public class TrespasserGuestFragment extends BaseFragment<FragmentTrespasserGues
         return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mViewModel.setNavigator(this);
+    }
+
     public synchronized void setSearch(String search) {
         this.search = search;
         doSearch(search);
@@ -57,14 +64,13 @@ public class TrespasserGuestFragment extends BaseFragment<FragmentTrespasserGues
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getViewModel().setNavigator(this);
         setUpAdapter();
     }
 
 
     private void setUpAdapter() {
         list = new ArrayList<>();
-        adapter = new TrespasserAdapter(list, pos -> VisitorProfileDialog.newInstance(getViewModel().getVisitorDetail(list.get(pos)), null).setImage(list.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
+        adapter = new TrespasserAdapter(list, pos -> VisitorProfileDialog.newInstance(mViewModel.getVisitorDetail(list.get(pos)), null).setImage(list.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
         adapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(adapter);
 
@@ -74,7 +80,7 @@ public class TrespasserGuestFragment extends BaseFragment<FragmentTrespasserGues
                 setAdapterLoading(true);
                 page++;
 
-                getViewModel().getTrespasserGuest(page, search);
+                mViewModel.getTrespasserGuest(page, search);
             }
         };
         getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
@@ -93,7 +99,7 @@ public class TrespasserGuestFragment extends BaseFragment<FragmentTrespasserGues
         scrollListener.onDataCleared();
         list.clear();
         this.page = 0;
-        getViewModel().getTrespasserGuest(page, search.trim());
+        mViewModel.getTrespasserGuest(page, search.trim());
     }
 
     @Override

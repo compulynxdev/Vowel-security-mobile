@@ -43,6 +43,12 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
         return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mViewModel.setCheckInOutNavigator(this);
+    }
+
     public void setSearch(String search) {
         this.search = search;
         doSearch(search);
@@ -66,7 +72,6 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getViewModel().setCheckInOutNavigator(this);
         setUpAdapter();
     }
 
@@ -74,7 +79,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
         spList = new ArrayList<>();
         adapter = new ExpectedSPAdapter(spList, pos -> {
             ServiceProvider spBean = spList.get(pos);
-            List<VisitorProfileBean> visitorProfileBeanList = getViewModel().setClickVisitorDetail(spBean);
+            List<VisitorProfileBean> visitorProfileBeanList = mViewModel.setClickVisitorDetail(spBean);
             VisitorProfileDialog.newInstance(visitorProfileBeanList, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
                 decideNextProcess();
@@ -90,7 +95,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                 setAdapterLoading(true);
                 page++;
 
-                getViewModel().getSpListData(page, search);
+                mViewModel.getSpListData(page, search);
             }
         };
         getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
@@ -101,9 +106,9 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
     }
 
     private void decideNextProcess() {
-        ServiceProvider tmpBean = getViewModel().getDataManager().getSpDetail();
+        ServiceProvider tmpBean = mViewModel.getDataManager().getSpDetail();
         if (tmpBean.getCheckInStatus()) {
-            getViewModel().approveByCall(true, null);
+            mViewModel.approveByCall(true, null);
         } else {
             if (tmpBean.getIdentityNo().isEmpty()) {
                 showCheckinOptions();
@@ -140,7 +145,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
         scrollListener.onDataCleared();
         spList.clear();
         this.page = 0;
-        getViewModel().getSpListData(page, search);
+        mViewModel.getSpListData(page, search);
     }
 
     private void showCheckinOptions() {
@@ -155,7 +160,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                 });
 
 
-        ServiceProvider bean = getViewModel().getDataManager().getSpDetail();
+        ServiceProvider bean = mViewModel.getDataManager().getSpDetail();
         if (!bean.isNotificationStatus() || bean.getHouseNo().isEmpty()) {
             alert.setNegativeBtnShow(false).show(getFragmentManager());
         } else {
@@ -164,7 +169,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                     .setNegativeBtnLabel(getString(R.string.send_notification))
                     .setOnNegativeClickListener(dialog1 -> {
                         dialog1.dismiss();
-                        getViewModel().sendNotification();
+                        mViewModel.sendNotification();
                     })
                     .show(getFragmentManager());
         }
@@ -184,7 +189,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                 })
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
-                    getViewModel().approveByCall(true, null);
+                    mViewModel.approveByCall(true, null);
                 }).show(getFragmentManager());
     }
 
@@ -192,7 +197,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
         InputDialog.newInstance().setTitle(getString(R.string.are_you_sure))
                 .setOnPositiveClickListener((dialog, input) -> {
                     dialog.dismiss();
-                    getViewModel().approveByCall(false, input);
+                    mViewModel.approveByCall(false, input);
                 }).show(getFragmentManager());
     }
 
@@ -220,7 +225,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                         break;
                 }
 
-                if (getViewModel().getDataManager().getSpDetail().getIdentityNo().equals(identityNo))
+                if (mViewModel.getDataManager().getSpDetail().getIdentityNo().equals(identityNo))
                     showCheckinOptions();
                 else {
                     showToast(R.string.alert_id);

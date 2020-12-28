@@ -32,6 +32,12 @@ public class LanguageDialog extends BaseDialog<DialogLanguageBinding, LanguageDi
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mViewModel.setNavigator(getBaseActivity());
+    }
+
+    @Override
     public int getBindingVariable() {
         return com.evisitor.BR.viewModel;
     }
@@ -53,12 +59,11 @@ public class LanguageDialog extends BaseDialog<DialogLanguageBinding, LanguageDi
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getViewModel().setNavigator(getBaseActivity());
         getViewDataBinding().btnCancel.setOnClickListener(this);
         getViewDataBinding().btnOk.setOnClickListener(this);
-        langList = getViewModel().getLangList();
+        langList = mViewModel.getLangList();
         LanguageAdapter adapter = new LanguageAdapter(langList, pos -> language = langList.get(pos));
-        language = getViewModel().getSelectedLang();
+        language = mViewModel.getSelectedLang();
         for (int i = 0; i < langList.size(); i++) {
             if (language.getLangName().equalsIgnoreCase(langList.get(i).getLangName())) {
                 adapter.lastPos = i;
@@ -93,7 +98,7 @@ public class LanguageDialog extends BaseDialog<DialogLanguageBinding, LanguageDi
     }
 
     private boolean verifyInput() {
-        return !language.getLangName().equals(getViewModel().getSelectedLang().getLangName());
+        return !language.getLangName().equals(mViewModel.getSelectedLang().getLangName());
     }
 
 

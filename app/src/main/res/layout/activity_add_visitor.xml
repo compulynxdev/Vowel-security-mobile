@@ -208,7 +208,6 @@
                     android:inputType="textCapCharacters"
                     android:paddingStart="16dp"
                     android:paddingEnd="8dp"
-                    android:textAllCaps="true"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black40p"
                     android:textSize="16sp"

@@ -34,8 +34,8 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getViewModel().setNavigator(this);
-        getViewModel().decideNextActivity();
+        mViewModel.setNavigator(this);
+        mViewModel.decideNextActivity();
     }
 
     @Override

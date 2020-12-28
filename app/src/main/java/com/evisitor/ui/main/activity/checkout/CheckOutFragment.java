@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
@@ -50,6 +51,12 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
         return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mViewModel.setNavigator(this);
+    }
+
     private void setData(int listOf, OnFragmentInteraction interaction) {
         this.listOf = listOf;
         listener = interaction;
@@ -76,7 +83,7 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
         switch (listOf) {
             //guest
             case 0:
-                if (getViewModel().getDataManager().isCommercial()) {
+                if (mViewModel.getDataManager().isCommercial()) {
                     getViewDataBinding().recyclerView.setAdapter(commercialGuestCheckOutAdapter);
                 } else getViewDataBinding().recyclerView.setAdapter(guestAdapter);
                 break;
@@ -98,12 +105,10 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getViewModel().setNavigator(this);
-
         houseKeepingList = new ArrayList<>();
         serviceProviderList = new ArrayList<>();
 
-        if (getViewModel().getDataManager().isCommercial()) {
+        if (mViewModel.getDataManager().isCommercial()) {
             setUpCommercialGuestAdapter();
         } else {
             setUpGuestAdapter();
@@ -118,19 +123,19 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
                     case 0:
                         setGuestAdapterLoading(true);
                         guestPage++;
-                        getViewModel().getCheckOutData(guestPage, search, listOf);
+                        mViewModel.getCheckOutData(guestPage, search, listOf);
                         break;
 
                     case 1:
                         setHKAdapterLoading(true);
                         hkPage++;
-                        getViewModel().getCheckOutData(hkPage, search, listOf);
+                        mViewModel.getCheckOutData(hkPage, search, listOf);
                         break;
 
                     case 2:
                         setSPAdapterLoading(true);
                         spPage++;
-                        getViewModel().getCheckOutData(spPage, search, listOf);
+                        mViewModel.getCheckOutData(spPage, search, listOf);
                         break;
 
 
@@ -145,25 +150,25 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
     }
 
     private void setUpHouseKeeperAdapter() {
-        houseKeepingAdapter = new HouseKeepingCheckOutAdapter(houseKeepingList, pos -> VisitorProfileDialog.newInstance(getViewModel().getHouseKeepingCheckInProfileBean(houseKeepingList.get(pos)), null).setImage(houseKeepingList.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
+        houseKeepingAdapter = new HouseKeepingCheckOutAdapter(houseKeepingList, pos -> VisitorProfileDialog.newInstance(mViewModel.getHouseKeepingCheckInProfileBean(houseKeepingList.get(pos)), null).setImage(houseKeepingList.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
         houseKeepingAdapter.setHasStableIds(true);
     }
 
     private void setUpServiceProviderAdapter() {
-        serviceProviderAdapter = new ServiceProviderCheckOutAdapter(serviceProviderList, pos -> VisitorProfileDialog.newInstance(getViewModel().getServiceProviderCheckInProfileBean(serviceProviderList.get(pos)), null).setImage(serviceProviderList.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
+        serviceProviderAdapter = new ServiceProviderCheckOutAdapter(serviceProviderList, pos -> VisitorProfileDialog.newInstance(mViewModel.getServiceProviderCheckInProfileBean(serviceProviderList.get(pos)), null).setImage(serviceProviderList.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
         serviceProviderAdapter.setHasStableIds(true);
     }
 
     private void setUpCommercialGuestAdapter() {
         commercialGuestList = new ArrayList<>();
-        commercialGuestCheckOutAdapter = new CommercialGuestCheckOutAdapter(commercialGuestList, pos -> VisitorProfileDialog.newInstance(getViewModel().getCommercialGuestCheckInProfileBean(commercialGuestList.get(pos)), null).setImage(commercialGuestList.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
+        commercialGuestCheckOutAdapter = new CommercialGuestCheckOutAdapter(commercialGuestList, pos -> VisitorProfileDialog.newInstance(mViewModel.getCommercialGuestCheckInProfileBean(commercialGuestList.get(pos)), null).setImage(commercialGuestList.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
         commercialGuestCheckOutAdapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(commercialGuestCheckOutAdapter);
     }
 
     private void setUpGuestAdapter() {
         guestsList = new ArrayList<>();
-        guestAdapter = new GuestCheckOutAdapter(guestsList, pos -> VisitorProfileDialog.newInstance(getViewModel().getGuestCheckInProfileBean(guestsList.get(pos)), null).setImage(guestsList.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
+        guestAdapter = new GuestCheckOutAdapter(guestsList, pos -> VisitorProfileDialog.newInstance(mViewModel.getGuestCheckInProfileBean(guestsList.get(pos)), null).setImage(guestsList.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
         guestAdapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(guestAdapter);
     }
@@ -173,25 +178,25 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
         scrollListener.onDataCleared();
         switch (listOf) {
             case 0:
-                if (getViewModel().getDataManager().isCommercial())
+                if (mViewModel.getDataManager().isCommercial())
                     commercialGuestList.clear();
                 else
                     guestsList.clear();
 
                 guestPage = 0;
-                getViewModel().getCheckOutData(guestPage, search, listOf);
+                mViewModel.getCheckOutData(guestPage, search, listOf);
                 break;
 
             case 1:
                 houseKeepingList.clear();
                 hkPage = 0;
-                getViewModel().getCheckOutData(hkPage, search, listOf);
+                mViewModel.getCheckOutData(hkPage, search, listOf);
                 break;
 
             case 2:
                 serviceProviderList.clear();
                 spPage = 0;
-                getViewModel().getCheckOutData(spPage, search, listOf);
+                mViewModel.getCheckOutData(spPage, search, listOf);
                 break;
         }
     }

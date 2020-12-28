@@ -57,7 +57,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getViewModel().setCheckInOutNavigator(this);
+        mViewModel.setCheckInOutNavigator(this);
     }
 
     private void setData(int listOf, OnFragmentInteraction interaction) {
@@ -70,7 +70,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
         switch (listOf) {
             //guest
             case 0:
-                if (getViewModel().getDataManager().isCommercial())
+                if (mViewModel.getDataManager().isCommercial())
                     getViewDataBinding().recyclerView.setAdapter(commercialGuestCheckInAdapter);
                 else
                     getViewDataBinding().recyclerView.setAdapter(guestAdapter);
@@ -102,10 +102,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
 
     @Override
     public CheckInViewModel getViewModel() {
-        if (viewModel == null)
-            viewModel = new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(CheckInViewModel.class);
-
-        return viewModel;
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(CheckInViewModel.class);
     }
 
     @Override
@@ -114,7 +111,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
         houseKeepingList = new ArrayList<>();
         serviceProviderList = new ArrayList<>();
 
-        if (getViewModel().getDataManager().isCommercial()) {
+        if (mViewModel.getDataManager().isCommercial()) {
             setUpCommercialGuestAdapter();
         } else {
             setUpGuestAdapter();
@@ -130,19 +127,19 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                     case 0:
                         setGuestAdapterLoading(true);
                         guestPage++;
-                        getViewModel().getCheckInData(guestPage, search, listOf);
+                        mViewModel.getCheckInData(guestPage, search, listOf);
                         break;
 
                     case 1:
                         setHKAdapterLoading(true);
                         hkPage++;
-                        getViewModel().getCheckInData(hkPage, search, listOf);
+                        mViewModel.getCheckInData(hkPage, search, listOf);
                         break;
 
                     case 2:
                         setSPAdapterLoading(true);
                         spPage++;
-                        getViewModel().getCheckInData(spPage, search, listOf);
+                        mViewModel.getCheckInData(spPage, search, listOf);
                         break;
 
 
@@ -160,10 +157,10 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
         commercialGuestList = new ArrayList<>();
         commercialGuestCheckInAdapter = new CommercialGuestCheckInAdapter(commercialGuestList, getBaseActivity(), pos -> {
             CommercialGuestResponse.CommercialGuest guests = commercialGuestList.get(pos);
-            List<VisitorProfileBean> beans = getViewModel().getCommercialGuestCheckInProfileBean(guests);
+            List<VisitorProfileBean> beans = mViewModel.getCommercialGuestCheckInProfileBean(guests);
             VisitorProfileDialog.newInstance(beans, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
-                getViewModel().checkOut(0);
+                mViewModel.checkOut(0);
             }).setImage(guests.getImageUrl()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
         });
 
@@ -172,14 +169,14 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
 
     private void setUpHouseKeeperAdapter() {
         houseKeepingAdapter = new HouseKeepingCheckInAdapter(houseKeepingList, getBaseActivity(), houseKeeping -> {
-            List<VisitorProfileBean> beans = getViewModel().getHouseKeepingCheckInProfileBean(houseKeeping);
+            List<VisitorProfileBean> beans = mViewModel.getHouseKeepingCheckInProfileBean(houseKeeping);
             VisitorProfileDialog.newInstance(beans, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
                 if (houseKeeping.isCheckOutFeature() && !houseKeeping.isHostCheckOut())
                     showCallDialog(1);
                 else {
                     if (isNetworkConnected(true))
-                        getViewModel().checkOut(1);
+                        mViewModel.checkOut(1);
                 }
             }).setImage(houseKeeping.getImageUrl()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
         });
@@ -187,12 +184,12 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
 
     private void setUpServiceProviderAdapter() {
         serviceProviderAdapter = new ServiceProviderCheckInAdapter(serviceProviderList, getBaseActivity(), serviceProvider -> {
-            List<VisitorProfileBean> beans = getViewModel().getServiceProviderCheckInProfileBean(serviceProvider);
+            List<VisitorProfileBean> beans = mViewModel.getServiceProviderCheckInProfileBean(serviceProvider);
             VisitorProfileDialog.newInstance(beans, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
                 if (serviceProvider.isCheckOutFeature() && !serviceProvider.isHostCheckOut())
                     showCallDialog(2);
-                else getViewModel().checkOut(2);
+                else mViewModel.checkOut(2);
             }).setImage(serviceProvider.getImageUrl()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
         });
     }
@@ -201,12 +198,12 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
         guestsList = new ArrayList<>();
         guestAdapter = new GuestCheckInAdapter(guestsList, getBaseActivity(), pos -> {
             Guests guests = guestsList.get(pos);
-            List<VisitorProfileBean> beans = getViewModel().getGuestCheckInProfileBean(guests);
+            List<VisitorProfileBean> beans = mViewModel.getGuestCheckInProfileBean(guests);
             VisitorProfileDialog.newInstance(beans, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
                 if (guests.isCheckOutFeature() && !guests.isHostCheckOut())
                     showCallDialog(0);
-                else getViewModel().checkOut(0);
+                else mViewModel.checkOut(0);
             }).setImage(guests.getImageUrl()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
         });
 
@@ -228,7 +225,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
                     if (isNetworkConnected(true))
-                        getViewModel().checkOut(type);
+                        mViewModel.checkOut(type);
                 }).show(getFragmentManager());
     }
 
@@ -237,25 +234,25 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
         scrollListener.onDataCleared();
         switch (listOf) {
             case 0:
-                if (getViewModel().getDataManager().isCommercial())
+                if (mViewModel.getDataManager().isCommercial())
                     commercialGuestList.clear();
                 else
                     guestsList.clear();
 
                 guestPage = 0;
-                getViewModel().getCheckInData(guestPage, search, listOf);
+                mViewModel.getCheckInData(guestPage, search, listOf);
                 break;
 
             case 1:
                 houseKeepingList.clear();
                 hkPage = 0;
-                getViewModel().getCheckInData(hkPage, search, listOf);
+                mViewModel.getCheckInData(hkPage, search, listOf);
                 break;
 
             case 2:
                 serviceProviderList.clear();
                 spPage = 0;
-                getViewModel().getCheckInData(spPage, search, listOf);
+                mViewModel.getCheckInData(spPage, search, listOf);
                 break;
         }
     }
@@ -351,7 +348,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
     }
 
     private void setGuestAdapterLoading(boolean isShowLoader) {
-        if (getViewModel().getDataManager().isCommercial()) {
+        if (mViewModel.getDataManager().isCommercial()) {
             if (commercialGuestCheckInAdapter != null) {
                 commercialGuestCheckInAdapter.showLoading(isShowLoader);
                 commercialGuestCheckInAdapter.notifyDataSetChanged();

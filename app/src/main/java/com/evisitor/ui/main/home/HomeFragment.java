@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
@@ -39,6 +40,12 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mViewModel.setNavigator(this);
+    }
+
     public void setInteraction(HomeFragmentInteraction interaction) {
         this.interaction = interaction;
     }
@@ -61,17 +68,16 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getViewModel().setNavigator(this);
         getViewDataBinding().toolbar.tvTitle.setText(R.string.title_home);
 
         setupAdapter();
-        getViewModel().getNotificationCountData().observe(this, count -> {
+        mViewModel.getNotificationCountData().observe(this, count -> {
             if (interaction != null)
                 interaction.onReceiveNotificationCount(count);
         });
 
         //update guest configuration in data manager
-        getViewModel().doGetGuestConfiguration(null);
+        mViewModel.doGetGuestConfiguration(null);
     }
 
     private void setupAdapter() {
@@ -79,7 +85,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         HomeAdapter homeAdapter = new HomeAdapter(homeList, pos -> {
             switch (homeList.get(pos).getPos()) {
                 case HomeViewModel.ADD_VISITOR_VIEW:
-                    Intent i = getViewModel().getDataManager().isCommercial() ? CommercialAddVisitorActivity.getStartIntent(getContext()) : AddVisitorActivity.getStartIntent(getContext());
+                    Intent i = mViewModel.getDataManager().isCommercial() ? CommercialAddVisitorActivity.getStartIntent(getContext()) : AddVisitorActivity.getStartIntent(getContext());
                     i.putExtra(AppConstants.FROM, AppConstants.CONTROLLER_HOME);
                     startActivity(i);
                     break;
@@ -119,18 +125,18 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         });
         getViewDataBinding().recyclerView.setAdapter(homeAdapter);
 
-        getViewModel().getHomeListData().observe(this, homeBeansList -> {
+        mViewModel.getHomeListData().observe(this, homeBeansList -> {
             homeList.clear();
             homeList.addAll(homeBeansList);
             homeAdapter.notifyDataSetChanged();
         });
-        getViewModel().setupHomeList();
+        mViewModel.setupHomeList();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        getViewModel().getVisitorCount();
+        mViewModel.getVisitorCount();
     }
 
     public interface HomeFragmentInteraction {

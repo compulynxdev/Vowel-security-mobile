@@ -47,7 +47,7 @@ public class RejectedVisitorActivity extends BaseActivity<ActivityRejectedVisito
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getViewModel().setNavigator(this);
+        mViewModel.setNavigator(this);
         initView();
         setUpSearch();
         setUpPagerAdapter();
@@ -63,7 +63,7 @@ public class RejectedVisitorActivity extends BaseActivity<ActivityRejectedVisito
         getViewDataBinding().tvGuest.setOnClickListener(this);
         getViewDataBinding().tvHouse.setOnClickListener(this);
 
-        if (getViewModel().getDataManager().isCommercial())
+        if (mViewModel.getDataManager().isCommercial())
             getViewDataBinding().tvHouse.setText(getString(R.string.title_office_staff));
     }
 

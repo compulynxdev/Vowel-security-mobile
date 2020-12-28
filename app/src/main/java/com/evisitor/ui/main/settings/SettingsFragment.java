@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -29,6 +30,11 @@ public class SettingsFragment extends BaseFragment<FragmentSettingsBinding, Sett
         return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mViewModel.setNavigator(this);
+    }
 
     @Override
     public int getBindingVariable() {
@@ -48,10 +54,9 @@ public class SettingsFragment extends BaseFragment<FragmentSettingsBinding, Sett
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getViewModel().setNavigator(this);
         TextView tvTitle = view.findViewById(R.id.tv_title);
         tvTitle.setText(R.string.title_settings);
-        getViewDataBinding().tvLang.setText(getViewModel().getDataManager().getLanguage());
+        getViewDataBinding().tvLang.setText(mViewModel.getDataManager().getLanguage());
 
         setOnClickListener(getViewDataBinding().infoConstraint, getViewDataBinding().premiseInfoConstraint, getViewDataBinding().languageConstraint, getViewDataBinding().aboutusConstraint
                 , getViewDataBinding().privacyConstraint, getViewDataBinding().logoutConstraint);
@@ -75,7 +80,7 @@ public class SettingsFragment extends BaseFragment<FragmentSettingsBinding, Sett
 
             case R.id.language_constraint:
                 LanguageDialog.newInstance(language -> {
-                    getViewModel().getDataManager().setLanguage(language.getLangName());
+                    mViewModel.getDataManager().setLanguage(language.getLangName());
                     getViewDataBinding().tvLang.setText(language.getLocalisationTitle());
                 }).show(getChildFragmentManager());
                 break;

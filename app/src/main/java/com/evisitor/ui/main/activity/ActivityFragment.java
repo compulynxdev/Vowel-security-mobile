@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
@@ -30,6 +31,12 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mViewModel.setNavigator(this);
+    }
+
+    @Override
     public int getBindingVariable() {
         return com.evisitor.BR.viewModel;
     }
@@ -47,7 +54,6 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getViewModel().setNavigator(this);
         initView();
         setupSearch();
         setUpPagerAdapter();
@@ -89,7 +95,7 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
         getViewDataBinding().titleHouse.setOnClickListener(this);
         getViewDataBinding().titleService.setOnClickListener(this);
 
-        if (getViewModel().getDataManager().isCommercial())
+        if (mViewModel.getDataManager().isCommercial())
             getViewDataBinding().titleHouse.setText(getString(R.string.title_office_staff));
     }
 

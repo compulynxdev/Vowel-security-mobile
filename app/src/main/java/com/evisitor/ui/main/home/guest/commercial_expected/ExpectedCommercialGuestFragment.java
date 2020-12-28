@@ -43,6 +43,12 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
         return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mViewModel.setCheckInOutNavigator(this);
+    }
+
     public void setSearch(String search) {
         this.search = search;
         doSearch(search);
@@ -66,7 +72,6 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getViewModel().setCheckInOutNavigator(this);
         setUpAdapter();
     }
 
@@ -74,7 +79,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
         guestsList = new ArrayList<>();
         adapter = new ExpectedCommercialGuestAdapter(guestsList, getContext(), pos -> {
             CommercialGuestResponse.CommercialGuest guestBean = guestsList.get(pos);
-            List<VisitorProfileBean> visitorProfileBeanList = getViewModel().setClickVisitorDetail(guestBean);
+            List<VisitorProfileBean> visitorProfileBeanList = mViewModel.setClickVisitorDetail(guestBean);
             VisitorProfileDialog.newInstance(visitorProfileBeanList, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
                 decideNextProcess();
@@ -90,7 +95,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
                 setAdapterLoading(true);
                 page++;
 
-                getViewModel().getGuestListData(page, search);
+                mViewModel.getGuestListData(page, search);
             }
         };
         getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
@@ -101,11 +106,11 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
     }
 
     private void decideNextProcess() {
-        CommercialGuestResponse.CommercialGuest tmpBean = getViewModel().getDataManager().getCommercialGuestDetail();
+        CommercialGuestResponse.CommercialGuest tmpBean = mViewModel.getDataManager().getCommercialGuestDetail();
         if (tmpBean.getCheckInStatus()) {
-            getViewModel().approveByCall(true, null);
+            mViewModel.approveByCall(true, null);
         } else {
-            if (!getViewModel().getDataManager().isIdentifyFeature() || tmpBean.getIdentityNo().isEmpty()) {
+            if (!mViewModel.getDataManager().isIdentifyFeature() || tmpBean.getIdentityNo().isEmpty()) {
                 showCheckinOptions();
             } else {
                 IdVerificationDialog.newInstance(new IdVerificationCallback() {
@@ -154,7 +159,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
                                 mrzRecord.getOptional2();
                         break;
                 }
-                if (getViewModel().getDataManager().getGuestDetail().getIdentityNo().equals(identityNo))
+                if (mViewModel.getDataManager().getGuestDetail().getIdentityNo().equals(identityNo))
                     showCheckinOptions();
                 else {
                     showToast(R.string.alert_id);
@@ -173,7 +178,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
         scrollListener.onDataCleared();
         guestsList.clear();
         this.page = 0;
-        getViewModel().getGuestListData(page, search);
+        mViewModel.getGuestListData(page, search);
     }
 
     private void showCheckinOptions() {
@@ -187,7 +192,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
                     showCallDialog();
                 });
 
-        CommercialGuestResponse.CommercialGuest bean = getViewModel().getDataManager().getCommercialGuestDetail();
+        CommercialGuestResponse.CommercialGuest bean = mViewModel.getDataManager().getCommercialGuestDetail();
         if (bean.getHouseNo().isEmpty()) {
             alert.setNegativeBtnShow(false).show(getFragmentManager());
         } else {
@@ -196,7 +201,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
                     .setNegativeBtnLabel(getString(R.string.send_notification))
                     .setOnNegativeClickListener(dialog1 -> {
                         dialog1.dismiss();
-                        getViewModel().sendNotification();
+                        mViewModel.sendNotification();
                     })
                     .show(getFragmentManager());
         }
@@ -216,7 +221,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
                 })
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
-                    getViewModel().approveByCall(true, null);
+                    mViewModel.approveByCall(true, null);
                 }).show(getFragmentManager());
     }
 
@@ -224,7 +229,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
         InputDialog.newInstance().setTitle(getString(R.string.are_you_sure))
                 .setOnPositiveClickListener((dialog, input) -> {
                     dialog.dismiss();
-                    getViewModel().approveByCall(false, input);
+                    mViewModel.approveByCall(false, input);
                 }).show(getFragmentManager());
     }
 

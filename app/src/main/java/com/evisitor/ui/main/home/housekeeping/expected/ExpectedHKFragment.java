@@ -43,6 +43,12 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
         return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mViewModel.setCheckInOutNavigator(this);
+    }
+
     public synchronized void setSearch(String search) {
         this.search = search;
         doSearch(search);
@@ -66,15 +72,14 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getViewModel().setCheckInOutNavigator(this);
-        getViewDataBinding().tvNoData.setText(getViewModel().getDataManager().isCommercial() ? getString(R.string.no_expected_ofc_staff) : getString(R.string.no_expedted_hk));
+        getViewDataBinding().tvNoData.setText(mViewModel.getDataManager().isCommercial() ? getString(R.string.no_expected_ofc_staff) : getString(R.string.no_expedted_hk));
         setUpAdapter();
     }
 
     private void setUpAdapter() {
         list = new ArrayList<>();
         adapter = new ExpectedHKAdapter(list, pos -> {
-            List<VisitorProfileBean> visitorProfileBeanList = getViewModel().setClickVisitorDetail(list.get(pos));
+            List<VisitorProfileBean> visitorProfileBeanList = mViewModel.setClickVisitorDetail(list.get(pos));
             VisitorProfileDialog.newInstance(visitorProfileBeanList, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
                 decideNextProcess();
@@ -89,7 +94,7 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
                 setAdapterLoading(true);
                 page++;
 
-                getViewModel().getExpectedHKListData(page, search);
+                mViewModel.getExpectedHKListData(page, search);
             }
         };
         getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
@@ -100,9 +105,9 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
     }
 
     private void decideNextProcess() {
-        HouseKeepingResponse.ContentBean tmpBean = getViewModel().getDataManager().getHouseKeeping();
+        HouseKeepingResponse.ContentBean tmpBean = mViewModel.getDataManager().getHouseKeeping();
         if (tmpBean.getCheckInStatus()) {
-            getViewModel().approveByCall(true, null);
+            mViewModel.approveByCall(true, null);
         } else {
             if (tmpBean.getDocumentId().isEmpty()) {
                 showCheckinOptions();
@@ -139,7 +144,7 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
         scrollListener.onDataCleared();
         list.clear();
         this.page = 0;
-        getViewModel().getExpectedHKListData(page, search.trim());
+        mViewModel.getExpectedHKListData(page, search.trim());
     }
 
     private void showCheckinOptions() {
@@ -154,7 +159,7 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
                 });
 
 
-        HouseKeepingResponse.ContentBean bean = getViewModel().getDataManager().getHouseKeeping();
+        HouseKeepingResponse.ContentBean bean = mViewModel.getDataManager().getHouseKeeping();
         if (!bean.isNotificationStatus() || bean.getFlatNo().isEmpty()) {
             alert.setNegativeBtnShow(false).show(getFragmentManager());
         } else {
@@ -163,7 +168,7 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
                     .setNegativeBtnLabel(getString(R.string.send_notification))
                     .setOnNegativeClickListener(dialog1 -> {
                         dialog1.dismiss();
-                        getViewModel().sendNotification();
+                        mViewModel.sendNotification();
                     })
                     .show(getFragmentManager());
         }
@@ -183,7 +188,7 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
                 })
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
-                    getViewModel().approveByCall(true, null);
+                    mViewModel.approveByCall(true, null);
                 }).show(getFragmentManager());
     }
 
@@ -191,7 +196,7 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
         InputDialog.newInstance().setTitle(getString(R.string.are_you_sure))
                 .setOnPositiveClickListener((dialog, input) -> {
                     dialog.dismiss();
-                    getViewModel().approveByCall(false, input);
+                    mViewModel.approveByCall(false, input);
                 }).show(getFragmentManager());
     }
 
@@ -219,7 +224,7 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
                         break;
                 }
 
-                if (getViewModel().getDataManager().getHouseKeeping().getDocumentId().equals(identityNo))
+                if (mViewModel.getDataManager().getHouseKeeping().getDocumentId().equals(identityNo))
                     showCheckinOptions();
                 else {
                     showToast(R.string.alert_id);

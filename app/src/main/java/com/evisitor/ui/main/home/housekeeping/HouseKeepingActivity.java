@@ -44,7 +44,7 @@ public class HouseKeepingActivity extends BaseActivity<ActivityHkBinding, HKView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getViewModel().setNavigator(this);
+        mViewModel.setNavigator(this);
         initView();
         setUpSearch();
 

@@ -136,6 +136,7 @@ public class VisitorProfileAdapter extends RecyclerView.Adapter<BaseViewHolder> 
                     if (spBean != null) {
                         spBean.setEnteredVehicleNo(et_data.getText().toString());
                         dataManager.setSPDetail(spBean);
+                        return;
                     }
 
                     HouseKeepingResponse.ContentBean hkBean = dataManager.getHouseKeeping();

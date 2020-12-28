@@ -29,7 +29,7 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
 
     private BaseActivity mActivity;
     private T mViewDataBinding;
-    private V mViewModel;
+    protected V mViewModel;
 
     /**
      * Override for set binding variable

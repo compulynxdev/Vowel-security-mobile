@@ -46,7 +46,7 @@ public class SPActivity extends BaseActivity<ActivitySpBinding, SPViewModel> {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getViewModel().setNavigator(this);
+        mViewModel.setNavigator(this);
         getViewDataBinding().header.tvTitle.setText(R.string.title_service_provider);
         getViewDataBinding().header.imgBack.setVisibility(View.VISIBLE);
         getViewDataBinding().header.imgBack.setOnClickListener(v -> onBackPressed());
@@ -65,7 +65,7 @@ public class SPActivity extends BaseActivity<ActivitySpBinding, SPViewModel> {
                 })
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
-                    Intent i = getViewModel().getDataManager().isCommercial() ? CommercialAddVisitorActivity.getStartIntent(this) : AddVisitorActivity.getStartIntent(this);
+                    Intent i = mViewModel.getDataManager().isCommercial() ? CommercialAddVisitorActivity.getStartIntent(this) : AddVisitorActivity.getStartIntent(this);
                     i.putExtra(AppConstants.FROM, AppConstants.CONTROLLER_SP);
                     startActivity(i);
                 }).show(getSupportFragmentManager()));
@@ -110,7 +110,7 @@ public class SPActivity extends BaseActivity<ActivitySpBinding, SPViewModel> {
         if (resultCode == RESULT_OK) {
             if (requestCode == AppConstants.SCAN_RESULT && data != null) {
                 MrzRecord mrzRecord = (MrzRecord) data.getSerializableExtra("Record");
-                Intent intent = getViewModel().getDataManager().isCommercial() ? CommercialAddVisitorActivity.getStartIntent(this) : AddVisitorActivity.getStartIntent(this);
+                Intent intent = mViewModel.getDataManager().isCommercial() ? CommercialAddVisitorActivity.getStartIntent(this) : AddVisitorActivity.getStartIntent(this);
                 intent.putExtra("Record", mrzRecord);
                 intent.putExtra(AppConstants.FROM, AppConstants.CONTROLLER_SP);
                 startActivity(intent);

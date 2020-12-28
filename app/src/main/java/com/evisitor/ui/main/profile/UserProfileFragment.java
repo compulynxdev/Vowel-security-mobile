@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -28,6 +29,12 @@ public class UserProfileFragment extends BaseFragment<FragmentUserProfileBinding
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mViewModel.setNavigator(this);
+    }
+
+    @Override
     public int getBindingVariable() {
         return com.evisitor.BR.viewModel;
     }
@@ -45,7 +52,6 @@ public class UserProfileFragment extends BaseFragment<FragmentUserProfileBinding
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getViewModel().setNavigator(this);
         getViewDataBinding().toolbar.tvTitle.setText(R.string.title_profile);
 
         getViewDataBinding().toolbar.imgSearch.setVisibility(View.VISIBLE);
@@ -62,12 +68,12 @@ public class UserProfileFragment extends BaseFragment<FragmentUserProfileBinding
                     openActivityOnTokenExpire();
                 }).setOnNegativeClickListener(DialogFragment::dismiss));
 
-        getViewModel().getUserDetail().observe(this, userDetail -> {
+        mViewModel.getUserDetail().observe(this, userDetail -> {
             getViewDataBinding().tvName.setText(userDetail.getFullName().isEmpty() ? getString(R.string.na) : userDetail.getFullName());
             getViewDataBinding().tvUsername.setText(userDetail.getUsername().isEmpty() ? getString(R.string.na) : userDetail.getUsername());
             getViewDataBinding().tvEmail.setText(userDetail.getEmail().isEmpty() ? getString(R.string.na) : userDetail.getEmail());
             getViewDataBinding().tvGender.setText(userDetail.getGender().isEmpty() ? getString(R.string.na) : userDetail.getGender());
-            getViewDataBinding().tvContact.setText(userDetail.getContactNo().isEmpty() ? getString(R.string.na) : "+ ".concat(userDetail.getDialingCode()).concat(userDetail.getContactNo()));
+            getViewDataBinding().tvContact.setText(userDetail.getContactNo().isEmpty() ? getString(R.string.na) : "+".concat(userDetail.getDialingCode()).concat(" ").concat(userDetail.getContactNo()));
             getViewDataBinding().tvAddress.setText(userDetail.getAddress().isEmpty() ? getString(R.string.na) : userDetail.getAddress());
             getViewDataBinding().tvGroup.setText(userDetail.getGroupName().isEmpty() ? getString(R.string.na) : userDetail.getGroupName());
 
@@ -81,7 +87,7 @@ public class UserProfileFragment extends BaseFragment<FragmentUserProfileBinding
                         .into(getViewDataBinding().imgUser);
             } else {
                 Glide.with(this)
-                        .load(getViewModel().getDataManager().getImageBaseURL().concat(userDetail.getImageUrl()))
+                        .load(mViewModel.getDataManager().getImageBaseURL().concat(userDetail.getImageUrl()))
                         .centerCrop()
                         .placeholder(R.drawable.ic_person)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -89,6 +95,6 @@ public class UserProfileFragment extends BaseFragment<FragmentUserProfileBinding
             }
         });
 
-        getViewModel().getAccountName().observe(this, s -> getViewDataBinding().tvProperty.setText(s.isEmpty() ? getString(R.string.na) : s));
+        mViewModel.getAccountName().observe(this, s -> getViewDataBinding().tvProperty.setText(s.isEmpty() ? getString(R.string.na) : s));
     }
 }

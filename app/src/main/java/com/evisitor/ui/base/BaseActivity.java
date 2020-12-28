@@ -50,7 +50,7 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     // since its going to be common for all the activities
     private ProgressDialog mProgressDialog;
     private T mViewDataBinding;
-    private V mViewModel;
+    protected V mViewModel;
     private Toast toast;
 
     /**
@@ -140,7 +140,7 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
 
     @Override
     public void openActivityOnTokenExpire() {
-        getViewModel().getDataManager().logout(this);
+        mViewModel.getDataManager().logout(this);
     }
 
     @Override

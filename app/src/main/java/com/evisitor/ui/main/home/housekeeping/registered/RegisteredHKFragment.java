@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
@@ -32,6 +33,12 @@ public class RegisteredHKFragment extends BaseFragment<FragmentExpectedBinding, 
         return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mViewModel.setNavigator(this);
+    }
+
     public synchronized void setSearch(String search) {
         this.search = search;
         doSearch(search);
@@ -55,15 +62,14 @@ public class RegisteredHKFragment extends BaseFragment<FragmentExpectedBinding, 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getViewModel().setNavigator(this);
-        getViewDataBinding().tvNoData.setText(getViewModel().getDataManager().isCommercial() ? getString(R.string.no_registerd_ofc_staff) : getString(R.string.no_registerd_hk));
+        getViewDataBinding().tvNoData.setText(mViewModel.getDataManager().isCommercial() ? getString(R.string.no_registerd_ofc_staff) : getString(R.string.no_registerd_hk));
         setUpAdapter();
     }
 
     private void setUpAdapter() {
         list = new ArrayList<>();
         adapter = new RegisteredHKAdapter(list, pos -> {
-            List<VisitorProfileBean> visitorProfileBeanList = getViewModel().setClickVisitorDetail(list.get(pos));
+            List<VisitorProfileBean> visitorProfileBeanList = mViewModel.setClickVisitorDetail(list.get(pos));
             VisitorProfileDialog.newInstance(visitorProfileBeanList, null).setImage(list.get(pos).getImageUrl()).setBtnVisible(false).show(getFragmentManager());
         });
         adapter.setHasStableIds(true);
@@ -75,7 +81,7 @@ public class RegisteredHKFragment extends BaseFragment<FragmentExpectedBinding, 
                 setAdapterLoading(true);
                 page++;
 
-                getViewModel().getRegisteredHKListData(page, search);
+                mViewModel.getRegisteredHKListData(page, search);
             }
         };
         getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
@@ -94,7 +100,7 @@ public class RegisteredHKFragment extends BaseFragment<FragmentExpectedBinding, 
         scrollListener.onDataCleared();
         list.clear();
         this.page = 0;
-        getViewModel().getRegisteredHKListData(page, search.trim());
+        mViewModel.getRegisteredHKListData(page, search.trim());
     }
 
     @Override

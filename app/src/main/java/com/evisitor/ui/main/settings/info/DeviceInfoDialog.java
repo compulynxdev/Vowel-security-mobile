@@ -28,6 +28,12 @@ public class DeviceInfoDialog extends BaseDialog<DialogDeviceInfoBinding, Device
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mViewModel.setNavigator(getBaseActivity());
+    }
+
+    @Override
     public int getBindingVariable() {
         return com.evisitor.BR.viewModel;
     }

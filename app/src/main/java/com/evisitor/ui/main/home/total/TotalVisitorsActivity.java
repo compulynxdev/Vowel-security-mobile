@@ -55,7 +55,7 @@ public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBin
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getViewModel().setNavigator(this);
+        mViewModel.setNavigator(this);
         initView();
         setUpSearch();
         setUpPagerAdapter();
@@ -69,13 +69,13 @@ public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBin
         getViewDataBinding().titleService.setOnClickListener(this);
         getViewDataBinding().titleHouse.setOnClickListener(this);
 
-        if (getViewModel().getDataManager().isCommercial())
+        if (mViewModel.getDataManager().isCommercial())
             getViewDataBinding().titleHouse.setText(getString(R.string.title_office_staff));
     }
 
     private void setUpPagerAdapter() {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        if (getViewModel().getDataManager().isCommercial()) {
+        if (mViewModel.getDataManager().isCommercial()) {
             commercialGuestFragment = ExpectedCommercialGuestFragment.newInstance();
             adapter.addFragment(commercialGuestFragment);
         } else {
@@ -178,7 +178,7 @@ public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBin
                 if (txt.isEmpty() || txt.length() >= 3) {
                     switch (getViewDataBinding().viewPager.getCurrentItem()) {
                         case 0:
-                            if (getViewModel().getDataManager().isCommercial()) {
+                            if (mViewModel.getDataManager().isCommercial()) {
                                 commercialGuestFragment.setSearch(txt);
                             } else expectedGuestFragment.setSearch(txt);
                             break;

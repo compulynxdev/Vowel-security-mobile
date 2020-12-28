@@ -51,12 +51,12 @@ public class GuestActivity extends BaseActivity<ActivityExpectedGuestBinding, Gu
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getViewModel().setNavigator(this);
+        mViewModel.setNavigator(this);
         getViewDataBinding().header.tvTitle.setText(R.string.title_expected_guests);
         getViewDataBinding().header.imgBack.setVisibility(View.VISIBLE);
         getViewDataBinding().header.imgBack.setOnClickListener(v -> onBackPressed());
         setUpSearch();
-        if (getViewModel().getDataManager().isCommercial()) {
+        if (mViewModel.getDataManager().isCommercial()) {
             commercialGuestFragment = ExpectedCommercialGuestFragment.newInstance();
             replaceFragment(commercialGuestFragment, R.id.guest_frame);
         } else {
@@ -64,7 +64,7 @@ public class GuestActivity extends BaseActivity<ActivityExpectedGuestBinding, Gu
             replaceFragment(guestFragment, R.id.guest_frame);
         }
         getViewDataBinding().fabAdd.setOnClickListener(v -> {
-            if (getViewModel().getDataManager().isIdentifyFeature()) {
+            if (mViewModel.getDataManager().isIdentifyFeature()) {
                 AlertDialog.newInstance()
                         .setNegativeBtnShow(true)
                         .setCloseBtnShow(true)
@@ -80,12 +80,12 @@ public class GuestActivity extends BaseActivity<ActivityExpectedGuestBinding, Gu
                         })
                         .setOnPositiveClickListener(dialog12 -> {
                             dialog12.dismiss();
-                            Intent i = getViewModel().getDataManager().isCommercial() ? CommercialAddVisitorActivity.getStartIntent(this) : AddVisitorActivity.getStartIntent(this);
+                            Intent i = mViewModel.getDataManager().isCommercial() ? CommercialAddVisitorActivity.getStartIntent(this) : AddVisitorActivity.getStartIntent(this);
                             i.putExtra(AppConstants.FROM, AppConstants.CONTROLLER_GUEST);
                             startActivity(i);
                         }).show(getSupportFragmentManager());
             } else {
-                Intent i = getViewModel().getDataManager().isCommercial() ? CommercialAddVisitorActivity.getStartIntent(this) : AddVisitorActivity.getStartIntent(this);
+                Intent i = mViewModel.getDataManager().isCommercial() ? CommercialAddVisitorActivity.getStartIntent(this) : AddVisitorActivity.getStartIntent(this);
                 i.putExtra(AppConstants.FROM, AppConstants.CONTROLLER_GUEST);
                 startActivity(i);
             }
@@ -112,7 +112,7 @@ public class GuestActivity extends BaseActivity<ActivityExpectedGuestBinding, Gu
             public boolean onQueryTextChange(String newText) {
                 String txt = newText.trim();
                 if (txt.isEmpty() || txt.length() >= 3) {
-                    if (getViewModel().getDataManager().isCommercial()) {
+                    if (mViewModel.getDataManager().isCommercial()) {
                         commercialGuestFragment.setSearch(txt);
                     } else guestFragment.setSearch(txt);
                 }
@@ -127,7 +127,7 @@ public class GuestActivity extends BaseActivity<ActivityExpectedGuestBinding, Gu
         if (resultCode == RESULT_OK) {
             if (requestCode == SCAN_RESULT && data != null) {
                 MrzRecord mrzRecord = (MrzRecord) data.getSerializableExtra("Record");
-                Intent intent = getViewModel().getDataManager().isCommercial() ? CommercialAddVisitorActivity.getStartIntent(this) : AddVisitorActivity.getStartIntent(this);
+                Intent intent = mViewModel.getDataManager().isCommercial() ? CommercialAddVisitorActivity.getStartIntent(this) : AddVisitorActivity.getStartIntent(this);
                 intent.putExtra("Record", mrzRecord);
                 intent.putExtra(AppConstants.FROM, AppConstants.CONTROLLER_GUEST);
                 startActivity(intent);

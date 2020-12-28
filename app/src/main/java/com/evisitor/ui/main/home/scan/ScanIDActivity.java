@@ -73,7 +73,7 @@ public class ScanIDActivity extends BaseActivity<ActivityScanIdBinding, ScanIDVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getViewModel().setNavigator(this);
+        mViewModel.setNavigator(this);
         TextView tvTitle = findViewById(R.id.tv_title);
         tvTitle.setText(R.string.title_scan_id);
         ImageView imgBack = findViewById(R.id.img_back);

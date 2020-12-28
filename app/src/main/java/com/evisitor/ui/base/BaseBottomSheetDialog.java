@@ -37,7 +37,7 @@ public abstract class BaseBottomSheetDialog<T extends ViewDataBinding, V extends
 
     private BaseActivity mActivity;
     private T mViewDataBinding;
-    private V mViewModel;
+    protected V mViewModel;
 
     /**
      * Override for set binding variable

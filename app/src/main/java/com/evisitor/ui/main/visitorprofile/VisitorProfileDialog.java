@@ -46,6 +46,12 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
         return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mViewModel.setNavigator(getBaseActivity());
+    }
+
     private void setData(List<VisitorProfileBean> visitorInfoList) {
         this.visitorInfoList = visitorInfoList;
     }
@@ -87,7 +93,6 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getViewModel().setNavigator(getBaseActivity());
         getViewDataBinding().imgClose.setOnClickListener(this);
         getViewDataBinding().btnOk.setVisibility(isBtnVisible ? View.VISIBLE : View.GONE);
         getViewDataBinding().btnOk.setOnClickListener(this);
@@ -105,7 +110,7 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
                     .into(getViewDataBinding().imgProfile);
         } else {
             Glide.with(this)
-                    .load(getViewModel().getDataManager().getImageBaseURL().concat(image))
+                    .load(mViewModel.getDataManager().getImageBaseURL().concat(image))
                     .centerCrop()
                     .placeholder(R.drawable.ic_person)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -113,8 +118,8 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
         }
         setUpAdapter();
 
-        if (getViewModel().getDataManager().isCommercial()) {
-            CommercialGuestResponse.CommercialGuest guest = getViewModel().getDataManager().getCommercialGuestDetail();
+        if (mViewModel.getDataManager().isCommercial()) {
+            CommercialGuestResponse.CommercialGuest guest = mViewModel.getDataManager().getCommercialGuestDetail();
             if (guest != null) {
                 deviceBeanList = guest.getDeviceBeanList();
                 if (deviceBeanList != null && !deviceBeanList.isEmpty()) {
@@ -168,10 +173,10 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
             Type listType = new TypeToken<List<DeviceBean>>() {
             }.getType();
             deviceBeanList.clear();
-            deviceBeanList.addAll(Objects.requireNonNull(getViewModel().getDataManager().getGson().fromJson(data.getStringExtra("data"), listType)));
-            CommercialGuestResponse.CommercialGuest guest = getViewModel().getDataManager().getCommercialGuestDetail();
+            deviceBeanList.addAll(Objects.requireNonNull(mViewModel.getDataManager().getGson().fromJson(data.getStringExtra("data"), listType)));
+            CommercialGuestResponse.CommercialGuest guest = mViewModel.getDataManager().getCommercialGuestDetail();
             guest.setDeviceBeanList(deviceBeanList);
-            getViewModel().getDataManager().setCommercialGuestDetail(guest);
+            mViewModel.getDataManager().setCommercialGuestDetail(guest);
         }
     }
 }

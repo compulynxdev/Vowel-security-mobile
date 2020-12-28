@@ -37,7 +37,7 @@ public abstract class BaseDialog<T extends ViewDataBinding, V extends BaseViewMo
     private static final String TAG = "BaseDialog";
     private BaseActivity mActivity;
     private T mViewDataBinding;
-    private V mViewModel;
+    protected V mViewModel;
     private int defaultView = ViewGroup.LayoutParams.WRAP_CONTENT;
 
     /**

@@ -36,6 +36,12 @@ public class TrespasserSPFragment extends BaseFragment<FragmentTrespasserSBindin
         return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mViewModel.setNavigator(this);
+    }
+
     public synchronized void setSearch(String search) {
         this.search = search;
         doSearch(search);
@@ -59,14 +65,13 @@ public class TrespasserSPFragment extends BaseFragment<FragmentTrespasserSBindin
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getViewModel().setNavigator(this);
         setUpAdapter();
     }
 
 
     private void setUpAdapter() {
         list = new ArrayList<>();
-        adapter = new TrespasserAdapter(list, pos -> VisitorProfileDialog.newInstance(getViewModel().getVisitorDetail(list.get(pos)), null).setImage(list.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
+        adapter = new TrespasserAdapter(list, pos -> VisitorProfileDialog.newInstance(mViewModel.getVisitorDetail(list.get(pos)), null).setImage(list.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
         adapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(adapter);
 
@@ -76,7 +81,7 @@ public class TrespasserSPFragment extends BaseFragment<FragmentTrespasserSBindin
                 setAdapterLoading(true);
                 page++;
 
-                getViewModel().getTrespasserSP(page, search);
+                mViewModel.getTrespasserSP(page, search);
             }
         };
         getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
@@ -95,7 +100,7 @@ public class TrespasserSPFragment extends BaseFragment<FragmentTrespasserSBindin
         scrollListener.onDataCleared();
         list.clear();
         this.page = 0;
-        getViewModel().getTrespasserSP(page, search.trim());
+        mViewModel.getTrespasserSP(page, search.trim());
     }
 
 

@@ -280,8 +280,6 @@
     <string name="select_department">Select Department</string>
     <string name="gadgets_info">Gadgets Information</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="enter_gadget_info">Enter gadgets information</string>
     <string name="enter_device_name">Device deviceName</string>
     <string name="enter_device_type">Device type</string>

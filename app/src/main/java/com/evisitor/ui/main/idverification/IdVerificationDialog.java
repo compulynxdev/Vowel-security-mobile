@@ -26,6 +26,12 @@ public class IdVerificationDialog extends BaseDialog<DialogIdVerificationBinding
         return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mViewModel.setNavigator(getBaseActivity());
+    }
+
     private void setCallback(IdVerificationCallback callback) {
         this.callback = callback;
     }
@@ -48,7 +54,6 @@ public class IdVerificationDialog extends BaseDialog<DialogIdVerificationBinding
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getViewModel().setNavigator(getBaseActivity());
         getViewDataBinding().imgClose.setOnClickListener(this);
         getViewDataBinding().btnScan.setOnClickListener(this);
         getViewDataBinding().btnSubmit.setOnClickListener(this);

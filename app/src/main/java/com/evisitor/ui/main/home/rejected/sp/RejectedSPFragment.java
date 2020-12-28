@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
@@ -32,6 +33,12 @@ public class RejectedSPFragment extends BaseFragment<FragmentRejectedSBinding, R
         return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mViewModel.setNavigator(this);
+    }
+
     public synchronized void setSearch(String search) {
         this.search = search;
         doSearch(search);
@@ -55,14 +62,13 @@ public class RejectedSPFragment extends BaseFragment<FragmentRejectedSBinding, R
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getViewModel().setNavigator(this);
         setUpAdapter();
     }
 
 
     private void setUpAdapter() {
         list = new ArrayList<>();
-        adapter = new RejectedSPAdapter(list, pos -> VisitorProfileDialog.newInstance(getViewModel().getVisitorDetail(list.get(pos)), null).setImage(list.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
+        adapter = new RejectedSPAdapter(list, pos -> VisitorProfileDialog.newInstance(mViewModel.getVisitorDetail(list.get(pos)), null).setImage(list.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
         adapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(adapter);
 
@@ -72,7 +78,7 @@ public class RejectedSPFragment extends BaseFragment<FragmentRejectedSBinding, R
                 setAdapterLoading(true);
                 page++;
 
-                getViewModel().getSP(page, search);
+                mViewModel.getSP(page, search);
             }
         };
         getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
@@ -91,7 +97,7 @@ public class RejectedSPFragment extends BaseFragment<FragmentRejectedSBinding, R
         scrollListener.onDataCleared();
         list.clear();
         this.page = 0;
-        getViewModel().getSP(page, search.trim());
+        mViewModel.getSP(page, search.trim());
     }
 
 

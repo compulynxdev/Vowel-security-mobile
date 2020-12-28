@@ -45,7 +45,7 @@ public class TrespasserActivity extends BaseActivity<ActivityTrespasserBinding, 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getViewModel().setNavigator(this);
+        mViewModel.setNavigator(this);
         initView();
         setUpSearch();
         setUpPagerAdapter();

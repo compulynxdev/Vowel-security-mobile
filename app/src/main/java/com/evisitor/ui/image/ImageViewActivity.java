@@ -44,7 +44,7 @@ public class ImageViewActivity extends BaseActivity<ActivityImageViewBinding, Im
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getViewModel().setNavigator(this);
+        mViewModel.setNavigator(this);
         getViewDataBinding().imgBack.setOnClickListener(v -> onBackPressed());
         mScaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
         updateUI(getIntent());
@@ -61,7 +61,7 @@ public class ImageViewActivity extends BaseActivity<ActivityImageViewBinding, Im
                         .into(getViewDataBinding().imageView);
             } else {
                 Glide.with(this)
-                        .load(getViewModel().getDataManager().getImageBaseURL().concat(imageUrl))
+                        .load(mViewModel.getDataManager().getImageBaseURL().concat(imageUrl))
                         .fitCenter()
                         .placeholder(R.drawable.ic_person)
                         .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)

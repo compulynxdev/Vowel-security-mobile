@@ -51,7 +51,7 @@ public class BlackListVisitorActivity extends BaseActivity<ActivityBlackListVisi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getViewModel().setNavigator(this);
+        mViewModel.setNavigator(this);
         TextView tvTitle = findViewById(R.id.tv_title);
         tvTitle.setText(R.string.title_blacklisted_visitor);
 
@@ -68,7 +68,7 @@ public class BlackListVisitorActivity extends BaseActivity<ActivityBlackListVisi
 
     private void setUpAdapter() {
         list = new ArrayList<>();
-        adapter = new BlackListAdapter(list, pos -> VisitorProfileDialog.newInstance(getViewModel().getVisitorDetail(list.get(pos)), null).setImage(list.get(pos).getImageUrl()).setBtnVisible(false).show(getSupportFragmentManager()));
+        adapter = new BlackListAdapter(list, pos -> VisitorProfileDialog.newInstance(mViewModel.getVisitorDetail(list.get(pos)), null).setImage(list.get(pos).getImageUrl()).setBtnVisible(false).show(getSupportFragmentManager()));
         adapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(adapter);
         scrollListener = new RecyclerViewScrollListener() {
@@ -76,7 +76,7 @@ public class BlackListVisitorActivity extends BaseActivity<ActivityBlackListVisi
             public void onLoadMore() {
                 setAdapterLoading(true);
                 page++;
-                getViewModel().getData(page, search);
+                mViewModel.getData(page, search);
             }
         };
         getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
@@ -143,7 +143,7 @@ public class BlackListVisitorActivity extends BaseActivity<ActivityBlackListVisi
         this.list.clear();
         this.page = 0;
         if (isNetworkConnected(true))
-            getViewModel().getData(page, search);
+            mViewModel.getData(page, search);
         else getViewDataBinding().swipeToRefresh.setRefreshing(false);
 
     }

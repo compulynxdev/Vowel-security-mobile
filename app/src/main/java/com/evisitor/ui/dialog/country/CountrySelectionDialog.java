@@ -37,6 +37,12 @@ public class CountrySelectionDialog extends BaseDialog<DialogCountrySelectionBin
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mViewModel.setNavigator(getBaseActivity());
+    }
+
+    @Override
     public int getBindingVariable() {
         return com.evisitor.BR.viewModel;
     }
@@ -58,7 +64,6 @@ public class CountrySelectionDialog extends BaseDialog<DialogCountrySelectionBin
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getViewModel().setNavigator(getBaseActivity());
         getViewDataBinding().imgClose.setOnClickListener(this);
 
         adapterList = new ArrayList<>();
@@ -70,7 +75,7 @@ public class CountrySelectionDialog extends BaseDialog<DialogCountrySelectionBin
             }
         });
         getViewDataBinding().recyclerView.setAdapter(adapter);
-        getViewModel().getResponseCountryLiveData().observe(this, countryResponseList -> {
+        mViewModel.getResponseCountryLiveData().observe(this, countryResponseList -> {
             backupList.clear();
             backupList.addAll(countryResponseList);
 

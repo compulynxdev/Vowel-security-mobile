@@ -49,7 +49,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getViewModel().setNavigator(this);
+        mViewModel.setNavigator(this);
 
         getViewDataBinding().bottomNavigation.add(new MeowBottomNavigation.Model(ID_HOME, R.drawable.ic_home));
         getViewDataBinding().bottomNavigation.add(new MeowBottomNavigation.Model(ID_ACTIVITY, R.drawable.ic_clock));

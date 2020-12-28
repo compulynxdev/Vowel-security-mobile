@@ -41,7 +41,7 @@ public class ContentActivity extends BaseActivity<ActivityContentBinding, Conten
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getViewModel().setNavigator(this);
+        mViewModel.setNavigator(this);
 
         ImageView imgBack = findViewById(R.id.img_back);
         imgBack.setVisibility(View.VISIBLE);
@@ -83,7 +83,7 @@ public class ContentActivity extends BaseActivity<ActivityContentBinding, Conten
             } else {
                 getViewDataBinding().tvContent.setText(Html.fromHtml(data));
             }
-            /*getViewModel().getContent(from).observe(this, contentResponse -> {
+            /*mViewModel.getContent(from).observe(this, contentResponse -> {
                 String data;
                 switch (from != null ? from : "") {
                     case AppConstants.ACTIVITY_ABOUT_US:

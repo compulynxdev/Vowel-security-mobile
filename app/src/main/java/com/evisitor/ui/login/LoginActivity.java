@@ -13,7 +13,6 @@ import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.ActivityLoginBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.main.MainActivity;
-import com.evisitor.ui.main.settings.info.DeviceInfoDialog;
 import com.evisitor.util.AppLogger;
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -45,15 +44,15 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getViewModel().setNavigator(this);
+        mViewModel.setNavigator(this);
 
         getViewDataBinding().btnLogin.setOnClickListener(this);
         initFcmToken();
 
-        if (getViewModel().getDataManager().isRememberMe()) {
+        if (mViewModel.getDataManager().isRememberMe()) {
             getViewDataBinding().cbRemember.setChecked(true);
-            getViewDataBinding().etUsername.setText(getViewModel().getDataManager().getUsername());
-            getViewDataBinding().etPassword.setText(getViewModel().getDataManager().getUserPassword());
+            getViewDataBinding().etUsername.setText(mViewModel.getDataManager().getUsername());
+            getViewDataBinding().etPassword.setText(mViewModel.getDataManager().getUserPassword());
         }
     }
 
@@ -81,7 +80,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_login) {
-            getViewModel().doVerifyAndLogin(Objects.requireNonNull(getViewDataBinding().etUsername.getText()).toString(),
+            mViewModel.doVerifyAndLogin(Objects.requireNonNull(getViewDataBinding().etUsername.getText()).toString(),
                     Objects.requireNonNull(getViewDataBinding().etPassword.getText()).toString(), fcmToken,
                     getViewDataBinding().cbRemember.isChecked());
         }

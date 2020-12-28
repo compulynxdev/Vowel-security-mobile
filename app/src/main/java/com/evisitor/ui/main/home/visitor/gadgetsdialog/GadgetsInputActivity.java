@@ -50,6 +50,7 @@ public class GadgetsInputActivity extends BaseActivity<GadgetsInputDialogBinding
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mViewModel.setNavigator(this);
         setUp();
         setUpIntent(getIntent());
         setUpAdapter();
@@ -60,7 +61,7 @@ public class GadgetsInputActivity extends BaseActivity<GadgetsInputDialogBinding
         if (intent.hasExtra("list")) {
             Type listType = new TypeToken<List<DeviceBean>>() {
             }.getType();
-            beans.addAll(Objects.requireNonNull(getViewModel().getDataManager().getGson().fromJson(intent.getStringExtra("list"), listType)));
+            beans.addAll(Objects.requireNonNull(mViewModel.getDataManager().getGson().fromJson(intent.getStringExtra("list"), listType)));
         }
     }
 
@@ -92,7 +93,7 @@ public class GadgetsInputActivity extends BaseActivity<GadgetsInputDialogBinding
 
             case R.id.btn_ok:
                 if (!beans.isEmpty()) {
-                    if (getViewModel().verifyDeviceDetails(beans)) {
+                    if (mViewModel.verifyDeviceDetails(beans)) {
                         Intent intent = getIntent();
                         Bundle bundle = new Bundle();
                         String yourListAsString = new Gson().toJson(beans);
@@ -109,7 +110,7 @@ public class GadgetsInputActivity extends BaseActivity<GadgetsInputDialogBinding
 
             case R.id.img_search:
                 if (beans.size() < 5) {
-                    if (getViewModel().verifyDeviceDetails(beans)) {
+                    if (mViewModel.verifyDeviceDetails(beans)) {
                         beans.add(new DeviceBean(getString(R.string.device).concat(" ").concat(String.valueOf(beans.size() + 1)), "", "", "", "", ""));
                         adapter.notifyDataSetChanged();
                     } else

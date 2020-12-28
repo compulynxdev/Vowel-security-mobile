@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -33,6 +34,12 @@ public class NotificationsFragment extends BaseFragment<FragmentNotificationsBin
         return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mViewModel.setNavigator(this);
+    }
+
     private void setInteraction(NotificationFragmentInteraction interaction) {
         this.interaction = interaction;
     }
@@ -55,7 +62,6 @@ public class NotificationsFragment extends BaseFragment<FragmentNotificationsBin
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getViewModel().setNavigator(this);
         getViewDataBinding().header.tvTitle.setText(R.string.title_notification);
 
         notificationsList = new ArrayList<>();
@@ -69,14 +75,14 @@ public class NotificationsFragment extends BaseFragment<FragmentNotificationsBin
                 setAdapterLoading(true);
                 page++;
 
-                getViewModel().getNotifications(page, search);
+                mViewModel.getNotifications(page, search);
             }
         };
         getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
 
         getViewDataBinding().swipeToRefresh.setOnRefreshListener(this::updateUI);
         getViewDataBinding().swipeToRefresh.setColorSchemeResources(R.color.colorPrimary);
-        getViewModel().doReadAllNotification();
+        mViewModel.doReadAllNotification();
         updateUI();
     }
 
@@ -118,7 +124,7 @@ public class NotificationsFragment extends BaseFragment<FragmentNotificationsBin
         scrollListener.onDataCleared();
         notificationsList.clear();
         this.page = 0;
-        getViewModel().getNotifications(page, search);
+        mViewModel.getNotifications(page, search);
     }
 
     @Override
