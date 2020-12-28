@@ -31,7 +31,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:layout_margin="10dp"
-                android:src="@drawable/img_visitor"
                 app:layout_constraintBottom_toTopOf="@+id/tv_note"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
