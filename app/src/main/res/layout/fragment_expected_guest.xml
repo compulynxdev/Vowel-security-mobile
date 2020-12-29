@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.main.home.guest.expected.ExpectedGuestFragment">
+    tools:context=".ui.main.residential.guest.expected.ExpectedGuestFragment">
 
     <data>
 
@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="com.evisitor.ui.main.home.guest.expected.ExpectedGuestViewModel" />
+            type="com.evisitor.ui.main.residential.guest.expected.ExpectedGuestViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

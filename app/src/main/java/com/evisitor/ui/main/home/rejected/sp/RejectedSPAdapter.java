@@ -134,7 +134,7 @@ public class RejectedSPAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             if (isCommercial()) {
                 host.setVisibility(View.GONE);
                 houseNo.setVisibility(View.GONE);
-            }else {
+            } else {
                 //For Residential System
                 if (bean.getPremiseName().isEmpty()) {
                     houseNo.setVisibility(View.GONE);

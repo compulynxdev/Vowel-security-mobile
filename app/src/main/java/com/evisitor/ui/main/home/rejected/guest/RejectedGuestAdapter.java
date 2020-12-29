@@ -128,7 +128,7 @@ public class RejectedGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             houseNo.setText(houseNo.getContext().getString(R.string.data_dynamic_premise, getPremiseLastLevel(), bean.getPremiseName()));
             if (isCommercial()) {
                 host.setVisibility(View.GONE);
-            }else {
+            } else {
                 //For Residential System
                 host.setText(host.getContext().getString(R.string.data_host, bean.getHost()));
             }

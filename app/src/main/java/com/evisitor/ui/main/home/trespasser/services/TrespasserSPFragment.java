@@ -14,7 +14,7 @@ import com.evisitor.data.model.TrespasserResponse;
 import com.evisitor.databinding.FragmentTrespasserSBinding;
 import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.main.home.trespasser.TrespasserAdapter;
-import com.evisitor.ui.main.visitorprofile.VisitorProfileDialog;
+import com.evisitor.ui.main.home.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
 
 import java.util.ArrayList;

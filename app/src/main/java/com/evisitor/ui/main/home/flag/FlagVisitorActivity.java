@@ -13,7 +13,7 @@ import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.FlaggedVisitorResponse;
 import com.evisitor.databinding.ActivityFlagVisitorBinding;
 import com.evisitor.ui.base.BaseActivity;
-import com.evisitor.ui.main.visitorprofile.VisitorProfileDialog;
+import com.evisitor.ui.main.home.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
 
 import java.util.ArrayList;

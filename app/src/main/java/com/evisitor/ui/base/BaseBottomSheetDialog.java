@@ -35,9 +35,9 @@ import okhttp3.ResponseBody;
 
 public abstract class BaseBottomSheetDialog<T extends ViewDataBinding, V extends BaseViewModel> extends BottomSheetDialogFragment implements BaseNavigator, View.OnFocusChangeListener {
 
+    protected V mViewModel;
     private BaseActivity mActivity;
     private T mViewDataBinding;
-    protected V mViewModel;
 
     /**
      * Override for set binding variable

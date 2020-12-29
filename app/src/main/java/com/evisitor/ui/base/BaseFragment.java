@@ -27,9 +27,9 @@ import okhttp3.ResponseBody;
 
 public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseViewModel> extends Fragment implements BaseNavigator {
 
+    protected V mViewModel;
     private BaseActivity mActivity;
     private T mViewDataBinding;
-    protected V mViewModel;
 
     /**
      * Override for set binding variable

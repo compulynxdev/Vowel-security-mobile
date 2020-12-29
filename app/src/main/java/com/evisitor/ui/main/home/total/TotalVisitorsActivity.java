@@ -18,10 +18,10 @@ import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.ActivityTotalVisitorsBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.base.BaseNavigator;
-import com.evisitor.ui.main.home.guest.commercial_expected.ExpectedCommercialGuestFragment;
-import com.evisitor.ui.main.home.guest.expected.ExpectedGuestFragment;
-import com.evisitor.ui.main.home.housekeeping.expected.ExpectedHKFragment;
-import com.evisitor.ui.main.home.sp.ExpectedSPFragment;
+import com.evisitor.ui.main.commercial.visitor.expected.ExpectedCommercialGuestFragment;
+import com.evisitor.ui.main.residential.guest.expected.ExpectedGuestFragment;
+import com.evisitor.ui.main.residential.sp.ExpectedSPFragment;
+import com.evisitor.ui.main.residential.staff.expected.ExpectedHKFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +70,7 @@ public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBin
         getViewDataBinding().titleHouse.setOnClickListener(this);
 
         getViewDataBinding().titleGuest.setText(mViewModel.getDataManager().isCommercial() ? R.string.title_visitor : R.string.title_guests);
-        getViewDataBinding().titleHouse.setText(mViewModel.getDataManager().isCommercial() ? R.string.title_office_staff : R.string.title_domestic_staff);
+        getViewDataBinding().titleHouse.setText(mViewModel.getDataManager().isCommercial() ? R.string.title_staff : R.string.title_domestic_staff);
     }
 
     private void setUpPagerAdapter() {

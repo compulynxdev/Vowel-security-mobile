@@ -46,7 +46,7 @@
     <string name="title_add_sp">Add Service Provider</string>
     <string name="title_guests">Guests</string>
     <string name="title_domestic_staff">Domestic Staff</string>
-    <string name="title_office_staff">Office Staff</string>
+    <string name="title_staff">Staff</string>
     <string name="title_service_provider">Service Provider</string>
     <string name="title_ttl_expected_visitor">Total Expected Visitors</string>
     <string name="title_expected_visitor">Expected Visitors</string>

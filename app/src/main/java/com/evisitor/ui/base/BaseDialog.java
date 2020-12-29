@@ -35,9 +35,9 @@ import okhttp3.ResponseBody;
 public abstract class BaseDialog<T extends ViewDataBinding, V extends BaseViewModel> extends DialogFragment {
 
     private static final String TAG = "BaseDialog";
+    protected V mViewModel;
     private BaseActivity mActivity;
     private T mViewDataBinding;
-    protected V mViewModel;
     private int defaultView = ViewGroup.LayoutParams.WRAP_CONTENT;
 
     /**

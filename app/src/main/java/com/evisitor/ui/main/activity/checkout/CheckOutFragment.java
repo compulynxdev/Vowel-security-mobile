@@ -20,7 +20,7 @@ import com.evisitor.ui.main.activity.checkout.adapter.CommercialGuestCheckOutAda
 import com.evisitor.ui.main.activity.checkout.adapter.GuestCheckOutAdapter;
 import com.evisitor.ui.main.activity.checkout.adapter.HouseKeepingCheckOutAdapter;
 import com.evisitor.ui.main.activity.checkout.adapter.ServiceProviderCheckOutAdapter;
-import com.evisitor.ui.main.visitorprofile.VisitorProfileDialog;
+import com.evisitor.ui.main.home.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
 
 import java.util.ArrayList;

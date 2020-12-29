@@ -8,47 +8,48 @@ import com.evisitor.data.DataManager;
 import com.evisitor.ui.dialog.AlertViewModel;
 import com.evisitor.ui.dialog.ImagePickViewModel;
 import com.evisitor.ui.dialog.country.CountrySelectionDialogViewModel;
+import com.evisitor.ui.dialog.selection.SelectionViewModel;
 import com.evisitor.ui.image.ImageViewModel;
 import com.evisitor.ui.login.LoginViewModel;
 import com.evisitor.ui.main.MainViewModel;
 import com.evisitor.ui.main.activity.ActivityViewModel;
 import com.evisitor.ui.main.activity.checkin.CheckInViewModel;
 import com.evisitor.ui.main.activity.checkout.CheckOutViewModel;
+import com.evisitor.ui.main.commercial.add.CommercialAddVisitorViewModel;
+import com.evisitor.ui.main.commercial.gadgets.GadgetsInputViewModel;
+import com.evisitor.ui.main.commercial.visitor.VisitorViewModel;
+import com.evisitor.ui.main.commercial.visitor.expected.ExpectedCommercialGuestViewModel;
 import com.evisitor.ui.main.home.HomeViewModel;
 import com.evisitor.ui.main.home.blacklist.BlackListViewModel;
 import com.evisitor.ui.main.home.flag.FlagVisitorViewModel;
-import com.evisitor.ui.main.home.guest.GuestViewModel;
-import com.evisitor.ui.main.home.guest.commercial_expected.ExpectedCommercialGuestViewModel;
-import com.evisitor.ui.main.home.guest.expected.ExpectedGuestViewModel;
-import com.evisitor.ui.main.home.housekeeping.HKViewModel;
-import com.evisitor.ui.main.home.housekeeping.expected.ExpectedHKViewModel;
-import com.evisitor.ui.main.home.housekeeping.registered.RegisteredHKViewModel;
+import com.evisitor.ui.main.home.idverification.IdVerificationViewModel;
 import com.evisitor.ui.main.home.rejected.RejectedVisitorViewModel;
 import com.evisitor.ui.main.home.rejected.guest.RejectedGuestViewModel;
 import com.evisitor.ui.main.home.rejected.sp.RejectedSPViewModel;
 import com.evisitor.ui.main.home.rejected.staff.RejectedStaffViewModel;
+import com.evisitor.ui.main.home.rejectreason.InputDialogViewModel;
 import com.evisitor.ui.main.home.scan.ScanIDViewModel;
-import com.evisitor.ui.main.home.sp.ExpectedSpViewModel;
-import com.evisitor.ui.main.home.sp.SPViewModel;
 import com.evisitor.ui.main.home.total.TotalVisitorsViewModel;
 import com.evisitor.ui.main.home.trespasser.TrespasserViewModel;
 import com.evisitor.ui.main.home.trespasser.guests.TrespasserGuestViewModel;
 import com.evisitor.ui.main.home.trespasser.services.TrespasserSPViewModel;
 import com.evisitor.ui.main.home.tutorial.TutorialScanViewModel;
-import com.evisitor.ui.main.home.visitor.AddVisitorViewModel;
-import com.evisitor.ui.main.home.visitor.commercialvisitor.CommercialAddVisitorViewModel;
-import com.evisitor.ui.main.home.visitor.dialogs.SelectionViewModel;
-import com.evisitor.ui.main.home.visitor.gadgetsdialog.GadgetsInputViewModel;
-import com.evisitor.ui.main.idverification.IdVerificationViewModel;
+import com.evisitor.ui.main.home.visitorprofile.VisitorProfileViewModel;
 import com.evisitor.ui.main.notifications.NotificationsViewModel;
 import com.evisitor.ui.main.profile.UserProfileViewModel;
-import com.evisitor.ui.main.rejectreason.InputDialogViewModel;
+import com.evisitor.ui.main.residential.add.AddVisitorViewModel;
+import com.evisitor.ui.main.residential.guest.GuestViewModel;
+import com.evisitor.ui.main.residential.guest.expected.ExpectedGuestViewModel;
+import com.evisitor.ui.main.residential.sp.ExpectedSpViewModel;
+import com.evisitor.ui.main.residential.sp.SPViewModel;
+import com.evisitor.ui.main.residential.staff.HKViewModel;
+import com.evisitor.ui.main.residential.staff.expected.ExpectedHKViewModel;
+import com.evisitor.ui.main.residential.staff.registered.RegisteredHKViewModel;
 import com.evisitor.ui.main.settings.SettingsViewModel;
 import com.evisitor.ui.main.settings.content.ContentViewModel;
 import com.evisitor.ui.main.settings.info.DeviceInfoViewModel;
 import com.evisitor.ui.main.settings.language.LanguageDialogViewModel;
 import com.evisitor.ui.main.settings.propertyinfo.PropertyInfoViewModel;
-import com.evisitor.ui.main.visitorprofile.VisitorProfileViewModel;
 import com.evisitor.ui.splash.SplashViewModel;
 
 /**
@@ -121,6 +122,9 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(GuestViewModel.class)) {
             //noinspection unchecked
             return (T) new GuestViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(VisitorViewModel.class)) {
+            //noinspection unchecked
+            return (T) new VisitorViewModel(dataManager);
         } else if (modelClass.isAssignableFrom(AddVisitorViewModel.class)) {
             //noinspection unchecked
             return (T) new AddVisitorViewModel(dataManager);

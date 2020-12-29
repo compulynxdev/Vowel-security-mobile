@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.main.home.visitor.AddVisitorActivity">
+    tools:context=".ui.main.residential.add.AddVisitorActivity">
 
     <data>
 
@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="com.evisitor.ui.main.home.visitor.AddVisitorViewModel" />
+            type="com.evisitor.ui.main.residential.add.AddVisitorViewModel" />
     </data>
 
     <ScrollView

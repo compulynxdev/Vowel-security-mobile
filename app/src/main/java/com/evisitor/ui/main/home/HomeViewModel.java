@@ -25,7 +25,7 @@ public class HomeViewModel extends BaseViewModel<BaseNavigator> {
 
     static final int ADD_VISITOR_VIEW = 0;
     static final int GUEST_VIEW = 1;
-    static final int HOUSE_KEEPING_VIEW = 2;
+    static final int STAFF_VIEW = 2;
     static final int SERVICE_PROVIDER_VIEW = 3;
     static final int TOTAL_VISITOR_VIEW = 4;
     static final int BLACKLISTED_VISITOR_VIEW = 5;
@@ -51,12 +51,16 @@ public class HomeViewModel extends BaseViewModel<BaseNavigator> {
     void setupHomeList() {
         list.add(new HomeBean(ADD_VISITOR_VIEW, R.drawable.ic_add_button, getNavigator().getContext().getString(R.string.title_add_visitor)));
         list.add(new HomeBean(GUEST_VIEW, R.drawable.ic_guest, getDataManager().isCommercial() ? getNavigator().getContext().getString(R.string.title_visitor) : getNavigator().getContext().getString(R.string.title_guests)));
-        list.add(new HomeBean(HOUSE_KEEPING_VIEW, R.drawable.ic_maid, getDataManager().isCommercial() ? getNavigator().getContext().getString(R.string.title_office_staff) : getNavigator().getContext().getString(R.string.title_domestic_staff)));
+
+        if (getDataManager().isCommercial())
+            list.add(new HomeBean(STAFF_VIEW, R.drawable.ic_maid, getNavigator().getContext().getString(R.string.title_staff)));
+        else
+            list.add(new HomeBean(STAFF_VIEW, R.drawable.ic_maid, getNavigator().getContext().getString(R.string.title_domestic_staff)));
+
         list.add(new HomeBean(SERVICE_PROVIDER_VIEW, R.drawable.ic_assistance, getNavigator().getContext().getString(R.string.title_service_provider)));
         list.add(new HomeBean(TOTAL_VISITOR_VIEW, R.drawable.ic_group, getNavigator().getContext().getString(R.string.title_ttl_expected_visitor)));
         list.add(new HomeBean(BLACKLISTED_VISITOR_VIEW, R.drawable.ic_black_visitor, getNavigator().getContext().getString(R.string.title_blacklisted_visitor)));
-        if (!getDataManager().isCommercial())
-            list.add(new HomeBean(TRESPASSER_VIEW, R.drawable.ic_trespasser, getNavigator().getContext().getString(R.string.title_trespasser_visitor)));
+        list.add(new HomeBean(TRESPASSER_VIEW, R.drawable.ic_trespasser, getNavigator().getContext().getString(R.string.title_trespasser_visitor)));
         list.add(new HomeBean(FLAGGED_VIEW, R.drawable.ic_flag_visitor, getNavigator().getContext().getString(R.string.title_flagged_visitor)));
         list.add(new HomeBean(REJECTED_VIEW, R.drawable.ic_rejected, getNavigator().getContext().getString(R.string.title_rejected_visitor)));
         homeListData.setValue(list);
@@ -85,7 +89,7 @@ public class HomeViewModel extends BaseViewModel<BaseNavigator> {
                                 int spCount = jsonObject.getInt("serviceProvider");
                                 int totalCount = guestCount + hkCount + spCount;
                                 list.get(GUEST_VIEW).setCount(String.valueOf(guestCount));
-                                list.get(HOUSE_KEEPING_VIEW).setCount(String.valueOf(hkCount));
+                                list.get(STAFF_VIEW).setCount(String.valueOf(hkCount));
                                 list.get(SERVICE_PROVIDER_VIEW).setCount(String.valueOf(spCount));
                                 list.get(TOTAL_VISITOR_VIEW).setCount(String.valueOf(totalCount));
                                 homeListData.setValue(list);

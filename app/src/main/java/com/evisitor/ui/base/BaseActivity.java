@@ -46,11 +46,11 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
         implements BaseFragment.Callback, BaseNavigator {
 
     private static final String TAG = "BaseActivity";
+    protected V mViewModel;
     // this can probably depend on isLoading variable of BaseViewModel,
     // since its going to be common for all the activities
     private ProgressDialog mProgressDialog;
     private T mViewDataBinding;
-    protected V mViewModel;
     private Toast toast;
 
     /**

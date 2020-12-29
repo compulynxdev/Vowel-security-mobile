@@ -25,11 +25,11 @@ public abstract class BaseViewHolder extends RecyclerView.ViewHolder {
         itemView.getContext().startActivity(intent);
     }
 
-    public boolean isCommercial(){
+    public boolean isCommercial() {
         return EVisitor.getInstance().getDataManager().isCommercial();
     }
 
-    protected String getPremiseLastLevel(){
+    protected String getPremiseLastLevel() {
         return EVisitor.getInstance().getDataManager().getLevelName();
     }
 

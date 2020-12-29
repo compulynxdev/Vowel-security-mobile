@@ -13,16 +13,17 @@ import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.HomeBean;
 import com.evisitor.databinding.FragmentHomeBinding;
 import com.evisitor.ui.base.BaseFragment;
+import com.evisitor.ui.main.commercial.add.CommercialAddVisitorActivity;
+import com.evisitor.ui.main.commercial.visitor.VisitorActivity;
 import com.evisitor.ui.main.home.blacklist.BlackListVisitorActivity;
 import com.evisitor.ui.main.home.flag.FlagVisitorActivity;
-import com.evisitor.ui.main.home.guest.GuestActivity;
-import com.evisitor.ui.main.home.housekeeping.HouseKeepingActivity;
 import com.evisitor.ui.main.home.rejected.RejectedVisitorActivity;
-import com.evisitor.ui.main.home.sp.SPActivity;
 import com.evisitor.ui.main.home.total.TotalVisitorsActivity;
 import com.evisitor.ui.main.home.trespasser.TrespasserActivity;
-import com.evisitor.ui.main.home.visitor.AddVisitorActivity;
-import com.evisitor.ui.main.home.visitor.commercialvisitor.CommercialAddVisitorActivity;
+import com.evisitor.ui.main.residential.add.AddVisitorActivity;
+import com.evisitor.ui.main.residential.guest.GuestActivity;
+import com.evisitor.ui.main.residential.sp.SPActivity;
+import com.evisitor.ui.main.residential.staff.HouseKeepingActivity;
 import com.evisitor.util.AppConstants;
 
 import java.util.ArrayList;
@@ -91,10 +92,10 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
                     break;
 
                 case HomeViewModel.GUEST_VIEW:
-                    startActivity(GuestActivity.getStartIntent(getContext()));
+                    startActivity(mViewModel.getDataManager().isCommercial() ? VisitorActivity.getStartIntent(getContext()) : GuestActivity.getStartIntent(getContext()));
                     break;
 
-                case HomeViewModel.HOUSE_KEEPING_VIEW:
+                case HomeViewModel.STAFF_VIEW:
                     startActivity(HouseKeepingActivity.getStartIntent(getContext()));
                     break;
 

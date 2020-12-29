@@ -12,7 +12,7 @@ import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.HouseKeepingResponse;
 import com.evisitor.databinding.FragmentRejectedStaffBinding;
 import com.evisitor.ui.base.BaseFragment;
-import com.evisitor.ui.main.visitorprofile.VisitorProfileDialog;
+import com.evisitor.ui.main.home.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
 
 import java.util.ArrayList;
