@@ -262,6 +262,8 @@
     <string name="no_rejected_guest">You don\'t have any rejected guest visitors!</string>
     <string name="no_rejected_visitor">You don\'t have any rejected visitors!</string>
     <string name="no_rejected_staff">You don\'t have any rejected domestic staff!</string>
+    <string name="no_staff">You don\'t have any staff!</string>
+    <string name="no_last_level">You don\'t have any %s!</string>
     <string name="revisit">Keep visiting this page to see new updates!</string>
     <string name="continue_">Continue</string>
     <string name="title_tutorial">How to SCAN ID ?</string>
@@ -279,7 +281,8 @@
     <string name="no_registerd_ofc_staff">You don\'t have any registered office staff!</string>
     <string name="no_rejected_ofc_staff">You don\'t have any rejected office staff!</string>
     <string name="enter_purpose">Enter purpose of visit*</string>
-    <string name="select_department">Select Department</string>
+    <string name="title_who_to_meet">Whom to meet</string>
+    <string name="who_to_meet">Select whom to meet*</string>
     <string name="gadgets_info">Gadgets Information</string>
 
     <string name="enter_gadget_info">Gadgets information</string>
@@ -291,6 +294,7 @@
     <string name="enter_device_manufacturer">Manufacturer</string>
     <string name="please_fill_details">Please fill the device details first, if you have device then device deviceName and device serial number is mandatory!!</string>
     <string name="please_select">Please select</string>
+    <string name="alert_whom_to_meet">Please select whom to meet</string>
     <string name="please_enter_purpose">Please enter purpose of visist!</string>
     <string name="view_gadgets_info">View gadgets information</string>
     <string name="device">Device</string>

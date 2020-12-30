@@ -92,12 +92,14 @@ public final class AppUtils {
         return sizeInKB / 1024;
     }
 
+    public static String getFirstLetter(String data) {
+        if (data == null || data.isEmpty()) return "";
+        return data.substring(0, 1).toUpperCase();
+    }
+
     public static String capitaliseFirstLetter(String data) {
-        try {
-            return data.substring(0, 1).toUpperCase() + data.substring(1).toLowerCase();
-        } catch (Exception e) {
-            return data;
-        }
+        if (data == null || data.isEmpty()) return "";
+        return data.substring(0, 1).toUpperCase() + data.substring(1).toLowerCase();
     }
 
     public static Bitmap getBitmap(byte[] bitmap) {

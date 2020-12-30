@@ -15,7 +15,7 @@ public abstract class BaseViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
     }
 
-    public String getImageUrl(String image) {
+    public String getImageBaseUrl(String image) {
         return EVisitor.getInstance().getDataManager().getImageBaseURL().concat(image);
     }
 

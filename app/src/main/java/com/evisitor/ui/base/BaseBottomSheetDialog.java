@@ -25,6 +25,8 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+import org.json.JSONObject;
+
 import okhttp3.ResponseBody;
 
 
@@ -38,6 +40,8 @@ public abstract class BaseBottomSheetDialog<T extends ViewDataBinding, V extends
     protected V mViewModel;
     private BaseActivity mActivity;
     private T mViewDataBinding;
+    private int defaultStyle = R.style.CustomBottomSheetDialogTheme;
+    private boolean draggable = true;
 
     /**
      * Override for set binding variable
@@ -60,6 +64,14 @@ public abstract class BaseBottomSheetDialog<T extends ViewDataBinding, V extends
      */
     public abstract V getViewModel();
 
+    public void setStyle(int style) {
+        this.defaultStyle = style;
+    }
+
+    protected void setDraggableFalse() {
+        this.draggable = false;
+    }
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -73,7 +85,7 @@ public abstract class BaseBottomSheetDialog<T extends ViewDataBinding, V extends
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme);
+        setStyle(BottomSheetDialogFragment.STYLE_NORMAL, defaultStyle);
         mViewModel = getViewModel();
         setHasOptionsMenu(false);
     }
@@ -94,7 +106,8 @@ public abstract class BaseBottomSheetDialog<T extends ViewDataBinding, V extends
 
             assert bottomSheet != null;
             BottomSheetBehavior behavior = BottomSheetBehavior.from(bottomSheet);
-            behavior.setSkipCollapsed(true);
+            behavior.setSkipCollapsed(false);
+            behavior.setDraggable(draggable);
             behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         });
         return bottomSheetDialog;
@@ -132,7 +145,7 @@ public abstract class BaseBottomSheetDialog<T extends ViewDataBinding, V extends
         show(transaction, tag);
     }
 
-    public void dismissDialog(String tag) {
+    protected void dismissDialog(String tag) {
         hideKeyboard();
         dismiss();
     }
@@ -221,14 +234,30 @@ public abstract class BaseBottomSheetDialog<T extends ViewDataBinding, V extends
 
     @Override
     public void handleApiFailure(@NonNull Throwable t) {
-        if (mActivity != null)
-            mActivity.handleApiFailure(t);
+        showAlert(getString(R.string.alert), t.getMessage());
     }
 
     @Override
     public void handleApiError(ResponseBody response) {
-        if (mActivity != null)
-            mActivity.handleApiError(response);
+        try {
+            String data = response.string();
+            if (data.isEmpty()) {
+                showAlert(R.string.alert, R.string.alert_error);
+            } else {
+                JSONObject object = new JSONObject(data);
+                if (object.has("detail")) {
+                    showAlert(R.string.alert, object.getString("detail"));
+                } else if (object.has("message")) {
+                    showAlert(R.string.alert, object.getString("message"));
+                } else if (object.has("respMessage"))
+                    showAlert(R.string.alert, object.getString("respMessage"));
+                else {
+                    showAlert(R.string.alert, R.string.alert_error);
+                }
+            }
+        } catch (Exception e) {
+            showAlert(getString(R.string.alert), R.string.alert_error);
+        }
     }
 
     @Override
@@ -240,9 +269,4 @@ public abstract class BaseBottomSheetDialog<T extends ViewDataBinding, V extends
     public void showToast(@StringRes int msg) {
         if (mActivity != null) mActivity.showToast(msg);
     }
-
-   /* public void createLog(String activityName, String action) {
-        if (mActivity!=null)
-            mActivity.createLog(activityName, action);
-    }*/
 }

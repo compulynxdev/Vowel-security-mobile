@@ -141,7 +141,7 @@ public class BlackListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                         .into(imgVisitor);
             } else {
                 Glide.with(imgVisitor.getContext())
-                        .load(getImageUrl(bean.getImageUrl()))
+                        .load(getImageBaseUrl(bean.getImageUrl()))
                         .centerCrop()
                         .placeholder(R.drawable.ic_person)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)

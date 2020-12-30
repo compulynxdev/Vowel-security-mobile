@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.AddVisitorData;
+import com.evisitor.data.model.CommercialStaffResponse;
 import com.evisitor.data.model.CompanyBean;
 import com.evisitor.data.model.DeviceBean;
 import com.evisitor.data.model.GuestConfigurationResponse;
@@ -31,6 +32,8 @@ import com.evisitor.ui.dialog.ImagePickCallback;
 import com.evisitor.ui.dialog.country.CountrySelectionDialog;
 import com.evisitor.ui.dialog.selection.SelectionBottomSheetDialog;
 import com.evisitor.ui.main.MainActivity;
+import com.evisitor.ui.main.commercial.add.whomtomeet.WhomToMeetBottomSheet;
+import com.evisitor.ui.main.commercial.add.whomtomeet.WhomToMeetCallback;
 import com.evisitor.ui.main.commercial.gadgets.GadgetsInputActivity;
 import com.evisitor.ui.main.home.rejectreason.InputDialog;
 import com.evisitor.util.AppConstants;
@@ -55,6 +58,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
     private Bitmap bmp_profile;
     private String idType = "";
     private Boolean isGuest = false;
+    private boolean isStaffSelect;
     private List<DeviceBean> deviceBeanList;
 
     public static Intent getStartIntent(Context context) {
@@ -82,8 +86,6 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
         mViewModel.setNavigator(this);
         getViewDataBinding().toolbar.tvTitle.setText(R.string.title_add_visitor);
         setUp();
-        mViewModel.doGetHouseDetails("");
-        setUpDepartment();
         setIntentData(getIntent());
         randomCheckInObserver();
         setUpProfileSearch();
@@ -91,16 +93,18 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
     }
 
     private void setUpDepartment() {
-        getViewDataBinding().tvDepartment.setHint(getString(R.string.select).concat(" ").concat(
-                AppUtils.capitaliseFirstLetter(mViewModel.getDataManager().getLevelName())).concat("*"));
         mViewModel.doGetLiveHouseDetails().observe(this, houseDetailBeans -> {
             if (houseDetailBeans.size() == 1) {
                 HouseDetailBean bean = (HouseDetailBean) mViewModel.doGetHouseDetails().get(0);
-                getViewDataBinding().tvDepartment.setText(bean.getName());
-                houseId = String.valueOf(bean.getId());
-                getViewDataBinding().tvDepartment.setEnabled(false);
+                updateWhomToMeetData(false, bean.getName(), String.valueOf(bean.getId()));
             }
         });
+    }
+
+    private void updateWhomToMeetData(boolean isStaffSelect, String name, String id) {
+        this.isStaffSelect = isStaffSelect;
+        getViewDataBinding().tvWhomToMeet.setText(name);
+        houseId = id;
     }
 
     private void updateFieldConfigurationUI() {
@@ -245,7 +249,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
         deviceBeanList = new ArrayList<>();
         ImageView imgBack = findViewById(R.id.img_back);
         imgBack.setVisibility(View.VISIBLE);
-        setOnClickListener(imgBack, getViewDataBinding().tvVisitorType, getViewDataBinding().tvEmployment, getViewDataBinding().tvIdentity, getViewDataBinding().tvGender, getViewDataBinding().tvDepartment
+        setOnClickListener(imgBack, getViewDataBinding().tvVisitorType, getViewDataBinding().tvEmployment, getViewDataBinding().tvIdentity, getViewDataBinding().tvGender, getViewDataBinding().tvWhomToMeet
                 , getViewDataBinding().frameImg, getViewDataBinding().btnAdd, getViewDataBinding().rlCode, getViewDataBinding().tvGadgets);
         getViewDataBinding().tvCode.setText("+".concat(countryCode));
         setIdentity();
@@ -338,12 +342,25 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
                 }).show(getSupportFragmentManager());
                 break;
 
-            case R.id.tv_department:
-                SelectionBottomSheetDialog.newInstance(AppUtils.capitaliseFirstLetter(getString(R.string.select).concat(" ").concat(AppUtils.capitaliseFirstLetter(mViewModel.getDataManager().getLevelName()))), mViewModel.doGetHouseDetails()).setItemSelectedListener(pos -> {
-                    HouseDetailBean bean = (HouseDetailBean) mViewModel.doGetHouseDetails().get(pos);
-                    getViewDataBinding().tvDepartment.setText(bean.getName());
-                    houseId = String.valueOf(bean.getId());
-                }).show(getSupportFragmentManager());
+            case R.id.tv_whom_to_meet:
+                if (isGuest) {
+                    WhomToMeetBottomSheet.newInstance(new WhomToMeetCallback() {
+                        @Override
+                        public void onLastLevelClick(HouseDetailBean houseDetailBean) {
+                            updateWhomToMeetData(false, houseDetailBean.getName(), String.valueOf(houseDetailBean.getId()));
+                        }
+
+                        @Override
+                        public void onStaffClick(CommercialStaffResponse staffDetail) {
+                            updateWhomToMeetData(true, staffDetail.getFullName(), String.valueOf(staffDetail.getId()));
+                        }
+                    }).show(getSupportFragmentManager());
+                } else {
+                    SelectionBottomSheetDialog.newInstance(AppUtils.capitaliseFirstLetter(getString(R.string.select).concat(" ").concat(AppUtils.capitaliseFirstLetter(mViewModel.getDataManager().getLevelName()))), mViewModel.doGetHouseDetails()).setItemSelectedListener(pos -> {
+                        HouseDetailBean bean = (HouseDetailBean) mViewModel.doGetHouseDetails().get(pos);
+                        updateWhomToMeetData(false, bean.getName(), String.valueOf(bean.getId()));
+                    }).show(getSupportFragmentManager());
+                }
                 break;
 
             case R.id.tv_gadgets:
@@ -370,6 +387,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
                 visitorData.address = getViewDataBinding().etAddress.getText().toString().trim();
                 visitorData.gender = getViewDataBinding().tvGender.getText().toString();
                 visitorData.houseId = houseId;
+                visitorData.isStaffSelect = isStaffSelect;
                 if (isGuest) {
                     visitorData.purpose = getViewDataBinding().etPurpose.getText().toString();
                     visitorData.deviceBeanList.clear();
@@ -433,6 +451,10 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
     }
 
     private void updateVisitorUI(String visitorType) {
+        getViewDataBinding().tvWhomToMeet.setVisibility(View.VISIBLE);
+        //reset value when visitor type update
+        updateWhomToMeetData(false, "", "");
+
         getViewDataBinding().tvVisitorType.setText(visitorType);
         if (visitorType.equals("Guest") || visitorType.equals("Visitor")) {
             isGuest = true;
@@ -442,6 +464,11 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
             isGuest = false;
             getViewDataBinding().groupGuestCommercial.setVisibility(View.GONE);
             getViewDataBinding().groupSp.setVisibility(View.VISIBLE);
+
+            if (mViewModel.doGetLiveHouseDetails().getValue() == null || mViewModel.doGetHouseDetails().isEmpty()) {
+                mViewModel.doGetHouseDetails("");
+                setUpDepartment();
+            }
         }
         setIdentity();
         updateFieldConfigurationUI();
@@ -492,6 +519,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
         addVisitorData.bmp_profile = bmp_profile;
         addVisitorData.identityNo = getViewDataBinding().etIdentity.getText().toString().trim();
         addVisitorData.idType = idType;
+        addVisitorData.isStaffSelect = isStaffSelect;
         addVisitorData.name = getViewDataBinding().etName.getText().toString();
         addVisitorData.vehicleNo = getViewDataBinding().etVehicle.getText().toString().trim();
         addVisitorData.contact = getViewDataBinding().etContact.getText().toString();

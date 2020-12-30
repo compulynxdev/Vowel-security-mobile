@@ -16,7 +16,10 @@ import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import com.evisitor.R;
 import com.evisitor.ui.dialog.AlertDialog;
+
+import org.json.JSONObject;
 
 import okhttp3.ResponseBody;
 
@@ -201,14 +204,30 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
 
     @Override
     public void handleApiFailure(@NonNull Throwable t) {
-        if (mActivity != null)
-            mActivity.handleApiFailure(t);
+        showAlert(getString(R.string.alert), t.getMessage());
     }
 
     @Override
     public void handleApiError(ResponseBody response) {
-        if (mActivity != null)
-            mActivity.handleApiError(response);
+        try {
+            String data = response.string();
+            if (data.isEmpty()) {
+                showAlert(R.string.alert, R.string.alert_error);
+            } else {
+                JSONObject object = new JSONObject(data);
+                if (object.has("detail")) {
+                    showAlert(R.string.alert, object.getString("detail"));
+                } else if (object.has("message")) {
+                    showAlert(R.string.alert, object.getString("message"));
+                } else if (object.has("respMessage"))
+                    showAlert(R.string.alert, object.getString("respMessage"));
+                else {
+                    showAlert(R.string.alert, R.string.alert_error);
+                }
+            }
+        } catch (Exception e) {
+            showAlert(getString(R.string.alert), R.string.alert_error);
+        }
     }
 
     public void showFullImage(String imageUrl) {

@@ -51,6 +51,10 @@ class WebServices {
 
     static final String GET_COMPANY_SUGGESTIONS = "usermaster/get_company_list";//http://localhost:8085/api/usermaster/get_company_list?search=
 
+    static final String GET_COMMERCIAL_STAFF = "employee/get_staff_list"; //?accountId=1
+
+
+
     private WebServices() {
     }
 }

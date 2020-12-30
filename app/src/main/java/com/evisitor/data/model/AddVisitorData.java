@@ -20,6 +20,7 @@ public class AddVisitorData {
     public String address;
     public String gender;
     public String houseId;//department for commercial
+    public boolean isStaffSelect;//for staff selection commercial
     public String residentId;
     //reject reason
     public String rejectedReason;

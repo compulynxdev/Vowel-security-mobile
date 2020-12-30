@@ -16,6 +16,9 @@ import com.evisitor.ui.main.activity.ActivityViewModel;
 import com.evisitor.ui.main.activity.checkin.CheckInViewModel;
 import com.evisitor.ui.main.activity.checkout.CheckOutViewModel;
 import com.evisitor.ui.main.commercial.add.CommercialAddVisitorViewModel;
+import com.evisitor.ui.main.commercial.add.whomtomeet.WhomToMeetViewModel;
+import com.evisitor.ui.main.commercial.add.whomtomeet.level.SelectLastLevelViewModel;
+import com.evisitor.ui.main.commercial.add.whomtomeet.staff.SelectStaffViewModel;
 import com.evisitor.ui.main.commercial.gadgets.GadgetsInputViewModel;
 import com.evisitor.ui.main.commercial.visitor.VisitorViewModel;
 import com.evisitor.ui.main.commercial.visitor.expected.ExpectedCommercialGuestViewModel;
@@ -212,6 +215,15 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(ExpectedCommercialGuestViewModel.class)) {
             //noinspection unchecked
             return (T) new ExpectedCommercialGuestViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(WhomToMeetViewModel.class)) {
+            //noinspection unchecked
+            return (T) new WhomToMeetViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(SelectLastLevelViewModel.class)) {
+            //noinspection unchecked
+            return (T) new SelectLastLevelViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(SelectStaffViewModel.class)) {
+            //noinspection unchecked
+            return (T) new SelectStaffViewModel(dataManager);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

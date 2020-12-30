@@ -67,7 +67,7 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
             getNavigator().showToast(R.string.alert_select_gender);
             return false;
         } else if (visitorData.houseId.isEmpty()) {
-            getNavigator().showToast(getNavigator().getContext().getString(R.string.please_select).concat(" ").concat(getDataManager().getLevelName()));
+            getNavigator().showToast(R.string.alert_whom_to_meet);
             return false;
         } else if (visitorData.purpose.isEmpty()) {
             getNavigator().showToast(R.string.please_enter_purpose);
@@ -93,7 +93,11 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
                 object.put("type", "random");
                 object.put("address", addVisitorData.address);
                 object.put("country", "");
-                object.put("premiseHierarchyDetailsId", addVisitorData.houseId);  //house or flat id
+                if (addVisitorData.isStaffSelect) {
+                    object.put("employeeId", addVisitorData.houseId);
+                } else {
+                    object.put("premiseHierarchyDetailsId", addVisitorData.houseId);  //house or flat id
+                }
                 object.put("expectedVehicleNo", addVisitorData.vehicleNo.toUpperCase());
                 object.put("enteredVehicleNo", addVisitorData.vehicleNo.toUpperCase());
                 object.put("gender", addVisitorData.gender);

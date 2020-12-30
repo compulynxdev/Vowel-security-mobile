@@ -324,7 +324,7 @@
                     app:layout_constraintTop_toBottomOf="@id/et_address" />
 
                 <TextView
-                    android:id="@+id/tv_department"
+                    android:id="@+id/tv_whom_to_meet"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_marginStart="10dp"
@@ -333,12 +333,13 @@
                     android:background="@drawable/bg_search"
                     android:fontFamily="@font/futura_round_medium"
                     android:gravity="center_vertical"
-                    android:hint="@string/select_department"
+                    android:hint="@string/who_to_meet"
                     android:paddingStart="16dp"
                     android:paddingEnd="8dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black40p"
                     android:textSize="16sp"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_gender" />
@@ -361,7 +362,7 @@
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_department" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_whom_to_meet" />
 
                 <EditText
                     android:id="@+id/et_purpose"
