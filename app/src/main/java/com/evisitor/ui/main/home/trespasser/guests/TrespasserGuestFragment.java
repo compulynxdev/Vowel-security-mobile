@@ -64,6 +64,7 @@ public class TrespasserGuestFragment extends BaseFragment<FragmentTrespasserGues
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        getViewDataBinding().tvNoData.setText(mViewModel.getDataManager().isCommercial() ? R.string.no_trespasser_visitor : R.string.no_trespasser_guest);
         setUpAdapter();
     }
 

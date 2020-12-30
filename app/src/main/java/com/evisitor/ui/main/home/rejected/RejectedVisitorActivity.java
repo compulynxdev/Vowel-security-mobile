@@ -24,6 +24,7 @@ public class RejectedVisitorActivity extends BaseActivity<ActivityRejectedVisito
     private RejectedGuestFragment rejectedGuestFragment;
     private RejectedSPFragment rejectedSPFragment;
     private RejectedStaffFragment rejectedStaffFragment;
+    private int adapterLastPos = 2;
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, RejectedVisitorActivity.class);
@@ -64,18 +65,23 @@ public class RejectedVisitorActivity extends BaseActivity<ActivityRejectedVisito
         getViewDataBinding().tvHouse.setOnClickListener(this);
 
         getViewDataBinding().tvGuest.setText(mViewModel.getDataManager().isCommercial() ? R.string.title_visitor : R.string.title_guests);
-        getViewDataBinding().tvHouse.setText(mViewModel.getDataManager().isCommercial() ? R.string.title_staff : R.string.title_domestic_staff);
+        getViewDataBinding().tvHouse.setVisibility(mViewModel.getDataManager().isCommercial() ? View.GONE : View.VISIBLE);
     }
 
     private void setUpPagerAdapter() {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         rejectedGuestFragment = RejectedGuestFragment.newInstance();
         adapter.addFragment(rejectedGuestFragment);
-        rejectedStaffFragment = RejectedStaffFragment.newInstance();
-        adapter.addFragment(rejectedStaffFragment);
+
+        //Don't show staff if system works in commercial mode
+        if (!mViewModel.getDataManager().isCommercial()) {
+            rejectedStaffFragment = RejectedStaffFragment.newInstance();
+            adapter.addFragment(rejectedStaffFragment);
+            adapterLastPos = 2;
+        } else adapterLastPos = 1;
         rejectedSPFragment = RejectedSPFragment.newInstance();
         adapter.addFragment(rejectedSPFragment);
-        getViewDataBinding().viewPager.setOffscreenPageLimit(3);
+        getViewDataBinding().viewPager.setOffscreenPageLimit(adapter.getCount());
 
         getViewDataBinding().viewPager.setAdapter(adapter);
         getViewDataBinding().viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -87,19 +93,9 @@ public class RejectedVisitorActivity extends BaseActivity<ActivityRejectedVisito
             public void onPageSelected(int position) {
                 getViewDataBinding().customSearchView.searchView.setQuery("", false);
 
-                if (position == 0) {
-                    getViewDataBinding().tvGuest.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                    getViewDataBinding().tvHouse.setTextColor(getResources().getColor(R.color.black));
-                    getViewDataBinding().tvService.setTextColor(getResources().getColor(R.color.black));
-                } else if (position == 1) {
-                    getViewDataBinding().tvGuest.setTextColor(getResources().getColor(R.color.black));
-                    getViewDataBinding().tvHouse.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                    getViewDataBinding().tvService.setTextColor(getResources().getColor(R.color.black));
-                } else {
-                    getViewDataBinding().tvGuest.setTextColor(getResources().getColor(R.color.black));
-                    getViewDataBinding().tvHouse.setTextColor(getResources().getColor(R.color.black));
-                    getViewDataBinding().tvService.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                }
+                getViewDataBinding().tvGuest.setTextColor(position == 0 ? getResources().getColor(R.color.colorPrimaryDark) : getResources().getColor(R.color.black));
+                getViewDataBinding().tvHouse.setTextColor(position == 1 ? getResources().getColor(R.color.colorPrimaryDark) : getResources().getColor(R.color.black));
+                getViewDataBinding().tvService.setTextColor(position == adapterLastPos ? getResources().getColor(R.color.colorPrimaryDark) : getResources().getColor(R.color.black));
             }
 
             @Override
@@ -148,7 +144,7 @@ public class RejectedVisitorActivity extends BaseActivity<ActivityRejectedVisito
                 break;
 
             case R.id.tv_service:
-                getViewDataBinding().viewPager.setCurrentItem(2, true);
+                getViewDataBinding().viewPager.setCurrentItem(adapterLastPos, true);
                 break;
 
             case R.id.img_search:

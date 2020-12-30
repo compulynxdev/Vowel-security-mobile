@@ -257,6 +257,7 @@
     <string name="no_blacklisted">You don\'t have any black listed visitors!</string>
     <string name="no_flagged">You don\'t have any flagged visitors!</string>
     <string name="no_trespasser_guest">You don\'t have any trespasser guests visitors!</string>
+    <string name="no_trespasser_visitor">You don\'t have any trespasser visitors!</string>
     <string name="no_trespasser_sp">You don\'t have any trespasser service provider visitors!</string>
     <string name="no_rejected_sp">You don\'t have any rejected service provider visitors!</string>
     <string name="no_rejected_guest">You don\'t have any rejected guest visitors!</string>

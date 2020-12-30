@@ -57,6 +57,7 @@ public class TrespasserActivity extends BaseActivity<ActivityTrespasserBinding, 
         getViewDataBinding().header.imgBack.setVisibility(View.VISIBLE);
         getViewDataBinding().header.imgBack.setOnClickListener(v -> onBackPressed());
 
+        getViewDataBinding().llTab.setVisibility(mViewModel.getDataManager().isCommercial() ? View.GONE : View.VISIBLE);
         getViewDataBinding().tvService.setOnClickListener(this);
         getViewDataBinding().tvGuest.setOnClickListener(this);
     }
@@ -65,9 +66,13 @@ public class TrespasserActivity extends BaseActivity<ActivityTrespasserBinding, 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         trespasserGuestFragment = TrespasserGuestFragment.newInstance();
         adapter.addFragment(trespasserGuestFragment);
-        trespasserSPFragment = TrespasserSPFragment.newInstance();
-        adapter.addFragment(trespasserSPFragment);
-        getViewDataBinding().viewPager.setOffscreenPageLimit(2);
+
+        if (!mViewModel.getDataManager().isCommercial()) {
+            trespasserSPFragment = TrespasserSPFragment.newInstance();
+            adapter.addFragment(trespasserSPFragment);
+        }
+
+        getViewDataBinding().viewPager.setOffscreenPageLimit(adapter.getCount());
 
         getViewDataBinding().viewPager.setAdapter(adapter);
         getViewDataBinding().viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
