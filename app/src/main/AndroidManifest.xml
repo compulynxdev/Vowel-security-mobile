@@ -94,7 +94,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/DashboardTheme" />
         <activity
-            android:name=".ui.main.commercial.visitor.VisitorActivity"
+            android:name=".ui.main.commercial.visitor.guest.VisitorActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -147,6 +147,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/DashboardTheme" />
+        <activity android:name=".ui.main.commercial.visitor.staff.OfficeStaffActivity" />
 
         <service
             android:name=".ui.fcm.MyFirebaseMessagingService"

@@ -1,0 +1,97 @@
+package com.evisitor.ui.main.commercial.visitor.staff.registered;
+
+import androidx.annotation.NonNull;
+
+import com.evisitor.R;
+import com.evisitor.data.DataManager;
+import com.evisitor.data.model.OfficeStaffResponse;
+import com.evisitor.data.model.VisitorProfileBean;
+import com.evisitor.ui.base.BaseViewModel;
+import com.evisitor.util.AppConstants;
+import com.evisitor.util.AppLogger;
+import com.evisitor.util.CalenderUtils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class RegisteredOfficeStaffViewModel extends BaseViewModel<RegisteredOfficeStaffNavigator> {
+
+    public RegisteredOfficeStaffViewModel(DataManager dataManager) {
+        super(dataManager);
+    }
+
+    void getRegisteredOfficeListData(int page, String search) {
+        if (getNavigator().isNetworkConnected()) {
+            Map<String, String> map = new HashMap<>();
+            map.put("accountId", getDataManager().getAccountId());
+            if (!search.isEmpty())
+                map.put("search", search);
+            map.put("page", "" + page);
+            map.put("size", String.valueOf(AppConstants.LIMIT));
+            map.put("type", "all");
+            AppLogger.d("Searching : Registered", page + " : " + search);
+
+            getDataManager().doGetCommercialOfficeListDetail(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                    getNavigator().hideLoading();
+                    getNavigator().hideSwipeToRefresh();
+                    try {
+                        if (response.code() == 200) {
+                            assert response.body() != null;
+                            OfficeStaffResponse registeredOFResponse = getDataManager().getGson().fromJson(response.body().string(), OfficeStaffResponse.class);
+                            if (registeredOFResponse.getContent() != null) {
+                                AppLogger.d("Searching : Size", "" + registeredOFResponse.getContent().size());
+                                getNavigator().onRegisteredOfficeStaffSuccess(registeredOFResponse.getContent());
+                            }
+                        } else if (response.code() == 401) {
+                            getNavigator().openActivityOnTokenExpire();
+                        } else getNavigator().handleApiError(response.errorBody());
+                    } catch (Exception e) {
+                        getNavigator().showAlert(R.string.alert, R.string.alert_error);
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                    getNavigator().hideSwipeToRefresh();
+                    getNavigator().hideLoading();
+                    getNavigator().handleApiFailure(t);
+                }
+            });
+        } else {
+            getNavigator().hideSwipeToRefresh();
+            getNavigator().hideLoading();
+        }
+    }
+
+    List<VisitorProfileBean> setClickVisitorDetail(OfficeStaffResponse.ContentBean bean) {
+        getNavigator().showLoading();
+        List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, bean.getFullName())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_profile, bean.getProfile())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_days_slot), VisitorProfileBean.VIEW_TYPE_DAYS, bean.getWorkingDays()));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time_slot, CalenderUtils.formatDate(bean.getCheckInTime(), CalenderUtils.TIME_FORMAT, CalenderUtils.TIME_FORMAT_AM), CalenderUtils.formatDate(bean.getCheckOutTime(), CalenderUtils.TIME_FORMAT, CalenderUtils.TIME_FORMAT_AM))));
+        if (!bean.getContactNo().isEmpty())
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, bean.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(bean.getDialingCode()).concat(" ").concat(bean.getContactNo()))));
+        if (!bean.getDocumentId().isEmpty())
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, bean.getDocumentId())));
+
+        if (!getDataManager().isCommercial() && !bean.getFlatNo().isEmpty()) {
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), bean.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : bean.getPremiseName())));
+        } else if (bean.getCreatedBy() != null && !bean.getCreatedBy().isEmpty())
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_register_by, bean.getCreatedBy())));
+        if (bean.getCreatedDate() != null && !bean.getCreatedDate().isEmpty())
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_register_date, CalenderUtils.formatDate(bean.getCreatedDate(), CalenderUtils.SERVER_DATE_FORMAT2, CalenderUtils.CUSTOM_TIMESTAMP_FORMAT_SLASH))));
+
+        getNavigator().hideLoading();
+        return visitorProfileBeanList;
+    }
+}

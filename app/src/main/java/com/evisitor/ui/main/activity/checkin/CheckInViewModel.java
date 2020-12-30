@@ -10,6 +10,7 @@ import com.evisitor.data.model.GuestsResponse;
 import com.evisitor.data.model.HouseKeeping;
 import com.evisitor.data.model.HouseKeepingCheckInResponse;
 import com.evisitor.data.model.HouseKeepingResponse;
+import com.evisitor.data.model.OfficeStaffResponse;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.model.ServiceProviderResponse;
 import com.evisitor.data.model.VisitorProfileBean;
@@ -59,7 +60,9 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
                     break;
 
                 case 1:
-                    getHouseKeeperList(map);
+                    if (getDataManager().isCommercial())
+                        getOfficeStaffList(map);
+                    else getHouseKeeperList(map);
                     AppLogger.d("Searching : CheckInViewModel ExpectedHK", page + " : " + search);
                     break;
 
@@ -118,6 +121,38 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
                         HouseKeepingCheckInResponse houseKeepingCheckInResponse = getDataManager().getGson().fromJson(response.body().string(), HouseKeepingCheckInResponse.class);
                         if (houseKeepingCheckInResponse.getContent() != null) {
                             getNavigator().onExpectedHKSuccess(houseKeepingCheckInResponse.getContent());
+                        }
+                    } else if (response.code() == 401) {
+                        getNavigator().openActivityOnTokenExpire();
+                    } else getNavigator().handleApiError(response.errorBody());
+                } catch (Exception e) {
+                    getNavigator().showAlert(R.string.alert, R.string.alert_error);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                getNavigator().hideSwipeToRefresh();
+                getNavigator().hideLoading();
+                getNavigator().handleApiFailure(t);
+            }
+        });
+
+    }
+
+
+    private void getOfficeStaffList(Map<String, String> map) {
+        getDataManager().doGetCommercialOfficeCheckInListDetail(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                getNavigator().hideLoading();
+                getNavigator().hideSwipeToRefresh();
+                try {
+                    if (response.code() == 200) {
+                        assert response.body() != null;
+                        OfficeStaffResponse officeStaffResponse = getDataManager().getGson().fromJson(response.body().string(), OfficeStaffResponse.class);
+                        if (officeStaffResponse.getContent() != null) {
+                            getNavigator().onExpectedOfficeSuccess(officeStaffResponse.getContent());
                         }
                     } else if (response.code() == 401) {
                         getNavigator().openActivityOnTokenExpire();
@@ -315,5 +350,60 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
 
         RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
         doCheckInOut(body, () -> getNavigator().refreshList());
+    }
+
+    public List<VisitorProfileBean> getOfficeStaffCheckInBean(OfficeStaffResponse.ContentBean bean) {
+        getNavigator().showLoading();
+        List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
+        getDataManager().setOfficeStaff(bean);
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, bean.getFullName())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_profile, bean.getProfile().isEmpty() ? getNavigator().getContext().getString(R.string.na) : bean.getProfile())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time, CalenderUtils.formatDate(bean.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, bean.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(bean.getDialingCode()).concat(" ").concat(bean.getContactNo()))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, bean.getDocumentId().isEmpty() ? getNavigator().getContext().getString(R.string.na) : bean.getDocumentId())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), bean.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : bean.getPremiseName())));
+        getNavigator().hideLoading();
+        return visitorProfileBeanList;
+    }
+
+    public void staffCheckOut() {
+        JSONObject object = new JSONObject();
+        try {
+            object.put("id", getDataManager().getOfficeStaff().getId());
+            object.put("accountId", getDataManager().getAccountId());
+            object.put("type", AppConstants.CHECK_OUT);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
+        getNavigator().showLoading();
+        getDataManager().doOfficeStaffCheckInCheckOut(getDataManager().getHeader(), body).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                getNavigator().hideLoading();
+                if (response.code() == 200) {
+                    try {
+                        assert response.body() != null;
+                        JSONObject object1 = new JSONObject(response.body().string());
+                        getNavigator().showAlert(getNavigator().getContext().getString(R.string.success), object1.getString("result")).setOnPositiveClickListener(alertDialog -> {
+                            alertDialog.dismiss();
+                            getNavigator().refreshList();
+                        });
+                    } catch (Exception e) {
+                        getNavigator().showAlert(R.string.alert, R.string.alert_error);
+                    }
+                } else if (response.code() == 401) {
+                    getNavigator().openActivityOnTokenExpire();
+                } else {
+                    getNavigator().handleApiError(response.errorBody());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                getNavigator().hideLoading();
+                getNavigator().handleApiFailure(t);
+            }
+        });
     }
 }

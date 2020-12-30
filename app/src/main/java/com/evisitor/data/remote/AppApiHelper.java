@@ -204,4 +204,19 @@ public class AppApiHelper implements ApiHelper {
     public Call<ResponseBody> doGetCommercialStaff(String authToken, Map<String, String> partMap) {
         return getApiInterface().doGetCommercialStaff(authToken, partMap);
     }
+
+    @Override
+    public Call<ResponseBody> doGetCommercialOfficeListDetail(String authToken, Map<String, String> partMap) {
+        return getApiInterface().doGetCommercialOfficeListDetail(authToken, partMap);
+    }
+
+    @Override
+    public Call<ResponseBody> doOfficeStaffCheckInCheckOut(String authToken, RequestBody body) {
+        return getApiInterface().doOfficeStaffCheckInCheckOut(authToken, body);
+    }
+
+    @Override
+    public Call<ResponseBody> doGetCommercialOfficeCheckInListDetail(String authToken, Map<String, String> partMap) {
+        return getApiInterface().doGetCommercialOfficeCheckInListDetail(authToken, partMap);
+    }
 }

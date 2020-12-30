@@ -12,6 +12,7 @@ import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.CommercialGuestResponse;
 import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.HouseKeeping;
+import com.evisitor.data.model.OfficeStaffResponse;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.databinding.FragmentCheckOutBinding;
 import com.evisitor.ui.base.BaseFragment;
@@ -252,6 +253,23 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
             getViewDataBinding().recyclerView.setVisibility(View.VISIBLE);
         }
         if (listOf == 1) listener.totalCount(houseKeepingList.size());
+    }
+
+    @Override
+    public void onExpectedOfficeSuccess(List<OfficeStaffResponse.ContentBean> staffList) {
+      /*  if (hkPage == 0) officeStaffList.clear();
+
+        officeStaffList.addAll(tmpHouseKeepingList);
+        houseKeepingAdapter.notifyDataSetChanged();
+
+        if (houseKeepingList.size() == 0) {
+            getViewDataBinding().recyclerView.setVisibility(View.GONE);
+            getViewDataBinding().tvNoData.setVisibility(View.VISIBLE);
+        } else {
+            getViewDataBinding().tvNoData.setVisibility(View.GONE);
+            getViewDataBinding().recyclerView.setVisibility(View.VISIBLE);
+        }
+        if (listOf == 1) listener.totalCount(houseKeepingList.size());*/
     }
 
     @Override

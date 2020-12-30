@@ -12,6 +12,7 @@ import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.CommercialGuestResponse;
 import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.HouseKeeping;
+import com.evisitor.data.model.OfficeStaffResponse;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.databinding.FragmentCheckInBinding;
@@ -21,6 +22,7 @@ import com.evisitor.ui.main.activity.ActivityNavigator;
 import com.evisitor.ui.main.activity.checkin.adapter.CommercialGuestCheckInAdapter;
 import com.evisitor.ui.main.activity.checkin.adapter.GuestCheckInAdapter;
 import com.evisitor.ui.main.activity.checkin.adapter.HouseKeepingCheckInAdapter;
+import com.evisitor.ui.main.activity.checkin.adapter.OfficeStaffCheckInAdapter;
 import com.evisitor.ui.main.activity.checkin.adapter.ServiceProviderCheckInAdapter;
 import com.evisitor.ui.main.home.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
@@ -30,12 +32,12 @@ import java.util.List;
 
 public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckInViewModel> implements ActivityNavigator {
 
-    private CheckInViewModel viewModel;
     private List<CommercialGuestResponse.CommercialGuest> commercialGuestList;
     private List<Guests> guestsList;
     private List<ServiceProvider> serviceProviderList;
     private List<HouseKeeping> houseKeepingList;
-
+    private List<OfficeStaffResponse.ContentBean> officeStaffList;
+    private OfficeStaffCheckInAdapter officeStaffCheckInAdapter;
     private GuestCheckInAdapter guestAdapter;
     private CommercialGuestCheckInAdapter commercialGuestCheckInAdapter;
     private ServiceProviderCheckInAdapter serviceProviderAdapter;
@@ -119,7 +121,9 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
 
         setUpServiceProviderAdapter();
 
-        setUpHouseKeeperAdapter();
+        if (mViewModel.getDataManager().isCommercial()) {
+            setUpOfficeStaffAdapter();
+        } else setUpHouseKeeperAdapter();
         scrollListener = new RecyclerViewScrollListener() {
             @Override
             public void onLoadMore() {
@@ -141,8 +145,6 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                         spPage++;
                         mViewModel.getCheckInData(spPage, search, listOf);
                         break;
-
-
                 }
             }
         };
@@ -151,6 +153,17 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
         getViewDataBinding().swipeToRefresh.setOnRefreshListener(this::updateUI);
         getViewDataBinding().swipeToRefresh.setColorSchemeResources(R.color.colorPrimary);
         updateUI();
+    }
+
+    private void setUpOfficeStaffAdapter() {
+        officeStaffList = new ArrayList<>();
+        officeStaffCheckInAdapter = new OfficeStaffCheckInAdapter(officeStaffList, getBaseActivity(), bean -> {
+            List<VisitorProfileBean> beans = mViewModel.getOfficeStaffCheckInBean(bean);
+            VisitorProfileDialog.newInstance(beans, visitorProfileDialog -> {
+                visitorProfileDialog.dismiss();
+                mViewModel.staffCheckOut();
+            }).setImage(bean.getImageUrl()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
+        });
     }
 
     private void setUpCommercialGuestAdapter() {
@@ -244,7 +257,9 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                 break;
 
             case 1:
-                houseKeepingList.clear();
+                if (mViewModel.getDataManager().isCommercial())
+                    officeStaffList.clear();
+                else houseKeepingList.clear();
                 hkPage = 0;
                 mViewModel.getCheckInData(hkPage, search, listOf);
                 break;
@@ -312,6 +327,24 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
     }
 
     @Override
+    public void onExpectedOfficeSuccess(List<OfficeStaffResponse.ContentBean> staffList) {
+        if (hkPage == 0) officeStaffList.clear();
+
+        officeStaffList.addAll(staffList);
+        officeStaffCheckInAdapter.notifyDataSetChanged();
+
+        if (officeStaffList.size() == 0) {
+            getViewDataBinding().recyclerView.setVisibility(View.GONE);
+            getViewDataBinding().tvNoData.setVisibility(View.VISIBLE);
+        } else {
+            getViewDataBinding().tvNoData.setVisibility(View.GONE);
+            getViewDataBinding().recyclerView.setVisibility(View.VISIBLE);
+        }
+
+        if (listOf == 1) listener.totalCount(officeStaffList.size());
+    }
+
+    @Override
     public void onExpectedSPSuccess(List<ServiceProvider> tmpSPList) {
         if (spPage == 0) serviceProviderList.clear();
 
@@ -362,9 +395,16 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
     }
 
     private void setHKAdapterLoading(boolean isShowLoader) {
-        if (houseKeepingAdapter != null) {
-            houseKeepingAdapter.showLoading(isShowLoader);
-            houseKeepingAdapter.notifyDataSetChanged();
+        if (mViewModel.getDataManager().isCommercial()) {
+            if (officeStaffCheckInAdapter != null) {
+                officeStaffCheckInAdapter.showLoading(isShowLoader);
+                officeStaffCheckInAdapter.notifyDataSetChanged();
+            }
+        } else {
+            if (houseKeepingAdapter != null) {
+                houseKeepingAdapter.showLoading(isShowLoader);
+                houseKeepingAdapter.notifyDataSetChanged();
+            }
         }
     }
 

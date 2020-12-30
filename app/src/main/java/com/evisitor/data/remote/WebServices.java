@@ -49,7 +49,13 @@ class WebServices {
 
     static final String GET_PROFILES_SUGGESTIONS = "usermaster/get_profile_list";//http://localhost:8085/api/usermaster/get_profile_list?search=
 
-    static final String GET_COMPANY_SUGGESTIONS = "usermaster/get_company_list";//http://localhost:8085/api/usermaster/get_company_list?search=
+    static final String GET_COMPANY_SUGGESTIONS = "usermaster/get_company_list";//http://localhost:8085/api/usermaster/get_company_list?search=\
+
+    static final String GET_COMMERCIAL_OFFICE_STAFF = "employee/get_all_staff";//http://localhost:8085/api/employee/get_all_staff?accountId=1&type=expected
+
+    static final String GET_CHECK_IN_OFFICE_STAFF = "employee/get_staff_check_in";//http://localhost:8085/api/employee/get_staff_check_in?accountId=1&type=CHECK_OUT&search=a
+
+    static final String OFFICE_STAFF_CHECK_IN_OUT = "employee/check_in_check_out";//http://localhost:8085/api/employee/check_in_check_out
 
     static final String GET_COMMERCIAL_STAFF = "employee/get_staff_list"; //?accountId=1
 
