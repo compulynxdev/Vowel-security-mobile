@@ -17,8 +17,11 @@ import com.evisitor.ui.main.activity.checkin.CheckInViewModel;
 import com.evisitor.ui.main.activity.checkout.CheckOutViewModel;
 import com.evisitor.ui.main.commercial.add.CommercialAddVisitorViewModel;
 import com.evisitor.ui.main.commercial.gadgets.GadgetsInputViewModel;
-import com.evisitor.ui.main.commercial.visitor.VisitorViewModel;
-import com.evisitor.ui.main.commercial.visitor.expected.ExpectedCommercialGuestViewModel;
+import com.evisitor.ui.main.commercial.visitor.guest.VisitorViewModel;
+import com.evisitor.ui.main.commercial.visitor.guest.expected.ExpectedCommercialGuestViewModel;
+import com.evisitor.ui.main.commercial.visitor.staff.OfficeStaffViewModel;
+import com.evisitor.ui.main.commercial.visitor.staff.expected.ExpectedOfficeStaffViewModel;
+import com.evisitor.ui.main.commercial.visitor.staff.registered.RegisteredOfficeStaffViewModel;
 import com.evisitor.ui.main.home.HomeViewModel;
 import com.evisitor.ui.main.home.blacklist.BlackListViewModel;
 import com.evisitor.ui.main.home.flag.FlagVisitorViewModel;
@@ -212,6 +215,15 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(ExpectedCommercialGuestViewModel.class)) {
             //noinspection unchecked
             return (T) new ExpectedCommercialGuestViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(OfficeStaffViewModel.class)) {
+            //noinspection unchecked
+            return (T) new OfficeStaffViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(ExpectedOfficeStaffViewModel.class)) {
+            //noinspection unchecked
+            return (T) new ExpectedOfficeStaffViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(RegisteredOfficeStaffViewModel.class)) {
+            //noinspection unchecked
+            return (T) new RegisteredOfficeStaffViewModel(dataManager);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

@@ -10,6 +10,7 @@ import com.evisitor.data.model.CountryResponse;
 import com.evisitor.data.model.GuestConfigurationResponse;
 import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.HouseKeepingResponse;
+import com.evisitor.data.model.OfficeStaffResponse;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.model.UserDetail;
 import com.evisitor.data.remote.AppApiHelper;
@@ -39,6 +40,7 @@ public class AppDataManager implements DataManager {
     private HouseKeepingResponse.ContentBean houseKeeping;
     private List<CountryResponse> countryResponseList;
     private GuestConfigurationResponse configurationResponse;
+    private OfficeStaffResponse.ContentBean officeStaff;
 
     private AppDataManager(Context context) {
         apiHelper = AppApiHelper.getAppApiInstance();
@@ -126,6 +128,16 @@ public class AppDataManager implements DataManager {
     @Override
     public void setCommercialGuestDetail(CommercialGuestResponse.CommercialGuest guest) {
         commercialGuest = guest;
+    }
+
+    @Override
+    public OfficeStaffResponse.ContentBean getOfficeStaff() {
+        return officeStaff;
+    }
+
+    @Override
+    public void setOfficeStaff(OfficeStaffResponse.ContentBean officeStaff) {
+        this.officeStaff = officeStaff;
     }
 
     @Override
@@ -416,5 +428,20 @@ public class AppDataManager implements DataManager {
     @Override
     public Call<ResponseBody> doGetExpectedCommercialGuestListDetail(String authToken, Map<String, String> partMap) {
         return apiHelper.doGetExpectedCommercialGuestListDetail(authToken, partMap);
+    }
+
+    @Override
+    public Call<ResponseBody> doGetCommercialOfficeListDetail(String authToken, Map<String, String> partMap) {
+        return apiHelper.doGetCommercialOfficeListDetail(authToken, partMap);
+    }
+
+    @Override
+    public Call<ResponseBody> doOfficeStaffCheckInCheckOut(String authToken, RequestBody body) {
+        return apiHelper.doOfficeStaffCheckInCheckOut(authToken, body);
+    }
+
+    @Override
+    public Call<ResponseBody> doGetCommercialOfficeCheckInListDetail(String authToken, Map<String, String> partMap) {
+        return apiHelper.doGetCommercialOfficeCheckInListDetail(authToken, partMap);
     }
 }

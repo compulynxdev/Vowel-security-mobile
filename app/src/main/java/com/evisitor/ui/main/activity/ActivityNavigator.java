@@ -3,6 +3,7 @@ package com.evisitor.ui.main.activity;
 import com.evisitor.data.model.CommercialGuestResponse;
 import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.HouseKeeping;
+import com.evisitor.data.model.OfficeStaffResponse;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.ui.base.BaseNavigator;
 
@@ -14,6 +15,8 @@ public interface ActivityNavigator extends BaseNavigator {
     void onExpectedGuestSuccess(List<Guests> guestsList);
 
     void onExpectedHKSuccess(List<HouseKeeping> houseKeepingList);
+
+    void onExpectedOfficeSuccess(List<OfficeStaffResponse.ContentBean> officeStaffList);
 
     void onExpectedSPSuccess(List<ServiceProvider> spList);
 

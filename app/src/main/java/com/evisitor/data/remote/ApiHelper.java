@@ -108,5 +108,13 @@ public interface ApiHelper {
     @GET(WebServices.GET_EXPECTED_COMMERCIAL_GUEST_LIST)
     Call<ResponseBody> doGetExpectedCommercialGuestListDetail(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
 
+    @GET(WebServices.GET_COMMERCIAL_OFFICE_STAFF)
+    Call<ResponseBody> doGetCommercialOfficeListDetail(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+
+    @POST(WebServices.OFFICE_STAFF_CHECK_IN_OUT)
+    Call<ResponseBody> doOfficeStaffCheckInCheckOut(@Header("authorization") String authToken, @Body RequestBody body);
+
+    @GET(WebServices.GET_CHECK_IN_OFFICE_STAFF)
+    Call<ResponseBody> doGetCommercialOfficeCheckInListDetail(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
 
 }

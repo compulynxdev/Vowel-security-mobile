@@ -1,4 +1,4 @@
-package com.evisitor.ui.main.commercial.visitor;
+package com.evisitor.ui.main.commercial.visitor.guest;
 
 import com.evisitor.data.DataManager;
 import com.evisitor.ui.base.BaseNavigator;

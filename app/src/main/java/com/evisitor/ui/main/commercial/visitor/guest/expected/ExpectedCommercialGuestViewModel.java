@@ -1,4 +1,4 @@
-package com.evisitor.ui.main.commercial.visitor.expected;
+package com.evisitor.ui.main.commercial.visitor.guest.expected;
 
 import androidx.annotation.NonNull;
 

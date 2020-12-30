@@ -6,6 +6,7 @@ import com.evisitor.data.model.CountryResponse;
 import com.evisitor.data.model.GuestConfigurationResponse;
 import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.HouseKeepingResponse;
+import com.evisitor.data.model.OfficeStaffResponse;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.remote.ApiHelper;
 import com.google.gson.Gson;
@@ -45,4 +46,8 @@ public interface DataManager extends ApiHelper, PreferenceHelper {
     CommercialGuestResponse.CommercialGuest getCommercialGuestDetail();
 
     void setCommercialGuestDetail(CommercialGuestResponse.CommercialGuest guest);
+
+    OfficeStaffResponse.ContentBean getOfficeStaff();
+
+    void setOfficeStaff(OfficeStaffResponse.ContentBean officeStaff);
 }

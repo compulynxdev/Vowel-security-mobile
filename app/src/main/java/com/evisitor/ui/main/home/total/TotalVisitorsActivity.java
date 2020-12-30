@@ -18,7 +18,8 @@ import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.ActivityTotalVisitorsBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.base.BaseNavigator;
-import com.evisitor.ui.main.commercial.visitor.expected.ExpectedCommercialGuestFragment;
+import com.evisitor.ui.main.commercial.visitor.guest.expected.ExpectedCommercialGuestFragment;
+import com.evisitor.ui.main.commercial.visitor.staff.expected.ExpectedOfficeStaffFragment;
 import com.evisitor.ui.main.residential.guest.expected.ExpectedGuestFragment;
 import com.evisitor.ui.main.residential.sp.ExpectedSPFragment;
 import com.evisitor.ui.main.residential.staff.expected.ExpectedHKFragment;
@@ -32,6 +33,7 @@ public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBin
     private ExpectedCommercialGuestFragment commercialGuestFragment;
     private ExpectedHKFragment expectedHKFragment;
     private ExpectedSPFragment expectedSPFragment;
+    private ExpectedOfficeStaffFragment officeStaffFragment;
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, TotalVisitorsActivity.class);
@@ -78,12 +80,14 @@ public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBin
         if (mViewModel.getDataManager().isCommercial()) {
             commercialGuestFragment = ExpectedCommercialGuestFragment.newInstance();
             adapter.addFragment(commercialGuestFragment);
+            officeStaffFragment = ExpectedOfficeStaffFragment.newInstance();
+            adapter.addFragment(officeStaffFragment);
         } else {
             expectedGuestFragment = ExpectedGuestFragment.newInstance();
             adapter.addFragment(expectedGuestFragment);
+            expectedHKFragment = ExpectedHKFragment.newInstance();
+            adapter.addFragment(expectedHKFragment);
         }
-        expectedHKFragment = ExpectedHKFragment.newInstance();
-        adapter.addFragment(expectedHKFragment);
         expectedSPFragment = ExpectedSPFragment.newInstance();
         adapter.addFragment(expectedSPFragment);
 
@@ -184,7 +188,10 @@ public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBin
                             break;
 
                         case 1:
-                            expectedHKFragment.setSearch(txt);
+                            if (mViewModel.getDataManager().isCommercial()) {
+                                officeStaffFragment.setSearch(txt);
+                            } else expectedHKFragment.setSearch(txt);
+
                             break;
 
                         case 2:
