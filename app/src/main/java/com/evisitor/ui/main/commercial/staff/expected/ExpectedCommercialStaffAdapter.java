@@ -1,4 +1,4 @@
-package com.evisitor.ui.main.commercial.visitor.guest.expected;
+package com.evisitor.ui.main.commercial.staff.expected;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,25 +13,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.evisitor.R;
-import com.evisitor.data.model.CommercialGuestResponse;
+import com.evisitor.data.model.CommercialStaffResponse;
 import com.evisitor.ui.base.BaseViewHolder;
 import com.evisitor.ui.base.ItemClickCallback;
-import com.evisitor.util.CalenderUtils;
 import com.evisitor.util.pagination.FooterLoader;
 
 import java.util.List;
 
-public class ExpectedCommercialGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
+public class ExpectedCommercialStaffAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private static final int VIEWTYPE_ITEM = 1;
     private static final int VIEWTYPE_LOADER = 2;
-    private List<CommercialGuestResponse.CommercialGuest> list;
+    private List<CommercialStaffResponse.ContentBean> list;
     private boolean showLoader;
-    private Context context;
     private ItemClickCallback listener;
 
-    ExpectedCommercialGuestAdapter(List<CommercialGuestResponse.CommercialGuest> list, Context context, ItemClickCallback callback) {
+    ExpectedCommercialStaffAdapter(List<CommercialStaffResponse.ContentBean> list, ItemClickCallback callback) {
         this.list = list;
-        this.context = context;
         this.listener = callback;
     }
 
@@ -42,7 +39,7 @@ public class ExpectedCommercialGuestAdapter extends RecyclerView.Adapter<BaseVie
 
     @Override
     public long getItemId(int position) {
-        return Long.parseLong(list.get(position).getGuestId());
+        return list.get(position).getId();
     }
 
     @NonNull
@@ -51,8 +48,8 @@ public class ExpectedCommercialGuestAdapter extends RecyclerView.Adapter<BaseVie
         View view;
         switch (viewType) {
             case VIEWTYPE_ITEM:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_guests, parent, false);
-                return new ExpectedCommercialGuestAdapter.ViewHolder(view);
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_commercial_staff, parent, false);
+                return new ExpectedCommercialStaffAdapter.ViewHolder(view);
 
             default:
             case VIEWTYPE_LOADER:
@@ -94,16 +91,14 @@ public class ExpectedCommercialGuestAdapter extends RecyclerView.Adapter<BaseVie
 
     public class ViewHolder extends BaseViewHolder {
         ImageView imgVisitor;
-        TextView name, time, houseNo, host, vehicle, status;
+        TextView name, profile, staffId, lastLevel;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_name);
-            time = itemView.findViewById(R.id.tv_time);
-            houseNo = itemView.findViewById(R.id.tv_house_no);
-            host = itemView.findViewById(R.id.tv_host);
-            vehicle = itemView.findViewById(R.id.tv_vehicle);
-            status = itemView.findViewById(R.id.tv_status);
+            profile = itemView.findViewById(R.id.tv_profile);
+            staffId = itemView.findViewById(R.id.tv_staff_id);
+            lastLevel = itemView.findViewById(R.id.tv_last_level);
             imgVisitor = itemView.findViewById(R.id.img_visitor);
 
             itemView.setOnClickListener(v -> {
@@ -119,25 +114,12 @@ public class ExpectedCommercialGuestAdapter extends RecyclerView.Adapter<BaseVie
 
         @Override
         public void onBind(int position) {
-            CommercialGuestResponse.CommercialGuest bean = list.get(position);
-            name.setText(context.getString(R.string.data_name, bean.getName()));
-            status.setVisibility(bean.getStatus().equalsIgnoreCase("PENDING") ? View.GONE : View.VISIBLE);
-            status.setText(status.getContext().getString(R.string.status, bean.getStatus()));
-            if (bean.getTime() != null && !bean.getTime().isEmpty())
-                time.setText(context.getString(R.string.data_time, CalenderUtils.formatDate(bean.getTime(), CalenderUtils.SERVER_DATE_FORMAT,
-                        CalenderUtils.TIMESTAMP_FORMAT)));
-            else time.setVisibility(View.GONE);
-
-            houseNo.setText(context.getString(R.string.data_dynamic_premise, getPremiseLastLevel(), bean.getPremiseName()));
-
-            if (!bean.getHost().isEmpty()) {
-                host.setVisibility(View.VISIBLE);
-                host.setText(context.getString(R.string.data_host, bean.getHost()));
-            } else host.setVisibility(View.GONE);
-
-            if (!bean.getExpectedVehicleNo().isEmpty())
-                vehicle.setText(context.getString(R.string.data_vehicle, bean.getExpectedVehicleNo()));
-            else vehicle.setVisibility(View.GONE);
+            CommercialStaffResponse.ContentBean bean = list.get(position);
+            Context context = name.getContext();
+            name.setText(context.getString(R.string.data_name, bean.getFullName()));
+            staffId.setText(context.getString(R.string.data_staff_id, bean.getEmployeeId().isEmpty() ? "N/A" : bean.getEmployeeId()));
+            profile.setText(context.getString(R.string.data_profile, bean.getProfile()));
+            lastLevel.setText(context.getString(R.string.data_dynamic_premise, getPremiseLastLevel(), bean.getPremiseName()));
 
             if (bean.getImageUrl().isEmpty()) {
                 Glide.with(imgVisitor.getContext())

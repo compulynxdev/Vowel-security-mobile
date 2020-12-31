@@ -12,8 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.evisitor.R;
 import com.evisitor.data.model.NotificationResponse;
 import com.evisitor.ui.base.BaseViewHolder;
+import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppUtils;
 import com.evisitor.util.CalenderUtils;
+import com.evisitor.util.CommonUtils;
 import com.evisitor.util.pagination.FooterLoader;
 
 import java.util.Date;
@@ -84,21 +86,17 @@ public class NotificationAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         return notificationList.size();
     }
 
-    private String getVisitorType(TextView tvCompany, NotificationResponse.ContentBean notification) {
+    private void updateCompanyUI(TextView tvCompany, NotificationResponse.ContentBean notification) {
         switch (notification.getType().toUpperCase()) {
-            case "SERVICE_PROVIDER":
+            case AppConstants.SERVICE_PROVIDER:
+            case AppConstants.STAFF:
                 tvCompany.setVisibility(View.VISIBLE);
                 tvCompany.setText(tvCompany.getContext().getString(R.string.data_comp_name, notification.getCompanyName().isEmpty() ? tvCompany.getContext().getString(R.string.na) : notification.getCompanyName()));
-                return "Service Provider";
-
-            case "STAFF":
-                tvCompany.setVisibility(View.VISIBLE);
-                tvCompany.setText(tvCompany.getContext().getString(R.string.data_comp_name, notification.getCompanyName().isEmpty() ? tvCompany.getContext().getString(R.string.na) : notification.getCompanyName()));
-                return "Domestic Staff";
+                break;
 
             default:
                 tvCompany.setVisibility(View.GONE);
-                return AppUtils.capitaliseFirstLetter(notification.getType());
+                break;
         }
     }
 
@@ -121,7 +119,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             Date date = CalenderUtils.getDateFormat(notification.getCreatedDate(), CalenderUtils.SERVER_DATE_FORMAT2);
             tvTime.setText(DateUtils.getRelativeTimeSpanString(date == null ? new Date().getTime() : date.getTime()));
             tvMsg.setText(tvMsg.getContext().getString(R.string.msg_notification, AppUtils.capitaliseFirstLetter(notification.getNotificationStatus()), notification.getCreatedBy()));
-            tvType.setText(tvType.getContext().getString(R.string.data_type, getVisitorType(tvCompany, notification)));
+            tvType.setText(tvType.getContext().getString(R.string.data_type, CommonUtils.getVisitorType(notification.getType())));
+            updateCompanyUI(tvCompany, notification);
         }
     }
 }

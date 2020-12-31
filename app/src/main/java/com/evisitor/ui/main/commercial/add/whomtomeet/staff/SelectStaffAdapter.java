@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.evisitor.R;
-import com.evisitor.data.model.CommercialStaffResponse;
+import com.evisitor.data.model.SelectCommercialStaffResponse;
 import com.evisitor.ui.base.BaseViewHolder;
 import com.evisitor.ui.base.ItemClickCallback;
 
@@ -20,10 +20,10 @@ import java.util.List;
 
 public class SelectStaffAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
-    private List<CommercialStaffResponse> list;
+    private List<SelectCommercialStaffResponse> list;
     private ItemClickCallback callback;
 
-    SelectStaffAdapter(List<CommercialStaffResponse> list, ItemClickCallback callback) {
+    SelectStaffAdapter(List<SelectCommercialStaffResponse> list, ItemClickCallback callback) {
         this.list = list;
         this.callback = callback;
     }
@@ -68,7 +68,7 @@ public class SelectStaffAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         @Override
         public void onBind(int position) {
-            CommercialStaffResponse bean = list.get(position);
+            SelectCommercialStaffResponse bean = list.get(position);
             name.setText(name.getContext().getString(R.string.data_name, bean.getFullName()));
             profile.setText(profile.getContext().getString(R.string.data_profile, bean.getProfile()));
 

@@ -14,20 +14,17 @@ class WebServices {
     static final String GET_USER_DETAIL = "usermaster/get_user_details"; //?username=ram
     static final String GET_GUEST_CONFIGURATION = "accountconfiguration/get_field_configuration_for_mobile"; //?accountId=1
     static final String ADD_GUEST = "guest/register_guest";
-    static final String ADD_COMMERCIAL_GUEST = "guest/register_commercial_guest";
     static final String ADD_SP = "serviceprovider/register_service_provider";
     static final String GET_HOUSE_LIST = "premise/get_all_flat_list"; //?accountId=1&search=a
     static final String GET_HOST_LIST = "resident/get_resident_by_flat_id"; //?accountId=1&flatId=6
 
-    static final String GUEST_SEND_NOTIFICTION = "notification/send_notification";
+    static final String GUEST_SEND_NOTIFICATION = "notification/send_notification";
     static final String CHECK_GUEST_STATUS = "guest/check_blacklist_guest"; //?accountId=1&documentId=44444
 
     static final String GET_EXPECTED_GUEST_LIST = "guest/get_all_booked_guest";
-    static final String GET_EXPECTED_COMMERCIAL_GUEST_LIST = "guest/get_all_commercial_booked_guest";//?page=0&size=10&sortBy=&direction=&search=&accountId=1
     static final String GET_EXPECTED_SP_LIST = "serviceprovider/get_all_expected_service_provider";
     static final String GET_REGISTERED_HOUSE_KEEPING_LIST = "staff/get_all_staff"; //?accountId=1&page=0&size=10&type=expected&search=a
 
-    static final String GET_COMMERCIAL_GUEST_CHECKIN_CHECKOUT_LIST = "guest/get_commercial_guest_check_in_check_out"; //?page=0&size=10&sortBy=&direction=&search=&accountId=1&type=CHECK_IN
     static final String GET_GUEST_CHECKIN_CHECKOUT_LIST = "guest/get_guest_check_in_check_out";
     static final String GET_HOUSEKEEPING_CHECKIN_CHECKOUT_LIST = "staff/get_staff_check_in";
     static final String GET_SERVICE_PROVIDER_CHECKIN_CHECKOUT_LIST = "serviceprovider/get_service_provider_check_in_check_out";
@@ -51,14 +48,16 @@ class WebServices {
 
     static final String GET_COMPANY_SUGGESTIONS = "usermaster/get_company_list";//http://localhost:8085/api/usermaster/get_company_list?search=\
 
-    static final String GET_COMMERCIAL_OFFICE_STAFF = "employee/get_all_staff";//http://localhost:8085/api/employee/get_all_staff?accountId=1&type=expected
+    /*Commercial System Api's*/
+    static final String ADD_COMMERCIAL_GUEST = "guest/register_commercial_guest";
+    static final String GET_EXPECTED_COMMERCIAL_GUEST_LIST = "guest/get_all_commercial_booked_guest";//?page=0&size=10&sortBy=&direction=&search=&accountId=1
+    static final String GET_COMMERCIAL_GUEST_CHECKIN_CHECKOUT_LIST = "guest/get_commercial_guest_check_in_check_out"; //?page=0&size=10&sortBy=&direction=&search=&accountId=1&type=CHECK_IN
 
-    static final String GET_CHECK_IN_OFFICE_STAFF = "employee/get_staff_check_in";//http://localhost:8085/api/employee/get_staff_check_in?accountId=1&type=CHECK_OUT&search=a
-
-    static final String OFFICE_STAFF_CHECK_IN_OUT = "employee/check_in_check_out";//http://localhost:8085/api/employee/check_in_check_out
-
+    static final String GET_ALL_REGISTERED_COMMERCIAL_STAFF = "employee/get_all_staff";//http://localhost:8085/api/employee/get_all_staff?accountId=1&type=expected
+    static final String GET_COMMERCIAL_CHECKIN_CHECKOUT_STAFF = "employee/get_staff_check_in";//http://localhost:8085/api/employee/get_staff_check_in?accountId=1&type=CHECK_OUT&search=a
+    static final String COMMERCIAL_STAFF_CHECK_IN_OUT = "employee/check_in_check_out";//http://localhost:8085/api/employee/check_in_check_out
     static final String GET_COMMERCIAL_STAFF = "employee/get_staff_list"; //?accountId=1
-
+    static final String COMMERCIAL_SEND_NOTIFICATION = "notification/send_commercial_notification";
 
 
     private WebServices() {

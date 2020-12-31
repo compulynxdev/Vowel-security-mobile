@@ -1,7 +1,7 @@
 package com.evisitor.ui.main.commercial.add.whomtomeet.staff;
 
 
-import com.evisitor.data.model.CommercialStaffResponse;
+import com.evisitor.data.model.SelectCommercialStaffResponse;
 import com.evisitor.ui.base.BaseNavigator;
 
 import java.util.List;
@@ -11,6 +11,6 @@ import java.util.List;
  */
 interface SelectStaffNavigator extends BaseNavigator {
 
-    void onStaffDataReceived(List<CommercialStaffResponse> staffList);
+    void onStaffDataReceived(List<SelectCommercialStaffResponse> staffList);
 
 }

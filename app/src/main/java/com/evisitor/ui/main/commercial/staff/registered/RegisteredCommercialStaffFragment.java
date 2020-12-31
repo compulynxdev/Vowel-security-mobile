@@ -1,4 +1,4 @@
-package com.evisitor.ui.main.commercial.visitor.staff.registered;
+package com.evisitor.ui.main.commercial.staff.registered;
 
 import android.os.Bundle;
 import android.view.View;
@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
-import com.evisitor.data.model.OfficeStaffResponse;
+import com.evisitor.data.model.CommercialStaffResponse;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.databinding.FragmentExpectedBinding;
 import com.evisitor.ui.base.BaseFragment;
@@ -19,15 +19,15 @@ import com.evisitor.util.pagination.RecyclerViewScrollListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RegisteredOfficeStaffFragment extends BaseFragment<FragmentExpectedBinding, RegisteredOfficeStaffViewModel> implements RegisteredOfficeStaffNavigator {
+public class RegisteredCommercialStaffFragment extends BaseFragment<FragmentExpectedBinding, RegisteredCommercialStaffViewModel> implements RegisteredCommercialStaffNavigator {
     private RecyclerViewScrollListener scrollListener;
-    private RegisteredOfficeStaffAdapter adapter;
+    private RegisteredCommercialStaffAdapter adapter;
     private String search = "";
     private int page = 0;
-    private List<OfficeStaffResponse.ContentBean> list;
+    private List<CommercialStaffResponse.ContentBean> list;
 
-    public static RegisteredOfficeStaffFragment newInstance() {
-        RegisteredOfficeStaffFragment fragment = new RegisteredOfficeStaffFragment();
+    public static RegisteredCommercialStaffFragment newInstance() {
+        RegisteredCommercialStaffFragment fragment = new RegisteredCommercialStaffFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -55,8 +55,8 @@ public class RegisteredOfficeStaffFragment extends BaseFragment<FragmentExpected
     }
 
     @Override
-    public RegisteredOfficeStaffViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(RegisteredOfficeStaffViewModel.class);
+    public RegisteredCommercialStaffViewModel getViewModel() {
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(RegisteredCommercialStaffViewModel.class);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class RegisteredOfficeStaffFragment extends BaseFragment<FragmentExpected
 
     private void setUpAdapter() {
         list = new ArrayList<>();
-        adapter = new RegisteredOfficeStaffAdapter(list, pos -> {
+        adapter = new RegisteredCommercialStaffAdapter(list, pos -> {
             List<VisitorProfileBean> visitorProfileBeanList = mViewModel.setClickVisitorDetail(list.get(pos));
             VisitorProfileDialog.newInstance(visitorProfileBeanList, null).setImage(list.get(pos).getImageUrl()).setBtnVisible(false).show(getFragmentManager());
         });
@@ -104,7 +104,7 @@ public class RegisteredOfficeStaffFragment extends BaseFragment<FragmentExpected
     }
 
     @Override
-    public void onRegisteredOfficeStaffSuccess(List<OfficeStaffResponse.ContentBean> houseKeepingList) {
+    public void onRegisteredOfficeStaffSuccess(List<CommercialStaffResponse.ContentBean> houseKeepingList) {
         if (page == 0) this.list.clear();
 
         this.list.addAll(houseKeepingList);

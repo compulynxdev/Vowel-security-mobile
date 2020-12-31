@@ -1,6 +1,5 @@
 package com.evisitor.ui.main.activity.checkout.adapter;
 
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.evisitor.R;
-import com.evisitor.data.model.ServiceProvider;
+import com.evisitor.data.model.CommercialStaffResponse;
 import com.evisitor.ui.base.BaseViewHolder;
 import com.evisitor.ui.base.ItemClickCallback;
 import com.evisitor.util.CalenderUtils;
@@ -22,14 +21,14 @@ import com.evisitor.util.pagination.FooterLoader;
 
 import java.util.List;
 
-public class ServiceProviderCheckOutAdapter extends RecyclerView.Adapter<BaseViewHolder> {
+public class CommercialStaffCheckOutAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private static final int VIEWTYPE_ITEM = 1;
     private static final int VIEWTYPE_LOADER = 2;
-    private List<ServiceProvider> list;
+    private List<CommercialStaffResponse.ContentBean> list;
     private boolean showLoader;
     private ItemClickCallback callback;
 
-    public ServiceProviderCheckOutAdapter(List<ServiceProvider> list, ItemClickCallback callback) {
+    public CommercialStaffCheckOutAdapter(List<CommercialStaffResponse.ContentBean> list, ItemClickCallback callback) {
         this.list = list;
         this.callback = callback;
     }
@@ -41,7 +40,7 @@ public class ServiceProviderCheckOutAdapter extends RecyclerView.Adapter<BaseVie
         switch (viewType) {
             case VIEWTYPE_ITEM:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_check_in_out, parent, false);
-                return new ServiceProviderCheckOutAdapter.ViewHolder(view);
+                return new CommercialStaffCheckOutAdapter.ViewHolder(view);
 
             default:
             case VIEWTYPE_LOADER:
@@ -81,7 +80,6 @@ public class ServiceProviderCheckOutAdapter extends RecyclerView.Adapter<BaseVie
         return list.size();
     }
 
-
     public class ViewHolder extends BaseViewHolder {
 
         ImageView imgVisitor;
@@ -97,6 +95,8 @@ public class ServiceProviderCheckOutAdapter extends RecyclerView.Adapter<BaseVie
             visitorType = itemView.findViewById(R.id.tv_type);
             imgVisitor = itemView.findViewById(R.id.img_visitor);
             timeOut.setVisibility(View.VISIBLE);
+            host.setVisibility(View.GONE);
+            visitorType.setVisibility(View.GONE);
 
             itemView.setOnClickListener(v -> {
                 if (callback != null && getAdapterPosition() != -1)
@@ -111,29 +111,14 @@ public class ServiceProviderCheckOutAdapter extends RecyclerView.Adapter<BaseVie
 
         @Override
         public void onBind(int position) {
-            ServiceProvider bean = list.get(position);
+            CommercialStaffResponse.ContentBean bean = list.get(position);
             Context context = name.getContext();
-            name.setText(context.getString(R.string.data_name, bean.getName()));
+            name.setText(context.getString(R.string.data_name, bean.getFullName()));
             timeIn.setText(context.getString(R.string.data_time_in, CalenderUtils.formatDate(bean.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT)));
             timeOut.setText(context.getString(R.string.data_time_out, CalenderUtils.formatDate(bean.getCheckOutTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT)));
+            houseNo.setVisibility(View.VISIBLE);
+            houseNo.setText(context.getString(R.string.data_dynamic_premise, getPremiseLastLevel(), bean.getPremiseName()));
 
-            if (isCommercial()) {
-                host.setVisibility(View.GONE);
-                if (!bean.getPremiseName().isEmpty()) {
-                    houseNo.setVisibility(View.VISIBLE);
-                    houseNo.setText(context.getString(R.string.data_dynamic_premise, getPremiseLastLevel(), bean.getPremiseName()));
-                } else houseNo.setVisibility(View.GONE);
-            } else {
-                if (!bean.getHouseNo().isEmpty()) {
-                    houseNo.setVisibility(View.VISIBLE);
-                    houseNo.setText(context.getString(R.string.data_dynamic_premise, getPremiseLastLevel(), bean.getPremiseName()));
-                    host.setText(context.getString(R.string.data_host, bean.getHost()));
-                } else {
-                    houseNo.setVisibility(View.GONE);
-                    houseNo.setText("");
-                    host.setText(context.getString(R.string.data_host, bean.getCreatedBy()));
-                }
-            }
 
             if (bean.getImageUrl().isEmpty()) {
                 Glide.with(imgVisitor.getContext())

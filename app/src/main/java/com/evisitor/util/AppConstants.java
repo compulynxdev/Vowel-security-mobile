@@ -17,15 +17,17 @@ public final class AppConstants {
     public static final String ACTIVITY_PRIVACY = "ACTIVITY_PRIVACY";
     public static final String CHECK_IN = "CHECK_IN";
     public static final String CHECK_OUT = "CHECK_OUT";
-    public static final String VISITOR_LABEL = "Visitor";
-    public static final String SP_LABEL = "Service Provider";
+    public static final String STAFF = "STAFF";
+    public static final String WALKIN_VISITOR = "WALKIN_VISITOR";
     public static final String GUEST = "GUEST";
+    static final String VISITOR_LABEL = "Visitor";
     public static final String SERVICE_PROVIDER = "SERVICE_PROVIDER";
     public static final String HOUSE_HELP = "HOUSE_HELP";
     public static final String EXPECTED = "expected";
     public static final String BLACK = "black";
     public static final String FLAG = "flag";
     public static final String TODAY = "today";
+    static final String SP_LABEL = "Service Provider";
 
     public static final String ACCEPT = "ACCEPTED";
     public static final String REJECT = "REJECTED";

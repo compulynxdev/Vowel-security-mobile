@@ -67,6 +67,37 @@ public class BaseCheckInOutViewModel<N extends BaseNavigator> extends BaseViewMo
         }
     }
 
+    protected void sendCommercialNotification(RequestBody body, ApiCallback apiCallback) {
+        if (getNavigator().isNetworkConnected(true)) {
+            getNavigator().showLoading();
+            getDataManager().doCommercialSendNotification(getDataManager().getHeader(), body).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                    getNavigator().hideLoading();
+                    if (response.code() == 200) {
+                        getNavigator().showAlert(getNavigator().getContext().getString(R.string.success)
+                                , getNavigator().getContext().getString(R.string.send_notification_success)).setOnPositiveClickListener(dialog -> {
+                            dialog.dismiss();
+
+                            if (apiCallback != null)
+                                apiCallback.onSuccess();
+                        });
+                    } else if (response.code() == 401) {
+                        getNavigator().openActivityOnTokenExpire();
+                    } else {
+                        getNavigator().handleApiError(response.errorBody());
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                    getNavigator().hideLoading();
+                    getNavigator().handleApiFailure(t);
+                }
+            });
+        }
+    }
+
     protected void doCheckInOut(RequestBody body, ApiCallback apiCallback) {
         if (getNavigator().isNetworkConnected(true)) {
             getNavigator().showLoading();

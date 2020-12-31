@@ -1,4 +1,4 @@
-package com.evisitor.ui.main.commercial.visitor.guest;
+package com.evisitor.ui.main.commercial.visitor;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +15,7 @@ import com.evisitor.databinding.ActivityExpectedGuestOrVisitorBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.dialog.AlertDialog;
 import com.evisitor.ui.main.commercial.add.CommercialAddVisitorActivity;
-import com.evisitor.ui.main.commercial.visitor.guest.expected.ExpectedCommercialGuestFragment;
+import com.evisitor.ui.main.commercial.visitor.expected.ExpectedCommercialGuestFragment;
 import com.evisitor.ui.main.home.scan.ScanIDActivity;
 import com.evisitor.ui.main.residential.add.AddVisitorActivity;
 import com.evisitor.util.AppConstants;

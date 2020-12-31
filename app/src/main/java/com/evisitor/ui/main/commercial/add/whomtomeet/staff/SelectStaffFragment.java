@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.evisitor.BR;
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
-import com.evisitor.data.model.CommercialStaffResponse;
+import com.evisitor.data.model.SelectCommercialStaffResponse;
 import com.evisitor.databinding.FragmentWhomToMeetBinding;
 import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.main.commercial.add.whomtomeet.WhomToMeetCallback;
@@ -21,7 +21,7 @@ import java.util.List;
 public class SelectStaffFragment extends BaseFragment<FragmentWhomToMeetBinding, SelectStaffViewModel> implements SelectStaffNavigator {
 
     private SelectStaffAdapter adapter;
-    private List<CommercialStaffResponse> list;
+    private List<SelectCommercialStaffResponse> list;
     private WhomToMeetCallback callback;
 
     public static SelectStaffFragment newInstance(WhomToMeetCallback callback) {
@@ -78,7 +78,7 @@ public class SelectStaffFragment extends BaseFragment<FragmentWhomToMeetBinding,
     }
 
     @Override
-    public void onStaffDataReceived(List<CommercialStaffResponse> staffList) {
+    public void onStaffDataReceived(List<SelectCommercialStaffResponse> staffList) {
         list.addAll(staffList);
         adapter.notifyDataSetChanged();
 

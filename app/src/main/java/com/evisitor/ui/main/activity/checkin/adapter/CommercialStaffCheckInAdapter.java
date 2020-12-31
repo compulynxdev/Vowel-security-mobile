@@ -1,4 +1,4 @@
-package com.evisitor.ui.main.commercial.visitor.staff.expected;
+package com.evisitor.ui.main.activity.checkin.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,34 +13,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.evisitor.R;
-import com.evisitor.data.model.OfficeStaffResponse;
+import com.evisitor.data.model.CommercialStaffResponse;
 import com.evisitor.ui.base.BaseViewHolder;
-import com.evisitor.ui.base.ItemClickCallback;
 import com.evisitor.util.CalenderUtils;
 import com.evisitor.util.pagination.FooterLoader;
 
 import java.util.List;
 
-public class ExpectedOfficeStaffAdapter extends RecyclerView.Adapter<BaseViewHolder> {
+public class CommercialStaffCheckInAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private static final int VIEWTYPE_ITEM = 1;
     private static final int VIEWTYPE_LOADER = 2;
-    private List<OfficeStaffResponse.ContentBean> list;
+    private List<CommercialStaffResponse.ContentBean> list;
     private boolean showLoader;
-    private ItemClickCallback listener;
+    private Context context;
+    private OnItemClickListener listener;
 
-    ExpectedOfficeStaffAdapter(List<OfficeStaffResponse.ContentBean> list, ItemClickCallback callback) {
+    public CommercialStaffCheckInAdapter(List<CommercialStaffResponse.ContentBean> list, Context context, OnItemClickListener click) {
         this.list = list;
-        this.listener = callback;
-    }
-
-    @Override
-    public void setHasStableIds(boolean hasStableIds) {
-        super.setHasStableIds(hasStableIds);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return list.get(position).getId();
+        this.listener = click;
+        this.context = context;
     }
 
     @NonNull
@@ -49,8 +40,8 @@ public class ExpectedOfficeStaffAdapter extends RecyclerView.Adapter<BaseViewHol
         View view;
         switch (viewType) {
             case VIEWTYPE_ITEM:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_hk, parent, false);
-                return new ExpectedOfficeStaffAdapter.ViewHolder(view);
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_check_in_out, parent, false);
+                return new CommercialStaffCheckInAdapter.ViewHolder(view);
 
             default:
             case VIEWTYPE_LOADER:
@@ -90,23 +81,28 @@ public class ExpectedOfficeStaffAdapter extends RecyclerView.Adapter<BaseViewHol
         return list.size();
     }
 
+
+    public interface OnItemClickListener {
+        void ItemClick(CommercialStaffResponse.ContentBean officeStaff);
+    }
+
     public class ViewHolder extends BaseViewHolder {
+
         ImageView imgVisitor;
-        TextView name, identity, profile, time, houseNo, host;
+        TextView name, time, houseNo, host, visitorType;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_name);
-            identity = itemView.findViewById(R.id.tv_identity);
-            profile = itemView.findViewById(R.id.tv_profile);
-            time = itemView.findViewById(R.id.tv_time);
+            time = itemView.findViewById(R.id.tv_time_in);
             houseNo = itemView.findViewById(R.id.tv_house_no);
             host = itemView.findViewById(R.id.tv_host);
+            visitorType = itemView.findViewById(R.id.tv_type);
             imgVisitor = itemView.findViewById(R.id.img_visitor);
 
             itemView.setOnClickListener(v -> {
                 if (listener != null && getAdapterPosition() != -1)
-                    listener.onItemClick(getAdapterPosition());
+                    listener.ItemClick(list.get(getAdapterPosition()));
             });
 
             imgVisitor.setOnClickListener(v -> {
@@ -117,27 +113,12 @@ public class ExpectedOfficeStaffAdapter extends RecyclerView.Adapter<BaseViewHol
 
         @Override
         public void onBind(int position) {
-            OfficeStaffResponse.ContentBean bean = list.get(position);
-            Context context = name.getContext();
+            CommercialStaffResponse.ContentBean bean = list.get(position);
             name.setText(context.getString(R.string.data_name, bean.getFullName()));
-            identity.setText(context.getString(R.string.data_identity, bean.getDocumentId().isEmpty() ? "N?A" : bean.getDocumentId()));
-            profile.setText(context.getString(R.string.data_profile, bean.getProfile()));
-            time.setText(context.getString(R.string.data_time_slot, CalenderUtils.formatDate(bean.getCheckInTime(), CalenderUtils.TIME_FORMAT, CalenderUtils.TIME_FORMAT_AM), CalenderUtils.formatDate(bean.getCheckOutTime(), CalenderUtils.TIME_FORMAT, CalenderUtils.TIME_FORMAT_AM)));
-
-            if (isCommercial()) {
-                host.setVisibility(View.GONE);
-                houseNo.setVisibility(View.GONE);
-            } else {
-                //For Residential System
-                if (bean.getFlatNo().isEmpty()) {
-                    houseNo.setVisibility(View.GONE);
-                    host.setText(context.getString(R.string.data_host, bean.getCreatedBy()));
-                } else {
-                    houseNo.setVisibility(View.VISIBLE);
-                    houseNo.setText(context.getString(R.string.data_dynamic_premise, getPremiseLastLevel(), bean.getPremiseName()));
-                    host.setText(context.getString(R.string.data_host, bean.getCreatedBy()));
-                }
-            }
+            time.setText(context.getString(R.string.data_time_in, CalenderUtils.formatDate(bean.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT)));
+            houseNo.setText(context.getString(R.string.data_dynamic_premise, getPremiseLastLevel(), bean.getPremiseName()));
+            houseNo.setVisibility(View.VISIBLE);
+            host.setVisibility(View.GONE);
 
 
             if (bean.getImageUrl().isEmpty()) {
@@ -156,5 +137,5 @@ public class ExpectedOfficeStaffAdapter extends RecyclerView.Adapter<BaseViewHol
             }
         }
     }
-
 }
+

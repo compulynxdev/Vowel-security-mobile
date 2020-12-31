@@ -262,7 +262,7 @@ public class TrespasserResponse {
          * "createdDate" : "2020-09-07T04:49:18Z",
          * "fullName" : "account",
          * "flatNo" : "200",
-         * "checkOutTime" : "RANDOM_VISITOR",
+         * "checkOutTime" : "WALKIN_VISITOR",
          * "gender" : "Male",
          * "createdBy" : "GUEST",
          * "checkInTime" : "2020-09-04T04:43:27Z",

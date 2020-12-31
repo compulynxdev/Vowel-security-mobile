@@ -1,4 +1,4 @@
-package com.evisitor.ui.main.commercial.visitor.guest.expected;
+package com.evisitor.ui.main.commercial.visitor.expected;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
-import com.evisitor.data.model.CommercialGuestResponse;
+import com.evisitor.data.model.CommercialVisitorResponse;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.databinding.FragmentExpectedCommercialGuestBinding;
 import com.evisitor.ui.base.BaseFragment;
@@ -30,7 +30,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpectedCommercialGuestBinding, ExpectedCommercialGuestViewModel> implements ExpectedCommercialGuestNavigator {
     private final int SCAN_RESULT = 101;
-    private List<CommercialGuestResponse.CommercialGuest> guestsList;
+    private List<CommercialVisitorResponse.CommercialGuest> guestsList;
     private RecyclerViewScrollListener scrollListener;
     private ExpectedCommercialGuestAdapter adapter;
     private String search = "";
@@ -78,7 +78,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
     private void setUpAdapter() {
         guestsList = new ArrayList<>();
         adapter = new ExpectedCommercialGuestAdapter(guestsList, getContext(), pos -> {
-            CommercialGuestResponse.CommercialGuest guestBean = guestsList.get(pos);
+            CommercialVisitorResponse.CommercialGuest guestBean = guestsList.get(pos);
             List<VisitorProfileBean> visitorProfileBeanList = mViewModel.setClickVisitorDetail(guestBean);
             VisitorProfileDialog.newInstance(visitorProfileBeanList, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
@@ -95,7 +95,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
                 setAdapterLoading(true);
                 page++;
 
-                mViewModel.getGuestListData(page, search);
+                mViewModel.getExpectedVisitorListData(page, search);
             }
         };
         getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
@@ -106,7 +106,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
     }
 
     private void decideNextProcess() {
-        CommercialGuestResponse.CommercialGuest tmpBean = mViewModel.getDataManager().getCommercialGuestDetail();
+        CommercialVisitorResponse.CommercialGuest tmpBean = mViewModel.getDataManager().getCommercialVisitorDetail();
         if (tmpBean.getCheckInStatus()) {
             mViewModel.approveByCall(true, null);
         } else {
@@ -178,7 +178,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
         scrollListener.onDataCleared();
         guestsList.clear();
         this.page = 0;
-        mViewModel.getGuestListData(page, search);
+        mViewModel.getExpectedVisitorListData(page, search);
     }
 
     private void showCheckinOptions() {
@@ -192,7 +192,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
                     showCallDialog();
                 });
 
-        CommercialGuestResponse.CommercialGuest bean = mViewModel.getDataManager().getCommercialGuestDetail();
+        CommercialVisitorResponse.CommercialGuest bean = mViewModel.getDataManager().getCommercialVisitorDetail();
         if (bean.getHouseNo().isEmpty()) {
             alert.setNegativeBtnShow(false).show(getFragmentManager());
         } else {
@@ -234,7 +234,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
     }
 
     @Override
-    public void onExpectedGuestSuccess(List<CommercialGuestResponse.CommercialGuest> tmpGuestsList) {
+    public void onExpectedGuestSuccess(List<CommercialVisitorResponse.CommercialGuest> tmpGuestsList) {
         if (page == 0) guestsList.clear();
 
         guestsList.addAll(tmpGuestsList);

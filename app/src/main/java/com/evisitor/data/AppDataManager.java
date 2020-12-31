@@ -5,12 +5,12 @@ import android.content.Context;
 
 import com.evisitor.BuildConfig;
 import com.evisitor.data.local.prefs.AppPreferenceHelper;
-import com.evisitor.data.model.CommercialGuestResponse;
+import com.evisitor.data.model.CommercialStaffResponse;
+import com.evisitor.data.model.CommercialVisitorResponse;
 import com.evisitor.data.model.CountryResponse;
 import com.evisitor.data.model.GuestConfigurationResponse;
 import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.HouseKeepingResponse;
-import com.evisitor.data.model.OfficeStaffResponse;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.model.UserDetail;
 import com.evisitor.data.remote.AppApiHelper;
@@ -35,12 +35,12 @@ public class AppDataManager implements DataManager {
     private AppApiHelper apiHelper;
     private AppPreferenceHelper preferenceHelper;
     private Guests guests;
-    private CommercialGuestResponse.CommercialGuest commercialGuest;
+    private CommercialVisitorResponse.CommercialGuest commercialGuest;
     private ServiceProvider spDetail;
     private HouseKeepingResponse.ContentBean houseKeeping;
     private List<CountryResponse> countryResponseList;
     private GuestConfigurationResponse configurationResponse;
-    private OfficeStaffResponse.ContentBean officeStaff;
+    private CommercialStaffResponse.ContentBean officeStaff;
 
     private AppDataManager(Context context) {
         apiHelper = AppApiHelper.getAppApiInstance();
@@ -121,22 +121,22 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public CommercialGuestResponse.CommercialGuest getCommercialGuestDetail() {
+    public CommercialVisitorResponse.CommercialGuest getCommercialVisitorDetail() {
         return commercialGuest;
     }
 
     @Override
-    public void setCommercialGuestDetail(CommercialGuestResponse.CommercialGuest guest) {
+    public void setCommercialVisitorDetail(CommercialVisitorResponse.CommercialGuest guest) {
         commercialGuest = guest;
     }
 
     @Override
-    public OfficeStaffResponse.ContentBean getOfficeStaff() {
+    public CommercialStaffResponse.ContentBean getCommercialStaff() {
         return officeStaff;
     }
 
     @Override
-    public void setOfficeStaff(OfficeStaffResponse.ContentBean officeStaff) {
+    public void setCommercialStaff(CommercialStaffResponse.ContentBean officeStaff) {
         this.officeStaff = officeStaff;
     }
 
@@ -436,17 +436,22 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Call<ResponseBody> doGetCommercialOfficeListDetail(String authToken, Map<String, String> partMap) {
-        return apiHelper.doGetCommercialOfficeListDetail(authToken, partMap);
+    public Call<ResponseBody> doGetCommercialStaffListDetail(String authToken, Map<String, String> partMap) {
+        return apiHelper.doGetCommercialStaffListDetail(authToken, partMap);
     }
 
     @Override
-    public Call<ResponseBody> doOfficeStaffCheckInCheckOut(String authToken, RequestBody body) {
-        return apiHelper.doOfficeStaffCheckInCheckOut(authToken, body);
+    public Call<ResponseBody> doCommercialStaffCheckInCheckOut(String authToken, RequestBody body) {
+        return apiHelper.doCommercialStaffCheckInCheckOut(authToken, body);
     }
 
     @Override
-    public Call<ResponseBody> doGetCommercialOfficeCheckInListDetail(String authToken, Map<String, String> partMap) {
-        return apiHelper.doGetCommercialOfficeCheckInListDetail(authToken, partMap);
+    public Call<ResponseBody> doGetCommercialStaffCheckInOutListDetail(String authToken, Map<String, String> partMap) {
+        return apiHelper.doGetCommercialStaffCheckInOutListDetail(authToken, partMap);
+    }
+
+    @Override
+    public Call<ResponseBody> doCommercialSendNotification(String authToken, RequestBody body) {
+        return apiHelper.doCommercialSendNotification(authToken, body);
     }
 }

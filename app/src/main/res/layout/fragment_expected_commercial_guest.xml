@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="com.evisitor.ui.main.commercial.visitor.guest.expected.ExpectedCommercialGuestViewModel" />
+            type="com.evisitor.ui.main.commercial.visitor.expected.ExpectedCommercialGuestViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

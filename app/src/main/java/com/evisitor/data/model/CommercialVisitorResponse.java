@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommercialGuestResponse {
+public class CommercialVisitorResponse {
 
     @SerializedName("content")
     private List<CommercialGuest> content;
@@ -26,20 +26,17 @@ public class CommercialGuestResponse {
         @SerializedName("image")
         private String imageUrl;
 
-        @SerializedName("gender")
-        private String gender;
-
-        @SerializedName("checkInTime")
-        private String checkInTime;
+        @SerializedName("premiseHierarchyDetailsId")
+        private String flatId = "";
 
         @SerializedName("fullName")
         private String name;
 
+        @SerializedName("employeeId")
+        private String staffId;
+
         @SerializedName("expectedDate")
         private String time;
-
-        @SerializedName("enteredVehicleNo")
-        private String enteredVehicleNo = "";
 
         @SerializedName("dialingCode")
         private String dialingCode;
@@ -53,17 +50,14 @@ public class CommercialGuestResponse {
         @SerializedName("flatNo")
         private String houseNo;
 
-        @SerializedName("checkOutTime")
-        private String checkOutTime;
-
         @SerializedName("createdBy")
         private String createdBy;
 
+        @SerializedName("deviceList")
+        private List<DeviceBean> deviceBeanList;
+
         @SerializedName("documentId")
         private String identityNo;
-
-        @SerializedName("flatId")  //for guest check in/out list
-        private String flatId2 = "";
 
         @SerializedName("id")
         private String guestId;
@@ -71,17 +65,30 @@ public class CommercialGuestResponse {
         @SerializedName("state")
         private String status;
 
-        @SerializedName("guestType")
-        private String guestType;
-
         @SerializedName("premiseName")
         private String premiseName;
 
         @SerializedName("contactNo")
         private String contactNo;
 
-        @SerializedName("premiseHierarchyDetailsId")
-        private String flatId = "";
+
+        @SerializedName("gender")
+        private String gender;
+
+        @SerializedName("checkInTime")
+        private String checkInTime;
+
+        @SerializedName("enteredVehicleNo")
+        private String enteredVehicleNo = "";
+
+        @SerializedName("checkOutTime")
+        private String checkOutTime;
+
+        @SerializedName("flatId")  //for guest check in/out list
+        private String flatId2 = "";
+
+        @SerializedName("guestType")
+        private String guestType;
 
         @SerializedName("checkOutFeature")
         private boolean checkOutFeature;
@@ -91,16 +98,15 @@ public class CommercialGuestResponse {
 
         @SerializedName("rejectedBy")
         private String rejectedBy;
+
         @SerializedName("rejectReason")
         private String rejectedReason;
+
         @SerializedName("rejectedOn")
         private String rejectedOn;
 
         @SerializedName("purposeOfExit")
         private String purpose;
-
-        @SerializedName("deviceList")
-        private List<DeviceBean> deviceBeanList;
 
 
         public String getCheckInTime() {
@@ -302,6 +308,22 @@ public class CommercialGuestResponse {
 
         public void setDeviceBeanList(List<DeviceBean> deviceBeanList) {
             this.deviceBeanList = deviceBeanList;
+        }
+
+        public String getStaffId() {
+            return staffId;
+        }
+
+        public void setStaffId(String staffId) {
+            this.staffId = staffId;
+        }
+
+        public String getCreatedDate() {
+            return createdDate;
+        }
+
+        public void setCreatedDate(String createdDate) {
+            this.createdDate = createdDate;
         }
     }
 

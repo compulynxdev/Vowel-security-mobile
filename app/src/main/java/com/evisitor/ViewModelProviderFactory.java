@@ -20,11 +20,11 @@ import com.evisitor.ui.main.commercial.add.whomtomeet.WhomToMeetViewModel;
 import com.evisitor.ui.main.commercial.add.whomtomeet.level.SelectLastLevelViewModel;
 import com.evisitor.ui.main.commercial.add.whomtomeet.staff.SelectStaffViewModel;
 import com.evisitor.ui.main.commercial.gadgets.GadgetsInputViewModel;
-import com.evisitor.ui.main.commercial.visitor.guest.VisitorViewModel;
-import com.evisitor.ui.main.commercial.visitor.guest.expected.ExpectedCommercialGuestViewModel;
-import com.evisitor.ui.main.commercial.visitor.staff.OfficeStaffViewModel;
-import com.evisitor.ui.main.commercial.visitor.staff.expected.ExpectedOfficeStaffViewModel;
-import com.evisitor.ui.main.commercial.visitor.staff.registered.RegisteredOfficeStaffViewModel;
+import com.evisitor.ui.main.commercial.staff.CommercialStaffViewModel;
+import com.evisitor.ui.main.commercial.staff.expected.ExpectedCommercialStaffViewModel;
+import com.evisitor.ui.main.commercial.staff.registered.RegisteredCommercialStaffViewModel;
+import com.evisitor.ui.main.commercial.visitor.VisitorViewModel;
+import com.evisitor.ui.main.commercial.visitor.expected.ExpectedCommercialGuestViewModel;
 import com.evisitor.ui.main.home.HomeViewModel;
 import com.evisitor.ui.main.home.blacklist.BlackListViewModel;
 import com.evisitor.ui.main.home.flag.FlagVisitorViewModel;
@@ -227,15 +227,15 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(SelectStaffViewModel.class)) {
             //noinspection unchecked
             return (T) new SelectStaffViewModel(dataManager);
-        } else if (modelClass.isAssignableFrom(OfficeStaffViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(CommercialStaffViewModel.class)) {
             //noinspection unchecked
-            return (T) new OfficeStaffViewModel(dataManager);
-        } else if (modelClass.isAssignableFrom(ExpectedOfficeStaffViewModel.class)) {
+            return (T) new CommercialStaffViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(ExpectedCommercialStaffViewModel.class)) {
             //noinspection unchecked
-            return (T) new ExpectedOfficeStaffViewModel(dataManager);
-        } else if (modelClass.isAssignableFrom(RegisteredOfficeStaffViewModel.class)) {
+            return (T) new ExpectedCommercialStaffViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(RegisteredCommercialStaffViewModel.class)) {
             //noinspection unchecked
-            return (T) new RegisteredOfficeStaffViewModel(dataManager);
+            return (T) new RegisteredCommercialStaffViewModel(dataManager);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

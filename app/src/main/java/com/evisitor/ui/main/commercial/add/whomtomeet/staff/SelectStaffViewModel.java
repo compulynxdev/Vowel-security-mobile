@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.evisitor.R;
 import com.evisitor.data.DataManager;
-import com.evisitor.data.model.CommercialStaffResponse;
+import com.evisitor.data.model.SelectCommercialStaffResponse;
 import com.evisitor.ui.base.BaseViewModel;
 import com.google.gson.reflect.TypeToken;
 
@@ -37,9 +37,9 @@ public class SelectStaffViewModel extends BaseViewModel<SelectStaffNavigator> {
                     try {
                         if (response.code() == 200) {
                             assert response.body() != null;
-                            Type listType = new TypeToken<List<CommercialStaffResponse>>() {
+                            Type listType = new TypeToken<List<SelectCommercialStaffResponse>>() {
                             }.getType();
-                            List<CommercialStaffResponse> commercialStaffList = getDataManager().getGson().fromJson(response.body().string(), listType);
+                            List<SelectCommercialStaffResponse> commercialStaffList = getDataManager().getGson().fromJson(response.body().string(), listType);
                             if (commercialStaffList != null) {
                                 getNavigator().onStaffDataReceived(commercialStaffList);
                             }

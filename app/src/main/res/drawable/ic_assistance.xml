@@ -22,7 +22,7 @@
         android:fillColor="#ff9811"
         android:pathData="m49,28v5.76a8,8 0,0 0,-4 -1.7v-9.06h2l0.65,4.53a12.671,12.671 0,0 1,1.35 0.47z" />
     <path
-        android:fillColor="#3d9ae2"
+        android:fillColor="@color/colorPrimary"
         android:pathData="m39.61,46.68a9.936,9.936 0,0 0,-4.9 -4.19l-7.71,-3.09 -1,-0.4a4,4 0,0 1,-8 0l-8.71,3.49a9.982,9.982 0,0 0,-6.29 9.28v9.23h38v-9.23a9.991,9.991 0,0 0,-1.39 -5.09z" />
     <path
         android:fillColor="#ffc477"

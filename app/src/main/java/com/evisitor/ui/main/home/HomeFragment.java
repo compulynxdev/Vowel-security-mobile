@@ -14,8 +14,8 @@ import com.evisitor.data.model.HomeBean;
 import com.evisitor.databinding.FragmentHomeBinding;
 import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.main.commercial.add.CommercialAddVisitorActivity;
-import com.evisitor.ui.main.commercial.visitor.guest.VisitorActivity;
-import com.evisitor.ui.main.commercial.visitor.staff.OfficeStaffActivity;
+import com.evisitor.ui.main.commercial.staff.CommercialStaffActivity;
+import com.evisitor.ui.main.commercial.visitor.VisitorActivity;
 import com.evisitor.ui.main.home.blacklist.BlackListVisitorActivity;
 import com.evisitor.ui.main.home.flag.FlagVisitorActivity;
 import com.evisitor.ui.main.home.rejected.RejectedVisitorActivity;
@@ -97,7 +97,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
                     break;
 
                 case HomeViewModel.STAFF_VIEW:
-                    startActivity(mViewModel.getDataManager().isCommercial() ? OfficeStaffActivity.getStartIntent(getContext()) : HouseKeepingActivity.getStartIntent(getContext()));
+                    startActivity(mViewModel.getDataManager().isCommercial() ? CommercialStaffActivity.getStartIntent(getContext()) : HouseKeepingActivity.getStartIntent(getContext()));
                     break;
 
                 case HomeViewModel.SERVICE_PROVIDER_VIEW:

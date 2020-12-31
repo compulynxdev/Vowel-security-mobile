@@ -42,7 +42,7 @@ public interface ApiHelper {
     @POST(WebServices.CHECKIN_CHECKOUT)
     Call<ResponseBody> doCheckInCheckOut(@Header("authorization") String authToken, @Body RequestBody body);
 
-    @POST(WebServices.GUEST_SEND_NOTIFICTION)
+    @POST(WebServices.GUEST_SEND_NOTIFICATION)
     Call<ResponseBody> doGuestSendNotification(@Header("authorization") String authToken, @Body RequestBody body);
 
     @GET(WebServices.GET_COMMERCIAL_GUEST_CHECKIN_CHECKOUT_LIST)
@@ -110,13 +110,17 @@ public interface ApiHelper {
 
     @GET(WebServices.GET_COMMERCIAL_STAFF)
     Call<ResponseBody> doGetCommercialStaff(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
-    @GET(WebServices.GET_COMMERCIAL_OFFICE_STAFF)
-    Call<ResponseBody> doGetCommercialOfficeListDetail(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
 
-    @POST(WebServices.OFFICE_STAFF_CHECK_IN_OUT)
-    Call<ResponseBody> doOfficeStaffCheckInCheckOut(@Header("authorization") String authToken, @Body RequestBody body);
+    @GET(WebServices.GET_ALL_REGISTERED_COMMERCIAL_STAFF)
+    Call<ResponseBody> doGetCommercialStaffListDetail(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
 
-    @GET(WebServices.GET_CHECK_IN_OFFICE_STAFF)
-    Call<ResponseBody> doGetCommercialOfficeCheckInListDetail(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+    @POST(WebServices.COMMERCIAL_STAFF_CHECK_IN_OUT)
+    Call<ResponseBody> doCommercialStaffCheckInCheckOut(@Header("authorization") String authToken, @Body RequestBody body);
+
+    @GET(WebServices.GET_COMMERCIAL_CHECKIN_CHECKOUT_STAFF)
+    Call<ResponseBody> doGetCommercialStaffCheckInOutListDetail(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+
+    @POST(WebServices.COMMERCIAL_SEND_NOTIFICATION)
+    Call<ResponseBody> doCommercialSendNotification(@Header("authorization") String authToken, @Body RequestBody body);
 
 }

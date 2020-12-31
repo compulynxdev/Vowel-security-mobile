@@ -16,13 +16,13 @@ import androidx.lifecycle.ViewModelProvider;
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.AddVisitorData;
-import com.evisitor.data.model.CommercialStaffResponse;
 import com.evisitor.data.model.CompanyBean;
 import com.evisitor.data.model.DeviceBean;
 import com.evisitor.data.model.GuestConfigurationResponse;
 import com.evisitor.data.model.HouseDetailBean;
 import com.evisitor.data.model.IdentityBean;
 import com.evisitor.data.model.ProfileBean;
+import com.evisitor.data.model.SelectCommercialStaffResponse;
 import com.evisitor.databinding.ActivityCommercialAddVisitorBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.base.BaseViewModel;
@@ -95,7 +95,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
     private void setUpDepartment() {
         mViewModel.doGetLiveHouseDetails().observe(this, houseDetailBeans -> {
             if (houseDetailBeans.size() == 1) {
-                HouseDetailBean bean = (HouseDetailBean) mViewModel.doGetHouseDetails().get(0);
+                HouseDetailBean bean = (HouseDetailBean) mViewModel.doGetHouseDetailsList().get(0);
                 updateWhomToMeetData(false, bean.getName(), String.valueOf(bean.getId()));
             }
         });
@@ -351,13 +351,13 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
                         }
 
                         @Override
-                        public void onStaffClick(CommercialStaffResponse staffDetail) {
+                        public void onStaffClick(SelectCommercialStaffResponse staffDetail) {
                             updateWhomToMeetData(true, staffDetail.getFullName(), String.valueOf(staffDetail.getId()));
                         }
                     }).show(getSupportFragmentManager());
                 } else {
-                    SelectionBottomSheetDialog.newInstance(AppUtils.capitaliseFirstLetter(getString(R.string.select).concat(" ").concat(AppUtils.capitaliseFirstLetter(mViewModel.getDataManager().getLevelName()))), mViewModel.doGetHouseDetails()).setItemSelectedListener(pos -> {
-                        HouseDetailBean bean = (HouseDetailBean) mViewModel.doGetHouseDetails().get(pos);
+                    SelectionBottomSheetDialog.newInstance(AppUtils.capitaliseFirstLetter(getString(R.string.select).concat(" ").concat(AppUtils.capitaliseFirstLetter(mViewModel.getDataManager().getLevelName()))), mViewModel.doGetHouseDetailsList()).setItemSelectedListener(pos -> {
+                        HouseDetailBean bean = (HouseDetailBean) mViewModel.doGetHouseDetailsList().get(pos);
                         updateWhomToMeetData(false, bean.getName(), String.valueOf(bean.getId()));
                     }).show(getSupportFragmentManager());
                 }
@@ -465,8 +465,8 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
             getViewDataBinding().groupGuestCommercial.setVisibility(View.GONE);
             getViewDataBinding().groupSp.setVisibility(View.VISIBLE);
 
-            if (mViewModel.doGetLiveHouseDetails().getValue() == null || mViewModel.doGetHouseDetails().isEmpty()) {
-                mViewModel.doGetHouseDetails("");
+            if (mViewModel.doGetLiveHouseDetails().getValue() == null || mViewModel.doGetHouseDetailsList().isEmpty()) {
+                mViewModel.doGetHouseDetails();
                 setUpDepartment();
             }
         }

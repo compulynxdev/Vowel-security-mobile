@@ -1,10 +1,10 @@
-package com.evisitor.ui.main.commercial.visitor.staff.registered;
+package com.evisitor.ui.main.commercial.staff.registered;
 
 import androidx.annotation.NonNull;
 
 import com.evisitor.R;
 import com.evisitor.data.DataManager;
-import com.evisitor.data.model.OfficeStaffResponse;
+import com.evisitor.data.model.CommercialStaffResponse;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.ui.base.BaseViewModel;
 import com.evisitor.util.AppConstants;
@@ -21,9 +21,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RegisteredOfficeStaffViewModel extends BaseViewModel<RegisteredOfficeStaffNavigator> {
+public class RegisteredCommercialStaffViewModel extends BaseViewModel<RegisteredCommercialStaffNavigator> {
 
-    public RegisteredOfficeStaffViewModel(DataManager dataManager) {
+    public RegisteredCommercialStaffViewModel(DataManager dataManager) {
         super(dataManager);
     }
 
@@ -38,7 +38,7 @@ public class RegisteredOfficeStaffViewModel extends BaseViewModel<RegisteredOffi
             map.put("type", "all");
             AppLogger.d("Searching : Registered", page + " : " + search);
 
-            getDataManager().doGetCommercialOfficeListDetail(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
+            getDataManager().doGetCommercialStaffListDetail(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                     getNavigator().hideLoading();
@@ -46,7 +46,7 @@ public class RegisteredOfficeStaffViewModel extends BaseViewModel<RegisteredOffi
                     try {
                         if (response.code() == 200) {
                             assert response.body() != null;
-                            OfficeStaffResponse registeredOFResponse = getDataManager().getGson().fromJson(response.body().string(), OfficeStaffResponse.class);
+                            CommercialStaffResponse registeredOFResponse = getDataManager().getGson().fromJson(response.body().string(), CommercialStaffResponse.class);
                             if (registeredOFResponse.getContent() != null) {
                                 AppLogger.d("Searching : Size", "" + registeredOFResponse.getContent().size());
                                 getNavigator().onRegisteredOfficeStaffSuccess(registeredOFResponse.getContent());
@@ -72,21 +72,23 @@ public class RegisteredOfficeStaffViewModel extends BaseViewModel<RegisteredOffi
         }
     }
 
-    List<VisitorProfileBean> setClickVisitorDetail(OfficeStaffResponse.ContentBean bean) {
+    List<VisitorProfileBean> setClickVisitorDetail(CommercialStaffResponse.ContentBean bean) {
         getNavigator().showLoading();
         List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, bean.getFullName())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_profile, bean.getProfile())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_staff_id, bean.getEmployeeId())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_days_slot), VisitorProfileBean.VIEW_TYPE_DAYS, bean.getWorkingDays()));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time_slot, CalenderUtils.formatDate(bean.getCheckInTime(), CalenderUtils.TIME_FORMAT, CalenderUtils.TIME_FORMAT_AM), CalenderUtils.formatDate(bean.getCheckOutTime(), CalenderUtils.TIME_FORMAT, CalenderUtils.TIME_FORMAT_AM))));
         if (!bean.getContactNo().isEmpty())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, bean.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(bean.getDialingCode()).concat(" ").concat(bean.getContactNo()))));
         if (!bean.getDocumentId().isEmpty())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, bean.getDocumentId())));
 
-        if (!getDataManager().isCommercial() && !bean.getFlatNo().isEmpty()) {
+        if (!bean.getPremiseName().isEmpty()) {
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), bean.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : bean.getPremiseName())));
-        } else if (bean.getCreatedBy() != null && !bean.getCreatedBy().isEmpty())
+        }
+
+        if (bean.getCreatedBy() != null && !bean.getCreatedBy().isEmpty())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_register_by, bean.getCreatedBy())));
         if (bean.getCreatedDate() != null && !bean.getCreatedDate().isEmpty())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_register_date, CalenderUtils.formatDate(bean.getCreatedDate(), CalenderUtils.SERVER_DATE_FORMAT2, CalenderUtils.CUSTOM_TIMESTAMP_FORMAT_SLASH))));

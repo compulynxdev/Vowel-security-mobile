@@ -9,15 +9,16 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
-import com.evisitor.data.model.CommercialGuestResponse;
+import com.evisitor.data.model.CommercialStaffResponse;
+import com.evisitor.data.model.CommercialVisitorResponse;
 import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.HouseKeeping;
-import com.evisitor.data.model.OfficeStaffResponse;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.databinding.FragmentCheckOutBinding;
 import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.main.activity.ActivityNavigator;
 import com.evisitor.ui.main.activity.checkout.adapter.CommercialGuestCheckOutAdapter;
+import com.evisitor.ui.main.activity.checkout.adapter.CommercialStaffCheckOutAdapter;
 import com.evisitor.ui.main.activity.checkout.adapter.GuestCheckOutAdapter;
 import com.evisitor.ui.main.activity.checkout.adapter.HouseKeepingCheckOutAdapter;
 import com.evisitor.ui.main.activity.checkout.adapter.ServiceProviderCheckOutAdapter;
@@ -29,14 +30,16 @@ import java.util.List;
 
 public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, CheckOutViewModel> implements ActivityNavigator {
 
-    private List<CommercialGuestResponse.CommercialGuest> commercialGuestList;
+    private List<CommercialVisitorResponse.CommercialGuest> commercialGuestList;
     private List<Guests> guestsList;
     private List<ServiceProvider> serviceProviderList;
     private List<HouseKeeping> houseKeepingList;
+    private List<CommercialStaffResponse.ContentBean> commercialStaffList;
 
+    private CommercialGuestCheckOutAdapter commercialGuestAdapter;
     private GuestCheckOutAdapter guestAdapter;
-    private CommercialGuestCheckOutAdapter commercialGuestCheckOutAdapter;
     private ServiceProviderCheckOutAdapter serviceProviderAdapter;
+    private CommercialStaffCheckOutAdapter commercialStaffAdapter;
     private HouseKeepingCheckOutAdapter houseKeepingAdapter;
     private int listOf = 0;
     private OnFragmentInteraction listener;
@@ -85,13 +88,15 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
             //guest
             case 0:
                 if (mViewModel.getDataManager().isCommercial()) {
-                    getViewDataBinding().recyclerView.setAdapter(commercialGuestCheckOutAdapter);
+                    getViewDataBinding().recyclerView.setAdapter(commercialGuestAdapter);
                 } else getViewDataBinding().recyclerView.setAdapter(guestAdapter);
                 break;
 
             //house
             case 1:
-                getViewDataBinding().recyclerView.setAdapter(houseKeepingAdapter);
+                if (mViewModel.getDataManager().isCommercial()) {
+                    getViewDataBinding().recyclerView.setAdapter(commercialStaffAdapter);
+                } else getViewDataBinding().recyclerView.setAdapter(houseKeepingAdapter);
                 break;
 
             //service
@@ -106,16 +111,16 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        houseKeepingList = new ArrayList<>();
         serviceProviderList = new ArrayList<>();
 
         if (mViewModel.getDataManager().isCommercial()) {
             setUpCommercialGuestAdapter();
+            setUpCommercialStaffAdapter();
         } else {
             setUpGuestAdapter();
+            setUpHouseKeeperAdapter();
         }
         setUpServiceProviderAdapter();
-        setUpHouseKeeperAdapter();
 
         scrollListener = new RecyclerViewScrollListener() {
             @Override
@@ -150,28 +155,33 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
         updateUI();
     }
 
+    private void setUpCommercialStaffAdapter() {
+        commercialStaffList = new ArrayList<>();
+        commercialStaffAdapter = new CommercialStaffCheckOutAdapter(commercialStaffList, pos -> VisitorProfileDialog.newInstance(mViewModel.getCommercialStaffProfileBean(commercialStaffList.get(pos)), null).setImage(commercialStaffList.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
+        commercialStaffAdapter.setHasStableIds(true);
+    }
+
     private void setUpHouseKeeperAdapter() {
-        houseKeepingAdapter = new HouseKeepingCheckOutAdapter(houseKeepingList, pos -> VisitorProfileDialog.newInstance(mViewModel.getHouseKeepingCheckInProfileBean(houseKeepingList.get(pos)), null).setImage(houseKeepingList.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
+        houseKeepingList = new ArrayList<>();
+        houseKeepingAdapter = new HouseKeepingCheckOutAdapter(houseKeepingList, pos -> VisitorProfileDialog.newInstance(mViewModel.getHouseKeepingProfileBean(houseKeepingList.get(pos)), null).setImage(houseKeepingList.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
         houseKeepingAdapter.setHasStableIds(true);
     }
 
     private void setUpServiceProviderAdapter() {
-        serviceProviderAdapter = new ServiceProviderCheckOutAdapter(serviceProviderList, pos -> VisitorProfileDialog.newInstance(mViewModel.getServiceProviderCheckInProfileBean(serviceProviderList.get(pos)), null).setImage(serviceProviderList.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
+        serviceProviderAdapter = new ServiceProviderCheckOutAdapter(serviceProviderList, pos -> VisitorProfileDialog.newInstance(mViewModel.getServiceProviderProfileBean(serviceProviderList.get(pos)), null).setImage(serviceProviderList.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
         serviceProviderAdapter.setHasStableIds(true);
     }
 
     private void setUpCommercialGuestAdapter() {
         commercialGuestList = new ArrayList<>();
-        commercialGuestCheckOutAdapter = new CommercialGuestCheckOutAdapter(commercialGuestList, pos -> VisitorProfileDialog.newInstance(mViewModel.getCommercialGuestCheckInProfileBean(commercialGuestList.get(pos)), null).setImage(commercialGuestList.get(pos).getImageUrl()).setIsCommercialGuest(true).setBtnVisible(false).show(getChildFragmentManager()));
-        commercialGuestCheckOutAdapter.setHasStableIds(true);
-        getViewDataBinding().recyclerView.setAdapter(commercialGuestCheckOutAdapter);
+        commercialGuestAdapter = new CommercialGuestCheckOutAdapter(commercialGuestList, pos -> VisitorProfileDialog.newInstance(mViewModel.getCommercialGuestProfileBean(commercialGuestList.get(pos)), null).setImage(commercialGuestList.get(pos).getImageUrl()).setIsCommercialGuest(true).setBtnVisible(false).show(getChildFragmentManager()));
+        commercialGuestAdapter.setHasStableIds(true);
     }
 
     private void setUpGuestAdapter() {
         guestsList = new ArrayList<>();
-        guestAdapter = new GuestCheckOutAdapter(guestsList, pos -> VisitorProfileDialog.newInstance(mViewModel.getGuestCheckInProfileBean(guestsList.get(pos)), null).setImage(guestsList.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
+        guestAdapter = new GuestCheckOutAdapter(guestsList, pos -> VisitorProfileDialog.newInstance(mViewModel.getGuestProfileBean(guestsList.get(pos)), null).setImage(guestsList.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
         guestAdapter.setHasStableIds(true);
-        getViewDataBinding().recyclerView.setAdapter(guestAdapter);
     }
 
     public void doSearch(String search) {
@@ -189,7 +199,9 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
                 break;
 
             case 1:
-                houseKeepingList.clear();
+                if (mViewModel.getDataManager().isCommercial())
+                    commercialStaffList.clear();
+                else houseKeepingList.clear();
                 hkPage = 0;
                 mViewModel.getCheckOutData(hkPage, search, listOf);
                 break;
@@ -203,11 +215,11 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
     }
 
     @Override
-    public void onExpectedCommercialGuestSuccess(List<CommercialGuestResponse.CommercialGuest> tmpGuestsList) {
+    public void onExpectedCommercialGuestSuccess(List<CommercialVisitorResponse.CommercialGuest> tmpGuestsList) {
         if (guestPage == 0) commercialGuestList.clear();
 
         commercialGuestList.addAll(tmpGuestsList);
-        commercialGuestCheckOutAdapter.notifyDataSetChanged();
+        commercialGuestAdapter.notifyDataSetChanged();
 
         if (commercialGuestList.size() == 0) {
             getViewDataBinding().recyclerView.setVisibility(View.GONE);
@@ -256,20 +268,20 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
     }
 
     @Override
-    public void onExpectedOfficeSuccess(List<OfficeStaffResponse.ContentBean> staffList) {
-      /*  if (hkPage == 0) officeStaffList.clear();
+    public void onExpectedOfficeSuccess(List<CommercialStaffResponse.ContentBean> staffList) {
+        if (hkPage == 0) commercialStaffList.clear();
 
-        officeStaffList.addAll(tmpHouseKeepingList);
-        houseKeepingAdapter.notifyDataSetChanged();
+        commercialStaffList.addAll(staffList);
+        commercialStaffAdapter.notifyDataSetChanged();
 
-        if (houseKeepingList.size() == 0) {
+        if (commercialStaffList.size() == 0) {
             getViewDataBinding().recyclerView.setVisibility(View.GONE);
             getViewDataBinding().tvNoData.setVisibility(View.VISIBLE);
         } else {
             getViewDataBinding().tvNoData.setVisibility(View.GONE);
             getViewDataBinding().recyclerView.setVisibility(View.VISIBLE);
         }
-        if (listOf == 1) listener.totalCount(houseKeepingList.size());*/
+        if (listOf == 1) listener.totalCount(commercialStaffList.size());
     }
 
     @Override
@@ -307,16 +319,30 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
     }
 
     private void setGuestAdapterLoading(boolean isShowLoader) {
-        if (guestAdapter != null) {
-            guestAdapter.showLoading(isShowLoader);
-            guestAdapter.notifyDataSetChanged();
+        if (mViewModel.getDataManager().isCommercial()) {
+            if (commercialGuestAdapter != null) {
+                commercialGuestAdapter.showLoading(isShowLoader);
+                commercialGuestAdapter.notifyDataSetChanged();
+            }
+        } else {
+            if (guestAdapter != null) {
+                guestAdapter.showLoading(isShowLoader);
+                guestAdapter.notifyDataSetChanged();
+            }
         }
     }
 
     private void setHKAdapterLoading(boolean isShowLoader) {
-        if (houseKeepingAdapter != null) {
-            houseKeepingAdapter.showLoading(isShowLoader);
-            houseKeepingAdapter.notifyDataSetChanged();
+        if (mViewModel.getDataManager().isCommercial()) {
+            if (commercialStaffAdapter != null) {
+                commercialStaffAdapter.showLoading(isShowLoader);
+                commercialStaffAdapter.notifyDataSetChanged();
+            }
+        } else {
+            if (houseKeepingAdapter != null) {
+                houseKeepingAdapter.showLoading(isShowLoader);
+                houseKeepingAdapter.notifyDataSetChanged();
+            }
         }
     }
 

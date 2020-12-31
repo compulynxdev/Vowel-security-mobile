@@ -4,12 +4,12 @@ import androidx.annotation.NonNull;
 
 import com.evisitor.R;
 import com.evisitor.data.DataManager;
-import com.evisitor.data.model.CommercialGuestResponse;
+import com.evisitor.data.model.CommercialStaffResponse;
+import com.evisitor.data.model.CommercialVisitorResponse;
 import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.GuestsResponse;
 import com.evisitor.data.model.HouseKeeping;
 import com.evisitor.data.model.HouseKeepingCheckInResponse;
-import com.evisitor.data.model.HouseKeepingResponse;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.model.ServiceProviderResponse;
 import com.evisitor.data.model.VisitorProfileBean;
@@ -54,7 +54,9 @@ public class CheckOutViewModel extends BaseViewModel<ActivityNavigator> {
                     break;
 
                 case 1:
-                    getHouseKeeperList(map);
+                    if (getDataManager().isCommercial())
+                        getCommercialStaffList(map);
+                    else getHouseKeeperList(map);
                     AppLogger.d("Searching : CheckOutViewModel ExpectedHK", page + " : " + search);
                     break;
 
@@ -78,7 +80,7 @@ public class CheckOutViewModel extends BaseViewModel<ActivityNavigator> {
                 try {
                     if (response.code() == 200) {
                         assert response.body() != null;
-                        CommercialGuestResponse commercialGuestResponse = getDataManager().getGson().fromJson(response.body().string(), CommercialGuestResponse.class);
+                        CommercialVisitorResponse commercialGuestResponse = getDataManager().getGson().fromJson(response.body().string(), CommercialVisitorResponse.class);
                         if (commercialGuestResponse.getContent() != null) {
                             getNavigator().onExpectedCommercialGuestSuccess(commercialGuestResponse.getContent());
                         }
@@ -127,6 +129,37 @@ public class CheckOutViewModel extends BaseViewModel<ActivityNavigator> {
                 getNavigator().handleApiFailure(t);
             }
         });
+    }
+
+    private void getCommercialStaffList(Map<String, String> map) {
+        getDataManager().doGetCommercialStaffCheckInOutListDetail(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                getNavigator().hideLoading();
+                getNavigator().hideSwipeToRefresh();
+                try {
+                    if (response.code() == 200) {
+                        assert response.body() != null;
+                        CommercialStaffResponse officeStaffResponse = getDataManager().getGson().fromJson(response.body().string(), CommercialStaffResponse.class);
+                        if (officeStaffResponse.getContent() != null) {
+                            getNavigator().onExpectedOfficeSuccess(officeStaffResponse.getContent());
+                        }
+                    } else if (response.code() == 401) {
+                        getNavigator().openActivityOnTokenExpire();
+                    } else getNavigator().handleApiError(response.errorBody());
+                } catch (Exception e) {
+                    getNavigator().showAlert(R.string.alert, R.string.alert_error);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                getNavigator().hideSwipeToRefresh();
+                getNavigator().hideLoading();
+                getNavigator().handleApiFailure(t);
+            }
+        });
+
     }
 
     private void getHouseKeeperList(Map<String, String> map) {
@@ -191,10 +224,10 @@ public class CheckOutViewModel extends BaseViewModel<ActivityNavigator> {
 
     }
 
-    List<VisitorProfileBean> getCommercialGuestCheckInProfileBean(CommercialGuestResponse.CommercialGuest guests) {
+    List<VisitorProfileBean> getCommercialGuestProfileBean(CommercialVisitorResponse.CommercialGuest guests) {
         getNavigator().showLoading();
         List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
-        getDataManager().setCommercialGuestDetail(guests);
+        getDataManager().setCommercialVisitorDetail(guests);
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, guests.getName())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time_in, CalenderUtils.formatDate(guests.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT))));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time_out, CalenderUtils.formatDate(guests.getCheckOutTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT))));
@@ -214,7 +247,7 @@ public class CheckOutViewModel extends BaseViewModel<ActivityNavigator> {
         return visitorProfileBeanList;
     }
 
-    List<VisitorProfileBean> getGuestCheckInProfileBean(Guests guests) {
+    List<VisitorProfileBean> getGuestProfileBean(Guests guests) {
         getNavigator().showLoading();
         List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, guests.getName())));
@@ -236,11 +269,25 @@ public class CheckOutViewModel extends BaseViewModel<ActivityNavigator> {
         return visitorProfileBeanList;
     }
 
-    List<VisitorProfileBean> getHouseKeepingCheckInProfileBean(HouseKeeping houseKeeping) {
+    List<VisitorProfileBean> getCommercialStaffProfileBean(CommercialStaffResponse.ContentBean bean) {
         getNavigator().showLoading();
         List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
-        HouseKeepingResponse.ContentBean hkBean = new HouseKeepingResponse.ContentBean();
-        hkBean.setId(Integer.parseInt(houseKeeping.getHouseKeeperId()));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, bean.getFullName())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_profile, bean.getProfile().isEmpty() ? getNavigator().getContext().getString(R.string.na) : bean.getProfile())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_staff_id, bean.getEmployeeId())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time_in, CalenderUtils.formatDate(bean.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time_out, CalenderUtils.formatDate(bean.getCheckOutTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, bean.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(bean.getDialingCode()).concat(" ").concat(bean.getContactNo()))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, bean.getDocumentId().isEmpty() ? getNavigator().getContext().getString(R.string.na) : bean.getDocumentId())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), bean.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : bean.getPremiseName())));
+
+        getNavigator().hideLoading();
+        return visitorProfileBeanList;
+    }
+
+    List<VisitorProfileBean> getHouseKeepingProfileBean(HouseKeeping houseKeeping) {
+        getNavigator().showLoading();
+        List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, houseKeeping.getName())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_profile, houseKeeping.getProfile().isEmpty() ? getNavigator().getContext().getString(R.string.na) : houseKeeping.getProfile())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time_in, CalenderUtils.formatDate(houseKeeping.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT))));
@@ -248,18 +295,15 @@ public class CheckOutViewModel extends BaseViewModel<ActivityNavigator> {
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, houseKeeping.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(houseKeeping.getDialingCode()).concat(" ").concat(houseKeeping.getContactNo()))));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, houseKeeping.getIdentityNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : houseKeeping.getIdentityNo())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_comp_name, houseKeeping.getCompanyName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : houseKeeping.getCompanyName())));
-
-        if (!getDataManager().isCommercial()) {
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), houseKeeping.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : houseKeeping.getPremiseName())));
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, houseKeeping.getHost().isEmpty() ? houseKeeping.getCreatedBy() : houseKeeping.getHost())));
-            if (houseKeeping.isCheckOutFeature())
-                visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_is_checkout, houseKeeping.isHostCheckOut())));
-        }
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), houseKeeping.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : houseKeeping.getPremiseName())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, houseKeeping.getHost().isEmpty() ? houseKeeping.getCreatedBy() : houseKeeping.getHost())));
+        if (houseKeeping.isCheckOutFeature())
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_is_checkout, houseKeeping.isHostCheckOut())));
         getNavigator().hideLoading();
         return visitorProfileBeanList;
     }
 
-    List<VisitorProfileBean> getServiceProviderCheckInProfileBean(ServiceProvider serviceProvider) {
+    List<VisitorProfileBean> getServiceProviderProfileBean(ServiceProvider serviceProvider) {
         getNavigator().showLoading();
         List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, serviceProvider.getName())));
@@ -269,9 +313,8 @@ public class CheckOutViewModel extends BaseViewModel<ActivityNavigator> {
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, serviceProvider.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(serviceProvider.getDialingCode()).concat(" ").concat(serviceProvider.getContactNo()))));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, serviceProvider.getIdentityNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : serviceProvider.getIdentityNo())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_comp_name, serviceProvider.getCompanyName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : serviceProvider.getCompanyName())));
-
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), serviceProvider.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : serviceProvider.getPremiseName())));
         if (!getDataManager().isCommercial()) {
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), serviceProvider.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : serviceProvider.getPremiseName())));
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, serviceProvider.getHost().isEmpty() ? serviceProvider.getCreatedBy() : serviceProvider.getHost())));
             if (serviceProvider.isCheckOutFeature())
                 visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_is_checkout, serviceProvider.isHostCheckOut())));

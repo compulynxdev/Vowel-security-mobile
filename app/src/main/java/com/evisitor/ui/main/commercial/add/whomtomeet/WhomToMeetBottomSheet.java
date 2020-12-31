@@ -12,8 +12,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
-import com.evisitor.data.model.CommercialStaffResponse;
 import com.evisitor.data.model.HouseDetailBean;
+import com.evisitor.data.model.SelectCommercialStaffResponse;
 import com.evisitor.databinding.DialogWhomToMeetBinding;
 import com.evisitor.ui.base.BaseBottomSheetDialog;
 import com.evisitor.ui.main.commercial.add.whomtomeet.level.SelectLastLevelFragment;
@@ -80,7 +80,7 @@ public class WhomToMeetBottomSheet extends BaseBottomSheetDialog<DialogWhomToMee
     }
 
     private void setUpSearch() {
-        getViewDataBinding().header.imgSearch.setVisibility(View.VISIBLE);
+        getViewDataBinding().header.imgSearch.setVisibility(View.GONE);
         getViewDataBinding().header.imgSearch.setOnClickListener(this);
 
         getBaseActivity().setupSearchSetting(getViewDataBinding().customSearchView.searchView);
@@ -175,7 +175,7 @@ public class WhomToMeetBottomSheet extends BaseBottomSheetDialog<DialogWhomToMee
     }
 
     @Override
-    public void onStaffClick(CommercialStaffResponse staffDetail) {
+    public void onStaffClick(SelectCommercialStaffResponse staffDetail) {
         if (callback != null) callback.onStaffClick(staffDetail);
         dismissDialog(TAG);
     }

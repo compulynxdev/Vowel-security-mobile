@@ -89,7 +89,7 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
                 object.put("documentId", addVisitorData.identityNo);
                 object.put("dialingCode", addVisitorData.dialingCode);
                 object.put("contactNo", addVisitorData.contact);
-                object.put("guestType", "RANDOM_VISITOR");
+                object.put("guestType", AppConstants.WALKIN_VISITOR);
                 object.put("type", "random");
                 object.put("address", addVisitorData.address);
                 object.put("country", "");
@@ -399,11 +399,11 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
         }
     }
 
-    void doGetHouseDetails(String search) {
+    void doGetHouseDetails() {
         if (getNavigator().isNetworkConnected(true)) {
             Map<String, String> map = new HashMap<>();
             map.put("accountId", getDataManager().getAccountId());
-            map.put("search", search);
+            map.put("search", "");
             getDataManager().doGetHouseDetailList(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
@@ -432,7 +432,7 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
         }
     }
 
-    List doGetHouseDetails() {
+    List doGetHouseDetailsList() {
         return houseDetailMutableList.getValue();
     }
 

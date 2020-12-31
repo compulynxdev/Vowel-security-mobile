@@ -190,9 +190,7 @@ public class GadgetsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 }
             });
 
-            img_close.setOnClickListener(v -> {
-                callback.onRemove(position);
-            });
+            img_close.setOnClickListener(v -> callback.onRemove(position));
         }
     }
 }

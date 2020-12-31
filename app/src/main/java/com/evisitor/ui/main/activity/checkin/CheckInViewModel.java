@@ -4,13 +4,13 @@ import androidx.annotation.NonNull;
 
 import com.evisitor.R;
 import com.evisitor.data.DataManager;
-import com.evisitor.data.model.CommercialGuestResponse;
+import com.evisitor.data.model.CommercialStaffResponse;
+import com.evisitor.data.model.CommercialVisitorResponse;
 import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.GuestsResponse;
 import com.evisitor.data.model.HouseKeeping;
 import com.evisitor.data.model.HouseKeepingCheckInResponse;
 import com.evisitor.data.model.HouseKeepingResponse;
-import com.evisitor.data.model.OfficeStaffResponse;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.model.ServiceProviderResponse;
 import com.evisitor.data.model.VisitorProfileBean;
@@ -61,7 +61,7 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
 
                 case 1:
                     if (getDataManager().isCommercial())
-                        getOfficeStaffList(map);
+                        getCommercialStaffList(map);
                     else getHouseKeeperList(map);
                     AppLogger.d("Searching : CheckInViewModel ExpectedHK", page + " : " + search);
                     break;
@@ -141,8 +141,8 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
     }
 
 
-    private void getOfficeStaffList(Map<String, String> map) {
-        getDataManager().doGetCommercialOfficeCheckInListDetail(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
+    private void getCommercialStaffList(Map<String, String> map) {
+        getDataManager().doGetCommercialStaffCheckInOutListDetail(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 getNavigator().hideLoading();
@@ -150,7 +150,7 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
                 try {
                     if (response.code() == 200) {
                         assert response.body() != null;
-                        OfficeStaffResponse officeStaffResponse = getDataManager().getGson().fromJson(response.body().string(), OfficeStaffResponse.class);
+                        CommercialStaffResponse officeStaffResponse = getDataManager().getGson().fromJson(response.body().string(), CommercialStaffResponse.class);
                         if (officeStaffResponse.getContent() != null) {
                             getNavigator().onExpectedOfficeSuccess(officeStaffResponse.getContent());
                         }
@@ -211,7 +211,7 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
                 try {
                     if (response.code() == 200) {
                         assert response.body() != null;
-                        CommercialGuestResponse commercialGuestResponse = getDataManager().getGson().fromJson(response.body().string(), CommercialGuestResponse.class);
+                        CommercialVisitorResponse commercialGuestResponse = getDataManager().getGson().fromJson(response.body().string(), CommercialVisitorResponse.class);
                         if (commercialGuestResponse.getContent() != null) {
                             getNavigator().onExpectedCommercialGuestSuccess(commercialGuestResponse.getContent());
                         }
@@ -232,103 +232,18 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
         });
     }
 
-    List<VisitorProfileBean> getCommercialGuestCheckInProfileBean(CommercialGuestResponse.CommercialGuest guests) {
-        getNavigator().showLoading();
-        List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
-        getDataManager().setCommercialGuestDetail(guests);
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, guests.getName())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time, CalenderUtils.formatDate(guests.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT))));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_vehicle, guests.getEnteredVehicleNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getEnteredVehicleNo())));
-
-        if (getDataManager().getGuestConfiguration().getGuestField().isContactNo())
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, guests.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getDialingCode().concat(guests.getContactNo()))));
-
-        if (getDataManager().isIdentifyFeature())
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, guests.getIdentityNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getIdentityNo())));
-
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), guests.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getPremiseName())));
-
-        if (!guests.getHost().isEmpty())
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, guests.getHost().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getHost())));
-        getNavigator().hideLoading();
-        return visitorProfileBeanList;
-    }
-
-    List<VisitorProfileBean> getGuestCheckInProfileBean(Guests guests) {
-        getNavigator().showLoading();
-        List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
-        getDataManager().setGuestDetail(guests);
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, guests.getName())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time, CalenderUtils.formatDate(guests.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT))));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_vehicle, guests.getEnteredVehicleNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getEnteredVehicleNo())));
-
-        if (getDataManager().getGuestConfiguration().getGuestField().isContactNo())
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, guests.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getDialingCode().concat(guests.getContactNo()))));
-
-        if (getDataManager().isIdentifyFeature())
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, guests.getIdentityNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getIdentityNo())));
-
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), guests.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getPremiseName())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, guests.getHost().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getHost())));
-        if (guests.isCheckOutFeature())
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_is_checkout, guests.isHostCheckOut())));
-        getNavigator().hideLoading();
-        return visitorProfileBeanList;
-    }
-
-    List<VisitorProfileBean> getHouseKeepingCheckInProfileBean(HouseKeeping houseKeeping) {
-        getNavigator().showLoading();
-        List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
-        HouseKeepingResponse.ContentBean hkBean = new HouseKeepingResponse.ContentBean();
-        hkBean.setId(Integer.parseInt(houseKeeping.getHouseKeeperId()));
-        getDataManager().setHouseKeeping(hkBean);
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, houseKeeping.getName())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_profile, houseKeeping.getProfile().isEmpty() ? getNavigator().getContext().getString(R.string.na) : houseKeeping.getProfile())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time, CalenderUtils.formatDate(houseKeeping.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT))));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, houseKeeping.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(houseKeeping.getDialingCode()).concat(" ").concat(houseKeeping.getContactNo()))));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, houseKeeping.getIdentityNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : houseKeeping.getIdentityNo())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_comp_name, houseKeeping.getCompanyName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : houseKeeping.getCompanyName())));
-
-        if (!getDataManager().isCommercial()) {
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), houseKeeping.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : houseKeeping.getPremiseName())));
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, houseKeeping.getHost().isEmpty() ? houseKeeping.getCreatedBy() : houseKeeping.getHost())));
-            if (houseKeeping.isCheckOutFeature())
-                visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_is_checkout, houseKeeping.isHostCheckOut())));
-        }
-        getNavigator().hideLoading();
-        return visitorProfileBeanList;
-    }
-
-    List<VisitorProfileBean> getServiceProviderCheckInProfileBean(ServiceProvider serviceProvider) {
-        getNavigator().showLoading();
-        List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
-        getDataManager().setSPDetail(serviceProvider);
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, serviceProvider.getName())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time, CalenderUtils.formatDate(serviceProvider.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT))));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_vehicle, serviceProvider.getEnteredVehicleNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : serviceProvider.getEnteredVehicleNo())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, serviceProvider.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(serviceProvider.getDialingCode()).concat(" ").concat(serviceProvider.getContactNo()))));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, serviceProvider.getIdentityNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : serviceProvider.getIdentityNo())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_comp_name, serviceProvider.getCompanyName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : serviceProvider.getCompanyName())));
-
-        if (!getDataManager().isCommercial()) {
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), serviceProvider.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : serviceProvider.getPremiseName())));
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, serviceProvider.getHost().isEmpty() ? serviceProvider.getCreatedBy() : serviceProvider.getHost())));
-            if (serviceProvider.isCheckOutFeature())
-                visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_is_checkout, serviceProvider.isHostCheckOut())));
-        }
-        getNavigator().hideLoading();
-        return visitorProfileBeanList;
-    }
-
     void checkOut(int type) {
         JSONObject object = new JSONObject();
         try {
             switch (type) {
                 case 0:
-                    if (getDataManager().isCommercial())
-                        object.put("id", getDataManager().getCommercialGuestDetail().getGuestId());
-                    else object.put("id", getDataManager().getGuestDetail().getGuestId());
-                    object.put("visitor", AppConstants.GUEST);
+                    if (getDataManager().isCommercial()) {
+                        object.put("accountId", getDataManager().getAccountId());
+                        object.put("id", getDataManager().getCommercialVisitorDetail().getGuestId());
+                    } else {
+                        object.put("id", getDataManager().getGuestDetail().getGuestId());
+                        object.put("visitor", AppConstants.GUEST);
+                    }
                     object.put("type", AppConstants.CHECK_OUT);
                     break;
 
@@ -352,24 +267,10 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
         doCheckInOut(body, () -> getNavigator().refreshList());
     }
 
-    public List<VisitorProfileBean> getOfficeStaffCheckInBean(OfficeStaffResponse.ContentBean bean) {
-        getNavigator().showLoading();
-        List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
-        getDataManager().setOfficeStaff(bean);
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, bean.getFullName())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_profile, bean.getProfile().isEmpty() ? getNavigator().getContext().getString(R.string.na) : bean.getProfile())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time, CalenderUtils.formatDate(bean.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT))));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, bean.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(bean.getDialingCode()).concat(" ").concat(bean.getContactNo()))));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, bean.getDocumentId().isEmpty() ? getNavigator().getContext().getString(R.string.na) : bean.getDocumentId())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), bean.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : bean.getPremiseName())));
-        getNavigator().hideLoading();
-        return visitorProfileBeanList;
-    }
-
-    public void staffCheckOut() {
+    void staffCheckOut() {
         JSONObject object = new JSONObject();
         try {
-            object.put("id", getDataManager().getOfficeStaff().getId());
+            object.put("id", getDataManager().getCommercialStaff().getId());
             object.put("accountId", getDataManager().getAccountId());
             object.put("type", AppConstants.CHECK_OUT);
         } catch (Exception e) {
@@ -377,7 +278,7 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
         }
         RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
         getNavigator().showLoading();
-        getDataManager().doOfficeStaffCheckInCheckOut(getDataManager().getHeader(), body).enqueue(new Callback<ResponseBody>() {
+        getDataManager().doCommercialStaffCheckInCheckOut(getDataManager().getHeader(), body).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 getNavigator().hideLoading();
@@ -405,5 +306,105 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
                 getNavigator().handleApiFailure(t);
             }
         });
+    }
+
+    List<VisitorProfileBean> getCommercialGuestProfileBean(CommercialVisitorResponse.CommercialGuest guests) {
+        getNavigator().showLoading();
+        List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
+        getDataManager().setCommercialVisitorDetail(guests);
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, guests.getName())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time, CalenderUtils.formatDate(guests.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_vehicle, guests.getEnteredVehicleNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getEnteredVehicleNo())));
+
+        if (getDataManager().getGuestConfiguration().getGuestField().isContactNo())
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, guests.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getDialingCode().concat(guests.getContactNo()))));
+
+        if (getDataManager().isIdentifyFeature())
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, guests.getIdentityNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getIdentityNo())));
+
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), guests.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getPremiseName())));
+
+        if (!guests.getHost().isEmpty())
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, guests.getHost().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getHost())));
+        getNavigator().hideLoading();
+        return visitorProfileBeanList;
+    }
+
+    List<VisitorProfileBean> getGuestProfileBean(Guests guests) {
+        getNavigator().showLoading();
+        List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
+        getDataManager().setGuestDetail(guests);
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, guests.getName())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time, CalenderUtils.formatDate(guests.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_vehicle, guests.getEnteredVehicleNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getEnteredVehicleNo())));
+
+        if (getDataManager().getGuestConfiguration().getGuestField().isContactNo())
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, guests.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getDialingCode().concat(guests.getContactNo()))));
+
+        if (getDataManager().isIdentifyFeature())
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, guests.getIdentityNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getIdentityNo())));
+
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), guests.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getPremiseName())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, guests.getHost().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getHost())));
+        if (guests.isCheckOutFeature())
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_is_checkout, guests.isHostCheckOut())));
+        getNavigator().hideLoading();
+        return visitorProfileBeanList;
+    }
+
+    List<VisitorProfileBean> getCommercialStaffBean(CommercialStaffResponse.ContentBean bean) {
+        getNavigator().showLoading();
+        List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
+        getDataManager().setCommercialStaff(bean);
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, bean.getFullName())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_profile, bean.getProfile().isEmpty() ? getNavigator().getContext().getString(R.string.na) : bean.getProfile())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_staff_id, bean.getEmployeeId().isEmpty() ? getNavigator().getContext().getString(R.string.na) : bean.getEmployeeId())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time, CalenderUtils.formatDate(bean.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_vehicle, bean.getEnteredVehicleNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : bean.getEnteredVehicleNo())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, bean.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(bean.getDialingCode()).concat(" ").concat(bean.getContactNo()))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, bean.getDocumentId().isEmpty() ? getNavigator().getContext().getString(R.string.na) : bean.getDocumentId())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), bean.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : bean.getPremiseName())));
+        getNavigator().hideLoading();
+        return visitorProfileBeanList;
+    }
+
+    List<VisitorProfileBean> getHouseKeepingProfileBean(HouseKeeping houseKeeping) {
+        getNavigator().showLoading();
+        List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
+        HouseKeepingResponse.ContentBean hkBean = new HouseKeepingResponse.ContentBean();
+        hkBean.setId(Integer.parseInt(houseKeeping.getHouseKeeperId()));
+        getDataManager().setHouseKeeping(hkBean);
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, houseKeeping.getName())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_profile, houseKeeping.getProfile().isEmpty() ? getNavigator().getContext().getString(R.string.na) : houseKeeping.getProfile())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time, CalenderUtils.formatDate(houseKeeping.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, houseKeeping.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(houseKeeping.getDialingCode()).concat(" ").concat(houseKeeping.getContactNo()))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, houseKeeping.getIdentityNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : houseKeeping.getIdentityNo())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_comp_name, houseKeeping.getCompanyName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : houseKeeping.getCompanyName())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), houseKeeping.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : houseKeeping.getPremiseName())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, houseKeeping.getHost().isEmpty() ? houseKeeping.getCreatedBy() : houseKeeping.getHost())));
+        if (houseKeeping.isCheckOutFeature())
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_is_checkout, houseKeeping.isHostCheckOut())));
+        getNavigator().hideLoading();
+        return visitorProfileBeanList;
+    }
+
+    List<VisitorProfileBean> getServiceProviderProfileBean(ServiceProvider serviceProvider) {
+        getNavigator().showLoading();
+        List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
+        getDataManager().setSPDetail(serviceProvider);
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, serviceProvider.getName())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time, CalenderUtils.formatDate(serviceProvider.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_vehicle, serviceProvider.getEnteredVehicleNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : serviceProvider.getEnteredVehicleNo())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, serviceProvider.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(serviceProvider.getDialingCode()).concat(" ").concat(serviceProvider.getContactNo()))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, serviceProvider.getIdentityNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : serviceProvider.getIdentityNo())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_comp_name, serviceProvider.getCompanyName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : serviceProvider.getCompanyName())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), serviceProvider.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : serviceProvider.getPremiseName())));
+        if (!getDataManager().isCommercial()) {
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, serviceProvider.getHost().isEmpty() ? serviceProvider.getCreatedBy() : serviceProvider.getHost())));
+            if (serviceProvider.isCheckOutFeature())
+                visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_is_checkout, serviceProvider.isHostCheckOut())));
+        }
+        getNavigator().hideLoading();
+        return visitorProfileBeanList;
     }
 }

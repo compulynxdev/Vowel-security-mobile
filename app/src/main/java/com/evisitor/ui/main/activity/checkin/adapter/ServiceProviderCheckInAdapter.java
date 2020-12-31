@@ -120,7 +120,10 @@ public class ServiceProviderCheckInAdapter extends RecyclerView.Adapter<BaseView
 
             if (isCommercial()) {
                 host.setVisibility(View.GONE);
-                houseNo.setVisibility(View.GONE);
+                if (!bean.getPremiseName().isEmpty()) {
+                    houseNo.setVisibility(View.VISIBLE);
+                    houseNo.setText(context.getString(R.string.data_dynamic_premise, getPremiseLastLevel(), bean.getPremiseName()));
+                } else houseNo.setVisibility(View.GONE);
             } else {
                 if (!bean.getHouseNo().isEmpty()) {
                     houseNo.setVisibility(View.VISIBLE);

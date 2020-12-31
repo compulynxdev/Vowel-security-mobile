@@ -53,7 +53,7 @@ public class HomeViewModel extends BaseViewModel<BaseNavigator> {
         list.add(new HomeBean(GUEST_VIEW, R.drawable.ic_guest, getDataManager().isCommercial() ? getNavigator().getContext().getString(R.string.title_visitor) : getNavigator().getContext().getString(R.string.title_guests)));
 
         if (getDataManager().isCommercial())
-            list.add(new HomeBean(STAFF_VIEW, R.drawable.ic_maid, getNavigator().getContext().getString(R.string.title_staff)));
+            list.add(new HomeBean(STAFF_VIEW, R.drawable.ic_staff, getNavigator().getContext().getString(R.string.title_staff)));
         else
             list.add(new HomeBean(STAFF_VIEW, R.drawable.ic_maid, getNavigator().getContext().getString(R.string.title_domestic_staff)));
 
@@ -87,9 +87,10 @@ public class HomeViewModel extends BaseViewModel<BaseNavigator> {
                                 int guestCount = jsonObject.getInt("guest");
                                 int hkCount = jsonObject.getInt("staff");
                                 int spCount = jsonObject.getInt("serviceProvider");
+                                int commercialStaffCount = jsonObject.has("commercialStaff") ? jsonObject.getInt("commercialStaff") : 0;
                                 int totalCount = guestCount + hkCount + spCount;
                                 list.get(GUEST_VIEW).setCount(String.valueOf(guestCount));
-                                list.get(STAFF_VIEW).setCount(String.valueOf(hkCount));
+                                list.get(STAFF_VIEW).setCount(String.valueOf(getDataManager().isCommercial() ? commercialStaffCount : hkCount));
                                 list.get(SERVICE_PROVIDER_VIEW).setCount(String.valueOf(spCount));
                                 list.get(TOTAL_VISITOR_VIEW).setCount(String.valueOf(totalCount));
                                 homeListData.setValue(list);

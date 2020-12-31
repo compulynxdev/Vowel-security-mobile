@@ -263,7 +263,7 @@ public class BlackListVisitorResponse {
          * "reason" : "Suspected Guest",
          * "lastModifiedDate" : "2020-09-07T04:49:18Z",
          * "lastModifiedBy" : "account",
-         * "profile" : "RANDOM_VISITOR",
+         * "profile" : "WALKIN_VISITOR",
          * "fullName" : "raja",
          * "type" : "GUEST",
          * "createdDate" : "2020-09-04T04:43:27Z",

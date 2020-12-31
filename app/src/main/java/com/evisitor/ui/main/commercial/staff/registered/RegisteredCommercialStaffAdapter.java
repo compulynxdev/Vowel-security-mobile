@@ -1,4 +1,4 @@
-package com.evisitor.ui.main.activity.checkin.adapter;
+package com.evisitor.ui.main.commercial.staff.registered;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,25 +13,33 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.evisitor.R;
-import com.evisitor.data.model.OfficeStaffResponse;
+import com.evisitor.data.model.CommercialStaffResponse;
 import com.evisitor.ui.base.BaseViewHolder;
-import com.evisitor.util.CalenderUtils;
+import com.evisitor.ui.base.ItemClickCallback;
 import com.evisitor.util.pagination.FooterLoader;
 
 import java.util.List;
 
-public class OfficeStaffCheckInAdapter extends RecyclerView.Adapter<BaseViewHolder> {
+public class RegisteredCommercialStaffAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private static final int VIEWTYPE_ITEM = 1;
     private static final int VIEWTYPE_LOADER = 2;
-    private List<OfficeStaffResponse.ContentBean> list;
+    private List<CommercialStaffResponse.ContentBean> list;
     private boolean showLoader;
-    private Context context;
-    private OnItemClickListener listener;
+    private ItemClickCallback listener;
 
-    public OfficeStaffCheckInAdapter(List<OfficeStaffResponse.ContentBean> list, Context context, OnItemClickListener click) {
+    RegisteredCommercialStaffAdapter(List<CommercialStaffResponse.ContentBean> list, ItemClickCallback callback) {
         this.list = list;
-        this.listener = click;
-        this.context = context;
+        this.listener = callback;
+    }
+
+    @Override
+    public void setHasStableIds(boolean hasStableIds) {
+        super.setHasStableIds(hasStableIds);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return list.get(position).getId();
     }
 
     @NonNull
@@ -40,8 +48,8 @@ public class OfficeStaffCheckInAdapter extends RecyclerView.Adapter<BaseViewHold
         View view;
         switch (viewType) {
             case VIEWTYPE_ITEM:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_check_in_out, parent, false);
-                return new OfficeStaffCheckInAdapter.ViewHolder(view);
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_commercial_staff, parent, false);
+                return new RegisteredCommercialStaffAdapter.ViewHolder(view);
 
             default:
             case VIEWTYPE_LOADER:
@@ -81,28 +89,21 @@ public class OfficeStaffCheckInAdapter extends RecyclerView.Adapter<BaseViewHold
         return list.size();
     }
 
-
-    public interface OnItemClickListener {
-        void ItemClick(OfficeStaffResponse.ContentBean officeStaff);
-    }
-
     public class ViewHolder extends BaseViewHolder {
-
         ImageView imgVisitor;
-        TextView name, time, houseNo, host, visitorType;
+        TextView name, profile, staffId, lastLevel;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_name);
-            time = itemView.findViewById(R.id.tv_time_in);
-            houseNo = itemView.findViewById(R.id.tv_house_no);
-            host = itemView.findViewById(R.id.tv_host);
-            visitorType = itemView.findViewById(R.id.tv_type);
+            profile = itemView.findViewById(R.id.tv_profile);
+            staffId = itemView.findViewById(R.id.tv_staff_id);
+            lastLevel = itemView.findViewById(R.id.tv_last_level);
             imgVisitor = itemView.findViewById(R.id.img_visitor);
 
             itemView.setOnClickListener(v -> {
                 if (listener != null && getAdapterPosition() != -1)
-                    listener.ItemClick(list.get(getAdapterPosition()));
+                    listener.onItemClick(getAdapterPosition());
             });
 
             imgVisitor.setOnClickListener(v -> {
@@ -113,12 +114,12 @@ public class OfficeStaffCheckInAdapter extends RecyclerView.Adapter<BaseViewHold
 
         @Override
         public void onBind(int position) {
-            OfficeStaffResponse.ContentBean bean = list.get(position);
+            CommercialStaffResponse.ContentBean bean = list.get(position);
+            Context context = name.getContext();
             name.setText(context.getString(R.string.data_name, bean.getFullName()));
-            time.setText(context.getString(R.string.data_time_in, CalenderUtils.formatDate(bean.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT)));
-
-            host.setVisibility(View.GONE);
-            houseNo.setVisibility(View.GONE);
+            staffId.setText(context.getString(R.string.data_staff_id, bean.getEmployeeId().isEmpty() ? "N/A" : bean.getEmployeeId()));
+            profile.setText(context.getString(R.string.data_profile, bean.getProfile()));
+            lastLevel.setText(context.getString(R.string.data_dynamic_premise, getPremiseLastLevel(), bean.getPremiseName()));
 
 
             if (bean.getImageUrl().isEmpty()) {
@@ -137,5 +138,5 @@ public class OfficeStaffCheckInAdapter extends RecyclerView.Adapter<BaseViewHold
             }
         }
     }
-}
 
+}

@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.evisitor.R;
-import com.evisitor.data.model.CommercialGuestResponse;
+import com.evisitor.data.model.CommercialVisitorResponse;
 import com.evisitor.ui.base.BaseViewHolder;
 import com.evisitor.ui.base.ItemClickCallback;
 import com.evisitor.util.CalenderUtils;
@@ -24,12 +24,12 @@ import java.util.List;
 public class CommercialGuestCheckInAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private static final int VIEWTYPE_ITEM = 1;
     private static final int VIEWTYPE_LOADER = 2;
-    private List<CommercialGuestResponse.CommercialGuest> list;
+    private List<CommercialVisitorResponse.CommercialGuest> list;
     private boolean showLoader;
     private Context context;
     private ItemClickCallback listener;
 
-    public CommercialGuestCheckInAdapter(List<CommercialGuestResponse.CommercialGuest> list, Context context, ItemClickCallback click) {
+    public CommercialGuestCheckInAdapter(List<CommercialVisitorResponse.CommercialGuest> list, Context context, ItemClickCallback click) {
         this.list = list;
         this.listener = click;
         this.context = context;
@@ -111,7 +111,7 @@ public class CommercialGuestCheckInAdapter extends RecyclerView.Adapter<BaseView
 
         @Override
         public void onBind(int position) {
-            CommercialGuestResponse.CommercialGuest bean = list.get(position);
+            CommercialVisitorResponse.CommercialGuest bean = list.get(position);
             name.setText(context.getString(R.string.data_name, bean.getName()));
             time.setText(context.getString(R.string.data_time_in, CalenderUtils.formatDate(bean.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT)));
             if (!bean.getHouseNo().isEmpty()) {

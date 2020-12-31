@@ -18,8 +18,8 @@ import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.ActivityTotalVisitorsBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.base.BaseNavigator;
-import com.evisitor.ui.main.commercial.visitor.guest.expected.ExpectedCommercialGuestFragment;
-import com.evisitor.ui.main.commercial.visitor.staff.expected.ExpectedOfficeStaffFragment;
+import com.evisitor.ui.main.commercial.staff.expected.ExpectedCommercialStaffFragment;
+import com.evisitor.ui.main.commercial.visitor.expected.ExpectedCommercialGuestFragment;
 import com.evisitor.ui.main.residential.guest.expected.ExpectedGuestFragment;
 import com.evisitor.ui.main.residential.sp.ExpectedSPFragment;
 import com.evisitor.ui.main.residential.staff.expected.ExpectedHKFragment;
@@ -33,7 +33,7 @@ public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBin
     private ExpectedCommercialGuestFragment commercialGuestFragment;
     private ExpectedHKFragment expectedHKFragment;
     private ExpectedSPFragment expectedSPFragment;
-    private ExpectedOfficeStaffFragment officeStaffFragment;
+    private ExpectedCommercialStaffFragment officeStaffFragment;
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, TotalVisitorsActivity.class);
@@ -80,7 +80,7 @@ public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBin
         if (mViewModel.getDataManager().isCommercial()) {
             commercialGuestFragment = ExpectedCommercialGuestFragment.newInstance();
             adapter.addFragment(commercialGuestFragment);
-            officeStaffFragment = ExpectedOfficeStaffFragment.newInstance();
+            officeStaffFragment = ExpectedCommercialStaffFragment.newInstance();
             adapter.addFragment(officeStaffFragment);
         } else {
             expectedGuestFragment = ExpectedGuestFragment.newInstance();

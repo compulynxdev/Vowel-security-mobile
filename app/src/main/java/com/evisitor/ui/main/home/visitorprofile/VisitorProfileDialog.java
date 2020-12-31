@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
-import com.evisitor.data.model.CommercialGuestResponse;
+import com.evisitor.data.model.CommercialVisitorResponse;
 import com.evisitor.data.model.DeviceBean;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.databinding.DialogVisitorProfileBinding;
@@ -125,7 +125,7 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
         setUpAdapter();
 
         if (isCommercialGuest && mViewModel.getDataManager().isCommercial()) {
-            CommercialGuestResponse.CommercialGuest guest = mViewModel.getDataManager().getCommercialGuestDetail();
+            CommercialVisitorResponse.CommercialGuest guest = mViewModel.getDataManager().getCommercialVisitorDetail();
             if (guest != null) {
                 deviceBeanList = guest.getDeviceBeanList();
                 if (deviceBeanList != null && !deviceBeanList.isEmpty()) {
@@ -193,9 +193,9 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
             }.getType();
             deviceBeanList.clear();
             deviceBeanList.addAll(Objects.requireNonNull(mViewModel.getDataManager().getGson().fromJson(data.getStringExtra("data"), listType)));
-            CommercialGuestResponse.CommercialGuest guest = mViewModel.getDataManager().getCommercialGuestDetail();
+            CommercialVisitorResponse.CommercialGuest guest = mViewModel.getDataManager().getCommercialVisitorDetail();
             guest.setDeviceBeanList(deviceBeanList);
-            mViewModel.getDataManager().setCommercialGuestDetail(guest);
+            mViewModel.getDataManager().setCommercialVisitorDetail(guest);
             getViewDataBinding().tvGadgetsInfo.setText(getString(R.string.view_gadgets_info).concat(" : ").concat(String.valueOf(deviceBeanList.size())));
         }
     }

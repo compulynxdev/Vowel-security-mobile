@@ -1,10 +1,10 @@
-package com.evisitor.ui.main.commercial.visitor.guest.expected;
+package com.evisitor.ui.main.commercial.visitor.expected;
 
 import androidx.annotation.NonNull;
 
 import com.evisitor.R;
 import com.evisitor.data.DataManager;
-import com.evisitor.data.model.CommercialGuestResponse;
+import com.evisitor.data.model.CommercialVisitorResponse;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.ui.main.BaseCheckInOutViewModel;
 import com.evisitor.util.AppConstants;
@@ -33,7 +33,7 @@ public class ExpectedCommercialGuestViewModel extends BaseCheckInOutViewModel<Ex
         super(dataManager);
     }
 
-    void getGuestListData(int page, String search) {
+    void getExpectedVisitorListData(int page, String search) {
         if (getNavigator().isNetworkConnected()) {
             Map<String, String> map = new HashMap<>();
             map.put("accountId", getDataManager().getAccountId());
@@ -52,7 +52,7 @@ public class ExpectedCommercialGuestViewModel extends BaseCheckInOutViewModel<Ex
                     try {
                         if (response.code() == 200) {
                             assert response.body() != null;
-                            CommercialGuestResponse guestsResponse = getDataManager().getGson().fromJson(response.body().string(), CommercialGuestResponse.class);
+                            CommercialVisitorResponse guestsResponse = getDataManager().getGson().fromJson(response.body().string(), CommercialVisitorResponse.class);
                             if (guestsResponse.getContent() != null) {
                                 getNavigator().onExpectedGuestSuccess(guestsResponse.getContent());
                             }
@@ -78,9 +78,9 @@ public class ExpectedCommercialGuestViewModel extends BaseCheckInOutViewModel<Ex
         }
     }
 
-    List<VisitorProfileBean> setClickVisitorDetail(CommercialGuestResponse.CommercialGuest guests) {
+    List<VisitorProfileBean> setClickVisitorDetail(CommercialVisitorResponse.CommercialGuest guests) {
         getNavigator().showLoading();
-        getDataManager().setCommercialGuestDetail(guests);
+        getDataManager().setCommercialVisitorDetail(guests);
         List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, guests.getName())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), guests.getExpectedVehicleNo(), VisitorProfileBean.VIEW_TYPE_EDITABLE));
@@ -102,20 +102,18 @@ public class ExpectedCommercialGuestViewModel extends BaseCheckInOutViewModel<Ex
         if (getNavigator().isNetworkConnected(true)) {
             JSONObject object = new JSONObject();
             try {
-                object.put("id", getDataManager().getCommercialGuestDetail().getGuestId());
+                object.put("id", getDataManager().getCommercialVisitorDetail().getGuestId());
                 object.put("accountId", getDataManager().getAccountId());
-                //object.put("residentId", getDataManager().getCommercialGuestDetail().getResidentId());
-                object.put("premiseHierarchyDetailsId", getDataManager().getCommercialGuestDetail().getFlatId());
-                object.put("enteredVehicleNo", getDataManager().getCommercialGuestDetail().getEnteredVehicleNo());
-                JSONArray deviceList = new JSONArray(new Gson().toJson(getDataManager().getCommercialGuestDetail().getDeviceBeanList()));
-                object.put("deviceList", deviceList);
-                object.put("type", AppConstants.GUEST);
+                object.put("staffId", getDataManager().getCommercialVisitorDetail().getStaffId());
+                object.put("premiseHierarchyDetailsId", getDataManager().getCommercialVisitorDetail().getFlatId());
+                object.put("enteredVehicleNo", getDataManager().getCommercialVisitorDetail().getEnteredVehicleNo());
+                //object.put("type", AppConstants.GUEST);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
             RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
-            sendNotification(body, this);
+            sendCommercialNotification(body, this);
         }
     }
 
@@ -123,10 +121,10 @@ public class ExpectedCommercialGuestViewModel extends BaseCheckInOutViewModel<Ex
         if (getNavigator().isNetworkConnected(true)) {
             JSONObject object = new JSONObject();
             try {
-                object.put("id", getDataManager().getCommercialGuestDetail().getGuestId());
-                object.put("enteredVehicleNo", getDataManager().getCommercialGuestDetail().getEnteredVehicleNo());
+                object.put("id", getDataManager().getCommercialVisitorDetail().getGuestId());
+                object.put("enteredVehicleNo", getDataManager().getCommercialVisitorDetail().getEnteredVehicleNo());
                 object.put("accountId", getDataManager().getAccountId());
-                JSONArray deviceList = new JSONArray(new Gson().toJson(getDataManager().getCommercialGuestDetail().getDeviceBeanList()));
+                JSONArray deviceList = new JSONArray(new Gson().toJson(getDataManager().getCommercialVisitorDetail().getDeviceBeanList()));
                 object.put("deviceList", deviceList);
                 object.put("type", AppConstants.CHECK_IN);
                 object.put("visitor", AppConstants.GUEST);

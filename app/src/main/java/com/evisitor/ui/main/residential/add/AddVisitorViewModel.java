@@ -168,7 +168,7 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                 object.put("documentId", addVisitorData.identityNo);
                 object.put("dialingCode", addVisitorData.dialingCode);
                 object.put("contactNo", addVisitorData.contact);
-                object.put("guestType", "RANDOM_VISITOR");
+                object.put("guestType", AppConstants.WALKIN_VISITOR);
                 object.put("type", "random");
                 object.put("address", addVisitorData.address);
                 object.put("country", "");

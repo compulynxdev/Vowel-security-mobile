@@ -1,4 +1,4 @@
-package com.evisitor.ui.main.commercial.visitor.staff;
+package com.evisitor.ui.main.commercial.staff;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,17 +13,17 @@ import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.ActivityHkBinding;
 import com.evisitor.ui.base.BaseActivity;
-import com.evisitor.ui.main.commercial.visitor.staff.expected.ExpectedOfficeStaffFragment;
-import com.evisitor.ui.main.commercial.visitor.staff.registered.RegisteredOfficeStaffFragment;
+import com.evisitor.ui.main.commercial.staff.expected.ExpectedCommercialStaffFragment;
+import com.evisitor.ui.main.commercial.staff.registered.RegisteredCommercialStaffFragment;
 import com.evisitor.util.ViewPagerAdapter;
 
-public class OfficeStaffActivity extends BaseActivity<ActivityHkBinding, OfficeStaffViewModel> implements View.OnClickListener {
+public class CommercialStaffActivity extends BaseActivity<ActivityHkBinding, CommercialStaffViewModel> implements View.OnClickListener {
 
-    private ExpectedOfficeStaffFragment expectedHKFragment;
-    private RegisteredOfficeStaffFragment registeredHKFragment;
+    private ExpectedCommercialStaffFragment expectedHKFragment;
+    private RegisteredCommercialStaffFragment registeredHKFragment;
 
     public static Intent getStartIntent(Context context) {
-        return new Intent(context, OfficeStaffActivity.class);
+        return new Intent(context, CommercialStaffActivity.class);
     }
 
     @Override
@@ -37,8 +37,8 @@ public class OfficeStaffActivity extends BaseActivity<ActivityHkBinding, OfficeS
     }
 
     @Override
-    public OfficeStaffViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(OfficeStaffViewModel.class);
+    public CommercialStaffViewModel getViewModel() {
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(CommercialStaffViewModel.class);
     }
 
     @Override
@@ -62,9 +62,9 @@ public class OfficeStaffActivity extends BaseActivity<ActivityHkBinding, OfficeS
 
     private void setUpPagerAdapter() {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        expectedHKFragment = ExpectedOfficeStaffFragment.newInstance();
+        expectedHKFragment = ExpectedCommercialStaffFragment.newInstance();
         adapter.addFragment(expectedHKFragment);
-        registeredHKFragment = RegisteredOfficeStaffFragment.newInstance();
+        registeredHKFragment = RegisteredCommercialStaffFragment.newInstance();
         adapter.addFragment(registeredHKFragment);
         getViewDataBinding().viewPager.setOffscreenPageLimit(2);
 

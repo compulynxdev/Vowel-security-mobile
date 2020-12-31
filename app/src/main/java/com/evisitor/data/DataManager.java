@@ -1,12 +1,12 @@
 package com.evisitor.data;
 
 import com.evisitor.data.local.prefs.PreferenceHelper;
-import com.evisitor.data.model.CommercialGuestResponse;
+import com.evisitor.data.model.CommercialStaffResponse;
+import com.evisitor.data.model.CommercialVisitorResponse;
 import com.evisitor.data.model.CountryResponse;
 import com.evisitor.data.model.GuestConfigurationResponse;
 import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.HouseKeepingResponse;
-import com.evisitor.data.model.OfficeStaffResponse;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.remote.ApiHelper;
 import com.google.gson.Gson;
@@ -43,11 +43,11 @@ public interface DataManager extends ApiHelper, PreferenceHelper {
 
     void setGuestConfiguration(GuestConfigurationResponse configurationResponse);
 
-    CommercialGuestResponse.CommercialGuest getCommercialGuestDetail();
+    CommercialVisitorResponse.CommercialGuest getCommercialVisitorDetail();
 
-    void setCommercialGuestDetail(CommercialGuestResponse.CommercialGuest guest);
+    void setCommercialVisitorDetail(CommercialVisitorResponse.CommercialGuest guest);
 
-    OfficeStaffResponse.ContentBean getOfficeStaff();
+    CommercialStaffResponse.ContentBean getCommercialStaff();
 
-    void setOfficeStaff(OfficeStaffResponse.ContentBean officeStaff);
+    void setCommercialStaff(CommercialStaffResponse.ContentBean officeStaff);
 }
