@@ -297,7 +297,7 @@
     <string name="please_fill_details">Please fill the device details first, if you have device then device name and device serial number is mandatory!!</string>
     <string name="please_select">Please select</string>
     <string name="alert_whom_to_meet">Please select whom to meet</string>
-    <string name="please_enter_purpose">Please enter purpose of visist!</string>
+    <string name="please_enter_purpose">Please enter purpose of visit!</string>
     <string name="view_gadgets_info">View gadgets information</string>
     <string name="device">Device</string>
     <string name="add_gadgets_info">Add gadgets information</string>
