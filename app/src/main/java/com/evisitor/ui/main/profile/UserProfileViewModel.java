@@ -8,9 +8,8 @@ import com.evisitor.ui.base.BaseNavigator;
 import com.evisitor.ui.base.BaseViewModel;
 
 public class UserProfileViewModel extends BaseViewModel<BaseNavigator> {
-    private MutableLiveData<UserDetail> userDetailMutableLiveData = new MutableLiveData<>();
-
-    private MutableLiveData<String> accountName = new MutableLiveData<>();
+    private final MutableLiveData<UserDetail> userDetailMutableLiveData = new MutableLiveData<>();
+    private final MutableLiveData<String> accountNameMutableLiveData = new MutableLiveData<>();
 
     public UserProfileViewModel(DataManager dataManager) {
         super(dataManager);
@@ -22,7 +21,7 @@ public class UserProfileViewModel extends BaseViewModel<BaseNavigator> {
     }
 
     MutableLiveData<String> getAccountName() {
-        accountName.setValue(getDataManager().getAccountName());
-        return accountName;
+        accountNameMutableLiveData.setValue(getDataManager().getAccountName());
+        return accountNameMutableLiveData;
     }
 }

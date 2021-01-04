@@ -29,8 +29,8 @@ import java.util.List;
 
 public class VisitorProfileAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
-    private List<VisitorProfileBean> list;
-    private Activity activity;
+    private final List<VisitorProfileBean> list;
+    private final Activity activity;
 
     VisitorProfileAdapter(Activity activity, List<VisitorProfileBean> list) {
         this.list = list;
@@ -70,7 +70,7 @@ public class VisitorProfileAdapter extends RecyclerView.Adapter<BaseViewHolder> 
 
     public class ItemViewHolder extends BaseViewHolder {
 
-        TextView tv_name;
+        final TextView tv_name;
 
         ItemViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -87,8 +87,8 @@ public class VisitorProfileAdapter extends RecyclerView.Adapter<BaseViewHolder> 
 
     public class EditableViewHolder extends BaseViewHolder {
 
-        TextView tv_title;
-        EditText et_data;
+        final TextView tv_title;
+        final EditText et_data;
 
         EditableViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -151,9 +151,9 @@ public class VisitorProfileAdapter extends RecyclerView.Adapter<BaseViewHolder> 
 
     public class DaysViewHolder extends BaseViewHolder {
 
-        TextView tv_name;
-        LinearLayout ll_days;
-        ConstraintLayout constraint_main;
+        final TextView tv_name;
+        final LinearLayout ll_days;
+        final ConstraintLayout constraint_main;
 
         DaysViewHolder(@NonNull View itemView) {
             super(itemView);

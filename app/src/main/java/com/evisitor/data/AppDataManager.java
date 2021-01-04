@@ -32,8 +32,8 @@ public class AppDataManager implements DataManager {
 
     private static AppDataManager instance;
     private final Gson mGson;
-    private AppApiHelper apiHelper;
-    private AppPreferenceHelper preferenceHelper;
+    private final AppApiHelper apiHelper;
+    private final AppPreferenceHelper preferenceHelper;
     private Guests guests;
     private CommercialVisitorResponse.CommercialGuest commercialGuest;
     private ServiceProvider spDetail;

@@ -16,8 +16,8 @@ import java.util.List;
 
 public class SelectionAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
-    private List list;
-    private ItemClickCallback clickListener;
+    private final List list;
+    private final ItemClickCallback clickListener;
 
     SelectionAdapter(List list, ItemClickCallback clickListener) {
         this.list = list;
@@ -42,7 +42,7 @@ public class SelectionAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     class ViewHolder extends BaseViewHolder implements View.OnClickListener {
-        private TextView tv_name;
+        private final TextView tv_name;
 
         ViewHolder(@NonNull View v) {
             super(v);

@@ -24,9 +24,9 @@ import java.util.List;
 public class ExpectedHKAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private static final int VIEWTYPE_ITEM = 1;
     private static final int VIEWTYPE_LOADER = 2;
-    private List<HouseKeepingResponse.ContentBean> list;
+    private final List<HouseKeepingResponse.ContentBean> list;
+    private final ItemClickCallback listener;
     private boolean showLoader;
-    private ItemClickCallback listener;
 
     ExpectedHKAdapter(List<HouseKeepingResponse.ContentBean> list, ItemClickCallback callback) {
         this.list = list;
@@ -91,8 +91,8 @@ public class ExpectedHKAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     public class ViewHolder extends BaseViewHolder {
-        ImageView imgVisitor;
-        TextView name, identity, profile, time, houseNo, host;
+        final ImageView imgVisitor;
+        final TextView name, identity, profile, time, houseNo, host;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);

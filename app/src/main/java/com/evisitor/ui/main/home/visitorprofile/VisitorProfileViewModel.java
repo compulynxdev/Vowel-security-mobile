@@ -19,7 +19,7 @@ import retrofit2.Response;
 
 public class VisitorProfileViewModel extends BaseViewModel<BaseNavigator> {
 
-    private MutableLiveData<String> houseNoInfo = new MutableLiveData<>();
+    private final MutableLiveData<String> houseNoInfo = new MutableLiveData<>();
 
     public VisitorProfileViewModel(DataManager dataManager) {
         super(dataManager);

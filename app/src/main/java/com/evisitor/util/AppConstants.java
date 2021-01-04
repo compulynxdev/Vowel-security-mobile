@@ -20,15 +20,12 @@ public final class AppConstants {
     public static final String STAFF = "STAFF";
     public static final String WALKIN_VISITOR = "WALKIN_VISITOR";
     public static final String GUEST = "GUEST";
-    static final String VISITOR_LABEL = "Visitor";
     public static final String SERVICE_PROVIDER = "SERVICE_PROVIDER";
     public static final String HOUSE_HELP = "HOUSE_HELP";
     public static final String EXPECTED = "expected";
     public static final String BLACK = "black";
     public static final String FLAG = "flag";
     public static final String TODAY = "today";
-    static final String SP_LABEL = "Service Provider";
-
     public static final String ACCEPT = "ACCEPTED";
     public static final String REJECT = "REJECTED";
     public static final int SCAN_RESULT = 101;
@@ -36,10 +33,11 @@ public final class AppConstants {
     public static final String CONTROLLER_HOME = "CONTROLLER_HOME";
     public static final String CONTROLLER_GUEST = "CONTROLLER_GUEST";
     public static final String CONTROLLER_SP = "CONTROLLER_SP";
-
+    public final static String CONTENT_TYPE_JSON = "application/json; charset=utf-8";
+    public final static String bearer = "Bearer";
+    static final String VISITOR_LABEL = "Visitor";
+    static final String SP_LABEL = "Service Provider";
     public static String CONTENT_TYPE_TEXT = "text/plain";
-    public static String CONTENT_TYPE_JSON = "application/json; charset=utf-8";
-    public static String bearer = "Bearer";
 
     private AppConstants() {
         // This class is not publicly instantiable

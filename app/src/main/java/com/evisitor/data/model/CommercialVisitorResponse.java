@@ -18,7 +18,7 @@ public class CommercialVisitorResponse {
         this.content = content;
     }
 
-    public class CommercialGuest {
+    public static class CommercialGuest {
 
         @SerializedName("employeeName")
         private String host;

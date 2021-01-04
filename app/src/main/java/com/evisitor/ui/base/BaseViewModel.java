@@ -17,7 +17,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BaseViewModel<N extends BaseNavigator> extends ViewModel {
-    private DataManager dataManager;
+    private final DataManager dataManager;
     private WeakReference<N> mNavigator;
 
 

@@ -23,10 +23,10 @@ import java.util.List;
 public class CommercialStaffCheckInAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private static final int VIEWTYPE_ITEM = 1;
     private static final int VIEWTYPE_LOADER = 2;
-    private List<CommercialStaffResponse.ContentBean> list;
+    private final List<CommercialStaffResponse.ContentBean> list;
+    private final Context context;
+    private final OnItemClickListener listener;
     private boolean showLoader;
-    private Context context;
-    private OnItemClickListener listener;
 
     public CommercialStaffCheckInAdapter(List<CommercialStaffResponse.ContentBean> list, Context context, OnItemClickListener click) {
         this.list = list;
@@ -88,8 +88,8 @@ public class CommercialStaffCheckInAdapter extends RecyclerView.Adapter<BaseView
 
     public class ViewHolder extends BaseViewHolder {
 
-        ImageView imgVisitor;
-        TextView name, time, houseNo, host, visitorType;
+        final ImageView imgVisitor;
+        final TextView name, time, houseNo, host, visitorType;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);

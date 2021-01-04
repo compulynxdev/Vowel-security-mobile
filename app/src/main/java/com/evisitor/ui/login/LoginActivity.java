@@ -14,7 +14,7 @@ import com.evisitor.databinding.ActivityLoginBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.main.MainActivity;
 import com.evisitor.util.AppLogger;
-import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.Objects;
 
@@ -57,16 +57,15 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     }
 
     private void initFcmToken() {
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(task -> {
-                    if (!task.isSuccessful()) {
-                        AppLogger.d("Firebase getInstanceId failed : ", String.valueOf(task.getException()));
-                        return;
-                    }
-                    // Get new Instance ID fcmToken
-                    fcmToken = Objects.requireNonNull(task.getResult()).getToken();
-                    AppLogger.d("Registration Token : ", fcmToken);
-                });
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                AppLogger.d("Firebase getInstanceId failed : ", String.valueOf(task.getException()));
+                return;
+            }
+            // Get new Instance ID fcmToken
+            fcmToken = Objects.requireNonNull(task.getResult());
+            AppLogger.d("Registration Token : ", fcmToken);
+        });
     }
 
     @Override

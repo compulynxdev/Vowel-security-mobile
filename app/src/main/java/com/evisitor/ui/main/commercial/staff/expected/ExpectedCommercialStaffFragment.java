@@ -1,6 +1,5 @@
 package com.evisitor.ui.main.commercial.staff.expected;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -16,15 +15,11 @@ import com.evisitor.databinding.FragmentExpectedBinding;
 import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.main.home.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
-import com.sharma.mrzreader.MrzRecord;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.app.Activity.RESULT_OK;
-
 public class ExpectedCommercialStaffFragment extends BaseFragment<FragmentExpectedBinding, ExpectedCommercialStaffViewModel> implements ExpectedCommercialStaffNavigator {
-    private final int SCAN_RESULT = 101;
     private RecyclerViewScrollListener scrollListener;
     private ExpectedCommercialStaffAdapter adapter;
     private String search = "";
@@ -110,39 +105,6 @@ public class ExpectedCommercialStaffFragment extends BaseFragment<FragmentExpect
         list.clear();
         this.page = 0;
         mViewModel.getExpectedOfficeListData(page, search.trim());
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            if (requestCode == SCAN_RESULT && data != null) {
-                String identityNo = "";
-                MrzRecord mrzRecord = (MrzRecord) data.getSerializableExtra("Record");
-                assert mrzRecord != null;
-
-                String code = mrzRecord.getCode1() + "" + mrzRecord.getCode2();
-                switch (code.toLowerCase()) {
-                    case "p<":
-                    case "p":
-                        identityNo = mrzRecord.getDocumentNumber();
-                        break;
-
-                    case "ac":
-                    case "id":
-                        identityNo = mrzRecord.getOptional2().length() == 9 ?
-                                mrzRecord.getOptional2().substring(0, mrzRecord.getOptional2().length() - 1) :
-                                mrzRecord.getOptional2();
-                        break;
-                }
-
-                if (mViewModel.getDataManager().getHouseKeeping().getDocumentId().equals(identityNo))
-                    mViewModel.doCheckIn();
-                else {
-                    showToast(R.string.alert_id);
-                }
-            }
-        }
     }
 
     @Override

@@ -177,9 +177,7 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
                 Intent i = GadgetsInputActivity.getStartIntent(getContext());
                 if (!deviceBeanList.isEmpty())
                     i.putExtra("list", new Gson().toJson(deviceBeanList));
-                if (btnLabel.equalsIgnoreCase(getString(R.string.check_in)))
-                    i.putExtra("add", true);
-                else i.putExtra("add", false);
+                i.putExtra("add", btnLabel.equalsIgnoreCase(getString(R.string.check_in)));
                 startActivityForResult(i, SCAN_RESULT);
                 break;
         }

@@ -24,7 +24,7 @@ import retrofit2.Response;
  */
 public class PropertyInfoViewModel extends BaseViewModel<BaseNavigator> {
 
-    private MutableLiveData<PropertyInfoResponse> propertyInfoResponseMutableData = new MutableLiveData<>();
+    private final MutableLiveData<PropertyInfoResponse> propertyInfoResponseMutableData = new MutableLiveData<>();
 
     public PropertyInfoViewModel(DataManager dataManager) {
         super(dataManager);

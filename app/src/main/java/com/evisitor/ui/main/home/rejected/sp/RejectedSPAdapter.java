@@ -25,8 +25,8 @@ public class RejectedSPAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     private static final int VIEWTYPE_ITEM = 1;
     private static final int VIEWTYPE_LOADER = 2;
-    private List<ServiceProvider> list;
-    private ItemClickCallback callback;
+    private final List<ServiceProvider> list;
+    private final ItemClickCallback callback;
     private boolean showLoader;
 
     RejectedSPAdapter(List<ServiceProvider> list, ItemClickCallback callback) {
@@ -87,8 +87,8 @@ public class RejectedSPAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     public class ViewHolder extends BaseViewHolder {
-        ImageView imgVisitor;
-        TextView name, profile, time, houseNo, host, vehicle, reject;
+        final ImageView imgVisitor;
+        final TextView name, profile, time, houseNo, host, vehicle, reject;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -5,7 +5,6 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
@@ -22,7 +21,6 @@ public class NotificationsFragment extends BaseFragment<FragmentNotificationsBin
     private List<NotificationResponse.ContentBean> notificationsList;
     private RecyclerViewScrollListener scrollListener;
     private NotificationAdapter adapter;
-    private String search = "";
     private int page = 0;
     private NotificationFragmentInteraction interaction;
 
@@ -75,7 +73,7 @@ public class NotificationsFragment extends BaseFragment<FragmentNotificationsBin
                 setAdapterLoading(true);
                 page++;
 
-                mViewModel.getNotifications(page, search);
+                mViewModel.getNotifications(page);
             }
         };
         getViewDataBinding().recyclerView.addOnScrollListener(scrollListener);
@@ -86,45 +84,17 @@ public class NotificationsFragment extends BaseFragment<FragmentNotificationsBin
         updateUI();
     }
 
-
-    private void setUpSearch() {
-        getViewDataBinding().header.imgSearch.setVisibility(View.VISIBLE);
-        getViewDataBinding().header.imgSearch.setOnClickListener(v -> {
-            hideKeyboard();
-            getViewDataBinding().customSearchView.llSearchBar.setVisibility(getViewDataBinding().customSearchView.llSearchBar.getVisibility() == View.GONE
-                    ? View.VISIBLE : View.GONE);
-
-            getViewDataBinding().customSearchView.searchView.setQuery("", false);
-        });
-        setupSearchSetting(getViewDataBinding().customSearchView.searchView);
-        getViewDataBinding().customSearchView.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                String txt = newText.trim();
-                if (txt.isEmpty() || txt.length() >= 3) {
-                    doSearch(txt);
-                }
-                return false;
-            }
-        });
-    }
-
     private void updateUI() {
         getViewDataBinding().swipeToRefresh.setRefreshing(true);
-        doSearch(search);
+        doRefreshApiCall();
     }
 
 
-    private void doSearch(String search) {
+    private void doRefreshApiCall() {
         scrollListener.onDataCleared();
         notificationsList.clear();
         this.page = 0;
-        mViewModel.getNotifications(page, search);
+        mViewModel.getNotifications(page);
     }
 
     @Override
@@ -158,7 +128,7 @@ public class NotificationsFragment extends BaseFragment<FragmentNotificationsBin
 
     @Override
     public void refreshList() {
-        doSearch(search);
+        doRefreshApiCall();
     }
 
     @Override

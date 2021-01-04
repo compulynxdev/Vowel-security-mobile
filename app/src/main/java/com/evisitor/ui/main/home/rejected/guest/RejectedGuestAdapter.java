@@ -24,8 +24,8 @@ public class RejectedGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     private static final int VIEWTYPE_ITEM = 1;
     private static final int VIEWTYPE_LOADER = 2;
-    private List<Guests> list;
-    private ItemClickCallback callback;
+    private final List<Guests> list;
+    private final ItemClickCallback callback;
     private boolean showLoader;
 
     RejectedGuestAdapter(List<Guests> list, ItemClickCallback callback) {
@@ -86,8 +86,8 @@ public class RejectedGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     public class ViewHolder extends BaseViewHolder {
-        ImageView imgVisitor;
-        TextView name, time, houseNo, host, vehicle, reject;
+        final ImageView imgVisitor;
+        final TextView name, time, houseNo, host, vehicle, reject;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -64,7 +64,7 @@ import com.evisitor.ui.splash.SplashViewModel;
  */
 public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFactory {
     private static ViewModelProviderFactory instance;
-    private DataManager dataManager;
+    private final DataManager dataManager;
 
     private ViewModelProviderFactory(DataManager dataManager) {
         this.dataManager = dataManager;

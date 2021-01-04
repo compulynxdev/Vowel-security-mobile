@@ -17,8 +17,8 @@ import java.util.List;
 
 public class CountrySelectionAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
-    private List<CountryResponse> list;
-    private ItemClickCallback clickListener;
+    private final List<CountryResponse> list;
+    private final ItemClickCallback clickListener;
 
     CountrySelectionAdapter(List<CountryResponse> list, ItemClickCallback clickListener) {
         this.list = list;
@@ -43,7 +43,8 @@ public class CountrySelectionAdapter extends RecyclerView.Adapter<BaseViewHolder
     }
 
     class ViewHolder extends BaseViewHolder implements View.OnClickListener {
-        private TextView tv_name, tv_code;
+        private final TextView tv_name;
+        private final TextView tv_code;
 
         ViewHolder(@NonNull View v) {
             super(v);

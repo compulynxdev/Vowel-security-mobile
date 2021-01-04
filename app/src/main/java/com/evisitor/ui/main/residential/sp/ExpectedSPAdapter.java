@@ -24,9 +24,9 @@ import java.util.List;
 public class ExpectedSPAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private static final int VIEWTYPE_ITEM = 1;
     private static final int VIEWTYPE_LOADER = 2;
-    private List<ServiceProvider> list;
+    private final List<ServiceProvider> list;
+    private final ItemClickCallback listener;
     private boolean showLoader;
-    private ItemClickCallback listener;
 
     ExpectedSPAdapter(List<ServiceProvider> list, ItemClickCallback callback) {
         this.list = list;
@@ -91,8 +91,8 @@ public class ExpectedSPAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     public class ViewHolder extends BaseViewHolder {
-        ImageView imgVisitor;
-        TextView name, profile, time, houseNo, host, vehicle, status;
+        final ImageView imgVisitor;
+        final TextView name, profile, time, houseNo, host, vehicle, status;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);

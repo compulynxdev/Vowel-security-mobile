@@ -99,6 +99,7 @@ public class FlagVisitorActivity extends BaseActivity<ActivityFlagVisitorBinding
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (newText.trim().isEmpty() || newText.trim().length() >= 3) {
+                    search = newText;
                     doSearch(newText);
                 }
                 return false;

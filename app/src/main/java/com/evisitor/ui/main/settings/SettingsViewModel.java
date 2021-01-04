@@ -9,7 +9,7 @@ import com.evisitor.ui.base.BaseViewModel;
 import com.evisitor.util.AppUtils;
 
 public class SettingsViewModel extends BaseViewModel<BaseNavigator> {
-    private MutableLiveData<String> version = new MutableLiveData<>();
+    private final MutableLiveData<String> version = new MutableLiveData<>();
 
     public SettingsViewModel(DataManager dataManager) {
         super(dataManager);

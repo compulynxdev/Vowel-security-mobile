@@ -14,14 +14,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by Priyanka Joshi on 14-07-2020.
  */
 public class AppApiHelper implements ApiHelper {
-    private static ApiHelper apiInterface = null;
-    private static AppApiHelper apiHelper;
-
-    private static OkHttpClient okHttpClient = new OkHttpClient.Builder()
+    private static final OkHttpClient okHttpClient = new OkHttpClient.Builder()
             .connectTimeout(1, TimeUnit.MINUTES)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
             .build();
+    private static ApiHelper apiInterface = null;
+    private static AppApiHelper apiHelper;
 
     private AppApiHelper() {
 

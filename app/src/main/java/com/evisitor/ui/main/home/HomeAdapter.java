@@ -17,8 +17,8 @@ import com.evisitor.ui.base.ItemClickCallback;
 import java.util.List;
 
 public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
-    private List<HomeBean> list;
-    private ItemClickCallback itemClickCallback;
+    private final List<HomeBean> list;
+    private final ItemClickCallback itemClickCallback;
 
     HomeAdapter(List<HomeBean> list, ItemClickCallback itemClickCallback) {
         this.list = list;
@@ -45,8 +45,8 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public class ViewHolder extends BaseViewHolder {
 
-        ImageView img;
-        TextView tv_title, tv_count;
+        final ImageView img;
+        final TextView tv_title, tv_count;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -34,14 +34,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVisitorNavigator> {
-    private MutableLiveData<Boolean> guestStatusMutableData = new MutableLiveData<>();
-    private List<String> genderList = new ArrayList<>();
-    private List<IdentityBean> identityTypeList = new ArrayList<>();
-    private List<String> visitorTypeList = new ArrayList<>();
-    private MutableLiveData<List<HouseDetailBean>> houseDetailMutableList = new MutableLiveData<>();
-    private List<String> employmentList = new ArrayList<>();
-    private MutableLiveData<List<ProfileBean>> profileBeanList = new MutableLiveData<>();
-    private MutableLiveData<List<CompanyBean>> companyBeanList = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> guestStatusMutableData = new MutableLiveData<>();
+    private final List<String> genderList = new ArrayList<>();
+    private final List<IdentityBean> identityTypeList = new ArrayList<>();
+    private final List<String> visitorTypeList = new ArrayList<>();
+    private final MutableLiveData<List<HouseDetailBean>> houseDetailMutableList = new MutableLiveData<>();
+    private final List<String> employmentList = new ArrayList<>();
+    private final MutableLiveData<List<ProfileBean>> profileBeanList = new MutableLiveData<>();
+    private final MutableLiveData<List<CompanyBean>> companyBeanList = new MutableLiveData<>();
 
     public CommercialAddVisitorViewModel(DataManager dataManager) {
         super(dataManager);

@@ -24,10 +24,10 @@ import java.util.List;
 public class ExpectedGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private static final int VIEWTYPE_ITEM = 1;
     private static final int VIEWTYPE_LOADER = 2;
-    private List<Guests> list;
+    private final List<Guests> list;
+    private final Context context;
+    private final ItemClickCallback listener;
     private boolean showLoader;
-    private Context context;
-    private ItemClickCallback listener;
 
     ExpectedGuestAdapter(List<Guests> list, Context context, ItemClickCallback callback) {
         this.list = list;
@@ -93,8 +93,8 @@ public class ExpectedGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     public class ViewHolder extends BaseViewHolder {
-        ImageView imgVisitor;
-        TextView name, time, houseNo, host, vehicle, status;
+        final ImageView imgVisitor;
+        final TextView name, time, houseNo, host, vehicle, status;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);

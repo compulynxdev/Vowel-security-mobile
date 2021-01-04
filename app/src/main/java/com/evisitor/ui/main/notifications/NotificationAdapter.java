@@ -25,8 +25,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     private static final int VIEWTYPE_ITEM = 1;
     private static final int VIEWTYPE_LOADER = 2;
+    private final List<NotificationResponse.ContentBean> notificationList;
     private boolean showLoader;
-    private List<NotificationResponse.ContentBean> notificationList;
 
     NotificationAdapter(List<NotificationResponse.ContentBean> notificationList) {
         this.notificationList = notificationList;
@@ -101,7 +101,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     public class ViewHolder extends BaseViewHolder {
-        TextView tvTitle, tvTime, tvMsg, tvType, tvCompany;
+        final TextView tvTitle, tvTime, tvMsg, tvType, tvCompany;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -18,8 +18,8 @@ import java.util.List;
 
 public class SelectLastLevelAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
-    private List<HouseDetailBean> list;
-    private ItemClickCallback callback;
+    private final List<HouseDetailBean> list;
+    private final ItemClickCallback callback;
 
     SelectLastLevelAdapter(List<HouseDetailBean> list, ItemClickCallback callback) {
         this.list = list;
@@ -44,7 +44,7 @@ public class SelectLastLevelAdapter extends RecyclerView.Adapter<BaseViewHolder>
     }
 
     public class ViewHolder extends BaseViewHolder {
-        TextView name, profileName;
+        final TextView name, profileName;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);

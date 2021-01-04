@@ -26,7 +26,7 @@ public class SelectLastLevelViewModel extends BaseViewModel<SelectLastLevelNavig
     }
 
     void doGetLastLevelData() {
-        if (getNavigator().isNetworkConnected(true)) {
+        if (getNavigator().isNetworkConnected(false)) {
             Map<String, String> map = new HashMap<>();
             map.put("accountId", getDataManager().getAccountId());
             map.put("search", "");

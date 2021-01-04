@@ -34,8 +34,8 @@ public class ScanIDActivity extends BaseActivity<ActivityScanIdBinding, ScanIDVi
 
     private static final String TAG = "ScanIDActivity";
     private final int RequestCameraPermissionID = 1001;
+    private final Handler handler = new Handler();
     private boolean isDataParsed = false;
-    private Handler handler = new Handler();
     private CameraSource cameraSource;
 
     public static Intent getStartIntent(Context context) {
@@ -51,8 +51,8 @@ public class ScanIDActivity extends BaseActivity<ActivityScanIdBinding, ScanIDVi
                 //here replace method remove white space
                 mrzCode.append(lines[i].replaceAll("\\s+", "")).append("\n");
             }
-            return mrzCode.toString();
-        } else return mrzCode.toString();
+        }
+        return mrzCode.toString();
     }
 
     @Override

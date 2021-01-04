@@ -80,7 +80,7 @@ public class WhomToMeetBottomSheet extends BaseBottomSheetDialog<DialogWhomToMee
     }
 
     private void setUpSearch() {
-        getViewDataBinding().header.imgSearch.setVisibility(View.GONE);
+        getViewDataBinding().header.imgSearch.setVisibility(View.INVISIBLE);
         getViewDataBinding().header.imgSearch.setOnClickListener(this);
 
         getBaseActivity().setupSearchSetting(getViewDataBinding().customSearchView.searchView);

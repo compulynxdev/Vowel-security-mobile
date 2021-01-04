@@ -26,8 +26,8 @@ public class TrespasserAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     private static final int VIEWTYPE_ITEM = 1;
     private static final int VIEWTYPE_LOADER = 2;
-    private List<TrespasserResponse.ContentBean> list;
-    private ItemClickCallback callback;
+    private final List<TrespasserResponse.ContentBean> list;
+    private final ItemClickCallback callback;
     private boolean showLoader;
 
     public TrespasserAdapter(List<TrespasserResponse.ContentBean> list, ItemClickCallback callback) {
@@ -88,8 +88,8 @@ public class TrespasserAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     public class ViewHolder extends BaseViewHolder {
-        ImageView imgVisitor;
-        TextView name, docId, flat, tv_elapsed_time, vehicleNo, checkInTime;
+        final ImageView imgVisitor;
+        final TextView name, docId, flat, tv_elapsed_time, vehicleNo, checkInTime;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -16,7 +16,7 @@ import com.evisitor.ui.base.BaseViewHolder;
 
 public final class FooterLoader extends BaseViewHolder {
 
-    public ProgressBar mProgressBar;
+    public final ProgressBar mProgressBar;
 
     public FooterLoader(@NonNull View itemView) {
         super(itemView);

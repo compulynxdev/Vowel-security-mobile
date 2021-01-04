@@ -24,16 +24,15 @@ public class NotificationsViewModel extends BaseViewModel<NotificationNavigator>
         super(dataManager);
     }
 
-    void getNotifications(int page, String search) {
+    void getNotifications(int page) {
         if (getNavigator().isNetworkConnected()) {
             Map<String, String> map = new HashMap<>();
             map.put("accountId", getDataManager().getAccountId());
-            if (!search.isEmpty())
-                map.put("search", search);
+            map.put("search", "");
             map.put("page", "" + page);
             map.put("username", "" + getDataManager().getUsername());
             map.put("size", String.valueOf(AppConstants.LIMIT));
-            AppLogger.d("Searching : NotificationResponse", page + " : " + search);
+            AppLogger.d("Searching : NotificationResponse", page + "");
 
             getDataManager().doGetNotifications(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
                 @Override

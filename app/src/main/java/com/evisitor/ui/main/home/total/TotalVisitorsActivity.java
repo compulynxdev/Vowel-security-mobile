@@ -5,11 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
@@ -23,9 +19,7 @@ import com.evisitor.ui.main.commercial.visitor.expected.ExpectedCommercialGuestF
 import com.evisitor.ui.main.residential.guest.expected.ExpectedGuestFragment;
 import com.evisitor.ui.main.residential.sp.ExpectedSPFragment;
 import com.evisitor.ui.main.residential.staff.expected.ExpectedHKFragment;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.evisitor.util.ViewPagerAdapter;
 
 public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBinding, TotalVisitorsViewModel> implements BaseNavigator, View.OnClickListener {
 
@@ -202,30 +196,5 @@ public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBin
                 return false;
             }
         });
-    }
-
-
-    class ViewPagerAdapter extends FragmentPagerAdapter {
-
-        private final List<Fragment> fragmentList = new ArrayList<>();
-
-        ViewPagerAdapter(@NonNull FragmentManager fm) {
-            super(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        }
-
-        @NonNull
-        @Override
-        public Fragment getItem(int position) {
-            return fragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return fragmentList.size();
-        }
-
-        void addFragment(Fragment fragment) {
-            fragmentList.add(fragment);
-        }
     }
 }

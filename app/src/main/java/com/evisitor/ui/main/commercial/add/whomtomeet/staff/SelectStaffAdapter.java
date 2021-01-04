@@ -20,8 +20,8 @@ import java.util.List;
 
 public class SelectStaffAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
-    private List<SelectCommercialStaffResponse> list;
-    private ItemClickCallback callback;
+    private final List<SelectCommercialStaffResponse> list;
+    private final ItemClickCallback callback;
 
     SelectStaffAdapter(List<SelectCommercialStaffResponse> list, ItemClickCallback callback) {
         this.list = list;
@@ -46,8 +46,8 @@ public class SelectStaffAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     public class ViewHolder extends BaseViewHolder {
-        ImageView imgVisitor;
-        TextView name, profile;
+        final ImageView imgVisitor;
+        final TextView name, profile;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -24,7 +24,7 @@ import retrofit2.Response;
 
 public class LoginViewModel extends BaseViewModel<LoginNavigator> {
 
-    private MutableLiveData<String> version = new MutableLiveData<>();
+    private final MutableLiveData<String> version = new MutableLiveData<>();
 
     public LoginViewModel(DataManager dataManager) {
         super(dataManager);
@@ -86,9 +86,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                             getDataManager().setIdentifyFeature(object.getBoolean("identityFeature"));
                             getDataManager().setLevelName(object.getString("levelName"));
                             getDataManager().setAccountName(object.getString("accountName"));
-                            if (object.has("type") && object.getString("type").equalsIgnoreCase("COMMERCIAL"))
-                                getDataManager().setCommercial(true);
-                            else getDataManager().setCommercial(false);
+                            getDataManager().setCommercial(object.has("type") && object.getString("type").equalsIgnoreCase("COMMERCIAL"));
                             getDataManager().setUserId(object.getString("userId"));
                             doGetUserDetail(isRemember);
                         } else {

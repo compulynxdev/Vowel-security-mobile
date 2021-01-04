@@ -93,10 +93,6 @@ public abstract class RecyclerViewScrollListener extends RecyclerView.OnScrollLi
 
     public abstract void onLoadMore();
 
-    public void setScrollThreshold(int scrollThreshold) {
-        int mScrollThreshold = scrollThreshold;
-    }
-
     public void stopInfiniteScrolling() {
         infiniteScrollingEnabled = false;
     }

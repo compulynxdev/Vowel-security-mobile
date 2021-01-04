@@ -18,9 +18,9 @@ import java.util.List;
 
 public class LanguageAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
+    private final List<LanguageBean> list;
+    private final ItemClickCallback clickListener;
     int lastPos = -1;
-    private List<LanguageBean> list;
-    private ItemClickCallback clickListener;
 
     LanguageAdapter(List<LanguageBean> list, ItemClickCallback clickListener) {
         this.list = list;
@@ -45,8 +45,8 @@ public class LanguageAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     class ViewHolder extends BaseViewHolder implements View.OnClickListener {
-        private TextView tvName;
-        private FrameLayout frameCheck;
+        private final TextView tvName;
+        private final FrameLayout frameCheck;
 
         ViewHolder(@NonNull View v) {
             super(v);

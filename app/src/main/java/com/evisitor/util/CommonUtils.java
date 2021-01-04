@@ -3,7 +3,6 @@ package com.evisitor.util;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.provider.Settings;
@@ -35,16 +34,21 @@ public final class CommonUtils {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-    public static String loadJSONFromAsset(Context context, String jsonFileName) throws IOException {
-        AssetManager manager = context.getAssets();
-        InputStream is = manager.open(jsonFileName);
+    public static String loadJSONFromAsset(Context context, String jsonFileName) {
+        try {
+            InputStream is = context.getAssets().open(jsonFileName);
 
-        int size = is.available();
-        byte[] buffer = new byte[size];
-        is.read(buffer);
-        is.close();
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
 
-        return new String(buffer, StandardCharsets.UTF_8);
+            return new String(buffer, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
     public static ProgressDialog showLoadingDialog(Context context) {

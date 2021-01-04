@@ -32,9 +32,9 @@ public class HomeViewModel extends BaseViewModel<BaseNavigator> {
     static final int TRESPASSER_VIEW = 6;
     static final int FLAGGED_VIEW = 7;
     static final int REJECTED_VIEW = 8;
-    private MutableLiveData<List<HomeBean>> homeListData = new MutableLiveData<>();
-    private MutableLiveData<Integer> notificationCountData = new MutableLiveData<>();
-    private List<HomeBean> list = new ArrayList<>();
+    private final MutableLiveData<List<HomeBean>> homeListData = new MutableLiveData<>();
+    private final MutableLiveData<Integer> notificationCountData = new MutableLiveData<>();
+    private final List<HomeBean> list = new ArrayList<>();
 
     public HomeViewModel(DataManager dataManager) {
         super(dataManager);

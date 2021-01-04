@@ -18,8 +18,8 @@ import com.evisitor.ui.base.BaseViewHolder;
 import java.util.List;
 
 public class GadgetsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
-    private List<DeviceBean> list;
-    private AdapterCallback callback;
+    private final List<DeviceBean> list;
+    private final AdapterCallback callback;
     private boolean isAdd;
 
     GadgetsAdapter(List<DeviceBean> list, AdapterCallback callback) {
@@ -57,8 +57,8 @@ public class GadgetsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public class ViewHolder extends BaseViewHolder {
 
-        TextView tv_title, etDeviceName, etDeviceType, etDeviceTag, etDeviceSerial, etDeviceManufacturer;
-        ImageView img_close;
+        final TextView tv_title, etDeviceName, etDeviceType, etDeviceTag, etDeviceSerial, etDeviceManufacturer;
+        final ImageView img_close;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);

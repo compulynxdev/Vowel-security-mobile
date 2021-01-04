@@ -45,7 +45,6 @@ import okhttp3.ResponseBody;
 public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseViewModel> extends AppCompatActivity
         implements BaseFragment.Callback, BaseNavigator {
 
-    private static final String TAG = "BaseActivity";
     protected V mViewModel;
     // this can probably depend on isLoading variable of BaseViewModel,
     // since its going to be common for all the activities

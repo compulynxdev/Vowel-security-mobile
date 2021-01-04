@@ -24,10 +24,10 @@ import java.util.List;
 public class ServiceProviderCheckInAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private static final int VIEWTYPE_ITEM = 1;
     private static final int VIEWTYPE_LOADER = 2;
-    private List<ServiceProvider> list;
+    private final List<ServiceProvider> list;
+    private final Context context;
+    private final OnItemClickListener listener;
     private boolean showLoader;
-    private Context context;
-    private OnItemClickListener listener;
 
     public ServiceProviderCheckInAdapter(List<ServiceProvider> list, Context context, OnItemClickListener click) {
         this.list = list;
@@ -89,8 +89,8 @@ public class ServiceProviderCheckInAdapter extends RecyclerView.Adapter<BaseView
 
     public class ViewHolder extends BaseViewHolder {
 
-        ImageView imgVisitor;
-        TextView name, time, houseNo, host, visitorType;
+        final ImageView imgVisitor;
+        final TextView name, time, houseNo, host, visitorType;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);

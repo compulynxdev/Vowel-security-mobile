@@ -24,9 +24,9 @@ import java.util.List;
 public class HouseKeepingCheckOutAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private static final int VIEWTYPE_ITEM = 1;
     private static final int VIEWTYPE_LOADER = 2;
-    private List<HouseKeeping> list;
+    private final List<HouseKeeping> list;
+    private final ItemClickCallback callback;
     private boolean showLoader;
-    private ItemClickCallback callback;
 
     public HouseKeepingCheckOutAdapter(List<HouseKeeping> list, ItemClickCallback callback) {
         this.list = list;
@@ -82,8 +82,8 @@ public class HouseKeepingCheckOutAdapter extends RecyclerView.Adapter<BaseViewHo
 
     public class ViewHolder extends BaseViewHolder {
 
-        ImageView imgVisitor;
-        TextView name, timeIn, timeOut, houseNo, host, visitorType;
+        final ImageView imgVisitor;
+        final TextView name, timeIn, timeOut, houseNo, host, visitorType;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);

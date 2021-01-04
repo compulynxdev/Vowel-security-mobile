@@ -107,6 +107,8 @@ public class ExpectedCommercialGuestViewModel extends BaseCheckInOutViewModel<Ex
                 object.put("staffId", getDataManager().getCommercialVisitorDetail().getStaffId());
                 object.put("premiseHierarchyDetailsId", getDataManager().getCommercialVisitorDetail().getFlatId());
                 object.put("enteredVehicleNo", getDataManager().getCommercialVisitorDetail().getEnteredVehicleNo());
+                JSONArray deviceList = new JSONArray(new Gson().toJson(getDataManager().getCommercialVisitorDetail().getDeviceBeanList()));
+                object.put("deviceList", deviceList);
                 //object.put("type", AppConstants.GUEST);
             } catch (JSONException e) {
                 e.printStackTrace();
