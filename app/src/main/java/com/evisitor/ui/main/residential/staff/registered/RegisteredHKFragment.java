@@ -62,7 +62,7 @@ public class RegisteredHKFragment extends BaseFragment<FragmentExpectedBinding, 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getViewDataBinding().tvNoData.setText(mViewModel.getDataManager().isCommercial() ? getString(R.string.no_registerd_ofc_staff) : getString(R.string.no_registerd_hk));
+        getViewDataBinding().tvNoData.setText(mViewModel.getDataManager().isCommercial() ? getString(R.string.no_registered_ofc_staff) : getString(R.string.no_registerd_hk));
         setUpAdapter();
     }
 

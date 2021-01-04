@@ -335,7 +335,7 @@ public final class FileUtils {
         final String KILOBYTES = " KB";
         final String MEGABYTES = " MB";
         final String GIGABYTES = " GB";
-        float fileSize = 0;
+        int fileSize = 0;
         String suffix = KILOBYTES;
 
         if (size > BYTES_IN_KILOBYTES) {

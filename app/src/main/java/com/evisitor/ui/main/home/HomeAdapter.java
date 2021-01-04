@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.evisitor.R;
@@ -65,7 +66,7 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         public void onBind(int position) {
             HomeBean mainBean = list.get(position);
             tv_count.setVisibility(mainBean.getCount().equals("0") ? View.GONE : View.VISIBLE);
-            img.setImageDrawable(img.getContext().getResources().getDrawable(mainBean.getIcon()));
+            img.setImageDrawable(ContextCompat.getDrawable(img.getContext(), mainBean.getIcon()));
             tv_title.setText(mainBean.getTitle());
             tv_count.setText(mainBean.getCount());
         }

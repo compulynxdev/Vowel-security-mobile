@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
@@ -92,7 +93,7 @@ public class GadgetsInputActivity extends BaseActivity<GadgetsInputDialogBinding
         imgBack.setVisibility(View.VISIBLE);
         imgBack.setOnClickListener(this);
         ImageView imgSearch = findViewById(R.id.img_search);
-        imgSearch.setImageDrawable(getDrawable(R.drawable.ic_add));
+        imgSearch.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_add));
         if (isAdd) {
             imgSearch.setVisibility(View.VISIBLE);
             getViewDataBinding().btnOk.setVisibility(View.VISIBLE);

@@ -62,7 +62,7 @@ public class RegisteredCommercialStaffFragment extends BaseFragment<FragmentExpe
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getViewDataBinding().tvNoData.setText(getString(R.string.no_registerd_ofc_staff));
+        getViewDataBinding().tvNoData.setText(getString(R.string.no_registered_ofc_staff));
         setUpAdapter();
     }
 

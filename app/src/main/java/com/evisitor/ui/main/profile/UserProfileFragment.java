@@ -5,6 +5,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -56,7 +57,7 @@ public class UserProfileFragment extends BaseFragment<FragmentUserProfileBinding
 
         getViewDataBinding().toolbar.imgSearch.setVisibility(View.VISIBLE);
         getViewDataBinding().toolbar.imgSearch.setPadding(3, 3, 3, 3);
-        getViewDataBinding().toolbar.imgSearch.setImageDrawable(getResources().getDrawable(R.drawable.ic_logout_2));
+        getViewDataBinding().toolbar.imgSearch.setImageDrawable(ContextCompat.getDrawable(getBaseActivity(), R.drawable.ic_logout_2));
         getViewDataBinding().imgUser.setOnClickListener(v -> showFullImage(imageUrl));
 
         getViewDataBinding().toolbar.imgSearch.setOnClickListener(v -> showAlert(R.string.logout, R.string.logout_msg)

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.evisitor.EVisitor;
@@ -174,7 +175,7 @@ public class VisitorProfileAdapter extends RecyclerView.Adapter<BaseViewHolder> 
             for (String day : bean.getDataList()) {
                 TextView tv_days = (TextView) activity.getLayoutInflater().inflate(R.layout.item_day, constraint_main, false);
                 tv_days.setText(AppUtils.capitaliseFirstLetter(day));
-                tv_days.setBackground(activity.getResources().getDrawable(day.equals("sun") || day.equals("sat") ?
+                tv_days.setBackground(ContextCompat.getDrawable(activity, day.equals("sun") || day.equals("sat") ?
                         R.drawable.bg_circle_red : R.drawable.bg_circle_primary));
                 ll_days.addView(tv_days);
             }

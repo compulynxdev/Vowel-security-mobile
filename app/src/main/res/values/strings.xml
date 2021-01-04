@@ -280,7 +280,7 @@
 
     <!--commercial staff labels-->
     <string name="no_expected_ofc_staff">You don\'t have any expected staff today!</string>
-    <string name="no_registerd_ofc_staff">You don\'t have any registered staff!</string>
+    <string name="no_registered_ofc_staff">You don\'t have any registered staff!</string>
     <string name="no_rejected_ofc_staff">You don\'t have any rejected staff!</string>
     <string name="enter_purpose">Enter purpose of visit*</string>
     <string name="title_who_to_meet">Whom to meet</string>

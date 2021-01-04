@@ -20,6 +20,11 @@ import java.util.Objects;
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
+    public void onNewToken(@NonNull String s) {
+        super.onNewToken(s);
+    }
+
+    @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
         showNotification(MyFirebaseMessagingService.this.getApplicationContext(), Objects.requireNonNull(remoteMessage.getNotification()).getTitle(), remoteMessage.getNotification().getBody());

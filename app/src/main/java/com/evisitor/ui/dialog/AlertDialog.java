@@ -5,6 +5,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -134,18 +135,18 @@ public class AlertDialog extends BaseDialog<DialogAlertBinding, AlertViewModel> 
         if (!negativeBtnLabel.isEmpty())
             getViewDataBinding().btnNegative.setText(negativeBtnLabel);
         if (isNegativeBtnShow) {
-            getViewDataBinding().btnPositive.setBackground(getResources().getDrawable(R.drawable.bg_bottom_right_primary_corner));
+            getViewDataBinding().btnPositive.setBackground(ContextCompat.getDrawable(getBaseActivity(), R.drawable.bg_bottom_right_primary_corner));
             getViewDataBinding().btnNegative.setVisibility(View.VISIBLE);
         } else {
-            getViewDataBinding().btnPositive.setBackground(getResources().getDrawable(R.drawable.bg_bottom_lr_primary_corner));
+            getViewDataBinding().btnPositive.setBackground(ContextCompat.getDrawable(getBaseActivity(), R.drawable.bg_bottom_lr_primary_corner));
             getViewDataBinding().btnNegative.setVisibility(View.GONE);
         }
 
         if (positiveBtnBgDrawable != -1)
-            getViewDataBinding().btnPositive.setBackground(getResources().getDrawable(positiveBtnBgDrawable));
+            getViewDataBinding().btnPositive.setBackground(ContextCompat.getDrawable(getBaseActivity(), positiveBtnBgDrawable));
 
         if (negativeBtnBgDrawable != -1)
-            getViewDataBinding().btnPositive.setBackground(getResources().getDrawable(negativeBtnBgDrawable));
+            getViewDataBinding().btnPositive.setBackground(ContextCompat.getDrawable(getBaseActivity(), negativeBtnBgDrawable));
     }
 
     public void show(FragmentManager fragmentManager) {
