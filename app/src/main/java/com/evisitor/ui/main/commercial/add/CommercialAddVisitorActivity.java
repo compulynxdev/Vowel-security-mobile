@@ -57,7 +57,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
     private String houseId = "";
     private Bitmap bmp_profile;
     private String idType = "";
-    private Boolean isGuest = false;
+    private Boolean isGuest;
     private boolean isStaffSelect;
     private List<DeviceBean> deviceBeanList;
 

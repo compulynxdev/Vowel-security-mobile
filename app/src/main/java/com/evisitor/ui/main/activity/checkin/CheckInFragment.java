@@ -173,7 +173,9 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
             List<VisitorProfileBean> beans = mViewModel.getCommercialGuestProfileBean(guests);
             VisitorProfileDialog.newInstance(beans, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
-                mViewModel.checkOut(0);
+                if (!guests.getHost().isEmpty() && guests.getHostCheckOutTime().isEmpty())
+                    showCallDialog(0);
+                else mViewModel.checkOut(0);
             }).setIsCommercialGuest(true).setImage(guests.getImageUrl()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
         });
 
@@ -228,7 +230,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                 .setNegativeBtnShow(false)
                 .setCloseBtnShow(true)
                 .setTitle(getString(R.string.check_out))
-                .setMsg(getString(R.string.msg_check_out_call))
+                .setMsg(getViewModel().getDataManager().isCommercial() ? getString(R.string.commercial_msg_check_out_call) : getString(R.string.msg_check_out_call))
                 .setPositiveBtnLabel(getString(R.string.approve))
                 /*.setNegativeBtnLabel(getString(R.string.reject))
                 .setOnNegativeClickListener(dialog1 -> {

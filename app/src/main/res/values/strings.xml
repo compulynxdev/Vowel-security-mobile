@@ -127,7 +127,7 @@
     <!--Add Guest Check-In Validation-->
     <string name="alert_empty_id">Please enter identity number.</string>
     <string name="alert_select_id">Please select identity type.</string>
-    <string name="alert_empty_name">Please enter deviceName.</string>
+    <string name="alert_empty_name">Please enter name.</string>
     <string name="alert_empty_contact">Please enter contact number.</string>
     <string name="alert_contact_length">Contact number minimum length must be 7 and maximum length 12.</string>
     <string name="alert_empty_address">Please enter address.</string>
@@ -141,7 +141,7 @@
     <string name="alert_select_assigned_to">Please select assigned to.</string>
     <string name="alert_select_employment">Please select employment.</string>
     <string name="alert_enter_profile">Please enter work profile.</string>
-    <string name="alert_enter_comp_name">Please enter company deviceName.</string>
+    <string name="alert_enter_comp_name">Please enter company name.</string>
     <string name="alert_enter_comp_address">Please enter company address.</string>
 
     <!--Settings-->
@@ -294,12 +294,14 @@
     <string name="enter_device_tag">Tag number</string>
     <string name="can_enter_more_device">You can\'t enter more than 5 device details!</string>
     <string name="enter_device_manufacturer">Manufacturer</string>
-    <string name="please_fill_details">Please fill the device details first, if you have device then device deviceName and device serial number is mandatory!!</string>
+    <string name="please_fill_details">Please fill the device details first, if you have device then device name and device serial number is mandatory!!</string>
     <string name="please_select">Please select</string>
     <string name="alert_whom_to_meet">Please select whom to meet</string>
     <string name="please_enter_purpose">Please enter purpose of visist!</string>
     <string name="view_gadgets_info">View gadgets information</string>
     <string name="device">Device</string>
     <string name="add_gadgets_info">Add gadgets information</string>
+    <string name="employment">Employment : %s</string>
+    <string name="commercial_msg_check_out_call">Staff didn\'t checkout yet, Please call manually and wait for staff confirmation and select option according to staff.</string>
 
 </resources>
