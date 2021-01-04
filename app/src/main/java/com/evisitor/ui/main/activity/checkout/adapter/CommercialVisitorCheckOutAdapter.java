@@ -21,14 +21,14 @@ import com.evisitor.util.pagination.FooterLoader;
 
 import java.util.List;
 
-public class CommercialGuestCheckOutAdapter extends RecyclerView.Adapter<BaseViewHolder> {
+public class CommercialVisitorCheckOutAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private static final int VIEWTYPE_ITEM = 1;
     private static final int VIEWTYPE_LOADER = 2;
     private final List<CommercialVisitorResponse.CommercialGuest> list;
     private final ItemClickCallback callback;
     private boolean showLoader;
 
-    public CommercialGuestCheckOutAdapter(List<CommercialVisitorResponse.CommercialGuest> list, ItemClickCallback callback) {
+    public CommercialVisitorCheckOutAdapter(List<CommercialVisitorResponse.CommercialGuest> list, ItemClickCallback callback) {
         this.list = list;
         this.callback = callback;
     }
@@ -40,7 +40,7 @@ public class CommercialGuestCheckOutAdapter extends RecyclerView.Adapter<BaseVie
         switch (viewType) {
             case VIEWTYPE_ITEM:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_check_in_out, parent, false);
-                return new CommercialGuestCheckOutAdapter.ViewHolder(view);
+                return new CommercialVisitorCheckOutAdapter.ViewHolder(view);
 
             default:
             case VIEWTYPE_LOADER:

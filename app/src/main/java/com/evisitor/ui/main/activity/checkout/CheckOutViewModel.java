@@ -48,7 +48,7 @@ public class CheckOutViewModel extends BaseViewModel<ActivityNavigator> {
             switch (listOf) {
                 case 0:
                     if (getDataManager().isCommercial())
-                        getCommercialGuestList(map);
+                        getCommercialVisitorList(map);
                     else getGuestList(map);
                     AppLogger.d("Searching : CheckOutViewModel ExpectedGuest", page + " : " + search);
                     break;
@@ -71,7 +71,7 @@ public class CheckOutViewModel extends BaseViewModel<ActivityNavigator> {
         }
     }
 
-    private void getCommercialGuestList(Map<String, String> map) {
+    private void getCommercialVisitorList(Map<String, String> map) {
         getDataManager().doGetCommercialGuestCheckInOutList(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {

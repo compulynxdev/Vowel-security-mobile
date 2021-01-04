@@ -17,8 +17,8 @@ import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.databinding.FragmentCheckOutBinding;
 import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.main.activity.ActivityNavigator;
-import com.evisitor.ui.main.activity.checkout.adapter.CommercialGuestCheckOutAdapter;
 import com.evisitor.ui.main.activity.checkout.adapter.CommercialStaffCheckOutAdapter;
+import com.evisitor.ui.main.activity.checkout.adapter.CommercialVisitorCheckOutAdapter;
 import com.evisitor.ui.main.activity.checkout.adapter.GuestCheckOutAdapter;
 import com.evisitor.ui.main.activity.checkout.adapter.HouseKeepingCheckOutAdapter;
 import com.evisitor.ui.main.activity.checkout.adapter.ServiceProviderCheckOutAdapter;
@@ -36,7 +36,7 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
     private List<HouseKeeping> houseKeepingList;
     private List<CommercialStaffResponse.ContentBean> commercialStaffList;
 
-    private CommercialGuestCheckOutAdapter commercialGuestAdapter;
+    private CommercialVisitorCheckOutAdapter commercialVisitorAdapter;
     private GuestCheckOutAdapter guestAdapter;
     private ServiceProviderCheckOutAdapter serviceProviderAdapter;
     private CommercialStaffCheckOutAdapter commercialStaffAdapter;
@@ -88,7 +88,7 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
             //guest
             case 0:
                 if (mViewModel.getDataManager().isCommercial()) {
-                    getViewDataBinding().recyclerView.setAdapter(commercialGuestAdapter);
+                    getViewDataBinding().recyclerView.setAdapter(commercialVisitorAdapter);
                 } else getViewDataBinding().recyclerView.setAdapter(guestAdapter);
                 break;
 
@@ -114,7 +114,7 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
         serviceProviderList = new ArrayList<>();
 
         if (mViewModel.getDataManager().isCommercial()) {
-            setUpCommercialGuestAdapter();
+            setUpCommercialVisitorAdapter();
             setUpCommercialStaffAdapter();
         } else {
             setUpGuestAdapter();
@@ -172,16 +172,18 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
         serviceProviderAdapter.setHasStableIds(true);
     }
 
-    private void setUpCommercialGuestAdapter() {
+    private void setUpCommercialVisitorAdapter() {
         commercialGuestList = new ArrayList<>();
-        commercialGuestAdapter = new CommercialGuestCheckOutAdapter(commercialGuestList, pos -> VisitorProfileDialog.newInstance(mViewModel.getCommercialGuestProfileBean(commercialGuestList.get(pos)), null).setImage(commercialGuestList.get(pos).getImageUrl()).setIsCommercialGuest(true).setBtnVisible(false).show(getChildFragmentManager()));
-        commercialGuestAdapter.setHasStableIds(true);
+        commercialVisitorAdapter = new CommercialVisitorCheckOutAdapter(commercialGuestList, pos -> VisitorProfileDialog.newInstance(mViewModel.getCommercialGuestProfileBean(commercialGuestList.get(pos)), null).setImage(commercialGuestList.get(pos).getImageUrl()).setIsCommercialGuest(true).setBtnVisible(false).show(getChildFragmentManager()));
+        commercialVisitorAdapter.setHasStableIds(true);
+        getViewDataBinding().recyclerView.setAdapter(commercialVisitorAdapter);
     }
 
     private void setUpGuestAdapter() {
         guestsList = new ArrayList<>();
         guestAdapter = new GuestCheckOutAdapter(guestsList, pos -> VisitorProfileDialog.newInstance(mViewModel.getGuestProfileBean(guestsList.get(pos)), null).setImage(guestsList.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
         guestAdapter.setHasStableIds(true);
+        getViewDataBinding().recyclerView.setAdapter(guestAdapter);
     }
 
     public void doSearch(String search) {
@@ -219,7 +221,7 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
         if (guestPage == 0) commercialGuestList.clear();
 
         commercialGuestList.addAll(tmpGuestsList);
-        commercialGuestAdapter.notifyDataSetChanged();
+        commercialVisitorAdapter.notifyDataSetChanged();
 
         if (commercialGuestList.size() == 0) {
             getViewDataBinding().recyclerView.setVisibility(View.GONE);
@@ -320,9 +322,9 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
 
     private void setGuestAdapterLoading(boolean isShowLoader) {
         if (mViewModel.getDataManager().isCommercial()) {
-            if (commercialGuestAdapter != null) {
-                commercialGuestAdapter.showLoading(isShowLoader);
-                commercialGuestAdapter.notifyDataSetChanged();
+            if (commercialVisitorAdapter != null) {
+                commercialVisitorAdapter.showLoading(isShowLoader);
+                commercialVisitorAdapter.notifyDataSetChanged();
             }
         } else {
             if (guestAdapter != null) {

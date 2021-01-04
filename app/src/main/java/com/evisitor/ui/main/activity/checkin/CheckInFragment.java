@@ -19,8 +19,8 @@ import com.evisitor.databinding.FragmentCheckInBinding;
 import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.dialog.AlertDialog;
 import com.evisitor.ui.main.activity.ActivityNavigator;
-import com.evisitor.ui.main.activity.checkin.adapter.CommercialGuestCheckInAdapter;
 import com.evisitor.ui.main.activity.checkin.adapter.CommercialStaffCheckInAdapter;
+import com.evisitor.ui.main.activity.checkin.adapter.CommercialVisitorCheckInAdapter;
 import com.evisitor.ui.main.activity.checkin.adapter.GuestCheckInAdapter;
 import com.evisitor.ui.main.activity.checkin.adapter.HouseKeepingCheckInAdapter;
 import com.evisitor.ui.main.activity.checkin.adapter.ServiceProviderCheckInAdapter;
@@ -39,7 +39,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
     private List<CommercialStaffResponse.ContentBean> commercialStaffList;
     private CommercialStaffCheckInAdapter commercialStaffCheckInAdapter;
     private GuestCheckInAdapter guestAdapter;
-    private CommercialGuestCheckInAdapter commercialGuestCheckInAdapter;
+    private CommercialVisitorCheckInAdapter commercialVisitorAdapter;
     private ServiceProviderCheckInAdapter serviceProviderAdapter;
     private HouseKeepingCheckInAdapter houseKeepingAdapter;
     private OnFragmentInteraction listener;
@@ -73,7 +73,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
             //guest
             case 0:
                 if (mViewModel.getDataManager().isCommercial())
-                    getViewDataBinding().recyclerView.setAdapter(commercialGuestCheckInAdapter);
+                    getViewDataBinding().recyclerView.setAdapter(commercialVisitorAdapter);
                 else
                     getViewDataBinding().recyclerView.setAdapter(guestAdapter);
                 break;
@@ -168,7 +168,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
 
     private void setUpCommercialGuestAdapter() {
         commercialGuestList = new ArrayList<>();
-        commercialGuestCheckInAdapter = new CommercialGuestCheckInAdapter(commercialGuestList, getBaseActivity(), pos -> {
+        commercialVisitorAdapter = new CommercialVisitorCheckInAdapter(commercialGuestList, getBaseActivity(), pos -> {
             CommercialVisitorResponse.CommercialGuest guests = commercialGuestList.get(pos);
             List<VisitorProfileBean> beans = mViewModel.getCommercialGuestProfileBean(guests);
             VisitorProfileDialog.newInstance(beans, visitorProfileDialog -> {
@@ -177,7 +177,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
             }).setIsCommercialGuest(true).setImage(guests.getImageUrl()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
         });
 
-        getViewDataBinding().recyclerView.setAdapter(commercialGuestCheckInAdapter);
+        getViewDataBinding().recyclerView.setAdapter(commercialVisitorAdapter);
     }
 
     private void setUpHouseKeeperAdapter() {
@@ -277,7 +277,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
         if (guestPage == 0) commercialGuestList.clear();
 
         commercialGuestList.addAll(tmpGuestsList);
-        commercialGuestCheckInAdapter.notifyDataSetChanged();
+        commercialVisitorAdapter.notifyDataSetChanged();
 
         if (commercialGuestList.size() == 0) {
             getViewDataBinding().recyclerView.setVisibility(View.GONE);
@@ -382,9 +382,9 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
 
     private void setGuestAdapterLoading(boolean isShowLoader) {
         if (mViewModel.getDataManager().isCommercial()) {
-            if (commercialGuestCheckInAdapter != null) {
-                commercialGuestCheckInAdapter.showLoading(isShowLoader);
-                commercialGuestCheckInAdapter.notifyDataSetChanged();
+            if (commercialVisitorAdapter != null) {
+                commercialVisitorAdapter.showLoading(isShowLoader);
+                commercialVisitorAdapter.notifyDataSetChanged();
             }
         } else {
             if (guestAdapter != null) {
