@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.evisitor.EVisitor;
 import com.evisitor.R;
 import com.evisitor.data.DataManager;
+import com.evisitor.data.model.CommercialStaffResponse;
 import com.evisitor.data.model.CommercialVisitorResponse;
 import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.HouseKeepingResponse;
@@ -121,14 +122,25 @@ public class VisitorProfileAdapter extends RecyclerView.Adapter<BaseViewHolder> 
                         if (guests != null) {
                             guests.setEnteredVehicleNo(et_data.getText().toString());
                             dataManager.setCommercialVisitorDetail(guests);
-                            return;
                         }
+
+                        CommercialStaffResponse.ContentBean staff = dataManager.getCommercialStaff();
+                        if (staff != null) {
+                            staff.setEnteredVehicleNo(et_data.getText().toString());
+                            dataManager.setCommercialStaff(staff);
+                        }
+
                     } else {
                         Guests guests = dataManager.getGuestDetail();
                         if (guests != null) {
                             guests.setEnteredVehicleNo(et_data.getText().toString());
                             dataManager.setGuestDetail(guests);
-                            return;
+                        }
+
+                        HouseKeepingResponse.ContentBean hkBean = dataManager.getHouseKeeping();
+                        if (hkBean != null) {
+                            hkBean.setEnteredVehicleNo(et_data.getText().toString());
+                            dataManager.setHouseKeeping(hkBean);
                         }
                     }
 
@@ -136,13 +148,6 @@ public class VisitorProfileAdapter extends RecyclerView.Adapter<BaseViewHolder> 
                     if (spBean != null) {
                         spBean.setEnteredVehicleNo(et_data.getText().toString());
                         dataManager.setSPDetail(spBean);
-                        return;
-                    }
-
-                    HouseKeepingResponse.ContentBean hkBean = dataManager.getHouseKeeping();
-                    if (hkBean != null) {
-                        hkBean.setEnteredVehicleNo(et_data.getText().toString());
-                        dataManager.setHouseKeeping(hkBean);
                     }
                 }
             });

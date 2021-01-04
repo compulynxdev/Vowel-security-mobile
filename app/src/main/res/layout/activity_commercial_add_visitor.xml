@@ -90,6 +90,36 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
+                    android:id="@+id/et_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:autofillHints="deviceName"
+                    android:background="@drawable/bg_search"
+                    android:digits="@string/name_value"
+                    android:fontFamily="@font/futura_round_medium"
+                    android:gravity="center_vertical"
+                    android:hint="@string/enter_name"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPersonName"
+                    android:maxLength="@integer/name_length"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="8dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black40p"
+                    android:textSize="16sp"
+                    android:theme="@style/EditTextTheme"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_visitor_type"
+                    tools:ignore="LabelFor"
+                    tools:targetApi="o" />
+
+
+                <EditText
                     android:id="@+id/et_identity"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
@@ -115,7 +145,7 @@
                     android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_visitor_type"
+                    app:layout_constraintTop_toBottomOf="@id/et_name"
                     tools:ignore="LabelFor"
                     tools:targetApi="o" />
 
@@ -140,34 +170,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/et_identity" />
 
-                <EditText
-                    android:id="@+id/et_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:autofillHints="deviceName"
-                    android:background="@drawable/bg_search"
-                    android:digits="@string/name_value"
-                    android:fontFamily="@font/futura_round_medium"
-                    android:gravity="center_vertical"
-                    android:hint="@string/enter_name"
-                    android:imeOptions="actionNext"
-                    android:inputType="textPersonName"
-                    android:maxLength="@integer/name_length"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="8dp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black40p"
-                    android:textSize="16sp"
-                    android:theme="@style/EditTextTheme"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_identity"
-                    tools:ignore="LabelFor"
-                    tools:targetApi="o" />
 
                 <EditText
                     android:id="@+id/et_vehicle"
@@ -194,7 +196,7 @@
                     android:theme="@style/EditTextTheme"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/et_name"
+                    app:layout_constraintTop_toBottomOf="@id/tv_identity"
                     tools:ignore="LabelFor"
                     tools:targetApi="o" />
 

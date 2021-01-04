@@ -48,14 +48,14 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
     }
 
     boolean doVerifyGuestInputs(AddVisitorData visitorData, GuestConfigurationResponse configurationResponse) {
-        if (getDataManager().isIdentifyFeature() && visitorData.identityNo.isEmpty()) {
+        if (visitorData.name.isEmpty()) {
+            getNavigator().showToast(R.string.alert_empty_name);
+            return false;
+        } else if (getDataManager().isIdentifyFeature() && visitorData.identityNo.isEmpty()) {
             getNavigator().showToast(R.string.alert_empty_id);
             return false;
         } else if (!visitorData.identityNo.isEmpty() && visitorData.idType.isEmpty()) {
             getNavigator().showToast(R.string.alert_select_id);
-            return false;
-        } else if (visitorData.name.isEmpty()) {
-            getNavigator().showToast(R.string.alert_empty_name);
             return false;
         } else if (configurationResponse.getGuestField().isContactNo() && visitorData.contact.isEmpty()) {
             getNavigator().showToast(R.string.alert_empty_contact);
@@ -148,14 +148,14 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
         if (visitorData.assignedTo.isEmpty()) {
             getNavigator().showToast(R.string.alert_select_assigned_to);
             return false;
+        } else if (visitorData.name.isEmpty()) {
+            getNavigator().showToast(R.string.alert_empty_name);
+            return false;
         } else if (visitorData.identityNo.isEmpty()) {
             getNavigator().showToast(R.string.alert_empty_id);
             return false;
         } else if (visitorData.idType.isEmpty()) {
             getNavigator().showToast(R.string.alert_select_id);
-            return false;
-        } else if (visitorData.name.isEmpty()) {
-            getNavigator().showToast(R.string.alert_empty_name);
             return false;
         } else if (visitorData.contact.isEmpty()) {
             getNavigator().showToast(R.string.alert_empty_contact);

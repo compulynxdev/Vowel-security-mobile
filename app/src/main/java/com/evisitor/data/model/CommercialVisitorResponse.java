@@ -108,6 +108,9 @@ public class CommercialVisitorResponse {
         @SerializedName("purposeOfExit")
         private String purpose;
 
+        @SerializedName("hostCheckOutTime")
+        private String hostCheckOutTime;
+
 
         public String getCheckInTime() {
             return checkInTime;
@@ -324,6 +327,14 @@ public class CommercialVisitorResponse {
 
         public void setCreatedDate(String createdDate) {
             this.createdDate = createdDate;
+        }
+
+        public String getHostCheckOutTime() {
+            return hostCheckOutTime == null ? "" : hostCheckOutTime;
+        }
+
+        public void setHostCheckOutTime(String hostCheckOutTime) {
+            this.hostCheckOutTime = hostCheckOutTime;
         }
     }
 
