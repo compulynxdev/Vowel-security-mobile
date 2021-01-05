@@ -92,7 +92,7 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
                 } else getViewDataBinding().recyclerView.setAdapter(guestAdapter);
                 break;
 
-            //house
+            //domestic staff or commercial staff
             case 1:
                 if (mViewModel.getDataManager().isCommercial()) {
                     getViewDataBinding().recyclerView.setAdapter(commercialStaffAdapter);
@@ -191,19 +191,26 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
         scrollListener.onDataCleared();
         switch (listOf) {
             case 0:
-                if (mViewModel.getDataManager().isCommercial())
+                if (mViewModel.getDataManager().isCommercial()) {
                     commercialGuestList.clear();
-                else
+                    commercialVisitorAdapter.notifyDataSetChanged();
+                } else {
                     guestsList.clear();
+                    guestAdapter.notifyDataSetChanged();
+                }
 
                 guestPage = 0;
                 mViewModel.getCheckOutData(guestPage, search, listOf);
                 break;
 
             case 1:
-                if (mViewModel.getDataManager().isCommercial())
+                if (mViewModel.getDataManager().isCommercial()) {
                     commercialStaffList.clear();
-                else houseKeepingList.clear();
+                    commercialStaffAdapter.notifyDataSetChanged();
+                } else {
+                    houseKeepingList.clear();
+                    houseKeepingAdapter.notifyDataSetChanged();
+                }
                 hkPage = 0;
                 mViewModel.getCheckOutData(hkPage, search, listOf);
                 break;

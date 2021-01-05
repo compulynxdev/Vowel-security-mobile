@@ -230,7 +230,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                 .setNegativeBtnShow(false)
                 .setCloseBtnShow(true)
                 .setTitle(getString(R.string.check_out))
-                .setMsg(getViewModel().getDataManager().isCommercial() ? getString(R.string.commercial_msg_check_out_call) : getString(R.string.msg_check_out_call))
+                .setMsg(mViewModel.getDataManager().isCommercial() ? getString(R.string.commercial_msg_check_out_call) : getString(R.string.msg_check_out_call))
                 .setPositiveBtnLabel(getString(R.string.approve))
                 /*.setNegativeBtnLabel(getString(R.string.reject))
                 .setOnNegativeClickListener(dialog1 -> {
@@ -249,25 +249,33 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
         scrollListener.onDataCleared();
         switch (listOf) {
             case 0:
-                if (mViewModel.getDataManager().isCommercial())
+                if (mViewModel.getDataManager().isCommercial()) {
                     commercialGuestList.clear();
-                else
+                    commercialVisitorAdapter.notifyDataSetChanged();
+                } else {
                     guestsList.clear();
+                    guestAdapter.notifyDataSetChanged();
+                }
 
                 guestPage = 0;
                 mViewModel.getCheckInData(guestPage, search, listOf);
                 break;
 
             case 1:
-                if (mViewModel.getDataManager().isCommercial())
+                if (mViewModel.getDataManager().isCommercial()) {
                     commercialStaffList.clear();
-                else houseKeepingList.clear();
+                    commercialStaffCheckInAdapter.notifyDataSetChanged();
+                } else {
+                    houseKeepingList.clear();
+                    houseKeepingAdapter.notifyDataSetChanged();
+                }
                 hkPage = 0;
                 mViewModel.getCheckInData(hkPage, search, listOf);
                 break;
 
             case 2:
                 serviceProviderList.clear();
+                serviceProviderAdapter.notifyDataSetChanged();
                 spPage = 0;
                 mViewModel.getCheckInData(spPage, search, listOf);
                 break;
