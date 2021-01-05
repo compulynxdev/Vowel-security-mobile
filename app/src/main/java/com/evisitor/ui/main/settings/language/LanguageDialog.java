@@ -76,7 +76,7 @@ public class LanguageDialog extends BaseDialog<DialogLanguageBinding, LanguageDi
     }
 
     public void show(FragmentManager fragmentManager) {
-        super.show(fragmentManager);
+        super.show(fragmentManager, TAG);
     }
 
     @Override

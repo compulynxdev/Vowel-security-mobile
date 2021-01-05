@@ -15,6 +15,7 @@ import com.evisitor.ui.base.BaseDialog;
 
 public class InputDialog extends BaseDialog<DialogInputBinding, InputDialogViewModel> implements View.OnClickListener {
 
+    private static final String TAG = "InputDialog";
     private PositiveListener positiveListener;
 
     //default param
@@ -62,7 +63,7 @@ public class InputDialog extends BaseDialog<DialogInputBinding, InputDialogViewM
     }
 
     public void show(FragmentManager fragmentManager) {
-        super.show(fragmentManager);
+        super.show(fragmentManager, TAG);
     }
 
     @Override

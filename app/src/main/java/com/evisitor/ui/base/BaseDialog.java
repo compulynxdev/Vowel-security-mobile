@@ -18,14 +18,13 @@ import androidx.annotation.StringRes;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.evisitor.R;
 import com.evisitor.util.ScreenUtils;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-
-import okhttp3.ResponseBody;
 
 /**
  * Created by priyanka joshi
@@ -34,7 +33,6 @@ import okhttp3.ResponseBody;
 
 public abstract class BaseDialog<T extends ViewDataBinding, V extends BaseViewModel> extends DialogFragment {
 
-    private static final String TAG = "BaseDialog";
     protected V mViewModel;
     private BaseActivity mActivity;
     private T mViewDataBinding;
@@ -166,12 +164,22 @@ public abstract class BaseDialog<T extends ViewDataBinding, V extends BaseViewMo
         return dialog;
     }
 
-    public void show(FragmentManager fragmentManager) {
+    public void show(FragmentManager fragmentManager, String tag) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        Fragment prevFragment = fragmentManager.findFragmentByTag(tag);
+        if (prevFragment != null) {
+            transaction.remove(prevFragment);
+        }
+        transaction.addToBackStack(null);
+        show(transaction, tag);
+    }
+
+    /*public void show(FragmentManager fragmentManager) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         transaction.addToBackStack(null);
         show(transaction, TAG);
-    }
+    }*/
 
     public void showToast(String msg) {
         if (mActivity != null) mActivity.showToast(msg);
@@ -184,16 +192,6 @@ public abstract class BaseDialog<T extends ViewDataBinding, V extends BaseViewMo
     protected void dismissDialog(@NonNull String tag) {
         dismiss();
         getBaseActivity().onFragmentDetached(tag);
-    }
-
-    public void handleApiFailure(@NonNull Throwable t) {
-        if (mActivity != null)
-            mActivity.handleApiFailure(t);
-    }
-
-    public void handleApiError(ResponseBody response) {
-        if (mActivity != null)
-            mActivity.handleApiError(response);
     }
 
     public void showFullImage(String imageUrl) {

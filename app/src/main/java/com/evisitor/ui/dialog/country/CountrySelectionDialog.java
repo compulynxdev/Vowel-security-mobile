@@ -134,7 +134,7 @@ public class CountrySelectionDialog extends BaseDialog<DialogCountrySelectionBin
     }
 
     public void show(FragmentManager fragmentManager) {
-        super.show(fragmentManager);
+        super.show(fragmentManager, TAG);
     }
 
     @Override

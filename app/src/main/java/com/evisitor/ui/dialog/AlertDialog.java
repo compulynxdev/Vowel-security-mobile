@@ -17,6 +17,7 @@ import com.evisitor.ui.base.BaseDialog;
 
 public class AlertDialog extends BaseDialog<DialogAlertBinding, AlertViewModel> implements View.OnClickListener {
 
+    private static final String TAG = "AlertDialog";
     private NegativeListener negativeListener;
     private PositiveListener positiveListener;
 
@@ -150,7 +151,7 @@ public class AlertDialog extends BaseDialog<DialogAlertBinding, AlertViewModel> 
     }
 
     public void show(FragmentManager fragmentManager) {
-        super.show(fragmentManager);
+        super.show(fragmentManager, TAG);
     }
 
     @Override
