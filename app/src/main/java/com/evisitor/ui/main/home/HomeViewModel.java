@@ -88,7 +88,10 @@ public class HomeViewModel extends BaseViewModel<BaseNavigator> {
                                 int hkCount = jsonObject.getInt("staff");
                                 int spCount = jsonObject.getInt("serviceProvider");
                                 int commercialStaffCount = jsonObject.has("commercialStaff") ? jsonObject.getInt("commercialStaff") : 0;
-                                int totalCount = guestCount + hkCount + spCount;
+                                int totalCount = guestCount + spCount;
+                                if (getDataManager().isCommercial())
+                                    totalCount = totalCount + commercialStaffCount;
+                                else totalCount = totalCount + hkCount;
                                 list.get(GUEST_VIEW).setCount(String.valueOf(guestCount));
                                 list.get(STAFF_VIEW).setCount(String.valueOf(getDataManager().isCommercial() ? commercialStaffCount : hkCount));
                                 list.get(SERVICE_PROVIDER_VIEW).setCount(String.valueOf(spCount));

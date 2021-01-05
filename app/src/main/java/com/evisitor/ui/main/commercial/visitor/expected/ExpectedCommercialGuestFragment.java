@@ -212,7 +212,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
                 .setNegativeBtnShow(true)
                 .setCloseBtnShow(true)
                 .setTitle(getString(R.string.check_in))
-                .setMsg(getString(R.string.msg_check_in_call))
+                .setMsg(getString(R.string.commercial_msg_check_in_call))
                 .setPositiveBtnLabel(getString(R.string.approve))
                 .setNegativeBtnLabel(getString(R.string.reject))
                 .setOnNegativeClickListener(dialog1 -> {

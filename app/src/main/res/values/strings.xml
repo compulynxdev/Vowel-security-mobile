@@ -104,6 +104,8 @@
     <string name="msg_check_in_confirmation">Please confirm resident to check in guest or not?</string>
 
     <string name="msg_check_in_call">Please call manually and wait for resident confirmation and select option according to resident.</string>
+
+    <string name="commercial_msg_check_in_call">Please call manually and wait for staff confirmation and select option according to staff.</string>
     <string name="approve">Approve</string>
     <string name="reject">Reject</string>
 
