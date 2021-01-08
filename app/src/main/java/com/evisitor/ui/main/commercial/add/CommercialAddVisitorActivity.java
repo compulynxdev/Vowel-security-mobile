@@ -85,8 +85,8 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
         super.onCreate(savedInstanceState);
         mViewModel.setNavigator(this);
         getViewDataBinding().toolbar.tvTitle.setText(R.string.title_add_visitor);
-        setUp();
         setIntentData(getIntent());
+        setUp();
         randomCheckInObserver();
         setUpProfileSearch();
         setUpCompanySearch();
@@ -252,7 +252,6 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
         setOnClickListener(imgBack, getViewDataBinding().tvVisitorType, getViewDataBinding().tvEmployment, getViewDataBinding().tvIdentity, getViewDataBinding().tvGender, getViewDataBinding().tvWhomToMeet
                 , getViewDataBinding().frameImg, getViewDataBinding().btnAdd, getViewDataBinding().rlCode, getViewDataBinding().tvGadgets);
         getViewDataBinding().tvCode.setText("+".concat(countryCode));
-        setIdentity();
         getViewDataBinding().etIdentity.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
