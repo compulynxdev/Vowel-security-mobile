@@ -284,7 +284,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
 
     @Override
     public void onExpectedCommercialGuestSuccess(List<CommercialVisitorResponse.CommercialGuest> tmpGuestsList) {
-        if (guestPage == 0) commercialGuestList.clear();
+        if (this.guestPage == 0) commercialGuestList.clear();
 
         commercialGuestList.addAll(tmpGuestsList);
         commercialVisitorAdapter.notifyDataSetChanged();
@@ -302,7 +302,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
 
     @Override
     public void onExpectedGuestSuccess(List<Guests> tmpGuestsList) {
-        if (guestPage == 0) guestsList.clear();
+        if (this.guestPage == 0) guestsList.clear();
 
         guestsList.addAll(tmpGuestsList);
         guestAdapter.notifyDataSetChanged();
@@ -320,7 +320,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
 
     @Override
     public void onExpectedHKSuccess(List<HouseKeeping> tmpHouseKeepingList) {
-        if (hkPage == 0) houseKeepingList.clear();
+        if (this.hkPage == 0) houseKeepingList.clear();
 
         houseKeepingList.addAll(tmpHouseKeepingList);
         houseKeepingAdapter.notifyDataSetChanged();
@@ -338,7 +338,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
 
     @Override
     public void onExpectedOfficeSuccess(List<CommercialStaffResponse.ContentBean> staffList) {
-        if (hkPage == 0) commercialStaffList.clear();
+        if (this.hkPage == 0) commercialStaffList.clear();
 
         commercialStaffList.addAll(staffList);
         commercialStaffCheckInAdapter.notifyDataSetChanged();
@@ -356,7 +356,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
 
     @Override
     public void onExpectedSPSuccess(List<ServiceProvider> tmpSPList) {
-        if (spPage == 0) serviceProviderList.clear();
+        if (this.spPage == 0) serviceProviderList.clear();
 
         serviceProviderList.addAll(tmpSPList);
         serviceProviderAdapter.notifyDataSetChanged();

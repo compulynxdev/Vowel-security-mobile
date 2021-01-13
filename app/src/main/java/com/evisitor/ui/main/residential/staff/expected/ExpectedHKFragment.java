@@ -235,7 +235,7 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
 
     @Override
     public void onExpectedHKSuccess(List<HouseKeepingResponse.ContentBean> houseKeepingList) {
-        if (page == 0) this.list.clear();
+        if (this.page == 0) this.list.clear();
 
         this.list.addAll(houseKeepingList);
         adapter.notifyDataSetChanged();

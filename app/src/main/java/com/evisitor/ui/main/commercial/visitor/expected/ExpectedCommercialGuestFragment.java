@@ -235,7 +235,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
 
     @Override
     public void onExpectedGuestSuccess(List<CommercialVisitorResponse.CommercialGuest> tmpGuestsList) {
-        if (page == 0) guestsList.clear();
+        if (this.page == 0) guestsList.clear();
 
         guestsList.addAll(tmpGuestsList);
         adapter.notifyDataSetChanged();

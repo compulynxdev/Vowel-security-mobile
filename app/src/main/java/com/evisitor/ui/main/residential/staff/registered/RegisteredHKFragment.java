@@ -105,7 +105,7 @@ public class RegisteredHKFragment extends BaseFragment<FragmentExpectedBinding, 
 
     @Override
     public void onRegisteredHKSuccess(List<HouseKeepingResponse.ContentBean> houseKeepingList) {
-        if (page == 0) this.list.clear();
+        if (this.page == 0) this.list.clear();
 
         this.list.addAll(houseKeepingList);
         adapter.notifyDataSetChanged();

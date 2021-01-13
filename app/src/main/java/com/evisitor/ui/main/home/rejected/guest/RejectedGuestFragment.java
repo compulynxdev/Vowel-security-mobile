@@ -104,7 +104,7 @@ public class RejectedGuestFragment extends BaseFragment<FragmentRejectedGuestBin
 
     @Override
     public void onSuccess(List<Guests> beans) {
-        if (page == 0) this.list.clear();
+        if (this.page == 0) this.list.clear();
 
         this.list.addAll(beans);
         adapter.notifyDataSetChanged();

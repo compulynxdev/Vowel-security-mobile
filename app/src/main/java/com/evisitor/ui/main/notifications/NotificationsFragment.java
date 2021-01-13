@@ -105,7 +105,7 @@ public class NotificationsFragment extends BaseFragment<FragmentNotificationsBin
 
     @Override
     public void onNotificationSuccess(List<NotificationResponse.ContentBean> content) {
-        if (page == 0) notificationsList.clear();
+        if (this.page == 0) notificationsList.clear();
 
         notificationsList.addAll(content);
         adapter.notifyDataSetChanged();

@@ -235,7 +235,7 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
 
     @Override
     public void onExpectedGuestSuccess(List<Guests> tmpGuestsList) {
-        if (page == 0) guestsList.clear();
+        if (this.page == 0) guestsList.clear();
 
         guestsList.addAll(tmpGuestsList);
         adapter.notifyDataSetChanged();

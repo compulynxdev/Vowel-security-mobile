@@ -236,7 +236,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
 
     @Override
     public void onExpectedSPSuccess(List<ServiceProvider> spList) {
-        if (page == 0) this.spList.clear();
+        if (this.page == 0) this.spList.clear();
 
         this.spList.addAll(spList);
         adapter.notifyDataSetChanged();

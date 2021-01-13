@@ -105,7 +105,7 @@ public class TrespasserGuestFragment extends BaseFragment<FragmentTrespasserGues
 
     @Override
     public void onTrespasserSuccess(List<TrespasserResponse.ContentBean> beans) {
-        if (page == 0) this.list.clear();
+        if (this.page == 0) this.list.clear();
 
         this.list.addAll(beans);
         adapter.notifyDataSetChanged();

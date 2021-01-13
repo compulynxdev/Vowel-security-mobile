@@ -105,7 +105,7 @@ public class RegisteredCommercialStaffFragment extends BaseFragment<FragmentExpe
 
     @Override
     public void onRegisteredOfficeStaffSuccess(List<CommercialStaffResponse.ContentBean> houseKeepingList) {
-        if (page == 0) this.list.clear();
+        if (this.page == 0) this.list.clear();
 
         this.list.addAll(houseKeepingList);
         adapter.notifyDataSetChanged();
