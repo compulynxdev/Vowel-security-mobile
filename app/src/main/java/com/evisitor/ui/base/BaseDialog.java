@@ -171,7 +171,7 @@ public abstract class BaseDialog<T extends ViewDataBinding, V extends BaseViewMo
             transaction.remove(prevFragment);
         }
         transaction.addToBackStack(null);
-        show(transaction, tag);
+        show(transaction, null);
     }
 
     /*public void show(FragmentManager fragmentManager) {
@@ -187,11 +187,6 @@ public abstract class BaseDialog<T extends ViewDataBinding, V extends BaseViewMo
 
     public void showToast(@StringRes int msg) {
         if (mActivity != null) mActivity.showToast(msg);
-    }
-
-    protected void dismissDialog(@NonNull String tag) {
-        dismiss();
-        getBaseActivity().onFragmentDetached(tag);
     }
 
     public void showFullImage(String imageUrl) {

@@ -147,7 +147,7 @@ public class WhomToMeetBottomSheet extends BaseBottomSheetDialog<DialogWhomToMee
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img_back:
-                dismissDialog(TAG);
+                dismiss();
                 break;
 
             case R.id.tv_tab_1:
@@ -171,12 +171,12 @@ public class WhomToMeetBottomSheet extends BaseBottomSheetDialog<DialogWhomToMee
     @Override
     public void onLastLevelClick(HouseDetailBean houseDetailBean) {
         if (callback != null) callback.onLastLevelClick(houseDetailBean);
-        dismissDialog(TAG);
+        dismiss();
     }
 
     @Override
     public void onStaffClick(SelectCommercialStaffResponse staffDetail) {
         if (callback != null) callback.onStaffClick(staffDetail);
-        dismissDialog(TAG);
+        dismiss();
     }
 }

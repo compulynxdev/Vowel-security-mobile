@@ -85,13 +85,13 @@ public class LanguageDialog extends BaseDialog<DialogLanguageBinding, LanguageDi
         switch (v.getId()) {
             case R.id.btn_ok:
                 if (verifyInput()) {
-                    dismissDialog(TAG);
+                    dismiss();
                     callback.onDoneClick(language);
-                } else dismissDialog(TAG);
+                } else dismiss();
                 break;
 
             case R.id.btn_cancel:
-                dismissDialog(TAG);
+                dismiss();
                 break;
 
         }

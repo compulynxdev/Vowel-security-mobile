@@ -162,11 +162,11 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
         switch (v.getId()) {
             case R.id.btn_ok:
                 if (callback != null) callback.onOkayClick(this);
-                else dismissDialog(TAG);
+                else dismiss();
                 break;
 
             case R.id.img_close:
-                dismissDialog(TAG);
+                dismiss();
                 break;
 
             case R.id.img_profile:

@@ -68,19 +68,19 @@ public class IdVerificationDialog extends BaseDialog<DialogIdVerificationBinding
         hideKeyboard();
         switch (v.getId()) {
             case R.id.img_close:
-                dismissDialog(TAG);
+                dismiss();
                 break;
 
             case R.id.btn_scan:
                 if (callback != null) {
                     callback.onScanClick(this);
-                } else dismissDialog(TAG);
+                } else dismiss();
                 break;
 
             case R.id.btn_submit:
                 if (callback != null) {
                     callback.onSubmitClick(this, getViewDataBinding().etData.getText().toString().trim());
-                } else dismissDialog(TAG);
+                } else dismiss();
                 break;
         }
     }

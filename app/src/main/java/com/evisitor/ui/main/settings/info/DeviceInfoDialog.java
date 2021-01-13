@@ -51,7 +51,7 @@ public class DeviceInfoDialog extends BaseDialog<DialogDeviceInfoBinding, Device
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getViewDataBinding().imgClose.setOnClickListener(view1 -> dismissDialog(TAG));
+        getViewDataBinding().imgClose.setOnClickListener(view1 -> dismiss());
 
         getViewDataBinding().tvName.setText(getString(R.string.model, Build.MODEL));
         getViewDataBinding().tvId.setText(getString(R.string.MacID, CommonUtils.getDeviceId(getBaseActivity())));

@@ -69,7 +69,7 @@ public class CountrySelectionDialog extends BaseDialog<DialogCountrySelectionBin
         adapterList = new ArrayList<>();
         backupList = new ArrayList<>();
         adapter = new CountrySelectionAdapter(adapterList, pos -> {
-            dismissDialog(TAG);
+            dismiss();
             if (callback != null) {
                 callback.onSelect(adapterList.get(pos).getDial_code());
             }
@@ -141,7 +141,7 @@ public class CountrySelectionDialog extends BaseDialog<DialogCountrySelectionBin
     public void onClick(View v) {
         hideKeyboard();
         if (v.getId() == R.id.img_close) {
-            dismissDialog(TAG);
+            dismiss();
         }
     }
 

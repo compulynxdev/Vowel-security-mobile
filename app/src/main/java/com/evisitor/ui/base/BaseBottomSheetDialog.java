@@ -145,11 +145,6 @@ public abstract class BaseBottomSheetDialog<T extends ViewDataBinding, V extends
         show(transaction, tag);
     }
 
-    protected void dismissDialog(String tag) {
-        hideKeyboard();
-        dismiss();
-    }
-
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         if (!hasFocus) {
