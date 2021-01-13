@@ -151,7 +151,7 @@ public class AlertDialog extends BaseDialog<DialogAlertBinding, AlertViewModel> 
     }
 
     public void show(FragmentManager fragmentManager) {
-        super.show(fragmentManager, TAG);
+        super.show(fragmentManager);
     }
 
     @Override

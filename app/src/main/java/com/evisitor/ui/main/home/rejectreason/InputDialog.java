@@ -63,7 +63,7 @@ public class InputDialog extends BaseDialog<DialogInputBinding, InputDialogViewM
     }
 
     public void show(FragmentManager fragmentManager) {
-        super.show(fragmentManager, TAG);
+        super.show(fragmentManager);
     }
 
     @Override

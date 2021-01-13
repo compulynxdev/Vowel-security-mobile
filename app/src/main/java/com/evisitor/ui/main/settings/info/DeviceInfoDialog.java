@@ -58,6 +58,6 @@ public class DeviceInfoDialog extends BaseDialog<DialogDeviceInfoBinding, Device
     }
 
     public void show(FragmentManager fragmentManager) {
-        super.show(fragmentManager, TAG);
+        super.show(fragmentManager);
     }
 }

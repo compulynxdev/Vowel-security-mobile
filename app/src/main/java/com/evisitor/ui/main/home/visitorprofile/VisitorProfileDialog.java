@@ -153,7 +153,7 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
     }
 
     public void show(FragmentManager fragmentManager) {
-        super.show(fragmentManager, TAG);
+        super.show(fragmentManager);
     }
 
     @Override

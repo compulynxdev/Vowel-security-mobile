@@ -60,7 +60,7 @@ public class IdVerificationDialog extends BaseDialog<DialogIdVerificationBinding
     }
 
     public void show(FragmentManager fragmentManager) {
-        super.show(fragmentManager, TAG);
+        super.show(fragmentManager);
     }
 
     @Override

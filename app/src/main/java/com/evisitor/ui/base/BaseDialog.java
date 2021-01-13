@@ -18,7 +18,6 @@ import androidx.annotation.StringRes;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -33,9 +32,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public abstract class BaseDialog<T extends ViewDataBinding, V extends BaseViewModel> extends DialogFragment {
 
-    protected V mViewModel;
+    private static final String TAG = "BaseDialog";
     private BaseActivity mActivity;
     private T mViewDataBinding;
+    protected V mViewModel;
     private int defaultView = ViewGroup.LayoutParams.WRAP_CONTENT;
 
     /**
@@ -164,22 +164,25 @@ public abstract class BaseDialog<T extends ViewDataBinding, V extends BaseViewMo
         return dialog;
     }
 
-    public void show(FragmentManager fragmentManager, String tag) {
+    /*public void show(FragmentManager fragmentManager, String tag) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         Fragment prevFragment = fragmentManager.findFragmentByTag(tag);
         if (prevFragment != null) {
             transaction.remove(prevFragment);
         }
         transaction.addToBackStack(null);
-        show(transaction, null);
-    }
+        show(transaction, tag);
+    }*/
 
-    /*public void show(FragmentManager fragmentManager) {
+    public void show(FragmentManager fragmentManager) {
+        if (isAdded()) {
+            return;
+        }
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         transaction.addToBackStack(null);
         show(transaction, TAG);
-    }*/
+    }
 
     public void showToast(String msg) {
         if (mActivity != null) mActivity.showToast(msg);
