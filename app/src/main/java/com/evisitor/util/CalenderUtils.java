@@ -58,6 +58,19 @@ public final class CalenderUtils {
         }
     }
 
+    public static String formatDateWithOutUTC(String date, @NonNull String pFormat, @NonNull String dFormat) {
+        try {
+            SimpleDateFormat parseFormat = new SimpleDateFormat(pFormat, Locale.US);
+            SimpleDateFormat displayFormat = new SimpleDateFormat(dFormat, Locale.US);
+            Date dTime = parseFormat.parse(date);
+            assert dTime != null;
+            return displayFormat.format(dTime);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
     public static String formatDate(Date date, @NonNull String dFormat) {
         try {
             SimpleDateFormat displayFormat = new SimpleDateFormat(dFormat, Locale.getDefault());

@@ -320,6 +320,8 @@ public class CommercialStaffResponse {
         private String expectedVehicleNo;
         private String enteredVehicleNo = "";
         private String staffId;
+        private String timeIn;
+        private String timeOut;
 
         public String getImageUrl() {
             return imageUrl == null ? "" : imageUrl;
@@ -529,6 +531,22 @@ public class CommercialStaffResponse {
 
         public void setGender(String gender) {
             this.gender = gender;
+        }
+
+        public String getTimeIn() {
+            return timeIn == null ? "" : timeIn;
+        }
+
+        public void setTimeIn(String timeIn) {
+            this.timeIn = timeIn;
+        }
+
+        public String getTimeOut() {
+            return timeOut == null ? "" : timeOut;
+        }
+
+        public void setTimeOut(String timeOut) {
+            this.timeOut = timeOut;
         }
     }
 
