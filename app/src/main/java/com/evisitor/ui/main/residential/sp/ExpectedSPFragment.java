@@ -180,7 +180,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                 .setNegativeBtnShow(true)
                 .setCloseBtnShow(true)
                 .setTitle(getString(R.string.check_in))
-                .setMsg(getViewModel().getDataManager().isCommercial() ? getString(R.string.commercial_msg_check_in_call) : getString(R.string.msg_check_in_call))
+                .setMsg(mViewModel.getDataManager().isCommercial() ? getString(R.string.commercial_msg_check_in_call) : getString(R.string.msg_check_in_call))
                 .setPositiveBtnLabel(getString(R.string.approve))
                 .setNegativeBtnLabel(getString(R.string.reject))
                 .setOnNegativeClickListener(dialog1 -> {

@@ -219,12 +219,14 @@ public abstract class BaseBottomSheetDialog<T extends ViewDataBinding, V extends
 
     @Override
     public AlertDialog showAlert(String title, String msg) {
-        AlertDialog alertDialog = AlertDialog.newInstance().setMsg(msg)
-                .setTitle(title)
-                .setNegativeBtnShow(false)
-                .setOnPositiveClickListener(DialogFragment::dismiss);
-        alertDialog.show(getChildFragmentManager());
-        return alertDialog;
+        if (isAdded()) {
+            AlertDialog alertDialog = AlertDialog.newInstance().setMsg(msg)
+                    .setTitle(title)
+                    .setNegativeBtnShow(false)
+                    .setOnPositiveClickListener(DialogFragment::dismiss);
+            alertDialog.show(getChildFragmentManager());
+            return alertDialog;
+        } else return null;
     }
 
     @Override

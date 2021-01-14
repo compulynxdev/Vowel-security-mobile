@@ -25,6 +25,7 @@ public class BaseCheckInOutViewModel<N extends BaseNavigator> extends BaseViewMo
         super(dataManager);
     }
 
+    @NonNull
     @Override
     public N getNavigator() {
         return mNavigator.get();

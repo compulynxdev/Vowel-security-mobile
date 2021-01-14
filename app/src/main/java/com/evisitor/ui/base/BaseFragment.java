@@ -161,34 +161,30 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
 
     @Override
     public AlertDialog showAlert(@StringRes int title, @StringRes int msg) {
-        if (isAdded())
-            return showAlert(getString(title), getString(msg));
-        else return null;
+        return showAlert(getString(title), getString(msg));
     }
 
     @Override
     public AlertDialog showAlert(@StringRes int title, String msg) {
-        if (isAdded())
-            return showAlert(getString(title), msg);
-        else return null;
+        return showAlert(getString(title), msg);
     }
 
     //or we can use this one AlertDialog.newInstance() instead of null but this will create new instance every time
     @Override
     public AlertDialog showAlert(String title, @StringRes int msg) {
-        if (isAdded())
-            return showAlert(title, getString(msg));
-        else return null;
+        return showAlert(title, getString(msg));
     }
 
     @Override
     public AlertDialog showAlert(String title, String msg) {
-        AlertDialog alertDialog = AlertDialog.newInstance().setMsg(msg)
-                .setTitle(title)
-                .setNegativeBtnShow(false)
-                .setOnPositiveClickListener(DialogFragment::dismiss);
-        alertDialog.show(getChildFragmentManager());
-        return alertDialog;
+        if (isAdded()) {
+            AlertDialog alertDialog = AlertDialog.newInstance().setMsg(msg)
+                    .setTitle(title)
+                    .setNegativeBtnShow(false)
+                    .setOnPositiveClickListener(DialogFragment::dismiss);
+            alertDialog.show(getChildFragmentManager());
+            return alertDialog;
+        } else return null;
     }
 
 

@@ -64,9 +64,9 @@ public class ExpectedSpViewModel extends BaseCheckInOutViewModel<ExpectedSPNavig
 
                 @Override
                 public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                    getNavigator().hideSwipeToRefresh();
                     getNavigator().hideLoading();
                     getNavigator().handleApiFailure(t);
+                    getNavigator().hideSwipeToRefresh();
                 }
             });
         } else {
