@@ -46,7 +46,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
     private Bitmap bmp_profile;
     private List<HostDetailBean> hostDetailList;
     private String idType = "";
-    private Boolean isGuest = false;
+    private Boolean isGuest;
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, AddVisitorActivity.class);
@@ -72,9 +72,8 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
         super.onCreate(savedInstanceState);
         mViewModel.setNavigator(this);
         getViewDataBinding().toolbar.tvTitle.setText(R.string.title_add_visitor);
-
-        setUp();
         setIntentData(getIntent());
+        setUp();
         setUpHouseNoSearch();
         randomCheckInObserver();
         setUpProfileSearch();
@@ -303,7 +302,6 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
         setOnClickListener(imgBack, getViewDataBinding().tvVisitorType, getViewDataBinding().tvAssignedTo, getViewDataBinding().tvEmployment, getViewDataBinding().tvIdentity, getViewDataBinding().tvGender, getViewDataBinding().tvOwner, getViewDataBinding().tvHost
                 , getViewDataBinding().frameImg, getViewDataBinding().btnAdd, getViewDataBinding().rlCode);
         getViewDataBinding().tvCode.setText("+".concat(countryCode));
-        setIdentity();
         getViewDataBinding().etIdentity.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
