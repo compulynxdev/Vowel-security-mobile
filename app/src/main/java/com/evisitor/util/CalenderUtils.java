@@ -144,4 +144,13 @@ public final class CalenderUtils {
             return false;
         } else return false;
     }
+
+    public static String getElapseTime(Date hostCheckOut, Date checkOut) {
+        long timeDiff = checkOut.getTime() - hostCheckOut.getTime();
+        long timeDiffInMin = timeDiff / (60 * 1000);
+        long quotient = timeDiffInMin / 60;
+        long remainder = timeDiffInMin % 60;
+        return quotient + " hours " + remainder + " minutes";
+    }
+
 }

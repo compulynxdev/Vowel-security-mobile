@@ -202,19 +202,26 @@ public abstract class BaseBottomSheetDialog<T extends ViewDataBinding, V extends
         }
     }
 
+
+    private String getResString(@StringRes int value) {
+        if (mActivity != null)
+            return getString(value);
+        else return "";
+    }
+
     @Override
     public AlertDialog showAlert(@StringRes int title, @StringRes int msg) {
-        return showAlert(getString(title), getString(msg));
+        return showAlert(getResString(title), getResString(msg));
     }
 
     @Override
     public AlertDialog showAlert(@StringRes int title, String msg) {
-        return showAlert(getString(title), msg);
+        return showAlert(getResString(title), msg);
     }
 
     @Override
     public AlertDialog showAlert(String title, @StringRes int msg) {
-        return showAlert(title, getString(msg));
+        return showAlert(title, getResString(msg));
     }
 
     @Override
@@ -231,7 +238,7 @@ public abstract class BaseBottomSheetDialog<T extends ViewDataBinding, V extends
 
     @Override
     public void handleApiFailure(@NonNull Throwable t) {
-        showAlert(getString(R.string.alert), t.getMessage());
+        showAlert(getResString(R.string.alert), t.getMessage());
     }
 
     @Override
@@ -253,7 +260,7 @@ public abstract class BaseBottomSheetDialog<T extends ViewDataBinding, V extends
                 }
             }
         } catch (Exception e) {
-            showAlert(getString(R.string.alert), R.string.alert_error);
+            showAlert(getResString(R.string.alert), R.string.alert_error);
         }
     }
 

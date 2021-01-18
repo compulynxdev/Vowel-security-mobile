@@ -1,6 +1,5 @@
 package com.evisitor.ui.main.home.trespasser;
 
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -131,13 +130,15 @@ public class TrespasserAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 Date hostCheckOutTime = CalenderUtils.getDateFormat(bean.getHostCheckOutTime(), CalenderUtils.SERVER_DATE_FORMAT);
                 if (checkOutTime != null && hostCheckOutTime != null) {
                     tv_elapsed_time.setVisibility(View.VISIBLE);
-                    tv_elapsed_time.setText(tv_elapsed_time.getContext().getString(R.string.data_elapsed, DateUtils.getRelativeTimeSpanString(hostCheckOutTime.getTime(), checkOutTime.getTime(), DateUtils.MINUTE_IN_MILLIS)));
+                    //tv_elapsed_time.setText(tv_elapsed_time.getContext().getString(R.string.data_elapsed, DateUtils.getRelativeTimeSpanString(hostCheckOutTime.getTime(), checkOutTime.getTime(), DateUtils.MINUTE_IN_MILLIS)));
+                    tv_elapsed_time.setText(tv_elapsed_time.getContext().getString(R.string.data_elapsed, CalenderUtils.getElapseTime(hostCheckOutTime, checkOutTime)));
                 }
             } else if (!bean.getHostCheckOutTime().isEmpty()) {
                 Date hostCheckoutTime = CalenderUtils.getDateFormat(bean.getHostCheckOutTime(), CalenderUtils.SERVER_DATE_FORMAT);
                 if (hostCheckoutTime != null) {
                     tv_elapsed_time.setVisibility(View.VISIBLE);
-                    tv_elapsed_time.setText(tv_elapsed_time.getContext().getString(R.string.data_elapsed, DateUtils.getRelativeTimeSpanString(hostCheckoutTime.getTime())));
+                    //tv_elapsed_time.setText(tv_elapsed_time.getContext().getString(R.string.data_elapsed, DateUtils.getRelativeTimeSpanString(hostCheckoutTime.getTime())));
+                    tv_elapsed_time.setText(tv_elapsed_time.getContext().getString(R.string.data_elapsed, CalenderUtils.getElapseTime(hostCheckoutTime, new Date())));
                 }
             } else tv_elapsed_time.setVisibility(View.GONE);
 
