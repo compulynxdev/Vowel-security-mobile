@@ -308,7 +308,7 @@
                     android:fontFamily="@font/futura_round_medium"
                     android:gravity="center_vertical"
                     android:hint="@string/enter_address"
-                    android:digits="@string/name_value"
+                    android:digits="@string/text_without_special_char_value"
                     android:imeOptions="actionNext"
                     android:maxLength="@integer/address_length"
                     android:inputType="textPersonName"

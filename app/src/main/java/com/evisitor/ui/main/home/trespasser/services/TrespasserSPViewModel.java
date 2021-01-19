@@ -1,7 +1,5 @@
 package com.evisitor.ui.main.home.trespasser.services;
 
-import android.text.format.DateUtils;
-
 import androidx.annotation.NonNull;
 
 import com.evisitor.R;
@@ -81,9 +79,17 @@ public class TrespasserSPViewModel extends BaseViewModel<TrespasserSPNavigator> 
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, visitorResponse.getDocumentId().isEmpty() ? getNavigator().getContext().getString(R.string.na) : visitorResponse.getDocumentId())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_gender, visitorResponse.getGender().isEmpty() ? getNavigator().getContext().getString(R.string.na) : visitorResponse.getGender())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, visitorResponse.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(visitorResponse.getDialingCode()).concat(" ").concat(visitorResponse.getContactNo()))));
-        Date hostCheckoutTime = CalenderUtils.getDateFormat(visitorResponse.getHostCheckOutTime(), CalenderUtils.SERVER_DATE_FORMAT);
-        if (hostCheckoutTime != null) {
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_elapsed, DateUtils.getRelativeTimeSpanString(hostCheckoutTime.getTime()))));
+        if (!visitorResponse.getCheckOutTime().isEmpty()) {
+            Date checkOutTime = CalenderUtils.getDateFormat(visitorResponse.getCheckOutTime(), CalenderUtils.SERVER_DATE_FORMAT);
+            Date hostCheckOutTime = CalenderUtils.getDateFormat(visitorResponse.getHostCheckOutTime(), CalenderUtils.SERVER_DATE_FORMAT);
+            if (checkOutTime != null && hostCheckOutTime != null) {
+                visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_elapsed, CalenderUtils.getElapseTime(hostCheckOutTime, checkOutTime))));
+            }
+        } else if (!visitorResponse.getHostCheckOutTime().isEmpty()) {
+            Date hostCheckoutTime = CalenderUtils.getDateFormat(visitorResponse.getHostCheckOutTime(), CalenderUtils.SERVER_DATE_FORMAT);
+            if (hostCheckoutTime != null) {
+                visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_elapsed, CalenderUtils.getElapseTime(hostCheckoutTime, new Date()))));
+            }
         }
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time_in, visitorResponse.getCheckInTime().isEmpty() ? getNavigator().getContext().getString(R.string.na) : CalenderUtils.formatDate(visitorResponse.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT))));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), visitorResponse.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : visitorResponse.getPremiseName())));
