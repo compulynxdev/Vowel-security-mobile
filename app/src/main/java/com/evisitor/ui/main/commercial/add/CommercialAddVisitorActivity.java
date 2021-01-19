@@ -484,21 +484,26 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
             if (isBlock) {
                 showAlert(R.string.alert, R.string.msg_block);
             } else {
-                AlertDialog.newInstance()
-                        .setNegativeBtnShow(true)
-                        .setCloseBtnShow(false)
-                        .setTitle(getString(R.string.check_in))
-                        .setMsg(getString(R.string.commercial_msg_check_in_call))
-                        .setPositiveBtnLabel(getString(R.string.approve))
-                        .setNegativeBtnLabel(getString(R.string.reject))
-                        .setOnNegativeClickListener(dialog1 -> {
-                            dialog1.dismiss();
-                            showReasonGuestDialog();
-                        })
-                        .setOnPositiveClickListener(dialog12 -> {
-                            dialog12.dismiss();
-                            doAddGuest(true, null);
-                        }).show(getSupportFragmentManager());
+                if (isStaffSelect) {
+                    AlertDialog.newInstance()
+                            .setNegativeBtnShow(true)
+                            .setCloseBtnShow(false)
+                            .setTitle(getString(R.string.check_in))
+                            .setMsg(getString(R.string.commercial_msg_check_in_call))
+                            .setPositiveBtnLabel(getString(R.string.approve))
+                            .setNegativeBtnLabel(getString(R.string.reject))
+                            .setOnNegativeClickListener(dialog1 -> {
+                                dialog1.dismiss();
+                                showReasonGuestDialog();
+                            })
+                            .setOnPositiveClickListener(dialog12 -> {
+                                dialog12.dismiss();
+                                doAddGuest(true, null);
+                            }).show(getSupportFragmentManager());
+                } else {
+                    //for property there is no reject option
+                    doAddGuest(true, null);
+                }
             }
         });
     }
