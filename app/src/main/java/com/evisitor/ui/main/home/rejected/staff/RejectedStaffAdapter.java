@@ -16,7 +16,6 @@ import com.evisitor.R;
 import com.evisitor.data.model.HouseKeepingResponse;
 import com.evisitor.ui.base.BaseViewHolder;
 import com.evisitor.ui.base.ItemClickCallback;
-import com.evisitor.util.CalenderUtils;
 import com.evisitor.util.pagination.FooterLoader;
 
 import java.util.List;
@@ -123,12 +122,14 @@ public class RejectedStaffAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             reject.setVisibility(bean.getRejectedBy().isEmpty() ? View.GONE : View.VISIBLE);
             reject.setText(context.getString(R.string.rejected_by, bean.getRejectedBy()));
 
-            if (bean.getRejectedOn().isEmpty()) {
+            /*if (bean.getRejectedOn().isEmpty()) {
                 time.setVisibility(View.GONE);
             } else {
                 time.setVisibility(View.VISIBLE);
                 time.setText(time.getContext().getString(R.string.rejected_on, CalenderUtils.formatDate(bean.getRejectedOn(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT)));
-            }
+            }*/
+
+            time.setVisibility(View.GONE);
 
             if (isCommercial()) {
                 host.setVisibility(View.GONE);
