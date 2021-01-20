@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.evisitor.EVisitor;
 import com.evisitor.R;
 import com.evisitor.data.model.NotificationResponse;
 import com.evisitor.ui.base.BaseViewHolder;
@@ -110,6 +111,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             tvType = itemView.findViewById(R.id.tv_type);
             tvMsg = itemView.findViewById(R.id.tv_msg);
             tvCompany = itemView.findViewById(R.id.tv_company);
+            if (EVisitor.getInstance().getDataManager().isCommercial())
+                tvType.setVisibility(View.GONE);
+            else tvType.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -118,7 +122,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             tvTitle.setText(notification.getFullName());
             Date date = CalenderUtils.getDateFormat(notification.getCreatedDate(), CalenderUtils.SERVER_DATE_FORMAT2);
             tvTime.setText(DateUtils.getRelativeTimeSpanString(date == null ? new Date().getTime() : date.getTime()));
-            tvMsg.setText(tvMsg.getContext().getString(R.string.msg_notification, AppUtils.capitaliseFirstLetter(notification.getNotificationStatus()), notification.getCreatedBy()));
+            tvMsg.setText(tvMsg.getContext().getString(R.string.msg_notification, AppUtils.capitaliseFirstLetter(notification.getNotificationStatus()), notification.getResidentName()));
             tvType.setText(tvType.getContext().getString(R.string.data_type, CommonUtils.getVisitorType(notification.getType())));
             updateCompanyUI(tvCompany, notification);
         }

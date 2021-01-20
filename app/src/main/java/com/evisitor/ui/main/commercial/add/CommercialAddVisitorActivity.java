@@ -246,6 +246,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
     }
 
     private void setUp() {
+        countryCode = getViewModel().getDataManager().getPropertyDialingCode();
         deviceBeanList = new ArrayList<>();
         ImageView imgBack = findViewById(R.id.img_back);
         imgBack.setVisibility(View.VISIBLE);

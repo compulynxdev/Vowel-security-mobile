@@ -63,4 +63,11 @@ public interface PreferenceHelper {
 
     void setCommercial(boolean isCommercial);
 
+    String getPropertyCountry();
+
+    void setPropertyCountry(String country);
+
+    String getPropertyDialingCode();
+
+    void setPropertyDialingCode(String dialingCode);
 }

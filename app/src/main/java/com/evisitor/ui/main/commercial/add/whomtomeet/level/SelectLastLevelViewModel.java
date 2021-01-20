@@ -9,6 +9,7 @@ import com.evisitor.ui.base.BaseViewModel;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import retrofit2.Response;
 
 
 public class SelectLastLevelViewModel extends BaseViewModel<SelectLastLevelNavigator> {
+    private List<HouseDetailBean> houseDetailBeanList = new ArrayList<>();
 
     public SelectLastLevelViewModel(DataManager dataManager) {
         super(dataManager);
@@ -41,6 +43,7 @@ public class SelectLastLevelViewModel extends BaseViewModel<SelectLastLevelNavig
                             }.getType();
                             List<HouseDetailBean> houseDetailList = getDataManager().getGson().fromJson(response.body().string(), listType);
                             if (houseDetailList != null) {
+                                houseDetailBeanList = houseDetailList;
                                 getNavigator().onLastLevelDataReceived(houseDetailList);
                             }
                         } catch (Exception e) {
@@ -57,5 +60,14 @@ public class SelectLastLevelViewModel extends BaseViewModel<SelectLastLevelNavig
                 }
             });
         }
+    }
+
+    void getSearchData(String search) {
+        List<HouseDetailBean> houseDetailBeans = new ArrayList<>();
+        for (HouseDetailBean bean : houseDetailBeanList) {
+            if (bean.getName().toLowerCase().contains(search.toLowerCase()))
+                houseDetailBeans.add(bean);
+        }
+        getNavigator().onLastLevelDataReceived(houseDetailBeans);
     }
 }

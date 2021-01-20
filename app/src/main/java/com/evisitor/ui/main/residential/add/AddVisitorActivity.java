@@ -297,6 +297,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
     }*/
 
     private void setUp() {
+        countryCode = getViewModel().getDataManager().getPropertyDialingCode();
         ImageView imgBack = findViewById(R.id.img_back);
         imgBack.setVisibility(View.VISIBLE);
         setOnClickListener(imgBack, getViewDataBinding().tvVisitorType, getViewDataBinding().tvAssignedTo, getViewDataBinding().tvEmployment, getViewDataBinding().tvIdentity, getViewDataBinding().tvGender, getViewDataBinding().tvOwner, getViewDataBinding().tvHost

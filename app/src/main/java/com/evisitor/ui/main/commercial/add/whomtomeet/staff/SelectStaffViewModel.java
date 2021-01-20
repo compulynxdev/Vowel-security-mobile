@@ -9,6 +9,7 @@ import com.evisitor.ui.base.BaseViewModel;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,8 @@ import retrofit2.Response;
 
 
 public class SelectStaffViewModel extends BaseViewModel<SelectStaffNavigator> {
+
+    private List<SelectCommercialStaffResponse> commercialStaffLists = new ArrayList<>();
 
     public SelectStaffViewModel(DataManager dataManager) {
         super(dataManager);
@@ -41,6 +44,7 @@ public class SelectStaffViewModel extends BaseViewModel<SelectStaffNavigator> {
                             }.getType();
                             List<SelectCommercialStaffResponse> commercialStaffList = getDataManager().getGson().fromJson(response.body().string(), listType);
                             if (commercialStaffList != null) {
+                                commercialStaffLists = commercialStaffList;
                                 getNavigator().onStaffDataReceived(commercialStaffList);
                             }
                         } else if (response.code() == 401) {
@@ -58,5 +62,15 @@ public class SelectStaffViewModel extends BaseViewModel<SelectStaffNavigator> {
                 }
             });
         }
+    }
+
+    void getSearchData(String search) {
+        List<SelectCommercialStaffResponse> commercialStaff = new ArrayList<>();
+
+        for (SelectCommercialStaffResponse bean : commercialStaffLists) {
+            if (bean.getFullName().toLowerCase().contains(search.toLowerCase()))
+                commercialStaff.add(bean);
+        }
+        getNavigator().onStaffDataReceived(commercialStaff);
     }
 }
