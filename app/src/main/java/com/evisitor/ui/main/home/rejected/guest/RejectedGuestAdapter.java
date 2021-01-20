@@ -15,7 +15,6 @@ import com.evisitor.R;
 import com.evisitor.data.model.Guests;
 import com.evisitor.ui.base.BaseViewHolder;
 import com.evisitor.ui.base.ItemClickCallback;
-import com.evisitor.util.CalenderUtils;
 import com.evisitor.util.pagination.FooterLoader;
 
 import java.util.List;
@@ -115,15 +114,18 @@ public class RejectedGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             name.setText(name.getContext().getString(R.string.data_name, bean.getName()));
             reject.setVisibility(bean.getRejectedBy().isEmpty() ? View.GONE : View.VISIBLE);
             reject.setText(reject.getContext().getString(R.string.rejected_by, bean.getRejectedBy()));
-            if (bean.getRejectedOn().isEmpty()) {
+            /*if (bean.getRejectedOn().isEmpty()) {
                 time.setVisibility(View.GONE);
             } else {
                 time.setVisibility(View.VISIBLE);
                 time.setText(time.getContext().getString(R.string.rejected_on, CalenderUtils.formatDate(bean.getRejectedOn(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT)));
-            }
-            if (!bean.getExpectedVehicleNo().isEmpty())
+            }*/
+
+            time.setVisibility(View.GONE);
+            /*if (!bean.getExpectedVehicleNo().isEmpty())
                 vehicle.setText(vehicle.getContext().getString(R.string.data_vehicle, bean.getExpectedVehicleNo()));
-            else vehicle.setVisibility(View.GONE);
+            else*/
+            vehicle.setVisibility(View.GONE);
 
             houseNo.setText(houseNo.getContext().getString(R.string.data_dynamic_premise, getPremiseLastLevel(), bean.getPremiseName()));
             if (isCommercial()) {

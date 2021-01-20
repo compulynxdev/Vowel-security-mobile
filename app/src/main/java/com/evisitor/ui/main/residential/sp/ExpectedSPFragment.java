@@ -107,7 +107,8 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
 
     private void decideNextProcess() {
         ServiceProvider tmpBean = mViewModel.getDataManager().getSpDetail();
-        if (tmpBean.getCheckInStatus()) {
+        //if check in status true or system work in commercial mode
+        if (tmpBean.getCheckInStatus() || mViewModel.getDataManager().isCommercial()) {
             mViewModel.approveByCall(true, null);
         } else {
             if (tmpBean.getIdentityNo().isEmpty()) {
