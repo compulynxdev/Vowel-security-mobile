@@ -43,7 +43,11 @@ public class SelectLastLevelFragment extends BaseFragment<FragmentWhomToMeetBind
     }
 
     public synchronized void setSearch(String search) {
+        if (search.isEmpty())
+            mViewModel.doGetLastLevelData();
+        else mViewModel.getSearchData(search);
     }
+
 
     @Override
     public int getBindingVariable() {
@@ -79,6 +83,7 @@ public class SelectLastLevelFragment extends BaseFragment<FragmentWhomToMeetBind
 
     @Override
     public void onLastLevelDataReceived(List<HouseDetailBean> lastLevelDataList) {
+        this.list.clear();
         list.addAll(lastLevelDataList);
         adapter.notifyDataSetChanged();
 

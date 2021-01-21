@@ -80,11 +80,15 @@ public class WhomToMeetBottomSheet extends BaseBottomSheetDialog<DialogWhomToMee
     }
 
     private void setUpSearch() {
-        getViewDataBinding().header.imgSearch.setVisibility(View.INVISIBLE);
+
+        getViewDataBinding().header.imgSearch.setVisibility(View.VISIBLE);
         getViewDataBinding().header.imgSearch.setOnClickListener(this);
 
         getBaseActivity().setupSearchSetting(getViewDataBinding().customSearchView.searchView);
-        getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_data_trespasser));
+        if (getViewModel().getDataManager().isCommercial())
+            getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_commercial_data_trespasser, getViewModel().getDataManager().getLevelName()));
+        else
+            getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_data_trespasser));
         getViewDataBinding().customSearchView.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

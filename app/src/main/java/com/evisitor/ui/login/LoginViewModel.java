@@ -88,6 +88,14 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                             getDataManager().setAccountName(object.getString("accountName"));
                             getDataManager().setCommercial(object.has("type") && object.getString("type").equalsIgnoreCase("COMMERCIAL"));
                             getDataManager().setUserId(object.getString("userId"));
+                            if (object.has("country"))
+                                getDataManager().setPropertyCountry(object.getString("country"));
+                            else
+                                getDataManager().setPropertyCountry(getNavigator().getContext().getString(R.string.default_country));
+                            if (object.has("dialingCode"))
+                                getDataManager().setPropertyDialingCode(object.getString("dialingCode"));
+                            else
+                                getDataManager().setPropertyDialingCode(getNavigator().getContext().getString(R.string.default_dialing_code));
                             doGetUserDetail(isRemember);
                         } else {
                             getNavigator().hideLoading();

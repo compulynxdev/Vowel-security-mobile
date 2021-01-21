@@ -196,6 +196,26 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public String getPropertyCountry() {
+        return preferenceHelper.getPropertyCountry();
+    }
+
+    @Override
+    public void setPropertyCountry(String country) {
+        preferenceHelper.setPropertyCountry(country);
+    }
+
+    @Override
+    public String getPropertyDialingCode() {
+        return preferenceHelper.getPropertyDialingCode();
+    }
+
+    @Override
+    public void setPropertyDialingCode(String dialingCode) {
+        preferenceHelper.setPropertyDialingCode(dialingCode);
+    }
+
+    @Override
     public String getLanguage() {
         return preferenceHelper.getLanguage();
     }

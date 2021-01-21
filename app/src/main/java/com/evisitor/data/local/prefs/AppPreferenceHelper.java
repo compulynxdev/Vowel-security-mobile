@@ -38,6 +38,8 @@ public class AppPreferenceHelper implements PreferenceHelper {
     private static final String LEVEL_NAME = "LEVEL_NAME";
     private static final String ACCOUNT_NAME = "ACCOUNT_NAME";
     private static final String COMMERCIAL = "COMMERCIAL";
+    private static final String PROPERTY_COUNTRY = "PROPERTY_COUNTRY";
+    private static final String PROPERTY_DIALING_CODE = "PROPERTY_DIALING_CODE";
 
     private final SharedPreferences mPrefs;
 
@@ -203,6 +205,26 @@ public class AppPreferenceHelper implements PreferenceHelper {
     @Override
     public void setCommercial(boolean isCommercial) {
         mPrefs.edit().putBoolean(COMMERCIAL, isCommercial).apply();
+    }
+
+    @Override
+    public String getPropertyCountry() {
+        return mPrefs.getString(PROPERTY_COUNTRY, "");
+    }
+
+    @Override
+    public void setPropertyCountry(String country) {
+        mPrefs.edit().putString(PROPERTY_COUNTRY, country).apply();
+    }
+
+    @Override
+    public String getPropertyDialingCode() {
+        return mPrefs.getString(PROPERTY_DIALING_CODE, "");
+    }
+
+    @Override
+    public void setPropertyDialingCode(String dialingCode) {
+        mPrefs.edit().putString(PROPERTY_DIALING_CODE, dialingCode).apply();
     }
 
 }

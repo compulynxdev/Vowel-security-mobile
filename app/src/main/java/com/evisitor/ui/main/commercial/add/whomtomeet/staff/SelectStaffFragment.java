@@ -43,6 +43,9 @@ public class SelectStaffFragment extends BaseFragment<FragmentWhomToMeetBinding,
     }
 
     public synchronized void setSearch(String search) {
+        if (search.isEmpty())
+            mViewModel.getStaffListData();
+        else mViewModel.getSearchData(search);
     }
 
     @Override
@@ -79,9 +82,9 @@ public class SelectStaffFragment extends BaseFragment<FragmentWhomToMeetBinding,
 
     @Override
     public void onStaffDataReceived(List<SelectCommercialStaffResponse> staffList) {
+        this.list.clear();
         list.addAll(staffList);
         adapter.notifyDataSetChanged();
-
         if (this.list.size() == 0) {
             getViewDataBinding().recyclerView.setVisibility(View.GONE);
             getViewDataBinding().tvNoData.setVisibility(View.VISIBLE);
