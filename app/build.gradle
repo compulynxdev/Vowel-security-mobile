@@ -123,6 +123,9 @@ dependencies {
     // MRZ Reader
     implementation project(path: ':mrzreader')
 
+    // Barcode Scanner
+    implementation 'com.budiyev.android:code-scanner:2.1.0'
+
     //Image viewer
     implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
 

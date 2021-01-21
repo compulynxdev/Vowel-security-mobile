@@ -34,6 +34,7 @@ import com.evisitor.ui.main.home.rejected.guest.RejectedGuestViewModel;
 import com.evisitor.ui.main.home.rejected.sp.RejectedSPViewModel;
 import com.evisitor.ui.main.home.rejected.staff.RejectedStaffViewModel;
 import com.evisitor.ui.main.home.rejectreason.InputDialogViewModel;
+import com.evisitor.ui.main.home.scan.BarcodeScanViewModel;
 import com.evisitor.ui.main.home.scan.ScanIDViewModel;
 import com.evisitor.ui.main.home.total.TotalVisitorsViewModel;
 import com.evisitor.ui.main.home.trespasser.TrespasserViewModel;
@@ -236,6 +237,9 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(RegisteredCommercialStaffViewModel.class)) {
             //noinspection unchecked
             return (T) new RegisteredCommercialStaffViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(BarcodeScanViewModel.class)) {
+            //noinspection unchecked
+            return (T) new BarcodeScanViewModel(dataManager);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

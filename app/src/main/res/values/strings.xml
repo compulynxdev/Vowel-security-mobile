@@ -123,6 +123,7 @@
     <string name="add">Add</string>
     <string name="title_add_guest">Add Guest</string>
     <string name="title_scan_id">Scan ID</string>
+    <string name="title_scan_barcode">Barcode Scan</string>
     <string name="close">Close</string>
     <string name="enter_address">Enter Address*</string>
 

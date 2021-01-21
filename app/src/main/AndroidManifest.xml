@@ -89,6 +89,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/DashboardTheme" />
         <activity
+            android:name=".ui.main.home.scan.BarcodeScanActivity"
+            android:configChanges="orientation|screenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/DashboardTheme" />
+        <activity
             android:name=".ui.main.residential.guest.GuestActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTop"

@@ -36,6 +36,21 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
+            android:id="@+id/img_2"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:padding="3.5dp"
+            android:src="@drawable/ic_qr"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_title"
+            app:layout_constraintEnd_toStartOf="@id/img_search"
+            app:layout_constraintStart_toEndOf="@id/tv_title"
+            app:layout_constraintTop_toTopOf="@+id/tv_title"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
             android:id="@+id/img_search"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -45,7 +60,7 @@
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/tv_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tv_title"
+            app:layout_constraintStart_toEndOf="@id/img_2"
             app:layout_constraintTop_toTopOf="@+id/tv_title"
             tools:ignore="ContentDescription" />
 

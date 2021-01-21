@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
@@ -15,7 +17,11 @@ import com.evisitor.databinding.ActivityHkBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.main.commercial.staff.expected.ExpectedCommercialStaffFragment;
 import com.evisitor.ui.main.commercial.staff.registered.RegisteredCommercialStaffFragment;
+import com.evisitor.ui.main.home.scan.BarcodeScanActivity;
+import com.evisitor.util.PermissionUtils;
 import com.evisitor.util.ViewPagerAdapter;
+
+import static com.evisitor.util.AppConstants.SCAN_RESULT;
 
 public class CommercialStaffActivity extends BaseActivity<ActivityHkBinding, CommercialStaffViewModel> implements View.OnClickListener {
 
@@ -55,6 +61,15 @@ public class CommercialStaffActivity extends BaseActivity<ActivityHkBinding, Com
         getViewDataBinding().header.tvTitle.setText(R.string.title_staff);
         getViewDataBinding().header.imgBack.setVisibility(View.VISIBLE);
         getViewDataBinding().header.imgBack.setOnClickListener(v -> onBackPressed());
+
+        getViewDataBinding().header.img2.setVisibility(View.VISIBLE);
+        getViewDataBinding().header.img2.setOnClickListener(v -> {
+            if (PermissionUtils.checkCameraPermission(this)) {
+                Intent i = BarcodeScanActivity.getStartIntent(this);
+                startActivityForResult(i, SCAN_RESULT);
+            }
+        });
+
 
         getViewDataBinding().tvRegistered.setOnClickListener(this);
         getViewDataBinding().tvExpected.setOnClickListener(this);
@@ -138,6 +153,17 @@ public class CommercialStaffActivity extends BaseActivity<ActivityHkBinding, Com
 
                 getViewDataBinding().customSearchView.searchView.setQuery("", false);
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SCAN_RESULT && data != null) {
+                String barcodeData = data.getStringExtra("data");
+                Toast.makeText(this, barcodeData, Toast.LENGTH_LONG).show();
+            }
         }
     }
 }
