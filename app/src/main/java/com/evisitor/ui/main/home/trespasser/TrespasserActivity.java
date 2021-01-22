@@ -106,7 +106,7 @@ public class TrespasserActivity extends BaseActivity<ActivityTrespasserBinding, 
 
         setupSearchSetting(getViewDataBinding().customSearchView.searchView);
         if (getViewModel().getDataManager().isCommercial())
-            getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_commercial_data_trespasser, getViewModel().getDataManager().getLevelName()));
+            getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_commercial_data_trespasser, ",".concat(getViewModel().getDataManager().getLevelName())));
         else
             getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_data_trespasser));
 
