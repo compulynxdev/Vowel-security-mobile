@@ -11,4 +11,6 @@ interface ExpectedCommercialStaffNavigator extends BaseNavigator {
     void hideSwipeToRefresh();
 
     void refreshList();
+
+    void onScannedDataRetrieve(List<CommercialStaffResponse.ContentBean> content);
 }

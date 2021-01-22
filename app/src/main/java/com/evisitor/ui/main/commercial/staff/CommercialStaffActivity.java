@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
@@ -104,7 +103,6 @@ public class CommercialStaffActivity extends BaseActivity<ActivityHkBinding, Com
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
     }
@@ -114,6 +112,7 @@ public class CommercialStaffActivity extends BaseActivity<ActivityHkBinding, Com
         getViewDataBinding().header.imgSearch.setOnClickListener(this);
 
         setupSearchSetting(getViewDataBinding().customSearchView.searchView);
+        getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_commercial_staff_data, getViewModel().getDataManager().getLevelName()));
         getViewDataBinding().customSearchView.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -162,7 +161,12 @@ public class CommercialStaffActivity extends BaseActivity<ActivityHkBinding, Com
         if (resultCode == RESULT_OK) {
             if (requestCode == SCAN_RESULT && data != null) {
                 String barcodeData = data.getStringExtra("data");
-                Toast.makeText(this, barcodeData, Toast.LENGTH_LONG).show();
+                if (barcodeData != null && barcodeData.isEmpty()) {
+                    getViewDataBinding().viewPager.setCurrentItem(0, true);
+                    expectedHKFragment.scanQRId(barcodeData);
+                } else {
+                    showAlert(R.string.alert, R.string.blank);
+                }
             }
         }
     }
