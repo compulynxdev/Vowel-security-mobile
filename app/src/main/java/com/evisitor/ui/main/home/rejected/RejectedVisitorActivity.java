@@ -126,7 +126,7 @@ public class RejectedVisitorActivity extends BaseActivity<ActivityRejectedVisito
                 if (newText.trim().isEmpty() || newText.trim().length() >= 3) {
                     if (getViewDataBinding().viewPager.getCurrentItem() == 0)
                         rejectedGuestFragment.setSearch(newText);
-                    else if (getViewDataBinding().viewPager.getCurrentItem() == 1)
+                    else if (!mViewModel.getDataManager().isCommercial() && getViewDataBinding().viewPager.getCurrentItem() == 1)
                         rejectedStaffFragment.setSearch(newText);
                     else rejectedSPFragment.setSearch(newText);
                 }
