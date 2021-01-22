@@ -110,7 +110,6 @@ public class CommercialStaffActivity extends BaseActivity<ActivityHkBinding, Com
     private void setUpSearch() {
         getViewDataBinding().header.imgSearch.setVisibility(View.VISIBLE);
         getViewDataBinding().header.imgSearch.setOnClickListener(this);
-
         setupSearchSetting(getViewDataBinding().customSearchView.searchView);
         getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_commercial_staff_data, getViewModel().getDataManager().getLevelName()));
         getViewDataBinding().customSearchView.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
