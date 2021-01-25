@@ -59,6 +59,8 @@ class WebServices {
     static final String GET_COMMERCIAL_STAFF = "employee/get_staff_list"; //?accountId=1
     static final String COMMERCIAL_SEND_NOTIFICATION = "notification/send_commercial_notification";
 
+    static final String GET_COMMERCIAL_NOTIFICATION = "notification/get_commercial_notification";//http://localhost:8085/api/notification/get_commercial_notification?accountId=1&username=sohan
+
 
     private WebServices() {
     }

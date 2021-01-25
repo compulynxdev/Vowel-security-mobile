@@ -281,6 +281,7 @@ public class NotificationResponse {
         private String fullName;
         private String companyName;
         private String companyAddress;
+        private String staffName;
 
         public String getReason() {
             return reason == null ? "" : reason;
@@ -368,6 +369,14 @@ public class NotificationResponse {
 
         public void setCompanyAddress(String companyAddress) {
             this.companyAddress = companyAddress;
+        }
+
+        public String getStaffName() {
+            return staffName == null ? "" : staffName;
+        }
+
+        public void setStaffName(String staffName) {
+            this.staffName = staffName;
         }
     }
 }
