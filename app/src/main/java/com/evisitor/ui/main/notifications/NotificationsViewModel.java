@@ -33,34 +33,64 @@ public class NotificationsViewModel extends BaseViewModel<NotificationNavigator>
             map.put("username", "" + getDataManager().getUsername());
             map.put("size", String.valueOf(AppConstants.LIMIT));
             AppLogger.d("Searching : NotificationResponse", page + "");
-
-            getDataManager().doGetNotifications(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                    getNavigator().hideLoading();
-                    getNavigator().hideSwipeToRefresh();
-                    try {
-                        if (response.code() == 200) {
-                            assert response.body() != null;
-                            NotificationResponse notificationResponse = getDataManager().getGson().fromJson(response.body().string(), NotificationResponse.class);
-                            if (notificationResponse.getContent() != null) {
-                                getNavigator().onNotificationSuccess(notificationResponse.getContent());
-                            }
-                        } else if (response.code() == 401) {
-                            getNavigator().openActivityOnTokenExpire();
-                        } else getNavigator().handleApiError(response.errorBody());
-                    } catch (Exception e) {
-                        getNavigator().showAlert(R.string.alert, R.string.alert_error);
+            if (getDataManager().isCommercial()) {
+                getDataManager().doGetCommercialNotifications(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                        getNavigator().hideLoading();
+                        getNavigator().hideSwipeToRefresh();
+                        try {
+                            if (response.code() == 200) {
+                                assert response.body() != null;
+                                NotificationResponse notificationResponse = getDataManager().getGson().fromJson(response.body().string(), NotificationResponse.class);
+                                if (notificationResponse.getContent() != null) {
+                                    getNavigator().onNotificationSuccess(notificationResponse.getContent());
+                                }
+                            } else if (response.code() == 401) {
+                                getNavigator().openActivityOnTokenExpire();
+                            } else getNavigator().handleApiError(response.errorBody());
+                        } catch (Exception e) {
+                            getNavigator().showAlert(R.string.alert, R.string.alert_error);
+                        }
                     }
-                }
 
-                @Override
-                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                    getNavigator().hideSwipeToRefresh();
-                    getNavigator().hideLoading();
-                    getNavigator().handleApiFailure(t);
-                }
-            });
+                    @Override
+                    public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                        getNavigator().hideSwipeToRefresh();
+                        getNavigator().hideLoading();
+                        getNavigator().handleApiFailure(t);
+                    }
+                });
+            } else {
+                getDataManager().doGetNotifications(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                        getNavigator().hideLoading();
+                        getNavigator().hideSwipeToRefresh();
+                        try {
+                            if (response.code() == 200) {
+                                assert response.body() != null;
+                                NotificationResponse notificationResponse = getDataManager().getGson().fromJson(response.body().string(), NotificationResponse.class);
+                                if (notificationResponse.getContent() != null) {
+                                    getNavigator().onNotificationSuccess(notificationResponse.getContent());
+                                }
+                            } else if (response.code() == 401) {
+                                getNavigator().openActivityOnTokenExpire();
+                            } else getNavigator().handleApiError(response.errorBody());
+                        } catch (Exception e) {
+                            getNavigator().showAlert(R.string.alert, R.string.alert_error);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                        getNavigator().hideSwipeToRefresh();
+                        getNavigator().hideLoading();
+                        getNavigator().handleApiFailure(t);
+                    }
+                });
+            }
+
         } else {
             getNavigator().hideLoading();
             getNavigator().hideSwipeToRefresh();

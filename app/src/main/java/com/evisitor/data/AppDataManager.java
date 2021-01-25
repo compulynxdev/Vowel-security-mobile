@@ -474,4 +474,9 @@ public class AppDataManager implements DataManager {
     public Call<ResponseBody> doCommercialSendNotification(String authToken, RequestBody body) {
         return apiHelper.doCommercialSendNotification(authToken, body);
     }
+
+    @Override
+    public Call<ResponseBody> doGetCommercialNotifications(String authToken, Map<String, String> partMap) {
+        return apiHelper.doGetCommercialNotifications(authToken, partMap);
+    }
 }

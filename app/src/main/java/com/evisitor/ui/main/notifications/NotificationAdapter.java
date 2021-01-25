@@ -122,7 +122,10 @@ public class NotificationAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             tvTitle.setText(notification.getFullName());
             Date date = CalenderUtils.getDateFormat(notification.getCreatedDate(), CalenderUtils.SERVER_DATE_FORMAT2);
             tvTime.setText(DateUtils.getRelativeTimeSpanString(date == null ? new Date().getTime() : date.getTime()));
-            tvMsg.setText(tvMsg.getContext().getString(R.string.msg_notification, AppUtils.capitaliseFirstLetter(notification.getNotificationStatus()), notification.getResidentName()));
+            if (EVisitor.getInstance().getDataManager().isCommercial())
+                tvMsg.setText(tvMsg.getContext().getString(R.string.msg_notification, AppUtils.capitaliseFirstLetter(notification.getNotificationStatus()), notification.getStaffName()));
+            else
+                tvMsg.setText(tvMsg.getContext().getString(R.string.msg_notification, AppUtils.capitaliseFirstLetter(notification.getNotificationStatus()), notification.getResidentName()));
             tvType.setText(tvType.getContext().getString(R.string.data_type, CommonUtils.getVisitorType(notification.getType())));
             updateCompanyUI(tvCompany, notification);
         }
