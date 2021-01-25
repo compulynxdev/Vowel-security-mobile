@@ -123,4 +123,7 @@ public interface ApiHelper {
     @POST(WebServices.COMMERCIAL_SEND_NOTIFICATION)
     Call<ResponseBody> doCommercialSendNotification(@Header("authorization") String authToken, @Body RequestBody body);
 
+    @GET(WebServices.GET_STAFF_BY_QR_CODE)
+    Call<ResponseBody> doGetCommercialStaffByQRCode(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+
 }

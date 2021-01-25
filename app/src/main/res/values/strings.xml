@@ -312,5 +312,8 @@
     <string name="default_dialing_code">254</string>
     <string name="default_country">Kenya</string>
     <string name="blank">This QR code has no data!!</string>
+    <string name="no_data">No data found</string>
+    <string name="ownername">Owner Name</string>
+    <string name="relationship">Relationship</string>
 
 </resources>

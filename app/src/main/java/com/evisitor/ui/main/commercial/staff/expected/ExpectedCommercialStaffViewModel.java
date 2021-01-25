@@ -77,26 +77,26 @@ public class ExpectedCommercialStaffViewModel extends BaseCheckInOutViewModel<Ex
         }
     }
 
-    void getScannedData(String id) {
+    void getScannedData(String code) {
         if (getNavigator().isNetworkConnected()) {
+            getNavigator().showLoading();
             Map<String, String> map = new HashMap<>();
             map.put("accountId", getDataManager().getAccountId());
             map.put("type", "expected");
-            if (!id.isEmpty())
-                map.put("search", id);
-            map.put("page", "0");
-            map.put("size", String.valueOf(AppConstants.LIMIT));
-            getDataManager().doGetCommercialStaffListDetail(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
+            if (!code.isEmpty())
+                map.put("qrCode", code);
+            getDataManager().doGetCommercialStaffByQRCode(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                     getNavigator().hideLoading();
-                    getNavigator().hideSwipeToRefresh();
                     try {
                         if (response.code() == 200) {
                             assert response.body() != null;
-                            CommercialStaffResponse officeStaffResponse = getDataManager().getGson().fromJson(response.body().string(), CommercialStaffResponse.class);
-                            if (officeStaffResponse.getContent() != null) {
-                                getNavigator().onScannedDataRetrieve(officeStaffResponse.getContent());
+                            CommercialStaffResponse.ContentBean officeStaffResponse = getDataManager().getGson().fromJson(response.body().string(), CommercialStaffResponse.ContentBean.class);
+                            if (officeStaffResponse != null) {
+                                getNavigator().onScannedDataRetrieve(officeStaffResponse);
+                            } else {
+                                getNavigator().showAlert(R.string.alert, R.string.no_data);
                             }
                         } else if (response.code() == 401) {
                             getNavigator().openActivityOnTokenExpire();
@@ -108,13 +108,11 @@ public class ExpectedCommercialStaffViewModel extends BaseCheckInOutViewModel<Ex
 
                 @Override
                 public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                    getNavigator().hideSwipeToRefresh();
                     getNavigator().hideLoading();
                     getNavigator().handleApiFailure(t);
                 }
             });
         } else {
-            getNavigator().hideSwipeToRefresh();
             getNavigator().hideLoading();
             getNavigator().showAlert(getNavigator().getContext().getString(R.string.alert), getNavigator().getContext().getString(R.string.alert_internet));
         }

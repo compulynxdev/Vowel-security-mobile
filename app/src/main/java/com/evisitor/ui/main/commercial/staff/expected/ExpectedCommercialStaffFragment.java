@@ -44,8 +44,8 @@ public class ExpectedCommercialStaffFragment extends BaseFragment<FragmentExpect
         doSearch(search);
     }
 
-    public void scanQRId(String id) {
-        mViewModel.getScannedData(id);
+    public void scanQRId(String code) {
+        mViewModel.getScannedData(code);
     }
 
     @Override
@@ -146,15 +146,13 @@ public class ExpectedCommercialStaffFragment extends BaseFragment<FragmentExpect
     }
 
     @Override
-    public void onScannedDataRetrieve(List<CommercialStaffResponse.ContentBean> content) {
-        if (content.size() > 0) {
-            List<VisitorProfileBean> visitorProfileBeanList = mViewModel.setClickVisitorDetail(content.get(0));
+    public void onScannedDataRetrieve(CommercialStaffResponse.ContentBean content) {
+        if (content != null) {
+            List<VisitorProfileBean> visitorProfileBeanList = mViewModel.setClickVisitorDetail(content);
             VisitorProfileDialog.newInstance(visitorProfileBeanList, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
                 mViewModel.doCheckIn();
-            }).setImage(content.get(0).getImageUrl()).setBtnLabel(getString(R.string.check_in)).show(getFragmentManager());
-        } else {
-
+            }).setImage(content.getImageUrl()).setBtnLabel(getString(R.string.check_in)).show(getFragmentManager());
         }
     }
 }

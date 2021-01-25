@@ -19,6 +19,7 @@ import com.evisitor.ui.main.commercial.visitor.VisitorActivity;
 import com.evisitor.ui.main.home.blacklist.BlackListVisitorActivity;
 import com.evisitor.ui.main.home.flag.FlagVisitorActivity;
 import com.evisitor.ui.main.home.rejected.RejectedVisitorActivity;
+import com.evisitor.ui.main.home.scan.BarcodeScanActivity;
 import com.evisitor.ui.main.home.total.TotalVisitorsActivity;
 import com.evisitor.ui.main.home.trespasser.TrespasserActivity;
 import com.evisitor.ui.main.residential.add.AddVisitorActivity;
@@ -26,9 +27,13 @@ import com.evisitor.ui.main.residential.guest.GuestActivity;
 import com.evisitor.ui.main.residential.sp.SPActivity;
 import com.evisitor.ui.main.residential.staff.HouseKeepingActivity;
 import com.evisitor.util.AppConstants;
+import com.evisitor.util.PermissionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
+import static com.evisitor.util.AppConstants.SCAN_RESULT;
 
 public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel> {
 
@@ -76,6 +81,15 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         mViewModel.getNotificationCountData().observe(this, count -> {
             if (interaction != null)
                 interaction.onReceiveNotificationCount(count);
+        });
+
+        if (!getViewModel().getDataManager().isCommercial())
+            getViewDataBinding().toolbar.img2.setVisibility(View.VISIBLE);
+        getViewDataBinding().toolbar.img2.setOnClickListener(v -> {
+            if (PermissionUtils.checkCameraPermission(getActivity())) {
+                Intent i = BarcodeScanActivity.getStartIntent(getActivity());
+                startActivityForResult(i, SCAN_RESULT);
+            }
         });
 
         //update guest configuration in data manager
@@ -143,5 +157,22 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
     public interface HomeFragmentInteraction {
         void onReceiveNotificationCount(int count);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SCAN_RESULT && data != null) {
+                String barcodeData = data.getStringExtra("data");
+                if (barcodeData != null && barcodeData.isEmpty()) {
+
+                } else {
+                    showAlert(R.string.alert, R.string.blank);
+                }
+            }
+        }
+
     }
 }

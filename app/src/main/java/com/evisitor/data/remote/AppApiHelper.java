@@ -223,4 +223,9 @@ public class AppApiHelper implements ApiHelper {
     public Call<ResponseBody> doCommercialSendNotification(String authToken, RequestBody body) {
         return getApiInterface().doCommercialSendNotification(authToken, body);
     }
+
+    @Override
+    public Call<ResponseBody> doGetCommercialStaffByQRCode(String authToken, Map<String, String> partMap) {
+        return getApiInterface().doGetCommercialStaffByQRCode(authToken, partMap);
+    }
 }
