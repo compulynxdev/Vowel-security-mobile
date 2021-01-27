@@ -21,7 +21,12 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.main.residential.residentprofile.ResidentProfileActivity"></activity>
+        <activity
+            android:name=".ui.main.residential.residentprofile.ResidentProfileActivity"
+            android:configChanges="orientation|screenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/DashboardTheme" />
         <activity
             android:name=".ui.main.commercial.add.CommercialAddVisitorActivity"
             android:configChanges="orientation|screenSize"

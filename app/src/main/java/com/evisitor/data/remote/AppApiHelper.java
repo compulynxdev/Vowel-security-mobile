@@ -228,4 +228,9 @@ public class AppApiHelper implements ApiHelper {
     public Call<ResponseBody> doGetCommercialStaffByQRCode(String authToken, Map<String, String> partMap) {
         return getApiInterface().doGetCommercialStaffByQRCode(authToken, partMap);
     }
+
+    @Override
+    public Call<ResponseBody> doGetResidentByQRCode(String authToken, Map<String, String> partMap) {
+        return getApiInterface().doGetResidentByQRCode(authToken, partMap);
+    }
 }

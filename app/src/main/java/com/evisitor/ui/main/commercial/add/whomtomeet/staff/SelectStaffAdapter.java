@@ -70,7 +70,7 @@ public class SelectStaffAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         public void onBind(int position) {
             SelectCommercialStaffResponse bean = list.get(position);
             name.setText(name.getContext().getString(R.string.data_name, bean.getFullName()));
-            profile.setText(profile.getContext().getString(R.string.data_profile, bean.getProfile()));
+            profile.setText(profile.getContext().getString(R.string.data_designation, bean.getProfile()));
 
             if (bean.getImageUrl().isEmpty()) {
                 Glide.with(imgVisitor.getContext())

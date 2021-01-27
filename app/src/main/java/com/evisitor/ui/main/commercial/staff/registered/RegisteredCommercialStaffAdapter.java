@@ -118,7 +118,7 @@ public class RegisteredCommercialStaffAdapter extends RecyclerView.Adapter<BaseV
             Context context = name.getContext();
             name.setText(context.getString(R.string.data_name, bean.getFullName()));
             staffId.setText(context.getString(R.string.data_staff_id, bean.getEmployeeId().isEmpty() ? "N/A" : bean.getEmployeeId()));
-            profile.setText(context.getString(R.string.data_profile, bean.getProfile()));
+            profile.setText(context.getString(R.string.data_designation, bean.getProfile()));
             lastLevel.setText(context.getString(R.string.data_dynamic_premise, getPremiseLastLevel(), bean.getPremiseName()));
 
 

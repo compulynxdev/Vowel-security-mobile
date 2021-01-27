@@ -160,7 +160,7 @@ public class CommercialStaffActivity extends BaseActivity<ActivityHkBinding, Com
         if (resultCode == RESULT_OK) {
             if (requestCode == SCAN_RESULT && data != null) {
                 String barcodeData = data.getStringExtra("data");
-                if (barcodeData != null && barcodeData.isEmpty()) {
+                if (barcodeData != null && !barcodeData.isEmpty()) {
                     getViewDataBinding().viewPager.setCurrentItem(0, true);
                     expectedHKFragment.scanQRId(barcodeData);
                 } else {

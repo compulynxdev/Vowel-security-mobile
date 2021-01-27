@@ -1,11 +1,36 @@
 package com.evisitor.data.model;
 
-public class ResidentProfile {
+import java.io.Serializable;
+
+/*
+   "image" : "67deb144-3549-4010-b40c-a78725c56986.png",
+   "address" : "eeee",
+   "gender" : "Male",
+   "fullName" : "TESTING",
+   "type" : "OWNER",
+   "secDialingCode" : "",
+   "dialingCode" : "973",
+   "accountId" : 2,
+   "primaryNo" : "555454555",
+   "flatNo" : "flat-5555 ",
+   "qrDate" : "2021-01-26T06:30:41.000+0000",
+   "secondaryNo" : null,
+   "flatId" : 10,
+   "id" : 1,
+   "relationship" : null,
+   "email" : null,
+   "premiseName" : "flat-5555 ,block-011(RESIDENTILA PROPERTY)"
+*/
+
+public class ResidentProfile implements Serializable {
     private String fullName;
     private String ownerName;
     private String address;
+    private String premiseName;
     private String email;
     private String gender;
+    private String secDialingCode;
+    private String dialingCode;
     private String primaryNo;
     private String secondaryNo;
     private String image;
@@ -90,5 +115,29 @@ public class ResidentProfile {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getPremiseName() {
+        return premiseName == null ? "" : premiseName;
+    }
+
+    public void setPremiseName(String premiseName) {
+        this.premiseName = premiseName;
+    }
+
+    public String getSecDialingCode() {
+        return secDialingCode == null ? "" : secDialingCode;
+    }
+
+    public void setSecDialingCode(String secDialingCode) {
+        this.secDialingCode = secDialingCode;
+    }
+
+    public String getDialingCode() {
+        return dialingCode == null ? "" : dialingCode;
+    }
+
+    public void setDialingCode(String dialingCode) {
+        this.dialingCode = dialingCode;
     }
 }

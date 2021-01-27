@@ -47,6 +47,7 @@ import com.evisitor.ui.main.profile.UserProfileViewModel;
 import com.evisitor.ui.main.residential.add.AddVisitorViewModel;
 import com.evisitor.ui.main.residential.guest.GuestViewModel;
 import com.evisitor.ui.main.residential.guest.expected.ExpectedGuestViewModel;
+import com.evisitor.ui.main.residential.residentprofile.ResidentProfileViewModel;
 import com.evisitor.ui.main.residential.sp.ExpectedSpViewModel;
 import com.evisitor.ui.main.residential.sp.SPViewModel;
 import com.evisitor.ui.main.residential.staff.HKViewModel;
@@ -240,6 +241,9 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(BarcodeScanViewModel.class)) {
             //noinspection unchecked
             return (T) new BarcodeScanViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(ResidentProfileViewModel.class)) {
+            //noinspection unchecked
+            return (T) new ResidentProfileViewModel(dataManager);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

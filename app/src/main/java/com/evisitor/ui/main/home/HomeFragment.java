@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.HomeBean;
+import com.evisitor.data.model.ResidentProfile;
 import com.evisitor.databinding.FragmentHomeBinding;
 import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.main.commercial.add.CommercialAddVisitorActivity;
@@ -24,6 +25,7 @@ import com.evisitor.ui.main.home.total.TotalVisitorsActivity;
 import com.evisitor.ui.main.home.trespasser.TrespasserActivity;
 import com.evisitor.ui.main.residential.add.AddVisitorActivity;
 import com.evisitor.ui.main.residential.guest.GuestActivity;
+import com.evisitor.ui.main.residential.residentprofile.ResidentProfileActivity;
 import com.evisitor.ui.main.residential.sp.SPActivity;
 import com.evisitor.ui.main.residential.staff.HouseKeepingActivity;
 import com.evisitor.util.AppConstants;
@@ -35,7 +37,7 @@ import java.util.List;
 import static android.app.Activity.RESULT_OK;
 import static com.evisitor.util.AppConstants.SCAN_RESULT;
 
-public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel> {
+public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel> implements HomeNavigator {
 
     private List<HomeBean> homeList;
     private HomeFragmentInteraction interaction;
@@ -155,6 +157,13 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         mViewModel.getVisitorCount();
     }
 
+    @Override
+    public void onSuccessResidentData(ResidentProfile profile) {
+        Intent i = ResidentProfileActivity.getStartIntent(getActivity());
+        i.putExtra("profile", profile);
+        startActivity(i);
+    }
+
     public interface HomeFragmentInteraction {
         void onReceiveNotificationCount(int count);
     }
@@ -166,8 +175,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         if (resultCode == RESULT_OK) {
             if (requestCode == SCAN_RESULT && data != null) {
                 String barcodeData = data.getStringExtra("data");
-                if (barcodeData != null && barcodeData.isEmpty()) {
-
+                if (barcodeData != null && !barcodeData.isEmpty()) {
+                    getViewModel().getResidentData(barcodeData);
                 } else {
                     showAlert(R.string.alert, R.string.blank);
                 }
@@ -175,4 +184,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         }
 
     }
+
+
 }

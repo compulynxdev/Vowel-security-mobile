@@ -16,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
+        android:background="@color/colorDashboard"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -70,7 +71,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/futura_round_medium"
-                    android:text="@{viewModel.profileLiveData.fullName}"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     app:layout_constraintTop_toBottomOf="@id/tv_name_label" />
@@ -103,7 +103,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/futura_round_medium"
-                    android:text="@{viewModel.profileLiveData.ownerName}"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     app:layout_constraintTop_toBottomOf="@id/tv_owner_label" />
@@ -136,7 +135,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/futura_round_medium"
-                    android:text="@{viewModel.profileLiveData.email}"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     app:layout_constraintTop_toBottomOf="@id/tv_email_label" />
@@ -169,7 +167,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/futura_round_medium"
-                    android:text="@{viewModel.profileLiveData.gender}"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     app:layout_constraintTop_toBottomOf="@id/tv_gender_label" />
@@ -203,7 +200,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/futura_round_medium"
-                    android:text="@{viewModel.profileLiveData.primaryNo}"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     app:layout_constraintTop_toBottomOf="@id/tv_contact_label" />
@@ -236,7 +232,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/futura_round_medium"
-                    android:text="@{viewModel.profileLiveData.secondaryNo}"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     app:layout_constraintTop_toBottomOf="@id/tv_secondary_contact_label" />
@@ -270,7 +265,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/futura_round_medium"
-                    android:text="@{viewModel.profileLiveData.relationship}"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     app:layout_constraintTop_toBottomOf="@id/tv_relationship_label" />
@@ -304,7 +298,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/futura_round_medium"
-                    android:text="@{viewModel.profileLiveData.address}"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     app:layout_constraintTop_toBottomOf="@id/tv_address_label" />
@@ -318,6 +311,38 @@
                     android:background="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_address" />
+
+                <TextView
+                    android:id="@+id/tv_type_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/futura_round_medium"
+                    android:text="@string/type"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/view_address" />
+
+                <TextView
+                    android:id="@+id/tv_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/futura_round_medium"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_type_label" />
+
+                <View
+                    android:id="@+id/view_type"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_type" />
 
                 <androidx.constraintlayout.widget.Group
                     android:id="@+id/family_group"

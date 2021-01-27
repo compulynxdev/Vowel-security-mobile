@@ -126,4 +126,7 @@ public interface ApiHelper {
     @GET(WebServices.GET_STAFF_BY_QR_CODE)
     Call<ResponseBody> doGetCommercialStaffByQRCode(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
 
+    @GET(WebServices.GET_RESIDENT_BY_QR_CODE)
+    Call<ResponseBody> doGetResidentByQRCode(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+
 }
