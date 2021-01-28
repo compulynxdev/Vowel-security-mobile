@@ -122,12 +122,12 @@ public class CommercialVisitorCheckOutAdapter extends RecyclerView.Adapter<BaseV
 
                 if (!bean.getHost().isEmpty()) {
                     host.setVisibility(View.VISIBLE);
-                    host.setText(context.getString(R.string.data_host, bean.getHost()));
+                    host.setText(context.getString(R.string.data_staff_name, bean.getHost()));
                 } else host.setVisibility(View.GONE);
             } else {
                 houseNo.setVisibility(View.GONE);
                 houseNo.setText("");
-                host.setText(context.getString(R.string.data_host, bean.getCreatedBy()));
+                host.setText(context.getString(R.string.data_staff_name, bean.getCreatedBy()));
             }
 
             if (bean.getImageUrl().isEmpty()) {

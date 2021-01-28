@@ -318,5 +318,6 @@
     <string name="relationship">Relationship</string>
     <string name="resident_profile">Resident Profile</string>
     <string name="type">Type</string>
+    <string name="data_staff_name">Staff Name : %s</string>
 
 </resources>

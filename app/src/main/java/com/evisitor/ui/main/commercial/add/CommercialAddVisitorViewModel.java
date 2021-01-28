@@ -166,10 +166,10 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
         } else if (visitorData.gender.isEmpty()) {
             getNavigator().showToast(R.string.alert_select_gender);
             return false;
-        } else if (visitorData.houseId.isEmpty()) {
+        }/* else if (visitorData.houseId.isEmpty()) {
             getNavigator().showToast(getNavigator().getContext().getString(R.string.please_select).concat(" ").concat(getDataManager().getLevelName()));
             return false;
-        } else if (visitorData.employment.isEmpty()) {
+        }*/ else if (visitorData.employment.isEmpty()) {
             getNavigator().showToast(R.string.alert_select_employment);
             return false;
         } else if (visitorData.profile.isEmpty()) {

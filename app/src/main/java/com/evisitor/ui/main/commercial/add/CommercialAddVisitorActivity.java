@@ -471,6 +471,8 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
             }
         }
         setIdentity();
+        if (!isGuest)
+            getViewDataBinding().tvWhomToMeet.setVisibility(View.GONE);
         updateFieldConfigurationUI();
     }
 
