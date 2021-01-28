@@ -59,6 +59,8 @@ class WebServices {
     static final String GET_COMMERCIAL_STAFF = "employee/get_staff_list"; //?accountId=1
     static final String COMMERCIAL_SEND_NOTIFICATION = "notification/send_commercial_notification";
 
+    static final String GET_COMMERCIAL_NOTIFICATION = "notification/get_commercial_notification";//http://localhost:8085/api/notification/get_commercial_notification?accountId=1&username=sohan
+
     static final String GET_STAFF_BY_QR_CODE = "employee/get_staff_by_qr_code";//http://localhost:8085/api/employee/get_staff_by_qr_code?accountId=1&qrCode=fa3b384b-df4d-41a1-8f03-b4f3401f798c
     static final String GET_RESIDENT_BY_QR_CODE = "resident/get_resident_by_qr_code";//http://localhost:8085/api/resident/get_resident_by_qr_code?accountId=2&qrCode=fad58264-b5b9-4856-930b-3d163a4ee8a5
 

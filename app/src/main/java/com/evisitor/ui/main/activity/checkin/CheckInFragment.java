@@ -283,8 +283,8 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
     }
 
     @Override
-    public void onExpectedCommercialGuestSuccess(List<CommercialVisitorResponse.CommercialGuest> tmpGuestsList) {
-        if (this.guestPage == 0) commercialGuestList.clear();
+    public void onExpectedCommercialGuestSuccess(int page, List<CommercialVisitorResponse.CommercialGuest> tmpGuestsList) {
+        if (page == 0) commercialGuestList.clear();
 
         commercialGuestList.addAll(tmpGuestsList);
         commercialVisitorAdapter.notifyDataSetChanged();
@@ -301,8 +301,8 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
     }
 
     @Override
-    public void onExpectedGuestSuccess(List<Guests> tmpGuestsList) {
-        if (this.guestPage == 0) guestsList.clear();
+    public void onExpectedGuestSuccess(int page, List<Guests> tmpGuestsList) {
+        if (page == 0) guestsList.clear();
 
         guestsList.addAll(tmpGuestsList);
         guestAdapter.notifyDataSetChanged();
@@ -319,8 +319,8 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
     }
 
     @Override
-    public void onExpectedHKSuccess(List<HouseKeeping> tmpHouseKeepingList) {
-        if (this.hkPage == 0) houseKeepingList.clear();
+    public void onExpectedHKSuccess(int page, List<HouseKeeping> tmpHouseKeepingList) {
+        if (page == 0) houseKeepingList.clear();
 
         houseKeepingList.addAll(tmpHouseKeepingList);
         houseKeepingAdapter.notifyDataSetChanged();
@@ -337,8 +337,8 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
     }
 
     @Override
-    public void onExpectedOfficeSuccess(List<CommercialStaffResponse.ContentBean> staffList) {
-        if (this.hkPage == 0) commercialStaffList.clear();
+    public void onExpectedOfficeSuccess(int page, List<CommercialStaffResponse.ContentBean> staffList) {
+        if (page == 0) commercialStaffList.clear();
 
         commercialStaffList.addAll(staffList);
         commercialStaffCheckInAdapter.notifyDataSetChanged();
@@ -355,8 +355,8 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
     }
 
     @Override
-    public void onExpectedSPSuccess(List<ServiceProvider> tmpSPList) {
-        if (this.spPage == 0) serviceProviderList.clear();
+    public void onExpectedSPSuccess(int page, List<ServiceProvider> tmpSPList) {
+        if (page == 0) serviceProviderList.clear();
 
         serviceProviderList.addAll(tmpSPList);
         serviceProviderAdapter.notifyDataSetChanged();

@@ -476,6 +476,11 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public Call<ResponseBody> doGetCommercialNotifications(String authToken, Map<String, String> partMap) {
+        return apiHelper.doGetCommercialNotifications(authToken, partMap);
+    }
+
+    @Override
     public Call<ResponseBody> doGetCommercialStaffByQRCode(String authToken, Map<String, String> partMap) {
         return apiHelper.doGetCommercialStaffByQRCode(authToken, partMap);
     }

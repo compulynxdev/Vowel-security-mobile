@@ -107,32 +107,55 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
 
     private void decideNextProcess() {
         ServiceProvider tmpBean = mViewModel.getDataManager().getSpDetail();
-        //if check in status true or system work in commercial mode
-        if (tmpBean.getCheckInStatus() || mViewModel.getDataManager().isCommercial()) {
-            mViewModel.approveByCall(true, null);
+
+        if (mViewModel.getDataManager().isCommercial()) {
+            IdVerificationDialog.newInstance(new IdVerificationCallback() {
+                @Override
+                public void onScanClick(IdVerificationDialog dialog) {
+                    dialog.dismiss();
+                    Intent i = ScanIDActivity.getStartIntent(getContext());
+                    startActivityForResult(i, SCAN_RESULT);
+                }
+
+                @Override
+                public void onSubmitClick(IdVerificationDialog dialog, String id) {
+                    dialog.dismiss();
+
+                    if (tmpBean.getIdentityNo().equals(id))
+                        mViewModel.approveByCall(true, null);
+                    else {
+                        showToast(R.string.alert_id);
+                    }
+                }
+            }).show(getFragmentManager());
         } else {
-            if (tmpBean.getIdentityNo().isEmpty()) {
-                showCheckinOptions();
+            //if check in status true
+            if (tmpBean.getCheckInStatus()) {
+                mViewModel.approveByCall(true, null);
             } else {
-                IdVerificationDialog.newInstance(new IdVerificationCallback() {
-                    @Override
-                    public void onScanClick(IdVerificationDialog dialog) {
-                        dialog.dismiss();
-                        Intent i = ScanIDActivity.getStartIntent(getContext());
-                        startActivityForResult(i, SCAN_RESULT);
-                    }
-
-                    @Override
-                    public void onSubmitClick(IdVerificationDialog dialog, String id) {
-                        dialog.dismiss();
-
-                        if (tmpBean.getIdentityNo().equals(id))
-                            showCheckinOptions();
-                        else {
-                            showToast(R.string.alert_id);
+                if (tmpBean.getIdentityNo().isEmpty()) {
+                    showCheckinOptions();
+                } else {
+                    IdVerificationDialog.newInstance(new IdVerificationCallback() {
+                        @Override
+                        public void onScanClick(IdVerificationDialog dialog) {
+                            dialog.dismiss();
+                            Intent i = ScanIDActivity.getStartIntent(getContext());
+                            startActivityForResult(i, SCAN_RESULT);
                         }
-                    }
-                }).show(getFragmentManager());
+
+                        @Override
+                        public void onSubmitClick(IdVerificationDialog dialog, String id) {
+                            dialog.dismiss();
+
+                            if (tmpBean.getIdentityNo().equals(id))
+                                showCheckinOptions();
+                            else {
+                                showToast(R.string.alert_id);
+                            }
+                        }
+                    }).show(getFragmentManager());
+                }
             }
         }
     }
@@ -226,9 +249,13 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                         break;
                 }
 
-                if (mViewModel.getDataManager().getSpDetail().getIdentityNo().equals(identityNo))
-                    showCheckinOptions();
-                else {
+                if (mViewModel.getDataManager().getSpDetail().getIdentityNo().equals(identityNo)) {
+                    if (mViewModel.getDataManager().isCommercial()) {
+                        mViewModel.approveByCall(true, null);
+                    } else {
+                        showCheckinOptions();
+                    }
+                } else {
                     showToast(R.string.alert_id);
                 }
             }
