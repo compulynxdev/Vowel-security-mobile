@@ -16,39 +16,42 @@
             android:layout_marginStart="16dp"
             android:src="@drawable/ic_back"
             android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_title"
-            app:layout_constraintEnd_toStartOf="@id/tv_title"
+            app:layout_constraintBottom_toBottomOf="@+id/frame_title"
+            app:layout_constraintEnd_toStartOf="@id/frame_title"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_title"
+            app:layout_constraintTop_toTopOf="@+id/frame_title"
             tools:ignore="ContentDescription" />
 
-
-        <TextView
-            android:id="@+id/tv_title"
-            style="@style/DashboardTitleTheme"
+        <FrameLayout
+            android:id="@+id/frame_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/img_search"
             app:layout_constraintStart_toEndOf="@id/img_back"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/img_2"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            android:padding="3.5dp"
-            android:src="@drawable/ic_qr"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_title"
-            app:layout_constraintEnd_toStartOf="@id/img_search"
-            app:layout_constraintStart_toEndOf="@id/tv_title"
-            app:layout_constraintTop_toTopOf="@+id/tv_title"
-            tools:ignore="ContentDescription" />
+            <TextView
+                android:id="@+id/tv_title"
+                style="@style/DashboardTitleTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center" />
+
+            <ImageView
+                android:id="@+id/img_2"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:padding="3.5dp"
+                android:layout_gravity="end"
+                android:src="@drawable/ic_qr"
+                android:visibility="gone"
+                tools:ignore="ContentDescription" />
+
+        </FrameLayout>
 
         <ImageView
             android:id="@+id/img_search"
@@ -58,10 +61,10 @@
             android:padding="3.5dp"
             android:src="@drawable/ic_search_white"
             android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_title"
+            app:layout_constraintBottom_toBottomOf="@+id/frame_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/img_2"
-            app:layout_constraintTop_toTopOf="@+id/tv_title"
+            app:layout_constraintStart_toEndOf="@id/frame_title"
+            app:layout_constraintTop_toTopOf="@+id/frame_title"
             tools:ignore="ContentDescription" />
 
 
