@@ -48,20 +48,20 @@ public class CheckOutViewModel extends BaseViewModel<ActivityNavigator> {
             switch (listOf) {
                 case 0:
                     if (getDataManager().isCommercial())
-                        getCommercialVisitorList(map);
-                    else getGuestList(map);
+                        getCommercialVisitorList(page, map);
+                    else getGuestList(page, map);
                     AppLogger.d("Searching : CheckOutViewModel ExpectedGuest", page + " : " + search);
                     break;
 
                 case 1:
                     if (getDataManager().isCommercial())
-                        getCommercialStaffList(map);
-                    else getHouseKeeperList(map);
+                        getCommercialStaffList(page, map);
+                    else getHouseKeeperList(page, map);
                     AppLogger.d("Searching : CheckOutViewModel ExpectedHK", page + " : " + search);
                     break;
 
                 case 2:
-                    getServiceProviderList(map);
+                    getServiceProviderList(page, map);
                     AppLogger.d("Searching : CheckOutViewModel ExpectedSP", page + " : " + search);
                     break;
             }
@@ -71,7 +71,7 @@ public class CheckOutViewModel extends BaseViewModel<ActivityNavigator> {
         }
     }
 
-    private void getCommercialVisitorList(Map<String, String> map) {
+    private void getCommercialVisitorList(int page, Map<String, String> map) {
         getDataManager().doGetCommercialGuestCheckInOutList(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
@@ -82,7 +82,7 @@ public class CheckOutViewModel extends BaseViewModel<ActivityNavigator> {
                         assert response.body() != null;
                         CommercialVisitorResponse commercialGuestResponse = getDataManager().getGson().fromJson(response.body().string(), CommercialVisitorResponse.class);
                         if (commercialGuestResponse.getContent() != null) {
-                            getNavigator().onExpectedCommercialGuestSuccess(commercialGuestResponse.getContent());
+                            getNavigator().onExpectedCommercialGuestSuccess(page, commercialGuestResponse.getContent());
                         }
                     } else if (response.code() == 401) {
                         getNavigator().openActivityOnTokenExpire();
@@ -101,7 +101,7 @@ public class CheckOutViewModel extends BaseViewModel<ActivityNavigator> {
         });
     }
 
-    private void getGuestList(Map<String, String> map) {
+    private void getGuestList(int page, Map<String, String> map) {
         getDataManager().doGetGuestCheckInOutList(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
@@ -112,7 +112,7 @@ public class CheckOutViewModel extends BaseViewModel<ActivityNavigator> {
                         assert response.body() != null;
                         GuestsResponse guestsResponse = getDataManager().getGson().fromJson(response.body().string(), GuestsResponse.class);
                         if (guestsResponse.getContent() != null) {
-                            getNavigator().onExpectedGuestSuccess(guestsResponse.getContent());
+                            getNavigator().onExpectedGuestSuccess(page, guestsResponse.getContent());
                         }
                     } else if (response.code() == 401) {
                         getNavigator().openActivityOnTokenExpire();
@@ -131,7 +131,7 @@ public class CheckOutViewModel extends BaseViewModel<ActivityNavigator> {
         });
     }
 
-    private void getCommercialStaffList(Map<String, String> map) {
+    private void getCommercialStaffList(int page, Map<String, String> map) {
         getDataManager().doGetCommercialStaffCheckInOutListDetail(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
@@ -142,7 +142,7 @@ public class CheckOutViewModel extends BaseViewModel<ActivityNavigator> {
                         assert response.body() != null;
                         CommercialStaffResponse officeStaffResponse = getDataManager().getGson().fromJson(response.body().string(), CommercialStaffResponse.class);
                         if (officeStaffResponse.getContent() != null) {
-                            getNavigator().onExpectedOfficeSuccess(officeStaffResponse.getContent());
+                            getNavigator().onExpectedOfficeSuccess(page, officeStaffResponse.getContent());
                         }
                     } else if (response.code() == 401) {
                         getNavigator().openActivityOnTokenExpire();
@@ -162,7 +162,7 @@ public class CheckOutViewModel extends BaseViewModel<ActivityNavigator> {
 
     }
 
-    private void getHouseKeeperList(Map<String, String> map) {
+    private void getHouseKeeperList(int page, Map<String, String> map) {
         getDataManager().doGetHouseKeepingCheckInOutList(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
@@ -173,7 +173,7 @@ public class CheckOutViewModel extends BaseViewModel<ActivityNavigator> {
                         assert response.body() != null;
                         HouseKeepingCheckInResponse houseKeepingCheckInResponse = getDataManager().getGson().fromJson(response.body().string(), HouseKeepingCheckInResponse.class);
                         if (houseKeepingCheckInResponse.getContent() != null) {
-                            getNavigator().onExpectedHKSuccess(houseKeepingCheckInResponse.getContent());
+                            getNavigator().onExpectedHKSuccess(page, houseKeepingCheckInResponse.getContent());
                         }
                     } else if (response.code() == 401) {
                         getNavigator().openActivityOnTokenExpire();
@@ -193,7 +193,7 @@ public class CheckOutViewModel extends BaseViewModel<ActivityNavigator> {
 
     }
 
-    private void getServiceProviderList(Map<String, String> map) {
+    private void getServiceProviderList(int page, Map<String, String> map) {
         getDataManager().doGetServiceProviderCheckInOutList(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
@@ -204,7 +204,7 @@ public class CheckOutViewModel extends BaseViewModel<ActivityNavigator> {
                         assert response.body() != null;
                         ServiceProviderResponse serviceProviderCheckInResponse = getDataManager().getGson().fromJson(response.body().string(), ServiceProviderResponse.class);
                         if (serviceProviderCheckInResponse.getContent() != null) {
-                            getNavigator().onExpectedSPSuccess(serviceProviderCheckInResponse.getContent());
+                            getNavigator().onExpectedSPSuccess(page, serviceProviderCheckInResponse.getContent());
                         }
                     } else if (response.code() == 401) {
                         getNavigator().openActivityOnTokenExpire();

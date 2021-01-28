@@ -10,15 +10,15 @@ import com.evisitor.ui.base.BaseNavigator;
 import java.util.List;
 
 public interface ActivityNavigator extends BaseNavigator {
-    void onExpectedCommercialGuestSuccess(List<CommercialVisitorResponse.CommercialGuest> guestsList);
+    void onExpectedCommercialGuestSuccess(int page, List<CommercialVisitorResponse.CommercialGuest> guestsList);
 
-    void onExpectedGuestSuccess(List<Guests> guestsList);
+    void onExpectedGuestSuccess(int page, List<Guests> guestsList);
 
-    void onExpectedHKSuccess(List<HouseKeeping> houseKeepingList);
+    void onExpectedHKSuccess(int page, List<HouseKeeping> houseKeepingList);
 
-    void onExpectedOfficeSuccess(List<CommercialStaffResponse.ContentBean> officeStaffList);
+    void onExpectedOfficeSuccess(int page, List<CommercialStaffResponse.ContentBean> officeStaffList);
 
-    void onExpectedSPSuccess(List<ServiceProvider> spList);
+    void onExpectedSPSuccess(int page, List<ServiceProvider> spList);
 
     void hideSwipeToRefresh();
 

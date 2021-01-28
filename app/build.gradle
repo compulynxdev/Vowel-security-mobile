@@ -20,7 +20,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), "proguard-rules.pro"
 
-            //Live url
+            //Stage url
+            //buildConfigField("String", "BASE_URL", "\"http://52.15.186.140:8090/\"")
+
+            //Dev url
             buildConfigField("String", "BASE_URL", "\"http://103.21.52.30:8085/\"")
 
             //Local
@@ -32,7 +35,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
-            //Live url
+            //Stage url
+            //buildConfigField("String", "BASE_URL", "\"http://52.15.186.140:8090/\"")
+
+            //Dev url
             buildConfigField("String", "BASE_URL", "\"http://103.21.52.30:8085/\"")
 
             //Local
@@ -55,7 +61,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    // android support libraries
+    // Android support libraries
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
@@ -63,12 +69,11 @@ dependencies {
     implementation "com.google.android.material:material:$rootProject.materialVersion"
 
     // Local unit tests
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     testImplementation "junit:junit:$rootProject.junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.junitExtVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
 
-    //multidex to provide support on lower api devices
+    // Multidex to provide support on lower api devices
     implementation 'androidx.multidex:multidex:2.0.1'
 
     // ViewModel
@@ -94,15 +99,6 @@ dependencies {
 
     // Circular Image
     implementation 'de.hdodenhof:circleimageview:3.1.0'
-
-    // Date time picker like ios
-    implementation 'com.github.florent37:singledateandtimepicker:2.2.3'
-
-    // Wheel view like ios
-    implementation 'cn.aigestudio.wheelpicker:WheelPicker:1.1.3'
-
-    // Material dialog
-    implementation 'com.afollestad.material-dialogs:core:0.8.5.9'
 
     // Image Compression
     implementation 'id.zelory:compressor:2.1.0'
