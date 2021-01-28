@@ -85,9 +85,11 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
                 interaction.onReceiveNotificationCount(count);
         });
 
-        if (!getViewModel().getDataManager().isCommercial())
-            getViewDataBinding().toolbar.img2.setVisibility(View.VISIBLE);
-        getViewDataBinding().toolbar.img2.setOnClickListener(v -> {
+        if (!getViewModel().getDataManager().isCommercial()) {
+            getViewDataBinding().toolbar.imgSearch.setVisibility(View.VISIBLE);
+            getViewDataBinding().toolbar.imgSearch.setImageResource(R.drawable.ic_qr);
+        }
+        getViewDataBinding().toolbar.imgSearch.setOnClickListener(v -> {
             if (PermissionUtils.checkCameraPermission(getActivity())) {
                 Intent i = BarcodeScanActivity.getStartIntent(getActivity());
                 startActivityForResult(i, SCAN_RESULT);
