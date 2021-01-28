@@ -162,7 +162,7 @@ public class CommercialStaffActivity extends BaseActivity<ActivityHkBinding, Com
                 String barcodeData = data.getStringExtra("data");
                 if (barcodeData != null && !barcodeData.isEmpty()) {
                     getViewDataBinding().viewPager.setCurrentItem(0, true);
-                    expectedHKFragment.scanQRId(barcodeData);
+                    expectedHKFragment.scanQRId(barcodeData.concat(".png"));
                 } else {
                     showAlert(R.string.alert, R.string.blank);
                 }

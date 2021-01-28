@@ -178,7 +178,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             if (requestCode == SCAN_RESULT && data != null) {
                 String barcodeData = data.getStringExtra("data");
                 if (barcodeData != null && !barcodeData.isEmpty()) {
-                    getViewModel().getResidentData(barcodeData);
+                    getViewModel().getResidentData(barcodeData.concat(".png"));
                 } else {
                     showAlert(R.string.alert, R.string.blank);
                 }
