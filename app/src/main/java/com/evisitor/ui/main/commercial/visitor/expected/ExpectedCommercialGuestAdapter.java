@@ -132,7 +132,7 @@ public class ExpectedCommercialGuestAdapter extends RecyclerView.Adapter<BaseVie
 
             if (!bean.getHost().isEmpty()) {
                 host.setVisibility(View.VISIBLE);
-                host.setText(context.getString(R.string.data_host, bean.getHost()));
+                host.setText(context.getString(R.string.data_staff_name, bean.getHost()));
             } else host.setVisibility(View.GONE);
 
             if (!bean.getExpectedVehicleNo().isEmpty())
@@ -155,5 +155,4 @@ public class ExpectedCommercialGuestAdapter extends RecyclerView.Adapter<BaseVie
             }
         }
     }
-
 }

@@ -85,6 +85,72 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_name" />
 
+
+                <TextView
+                    android:id="@+id/tv_type_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/futura_round_medium"
+                    android:text="@string/type"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/view_name" />
+
+                <TextView
+                    android:id="@+id/tv_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/futura_round_medium"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_type_label" />
+
+                <View
+                    android:id="@+id/view_type"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_type" />
+
+
+                <TextView
+                    android:id="@+id/tv_relationship_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/futura_round_medium"
+                    android:text="@string/relationship"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/view_type" />
+
+                <TextView
+                    android:id="@+id/tv_relationship"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/futura_round_medium"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_relationship_label" />
+
+
+                <View
+                    android:id="@+id/view_relationship"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_relationship" />
                 <TextView
                     android:id="@+id/tv_owner_label"
                     android:layout_width="match_parent"
@@ -95,7 +161,7 @@
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    app:layout_constraintTop_toBottomOf="@id/view_name" />
+                    app:layout_constraintTop_toBottomOf="@id/view_relationship" />
 
                 <TextView
                     android:id="@+id/tv_ownername"
@@ -248,39 +314,6 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_secondary_contact" />
 
                 <TextView
-                    android:id="@+id/tv_relationship_label"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="@font/futura_round_medium"
-                    android:text="@string/relationship"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintTop_toBottomOf="@id/view_secondary_contact" />
-
-                <TextView
-                    android:id="@+id/tv_relationship"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="@font/futura_round_medium"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    app:layout_constraintTop_toBottomOf="@id/tv_relationship_label" />
-
-
-                <View
-                    android:id="@+id/view_relationship"
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@color/black"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_relationship" />
-
-                <TextView
                     android:id="@+id/tv_address_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -290,7 +323,7 @@
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    app:layout_constraintTop_toBottomOf="@id/view_relationship" />
+                    app:layout_constraintTop_toBottomOf="@id/view_secondary_contact" />
 
                 <TextView
                     android:id="@+id/tv_address"
@@ -312,37 +345,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_address" />
 
-                <TextView
-                    android:id="@+id/tv_type_label"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="@font/futura_round_medium"
-                    android:text="@string/type"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintTop_toBottomOf="@id/view_address" />
-
-                <TextView
-                    android:id="@+id/tv_type"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="@font/futura_round_medium"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    app:layout_constraintTop_toBottomOf="@id/tv_type_label" />
-
-                <View
-                    android:id="@+id/view_type"
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@color/black"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_type" />
 
                 <androidx.constraintlayout.widget.Group
                     android:id="@+id/family_group"

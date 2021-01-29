@@ -40,10 +40,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:overScrollMode="never"
-                android:paddingStart="8dp"
                 android:paddingTop="18dp"
-                android:paddingEnd="8dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_trespasser_list" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

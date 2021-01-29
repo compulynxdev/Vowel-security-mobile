@@ -143,6 +143,7 @@ public class GadgetsInputActivity extends BaseActivity<GadgetsInputDialogBinding
                     if (mViewModel.verifyDeviceDetails(beans)) {
                         beans.add(new DeviceBean(getString(R.string.device).concat(" ").concat(String.valueOf(beans.size() + 1)), "", "", "", "", ""));
                         adapter.notifyDataSetChanged();
+                        getViewDataBinding().recyclerView.scrollToPosition(adapter.getItemCount() - 1);
                     } else
                         showAlert(R.string.alert, R.string.please_fill_details).show(getSupportFragmentManager());
                 } else
