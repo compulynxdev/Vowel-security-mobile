@@ -22,7 +22,7 @@ public class PropertyInfoResponse {
     private boolean status;
     private String email = "";
     private String image = "";
-    private int propertyType;
+    private String propertyType;
     private String propertyTypeName = "";
     private int id;
     private String fullName = "";
@@ -72,11 +72,11 @@ public class PropertyInfoResponse {
         this.image = image;
     }
 
-    public int getPropertyType() {
-        return propertyType;
+    public String getPropertyType() {
+        return propertyType == null ? "" : propertyType;
     }
 
-    public void setPropertyType(int propertyType) {
+    public void setPropertyType(String propertyType) {
         this.propertyType = propertyType;
     }
 

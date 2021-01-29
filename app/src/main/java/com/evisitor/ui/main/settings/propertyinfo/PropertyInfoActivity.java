@@ -45,7 +45,7 @@ public class PropertyInfoActivity extends BaseActivity<ActivityPropertyInfoBindi
         getViewDataBinding().toolbar.imgBack.setOnClickListener(v -> onBackPressed());
         mViewModel.getPropertyInfo().observe(this, propertyInfoResponse -> {
             getViewDataBinding().tvProperty.setText(propertyInfoResponse.getFullName());
-            getViewDataBinding().tvPropertyType.setText(propertyInfoResponse.getPropertyTypeName());
+            getViewDataBinding().tvPropertyType.setText(propertyInfoResponse.getPropertyType().isEmpty() ? getString(R.string.na) : propertyInfoResponse.getPropertyType());
             getViewDataBinding().tvAddress.setText(propertyInfoResponse.getAddress().concat(", ").concat(propertyInfoResponse.getZipCode()));
             getViewDataBinding().tvCountry.setText(propertyInfoResponse.getCountry().isEmpty() ? getString(R.string.na) : propertyInfoResponse.getCountry());
             getViewDataBinding().tvPhone.setText(propertyInfoResponse.getContactNo().isEmpty() ? getString(R.string.na) : "+".concat(propertyInfoResponse.getDialingCode()).concat(" ").concat(propertyInfoResponse.getContactNo()));
