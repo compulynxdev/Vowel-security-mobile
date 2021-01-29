@@ -80,7 +80,7 @@ public class GadgetsInputActivity extends BaseActivity<GadgetsInputDialogBinding
             @Override
             public void onRemove(int position) {
                 beans.remove(position);
-                adapter.notifyDataSetChanged();
+                adapter.notifyItemRemoved(position);
             }
         });
         adapter.setIsAdd(isAdd);

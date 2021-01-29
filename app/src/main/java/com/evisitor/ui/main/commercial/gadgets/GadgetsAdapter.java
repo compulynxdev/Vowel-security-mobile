@@ -69,6 +69,112 @@ public class GadgetsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             etDeviceSerial = itemView.findViewById(R.id.et_serial_no);
             etDeviceManufacturer = itemView.findViewById(R.id.et_manufacturer);
             img_close = itemView.findViewById(R.id.img_close);
+
+            etDeviceName.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if (getAdapterPosition() != -1) {
+                        list.get(getAdapterPosition()).setDeviceName(s.toString());
+                        callback.onChangeList(list);
+                    }
+                }
+            });
+
+            etDeviceType.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if (getAdapterPosition() != -1) {
+                        list.get(getAdapterPosition()).setType(s.toString());
+                        callback.onChangeList(list);
+                    }
+                }
+            });
+
+            etDeviceSerial.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if (getAdapterPosition() != -1) {
+                        list.get(getAdapterPosition()).setSerialNo(s.toString());
+                        callback.onChangeList(list);
+                    }
+                }
+            });
+
+            etDeviceTag.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if (getAdapterPosition() != -1) {
+                        list.get(getAdapterPosition()).setTagNo(s.toString());
+                        callback.onChangeList(list);
+                    }
+                }
+            });
+
+            etDeviceManufacturer.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if (getAdapterPosition() != -1) {
+                        list.get(getAdapterPosition()).setManufacturer(s.toString());
+                        callback.onChangeList(list);
+                    }
+                }
+            });
+
+            img_close.setOnClickListener(v -> {
+                if (getAdapterPosition() != -1) {
+                    callback.onRemove(getAdapterPosition());
+                }
+            });
         }
 
         @Override
@@ -96,101 +202,6 @@ public class GadgetsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 etDeviceSerial.setEnabled(false);
                 img_close.setVisibility(View.GONE);
             }
-            etDeviceName.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                    bean.setDeviceName(s.toString());
-                    list.set(position, bean);
-                    callback.onChangeList(list);
-                }
-            });
-
-            etDeviceType.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                    bean.setType(s.toString());
-                    list.set(position, bean);
-                    callback.onChangeList(list);
-                }
-            });
-
-            etDeviceSerial.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                    bean.setSerialNo(s.toString());
-                    list.set(position, bean);
-                    callback.onChangeList(list);
-                }
-            });
-
-            etDeviceTag.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                    bean.setTagNo(s.toString());
-                    list.set(position, bean);
-                    callback.onChangeList(list);
-                }
-            });
-            etDeviceManufacturer.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                    bean.setManufacturer(s.toString());
-                    list.set(position, bean);
-                    callback.onChangeList(list);
-                }
-            });
-
-            img_close.setOnClickListener(v -> callback.onRemove(position));
         }
     }
 }
