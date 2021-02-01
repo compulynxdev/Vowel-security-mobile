@@ -57,7 +57,7 @@ public class PropertyInfoResponse {
     }
 
     public String getEmail() {
-        return email;
+        return email == null ? "" : email;
     }
 
     public void setEmail(String email) {
@@ -105,7 +105,7 @@ public class PropertyInfoResponse {
     }
 
     public String getZipCode() {
-        return zipCode;
+        return zipCode == null ? "" : zipCode;
     }
 
     public void setZipCode(String zipCode) {

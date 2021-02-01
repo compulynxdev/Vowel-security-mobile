@@ -93,6 +93,11 @@ public class RejectedVisitorActivity extends BaseActivity<ActivityRejectedVisito
             public void onPageSelected(int position) {
                 getViewDataBinding().customSearchView.searchView.setQuery("", false);
 
+                if (position == 0 && getViewModel().getDataManager().isCommercial()) {
+                    getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_commercial_data_trespasser, ",".concat(getViewModel().getDataManager().getLevelName())));
+                } else if (position == adapterLastPos && getViewModel().getDataManager().isCommercial()) {
+                    getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_commercial_data_trespasser, ""));
+                }
                 getViewDataBinding().tvGuest.setTextColor(position == 0 ? getResources().getColor(R.color.colorPrimaryDark) : getResources().getColor(R.color.black));
                 getViewDataBinding().tvHouse.setTextColor(position == 1 ? getResources().getColor(R.color.colorPrimaryDark) : getResources().getColor(R.color.black));
                 getViewDataBinding().tvService.setTextColor(position == adapterLastPos ? getResources().getColor(R.color.colorPrimaryDark) : getResources().getColor(R.color.black));
@@ -141,6 +146,8 @@ public class RejectedVisitorActivity extends BaseActivity<ActivityRejectedVisito
         switch (v.getId()) {
             case R.id.tv_guest:
                 getViewDataBinding().viewPager.setCurrentItem(0, true);
+                if (getViewModel().getDataManager().isCommercial())
+                    getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_commercial_data_trespasser, ",".concat(getViewModel().getDataManager().getLevelName())));
                 break;
 
             case R.id.tv_house:
@@ -149,6 +156,8 @@ public class RejectedVisitorActivity extends BaseActivity<ActivityRejectedVisito
 
             case R.id.tv_service:
                 getViewDataBinding().viewPager.setCurrentItem(adapterLastPos, true);
+                if (getViewModel().getDataManager().isCommercial())
+                    getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_commercial_data_trespasser, ""));
                 break;
 
             case R.id.img_search:

@@ -86,6 +86,8 @@ public class SPActivity extends BaseActivity<ActivitySpBinding, SPViewModel> {
         });
 
         setupSearchSetting(getViewDataBinding().customSearchView.searchView);
+        if (getViewModel().getDataManager().isCommercial())
+            getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_commercial_sp_data));
         getViewDataBinding().customSearchView.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

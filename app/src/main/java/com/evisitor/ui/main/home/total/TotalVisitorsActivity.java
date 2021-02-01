@@ -100,14 +100,23 @@ public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBin
                     getViewDataBinding().titleGuest.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                     getViewDataBinding().titleHouse.setTextColor(getResources().getColor(R.color.black));
                     getViewDataBinding().titleService.setTextColor(getResources().getColor(R.color.black));
+                    if (getViewModel().getDataManager().isCommercial())
+                        getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_commercial_visitor_data, getViewModel().getDataManager().getLevelName()));
+
                 } else if (position == 1) {
                     getViewDataBinding().titleGuest.setTextColor(getResources().getColor(R.color.black));
                     getViewDataBinding().titleHouse.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                     getViewDataBinding().titleService.setTextColor(getResources().getColor(R.color.black));
+                    if (getViewModel().getDataManager().isCommercial())
+                        getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_commercial_staff_data, getViewModel().getDataManager().getLevelName()));
+
                 } else {
                     getViewDataBinding().titleGuest.setTextColor(getResources().getColor(R.color.black));
                     getViewDataBinding().titleHouse.setTextColor(getResources().getColor(R.color.black));
                     getViewDataBinding().titleService.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                    if (getViewModel().getDataManager().isCommercial())
+                        getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_commercial_sp_data));
+
 
                 }
             }
@@ -140,6 +149,8 @@ public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBin
                 getViewDataBinding().titleGuest.setTextColor(getResources().getColor(R.color.colorPrimary));
                 getViewDataBinding().titleService.setTextColor(getResources().getColor(R.color.black));
                 getViewDataBinding().titleHouse.setTextColor(getResources().getColor(R.color.black));
+                if (getViewModel().getDataManager().isCommercial())
+                    getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_commercial_visitor_data, getViewModel().getDataManager().getLevelName()));
                 getViewDataBinding().viewPager.setCurrentItem(0);
                 break;
 
@@ -147,6 +158,8 @@ public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBin
                 getViewDataBinding().titleGuest.setTextColor(getResources().getColor(R.color.black));
                 getViewDataBinding().titleService.setTextColor(getResources().getColor(R.color.black));
                 getViewDataBinding().titleHouse.setTextColor(getResources().getColor(R.color.colorPrimary));
+                if (getViewModel().getDataManager().isCommercial())
+                    getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_commercial_staff_data, getViewModel().getDataManager().getLevelName()));
                 getViewDataBinding().viewPager.setCurrentItem(1);
                 break;
 
@@ -154,6 +167,8 @@ public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBin
                 getViewDataBinding().titleGuest.setTextColor(getResources().getColor(R.color.black));
                 getViewDataBinding().titleService.setTextColor(getResources().getColor(R.color.colorPrimary));
                 getViewDataBinding().titleHouse.setTextColor(getResources().getColor(R.color.black));
+                if (getViewModel().getDataManager().isCommercial())
+                    getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_commercial_sp_data));
                 getViewDataBinding().viewPager.setCurrentItem(2);
                 break;
         }

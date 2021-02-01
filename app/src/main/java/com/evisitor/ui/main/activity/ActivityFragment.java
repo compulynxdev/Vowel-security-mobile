@@ -162,6 +162,9 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
                 getViewDataBinding().titleGuest.setTextColor(getResources().getColor(R.color.colorPrimary));
                 getViewDataBinding().titleService.setTextColor(getResources().getColor(R.color.black));
                 getViewDataBinding().titleHouse.setTextColor(getResources().getColor(R.color.black));
+                if (getViewModel().getDataManager().isCommercial())
+                    getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_commercial_visitor_data, getViewModel().getDataManager().getLevelName()));
+
                 break;
 
             case R.id.title_house:
@@ -171,6 +174,8 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
                 getViewDataBinding().titleGuest.setTextColor(getResources().getColor(R.color.black));
                 getViewDataBinding().titleService.setTextColor(getResources().getColor(R.color.black));
                 getViewDataBinding().titleHouse.setTextColor(getResources().getColor(R.color.colorPrimary));
+                if (getViewModel().getDataManager().isCommercial())
+                    getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_commercial_staff_data, getViewModel().getDataManager().getLevelName()));
                 break;
 
             case R.id.title_service:
@@ -180,6 +185,8 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
                 getViewDataBinding().titleGuest.setTextColor(getResources().getColor(R.color.black));
                 getViewDataBinding().titleService.setTextColor(getResources().getColor(R.color.colorPrimary));
                 getViewDataBinding().titleHouse.setTextColor(getResources().getColor(R.color.black));
+                if (getViewModel().getDataManager().isCommercial())
+                    getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_commercial_sp_data));
                 break;
         }
     }

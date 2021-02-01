@@ -307,8 +307,9 @@
     <string name="add_gadgets_info">Add gadgets information</string>
     <string name="employment">Employment : %s</string>
     <string name="commercial_msg_check_out_call">Staff didn\'t checkout yet, Please call manually and wait for staff confirmation and select option according to staff.</string>
-    <string name="search_commercial_data">Name,Vehicle,Staff Name,%s</string>
-    <string name="search_commercial_staff_data">Name,Vehicle,%s</string>
+    <string name="search_commercial_staff_data">Name,Staff Id,%s</string>
+    <string name="search_commercial_visitor_data">Name,Staff Name,%s</string>
+    <string name="search_commercial_sp_data">Name,Staff Name,Profile</string>
     <string name="search_commercial_data_trespasser">Name%s</string>
     <string name="default_dialing_code">254</string>
     <string name="default_country">Kenya</string>
@@ -319,5 +320,4 @@
     <string name="resident_profile">Resident Profile</string>
     <string name="type">Type</string>
     <string name="data_staff_name">Staff Name : %s</string>
-
 </resources>

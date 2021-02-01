@@ -273,7 +273,7 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     public void setupSearchSetting(SearchView searchView) {
         searchView.setActivated(true);
         if (getViewModel().getDataManager().isCommercial())
-            searchView.setQueryHint(getString(R.string.search_commercial_data, getViewModel().getDataManager().getLevelName()));
+            searchView.setQueryHint(getString(R.string.search_commercial_visitor_data, getViewModel().getDataManager().getLevelName()));
         else searchView.setQueryHint(getString(R.string.search_data));
         searchView.onActionViewExpanded();
         searchView.clearFocus();
