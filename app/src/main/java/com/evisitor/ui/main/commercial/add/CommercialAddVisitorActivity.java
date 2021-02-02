@@ -36,6 +36,7 @@ import com.evisitor.ui.main.commercial.add.whomtomeet.WhomToMeetBottomSheet;
 import com.evisitor.ui.main.commercial.add.whomtomeet.WhomToMeetCallback;
 import com.evisitor.ui.main.commercial.gadgets.GadgetsInputActivity;
 import com.evisitor.ui.main.home.rejectreason.InputDialog;
+import com.evisitor.ui.main.home.scan.ScanIDActivity;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppUtils;
 import com.evisitor.util.PermissionUtils;
@@ -49,6 +50,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static com.evisitor.util.AppConstants.SCAN_RESULT;
+import static com.evisitor.util.AppConstants.SCAN_RESULT_GADGETS;
 
 public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercialAddVisitorBinding, CommercialAddVisitorViewModel> implements CommercialAddVisitorNavigator, View.OnClickListener, BaseViewModel.GuestConfigurationCallback {
 
@@ -151,39 +153,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
         }
 
         if (intent.hasExtra("Record")) {
-            MrzRecord mrzRecord = (MrzRecord) intent.getSerializableExtra("Record");
-            assert mrzRecord != null;
-
-            String code = mrzRecord.getCode1() + "" + mrzRecord.getCode2();
-            switch (code.toLowerCase()) {
-                case "p<":
-                case "p":
-                    IdentityBean bean = (IdentityBean) mViewModel.getIdentityTypeList().get(1);
-                    getViewDataBinding().tvIdentity.setText(bean.getTitle());
-                    idType = bean.getKey();
-                    getViewDataBinding().etIdentity.setText(mrzRecord.getDocumentNumber());
-                    break;
-
-                case "ac":
-                case "id":
-                    bean = (IdentityBean) mViewModel.getIdentityTypeList().get(0);
-                    getViewDataBinding().tvIdentity.setText(bean.getTitle());
-                    idType = bean.getKey();
-
-                    getViewDataBinding().etIdentity.setText(mrzRecord.getOptional2().length() == 9 ?
-                            mrzRecord.getOptional2().substring(0, mrzRecord.getOptional2().length() - 1) :
-                            mrzRecord.getOptional2());
-                    break;
-            }
-
-            getViewDataBinding().etName.setText(mrzRecord.getGivenNames().concat(" ").concat(mrzRecord.getSurname()));
-
-            if (mrzRecord.getSex() != null) {
-                if (mrzRecord.getSex().toString().equalsIgnoreCase("M") || mrzRecord.getSex().toString().equalsIgnoreCase("Male"))
-                    getViewDataBinding().tvGender.setText(R.string.male);
-                else if (mrzRecord.getSex().toString().equalsIgnoreCase("F") || mrzRecord.getSex().toString().equalsIgnoreCase("Female"))
-                    getViewDataBinding().tvGender.setText(R.string.female);
-            }
+            setMrzData((MrzRecord) Objects.requireNonNull(intent.getSerializableExtra("Record")));
         }
     }
 
@@ -250,6 +220,16 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
         deviceBeanList = new ArrayList<>();
         ImageView imgBack = findViewById(R.id.img_back);
         imgBack.setVisibility(View.VISIBLE);
+
+        ImageView imgScan = findViewById(R.id.img_search);
+        if (isGuest == null)
+            imgScan.setVisibility(View.VISIBLE);
+        imgScan.setImageDrawable(getResources().getDrawable(R.drawable.ic_scan));
+        imgScan.setOnClickListener(v -> {
+            Intent i = ScanIDActivity.getStartIntent(getContext());
+            startActivityForResult(i, SCAN_RESULT);
+        });
+
         setOnClickListener(imgBack, getViewDataBinding().tvVisitorType, getViewDataBinding().tvEmployment, getViewDataBinding().tvIdentity, getViewDataBinding().tvGender, getViewDataBinding().tvWhomToMeet
                 , getViewDataBinding().frameImg, getViewDataBinding().btnAdd, getViewDataBinding().rlCode, getViewDataBinding().tvGadgets);
         getViewDataBinding().tvCode.setText("+".concat(countryCode));
@@ -369,7 +349,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
                     i.putExtra("list", new Gson().toJson(deviceBeanList));
                 }
                 i.putExtra("add", true);
-                startActivityForResult(i, SCAN_RESULT);
+                startActivityForResult(i, SCAN_RESULT_GADGETS);
                 break;
 
             case R.id.btn_add:
@@ -589,7 +569,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == SCAN_RESULT && data != null) {
+            if (requestCode == SCAN_RESULT_GADGETS && data != null) {
                 Type listType = new TypeToken<List<DeviceBean>>() {
                 }.getType();
                 deviceBeanList.clear();
@@ -599,7 +579,48 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
                 else {
                     getViewDataBinding().tvGadgets.setText("");
                 }
+            } else if (requestCode == SCAN_RESULT && data != null) {
+                MrzRecord mrzRecord = (MrzRecord) data.getSerializableExtra("Record");
+                assert mrzRecord != null;
+                setMrzData(mrzRecord);
             }
+        }
+    }
+
+
+    void setMrzData(MrzRecord mrzRecord) {
+        assert mrzRecord != null;
+        String code = mrzRecord.getCode1() + "" + mrzRecord.getCode2();
+        switch (code.toLowerCase()) {
+            case "p<":
+            case "p":
+                IdentityBean bean = (IdentityBean) mViewModel.getIdentityTypeList().get(1);
+                getViewDataBinding().tvIdentity.setText(bean.getTitle());
+                idType = bean.getKey();
+                getViewDataBinding().etIdentity.setText(mrzRecord.getDocumentNumber());
+                break;
+
+            case "ac":
+            case "id":
+                bean = (IdentityBean) mViewModel.getIdentityTypeList().get(0);
+                getViewDataBinding().tvIdentity.setText(bean.getTitle());
+                idType = bean.getKey();
+
+                getViewDataBinding().etIdentity.setText(mrzRecord.getOptional2().length() == 9 ?
+                        mrzRecord.getOptional2().substring(0, mrzRecord.getOptional2().length() - 1) :
+                        mrzRecord.getOptional2());
+                break;
+        }
+
+        //getViewDataBinding().tvIdentity.setText(mrzRecord.getCode().toString().concat(" [").concat(mrzRecord.getCode1() + "").concat(mrzRecord.getCode2() + "]"));
+        getViewDataBinding().etName.setText(mrzRecord.getGivenNames().concat(" ").concat(mrzRecord.getSurname()));
+        //tv_dob.setText(CalenderUtils.formatDate(mrzRecord.getDateOfBirth().toString(), "dd/MM/yy", "dd/MM/yyyy"));
+
+        if (mrzRecord.getSex() != null) {
+            if (mrzRecord.getSex().toString().equalsIgnoreCase("M") || mrzRecord.getSex().toString().equalsIgnoreCase("Male"))
+                getViewDataBinding().tvGender.setText(R.string.male);
+            else if (mrzRecord.getSex().toString().equalsIgnoreCase("F") || mrzRecord.getSex().toString().equalsIgnoreCase("Female"))
+                getViewDataBinding().tvGender.setText(R.string.female);
         }
     }
 }

@@ -29,6 +29,7 @@ public final class AppConstants {
     public static final String ACCEPT = "ACCEPTED";
     public static final String REJECT = "REJECTED";
     public static final int SCAN_RESULT = 101;
+    public static final int SCAN_RESULT_GADGETS = 102;
     public static final String FROM = "FROM";
     public static final String CONTROLLER_HOME = "CONTROLLER_HOME";
     public static final String CONTROLLER_GUEST = "CONTROLLER_GUEST";
