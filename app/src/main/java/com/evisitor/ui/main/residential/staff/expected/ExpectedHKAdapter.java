@@ -122,7 +122,7 @@ public class ExpectedHKAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             name.setText(context.getString(R.string.data_name, bean.getFullName()));
             identity.setText(context.getString(R.string.data_identity, bean.getDocumentId().isEmpty() ? "N?A" : bean.getDocumentId()));
             profile.setText(context.getString(R.string.data_profile, bean.getProfile()));
-            time.setText(context.getString(R.string.data_time_slot, CalenderUtils.formatDate(bean.getTimeIn(), CalenderUtils.TIME_FORMAT, CalenderUtils.TIME_FORMAT_AM), CalenderUtils.formatDate(bean.getTimeOut(), CalenderUtils.TIME_FORMAT, CalenderUtils.TIME_FORMAT_AM)));
+            time.setText(context.getString(R.string.data_time_slot, CalenderUtils.formatDateWithOutUTC(bean.getTimeIn(), CalenderUtils.TIME_FORMAT, CalenderUtils.TIME_FORMAT_AM), CalenderUtils.formatDateWithOutUTC(bean.getTimeOut(), CalenderUtils.TIME_FORMAT, CalenderUtils.TIME_FORMAT_AM)));
 
             if (isCommercial()) {
                 host.setVisibility(View.GONE);
