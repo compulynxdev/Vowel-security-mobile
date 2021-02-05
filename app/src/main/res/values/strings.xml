@@ -118,7 +118,7 @@
     <string name="enter_vehicle">Enter Vehicle No</string>
     <string name="enter_contact">Enter Contact*</string>
     <string name="select_gender">Select Gender*</string>
-    <string name="select_house">Select House Number*</string>
+    <string name="select_house">Search House Number*</string>
     <string name="select_owner">Select Owner*</string>
     <string name="select_host">Select Host*</string>
     <string name="add">Add</string>

@@ -37,6 +37,7 @@ import com.evisitor.util.AppConstants;
 import com.evisitor.util.PermissionUtils;
 import com.sharma.mrzreader.MrzRecord;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -149,29 +150,32 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
 
             @Override
             public void afterTextChanged(Editable s) {
-                mViewModel.doGetHouseDetails(s.toString());
+                mViewModel.doGetHouseDetails(s.toString().trim());
             }
         });
 
+        ArrayAdapter<HouseDetailBean> arrayAdapter = new ArrayAdapter<>(AddVisitorActivity.this, android.R.layout.simple_list_item_1, new ArrayList<>());
+        arrayAdapter.setNotifyOnChange(true);
+        getViewDataBinding().actvHouseNo.setAdapter(arrayAdapter);
+        getViewDataBinding().actvHouseNo.setText("", false);
+        getViewDataBinding().actvHouseNo.setOnItemClickListener((adapterView, view, i, l) -> {
+            HouseDetailBean houseDetailBean = (HouseDetailBean) adapterView.getItemAtPosition(i);
+            houseId = String.valueOf(houseDetailBean.getId());
+            getViewDataBinding().actvHouseNo.setText(houseDetailBean.getName());
+
+            /*Reset Data once House Info Change*/
+            //ownerId = "";
+            //getViewDataBinding().tvOwner.setText("");
+            residentId = "";
+            getViewDataBinding().tvHost.setText("");
+
+            mViewModel.doGetHostDetails(houseId);
+            /*End Here*/
+        });
+
         mViewModel.doGetHouseDetails().observe(AddVisitorActivity.this, houseDetailList -> {
-            ArrayAdapter<HouseDetailBean> arrayAdapter = new ArrayAdapter<>(AddVisitorActivity.this, android.R.layout.simple_list_item_1, houseDetailList);
-            getViewDataBinding().actvHouseNo.setThreshold(1);
-            getViewDataBinding().actvHouseNo.setAdapter(arrayAdapter);
-
-            getViewDataBinding().actvHouseNo.setOnItemClickListener((adapterView, view, i, l) -> {
-                HouseDetailBean houseDetailBean = (HouseDetailBean) adapterView.getItemAtPosition(i);
-                houseId = String.valueOf(houseDetailBean.getId());
-                getViewDataBinding().actvHouseNo.setText(houseDetailBean.getName());
-
-                /*Reset Data once House Info Change*/
-                //ownerId = "";
-                //getViewDataBinding().tvOwner.setText("");
-                residentId = "";
-                getViewDataBinding().tvHost.setText("");
-
-                mViewModel.doGetHostDetails(houseId);
-                /*End Here*/
-            });
+            arrayAdapter.clear();
+            arrayAdapter.addAll(houseDetailList);
         });
 
         mViewModel.doGetHostDetails().observe(this, hostDetailList -> {
@@ -199,14 +203,15 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
             }
         });
 
+        ArrayAdapter<ProfileBean> arrayAdapter = new ArrayAdapter<>(AddVisitorActivity.this, android.R.layout.simple_list_item_1, new ArrayList<>());
+        getViewDataBinding().actvWorkProfile.setAdapter(arrayAdapter);
+        getViewDataBinding().actvWorkProfile.setOnItemClickListener((adapterView, view, i, l) -> {
+            ProfileBean profileBean = (ProfileBean) adapterView.getItemAtPosition(i);
+            getViewDataBinding().actvWorkProfile.setText(profileBean.getProfileName());
+        });
         mViewModel.getProfileSuggestions().observe(AddVisitorActivity.this, profileBeanList -> {
-            ArrayAdapter<ProfileBean> arrayAdapter = new ArrayAdapter<>(AddVisitorActivity.this, android.R.layout.simple_list_item_1, profileBeanList);
-            getViewDataBinding().actvWorkProfile.setThreshold(1);
-            getViewDataBinding().actvWorkProfile.setAdapter(arrayAdapter);
-            getViewDataBinding().actvWorkProfile.setOnItemClickListener((adapterView, view, i, l) -> {
-                ProfileBean profileBean = (ProfileBean) adapterView.getItemAtPosition(i);
-                getViewDataBinding().actvWorkProfile.setText(profileBean.getProfileName());
-            });
+            arrayAdapter.clear();
+            arrayAdapter.addAll(profileBeanList);
         });
     }
 
@@ -227,15 +232,16 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                 mViewModel.doGetCompanySuggestions(s.toString());
             }
         });
+        ArrayAdapter<CompanyBean> arrayAdapter = new ArrayAdapter<>(AddVisitorActivity.this, android.R.layout.simple_list_item_1, new ArrayList<>());
+        getViewDataBinding().actvCompanyName.setAdapter(arrayAdapter);
+        getViewDataBinding().actvCompanyName.setOnItemClickListener((adapterView, view, i, l) -> {
+            CompanyBean companyBean = (CompanyBean) adapterView.getItemAtPosition(i);
+            getViewDataBinding().actvCompanyName.setText(companyBean.getCompanyName());
+        });
 
         mViewModel.getCompanySuggestions().observe(AddVisitorActivity.this, companyBeanList -> {
-            ArrayAdapter<CompanyBean> arrayAdapter = new ArrayAdapter<>(AddVisitorActivity.this, android.R.layout.simple_list_item_1, companyBeanList);
-            getViewDataBinding().actvCompanyName.setThreshold(1);
-            getViewDataBinding().actvCompanyName.setAdapter(arrayAdapter);
-            getViewDataBinding().actvCompanyName.setOnItemClickListener((adapterView, view, i, l) -> {
-                CompanyBean companyBean = (CompanyBean) adapterView.getItemAtPosition(i);
-                getViewDataBinding().actvCompanyName.setText(companyBean.getCompanyName());
-            });
+            arrayAdapter.clear();
+            arrayAdapter.addAll(companyBeanList);
         });
     }
 

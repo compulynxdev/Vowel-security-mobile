@@ -175,14 +175,15 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
             }
         });
 
+        ArrayAdapter<ProfileBean> arrayAdapter = new ArrayAdapter<>(CommercialAddVisitorActivity.this, android.R.layout.simple_list_item_1, new ArrayList<>());
+        getViewDataBinding().actvWorkProfile.setAdapter(arrayAdapter);
+        getViewDataBinding().actvWorkProfile.setOnItemClickListener((adapterView, view, i, l) -> {
+            ProfileBean profileBean = (ProfileBean) adapterView.getItemAtPosition(i);
+            getViewDataBinding().actvWorkProfile.setText(profileBean.getProfileName());
+        });
         mViewModel.getProfileSuggestions().observe(CommercialAddVisitorActivity.this, profileBeanList -> {
-            ArrayAdapter<ProfileBean> arrayAdapter = new ArrayAdapter<>(CommercialAddVisitorActivity.this, android.R.layout.simple_list_item_1, profileBeanList);
-            getViewDataBinding().actvWorkProfile.setThreshold(1);
-            getViewDataBinding().actvWorkProfile.setAdapter(arrayAdapter);
-            getViewDataBinding().actvWorkProfile.setOnItemClickListener((adapterView, view, i, l) -> {
-                ProfileBean profileBean = (ProfileBean) adapterView.getItemAtPosition(i);
-                getViewDataBinding().actvWorkProfile.setText(profileBean.getProfileName());
-            });
+            arrayAdapter.clear();
+            arrayAdapter.addAll(profileBeanList);
         });
     }
 
@@ -204,14 +205,15 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
             }
         });
 
+        ArrayAdapter<CompanyBean> arrayAdapter = new ArrayAdapter<>(CommercialAddVisitorActivity.this, android.R.layout.simple_list_item_1, new ArrayList<>());
+        getViewDataBinding().actvCompanyName.setAdapter(arrayAdapter);
+        getViewDataBinding().actvCompanyName.setOnItemClickListener((adapterView, view, i, l) -> {
+            CompanyBean companyBean = (CompanyBean) adapterView.getItemAtPosition(i);
+            getViewDataBinding().actvCompanyName.setText(companyBean.getCompanyName());
+        });
         mViewModel.getCompanySuggestions().observe(CommercialAddVisitorActivity.this, companyBeanList -> {
-            ArrayAdapter<CompanyBean> arrayAdapter = new ArrayAdapter<>(CommercialAddVisitorActivity.this, android.R.layout.simple_list_item_1, companyBeanList);
-            getViewDataBinding().actvCompanyName.setThreshold(1);
-            getViewDataBinding().actvCompanyName.setAdapter(arrayAdapter);
-            getViewDataBinding().actvCompanyName.setOnItemClickListener((adapterView, view, i, l) -> {
-                CompanyBean companyBean = (CompanyBean) adapterView.getItemAtPosition(i);
-                getViewDataBinding().actvCompanyName.setText(companyBean.getCompanyName());
-            });
+            arrayAdapter.clear();
+            arrayAdapter.addAll(companyBeanList);
         });
     }
 
