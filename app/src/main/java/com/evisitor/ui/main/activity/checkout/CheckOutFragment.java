@@ -188,7 +188,9 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
 
     public void doSearch(String search) {
         this.search = search;
-        scrollListener.onDataCleared();
+        if (scrollListener != null) {
+            scrollListener.onDataCleared();
+        }
         switch (listOf) {
             case 0:
                 if (mViewModel.getDataManager().isCommercial()) {

@@ -166,7 +166,9 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
     }
 
     private void doSearch(String search) {
-        scrollListener.onDataCleared();
+        if (scrollListener != null) {
+            scrollListener.onDataCleared();
+        }
         spList.clear();
         this.page = 0;
         mViewModel.getSpListData(page, search);

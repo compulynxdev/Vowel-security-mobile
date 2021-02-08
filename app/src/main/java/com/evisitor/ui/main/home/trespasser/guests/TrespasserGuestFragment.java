@@ -97,7 +97,9 @@ public class TrespasserGuestFragment extends BaseFragment<FragmentTrespasserGues
     }
 
     private void doSearch(String search) {
-        scrollListener.onDataCleared();
+        if (scrollListener != null) {
+            scrollListener.onDataCleared();
+        }
         list.clear();
         this.page = 0;
         mViewModel.getTrespasserGuest(page, search.trim());

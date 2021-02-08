@@ -246,7 +246,9 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
 
     public void doSearch(String search) {
         this.search = search;
-        scrollListener.onDataCleared();
+        if (scrollListener != null) {
+            scrollListener.onDataCleared();
+        }
         switch (listOf) {
             case 0:
                 if (mViewModel.getDataManager().isCommercial()) {

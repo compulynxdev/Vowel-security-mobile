@@ -63,7 +63,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     // Android support libraries
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
     implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
     implementation "com.google.android.material:material:$rootProject.materialVersion"

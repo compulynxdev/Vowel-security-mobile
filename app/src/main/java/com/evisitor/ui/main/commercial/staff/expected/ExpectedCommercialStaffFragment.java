@@ -105,7 +105,9 @@ public class ExpectedCommercialStaffFragment extends BaseFragment<FragmentExpect
     }
 
     private void doSearch(String search) {
-        scrollListener.onDataCleared();
+        if (scrollListener != null) {
+            scrollListener.onDataCleared();
+        }
         list.clear();
         this.page = 0;
         mViewModel.getExpectedOfficeListData(page, search.trim());

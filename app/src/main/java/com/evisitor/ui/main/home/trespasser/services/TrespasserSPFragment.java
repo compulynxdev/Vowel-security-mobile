@@ -97,7 +97,9 @@ public class TrespasserSPFragment extends BaseFragment<FragmentTrespasserSBindin
     }
 
     private void doSearch(String search) {
-        scrollListener.onDataCleared();
+        if (scrollListener != null) {
+            scrollListener.onDataCleared();
+        }
         list.clear();
         this.page = 0;
         mViewModel.getTrespasserSP(page, search.trim());

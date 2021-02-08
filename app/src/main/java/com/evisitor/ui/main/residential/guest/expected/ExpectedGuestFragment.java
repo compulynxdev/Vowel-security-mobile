@@ -175,7 +175,9 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
 
 
     private void doSearch(String search) {
-        scrollListener.onDataCleared();
+        if (scrollListener != null) {
+            scrollListener.onDataCleared();
+        }
         guestsList.clear();
         this.page = 0;
         mViewModel.getGuestListData(page, search);

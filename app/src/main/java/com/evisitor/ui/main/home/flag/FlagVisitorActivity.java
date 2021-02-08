@@ -137,7 +137,9 @@ public class FlagVisitorActivity extends BaseActivity<ActivityFlagVisitorBinding
     }
 
     private void doSearch(String search) {
-        scrollListener.onDataCleared();
+        if (scrollListener != null) {
+            scrollListener.onDataCleared();
+        }
         this.list.clear();
         this.page = 0;
         if (isNetworkConnected(true))

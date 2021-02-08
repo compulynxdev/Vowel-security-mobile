@@ -175,7 +175,9 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
 
 
     private void doSearch(String search) {
-        scrollListener.onDataCleared();
+        if (scrollListener != null) {
+            scrollListener.onDataCleared();
+        }
         guestsList.clear();
         this.page = 0;
         mViewModel.getExpectedVisitorListData(page, search);
@@ -264,6 +266,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
 
     @Override
     public void refreshList() {
+        getViewDataBinding().recyclerView.getRecycledViewPool().clear();
         doSearch(search);
     }
 }

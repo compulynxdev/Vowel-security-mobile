@@ -91,7 +91,9 @@ public class NotificationsFragment extends BaseFragment<FragmentNotificationsBin
 
 
     private void doRefreshApiCall() {
-        scrollListener.onDataCleared();
+        if (scrollListener != null) {
+            scrollListener.onDataCleared();
+        }
         notificationsList.clear();
         this.page = 0;
         mViewModel.getNotifications(page);

@@ -94,7 +94,9 @@ public class RejectedSPFragment extends BaseFragment<FragmentRejectedSBinding, R
     }
 
     private void doSearch(String search) {
-        scrollListener.onDataCleared();
+        if (scrollListener != null) {
+            scrollListener.onDataCleared();
+        }
         list.clear();
         this.page = 0;
         mViewModel.getSP(page, search.trim());

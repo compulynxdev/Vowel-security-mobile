@@ -97,7 +97,9 @@ public class RegisteredCommercialStaffFragment extends BaseFragment<FragmentExpe
     }
 
     private void doSearch(String search) {
-        scrollListener.onDataCleared();
+        if (scrollListener != null) {
+            scrollListener.onDataCleared();
+        }
         list.clear();
         this.page = 0;
         mViewModel.getRegisteredOfficeListData(page, search.trim());

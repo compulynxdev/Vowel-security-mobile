@@ -95,7 +95,9 @@ public class RejectedStaffFragment extends BaseFragment<FragmentRejectedStaffBin
     }
 
     private void doSearch(String search) {
-        scrollListener.onDataCleared();
+        if (scrollListener != null) {
+            scrollListener.onDataCleared();
+        }
         list.clear();
         this.page = 0;
         mViewModel.getDomesticStaff(page, search.trim());

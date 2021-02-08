@@ -141,7 +141,9 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
     }
 
     private void doSearch(String search) {
-        scrollListener.onDataCleared();
+        if (scrollListener != null) {
+            scrollListener.onDataCleared();
+        }
         list.clear();
         this.page = 0;
         mViewModel.getExpectedHKListData(page, search.trim());
