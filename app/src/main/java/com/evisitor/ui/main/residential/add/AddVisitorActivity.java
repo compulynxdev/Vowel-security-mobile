@@ -13,7 +13,11 @@ import android.widget.ImageView;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.evisitor.Constant;
+import com.evisitor.MainResultStore;
 import com.evisitor.R;
+import com.evisitor.ScanSmartActivity;
+import com.evisitor.ScannedIDData;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.AddVisitorData;
 import com.evisitor.data.model.CompanyBean;
@@ -32,7 +36,6 @@ import com.evisitor.ui.dialog.country.CountrySelectionDialog;
 import com.evisitor.ui.dialog.selection.SelectionBottomSheetDialog;
 import com.evisitor.ui.main.MainActivity;
 import com.evisitor.ui.main.home.rejectreason.InputDialog;
-import com.evisitor.ui.main.home.scan.ScanIDActivity;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.PermissionUtils;
 import com.sharma.mrzreader.MrzRecord;
@@ -282,7 +285,8 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
             imgScan.setVisibility(View.VISIBLE);
         imgScan.setImageDrawable(getResources().getDrawable(R.drawable.ic_scan));
         imgScan.setOnClickListener(v -> {
-            Intent i = ScanIDActivity.getStartIntent(getContext());
+            //Intent i = ScanIDActivity.getStartIntent(getContext());
+            Intent i = ScanSmartActivity.getStartIntent(getContext());
             startActivityForResult(i, SCAN_RESULT);
         });
         setOnClickListener(imgBack, getViewDataBinding().tvVisitorType, getViewDataBinding().tvAssignedTo, getViewDataBinding().tvEmployment, getViewDataBinding().tvIdentity, getViewDataBinding().tvGender, getViewDataBinding().tvOwner, getViewDataBinding().tvHost
@@ -603,10 +607,50 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == SCAN_RESULT && data != null) {
-                MrzRecord mrzRecord = (MrzRecord) data.getSerializableExtra("Record");
+            if (requestCode == SCAN_RESULT /*&& data != null*/) {
+                /*MrzRecord mrzRecord = (MrzRecord) data.getSerializableExtra("Record");
                 assert mrzRecord != null;
-                setMrzData(mrzRecord);
+                setMrzData(mrzRecord);*/
+                /*for (String name : MainResultStore.instance.getFieldNames()) {
+                    Log.e("FieldName",name);
+                }*/
+                ScannedIDData scannedData = MainResultStore.instance.getScannedIDData();
+                getViewDataBinding().etIdentity.setText(scannedData.idNumber);
+                getViewDataBinding().etName.setText(scannedData.name);
+
+                String gender = scannedData.gender;
+                if (gender.equalsIgnoreCase("M") || gender.equalsIgnoreCase("Male"))
+                    getViewDataBinding().tvGender.setText(R.string.male);
+                else if (gender.equalsIgnoreCase("F") || gender.equalsIgnoreCase("Female"))
+                    getViewDataBinding().tvGender.setText(R.string.female);
+                else getViewDataBinding().tvGender.setText("");
+                bmp_profile = scannedData.userImage;
+                getViewDataBinding().imgUser.setImageBitmap(bmp_profile);
+
+                switch (MainResultStore.instance.getDocumentType()) {
+                    case Constant.ID_KENYAN:
+                    case Constant.ID_UGANDA:
+                    case Constant.ID_TANZANIA:
+                    case Constant.ID_RWANDA:
+                    case Constant.ID_UAE:
+                    case Constant.ID_AADHAAR:
+                    case Constant.ID_PANCARD:
+                        IdentityBean bean = (IdentityBean) mViewModel.getIdentityTypeList().get(0);
+                        getViewDataBinding().tvIdentity.setText(bean.getTitle());
+                        idType = bean.getKey();
+                        break;
+
+                    case Constant.PASSPORT_KENYAN:
+                    case Constant.PASSPORT_UGANDA:
+                    case Constant.PASSPORT_TANZANIA:
+                    /*case Constant.PASSPORT_RWANDA:
+                    case Constant.PASSPORT_UAE:*/
+                    case Constant.PASSPORT_INDIA:
+                        bean = (IdentityBean) mViewModel.getIdentityTypeList().get(2);
+                        getViewDataBinding().tvIdentity.setText(bean.getTitle());
+                        idType = bean.getKey();
+                        break;
+                }
             }
         }
     }

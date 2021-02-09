@@ -67,6 +67,7 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
     implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
     implementation "com.google.android.material:material:$rootProject.materialVersion"
+    implementation project(path: ':smart-engine-scan')
 
     // Local unit tests
     testImplementation "junit:junit:$rootProject.junitVersion"
@@ -118,6 +119,9 @@ dependencies {
 
     // MRZ Reader
     implementation project(path: ':mrzreader')
+
+    // Smart scan
+    implementation project(path: ':smart-engine-scan')
 
     // Barcode Scanner
     implementation 'com.budiyev.android:code-scanner:2.1.0'

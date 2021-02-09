@@ -1,2 +1,3 @@
+include ':smart-engine-scan'
 include ':app', ':mrzreader'
 rootProject.name='E-Visitor'
