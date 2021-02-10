@@ -10,15 +10,14 @@ import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
+import com.evisitor.ScanSmartActivity;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.ActivitySpBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.dialog.AlertDialog;
 import com.evisitor.ui.main.commercial.add.CommercialAddVisitorActivity;
-import com.evisitor.ui.main.home.scan.ScanIDActivity;
 import com.evisitor.ui.main.residential.add.AddVisitorActivity;
 import com.evisitor.util.AppConstants;
-import com.sharma.mrzreader.MrzRecord;
 
 public class SPActivity extends BaseActivity<ActivitySpBinding, SPViewModel> {
 
@@ -60,7 +59,8 @@ public class SPActivity extends BaseActivity<ActivitySpBinding, SPViewModel> {
                 .setNegativeBtnLabel(getString(R.string.scan_id))
                 .setOnNegativeClickListener(dialog1 -> {
                     dialog1.dismiss();
-                    Intent i = ScanIDActivity.getStartIntent(getContext());
+                    //Intent i = ScanIDActivity.getStartIntent(getContext());
+                    Intent i = ScanSmartActivity.getStartIntent(getContext());
                     startActivityForResult(i, AppConstants.SCAN_RESULT);
                 })
                 .setOnPositiveClickListener(dialog12 -> {
@@ -110,10 +110,11 @@ public class SPActivity extends BaseActivity<ActivitySpBinding, SPViewModel> {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == AppConstants.SCAN_RESULT && data != null) {
-                MrzRecord mrzRecord = (MrzRecord) data.getSerializableExtra("Record");
+            if (requestCode == AppConstants.SCAN_RESULT /*&& data != null*/) {
+                //MrzRecord mrzRecord = (MrzRecord) data.getSerializableExtra("Record");
                 Intent intent = mViewModel.getDataManager().isCommercial() ? CommercialAddVisitorActivity.getStartIntent(this) : AddVisitorActivity.getStartIntent(this);
-                intent.putExtra("Record", mrzRecord);
+                //intent.putExtra("Record", mrzRecord);
+                intent.putExtra("Record", "");
                 intent.putExtra(AppConstants.FROM, AppConstants.CONTROLLER_SP);
                 startActivity(intent);
             }

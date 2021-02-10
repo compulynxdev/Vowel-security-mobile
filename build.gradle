@@ -54,7 +54,7 @@ ext {
     greenDaoVersion = '3.2.2'
 
     // Test dependencies
-    junitVersion = '4.13'
+    junitVersion = '4.13.1'
     junitExtVersion = '1.1.2'
     espressoVersion = '3.3.0'
 }

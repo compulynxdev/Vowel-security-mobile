@@ -520,13 +520,12 @@
                     android:visibility="gone"
                     app:constraint_referenced_ids="et_purpose,tv_gadgets" />
 
-
                 <androidx.constraintlayout.widget.Group
                     android:id="@+id/group_sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
-                    app:constraint_referenced_ids="tv_employment,actv_work_profile" />
+                    app:constraint_referenced_ids="tv_identity, tv_employment,actv_work_profile" />
 
                 <androidx.constraintlayout.widget.Group
                     android:id="@+id/group_employment"

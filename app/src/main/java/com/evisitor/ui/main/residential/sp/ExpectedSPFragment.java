@@ -8,7 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.evisitor.MainResultStore;
 import com.evisitor.R;
+import com.evisitor.ScanSmartActivity;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.model.VisitorProfileBean;
@@ -18,10 +20,8 @@ import com.evisitor.ui.dialog.AlertDialog;
 import com.evisitor.ui.main.home.idverification.IdVerificationCallback;
 import com.evisitor.ui.main.home.idverification.IdVerificationDialog;
 import com.evisitor.ui.main.home.rejectreason.InputDialog;
-import com.evisitor.ui.main.home.scan.ScanIDActivity;
 import com.evisitor.ui.main.home.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
-import com.sharma.mrzreader.MrzRecord;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,7 +113,8 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                 @Override
                 public void onScanClick(IdVerificationDialog dialog) {
                     dialog.dismiss();
-                    Intent i = ScanIDActivity.getStartIntent(getContext());
+                    //Intent i = ScanIDActivity.getStartIntent(getContext());
+                    Intent i = ScanSmartActivity.getStartIntent(getContext());
                     startActivityForResult(i, SCAN_RESULT);
                 }
 
@@ -140,7 +141,8 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                         @Override
                         public void onScanClick(IdVerificationDialog dialog) {
                             dialog.dismiss();
-                            Intent i = ScanIDActivity.getStartIntent(getContext());
+                            //Intent i = ScanIDActivity.getStartIntent(getContext());
+                            Intent i = ScanSmartActivity.getStartIntent(getContext());
                             startActivityForResult(i, SCAN_RESULT);
                         }
 
@@ -231,9 +233,9 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == SCAN_RESULT && data != null) {
-                String identityNo = "";
-                MrzRecord mrzRecord = (MrzRecord) data.getSerializableExtra("Record");
+            if (requestCode == SCAN_RESULT /*&& data != null*/) {
+                String identityNo = MainResultStore.instance.getScannedIDData().idNumber;
+                /*MrzRecord mrzRecord = (MrzRecord) data.getSerializableExtra("Record");
                 assert mrzRecord != null;
 
                 String code = mrzRecord.getCode1() + "" + mrzRecord.getCode2();
@@ -249,7 +251,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                                 mrzRecord.getOptional2().substring(0, mrzRecord.getOptional2().length() - 1) :
                                 mrzRecord.getOptional2();
                         break;
-                }
+                }*/
 
                 if (mViewModel.getDataManager().getSpDetail().getIdentityNo().equals(identityNo)) {
                     if (mViewModel.getDataManager().isCommercial()) {

@@ -30,7 +30,6 @@ package com.evisitor;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -44,6 +43,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -96,7 +96,7 @@ public class ScanSmartActivity extends AppCompatActivity
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         document_mask = savedInstanceState.getString(nameVariableKey);
-        TextView Doc = (TextView) findViewById(R.id.textViewDoc);
+        TextView Doc = findViewById(R.id.textViewDoc);
         Doc.setText(document_mask);
     }
 
@@ -123,7 +123,9 @@ public class ScanSmartActivity extends AppCompatActivity
 
         button = findViewById(R.id.button);
         selector = findViewById(R.id.selector);
-
+        TextView tv_title = findViewById(R.id.tv_title);
+        tv_title.setText("Scan Document");
+        findViewById(R.id.img_back).setOnClickListener(v -> onBackPressed());
         initEngine();
 
         if (permission(Manifest.permission.CAMERA)) {
@@ -138,8 +140,8 @@ public class ScanSmartActivity extends AppCompatActivity
             Log.d("smartid", "Engine initialization failed: " + e.toString());
         }
 
-        SurfaceView preview = (SurfaceView) findViewById(R.id.preview);
-        RelativeLayout drawing = (RelativeLayout) findViewById(R.id.drawing);
+        SurfaceView preview = findViewById(R.id.preview);
+        RelativeLayout drawing = findViewById(R.id.drawing);
         view.setSurface(preview, drawing);
     }
 
@@ -149,7 +151,7 @@ public class ScanSmartActivity extends AppCompatActivity
             button.setOnClickListener(null); // Disable button
             selector.setOnClickListener(null);
 
-            if (processing == false) {
+            if (!processing) {
                 view.startRecognition(document_mask, time_out);
             } else {
                 view.stopRecognition();
@@ -157,25 +159,17 @@ public class ScanSmartActivity extends AppCompatActivity
         }
 
         if (v.getId() == R.id.selector) {
-
             showList();
         }
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-
     void toast(final String message) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast t = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
-                t.setGravity(Gravity.CENTER, 0, 0);
-                t.show();
-            }
+        runOnUiThread(() -> {
+            Toast t = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
+            t.setGravity(Gravity.CENTER, 0, 0);
+            t.show();
         });
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     public boolean permission(String permission) {
         int result = ContextCompat.checkSelfPermission(this, permission);
@@ -188,32 +182,27 @@ public class ScanSmartActivity extends AppCompatActivity
 
     @Override
     public void onRequestPermissionsResult(
-            int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_CAMERA_PERMISSION: {
-                boolean granted = false;
-                for (int grantResult : grantResults) {
-                    if (grantResult == PackageManager.PERMISSION_GRANTED) { // Permission is granted
-                        granted = true;
-                    }
-                }
-                if (granted == true) {
-                    view.updatePreview();
-                } else {
-                    toast("Please enable Camera permission.");
+            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_CAMERA_PERMISSION) {
+            boolean granted = false;
+            for (int grantResult : grantResults) {
+                if (grantResult == PackageManager.PERMISSION_GRANTED) { // Permission is granted
+                    granted = true;
+                    break;
                 }
             }
-            default: {
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            if (granted) {
+                view.updatePreview();
+            } else {
+                toast("Please enable Camera permission.");
             }
         }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
     public void initialized(boolean engine_initialized) {
-        if (engine_initialized == true) {
+        if (engine_initialized) {
             button.setOnClickListener(this);
             selector.setOnClickListener(this);
             showNameDoc();
@@ -224,10 +213,10 @@ public class ScanSmartActivity extends AppCompatActivity
     public void recognized(RecognitionResult result) {
         // The result is terminal when the engine decides that the recognition result has had
         // enough information and ready to produce result, or when the session is timed out
-        if (result.IsTerminal() == true) {
+        if (result.IsTerminal()) {
             view.stopRecognition();
 
-            if (result.GetDocumentType().isEmpty() == true) {
+            if (result.GetDocumentType().isEmpty()) {
                 toast("Document not found."); // No result has been returned on any frame
                 return;
             }
@@ -287,6 +276,7 @@ public class ScanSmartActivity extends AppCompatActivity
 
             case Constant.ID_UAE:
                 //document type, id_number, name, name_eng, nationality, nationality_eng, photo;
+
                 scannedIDData = new ScannedIDData();
                 scannedIDData.idNumber = MainResultStore.instance.getStringValue("id_number");
                 scannedIDData.name = MainResultStore.instance.getStringValue("name_eng");
@@ -384,29 +374,26 @@ public class ScanSmartActivity extends AppCompatActivity
     }
 
     private void showNameDoc() {
-        TextView Doc = (TextView) findViewById(R.id.textViewDoc);
+        TextView Doc = findViewById(R.id.textViewDoc);
         Doc.setText("Document: " + document_name);
     }
 
     private void showList() {
         //final String[] sdocs = SelectDocs();
         final String[] sDocs = {"ken.id.type1", "ken.passport.type1", "uga.id.type1", "uga.passport.type1", "tza.id.type1", "tza.passport.type1",
-                "rwa.id.type1", "rwa.passport.type1", "are.id.type1", "are.passport.type1", "ind.aadhaar.type1", "ind.pancard.type1",
+                "rwa.id.type1", /*"rwa.passport.type1",*/ "are.id.type1", /*"are.passport.type1",*/ "ind.aadhaar.type1", "ind.pancard.type1",
                 "ind.passport.type1"};
 
         final String[] sTitle = {"Kenyan ID", "Kenyan Passport", "Uganda ID", "Uganda Passport", "Tanzania ID", "Tanzania Passport",
-                "Rwanda ID", "Rwanda Passport", "UAE ID", "UAE Passport", "Aadhaar ID", "Pan Card",
+                "Rwanda ID", /*"Rwanda Passport",*/ "UAE ID", /*"UAE Passport",*/ "Aadhaar ID", "Pan Card",
                 "India Passport"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(ScanSmartActivity.this);
         builder.setTitle("Choose document");
-        builder.setItems(sTitle, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                document_mask = sDocs[item];
-                document_name = sTitle[item];
-                showNameDoc();
-            }
+        builder.setItems(sTitle, (dialog, item) -> {
+            document_mask = sDocs[item];
+            document_name = sTitle[item];
+            showNameDoc();
         });
 
         builder.setCancelable(true);

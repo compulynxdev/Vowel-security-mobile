@@ -95,12 +95,12 @@ public class MainResultStore {
 
     public boolean isFieldImage(String fieldName) {
         Field field = fields.get(fieldName);
-        return field.is_image;
+        return field != null && field.is_image;
     }
 
     public boolean isFieldAccepted(String fieldName) {
         Field field = fields.get(fieldName);
-        return field.is_accepted;
+        return field != null && field.is_accepted;
     }
 
     public String getDocumentType() {
@@ -109,16 +109,16 @@ public class MainResultStore {
 
     public String getStringValue(String fieldName) {
         Field field = fields.get(fieldName);
-        return field.value;
+        return field != null ? field.value : "";
     }
 
     public Bitmap getImageValue(String fieldName) {
         Field field = fields.get(fieldName);
-        return field.bitmap;
+        return field != null ? field.bitmap : null;
     }
 
     private Bitmap getBitmap(Image image) {
-        Bitmap bitmap = null;
+        Bitmap bitmap;
 
         int nChannels = image.GetChannels(); ///< number of color channels per-pixel
         int sizeBytes = image.GetRequiredBufferLength();

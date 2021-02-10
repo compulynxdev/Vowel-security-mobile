@@ -10,15 +10,14 @@ import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
+import com.evisitor.ScanSmartActivity;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.ActivityExpectedGuestOrVisitorBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.dialog.AlertDialog;
-import com.evisitor.ui.main.home.scan.ScanIDActivity;
 import com.evisitor.ui.main.residential.add.AddVisitorActivity;
 import com.evisitor.ui.main.residential.guest.expected.ExpectedGuestFragment;
 import com.evisitor.util.AppConstants;
-import com.sharma.mrzreader.MrzRecord;
 
 import static com.evisitor.util.AppConstants.SCAN_RESULT;
 
@@ -67,7 +66,8 @@ public class GuestActivity extends BaseActivity<ActivityExpectedGuestOrVisitorBi
                         .setNegativeBtnLabel(getString(R.string.scan_id))
                         .setOnNegativeClickListener(dialog1 -> {
                             dialog1.dismiss();
-                            Intent i = ScanIDActivity.getStartIntent(getContext());
+                            //Intent i = ScanIDActivity.getStartIntent(getContext());
+                            Intent i = ScanSmartActivity.getStartIntent(getContext());
                             startActivityForResult(i, SCAN_RESULT);
                         })
                         .setOnPositiveClickListener(dialog12 -> {
@@ -115,10 +115,11 @@ public class GuestActivity extends BaseActivity<ActivityExpectedGuestOrVisitorBi
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == SCAN_RESULT && data != null) {
-                MrzRecord mrzRecord = (MrzRecord) data.getSerializableExtra("Record");
+            if (requestCode == SCAN_RESULT /*&& data != null*/) {
+                //MrzRecord mrzRecord = (MrzRecord) data.getSerializableExtra("Record");
                 Intent intent = AddVisitorActivity.getStartIntent(this);
-                intent.putExtra("Record", mrzRecord);
+                //intent.putExtra("Record", mrzRecord);
+                intent.putExtra("Record", "");
                 intent.putExtra(AppConstants.FROM, AppConstants.CONTROLLER_GUEST);
                 startActivity(intent);
             }
