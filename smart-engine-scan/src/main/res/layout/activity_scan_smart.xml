@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_centerHorizontal="false"
     android:layout_centerVertical="false"
-    tools:context=".ScanSmartActivity">
+    tools:context="com.smartengines.ScanSmartActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint_toolbar"

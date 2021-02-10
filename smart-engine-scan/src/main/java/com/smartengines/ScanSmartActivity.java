@@ -26,7 +26,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.evisitor;
+package com.smartengines;
 
 import android.Manifest;
 import android.content.Context;
@@ -124,7 +124,7 @@ public class ScanSmartActivity extends AppCompatActivity
         button = findViewById(R.id.button);
         selector = findViewById(R.id.selector);
         TextView tv_title = findViewById(R.id.tv_title);
-        tv_title.setText("Scan Document");
+        tv_title.setText("Scan ID");
         findViewById(R.id.img_back).setOnClickListener(v -> onBackPressed());
         initEngine();
 

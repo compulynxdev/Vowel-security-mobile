@@ -14,11 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.evisitor.Constant;
-import com.evisitor.MainResultStore;
 import com.evisitor.R;
-import com.evisitor.ScanSmartActivity;
-import com.evisitor.ScannedIDData;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.AddVisitorData;
 import com.evisitor.data.model.CompanyBean;
@@ -40,6 +36,10 @@ import com.evisitor.ui.main.home.rejectreason.InputDialog;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.PermissionUtils;
 import com.sharma.mrzreader.MrzRecord;
+import com.smartengines.Constant;
+import com.smartengines.MainResultStore;
+import com.smartengines.ScanSmartActivity;
+import com.smartengines.ScannedIDData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -503,9 +503,13 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
     }
 
     private void setIdentity() {
-        if (mViewModel.getDataManager().isIdentifyFeature() || !isGuest)
+        if (mViewModel.getDataManager().isIdentifyFeature() || !isGuest) {
             getViewDataBinding().etIdentity.setVisibility(View.VISIBLE);
-        else getViewDataBinding().etIdentity.setVisibility(View.GONE);
+            getViewDataBinding().tvIdentity.setVisibility(View.VISIBLE);
+        } else {
+            getViewDataBinding().etIdentity.setVisibility(View.GONE);
+            getViewDataBinding().tvIdentity.setVisibility(View.GONE);
+        }
     }
 
     private void randomCheckInObserver() {

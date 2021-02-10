@@ -1,4 +1,4 @@
-package com.evisitor;
+package com.smartengines;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.evisitor.test", appContext.getPackageName());
+        assertEquals("com.smartengines.test", appContext.getPackageName());
     }
 }

@@ -14,11 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.evisitor.Constant;
-import com.evisitor.MainResultStore;
 import com.evisitor.R;
-import com.evisitor.ScanSmartActivity;
-import com.evisitor.ScannedIDData;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.AddVisitorData;
 import com.evisitor.data.model.CompanyBean;
@@ -47,6 +43,10 @@ import com.evisitor.util.PermissionUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sharma.mrzreader.MrzRecord;
+import com.smartengines.Constant;
+import com.smartengines.MainResultStore;
+import com.smartengines.ScanSmartActivity;
+import com.smartengines.ScannedIDData;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -258,8 +258,6 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
                     getViewDataBinding().tvIdentity.setVisibility(s.toString().trim().isEmpty() ? View.GONE : View.VISIBLE);
             }
         });
-
-
     }
 
     private void setOnClickListener(View... views) {
@@ -465,9 +463,13 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
     }
 
     private void setIdentity() {
-        if (mViewModel.getDataManager().isIdentifyFeature() || !isGuest)
+        if (mViewModel.getDataManager().isIdentifyFeature() || !isGuest) {
             getViewDataBinding().etIdentity.setVisibility(View.VISIBLE);
-        else getViewDataBinding().etIdentity.setVisibility(View.GONE);
+            getViewDataBinding().tvIdentity.setVisibility(View.VISIBLE);
+        } else {
+            getViewDataBinding().etIdentity.setVisibility(View.GONE);
+            getViewDataBinding().tvIdentity.setVisibility(View.GONE);
+        }
     }
 
     private void randomCheckInObserver() {

@@ -8,9 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.evisitor.MainResultStore;
 import com.evisitor.R;
-import com.evisitor.ScanSmartActivity;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.model.VisitorProfileBean;
@@ -22,6 +20,8 @@ import com.evisitor.ui.main.home.idverification.IdVerificationDialog;
 import com.evisitor.ui.main.home.rejectreason.InputDialog;
 import com.evisitor.ui.main.home.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
+import com.smartengines.MainResultStore;
+import com.smartengines.ScanSmartActivity;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -26,7 +26,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.evisitor;
+package com.smartengines;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -53,7 +53,7 @@ public class MainResultView extends AppCompatActivity {
 
         CustomList adapter = new CustomList(
                 MainResultView.this, MainResultStore.instance.getFieldNames());
-        ListView list = (ListView) findViewById(R.id.list);
+        ListView list = findViewById(R.id.list);
         list.setAdapter(adapter);
 
         for (String name : MainResultStore.instance.getFieldNames()) {
@@ -79,7 +79,7 @@ public class MainResultView extends AppCompatActivity {
             View rowView = inflater.inflate(R.layout.result_row, null, true);
 
             String fieldName = fieldNames[position];
-            TextView label = (TextView) rowView.findViewById(R.id.label);
+            TextView label = rowView.findViewById(R.id.label);
 
             if (position == 0) {  // show document type at first position
                 String message = String.format(
@@ -95,7 +95,7 @@ public class MainResultView extends AppCompatActivity {
             if (MainResultStore.instance.isFieldImage(fieldName)) {
                 label.setText(message);
 
-                ImageView imageView = (ImageView) rowView.findViewById(R.id.image);
+                ImageView imageView = rowView.findViewById(R.id.image);
                 imageView.setImageBitmap(MainResultStore.instance.getImageValue(fieldName));
             } else {
                 message = message + ":\t" + MainResultStore.instance.getStringValue(fieldName);

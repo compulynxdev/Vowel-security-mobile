@@ -1,4 +1,4 @@
-package com.evisitor;
+package com.smartengines;
 
 import android.graphics.Bitmap;
 

@@ -10,7 +10,6 @@ import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
-import com.evisitor.ScanSmartActivity;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.ActivityExpectedGuestOrVisitorBinding;
 import com.evisitor.ui.base.BaseActivity;
@@ -19,6 +18,7 @@ import com.evisitor.ui.main.commercial.add.CommercialAddVisitorActivity;
 import com.evisitor.ui.main.commercial.visitor.expected.ExpectedCommercialGuestFragment;
 import com.evisitor.ui.main.residential.add.AddVisitorActivity;
 import com.evisitor.util.AppConstants;
+import com.smartengines.ScanSmartActivity;
 
 import static com.evisitor.util.AppConstants.SCAN_RESULT;
 

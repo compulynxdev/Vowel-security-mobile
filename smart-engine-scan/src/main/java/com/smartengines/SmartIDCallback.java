@@ -26,7 +26,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.evisitor;
+package com.smartengines;
 
 import biz.smartengines.smartid.swig.RecognitionResult;
 

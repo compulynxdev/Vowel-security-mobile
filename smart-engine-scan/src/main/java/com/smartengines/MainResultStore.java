@@ -27,7 +27,7 @@
  */
 
 
-package com.evisitor;
+package com.smartengines;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;

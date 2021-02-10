@@ -10,7 +10,6 @@ import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
-import com.evisitor.ScanSmartActivity;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.ActivitySpBinding;
 import com.evisitor.ui.base.BaseActivity;
@@ -18,6 +17,7 @@ import com.evisitor.ui.dialog.AlertDialog;
 import com.evisitor.ui.main.commercial.add.CommercialAddVisitorActivity;
 import com.evisitor.ui.main.residential.add.AddVisitorActivity;
 import com.evisitor.util.AppConstants;
+import com.smartengines.ScanSmartActivity;
 
 public class SPActivity extends BaseActivity<ActivitySpBinding, SPViewModel> {
 
