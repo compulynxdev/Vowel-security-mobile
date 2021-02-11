@@ -238,4 +238,9 @@ public class AppApiHelper implements ApiHelper {
     public Call<ResponseBody> doGetResidentByQRCode(String authToken, Map<String, String> partMap) {
         return getApiInterface().doGetResidentByQRCode(authToken, partMap);
     }
+
+    @Override
+    public Call<ResponseBody> doPasswordReset(RequestBody requestBody) {
+        return getApiInterface().doPasswordReset(requestBody);
+    }
 }

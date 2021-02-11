@@ -11,6 +11,7 @@ import com.evisitor.ui.dialog.country.CountrySelectionDialogViewModel;
 import com.evisitor.ui.dialog.selection.SelectionViewModel;
 import com.evisitor.ui.image.ImageViewModel;
 import com.evisitor.ui.login.LoginViewModel;
+import com.evisitor.ui.login.forgotpassword.ForgotPasswordViewModel;
 import com.evisitor.ui.main.MainViewModel;
 import com.evisitor.ui.main.activity.ActivityViewModel;
 import com.evisitor.ui.main.activity.checkin.CheckInViewModel;
@@ -244,6 +245,9 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(ResidentProfileViewModel.class)) {
             //noinspection unchecked
             return (T) new ResidentProfileViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(ForgotPasswordViewModel.class)) {
+            //noinspection unchecked
+            return (T) new ForgotPasswordViewModel(dataManager);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

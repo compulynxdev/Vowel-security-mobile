@@ -22,6 +22,12 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".ui.login.forgotpassword.ForgotPasswordActivity"
+            android:configChanges="orientation|screenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AuthTheme" />
+        <activity
             android:name=".ui.main.residential.residentprofile.ResidentProfileActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTop"

@@ -12,6 +12,7 @@ import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.ActivityLoginBinding;
 import com.evisitor.ui.base.BaseActivity;
+import com.evisitor.ui.login.forgotpassword.ForgotPasswordActivity;
 import com.evisitor.ui.main.MainActivity;
 import com.evisitor.util.AppLogger;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -47,6 +48,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         mViewModel.setNavigator(this);
 
         getViewDataBinding().btnLogin.setOnClickListener(this);
+        getViewDataBinding().tvForgot.setOnClickListener(this);
         initFcmToken();
 
         if (mViewModel.getDataManager().isRememberMe()) {
@@ -82,6 +84,9 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
             mViewModel.doVerifyAndLogin(Objects.requireNonNull(getViewDataBinding().etUsername.getText()).toString(),
                     Objects.requireNonNull(getViewDataBinding().etPassword.getText()).toString(), fcmToken,
                     getViewDataBinding().cbRemember.isChecked());
+        } else if (v.getId() == R.id.tv_forgot) {
+            Intent intent = ForgotPasswordActivity.getStartIntent(LoginActivity.this);
+            startActivity(intent);
         }
     }
 }

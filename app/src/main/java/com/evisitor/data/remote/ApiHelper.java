@@ -133,4 +133,7 @@ public interface ApiHelper {
     @GET(WebServices.GET_RESIDENT_BY_QR_CODE)
     Call<ResponseBody> doGetResidentByQRCode(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
 
+    @POST(WebServices.POST_TEST_PASSWORD_REQUEST)
+    Call<ResponseBody> doPasswordReset(@Body RequestBody requestBody);
+
 }

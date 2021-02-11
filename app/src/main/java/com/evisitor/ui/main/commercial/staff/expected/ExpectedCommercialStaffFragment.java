@@ -144,7 +144,11 @@ public class ExpectedCommercialStaffFragment extends BaseFragment<FragmentExpect
 
     @Override
     public void refreshList() {
-        doSearch(search);
+        if (!list.isEmpty() && getViewModel().getDataManager().getCommercialStaff() != null) {
+            list.remove(getViewModel().getDataManager().getCommercialStaff());
+            adapter.notifyDataSetChanged();
+        }
+        //doSearch(search);
     }
 
     @Override

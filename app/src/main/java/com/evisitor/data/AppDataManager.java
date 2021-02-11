@@ -489,4 +489,9 @@ public class AppDataManager implements DataManager {
     public Call<ResponseBody> doGetResidentByQRCode(String authToken, Map<String, String> partMap) {
         return apiHelper.doGetResidentByQRCode(authToken, partMap);
     }
+
+    @Override
+    public Call<ResponseBody> doPasswordReset(RequestBody requestBody) {
+        return apiHelper.doPasswordReset(requestBody);
+    }
 }
