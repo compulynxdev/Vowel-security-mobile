@@ -283,6 +283,7 @@
     <string name="contact_value">0123456789</string>
     <string name="vehicle_value">0123456789 QWERTYUIOPASDFGHJKLZXCVBNM</string>
     <string name="name_value">QWERTYUIOPASDFGHJKLZXCVBNM qwertzuiopasdfghjklyxcvbnm</string>
+    <string name="email_value">0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertzuiopasdfghjklyxcvbnm@.</string>
 
 
     <!--commercial staff labels-->
