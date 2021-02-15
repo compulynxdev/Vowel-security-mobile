@@ -57,6 +57,9 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
         } else if (!visitorData.identityNo.isEmpty() && visitorData.idType.isEmpty()) {
             getNavigator().showToast(R.string.alert_select_id);
             return false;
+        } else if (!visitorData.idType.isEmpty() && visitorData.nationality.isEmpty()) {
+            getNavigator().showToast(R.string.alert_select_nationality);
+            return false;
         } else if (configurationResponse.getGuestField().isContactNo() && visitorData.contact.isEmpty()) {
             getNavigator().showToast(R.string.alert_empty_contact);
             return false;
@@ -85,6 +88,7 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
                 object.put("fullName", addVisitorData.name);
                 object.put("accountId", getDataManager().getAccountId());
                 object.put("email", "");
+                object.put("nationality", addVisitorData.nationality);
                 object.put("documentType", addVisitorData.identityNo.isEmpty() ? "" : addVisitorData.idType);
                 object.put("documentId", addVisitorData.identityNo);
                 object.put("dialingCode", addVisitorData.dialingCode);
@@ -157,6 +161,9 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
         } else if (visitorData.idType.isEmpty()) {
             getNavigator().showToast(R.string.alert_select_id);
             return false;
+        } else if (visitorData.nationality.isEmpty()) {
+            getNavigator().showToast(R.string.alert_select_nationality);
+            return false;
         } else if (visitorData.contact.isEmpty()) {
             getNavigator().showToast(R.string.alert_empty_contact);
             return false;
@@ -202,6 +209,7 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
                 object.put("email", "");
                 object.put("documentType", visitorData.identityNo.isEmpty() ? "" : visitorData.idType);
                 object.put("documentId", visitorData.identityNo);
+                object.put("nationality", visitorData.nationality);
                 object.put("dialingCode", visitorData.dialingCode);
                 object.put("contactNo", visitorData.contact);
                 object.put("type", "random");

@@ -290,7 +290,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
             Intent i = ScanSmartActivity.getStartIntent(getContext());
             startActivityForResult(i, SCAN_RESULT);
         });
-        setOnClickListener(imgBack, getViewDataBinding().tvVisitorType, getViewDataBinding().tvAssignedTo, getViewDataBinding().tvEmployment, getViewDataBinding().tvIdentity, getViewDataBinding().tvGender, getViewDataBinding().tvOwner, getViewDataBinding().tvHost
+        setOnClickListener(imgBack, getViewDataBinding().tvVisitorType, getViewDataBinding().tvNationality, getViewDataBinding().tvAssignedTo, getViewDataBinding().tvEmployment, getViewDataBinding().tvIdentity, getViewDataBinding().tvGender, getViewDataBinding().tvOwner, getViewDataBinding().tvHost
                 , getViewDataBinding().frameImg, getViewDataBinding().btnAdd, getViewDataBinding().rlCode);
         getViewDataBinding().tvCode.setText("+".concat(countryCode));
         getViewDataBinding().etIdentity.addTextChangedListener(new TextWatcher() {
@@ -306,8 +306,10 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().trim().isEmpty() || s.toString().trim().length() > 1)
+                if (s.toString().trim().isEmpty() || s.toString().trim().length() > 1) {
                     getViewDataBinding().tvIdentity.setVisibility(s.toString().trim().isEmpty() ? View.GONE : View.VISIBLE);
+                    getViewDataBinding().tvNationality.setVisibility(s.toString().trim().isEmpty() ? View.GONE : View.VISIBLE);
+                }
             }
         });
     }
@@ -393,10 +395,14 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                 break;
 
             case R.id.rl_code:
-                CountrySelectionDialog.newInstance(code -> {
-                    countryCode = code;
+                CountrySelectionDialog.newInstance(true, countryResponse -> {
+                    countryCode = countryResponse.getDial_code();
                     getViewDataBinding().tvCode.setText("+".concat(countryCode));
                 }).show(getSupportFragmentManager());
+                break;
+
+            case R.id.tv_nationality:
+                CountrySelectionDialog.newInstance(false, countryResponse -> getViewDataBinding().tvNationality.setText(countryResponse.getNationality())).show(getSupportFragmentManager());
                 break;
 
             case R.id.tv_employment:
@@ -421,6 +427,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                 visitorData.isGuest = isGuest;
                 visitorData.identityNo = getViewDataBinding().etIdentity.getText().toString().trim();
                 visitorData.idType = idType;
+                visitorData.nationality = getViewDataBinding().tvNationality.getText().toString();
                 visitorData.name = getViewDataBinding().etName.getText().toString().trim();
                 visitorData.contact = getViewDataBinding().etContact.getText().toString().trim();
                 visitorData.address = getViewDataBinding().etAddress.getText().toString().trim();
@@ -435,6 +442,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                     visitorData.assignedTo = getViewDataBinding().tvAssignedTo.getText().toString();
                     visitorData.isResident = !visitorData.assignedTo.equalsIgnoreCase("Property");
                     visitorData.visitorType = getViewDataBinding().tvVisitorType.getText().toString();
+                    visitorData.nationality = getViewDataBinding().tvNationality.getText().toString();
                     visitorData.employment = getViewDataBinding().tvEmployment.getText().toString();
                     visitorData.isCompany = !visitorData.employment.equalsIgnoreCase("Self");
                     visitorData.profile = getViewDataBinding().actvWorkProfile.getText().toString().trim();
@@ -506,9 +514,11 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
         if (mViewModel.getDataManager().isIdentifyFeature() || !isGuest) {
             getViewDataBinding().etIdentity.setVisibility(View.VISIBLE);
             getViewDataBinding().tvIdentity.setVisibility(View.VISIBLE);
+            getViewDataBinding().tvNationality.setVisibility(View.VISIBLE);
         } else {
             getViewDataBinding().etIdentity.setVisibility(View.GONE);
             getViewDataBinding().tvIdentity.setVisibility(View.GONE);
+            getViewDataBinding().tvNationality.setVisibility(View.GONE);
         }
     }
 
@@ -625,6 +635,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
     }
 
     private void setSmartScanData() {
+        getViewDataBinding().tvIdentity.setEnabled(true);
         ScannedIDData scannedData = MainResultStore.instance.getScannedIDData();
         getViewDataBinding().etIdentity.setText(scannedData.idNumber);
         getViewDataBinding().etName.setText(scannedData.name);
@@ -651,6 +662,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
             case Constant.ID_AADHAAR:
             case Constant.ID_PANCARD:
                 IdentityBean bean = (IdentityBean) mViewModel.getIdentityTypeList().get(0);
+                getViewDataBinding().tvIdentity.setEnabled(false);
                 getViewDataBinding().tvIdentity.setText(bean.getTitle());
                 idType = bean.getKey();
                 break;
@@ -662,6 +674,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                     case Constant.PASSPORT_UAE:*/
             case Constant.PASSPORT_INDIA:
                 bean = (IdentityBean) mViewModel.getIdentityTypeList().get(2);
+                getViewDataBinding().tvIdentity.setEnabled(false);
                 getViewDataBinding().tvIdentity.setText(bean.getTitle());
                 idType = bean.getKey();
                 break;

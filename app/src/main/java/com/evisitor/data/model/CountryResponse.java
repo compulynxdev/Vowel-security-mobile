@@ -6,11 +6,13 @@ public class CountryResponse {
      * name : Afghanistan
      * dial_code : +93
      * code : AF
+     * nationality : Afghan
      */
 
     private String name;
     private String dial_code;
     private String code;
+    private String nationality;
 
     public String getName() {
         return name;
@@ -34,5 +36,13 @@ public class CountryResponse {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
     }
 }

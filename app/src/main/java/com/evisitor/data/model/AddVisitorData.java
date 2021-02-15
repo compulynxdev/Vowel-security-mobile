@@ -13,6 +13,7 @@ public class AddVisitorData {
     public Bitmap bmp_profile;
     public String identityNo;
     public String idType;
+    public String nationality = "";
     public String name;
     public String vehicleNo;
     public String contact;

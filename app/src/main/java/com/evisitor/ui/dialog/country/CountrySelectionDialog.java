@@ -21,18 +21,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CountrySelectionDialog extends BaseDialog<DialogCountrySelectionBinding, CountrySelectionDialogViewModel> implements View.OnClickListener {
-    private static final String TAG = "CountrySelectionDialog";
     private CountrySelectionCallback callback;
 
     private CountrySelectionAdapter adapter;
     private List<CountryResponse> adapterList;
     private List<CountryResponse> backupList;
+    private boolean isShowDialCode;
 
-    public static CountrySelectionDialog newInstance(CountrySelectionCallback callback) {
+    public static CountrySelectionDialog newInstance(boolean isShowDialCode, CountrySelectionCallback callback) {
         Bundle args = new Bundle();
         CountrySelectionDialog fragment = new CountrySelectionDialog();
         fragment.setArguments(args);
-        fragment.setOnClick(callback);
+        fragment.setOnClick(isShowDialCode, callback);
         return fragment;
     }
 
@@ -57,7 +57,8 @@ public class CountrySelectionDialog extends BaseDialog<DialogCountrySelectionBin
         return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(CountrySelectionDialogViewModel.class);
     }
 
-    private void setOnClick(CountrySelectionCallback callback) {
+    private void setOnClick(boolean isShowDialCode, CountrySelectionCallback callback) {
+        this.isShowDialCode = isShowDialCode;
         this.callback = callback;
     }
 
@@ -68,10 +69,10 @@ public class CountrySelectionDialog extends BaseDialog<DialogCountrySelectionBin
 
         adapterList = new ArrayList<>();
         backupList = new ArrayList<>();
-        adapter = new CountrySelectionAdapter(adapterList, pos -> {
+        adapter = new CountrySelectionAdapter(isShowDialCode, adapterList, pos -> {
             dismiss();
             if (callback != null) {
-                callback.onSelect(adapterList.get(pos).getDial_code());
+                callback.onSelect(adapterList.get(pos));
             }
         });
         getViewDataBinding().recyclerView.setAdapter(adapter);

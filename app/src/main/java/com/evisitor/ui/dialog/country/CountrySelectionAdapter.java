@@ -19,8 +19,10 @@ public class CountrySelectionAdapter extends RecyclerView.Adapter<BaseViewHolder
 
     private final List<CountryResponse> list;
     private final ItemClickCallback clickListener;
+    private final boolean isShowDialCode;
 
-    CountrySelectionAdapter(List<CountryResponse> list, ItemClickCallback clickListener) {
+    CountrySelectionAdapter(boolean isShowDialCode, List<CountryResponse> list, ItemClickCallback clickListener) {
+        this.isShowDialCode = isShowDialCode;
         this.list = list;
         this.clickListener = clickListener;
     }
@@ -50,6 +52,8 @@ public class CountrySelectionAdapter extends RecyclerView.Adapter<BaseViewHolder
             super(v);
             tv_name = v.findViewById(R.id.tv_name);
             tv_code = v.findViewById(R.id.tv_code);
+
+            tv_code.setVisibility(isShowDialCode ? View.VISIBLE : View.GONE);
             itemView.setOnClickListener(this);
         }
 

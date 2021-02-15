@@ -1,5 +1,7 @@
 package com.evisitor.ui.dialog.country;
 
+import com.evisitor.data.model.CountryResponse;
+
 public interface CountrySelectionCallback {
-    void onSelect(String code);
+    void onSelect(CountryResponse countryResponse);
 }

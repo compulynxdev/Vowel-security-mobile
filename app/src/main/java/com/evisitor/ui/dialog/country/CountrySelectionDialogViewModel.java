@@ -23,7 +23,7 @@ public class CountrySelectionDialogViewModel extends BaseViewModel<BaseNavigator
 
     MutableLiveData<List<CountryResponse>> getResponseCountryLiveData() {
         if (getDataManager().getCountryResponseList() == null) {
-            String jsonFileString = CommonUtils.loadJSONFromAsset(getNavigator().getContext(), "CountryCodes.json");
+            String jsonFileString = CommonUtils.loadJSONFromAsset(getNavigator().getContext(), "country.json");
 
             if (jsonFileString != null) {
                 AppLogger.i("data", jsonFileString);
