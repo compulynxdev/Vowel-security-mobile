@@ -53,22 +53,12 @@ public class ForgotPasswordActivity extends BaseActivity<ActivityForgotPasswordB
         getViewDataBinding().header.tvTitle.setTextColor(getResources().getColor(R.color.black));
         getViewDataBinding().rbEmail.setOnClickListener(this);
         getViewDataBinding().rbAdministrator.setOnClickListener(this);
-        getViewDataBinding().btnContinue.setOnClickListener(this);
         getViewDataBinding().btnSubmit.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_continue:
-                if (getViewDataBinding().etUsername.getText().toString().isEmpty()) {
-                    showAlert(R.string.alert, R.string.please_enter_username);
-                } else {
-                    getViewDataBinding().submitGroup.setVisibility(View.VISIBLE);
-                    getViewDataBinding().btnContinue.setVisibility(View.GONE);
-                    getViewDataBinding().etUsername.setEnabled(false);
-                }
-                break;
 
             case R.id.btn_submit:
                 if (NetworkUtils.isNetworkConnected(this)) {
