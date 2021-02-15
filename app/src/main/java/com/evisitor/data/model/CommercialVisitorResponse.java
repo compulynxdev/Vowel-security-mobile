@@ -111,6 +111,9 @@ public class CommercialVisitorResponse {
         @SerializedName("hostCheckOutTime")
         private String hostCheckOutTime;
 
+        @SerializedName("nationality")
+        private String nationality;
+
 
         public String getCheckInTime() {
             return checkInTime;
@@ -335,6 +338,14 @@ public class CommercialVisitorResponse {
 
         public void setHostCheckOutTime(String hostCheckOutTime) {
             this.hostCheckOutTime = hostCheckOutTime;
+        }
+
+        public String getNationality() {
+            return nationality == null ? "" : nationality;
+        }
+
+        public void setNationality(String nationality) {
+            this.nationality = nationality;
         }
     }
 

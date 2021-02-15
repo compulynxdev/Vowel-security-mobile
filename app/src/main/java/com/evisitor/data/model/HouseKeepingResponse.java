@@ -314,6 +314,7 @@ public class HouseKeepingResponse {
         private String companyAddress;
         private String premiseName;
         private String rejectedOn;
+        private String nationality;
 
         public String getImageUrl() {
             return imageUrl == null ? "" : imageUrl;
@@ -561,6 +562,14 @@ public class HouseKeepingResponse {
 
         public void setRejectedOn(String rejectedOn) {
             this.rejectedOn = rejectedOn;
+        }
+
+        public String getNationality() {
+            return nationality == null ? "" : nationality;
+        }
+
+        public void setNationality(String nationality) {
+            this.nationality = nationality;
         }
     }
 }

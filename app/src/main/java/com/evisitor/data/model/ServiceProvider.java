@@ -96,6 +96,9 @@ public class ServiceProvider {
     @SerializedName("rejectedOn")
     private String rejectedOn;
 
+    @SerializedName("nationality")
+    private String nationality;
+
     public String getStatus() {
         return status == null ? "PENDING" : status;
     }
@@ -334,5 +337,13 @@ public class ServiceProvider {
 
     public void setRejectedOn(String rejectedOn) {
         this.rejectedOn = rejectedOn;
+    }
+
+    public String getNationality() {
+        return nationality == null ? "" : nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
     }
 }

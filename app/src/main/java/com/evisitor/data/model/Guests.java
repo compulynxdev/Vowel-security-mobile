@@ -73,6 +73,9 @@ public class Guests {
     @SerializedName("premiseName")
     private String premiseName;
 
+    @SerializedName("nationality")
+    private String nationality;
+
     public String getCheckInTime() {
         return checkInTime;
     }
@@ -297,5 +300,13 @@ public class Guests {
 
     public void setRejectedOn(String rejectedOn) {
         this.rejectedOn = rejectedOn;
+    }
+
+    public String getNationality() {
+        return nationality == null ? "" : nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
     }
 }

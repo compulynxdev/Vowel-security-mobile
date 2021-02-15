@@ -70,6 +70,9 @@ public class HouseKeeping {
     @SerializedName("premiseName")
     private String premiseName;
 
+    @SerializedName("nationality")
+    private String nationality;
+
     public String getProfile() {
         return profile == null ? "" : profile;
     }
@@ -276,5 +279,13 @@ public class HouseKeeping {
 
     public void setPremiseName(String premiseName) {
         this.premiseName = premiseName;
+    }
+
+    public String getNationality() {
+        return nationality == null ? "" : nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
     }
 }
