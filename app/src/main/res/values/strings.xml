@@ -182,6 +182,8 @@
     <!--Profile-->
     <string name="deviceName">Name</string>
     <string name="username">Username</string>
+    <string name="enter_username">Enter Username</string>
+    <string name="enter_email">Enter Your Email Address</string>
     <string name="gender">Gender</string>
     <string name="contact">Primary Contact</string>
     <string name="address">Address</string>
@@ -243,6 +245,7 @@
     <string name="extention_no">Secondary Contact</string>
     <string name="search_here">Search…</string>
     <string name="country">Country</string>
+    <string name="forgot_password">Forgot Password ?</string>
 
     <string name="group">Group</string>
     <string name="rejected_by">Rejected By : %s</string>
@@ -282,6 +285,7 @@
     <string name="contact_value">0123456789</string>
     <string name="vehicle_value">0123456789 QWERTYUIOPASDFGHJKLZXCVBNM</string>
     <string name="name_value">QWERTYUIOPASDFGHJKLZXCVBNM qwertzuiopasdfghjklyxcvbnm</string>
+    <string name="email_value">0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertzuiopasdfghjklyxcvbnm@.</string>
 
 
     <!--commercial staff labels-->
@@ -321,5 +325,10 @@
     <string name="relationship">Relationship</string>
     <string name="resident_profile">Resident Profile</string>
     <string name="type">Type</string>
+    <string name="continue1">Continue</string>
+    <string name="administrator">Administrator</string>
     <string name="data_staff_name">Staff Name : %s</string>
+    <string name="please_select_appropriate_option">Please select the appropriate option to reset your password : </string>
+    <string name="please_enter_username">Please enter username!!</string>
+    <string name="please_enter_email">Please enter valid email!!</string>
 </resources>

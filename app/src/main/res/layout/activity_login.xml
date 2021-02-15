@@ -152,6 +152,20 @@
                     android:textColor="@color/white"
                     android:textSize="15sp"
                     app:layout_constraintStart_toStartOf="@id/et_password"
+                    app:layout_constraintEnd_toStartOf="@id/tv_forgot"
+                    app:layout_constraintTop_toBottomOf="@id/et_password" />
+
+                <TextView
+                    android:id="@+id/tv_forgot"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginEnd="10dp"
+                    android:fontFamily="@font/futura_round"
+                    android:text="@string/forgot_password"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="@id/et_password"
                     app:layout_constraintTop_toBottomOf="@id/et_password" />
 
                 <Button
