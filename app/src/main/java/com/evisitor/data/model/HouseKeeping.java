@@ -73,6 +73,9 @@ public class HouseKeeping {
     @SerializedName("nationality")
     private String nationality;
 
+    @SerializedName("documentType")
+    private String documentType;
+
     public String getProfile() {
         return profile == null ? "" : profile;
     }
@@ -287,5 +290,13 @@ public class HouseKeeping {
 
     public void setNationality(String nationality) {
         this.nationality = nationality;
+    }
+
+    public String getDocumentType() {
+        return documentType == null ? "" : documentType;
+    }
+
+    public void setDocumentType(String documentType) {
+        this.documentType = documentType;
     }
 }

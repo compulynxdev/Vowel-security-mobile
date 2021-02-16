@@ -322,6 +322,7 @@ public class CommercialStaffResponse {
         private String staffId;
         private String timeIn;
         private String timeOut;
+        private String nationality;
 
         public String getImageUrl() {
             return imageUrl == null ? "" : imageUrl;
@@ -547,6 +548,14 @@ public class CommercialStaffResponse {
 
         public void setTimeOut(String timeOut) {
             this.timeOut = timeOut;
+        }
+
+        public String getNationality() {
+            return nationality == null ? "" : nationality;
+        }
+
+        public void setNationality(String nationality) {
+            this.nationality = nationality;
         }
     }
 

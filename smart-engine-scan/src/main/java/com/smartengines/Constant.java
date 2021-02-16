@@ -12,6 +12,7 @@ public class Constant {
     public static final String PASSPORT_KENYAN = "ken.passport.type1";
     public static final String PASSPORT_UGANDA = "uga.passport.type1";
     public static final String PASSPORT_TANZANIA = "tza.passport.type1";
+    public static final String PASSPORT_TANZANIA_OLD = "tza.passport.type2";
     public static final String PASSPORT_RWANDA = "rwa.passport.type1";
     public static final String PASSPORT_UAE = "are.passport.type1";
     public static final String PASSPORT_INDIA = "ind.passport.type1";

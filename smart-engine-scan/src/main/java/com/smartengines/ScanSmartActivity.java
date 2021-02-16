@@ -327,15 +327,17 @@ public class ScanSmartActivity extends AppCompatActivity
 
             case Constant.PASSPORT_TANZANIA:
                 //document type, authority, authority_eng, birth_place, birth_place_eng, expiry_date, gender, issue_date, last_name, last_name_eng, name, name_eng, nationality, nationality_eng, photo, signature, type,
+            case Constant.PASSPORT_TANZANIA_OLD:
+                //document type, authority, authority_eng, birth_date, birth_place, birth_place_eng, expiry_date, full_mrz, gender, issue_date, last_name, last_name_eng, mrz_birth_date, mrz_doc_type_code, mrz_expiry_date, mrz_gender, mrz_issuer, mrz_last_name, mrz_line1, mrz_line2, mrz_name, mrz_nationality, mrz_number, mrz_opt_data_2, name, name_eng, nationality, nationality_eng, number, photo, signature, type;
+
                 scannedIDData = new ScannedIDData();
-                //scannedIDData.idNumber = MainResultStore.instance.getStringValue("number");
+                scannedIDData.idNumber = MainResultStore.instance.getStringValue("number");
                 scannedIDData.name = MainResultStore.instance.getStringValue("name_eng").concat(" ").concat(MainResultStore.instance.getStringValue("last_name_eng"));
                 scannedIDData.gender = MainResultStore.instance.getStringValue("gender");
                 if (MainResultStore.instance.isFieldImage("photo")) {
                     scannedIDData.userImage = MainResultStore.instance.getImageValue("photo");
                 }
                 return scannedIDData;
-
                     /*case Constant.PASSPORT_RWANDA:
                     case Constant.PASSPORT_UAE:*/
 
@@ -380,11 +382,11 @@ public class ScanSmartActivity extends AppCompatActivity
 
     private void showList() {
         //final String[] sdocs = SelectDocs();
-        final String[] sDocs = {"ken.id.type1", "ken.passport.type1", "uga.id.type1", "uga.passport.type1", "tza.id.type1", "tza.passport.type1",
+        final String[] sDocs = {"ken.id.type1", "ken.passport.type1", "uga.id.type1", "uga.passport.type1", "tza.id.type1", "tza.passport.type1", "tza.passport.type2",
                 "rwa.id.type1", /*"rwa.passport.type1",*/ "are.id.type1", /*"are.passport.type1",*/ "ind.aadhaar.type1", "ind.pancard.type1",
                 "ind.passport.type1"};
 
-        final String[] sTitle = {"Kenyan ID", "Kenyan Passport", "Uganda ID", "Uganda Passport", "Tanzania ID", "Tanzania Passport",
+        final String[] sTitle = {"Kenyan ID", "Kenyan Passport", "Uganda ID", "Uganda Passport", "Tanzania ID", "Tanzania Passport New", "Tanzania Passport Old",
                 "Rwanda ID", /*"Rwanda Passport",*/ "UAE ID", /*"UAE Passport",*/ "Aadhaar ID", "Pan Card",
                 "India Passport"};
 

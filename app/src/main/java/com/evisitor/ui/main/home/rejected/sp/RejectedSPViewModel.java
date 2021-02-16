@@ -79,7 +79,9 @@ public class RejectedSPViewModel extends BaseViewModel<RejectedSPNavigator> {
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_profile, spBean.getProfile())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_vehicle, spBean.getExpectedVehicleNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : spBean.getExpectedVehicleNo())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, spBean.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(spBean.getDialingCode()).concat(" ").concat(spBean.getContactNo()))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity_type, spBean.getDocumentType().isEmpty() ? getNavigator().getContext().getString(R.string.na) : spBean.getDocumentType())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, spBean.getIdentityNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : spBean.getIdentityNo())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_nationality, spBean.getNationality().isEmpty() ? getNavigator().getContext().getString(R.string.na) : spBean.getNationality())));
 
         if (!getDataManager().isCommercial()) {
             if (spBean.getPremiseName().isEmpty()) {

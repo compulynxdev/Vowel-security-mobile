@@ -648,6 +648,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
             case Constant.PASSPORT_KENYAN:
             case Constant.PASSPORT_UGANDA:
             case Constant.PASSPORT_TANZANIA:
+            case Constant.PASSPORT_TANZANIA_OLD:
                     /*case Constant.PASSPORT_RWANDA:
                     case Constant.PASSPORT_UAE:*/
             case Constant.PASSPORT_INDIA:

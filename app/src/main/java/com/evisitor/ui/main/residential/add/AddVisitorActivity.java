@@ -561,6 +561,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
         addVisitorData.bmp_profile = bmp_profile;
         addVisitorData.identityNo = getViewDataBinding().etIdentity.getText().toString().trim();
         addVisitorData.idType = idType;
+        addVisitorData.nationality = getViewDataBinding().tvNationality.getText().toString();
         addVisitorData.name = getViewDataBinding().etName.getText().toString();
         addVisitorData.vehicleNo = getViewDataBinding().etVehicle.getText().toString().trim();
         addVisitorData.contact = getViewDataBinding().etContact.getText().toString();
@@ -670,6 +671,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
             case Constant.PASSPORT_KENYAN:
             case Constant.PASSPORT_UGANDA:
             case Constant.PASSPORT_TANZANIA:
+            case Constant.PASSPORT_TANZANIA_OLD:
                     /*case Constant.PASSPORT_RWANDA:
                     case Constant.PASSPORT_UAE:*/
             case Constant.PASSPORT_INDIA:

@@ -99,6 +99,9 @@ public class ServiceProvider {
     @SerializedName("nationality")
     private String nationality;
 
+    @SerializedName("documentType")
+    private String documentType;
+
     public String getStatus() {
         return status == null ? "PENDING" : status;
     }
@@ -345,5 +348,13 @@ public class ServiceProvider {
 
     public void setNationality(String nationality) {
         this.nationality = nationality;
+    }
+
+    public String getDocumentType() {
+        return documentType == null ? "" : documentType;
+    }
+
+    public void setDocumentType(String documentType) {
+        this.documentType = documentType;
     }
 }

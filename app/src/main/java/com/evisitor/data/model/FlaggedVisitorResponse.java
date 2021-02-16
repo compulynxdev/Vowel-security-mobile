@@ -277,7 +277,7 @@ public class FlaggedVisitorResponse {
 
         private String reason;
         private String lastModifiedDate;
-        private Object documentType;
+        private String documentType;
         private String lastModifiedBy;
         private String profile;
         private String fullName;
@@ -308,11 +308,11 @@ public class FlaggedVisitorResponse {
             this.lastModifiedDate = lastModifiedDate;
         }
 
-        public Object getDocumentType() {
-            return documentType;
+        public String getDocumentType() {
+            return documentType == null ? "" : documentType;
         }
 
-        public void setDocumentType(Object documentType) {
+        public void setDocumentType(String documentType) {
             this.documentType = documentType;
         }
 

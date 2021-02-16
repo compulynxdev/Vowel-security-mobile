@@ -75,6 +75,7 @@
     <string name="data_time_slot">Time : %s - %s</string>
     <string name="data_days_slot">Working Days</string>
     <string name="data_expected_time">Expected Time : %s</string>
+    <string name="data_identity_type">Identity Type : %s</string>
     <string name="data_identity">Identity No : %s</string>
     <string name="data_nationality">Nationality : %s</string>
     <string name="data_staff_id">Staff ID : %s</string>
