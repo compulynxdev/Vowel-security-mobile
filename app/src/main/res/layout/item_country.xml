@@ -6,16 +6,15 @@
 
     <TextView
         android:id="@+id/tv_name"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:fontFamily="@font/futura_round_demi"
-        android:maxLines="1"
         android:textColor="@color/black"
         android:textSize="16sp"
-        app:layout_constraintBaseline_toBaselineOf="@id/tv_code"
+        app:layout_constraintEnd_toStartOf="@+id/tv_code"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -28,9 +27,9 @@
         android:layout_marginEnd="5dp"
         android:fontFamily="@font/futura_round_demi"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_name"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/tv_name" />
 
     <View
         android:layout_width="match_parent"
