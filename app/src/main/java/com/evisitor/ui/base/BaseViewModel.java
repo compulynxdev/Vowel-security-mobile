@@ -19,6 +19,7 @@ import retrofit2.Response;
 public class BaseViewModel<N extends BaseNavigator> extends ViewModel {
     private final DataManager dataManager;
     private WeakReference<N> mNavigator;
+    private HashMap<String, String> identityTypeList;
 
 
     public BaseViewModel(DataManager dataManager) {
@@ -35,6 +36,17 @@ public class BaseViewModel<N extends BaseNavigator> extends ViewModel {
 
     public void setNavigator(N navigator) {
         this.mNavigator = new WeakReference<>(navigator);
+    }
+
+    public String getIdentityType(String key) {
+        if (identityTypeList == null) {
+            identityTypeList = new HashMap<>();
+            identityTypeList.put("nationalId", "National ID");
+            identityTypeList.put("dl", "Driving Licence");
+            identityTypeList.put("passport", "Passport");
+        }
+
+        return identityTypeList.get(key);
     }
 
     public void doGetGuestConfiguration(GuestConfigurationCallback callback) {
