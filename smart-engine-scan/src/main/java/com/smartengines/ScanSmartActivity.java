@@ -237,6 +237,7 @@ public class ScanSmartActivity extends AppCompatActivity
                 //document type, birth_date, birth_place, gender, id_number, issue_date, issue_place, name, number, photo, signature;
                 ScannedIDData scannedIDData = new ScannedIDData();
                 scannedIDData.idNumber = MainResultStore.instance.getStringValue("id_number");
+                scannedIDData.nationality = "Kenyan";
                 scannedIDData.name = MainResultStore.instance.getStringValue("name");
                 scannedIDData.gender = MainResultStore.instance.getStringValue("gender");
                 if (MainResultStore.instance.isFieldImage("photo")) {
@@ -248,6 +249,7 @@ public class ScanSmartActivity extends AppCompatActivity
                 //document type, birth_date, expiry_date, gender, id_number, last_name, last_name_eng, name, name_eng, nationality, nationality_eng, number, photo, signature;
                 scannedIDData = new ScannedIDData();
                 scannedIDData.idNumber = MainResultStore.instance.getStringValue("number");
+                scannedIDData.nationality = "Ugandan";
                 scannedIDData.name = MainResultStore.instance.getStringValue("name").concat(" ").concat(MainResultStore.instance.getStringValue("last_name"));
                 scannedIDData.gender = MainResultStore.instance.getStringValue("gender");
                 if (MainResultStore.instance.isFieldImage("photo")) {
@@ -259,6 +261,7 @@ public class ScanSmartActivity extends AppCompatActivity
                 //document type, expiry_date, first_name, gender, last_name, middle_name, name, number, photo, signature;
                 scannedIDData = new ScannedIDData();
                 scannedIDData.idNumber = MainResultStore.instance.getStringValue("number");
+                scannedIDData.nationality = "Tanzanian";
                 scannedIDData.name = MainResultStore.instance.getStringValue("first_name").concat(" ").concat(MainResultStore.instance.getStringValue("middle_name")).concat(" ").concat(MainResultStore.instance.getStringValue("last_name"));
                 scannedIDData.gender = MainResultStore.instance.getStringValue("gender");
                 if (MainResultStore.instance.isFieldImage("photo")) {
@@ -270,6 +273,7 @@ public class ScanSmartActivity extends AppCompatActivity
                 //document type, birth_date, designation, full_name, gender, issue_place, issue_place_eng, last_name, name, nationality, number, signature;
                 scannedIDData = new ScannedIDData();
                 scannedIDData.idNumber = MainResultStore.instance.getStringValue("number");
+                scannedIDData.nationality = "Rwandan";
                 scannedIDData.name = MainResultStore.instance.getStringValue("full_name");
                 scannedIDData.gender = MainResultStore.instance.getStringValue("gender");
                 return scannedIDData;
@@ -279,6 +283,7 @@ public class ScanSmartActivity extends AppCompatActivity
 
                 scannedIDData = new ScannedIDData();
                 scannedIDData.idNumber = MainResultStore.instance.getStringValue("id_number");
+                scannedIDData.nationality = "Emirati, Emirian, Emiri";
                 scannedIDData.name = MainResultStore.instance.getStringValue("name_eng");
                 if (MainResultStore.instance.isFieldImage("photo")) {
                     scannedIDData.userImage = MainResultStore.instance.getImageValue("photo");
@@ -288,6 +293,7 @@ public class ScanSmartActivity extends AppCompatActivity
             case Constant.ID_AADHAAR:
                 //document type, birth_date, gender, name_eng, name_eng_ws, number;
                 scannedIDData = new ScannedIDData();
+                scannedIDData.nationality = "Indian";
                 scannedIDData.idNumber = MainResultStore.instance.getStringValue("number");
                 scannedIDData.name = MainResultStore.instance.getStringValue("name_eng");
                 scannedIDData.gender = MainResultStore.instance.getStringValue("gender");
@@ -297,6 +303,7 @@ public class ScanSmartActivity extends AppCompatActivity
                 //document type, birth_date, father, name, number, photo;
                 scannedIDData = new ScannedIDData();
                 scannedIDData.idNumber = MainResultStore.instance.getStringValue("number");
+                scannedIDData.nationality = "Indian";
                 scannedIDData.name = MainResultStore.instance.getStringValue("name");
                 if (MainResultStore.instance.isFieldImage("photo")) {
                     scannedIDData.userImage = MainResultStore.instance.getImageValue("photo");
@@ -307,6 +314,7 @@ public class ScanSmartActivity extends AppCompatActivity
                 //document type, authority, authority_eng, birth_date, birth_place, birth_place_eng, full_mrz, gender, issue_date, last_name, last_name_eng, mrz_birth_date, mrz_doc_type_code, mrz_expiry_date, mrz_gender, mrz_issuer, mrz_last_name, mrz_line1, mrz_line2, mrz_name, mrz_nationality, mrz_number, mrz_opt_data_2, name, name_eng, nationality, nationality_eng, photo, signature,
                 scannedIDData = new ScannedIDData();
                 scannedIDData.idNumber = MainResultStore.instance.getStringValue("mrz_number");
+                scannedIDData.nationality = "Kenyan";
                 scannedIDData.name = MainResultStore.instance.getStringValue("name_eng").concat(" ").concat(MainResultStore.instance.getStringValue("last_name_eng"));
                 scannedIDData.gender = MainResultStore.instance.getStringValue("gender");
                 if (MainResultStore.instance.isFieldImage("photo")) {
@@ -318,6 +326,7 @@ public class ScanSmartActivity extends AppCompatActivity
                 //document type, authority, authority_eng, birth_date, birth_place, birth_place_eng, expiry_date, full_mrz, gender, issue_date, last_name, last_name_eng, mrz_birth_date, mrz_doc_type_code, mrz_expiry_date, mrz_gender, mrz_issuer, mrz_last_name, mrz_line1, mrz_line2, mrz_name, mrz_nationality, mrz_number, mrz_opt_data_2, name, name_eng, nationality, nationality_eng, number, photo, profession, profession_eng, signature, type;
                 scannedIDData = new ScannedIDData();
                 scannedIDData.idNumber = MainResultStore.instance.getStringValue("number");
+                scannedIDData.nationality = "Ugandan";
                 scannedIDData.name = MainResultStore.instance.getStringValue("name_eng").concat(" ").concat(MainResultStore.instance.getStringValue("last_name_eng"));
                 scannedIDData.gender = MainResultStore.instance.getStringValue("gender");
                 if (MainResultStore.instance.isFieldImage("photo")) {
@@ -332,6 +341,7 @@ public class ScanSmartActivity extends AppCompatActivity
 
                 scannedIDData = new ScannedIDData();
                 scannedIDData.idNumber = MainResultStore.instance.getStringValue("number");
+                scannedIDData.nationality = "Tanzanian";
                 scannedIDData.name = MainResultStore.instance.getStringValue("name_eng").concat(" ").concat(MainResultStore.instance.getStringValue("last_name_eng"));
                 scannedIDData.gender = MainResultStore.instance.getStringValue("gender");
                 if (MainResultStore.instance.isFieldImage("photo")) {
@@ -345,6 +355,7 @@ public class ScanSmartActivity extends AppCompatActivity
                 //document type, birth_date, birth_place, birth_place_eng, expiry_date, gender, issue_date, issue_place, issue_place_eng, last_name, last_name_eng, name, name_eng, nationality, nationality_eng, number, signature, type;
                 scannedIDData = new ScannedIDData();
                 scannedIDData.idNumber = MainResultStore.instance.getStringValue("number");
+                scannedIDData.nationality = "Indian";
                 scannedIDData.name = MainResultStore.instance.getStringValue("name_eng").concat(" ").concat(MainResultStore.instance.getStringValue("last_name_eng"));
                 scannedIDData.gender = MainResultStore.instance.getStringValue("gender");
                 return scannedIDData;

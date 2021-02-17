@@ -614,9 +614,17 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
 
     private void setSmartScanData() {
         getViewDataBinding().tvIdentity.setEnabled(true);
+
         ScannedIDData scannedData = MainResultStore.instance.getScannedIDData();
         getViewDataBinding().etIdentity.setText(scannedData.idNumber);
         getViewDataBinding().etName.setText(scannedData.name);
+
+        if (scannedData.nationality.isEmpty()) {
+            getViewDataBinding().tvNationality.setEnabled(true);
+        } else {
+            getViewDataBinding().tvNationality.setEnabled(false);
+            getViewDataBinding().tvNationality.setText(scannedData.nationality);
+        }
 
         String gender = scannedData.gender;
         if (gender.equalsIgnoreCase("M") || gender.equalsIgnoreCase("Male"))
