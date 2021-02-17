@@ -78,9 +78,11 @@ public class ForgotPasswordActivity extends BaseActivity<ActivityForgotPasswordB
     private void setCheckBoxData() {
         if (getViewDataBinding().rbEmail.isChecked()) {
             getViewDataBinding().etEmail.setVisibility(View.VISIBLE);
+            getViewDataBinding().tvNote.setVisibility(View.GONE);
             type = "reset";
         } else {
             getViewDataBinding().etEmail.setVisibility(View.GONE);
+            getViewDataBinding().tvNote.setVisibility(View.VISIBLE);
             type = "request";
         }
     }

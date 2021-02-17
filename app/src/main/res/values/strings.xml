@@ -333,4 +333,5 @@
     <string name="please_select_appropriate_option">Please select the appropriate option to reset your password : </string>
     <string name="please_enter_username">Please enter username!!</string>
     <string name="please_enter_email">Please enter valid email!!</string>
+    <string name="note_administrator">Note : Your password reset request will be sent to administrator</string>
 </resources>
