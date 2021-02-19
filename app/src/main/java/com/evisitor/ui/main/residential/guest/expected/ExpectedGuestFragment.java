@@ -126,7 +126,7 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
                     public void onSubmitClick(IdVerificationDialog dialog, String id) {
                         dialog.dismiss();
 
-                        if (tmpBean.getIdentityNo().equals(id))
+                        if (tmpBean.getIdentityNo().equalsIgnoreCase(id))
                             showCheckinOptions();
                         else {
                             showToast(R.string.alert_id);
@@ -160,7 +160,7 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
                                 mrzRecord.getOptional2();
                         break;
                 }*/
-                if (mViewModel.getDataManager().getGuestDetail().getIdentityNo().equals(identityNo))
+                if (mViewModel.getDataManager().getGuestDetail().getIdentityNo().equalsIgnoreCase(identityNo))
                     showCheckinOptions();
                 else {
                     showToast(R.string.alert_id);

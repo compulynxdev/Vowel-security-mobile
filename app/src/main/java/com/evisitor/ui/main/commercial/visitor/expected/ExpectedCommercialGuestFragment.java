@@ -126,7 +126,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
                     public void onSubmitClick(IdVerificationDialog dialog, String id) {
                         dialog.dismiss();
 
-                        if (tmpBean.getIdentityNo().equals(id))
+                        if (tmpBean.getIdentityNo().equalsIgnoreCase(id))
                             showCheckinOptions();
                         else {
                             showToast(R.string.alert_id);
@@ -160,7 +160,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
                                 mrzRecord.getOptional2();
                         break;
                 }*/
-                if (mViewModel.getDataManager().getCommercialVisitorDetail().getIdentityNo().equals(identityNo))
+                if (mViewModel.getDataManager().getCommercialVisitorDetail().getIdentityNo().equalsIgnoreCase(identityNo))
                     showCheckinOptions();
                 else {
                     showToast(R.string.alert_id);

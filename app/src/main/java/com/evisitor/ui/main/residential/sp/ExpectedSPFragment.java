@@ -122,7 +122,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                 public void onSubmitClick(IdVerificationDialog dialog, String id) {
                     dialog.dismiss();
 
-                    if (tmpBean.getIdentityNo().equals(id))
+                    if (tmpBean.getIdentityNo().equalsIgnoreCase(id))
                         mViewModel.approveByCall(true, null);
                     else {
                         showToast(R.string.alert_id);
@@ -150,7 +150,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                         public void onSubmitClick(IdVerificationDialog dialog, String id) {
                             dialog.dismiss();
 
-                            if (tmpBean.getIdentityNo().equals(id))
+                            if (tmpBean.getIdentityNo().equalsIgnoreCase(id))
                                 showCheckinOptions();
                             else {
                                 showToast(R.string.alert_id);
@@ -253,7 +253,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                         break;
                 }*/
 
-                if (mViewModel.getDataManager().getSpDetail().getIdentityNo().equals(identityNo)) {
+                if (mViewModel.getDataManager().getSpDetail().getIdentityNo().equalsIgnoreCase(identityNo)) {
                     if (mViewModel.getDataManager().isCommercial()) {
                         mViewModel.approveByCall(true, null);
                     } else {

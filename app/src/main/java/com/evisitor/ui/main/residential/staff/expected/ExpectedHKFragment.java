@@ -125,7 +125,7 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
                     public void onSubmitClick(IdVerificationDialog dialog, String id) {
                         dialog.dismiss();
 
-                        if (tmpBean.getDocumentId().equals(id))
+                        if (tmpBean.getDocumentId().equalsIgnoreCase(id))
                             showCheckinOptions();
                         else {
                             showToast(R.string.alert_id);
@@ -227,7 +227,7 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
                         break;
                 }*/
 
-                if (mViewModel.getDataManager().getHouseKeeping().getDocumentId().equals(identityNo))
+                if (mViewModel.getDataManager().getHouseKeeping().getDocumentId().equalsIgnoreCase(identityNo))
                     showCheckinOptions();
                 else {
                     showToast(R.string.alert_id);
