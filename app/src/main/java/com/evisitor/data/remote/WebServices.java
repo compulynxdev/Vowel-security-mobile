@@ -65,6 +65,8 @@ class WebServices {
     static final String GET_RESIDENT_BY_QR_CODE = "resident/get_resident_by_qr_code";//http://localhost:8085/api/resident/get_resident_by_qr_code?accountId=2&qrCode=fad58264-b5b9-4856-930b-3d163a4ee8a5
     static final String POST_TEST_PASSWORD_REQUEST = "usermaster/generate_password_link";//http://localhost:8085/api/usermaster/generate_password_link
 
+    /*Filter/Search Visitor*/
+    static final String GET_FILTER_VISITOR_INFO = "guest/get_visitor_info";
 
     private WebServices() {
     }

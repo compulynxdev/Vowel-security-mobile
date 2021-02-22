@@ -76,6 +76,9 @@ public class Guests {
     @SerializedName("nationality")
     private String nationality;
 
+    @SerializedName("gender")
+    private String gender;
+
     @SerializedName("documentType")
     private String documentType;
 
@@ -319,5 +322,13 @@ public class Guests {
 
     public void setDocumentType(String documentType) {
         this.documentType = documentType;
+    }
+
+    public String getGender() {
+        return gender == null ? "" : gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }

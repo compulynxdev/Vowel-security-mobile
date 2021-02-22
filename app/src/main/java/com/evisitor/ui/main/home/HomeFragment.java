@@ -14,16 +14,15 @@ import com.evisitor.data.model.HomeBean;
 import com.evisitor.data.model.ResidentProfile;
 import com.evisitor.databinding.FragmentHomeBinding;
 import com.evisitor.ui.base.BaseFragment;
-import com.evisitor.ui.main.commercial.add.CommercialAddVisitorActivity;
 import com.evisitor.ui.main.commercial.staff.CommercialStaffActivity;
 import com.evisitor.ui.main.commercial.visitor.VisitorActivity;
 import com.evisitor.ui.main.home.blacklist.BlackListVisitorActivity;
 import com.evisitor.ui.main.home.flag.FlagVisitorActivity;
+import com.evisitor.ui.main.home.recurrentvisitor.FilterRecurrentVisitorActivity;
 import com.evisitor.ui.main.home.rejected.RejectedVisitorActivity;
 import com.evisitor.ui.main.home.scan.BarcodeScanActivity;
 import com.evisitor.ui.main.home.total.TotalVisitorsActivity;
 import com.evisitor.ui.main.home.trespasser.TrespasserActivity;
-import com.evisitor.ui.main.residential.add.AddVisitorActivity;
 import com.evisitor.ui.main.residential.guest.GuestActivity;
 import com.evisitor.ui.main.residential.residentprofile.ResidentProfileActivity;
 import com.evisitor.ui.main.residential.sp.SPActivity;
@@ -105,7 +104,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         HomeAdapter homeAdapter = new HomeAdapter(homeList, pos -> {
             switch (homeList.get(pos).getPos()) {
                 case HomeViewModel.ADD_VISITOR_VIEW:
-                    Intent i = mViewModel.getDataManager().isCommercial() ? CommercialAddVisitorActivity.getStartIntent(getContext()) : AddVisitorActivity.getStartIntent(getContext());
+                    Intent i = FilterRecurrentVisitorActivity.getStartIntent(getContext());
                     i.putExtra(AppConstants.FROM, AppConstants.CONTROLLER_HOME);
                     startActivity(i);
                     break;

@@ -8,6 +8,9 @@ import java.util.List;
 public class AddVisitorData {
     public boolean isGuest;
 
+    //recurrent guest
+    public String imageUrl = "";
+
     //guest default data
     public boolean isAccept;
     public Bitmap bmp_profile;

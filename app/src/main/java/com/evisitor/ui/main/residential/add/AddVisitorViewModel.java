@@ -183,7 +183,13 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                 object.put("residentId", addVisitorData.residentId); //host id
                 object.put("cardId", "");
                 object.put("dob", "");
-                object.put("image", addVisitorData.bmp_profile == null ? "" : AppUtils.getBitmapToBase64(addVisitorData.bmp_profile));
+                if (addVisitorData.bmp_profile == null) {
+                    object.put("image", addVisitorData.imageUrl == null ? "" : addVisitorData.imageUrl);
+                } else {
+                    object.put("image", AppUtils.getBitmapToBase64(addVisitorData.bmp_profile));
+                }
+                object.put("isImageUrl", !addVisitorData.imageUrl.isEmpty());
+
                 object.put("state", addVisitorData.isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);
                 if (!addVisitorData.isAccept) {
                     object.put("rejectedBy", getDataManager().getUserDetail().getFullName());
@@ -301,7 +307,12 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                 object.put("enteredVehicleNo", visitorData.vehicleNo.toUpperCase());
                 object.put("gender", visitorData.gender);
                 object.put("residentId", visitorData.isResident ? visitorData.residentId : null); //host id   //-> send null in case of property
-                object.put("image", visitorData.bmp_profile == null ? "" : AppUtils.getBitmapToBase64(visitorData.bmp_profile));
+                if (visitorData.bmp_profile == null) {
+                    object.put("image", visitorData.imageUrl == null ? "" : visitorData.imageUrl);
+                } else {
+                    object.put("image", AppUtils.getBitmapToBase64(visitorData.bmp_profile));
+                }
+                object.put("isImageUrl", !visitorData.imageUrl.isEmpty());
                 object.put("state", visitorData.isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);
                 if (!visitorData.isAccept) {
                     object.put("rejectedBy", getDataManager().getUserDetail().getFullName());

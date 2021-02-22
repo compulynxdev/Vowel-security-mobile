@@ -14,6 +14,8 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.AddVisitorData;
@@ -23,6 +25,7 @@ import com.evisitor.data.model.HostDetailBean;
 import com.evisitor.data.model.HouseDetailBean;
 import com.evisitor.data.model.IdentityBean;
 import com.evisitor.data.model.ProfileBean;
+import com.evisitor.data.model.RecurrentVisitor;
 import com.evisitor.databinding.ActivityAddVisitorBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.base.BaseViewModel;
@@ -34,6 +37,7 @@ import com.evisitor.ui.dialog.selection.SelectionBottomSheetDialog;
 import com.evisitor.ui.main.MainActivity;
 import com.evisitor.ui.main.home.rejectreason.InputDialog;
 import com.evisitor.util.AppConstants;
+import com.evisitor.util.AppUtils;
 import com.evisitor.util.PermissionUtils;
 import com.sharma.mrzreader.MrzRecord;
 import com.smartengines.Constant;
@@ -56,6 +60,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
     private List<HostDetailBean> hostDetailList;
     private String idType = "";
     private Boolean isGuest;
+    private String imageUrl;
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, AddVisitorActivity.class);
@@ -81,12 +86,12 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
         super.onCreate(savedInstanceState);
         mViewModel.setNavigator(this);
         getViewDataBinding().toolbar.tvTitle.setText(R.string.title_add_visitor);
-        setIntentData(getIntent());
         setUp();
         setUpHouseNoSearch();
         randomCheckInObserver();
         setUpProfileSearch();
         setUpCompanySearch();
+        setIntentData(getIntent());
     }
 
     private void updateFieldConfigurationUI() {
@@ -137,6 +142,11 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
         if (intent.hasExtra("Record")) {
             //setMrzData((MrzRecord) Objects.requireNonNull(intent.getSerializableExtra("Record")));
             setSmartScanData();
+        }
+
+        if (intent.hasExtra("RecurrentData")) {
+            RecurrentVisitor recurrentVisitor = intent.getParcelableExtra("RecurrentData");
+            autoFillData(recurrentVisitor);
         }
     }
 
@@ -488,6 +498,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
 
 
     private void doAddSp(boolean isAccept, AddVisitorData visitorData) {
+        visitorData.imageUrl = imageUrl;
         visitorData.bmp_profile = bmp_profile;
         visitorData.vehicleNo = getViewDataBinding().etVehicle.getText().toString().trim();
         visitorData.dialingCode = countryCode;
@@ -558,6 +569,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
     private void doAddGuest(boolean isAccept, String input) {
         AddVisitorData addVisitorData = new AddVisitorData();
         addVisitorData.isAccept = isAccept;
+        addVisitorData.imageUrl = imageUrl;
         addVisitorData.bmp_profile = bmp_profile;
         addVisitorData.identityNo = getViewDataBinding().etIdentity.getText().toString().trim();
         addVisitorData.idType = idType;
@@ -723,5 +735,79 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
             else if (mrzRecord.getSex().toString().equalsIgnoreCase("F") || mrzRecord.getSex().toString().equalsIgnoreCase("Female"))
                 getViewDataBinding().tvGender.setText(R.string.female);
         }
+    }
+
+    private void autoFillData(RecurrentVisitor recurrentVisitor) {
+        if (recurrentVisitor.getVisitorType().equalsIgnoreCase(AppConstants.GUEST)) {
+            getViewDataBinding().toolbar.tvTitle.setText(R.string.title_add_guest);
+            getViewDataBinding().tvVisitorType.setVisibility(View.GONE);
+            getViewDataBinding().tvAssignedTo.setVisibility(View.GONE);
+            updateVisitorUI(mViewModel.getVisitorTypeList().get(0).toString());
+            if (!mViewModel.getDataManager().getGuestConfiguration().isDataUpdated) {
+                mViewModel.doGetGuestConfiguration(this);
+            }
+
+            if (!recurrentVisitor.getPremiseName().isEmpty()) {
+                getViewDataBinding().actvHouseNo.setText(recurrentVisitor.getPremiseName());
+                houseId = String.valueOf(recurrentVisitor.getFlatId());
+
+                residentId = String.valueOf(recurrentVisitor.getResidentId());
+                getViewDataBinding().tvHost.setText(recurrentVisitor.getResidentName());
+            }
+        } else if (recurrentVisitor.getVisitorType().equalsIgnoreCase(AppConstants.SERVICE_PROVIDER)) {
+            getViewDataBinding().toolbar.tvTitle.setText(R.string.title_add_sp);
+            getViewDataBinding().tvVisitorType.setVisibility(View.GONE);
+            getViewDataBinding().tvAssignedTo.setVisibility(View.VISIBLE);
+            updateVisitorUI(mViewModel.getVisitorTypeList().get(1).toString());
+
+            getViewDataBinding().etAddress.setText(recurrentVisitor.getAddress());
+            getViewDataBinding().tvEmployment.setText(AppUtils.capitaliseFirstLetter(recurrentVisitor.getEmployment()));
+            getViewDataBinding().actvWorkProfile.setText(recurrentVisitor.getProfile());
+            getViewDataBinding().actvCompanyName.setText(recurrentVisitor.getCompanyName());
+            getViewDataBinding().etCompanyAddress.setText(recurrentVisitor.getCompanyAddress());
+
+            if (!recurrentVisitor.getResidentName().isEmpty()) {
+                getViewDataBinding().actvHouseNo.setText(recurrentVisitor.getPremiseName());
+                houseId = String.valueOf(recurrentVisitor.getFlatId());
+
+                residentId = String.valueOf(recurrentVisitor.getResidentId());
+                getViewDataBinding().tvHost.setText(recurrentVisitor.getResidentName());
+            } else {
+                //0 means property
+                String value = mViewModel.getAssignedToList().get(0).toString();
+                getViewDataBinding().tvAssignedTo.setText(value);
+                if (value.equals("Property")) {
+                    getViewDataBinding().groupResident.setVisibility(View.GONE);
+                } else {
+                    getViewDataBinding().groupResident.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+        if (recurrentVisitor.getImage().isEmpty()) {
+            imageUrl = "";
+        } else {
+            imageUrl = recurrentVisitor.getImage();
+
+            Glide.with(getContext())
+                    .load(mViewModel.getDataManager().getImageBaseURL().concat(imageUrl))
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_person)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(getViewDataBinding().imgUser);
+        }
+        getViewDataBinding().etName.setText(recurrentVisitor.getFullName());
+
+        getViewDataBinding().etIdentity.setText(recurrentVisitor.getDocumentId());
+        getViewDataBinding().tvIdentity.setText(mViewModel.getIdentityType(recurrentVisitor.getDocumentType()));
+        idType = recurrentVisitor.getDocumentType();
+
+        getViewDataBinding().tvNationality.setText(recurrentVisitor.getNationality());
+        if (!recurrentVisitor.getDialingCode().isEmpty()) {
+            countryCode = recurrentVisitor.getDialingCode();
+            getViewDataBinding().tvCode.setText("+".concat(countryCode));
+        }
+        getViewDataBinding().etContact.setText(recurrentVisitor.getContactNo());
+        getViewDataBinding().tvGender.setText(recurrentVisitor.getGender());
+        getViewDataBinding().etVehicle.setText(recurrentVisitor.getExpectedVehicleNo());
     }
 }

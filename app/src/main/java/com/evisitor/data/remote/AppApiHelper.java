@@ -243,4 +243,9 @@ public class AppApiHelper implements ApiHelper {
     public Call<ResponseBody> doPasswordReset(RequestBody requestBody) {
         return getApiInterface().doPasswordReset(requestBody);
     }
+
+    @Override
+    public Call<ResponseBody> doGetFilterVisitorInfo(String authToken, RequestBody requestBody) {
+        return getApiInterface().doGetFilterVisitorInfo(authToken, requestBody);
+    }
 }

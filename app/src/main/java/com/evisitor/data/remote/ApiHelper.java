@@ -136,4 +136,7 @@ public interface ApiHelper {
     @POST(WebServices.POST_TEST_PASSWORD_REQUEST)
     Call<ResponseBody> doPasswordReset(@Body RequestBody requestBody);
 
+    @POST(WebServices.GET_FILTER_VISITOR_INFO)
+    Call<ResponseBody> doGetFilterVisitorInfo(@Header("authorization") String authToken, @Body RequestBody requestBody);
+
 }

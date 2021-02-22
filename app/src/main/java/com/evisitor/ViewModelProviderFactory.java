@@ -30,6 +30,7 @@ import com.evisitor.ui.main.home.HomeViewModel;
 import com.evisitor.ui.main.home.blacklist.BlackListViewModel;
 import com.evisitor.ui.main.home.flag.FlagVisitorViewModel;
 import com.evisitor.ui.main.home.idverification.IdVerificationViewModel;
+import com.evisitor.ui.main.home.recurrentvisitor.FilterRecurrentVisitorViewModel;
 import com.evisitor.ui.main.home.rejected.RejectedVisitorViewModel;
 import com.evisitor.ui.main.home.rejected.guest.RejectedGuestViewModel;
 import com.evisitor.ui.main.home.rejected.sp.RejectedSPViewModel;
@@ -248,6 +249,9 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(ForgotPasswordViewModel.class)) {
             //noinspection unchecked
             return (T) new ForgotPasswordViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(FilterRecurrentVisitorViewModel.class)) {
+            //noinspection unchecked
+            return (T) new FilterRecurrentVisitorViewModel(dataManager);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

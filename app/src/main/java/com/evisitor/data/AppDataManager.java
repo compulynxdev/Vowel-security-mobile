@@ -494,4 +494,9 @@ public class AppDataManager implements DataManager {
     public Call<ResponseBody> doPasswordReset(RequestBody requestBody) {
         return apiHelper.doPasswordReset(requestBody);
     }
+
+    @Override
+    public Call<ResponseBody> doGetFilterVisitorInfo(String authToken, RequestBody requestBody) {
+        return apiHelper.doGetFilterVisitorInfo(authToken, requestBody);
+    }
 }

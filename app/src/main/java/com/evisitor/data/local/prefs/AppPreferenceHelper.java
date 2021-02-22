@@ -219,7 +219,7 @@ public class AppPreferenceHelper implements PreferenceHelper {
 
     @Override
     public String getPropertyDialingCode() {
-        return mPrefs.getString(PROPERTY_DIALING_CODE, "");
+        return mPrefs.getString(PROPERTY_DIALING_CODE, "254");
     }
 
     @Override

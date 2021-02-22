@@ -57,6 +57,7 @@
 
     <string name="title_house_keeping2">House \Help</string>
     <string name="title_service_provider2">Service \nProvider</string>
+    <string name="title_filter_recurrent_visitor">Filter Recurrent Visitors</string>
 
     <!--Visitor Profile-->
     <string name="check_in">Check In</string>
@@ -145,6 +146,7 @@
 
     <!--Visitor Validation-->
     <string name="alert_select_visitor">Please select visitor type.</string>
+    <string name="alert_select_filter">Please select filter type.</string>
     <string name="alert_select_assigned_to">Please select assigned to.</string>
     <string name="alert_select_employment">Please select employment.</string>
     <string name="alert_enter_profile">Please enter work profile.</string>
@@ -212,6 +214,7 @@
     <string name="house_no">House No.</string>
     <string name="host">Host</string>
     <string name="select_visitor_type">Select Visitor Type</string>
+    <string name="select_filter_type">Select Filter Type</string>
     <string name="visitor_type">Visitor Type</string>
     <string name="time_out">Time Out</string>
 
@@ -334,4 +337,5 @@
     <string name="please_enter_username">Please enter username!!</string>
     <string name="please_enter_email">Please enter valid email!!</string>
     <string name="note_administrator">Note : Your password reset request will be sent to administrator</string>
+    <string name="add_new_visitor">Add New Visitor</string>
 </resources>
