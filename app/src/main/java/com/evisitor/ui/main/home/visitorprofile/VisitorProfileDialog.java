@@ -34,7 +34,7 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
     private VisitorProfileCallback callback;
     private List<VisitorProfileBean> visitorInfoList;
     private String btnLabel = "";
-    private String image = "";
+    private String image = "", documentImage;
     private boolean isBtnVisible = true;
     private boolean isCommercialGuest = false;
 
@@ -82,6 +82,10 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
         return this;
     }
 
+    public VisitorProfileDialog setDocumentImage(String documentImage) {
+        this.documentImage = documentImage;
+        return this;
+    }
     public VisitorProfileDialog setIsCommercialGuest(boolean isTrue) {
         this.isCommercialGuest = isTrue;
         return this;
@@ -103,7 +107,7 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
         getViewDataBinding().btnOk.setVisibility(isBtnVisible ? View.VISIBLE : View.GONE);
         getViewDataBinding().btnOk.setOnClickListener(this);
         getViewDataBinding().imgProfile.setOnClickListener(this);
-
+        getViewDataBinding().tvDocumentImage.setOnClickListener(this);
         if (!btnLabel.isEmpty()) {
             getViewDataBinding().btnOk.setText(btnLabel);
         }
@@ -145,6 +149,11 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
         } else {
             getViewDataBinding().tvGadgetsInfo.setVisibility(View.GONE);
         }
+
+        if (documentImage != null && !documentImage.isEmpty()) {
+            getViewDataBinding().tvDocumentImage.setVisibility(View.VISIBLE);
+        } else getViewDataBinding().tvDocumentImage.setVisibility(View.GONE);
+
     }
 
     private void setUpAdapter() {
@@ -171,6 +180,11 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
 
             case R.id.img_profile:
                 showFullImage(image);
+                break;
+
+
+            case R.id.tv_document_image:
+                showFullImage(documentImage);
                 break;
 
             case R.id.tv_gadgets_info:
