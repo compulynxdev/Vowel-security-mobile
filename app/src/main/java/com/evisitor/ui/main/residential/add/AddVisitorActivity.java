@@ -765,22 +765,23 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
             getViewDataBinding().actvWorkProfile.setText(recurrentVisitor.getProfile());
             getViewDataBinding().actvCompanyName.setText(recurrentVisitor.getCompanyName());
             getViewDataBinding().etCompanyAddress.setText(recurrentVisitor.getCompanyAddress());
-
+            String value;
             if (!recurrentVisitor.getResidentName().isEmpty()) {
                 getViewDataBinding().actvHouseNo.setText(recurrentVisitor.getPremiseName());
                 houseId = String.valueOf(recurrentVisitor.getFlatId());
 
                 residentId = String.valueOf(recurrentVisitor.getResidentId());
                 getViewDataBinding().tvHost.setText(recurrentVisitor.getResidentName());
+                value = mViewModel.getAssignedToList().get(1).toString();
             } else {
                 //0 means property
-                String value = mViewModel.getAssignedToList().get(0).toString();
-                getViewDataBinding().tvAssignedTo.setText(value);
-                if (value.equals("Property")) {
-                    getViewDataBinding().groupResident.setVisibility(View.GONE);
-                } else {
-                    getViewDataBinding().groupResident.setVisibility(View.VISIBLE);
-                }
+                value = mViewModel.getAssignedToList().get(0).toString();
+            }
+            getViewDataBinding().tvAssignedTo.setText(value);
+            if (value.equals("Property")) {
+                getViewDataBinding().groupResident.setVisibility(View.GONE);
+            } else {
+                getViewDataBinding().groupResident.setVisibility(View.VISIBLE);
             }
         }
         if (recurrentVisitor.getImage().isEmpty()) {
