@@ -313,7 +313,6 @@ public class CommercialStaffResponse {
         private int flatId;
         private int id;
         private String premiseName;
-
         private String checkOutTime;
         private String checkInTime;
         private String contactNo;

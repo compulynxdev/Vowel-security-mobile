@@ -83,7 +83,7 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
             VisitorProfileDialog.newInstance(visitorProfileBeanList, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
                 decideNextProcess();
-            }).setImage(list.get(pos).getImageUrl()).setBtnLabel(getString(R.string.check_in)).show(getFragmentManager());
+            }).setImage(list.get(pos).getImageUrl()).setDocumentImage(list.get(pos).getDocumentImage()).setBtnLabel(getString(R.string.check_in)).show(getFragmentManager());
         });
         adapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(adapter);

@@ -338,4 +338,5 @@
     <string name="please_enter_email">Please enter valid email!!</string>
     <string name="note_administrator">Note : Your password reset request will be sent to administrator</string>
     <string name="add_new_visitor">Add New Visitor</string>
+    <string name="view_document_image">View Document Image</string>
 </resources>

@@ -70,7 +70,7 @@ public class RegisteredHKFragment extends BaseFragment<FragmentExpectedBinding, 
         list = new ArrayList<>();
         adapter = new RegisteredHKAdapter(list, pos -> {
             List<VisitorProfileBean> visitorProfileBeanList = mViewModel.setClickVisitorDetail(list.get(pos));
-            VisitorProfileDialog.newInstance(visitorProfileBeanList, null).setImage(list.get(pos).getImageUrl()).setBtnVisible(false).show(getFragmentManager());
+            VisitorProfileDialog.newInstance(visitorProfileBeanList, null).setImage(list.get(pos).getImageUrl()).setDocumentImage(list.get(pos).getDocumentImage()).setBtnVisible(false).show(getFragmentManager());
         });
         adapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(adapter);

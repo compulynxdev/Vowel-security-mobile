@@ -54,6 +54,23 @@
             app:layout_constraintTop_toBottomOf="@+id/recycler_view" />
 
         <TextView
+            android:id="@+id/tv_document_image"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:fontFamily="@font/futura_round_medium"
+            android:text="@string/view_document_image"
+            android:textAlignment="center"
+            android:textColor="@color/blue"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@id/tv_gadgets_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spacer1" />
+
+
+        <TextView
             android:id="@+id/tv_gadgets_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -68,7 +85,7 @@
             app:layout_constraintBottom_toTopOf="@id/spacer2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spacer1" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_document_image" />
 
         <Space
             android:id="@+id/spacer2"
