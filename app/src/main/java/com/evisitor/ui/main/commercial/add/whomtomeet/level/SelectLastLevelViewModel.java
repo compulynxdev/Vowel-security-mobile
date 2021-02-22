@@ -47,7 +47,7 @@ public class SelectLastLevelViewModel extends BaseViewModel<SelectLastLevelNavig
                                 getNavigator().onLastLevelDataReceived(houseDetailList);
                             }
                         } catch (Exception e) {
-                            getNavigator().showAlert(R.string.alert, R.string.alert_error);
+                            getNavigator().showToast(R.string.alert_error);
                         }
                     } else {
                         getNavigator().handleApiError(response.errorBody());

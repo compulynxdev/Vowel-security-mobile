@@ -188,7 +188,7 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                 } else {
                     object.put("image", AppUtils.getBitmapToBase64(addVisitorData.bmp_profile));
                 }
-                object.put("isImageUrl", !addVisitorData.imageUrl.isEmpty());
+                object.put("isImageUrl", addVisitorData.imageUrl != null && !addVisitorData.imageUrl.isEmpty());
 
                 object.put("state", addVisitorData.isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);
                 if (!addVisitorData.isAccept) {
@@ -312,7 +312,7 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                 } else {
                     object.put("image", AppUtils.getBitmapToBase64(visitorData.bmp_profile));
                 }
-                object.put("isImageUrl", !visitorData.imageUrl.isEmpty());
+                object.put("isImageUrl", visitorData.imageUrl != null && !visitorData.imageUrl.isEmpty());
                 object.put("state", visitorData.isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);
                 if (!visitorData.isAccept) {
                     object.put("rejectedBy", getDataManager().getUserDetail().getFullName());

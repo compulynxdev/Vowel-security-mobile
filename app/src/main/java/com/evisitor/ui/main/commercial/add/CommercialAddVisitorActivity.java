@@ -716,7 +716,28 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
     }
 
     private void autoFillData(RecurrentVisitor recurrentVisitor) {
+        if (recurrentVisitor.getVisitorType().equalsIgnoreCase(AppConstants.GUEST)) {
+            getViewDataBinding().toolbar.tvTitle.setText(R.string.title_add_guest);
+            updateVisitorUI(mViewModel.getVisitorTypeList().get(0).toString());
+            if (!mViewModel.getDataManager().getGuestConfiguration().isDataUpdated) {
+                mViewModel.doGetGuestConfiguration(this);
+            }
 
+            if (!recurrentVisitor.getStaffName().isEmpty()) {
+                updateWhomToMeetData(true, recurrentVisitor.getStaffName(), String.valueOf(recurrentVisitor.getStaffId()));
+            } else {
+                updateWhomToMeetData(false, recurrentVisitor.getPremiseName(), String.valueOf(recurrentVisitor.getFlatId()));
+            }
+        } else if (recurrentVisitor.getVisitorType().equalsIgnoreCase(AppConstants.SERVICE_PROVIDER)) {
+            getViewDataBinding().toolbar.tvTitle.setText(R.string.title_add_sp);
+            updateVisitorUI(mViewModel.getVisitorTypeList().get(1).toString());
+
+            getViewDataBinding().etAddress.setText(recurrentVisitor.getAddress());
+            getViewDataBinding().tvEmployment.setText(AppUtils.capitaliseFirstLetter(recurrentVisitor.getEmployment()));
+            getViewDataBinding().actvWorkProfile.setText(recurrentVisitor.getProfile());
+            getViewDataBinding().actvCompanyName.setText(recurrentVisitor.getCompanyName());
+            getViewDataBinding().etCompanyAddress.setText(recurrentVisitor.getCompanyAddress());
+        }
 
         if (recurrentVisitor.getImage().isEmpty()) {
             imageUrl = "";

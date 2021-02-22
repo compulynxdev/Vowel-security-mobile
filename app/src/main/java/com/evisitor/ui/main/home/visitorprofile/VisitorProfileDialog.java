@@ -34,7 +34,7 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
     private VisitorProfileCallback callback;
     private List<VisitorProfileBean> visitorInfoList;
     private String btnLabel = "";
-    private String image = "", documentImage;
+    private String image = "", documentImage = "";
     private boolean isBtnVisible = true;
     private boolean isCommercialGuest = false;
 
@@ -150,7 +150,7 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
             getViewDataBinding().tvGadgetsInfo.setVisibility(View.GONE);
         }
 
-        if (documentImage != null && !documentImage.isEmpty()) {
+        if (!documentImage.isEmpty()) {
             getViewDataBinding().tvDocumentImage.setVisibility(View.VISIBLE);
         } else getViewDataBinding().tvDocumentImage.setVisibility(View.GONE);
 
