@@ -209,6 +209,7 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
         if (resultCode == RESULT_OK) {
             if (requestCode == SCAN_RESULT /*&& data != null*/) {
                 String identityNo = MainResultStore.instance.getScannedIDData().idNumber;
+                String fullName = MainResultStore.instance.getScannedIDData().name;
                 /*MrzRecord mrzRecord = (MrzRecord) data.getSerializableExtra("Record");
                 assert mrzRecord != null;
 
@@ -227,10 +228,14 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
                         break;
                 }*/
 
-                if (mViewModel.getDataManager().getHouseKeeping().getDocumentId().equalsIgnoreCase(identityNo))
-                    showCheckinOptions();
-                else {
-                    showToast(R.string.alert_id);
+                if (mViewModel.getDataManager().getHouseKeeping().getDocumentId().equalsIgnoreCase(identityNo)) {
+                    if (mViewModel.getDataManager().getHouseKeeping().getFullName().equalsIgnoreCase(fullName)) {
+                        showCheckinOptions();
+                    } else {
+                        showToast(R.string.alert_invalid_name);
+                    }
+                } else {
+                    showToast(R.string.alert_invalid_id);
                 }
             }
         }

@@ -235,6 +235,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
         if (resultCode == RESULT_OK) {
             if (requestCode == SCAN_RESULT /*&& data != null*/) {
                 String identityNo = MainResultStore.instance.getScannedIDData().idNumber;
+                String fullName = MainResultStore.instance.getScannedIDData().name;
                 /*MrzRecord mrzRecord = (MrzRecord) data.getSerializableExtra("Record");
                 assert mrzRecord != null;
 
@@ -254,13 +255,17 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                 }*/
 
                 if (mViewModel.getDataManager().getSpDetail().getIdentityNo().equalsIgnoreCase(identityNo)) {
-                    if (mViewModel.getDataManager().isCommercial()) {
-                        mViewModel.approveByCall(true, null);
+                    if (mViewModel.getDataManager().getSpDetail().getName().equalsIgnoreCase(fullName)) {
+                        if (mViewModel.getDataManager().isCommercial()) {
+                            mViewModel.approveByCall(true, null);
+                        } else {
+                            showCheckinOptions();
+                        }
                     } else {
-                        showCheckinOptions();
+                        showToast(R.string.alert_invalid_name);
                     }
                 } else {
-                    showToast(R.string.alert_id);
+                    showToast(R.string.alert_invalid_id);
                 }
             }
         }

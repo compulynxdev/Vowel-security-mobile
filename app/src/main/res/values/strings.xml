@@ -231,6 +231,8 @@
 
     <string name="submit">Submit</string>
     <string name="or">OR</string>
+    <string name="alert_invalid_id">Invalid identity number</string>
+    <string name="alert_invalid_name">Invalid Name</string>
     <string name="alert_id">Please enter valid identity number</string>
     <string name="please_verify_identity_card_for_check_in">Please verify identity card \nfor check-in</string>
     <string name="expected">Expected</string>

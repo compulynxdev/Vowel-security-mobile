@@ -143,6 +143,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
         if (resultCode == RESULT_OK) {
             if (requestCode == SCAN_RESULT /*&& data != null*/) {
                 String identityNo = MainResultStore.instance.getScannedIDData().idNumber;
+                String fullName = MainResultStore.instance.getScannedIDData().name;
                /* MrzRecord mrzRecord = (MrzRecord) data.getSerializableExtra("Record");
                 assert mrzRecord != null;
 
@@ -160,10 +161,14 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
                                 mrzRecord.getOptional2();
                         break;
                 }*/
-                if (mViewModel.getDataManager().getCommercialVisitorDetail().getIdentityNo().equalsIgnoreCase(identityNo))
-                    showCheckinOptions();
-                else {
-                    showToast(R.string.alert_id);
+                if (mViewModel.getDataManager().getCommercialVisitorDetail().getIdentityNo().equalsIgnoreCase(identityNo)) {
+                    if (mViewModel.getDataManager().getCommercialVisitorDetail().getName().equalsIgnoreCase(fullName)) {
+                        showCheckinOptions();
+                    } else {
+                        showToast(R.string.alert_invalid_name);
+                    }
+                } else {
+                    showToast(R.string.alert_invalid_id);
                 }
             }
         }
