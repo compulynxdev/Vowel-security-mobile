@@ -260,7 +260,7 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
                     break;
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+            AppLogger.w("CheckInViewModel", e.toString());
         }
 
         RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
@@ -274,7 +274,7 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
             object.put("accountId", getDataManager().getAccountId());
             object.put("type", AppConstants.CHECK_OUT);
         } catch (Exception e) {
-            e.printStackTrace();
+            AppLogger.w("CheckInViewModel", e.toString());
         }
         RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
         getNavigator().showLoading();

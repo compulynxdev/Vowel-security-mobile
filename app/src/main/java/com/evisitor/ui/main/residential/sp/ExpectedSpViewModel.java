@@ -28,6 +28,8 @@ import retrofit2.Response;
 
 public class ExpectedSpViewModel extends BaseCheckInOutViewModel<ExpectedSPNavigator> implements BaseCheckInOutViewModel.ApiCallback {
 
+    private static final String TAG = "ExpectedSpViewModel";
+
     public ExpectedSpViewModel(DataManager dataManager) {
         super(dataManager);
     }
@@ -117,7 +119,7 @@ public class ExpectedSpViewModel extends BaseCheckInOutViewModel<ExpectedSPNavig
                 object.put("enteredVehicleNo", getDataManager().getSpDetail().getEnteredVehicleNo());
                 object.put("type", AppConstants.SERVICE_PROVIDER);
             } catch (JSONException e) {
-                e.printStackTrace();
+                AppLogger.w(TAG, e.toString());
             }
 
             RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
@@ -137,7 +139,7 @@ public class ExpectedSpViewModel extends BaseCheckInOutViewModel<ExpectedSPNavig
                 object.put("rejectedBy", isAccept ? null : getDataManager().getUserDetail().getFullName());
                 object.put("rejectReason", input);
             } catch (JSONException e) {
-                e.printStackTrace();
+                AppLogger.w(TAG, e.toString());
             }
 
             RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());

@@ -28,6 +28,8 @@ import retrofit2.Response;
 
 public class ExpectedGuestViewModel extends BaseCheckInOutViewModel<ExpectedGuestNavigator> implements BaseCheckInOutViewModel.ApiCallback {
 
+    private static final String TAG = "ExpectedGuestViewModel";
+
     public ExpectedGuestViewModel(DataManager dataManager) {
         super(dataManager);
     }
@@ -115,7 +117,7 @@ public class ExpectedGuestViewModel extends BaseCheckInOutViewModel<ExpectedGues
                 object.put("enteredVehicleNo", getDataManager().getGuestDetail().getEnteredVehicleNo());
                 object.put("type", AppConstants.GUEST);
             } catch (JSONException e) {
-                e.printStackTrace();
+                AppLogger.w(TAG, e.toString());
             }
 
             RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
@@ -135,7 +137,7 @@ public class ExpectedGuestViewModel extends BaseCheckInOutViewModel<ExpectedGues
                 object.put("rejectedBy", isAccept ? null : getDataManager().getUserDetail().getFullName());
                 object.put("rejectReason", input);
             } catch (JSONException e) {
-                e.printStackTrace();
+                AppLogger.w(TAG, e.toString());
             }
 
             RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());

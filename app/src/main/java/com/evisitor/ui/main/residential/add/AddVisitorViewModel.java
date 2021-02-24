@@ -34,6 +34,8 @@ import retrofit2.Response;
 
 public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
 
+    private static final String TAG = "AddVisitorViewModel";
+
     private final MutableLiveData<List<HouseDetailBean>> houseDetailMutableList = new MutableLiveData<>();
     private final MutableLiveData<List<HostDetailBean>> hostDetailMutableList = new MutableLiveData<>();
     private final MutableLiveData<Boolean> guestStatusMutableData = new MutableLiveData<>();
@@ -196,7 +198,7 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                     object.put("rejectReason", addVisitorData.rejectedReason);
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                AppLogger.w(TAG, e.toString());
             }
 
             //AppLogger.e("What : Guest", object.toString());
@@ -319,7 +321,7 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                     object.put("rejectReason", visitorData.rejectedReason);
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                AppLogger.w(TAG, e.toString());
             }
 
             //AppLogger.e("What : Sp", object.toString());

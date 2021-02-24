@@ -28,6 +28,8 @@ import retrofit2.Response;
 
 public class ExpectedHKViewModel extends BaseCheckInOutViewModel<ExpectedHKNavigator> implements BaseCheckInOutViewModel.ApiCallback {
 
+    private static final String TAG = "ExpectedHKViewModel";
+
     public ExpectedHKViewModel(DataManager dataManager) {
         super(dataManager);
     }
@@ -114,7 +116,7 @@ public class ExpectedHKViewModel extends BaseCheckInOutViewModel<ExpectedHKNavig
                 object.put("enteredVehicleNo", getDataManager().getHouseKeeping().getEnteredVehicleNo());
                 object.put("type", AppConstants.HOUSE_HELP);
             } catch (JSONException e) {
-                e.printStackTrace();
+                AppLogger.w(TAG, e.toString());
             }
 
             RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
@@ -135,7 +137,7 @@ public class ExpectedHKViewModel extends BaseCheckInOutViewModel<ExpectedHKNavig
                 object.put("rejectedBy", isAccept ? null : getDataManager().getUserDetail().getFullName());
                 object.put("rejectReason", input);
             } catch (JSONException e) {
-                e.printStackTrace();
+                AppLogger.w(TAG, e.toString());
             }
             RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
             doCheckInOut(body, this);

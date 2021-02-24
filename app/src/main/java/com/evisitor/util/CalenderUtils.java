@@ -14,6 +14,8 @@ import java.util.TimeZone;
  */
 
 public final class CalenderUtils {
+    private static final String TAG = "CalenderUtils";
+
     public static final String TIMESTAMP_FORMAT = "dd/MM/yyyy, hh:mm a";
     public static final String TIMESTAMP_FORMAT_24 = "dd/MM/yyyy HH:mm:ss";
     public static final String CUSTOM_TIMESTAMP_FORMAT_SLASH = "dd/MM/yyyy";
@@ -53,7 +55,7 @@ public final class CalenderUtils {
             assert dTime != null;
             return displayFormat.format(dTime);
         } catch (Exception e) {
-            e.printStackTrace();
+            AppLogger.w(TAG, e.toString());
             return "";
         }
     }
@@ -66,7 +68,7 @@ public final class CalenderUtils {
             assert dTime != null;
             return displayFormat.format(dTime);
         } catch (Exception e) {
-            e.printStackTrace();
+            AppLogger.w(TAG, e.toString());
             return "";
         }
     }
@@ -76,7 +78,7 @@ public final class CalenderUtils {
             SimpleDateFormat displayFormat = new SimpleDateFormat(dFormat, Locale.getDefault());
             return displayFormat.format(date);
         } catch (Exception e) {
-            e.printStackTrace();
+            AppLogger.w(TAG, e.toString());
             return "";
         }
     }
@@ -87,7 +89,7 @@ public final class CalenderUtils {
             parseFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
             return parseFormat.parse(date);
         } catch (Exception e) {
-            e.printStackTrace();
+            AppLogger.w(TAG, e.toString());
             return null;
         }
     }
@@ -106,7 +108,7 @@ public final class CalenderUtils {
 
             return (diffInMilliSec / (1000 * 60)) % 60;
         } catch (ParseException e) {
-            e.printStackTrace();
+            AppLogger.w(TAG, e.toString());
             return null;
         }
     }

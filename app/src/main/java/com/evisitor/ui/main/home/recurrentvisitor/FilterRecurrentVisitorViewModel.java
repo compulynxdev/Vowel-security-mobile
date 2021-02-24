@@ -8,6 +8,7 @@ import com.evisitor.data.model.IdentityBean;
 import com.evisitor.data.model.RecurrentVisitor;
 import com.evisitor.ui.base.BaseViewModel;
 import com.evisitor.util.AppConstants;
+import com.evisitor.util.AppLogger;
 import com.evisitor.util.AppUtils;
 
 import org.json.JSONException;
@@ -71,7 +72,7 @@ public class FilterRecurrentVisitorViewModel extends BaseViewModel<FilterRecurre
                     object.put("dialingCode", dialingCode);
                     object.put("contactNo", contactNum);
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    AppLogger.w("FilterRecurrentVisitorViewModel", e.toString());
                 }
                 RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
 

@@ -185,10 +185,10 @@ public class ImagePickBottomSheetDialog extends BaseBottomSheetDialog<DialogImag
                         }
                     } catch (OutOfMemoryError e) {
                         showToast(getString(R.string.alert_out_of_memory));
-                        e.printStackTrace();
+                        AppLogger.w(TAG, e.toString());
                     } catch (Exception e) {
                         showToast(getString(R.string.something_went_wrong));
-                        e.printStackTrace();
+                        AppLogger.w(TAG, e.toString());
                     }
                     break;
 
@@ -215,10 +215,10 @@ public class ImagePickBottomSheetDialog extends BaseBottomSheetDialog<DialogImag
 
                     } catch (OutOfMemoryError e) {
                         showToast(getString(R.string.alert_out_of_memory));
-                        e.printStackTrace();
+                        AppLogger.w(TAG, e.toString());
                     } catch (Exception e) {
                         showToast(getString(R.string.something_went_wrong));
-                        e.printStackTrace();
+                        AppLogger.w(TAG, e.toString());
                     }
                     break;
             }

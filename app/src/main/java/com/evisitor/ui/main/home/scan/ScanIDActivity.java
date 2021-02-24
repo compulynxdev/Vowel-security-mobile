@@ -21,6 +21,7 @@ import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.ActivityScanIdBinding;
 import com.evisitor.ui.base.BaseActivity;
+import com.evisitor.util.AppLogger;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.text.TextBlock;
@@ -128,7 +129,7 @@ public class ScanIDActivity extends BaseActivity<ActivityScanIdBinding, ScanIDVi
                         }
                         cameraSource.start(getViewDataBinding().surfaceView.getHolder());
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        AppLogger.w(TAG, e.toString());
                     }
                 }
 
@@ -183,7 +184,7 @@ public class ScanIDActivity extends BaseActivity<ActivityScanIdBinding, ScanIDVi
                 try {
                     cameraSource.start(getViewDataBinding().surfaceView.getHolder());
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    AppLogger.w(TAG, e.toString());
                 }
             }
         }

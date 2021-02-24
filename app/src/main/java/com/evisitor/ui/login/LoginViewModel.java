@@ -9,6 +9,7 @@ import com.evisitor.data.DataManager;
 import com.evisitor.data.model.UserDetail;
 import com.evisitor.ui.base.BaseViewModel;
 import com.evisitor.util.AppConstants;
+import com.evisitor.util.AppLogger;
 import com.evisitor.util.AppUtils;
 
 import org.json.JSONObject;
@@ -68,7 +69,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
             object.put("password", password);
             object.put("fcmToken", token);
         } catch (Exception e) {
-            e.printStackTrace();
+            AppLogger.w("doLogin", e.toString());
         }
         RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
         getDataManager().doLogin(body).enqueue(new Callback<ResponseBody>() {

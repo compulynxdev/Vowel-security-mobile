@@ -39,7 +39,7 @@ public final class AppUtils {
             PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             return pInfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+            AppLogger.w("getAppVersionName", e.toString());
             return "1.0";
         }
     }

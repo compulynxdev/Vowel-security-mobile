@@ -6,6 +6,7 @@ import com.evisitor.R;
 import com.evisitor.data.DataManager;
 import com.evisitor.ui.base.BaseViewModel;
 import com.evisitor.util.AppConstants;
+import com.evisitor.util.AppLogger;
 import com.evisitor.util.AppUtils;
 import com.evisitor.util.CommonUtils;
 
@@ -38,7 +39,7 @@ public class ForgotPasswordViewModel extends BaseViewModel<ForgotPasswordNavigat
                 object.put("email", email);
                 object.put("type", type);
             } catch (JSONException e) {
-                e.printStackTrace();
+                AppLogger.w("ForgotPasswordViewModel", e.toString());
             }
             RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
             getDataManager().doPasswordReset(body).enqueue(new Callback<ResponseBody>() {
@@ -56,7 +57,7 @@ public class ForgotPasswordViewModel extends BaseViewModel<ForgotPasswordNavigat
                                 });
                             }
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            AppLogger.w("ForgotPasswordViewModel", e.toString());
                         }
                     } else {
                         getNavigator().hideLoading();

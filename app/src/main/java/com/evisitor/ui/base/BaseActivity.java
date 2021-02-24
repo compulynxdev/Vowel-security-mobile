@@ -30,6 +30,7 @@ import com.evisitor.R;
 import com.evisitor.ui.dialog.AlertDialog;
 import com.evisitor.ui.image.ImageViewActivity;
 import com.evisitor.util.AppConstants;
+import com.evisitor.util.AppLogger;
 import com.evisitor.util.CommonUtils;
 import com.evisitor.util.NetworkUtils;
 
@@ -201,7 +202,7 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
             fragmentTransaction.commit();
             hideKeyboard();
         } catch (Exception e) {
-            e.printStackTrace();
+            AppLogger.w("replaceFragment", e.toString());
         }
     }
 
@@ -220,7 +221,7 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
 
             hideKeyboard();
         } catch (Exception e) {
-            e.printStackTrace();
+            AppLogger.w("addFragment", e.toString());
         }
     }
 

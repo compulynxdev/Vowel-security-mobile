@@ -123,7 +123,7 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
                     object.put("rejectReason", addVisitorData.rejectedReason);
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                AppLogger.w("CommercialAddVisitorViewModel", e.toString());
             }
 
             RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
@@ -236,7 +236,7 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
                     object.put("rejectReason", visitorData.rejectedReason);
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                AppLogger.w("CommercialAddVisitorViewModel", e.toString());
             }
 
             //AppLogger.e("What : Sp", object.toString());

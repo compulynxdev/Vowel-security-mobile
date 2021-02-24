@@ -114,7 +114,7 @@ public class ExpectedCommercialGuestViewModel extends BaseCheckInOutViewModel<Ex
                 object.put("deviceList", deviceList);
                 //object.put("type", AppConstants.GUEST);
             } catch (JSONException e) {
-                e.printStackTrace();
+                AppLogger.w("ExpectedCommercialGuestViewModel", e.toString());
             }
 
             RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
@@ -137,7 +137,7 @@ public class ExpectedCommercialGuestViewModel extends BaseCheckInOutViewModel<Ex
                 object.put("rejectedBy", isAccept ? null : getDataManager().getUserDetail().getFullName());
                 object.put("rejectReason", input);
             } catch (JSONException e) {
-                e.printStackTrace();
+                AppLogger.w("ExpectedCommercialGuestViewModel", e.toString());
             }
 
             RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
