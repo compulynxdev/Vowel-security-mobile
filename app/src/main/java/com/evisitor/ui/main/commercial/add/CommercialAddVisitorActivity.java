@@ -95,11 +95,11 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
         super.onCreate(savedInstanceState);
         mViewModel.setNavigator(this);
         getViewDataBinding().toolbar.tvTitle.setText(R.string.title_add_visitor);
-        setIntentData(getIntent());
         setUp();
         randomCheckInObserver();
         setUpProfileSearch();
         setUpCompanySearch();
+        setIntentData(getIntent());
     }
 
     private void setUpDepartment() {
@@ -717,7 +717,8 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
 
     private void autoFillData(RecurrentVisitor recurrentVisitor) {
         if (recurrentVisitor.getVisitorType().equalsIgnoreCase(AppConstants.GUEST)) {
-            getViewDataBinding().toolbar.tvTitle.setText(R.string.title_add_guest);
+            getViewDataBinding().toolbar.tvTitle.setText(R.string.title_add_visitor);
+            getViewDataBinding().tvVisitorType.setVisibility(View.GONE);
             updateVisitorUI(mViewModel.getVisitorTypeList().get(0).toString());
             if (!mViewModel.getDataManager().getGuestConfiguration().isDataUpdated) {
                 mViewModel.doGetGuestConfiguration(this);
@@ -730,6 +731,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
             }
         } else if (recurrentVisitor.getVisitorType().equalsIgnoreCase(AppConstants.SERVICE_PROVIDER)) {
             getViewDataBinding().toolbar.tvTitle.setText(R.string.title_add_sp);
+            getViewDataBinding().tvVisitorType.setVisibility(View.GONE);
             updateVisitorUI(mViewModel.getVisitorTypeList().get(1).toString());
 
             getViewDataBinding().etAddress.setText(recurrentVisitor.getAddress());
