@@ -8,6 +8,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.provider.Settings;
 import android.util.Patterns;
 
+import androidx.annotation.NonNull;
+
 import com.evisitor.EVisitor;
 import com.evisitor.R;
 
@@ -25,8 +27,8 @@ public final class CommonUtils {
         // This utility class is not publicly instantiable
     }
 
-    @SuppressLint("all")
-    public static String getDeviceId(Context context) {
+    @SuppressLint("HardwareIds")
+    public static String getDeviceId(@NonNull Context context) {
         return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 
@@ -40,16 +42,13 @@ public final class CommonUtils {
 
             int size = is.available();
             byte[] buffer = new byte[size];
-            //noinspection ResultOfMethodCallIgnored
-            is.read(buffer);
+            int count = is.read(buffer);
             is.close();
-
+            AppLogger.d("CommonUtils", "" + count);
             return new String(buffer, StandardCharsets.UTF_8);
         } catch (IOException e) {
-            e.printStackTrace();
             return null;
         }
-
     }
 
     public static ProgressDialog showLoadingDialog(Context context) {

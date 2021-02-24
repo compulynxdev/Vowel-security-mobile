@@ -142,8 +142,10 @@ public final class FileUtils {
 
         String extension = getExtension(file.getName());
 
-        if (extension.length() > 0)
-            return MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension.substring(1));
+        if (extension != null) {
+            if (extension.length() > 0)
+                return MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension.substring(1));
+        }
 
         return "application/octet-stream";
     }
