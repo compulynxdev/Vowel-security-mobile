@@ -9,8 +9,8 @@ android {
         applicationId "com.evisitor"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 11
-        versionName "2.0"
+        versionCode 1
+        versionName "1.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
@@ -22,7 +22,7 @@ android {
             buildConfigField("boolean", "DEBUG_MODE", "true")
 
             //Production url
-            buildConfigField("String", "BASE_URL", "\"http://3.141.153.241:8087/\"")
+            buildConfigField("String", "BASE_URL", "\"http://3.19.243.207:8087/\"")
 
             //Stage url
             //buildConfigField("String", "BASE_URL", "\"http://52.15.186.140:8090/\"")
@@ -41,7 +41,7 @@ android {
             buildConfigField("boolean", "DEBUG_MODE", "false")
 
             //Production url
-            buildConfigField("String", "BASE_URL", "\"http://3.141.153.241:8087/\"")
+            buildConfigField("String", "BASE_URL", "\"http://3.19.243.207:8087/\"")
 
             //Stage url
             //buildConfigField("String", "BASE_URL", "\"http://52.15.186.140:8090/\"")

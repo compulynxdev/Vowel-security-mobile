@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">VOWEL Security</string>
+    <string name="app_name">Vowel Security</string>
 
     <!--Alerts-->
     <string name="alert">Alert</string>
