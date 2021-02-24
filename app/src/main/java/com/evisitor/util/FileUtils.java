@@ -1,161 +1,32 @@
 package com.evisitor.util;
 
-import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.webkit.MimeTypeMap;
 
 import java.io.File;
-import java.io.FileFilter;
-import java.text.DecimalFormat;
-import java.util.Comparator;
-import java.util.Objects;
 
 public final class FileUtils {
-    public static final String MIME_TYPE_AUDIO = "audio/*";
-    public static final String MIME_TYPE_TEXT = "text/*";
-    public static final String MIME_TYPE_VIDEO = "video/*";
-    public static final String MIME_TYPE_APP = "application/*";
-    private static final String MIME_TYPE_IMAGE = "image/*";
-    private static final String HIDDEN_PREFIX = ".";
     /**
      * TAG for log messages.
      */
     private static final String TAG = "FileUtils";
     private static final boolean DEBUG = false; // Set to true to enable logging
-    /**
-     * File and folder comparator. TODO Expose sorting option method
-     */
-    public static Comparator<File> sComparator = (f1, f2) -> {
-        // Sort alphabetically by lower case, which is much cleaner
-        return f1.getName().toLowerCase().compareTo(
-                f2.getName().toLowerCase());
-    };
-    /**
-     * File (not directories) filter.
-     */
-    public static FileFilter sFileFilter = file -> {
-        final String fileName = file.getName();
-        // Return files only (not directories) and skip hidden files
-        return file.isFile() && !fileName.startsWith(HIDDEN_PREFIX);
-    };
-    /**
-     * Folder (directories) filter.
-     */
-    public static FileFilter sDirFilter = file -> {
-        final String fileName = file.getName();
-        // Return directories only and skip hidden directories
-        return file.isDirectory() && !fileName.startsWith(HIDDEN_PREFIX);
-    };
 
     private FileUtils() {
     } //private constructor to enforce Singleton pattern
-
-    /**
-     * Gets the extension of a file name, like ".png" or ".jpg".
-     *
-     * @param uri
-     * @return Extension including the dot("."); "" if there is no extension;
-     * null if uri was null.
-     */
-    private static String getExtension(String uri) {
-        if (uri == null) {
-            return null;
-        }
-
-        int dot = uri.lastIndexOf(".");
-        if (dot >= 0) {
-            return uri.substring(dot);
-        } else {
-            // No extension.
-            return "";
-        }
-    }
 
     /**
      * @return Whether the URI is a local one.
      */
     private static boolean isLocal(String url) {
         return url != null && !url.startsWith("http://") && !url.startsWith("https://");
-    }
-
-    /**
-     * @return True if Uri is a MediaStore Uri.
-     */
-    private static boolean isMediaUri(Uri uri) {
-        return "media".equalsIgnoreCase(uri.getAuthority());
-    }
-
-    /**
-     * Convert File into Uri.
-     *
-     * @param file
-     * @return uri
-     */
-    private static Uri getUri(File file) {
-        if (file != null) {
-            return Uri.fromFile(file);
-        }
-        return null;
-    }
-
-    /**
-     * Returns the path only (without file name).
-     *
-     * @param file
-     * @return
-     */
-    public static File getPathWithoutFilename(File file) {
-        if (file != null) {
-            if (file.isDirectory()) {
-                // no file to be split off. Return everything
-                return file;
-            } else {
-                String filename = file.getName();
-                String filepath = file.getAbsolutePath();
-
-                // Construct path without file name.
-                String pathWithoutName = filepath.substring(0,
-                        filepath.length() - filename.length());
-                if (pathWithoutName.endsWith("/")) {
-                    pathWithoutName = pathWithoutName.substring(0, pathWithoutName.length() - 1);
-                }
-                return new File(pathWithoutName);
-            }
-        }
-        return null;
-    }
-
-    /**
-     * @return The MIME type for the given file.
-     */
-    private static String getMimeType(File file) {
-
-        String extension = getExtension(file.getName());
-
-        if (extension != null) {
-            if (extension.length() > 0)
-                return MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension.substring(1));
-        }
-
-        return "application/octet-stream";
-    }
-
-    /**
-     * @return The MIME type for the give Uri.
-     */
-    private static String getMimeType(Context context, Uri uri) {
-        File file = new File(Objects.requireNonNull(getPath(context, uri)));
-        return getMimeType(file);
     }
 
     /**
@@ -325,119 +196,4 @@ public final class FileUtils {
         return null;
     }
 
-    /**
-     * Get the file size in a human-readable string.
-     *
-     * @param size
-     * @return
-     */
-    public static String getReadableFileSize(int size) {
-        final int BYTES_IN_KILOBYTES = 1024;
-        final DecimalFormat dec = new DecimalFormat("###.#");
-        final String KILOBYTES = " KB";
-        final String MEGABYTES = " MB";
-        final String GIGABYTES = " GB";
-        int fileSize = 0;
-        String suffix = KILOBYTES;
-
-        if (size > BYTES_IN_KILOBYTES) {
-            fileSize = size / BYTES_IN_KILOBYTES;
-            if (fileSize > BYTES_IN_KILOBYTES) {
-                fileSize = fileSize / BYTES_IN_KILOBYTES;
-                if (fileSize > BYTES_IN_KILOBYTES) {
-                    fileSize = fileSize / BYTES_IN_KILOBYTES;
-                    suffix = GIGABYTES;
-                } else {
-                    suffix = MEGABYTES;
-                }
-            }
-        }
-        return dec.format(fileSize) + suffix;
-    }
-
-    /**
-     * Attempt to retrieve the thumbnail of given File from the MediaStore. This
-     * should not be called on the UI thread.
-     *
-     * @param context
-     * @param file
-     * @return
-     */
-    public static Bitmap getThumbnail(Context context, File file) {
-        return getThumbnail(context, getUri(file), getMimeType(file));
-    }
-
-    /**
-     * Attempt to retrieve the thumbnail of given Uri from the MediaStore. This
-     * should not be called on the UI thread.
-     *
-     * @param context
-     * @param uri
-     * @return
-     */
-    public static Bitmap getThumbnail(Context context, Uri uri) {
-        return getThumbnail(context, uri, getMimeType(context, uri));
-    }
-
-    /**
-     * Attempt to retrieve the thumbnail of given Uri from the MediaStore. This
-     * should not be called on the UI thread.
-     *
-     * @param context
-     * @param uri
-     * @param mimeType
-     * @return
-     */
-    private static Bitmap getThumbnail(Context context, Uri uri, String mimeType) {
-        if (DEBUG)
-            Log.d(TAG, "Attempting to get thumbnail");
-
-        if (!isMediaUri(uri)) {
-            Log.e(TAG, "You can only retrieve thumbnails for images and videos.");
-            return null;
-        }
-
-        Bitmap bm = null;
-        final ContentResolver resolver = context.getContentResolver();
-        try (Cursor cursor = resolver.query(uri, null, null, null, null)) {
-            if (Objects.requireNonNull(cursor).moveToFirst()) {
-                final int id = cursor.getInt(0);
-                if (DEBUG)
-                    Log.d(TAG, "Got thumb ID: " + id);
-
-                if (mimeType.contains("video")) {
-                    bm = MediaStore.Video.Thumbnails.getThumbnail(
-                            resolver,
-                            id,
-                            MediaStore.Video.Thumbnails.MINI_KIND,
-                            null);
-                } else if (mimeType.contains(FileUtils.MIME_TYPE_IMAGE)) {
-                    bm = MediaStore.Images.Thumbnails.getThumbnail(
-                            resolver,
-                            id,
-                            MediaStore.Images.Thumbnails.MINI_KIND,
-                            null);
-                }
-            }
-        } catch (Exception e) {
-            if (DEBUG)
-                Log.e(TAG, "getThumbnail", e);
-        }
-        return bm;
-    }
-
-    /**
-     * Get the Intent for selecting content to be used in an Intent Chooser.
-     *
-     * @return The intent for opening a file with Intent.createChooser()
-     */
-    public static Intent createGetContentIntent() {
-        // Implicitly allow the user to select a particular kind of data
-        final Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        // The MIME data type filter
-        intent.setType("*/*");
-        // Only return URIs that can be opened with ContentResolver
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        return intent;
-    }
 }

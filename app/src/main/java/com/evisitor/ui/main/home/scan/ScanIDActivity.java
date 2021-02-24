@@ -207,8 +207,8 @@ public class ScanIDActivity extends BaseActivity<ActivityScanIdBinding, ScanIDVi
                 setResult(RESULT_OK, intent);
                 finish();
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            Log.w(TAG, e.toString());
            /* if (ex instanceof MrzParseException) {
                 final MrzParseException mpe = (MrzParseException) ex;
                 final MrzRange r = mpe.getRange();

@@ -90,7 +90,7 @@ public class SmartIDView implements SurfaceHolder.Callback,
                         camera.setParameters(cparams);
                         camera.autoFocus(SmartIDView.this);
                     }
-                } catch (RuntimeException e) {
+                } catch (RuntimeException ignored) {
                     // empty body
                 }
             }
@@ -211,7 +211,7 @@ public class SmartIDView implements SurfaceHolder.Callback,
 
         try {
             setView(preview.getWidth(), preview.getHeight());
-        } catch (Exception e) {
+        } catch (Exception ignored) {
             // empty body
         }
     }

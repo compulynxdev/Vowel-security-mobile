@@ -124,8 +124,9 @@ public class ImagePickBottomSheetDialog extends BaseBottomSheetDialog<DialogImag
             File photoFile = null;
             try {
                 photoFile = createImageFile();
-            } catch (IOException ex) {
+            } catch (IOException e) {
                 // Error occurred while creating the File
+                AppLogger.w(TAG, e.toString());
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
