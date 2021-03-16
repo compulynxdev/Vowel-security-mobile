@@ -61,7 +61,7 @@ public class CountrySelectionAdapter extends RecyclerView.Adapter<BaseViewHolder
         public void onBind(int position) {
             CountryResponse bean = list.get(position);
             tv_name.setText(bean.getName());
-            tv_code.setText(bean.getDial_code());
+            tv_code.setText("+".concat(bean.getDial_code()));
         }
 
         @Override
