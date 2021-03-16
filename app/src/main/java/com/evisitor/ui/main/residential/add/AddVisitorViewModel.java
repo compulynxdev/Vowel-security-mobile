@@ -144,7 +144,10 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
         } else if (configurationResponse.getGuestField().isContactNo() && (visitorData.contact.length() < 7 || visitorData.contact.length() > 12)) {
             getNavigator().showToast(R.string.alert_contact_length);
             return false;
-        }/* else if (configurationResponse.getGuestField().isAddress() && visitorData.address.isEmpty()) {
+        }else if (configurationResponse.getGuestField().isContactNo() && visitorData.contact.startsWith("0")) {
+            getNavigator().showToast(R.string.alert_contact_not_start_with_zero);
+            return false;
+        } /* else if (configurationResponse.getGuestField().isAddress() && visitorData.address.isEmpty()) {
             getNavigator().showToast(R.string.alert_empty_address);
             return false;
         } */ else if (configurationResponse.getGuestField().isGender() && visitorData.gender.isEmpty()) {
@@ -251,7 +254,10 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
         } else if (visitorData.contact.length() < 7 || visitorData.contact.length() > 12) {
             getNavigator().showToast(R.string.alert_contact_length);
             return false;
-        }/* else if (visitorData.address.isEmpty()) {
+        }else if (visitorData.contact.startsWith("0")) {
+            getNavigator().showToast(R.string.alert_contact_not_start_with_zero);
+            return false;
+        } /* else if (visitorData.address.isEmpty()) {
             getNavigator().showToast(R.string.alert_empty_address);
             return false;
         } */ else if (visitorData.gender.isEmpty()) {
