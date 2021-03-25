@@ -9,8 +9,8 @@ android {
         applicationId "com.evisitor"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 3
+        versionName "1.0.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
@@ -25,10 +25,10 @@ android {
             //buildConfigField("String", "BASE_URL", "\"http://3.19.243.207:8087/\"")
 
             //Stage url
-            buildConfigField("String", "BASE_URL", "\"http://52.15.186.140:8090/\"")
+            //buildConfigField("String", "BASE_URL", "\"http://52.15.186.140:8090/\"")
 
             //Dev url
-            //buildConfigField("String", "BASE_URL", "\"http://103.21.52.30:8085/\"")
+            buildConfigField("String", "BASE_URL", "\"http://103.21.52.30:8085/\"")
 
             //Local
             //buildConfigField("String", "BASE_URL", "\"http://192.168.43.134:8085/\"")
@@ -44,10 +44,10 @@ android {
             //buildConfigField("String", "BASE_URL", "\"http://3.19.243.207:8087/\"")
 
             //Stage url
-            buildConfigField("String", "BASE_URL", "\"http://52.15.186.140:8090/\"")
+            //buildConfigField("String", "BASE_URL", "\"http://52.15.186.140:8090/\"")
 
             //Dev url
-            //WbuildConfigField("String", "BASE_URL", "\"http://103.21.52.30:8085/\"")
+            buildConfigField("String", "BASE_URL", "\"http://103.21.52.30:8085/\"")
 
             //Local
             //buildConfigField("String", "BASE_URL", "\"http://192.168.43.134:8085/\"")  //shivanshu
