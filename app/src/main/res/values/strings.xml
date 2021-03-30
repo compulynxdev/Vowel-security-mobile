@@ -342,4 +342,5 @@
     <string name="add_new_visitor">Add New Visitor</string>
     <string name="view_document_image">View Document Image</string>
     <string name="alert_contact_not_start_with_zero">Contact number should not start with 0!</string>
+    <string name="web_mode_only">You can\'t login through mobile application. Please contact to administrator!</string>
 </resources>

@@ -79,28 +79,33 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                     try {
                         assert response.body() != null;
                         JSONObject object = new JSONObject(response.body().string());
-                        if (object.has("role") && object.getString("role").equals("DEVICE_ADMIN")) {
-                            getDataManager().setUsername(userName);
-                            getDataManager().setUserPassword(password);
-                            getDataManager().setAccessToken(object.getString("id_token"));
-                            getDataManager().setAccountId(object.getString("accountId"));
-                            getDataManager().setIdentifyFeature(object.getBoolean("identityFeature"));
-                            getDataManager().setLevelName(object.getString("levelName"));
-                            getDataManager().setAccountName(object.getString("accountName"));
-                            getDataManager().setCommercial(object.has("type") && object.getString("type").equalsIgnoreCase("COMMERCIAL"));
-                            getDataManager().setUserId(object.getString("userId"));
-                            if (object.has("country"))
-                                getDataManager().setPropertyCountry(object.getString("country"));
-                            else
-                                getDataManager().setPropertyCountry(getNavigator().getContext().getString(R.string.default_country));
-                            if (object.has("dialingCode"))
-                                getDataManager().setPropertyDialingCode(object.getString("dialingCode"));
-                            else
-                                getDataManager().setPropertyDialingCode(getNavigator().getContext().getString(R.string.default_dialing_code));
-                            doGetUserDetail(isRemember);
-                        } else {
+                        if(object.has("mobileMode") && !object.getString("mobileMode").equalsIgnoreCase("webportal")) {
+                            if (object.has("role") && object.getString("role").equals("DEVICE_ADMIN")) {
+                                getDataManager().setUsername(userName);
+                                getDataManager().setUserPassword(password);
+                                getDataManager().setAccessToken(object.getString("id_token"));
+                                getDataManager().setAccountId(object.getString("accountId"));
+                                getDataManager().setIdentifyFeature(object.getBoolean("identityFeature"));
+                                getDataManager().setLevelName(object.getString("levelName"));
+                                getDataManager().setAccountName(object.getString("accountName"));
+                                getDataManager().setCommercial(object.has("type") && object.getString("type").equalsIgnoreCase("COMMERCIAL"));
+                                getDataManager().setUserId(object.getString("userId"));
+                                if (object.has("country"))
+                                    getDataManager().setPropertyCountry(object.getString("country"));
+                                else
+                                    getDataManager().setPropertyCountry(getNavigator().getContext().getString(R.string.default_country));
+                                if (object.has("dialingCode"))
+                                    getDataManager().setPropertyDialingCode(object.getString("dialingCode"));
+                                else
+                                    getDataManager().setPropertyDialingCode(getNavigator().getContext().getString(R.string.default_dialing_code));
+                                doGetUserDetail(isRemember);
+                            } else {
+                                getNavigator().hideLoading();
+                                getNavigator().showAlert(R.string.alert, R.string.alert_invalid_role);
+                            }
+                        }else {
                             getNavigator().hideLoading();
-                            getNavigator().showAlert(R.string.alert, R.string.alert_invalid_role);
+                            getNavigator().showAlert(R.string.alert, R.string.web_mode_only);
                         }
                     } catch (Exception e) {
                         getNavigator().hideLoading();
