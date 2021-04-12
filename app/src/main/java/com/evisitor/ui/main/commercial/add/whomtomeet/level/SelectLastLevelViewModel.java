@@ -49,7 +49,9 @@ public class SelectLastLevelViewModel extends BaseViewModel<SelectLastLevelNavig
                         } catch (Exception e) {
                             getNavigator().showToast(R.string.alert_error);
                         }
-                    } else {
+                    } else if (response.code() == 401) {
+                        getNavigator().openActivityOnTokenExpire();
+                    }  else {
                         getNavigator().handleApiError(response.errorBody());
                     }
                 }

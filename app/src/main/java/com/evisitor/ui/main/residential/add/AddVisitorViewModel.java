@@ -74,7 +74,9 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                         } catch (Exception e) {
                             getNavigator().showAlert(R.string.alert, R.string.alert_error);
                         }
-                    } else {
+                    } else if (response.code() == 401) {
+                        getNavigator().openActivityOnTokenExpire();
+                    }  else {
                         getNavigator().handleApiError(response.errorBody());
                     }
                 }
@@ -111,7 +113,9 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                         } catch (Exception e) {
                             getNavigator().showAlert(R.string.alert, R.string.alert_error);
                         }
-                    } else {
+                    } else if (response.code() == 401) {
+                        getNavigator().openActivityOnTokenExpire();
+                    }  else {
                         getNavigator().handleApiError(response.errorBody());
                     }
                 }
@@ -218,6 +222,8 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                         } catch (Exception e) {
                             getNavigator().showAlert(R.string.alert, R.string.alert_error);
                         }
+                    }  else if (response.code() == 401) {
+                        getNavigator().openActivityOnTokenExpire();
                     } else {
                         getNavigator().handleApiError(response.errorBody());
                     }
@@ -345,7 +351,9 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                         } catch (Exception e) {
                             getNavigator().showAlert(R.string.alert, R.string.alert_error);
                         }
-                    } else {
+                    } else if (response.code() == 401) {
+                        getNavigator().openActivityOnTokenExpire();
+                    }  else {
                         getNavigator().handleApiError(response.errorBody());
                     }
                 }
@@ -389,7 +397,9 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                         } catch (Exception e) {
                             getNavigator().showAlert(R.string.alert, R.string.alert_error);
                         }
-                    } else {
+                    } else if (response.code() == 401) {
+                        getNavigator().openActivityOnTokenExpire();
+                    }  else {
                         getNavigator().handleApiError(response.errorBody());
                     }
                 }
@@ -467,7 +477,9 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                         } catch (Exception e) {
                             getNavigator().showAlert(R.string.alert, R.string.alert_error);
                         }
-                    } else {
+                    } else if (response.code() == 401) {
+                        getNavigator().openActivityOnTokenExpire();
+                    }  else {
                         getNavigator().handleApiError(response.errorBody());
                     }
                 }
@@ -502,6 +514,8 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                         } catch (Exception e) {
                             getNavigator().showAlert(R.string.alert, R.string.alert_error);
                         }
+                    }  else if (response.code() == 401) {
+                        getNavigator().openActivityOnTokenExpire();
                     } else {
                         getNavigator().handleApiError(response.errorBody());
                     }
