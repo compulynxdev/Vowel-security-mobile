@@ -38,6 +38,7 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
     private final List<String> genderList = new ArrayList<>();
     private final List<IdentityBean> identityTypeList = new ArrayList<>();
     private final List<String> visitorTypeList = new ArrayList<>();
+    private final List<String> visitorTypeModeList = new ArrayList<>();
     private final MutableLiveData<List<HouseDetailBean>> houseDetailMutableList = new MutableLiveData<>();
     private final List<String> employmentList = new ArrayList<>();
     private final MutableLiveData<List<ProfileBean>> profileBeanList = new MutableLiveData<>();
@@ -201,6 +202,9 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
         } else if (visitorData.isCompany && visitorData.companyAddress.isEmpty()) {
             getNavigator().showToast(R.string.alert_enter_comp_address);
             return false;
+        } else if (visitorData.mode.isEmpty()) {
+            getNavigator().showToast(R.string.please_select_visitor_mode);
+            return false;
         } else return true;
     }
 
@@ -226,6 +230,7 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
                 object.put("dialingCode", visitorData.dialingCode);
                 object.put("contactNo", visitorData.contact);
                 object.put("type", "random");
+                object.put("mode", visitorData.mode);
                 object.put("address", visitorData.address);
                 object.put("country", "");
                 object.put("premiseHierarchyDetailsId", visitorData.houseId);  //house or flat id  //->
@@ -349,6 +354,14 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
             visitorTypeList.add("Service Provider");
         }
         return visitorTypeList;
+    }
+
+    List getVisitorTypeMode() {
+        if (visitorTypeModeList.isEmpty()) {
+            visitorTypeModeList.add("Walk-In");
+            visitorTypeModeList.add("Drive-In");
+        }
+        return visitorTypeModeList;
     }
 
     List getEmploymentTypeList() {

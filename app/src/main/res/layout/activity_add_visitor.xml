@@ -90,6 +90,27 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/tv_visitor_mode"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/bg_search"
+                    android:fontFamily="@font/futura_round_medium"
+                    android:gravity="center_vertical"
+                    android:hint="@string/select_visitor_mode"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="8dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black40p"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_visitor_type" />
+
+
+                <TextView
                     android:id="@+id/tv_assigned_to"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
@@ -133,7 +154,7 @@
                     android:theme="@style/EditTextTheme"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_assigned_to"
+                    app:layout_constraintTop_toBottomOf="@id/tv_visitor_mode"
                     tools:ignore="LabelFor"
                     tools:targetApi="o" />
 
@@ -220,6 +241,7 @@
                     android:layout_marginEnd="10dp"
                     android:digits="@string/vehicle_value"
                     android:autofillHints="deviceName"
+                    android:visibility="gone"
                     android:background="@drawable/bg_search"
                     android:fontFamily="@font/futura_round_medium"
                     android:gravity="center_vertical"

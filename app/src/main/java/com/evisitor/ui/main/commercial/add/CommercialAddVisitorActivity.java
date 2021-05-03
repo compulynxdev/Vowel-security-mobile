@@ -248,7 +248,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
         });
 
         setOnClickListener(imgBack, getViewDataBinding().tvVisitorType, getViewDataBinding().tvNationality, getViewDataBinding().tvEmployment, getViewDataBinding().tvIdentity, getViewDataBinding().tvGender, getViewDataBinding().tvWhomToMeet
-                , getViewDataBinding().frameImg, getViewDataBinding().btnAdd, getViewDataBinding().rlCode, getViewDataBinding().tvGadgets);
+                , getViewDataBinding().frameImg, getViewDataBinding().btnAdd, getViewDataBinding().rlCode, getViewDataBinding().tvGadgets,getViewDataBinding().tvVisitorMode);
         getViewDataBinding().tvCode.setText("+".concat(countryCode));
         getViewDataBinding().etIdentity.addTextChangedListener(new TextWatcher() {
             @Override
@@ -305,6 +305,14 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
                 SelectionBottomSheetDialog.newInstance(getString(R.string.select_visitor_type), mViewModel.getVisitorTypeList()).setItemSelectedListener(pos -> {
                     String value = mViewModel.getVisitorTypeList().get(pos).toString();
                     updateVisitorUI(value);
+                }).show(getSupportFragmentManager());
+                break;
+
+
+            case R.id.tv_visitor_mode:
+                SelectionBottomSheetDialog.newInstance(getString(R.string.select_visitor_type), mViewModel.getVisitorTypeMode()).setItemSelectedListener(pos -> {
+                    String value = mViewModel.getVisitorTypeMode().get(pos).toString();
+                    updateVisitorModeUI(value);
                 }).show(getSupportFragmentManager());
                 break;
 
@@ -389,6 +397,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
                 visitorData.address = getViewDataBinding().etAddress.getText().toString().trim();
                 visitorData.gender = getViewDataBinding().tvGender.getText().toString();
                 visitorData.houseId = houseId;
+                visitorData.mode= getViewDataBinding().tvVisitorMode.getText().toString();
                 visitorData.isStaffSelect = isStaffSelect;
                 if (isGuest) {
                     visitorData.purpose = getViewDataBinding().etPurpose.getText().toString();
@@ -478,6 +487,17 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
         if (!isGuest)
             getViewDataBinding().tvWhomToMeet.setVisibility(View.GONE);
         updateFieldConfigurationUI();
+    }
+
+
+    private void updateVisitorModeUI(String visitorType) {
+        getViewDataBinding().tvVisitorMode.setText(visitorType);
+        if (visitorType.equals("Walk-In")) {
+            getViewDataBinding().etVehicle.setVisibility(View.GONE);
+        } else {
+            getViewDataBinding().etVehicle.setVisibility(View.VISIBLE);
+        }
+
     }
 
     private void setIdentity() {

@@ -42,6 +42,7 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
     private final List<String> genderList = new ArrayList<>();
     private final List<IdentityBean> identityTypeList = new ArrayList<>();
     private final List<String> visitorTypeList = new ArrayList<>();
+    private final List<String> visitorCategoryList = new ArrayList<>();
     private final List<String> assignedToList = new ArrayList<>();
     private final List<String> employmentList = new ArrayList<>();
     private final MutableLiveData<List<ProfileBean>> profileBeanList = new MutableLiveData<>();
@@ -183,6 +184,8 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                 object.put("contactNo", addVisitorData.contact);
                 object.put("guestType", AppConstants.WALKIN_VISITOR);
                 object.put("type", "random");
+                object.put("mode", addVisitorData.mode);
+                //object.put("type", addVisitorData..toUpperCase());
                 object.put("address", addVisitorData.address);
                 object.put("country", "");
                 object.put("premiseHierarchyDetailsId", addVisitorData.houseId);  //house or flat id
@@ -287,7 +290,10 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
         } else if (visitorData.isCompany && visitorData.companyAddress.isEmpty()) {
             getNavigator().showToast(R.string.alert_enter_comp_address);
             return false;
-        } else return true;
+        } if (visitorData.mode.isEmpty()) {
+            getNavigator().showToast(R.string.please_select_visitor_mode);
+            return false;
+        }else return true;
     }
 
     void doAddSp(AddVisitorData visitorData) {
@@ -313,6 +319,7 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                 object.put("dialingCode", visitorData.dialingCode);
                 object.put("contactNo", visitorData.contact);
                 object.put("type", "random");
+                object.put("mode", visitorData.mode);
                 object.put("address", visitorData.address);
                 object.put("country", "");
                 //object.put("expectedDate", new Date());
@@ -438,6 +445,14 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
             visitorTypeList.add("Service Provider");
         }
         return visitorTypeList;
+    }
+
+    List getVisitorCategoryList() {
+        if (visitorCategoryList.isEmpty()) {
+            visitorCategoryList.add("Drive-In");
+            visitorCategoryList.add("Walk-In");
+        }
+        return visitorCategoryList;
     }
 
     List getAssignedToList() {

@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -290,6 +291,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
     private void setUp() {
         countryCode = getViewModel().getDataManager().getPropertyDialingCode();
         ImageView imgBack = findViewById(R.id.img_back);
+        TextView visitorCtegory = findViewById(R.id.tv_visitor_mode);
         imgBack.setVisibility(View.VISIBLE);
         ImageView imgScan = findViewById(R.id.img_search);
         if (isGuest == null)
@@ -301,8 +303,9 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
             startActivityForResult(i, SCAN_RESULT);
         });
         setOnClickListener(imgBack, getViewDataBinding().tvVisitorType, getViewDataBinding().tvNationality, getViewDataBinding().tvAssignedTo, getViewDataBinding().tvEmployment, getViewDataBinding().tvIdentity, getViewDataBinding().tvGender, getViewDataBinding().tvOwner, getViewDataBinding().tvHost
-                , getViewDataBinding().frameImg, getViewDataBinding().btnAdd, getViewDataBinding().rlCode);
+                , getViewDataBinding().frameImg, getViewDataBinding().btnAdd, getViewDataBinding().rlCode, visitorCtegory);
         getViewDataBinding().tvCode.setText("+".concat(countryCode));
+
         getViewDataBinding().etIdentity.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -358,6 +361,13 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                 SelectionBottomSheetDialog.newInstance(getString(R.string.select_visitor_type), mViewModel.getVisitorTypeList()).setItemSelectedListener(pos -> {
                     String value = mViewModel.getVisitorTypeList().get(pos).toString();
                     updateVisitorUI(value);
+                }).show(getSupportFragmentManager());
+                break;
+
+            case R.id.tv_visitor_mode:
+                SelectionBottomSheetDialog.newInstance(getString(R.string.select_visitor_category), mViewModel.getVisitorCategoryList()).setItemSelectedListener(pos -> {
+                    String value = mViewModel.getVisitorCategoryList().get(pos).toString();
+                    updateVisitorCategory(value);
                 }).show(getSupportFragmentManager());
                 break;
 
@@ -432,7 +442,6 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                     showToast(R.string.alert_select_visitor);
                     return;
                 }
-
                 AddVisitorData visitorData = new AddVisitorData();
                 visitorData.isGuest = isGuest;
                 visitorData.identityNo = getViewDataBinding().etIdentity.getText().toString().trim();
@@ -444,6 +453,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                 visitorData.gender = getViewDataBinding().tvGender.getText().toString();
                 visitorData.houseId = houseId;
                 visitorData.residentId = residentId;
+                visitorData.mode = getViewDataBinding().tvVisitorMode.getText().toString();
                 if (isGuest) {
                     if (mViewModel.doVerifyGuestInputs(visitorData, mViewModel.getDataManager().getGuestConfiguration())) {
                         mViewModel.doCheckGuestStatus(getViewDataBinding().etIdentity.getText().toString().trim(), idType);
@@ -521,6 +531,15 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
         updateFieldConfigurationUI();
     }
 
+    private void updateVisitorCategory(String visitorType) {
+        getViewDataBinding().tvVisitorMode.setText(visitorType);
+        if (visitorType.equals("Walk-In")) {
+            getViewDataBinding().etVehicle.setVisibility(View.GONE);
+        } else {
+            getViewDataBinding().etVehicle.setVisibility(View.VISIBLE);
+        }
+    }
+
     private void setIdentity() {
         if (mViewModel.getDataManager().isIdentifyFeature() || !isGuest) {
             getViewDataBinding().etIdentity.setVisibility(View.VISIBLE);
@@ -582,6 +601,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
         addVisitorData.gender = (mViewModel.getDataManager().getGuestConfiguration().getGuestField().isGender()) ? getViewDataBinding().tvGender.getText().toString() : "";
         addVisitorData.houseId = houseId;
         addVisitorData.residentId = residentId;
+        addVisitorData.mode=getViewDataBinding().tvVisitorMode.getText().toString().trim();
 
         if (!isAccept) {
             addVisitorData.rejectedReason = input;

@@ -39,7 +39,11 @@ public class AddVisitorData {
     public String companyName = "";
     public String companyAddress = "";
 
+
+
     //commercial
     public String purpose;
     public List<DeviceBean> deviceBeanList = new ArrayList<>();
+
+    public String mode;
 }
