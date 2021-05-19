@@ -1,5 +1,7 @@
 package com.evisitor.data.model;
 
+import android.graphics.Bitmap;
+
 import com.google.gson.annotations.SerializedName;
 
 public class Guests {
@@ -81,6 +83,17 @@ public class Guests {
 
     @SerializedName("documentType")
     private String documentType;
+
+    @SerializedName("mode")
+    private String mode;
+
+    @SerializedName("no_plate_bmp_img")
+    public Bitmap no_plate_bmp_img;
+
+    @SerializedName("vehicleImage")
+    public String vehicleImage;
+
+
 
     public String getCheckInTime() {
         return checkInTime;
@@ -330,5 +343,29 @@ public class Guests {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
+
+    public Bitmap getNo_plate_bmp_img() {
+        return no_plate_bmp_img;
+    }
+
+    public void setNo_plate_bmp_img(Bitmap no_plate_bmp_img) {
+        this.no_plate_bmp_img = no_plate_bmp_img;
+    }
+
+    public String getVehicleImage() {
+        return vehicleImage;
+    }
+
+    public void setVehicleImage(String vehicleImage) {
+        this.vehicleImage = vehicleImage;
     }
 }

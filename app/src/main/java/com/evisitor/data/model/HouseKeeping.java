@@ -76,6 +76,17 @@ public class HouseKeeping {
     @SerializedName("documentType")
     private String documentType;
 
+    @SerializedName("mode")
+    private String mode;
+
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
+
     public String getProfile() {
         return profile == null ? "" : profile;
     }

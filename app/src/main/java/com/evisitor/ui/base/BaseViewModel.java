@@ -20,6 +20,7 @@ public class BaseViewModel<N extends BaseNavigator> extends ViewModel {
     private final DataManager dataManager;
     private WeakReference<N> mNavigator;
     private HashMap<String, String> identityTypeList;
+    private HashMap<String, String> visitorModeList;
 
 
     public BaseViewModel(DataManager dataManager) {
@@ -47,6 +48,16 @@ public class BaseViewModel<N extends BaseNavigator> extends ViewModel {
         }
 
         return identityTypeList.get(key);
+    }
+
+    public String getVisitorMode(String key) {
+        if (visitorModeList == null) {
+            visitorModeList = new HashMap<>();
+            visitorModeList.put("Walk-In", "Walk-In");
+            visitorModeList.put("drive-in", "Drive-In");
+        }
+
+        return visitorModeList.get(key);
     }
 
     public void doGetGuestConfiguration(GuestConfigurationCallback callback) {

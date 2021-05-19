@@ -116,7 +116,7 @@ public class ImagePickBottomSheetDialog extends BaseBottomSheetDialog<DialogImag
         }
     }
 
-    private void dispatchTakePictureIntent() {
+    public void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getBaseActivity().getPackageManager()) != null) {

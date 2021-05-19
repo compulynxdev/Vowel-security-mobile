@@ -77,7 +77,7 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                         }
                     } else if (response.code() == 401) {
                         getNavigator().openActivityOnTokenExpire();
-                    }  else {
+                    } else {
                         getNavigator().handleApiError(response.errorBody());
                     }
                 }
@@ -116,7 +116,7 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                         }
                     } else if (response.code() == 401) {
                         getNavigator().openActivityOnTokenExpire();
-                    }  else {
+                    } else {
                         getNavigator().handleApiError(response.errorBody());
                     }
                 }
@@ -149,7 +149,7 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
         } else if (configurationResponse.getGuestField().isContactNo() && (visitorData.contact.length() < 7 || visitorData.contact.length() > 12)) {
             getNavigator().showToast(R.string.alert_contact_length);
             return false;
-        }else if (configurationResponse.getGuestField().isContactNo() && visitorData.contact.startsWith("0")) {
+        } else if (configurationResponse.getGuestField().isContactNo() && visitorData.contact.startsWith("0")) {
             getNavigator().showToast(R.string.alert_contact_not_start_with_zero);
             return false;
         } /* else if (configurationResponse.getGuestField().isAddress() && visitorData.address.isEmpty()) {
@@ -163,6 +163,12 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
             return false;
         } else if (visitorData.residentId.isEmpty()) {
             getNavigator().showToast(R.string.alert_select_host);
+            return false;
+        } else if (visitorData.mode.isEmpty()) {
+            getNavigator().showToast(R.string.please_select_visitor_mode);
+            return false;
+        } else if ((visitorData.mode.equalsIgnoreCase("Drive-In") && visitorData.vehicleNo == null) || ((visitorData.mode.equalsIgnoreCase("Drive-In") && visitorData.vehicleNo.isEmpty()))) {
+            getNavigator().showToast(R.string.please_enter_vehical_no);
             return false;
         } else return true;
     }
@@ -207,6 +213,10 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                     object.put("rejectedBy", getDataManager().getUserDetail().getFullName());
                     object.put("rejectReason", addVisitorData.rejectedReason);
                 }
+
+                if (addVisitorData.vehicalNoPlateBitMapImg != null) {
+                    object.put("vehicleImage", AppUtils.getBitmapToBase64(addVisitorData.vehicalNoPlateBitMapImg));
+                }
             } catch (Exception e) {
                 AppLogger.w(TAG, e.toString());
             }
@@ -225,7 +235,7 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                         } catch (Exception e) {
                             getNavigator().showAlert(R.string.alert, R.string.alert_error);
                         }
-                    }  else if (response.code() == 401) {
+                    } else if (response.code() == 401) {
                         getNavigator().openActivityOnTokenExpire();
                     } else {
                         getNavigator().handleApiError(response.errorBody());
@@ -263,7 +273,7 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
         } else if (visitorData.contact.length() < 7 || visitorData.contact.length() > 12) {
             getNavigator().showToast(R.string.alert_contact_length);
             return false;
-        }else if (visitorData.contact.startsWith("0")) {
+        } else if (visitorData.contact.startsWith("0")) {
             getNavigator().showToast(R.string.alert_contact_not_start_with_zero);
             return false;
         } /* else if (visitorData.address.isEmpty()) {
@@ -290,10 +300,13 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
         } else if (visitorData.isCompany && visitorData.companyAddress.isEmpty()) {
             getNavigator().showToast(R.string.alert_enter_comp_address);
             return false;
-        } if (visitorData.mode.isEmpty()) {
+        } else if (visitorData.mode.isEmpty()) {
             getNavigator().showToast(R.string.please_select_visitor_mode);
             return false;
-        }else return true;
+        } else if ((visitorData.mode.equalsIgnoreCase("Drive-In") && visitorData.vehicleNo == null) || ((visitorData.mode.equalsIgnoreCase("Drive-In") && visitorData.vehicleNo.isEmpty()))) {
+            getNavigator().showToast(R.string.please_enter_vehical_no);
+            return false;
+        } else return true;
     }
 
     void doAddSp(AddVisitorData visitorData) {
@@ -339,6 +352,10 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                     object.put("rejectedBy", getDataManager().getUserDetail().getFullName());
                     object.put("rejectReason", visitorData.rejectedReason);
                 }
+                if (visitorData.vehicalNoPlateBitMapImg != null) {
+                    object.put("vehicleImage", AppUtils.getBitmapToBase64(visitorData.vehicalNoPlateBitMapImg));
+                }
+
             } catch (Exception e) {
                 AppLogger.w(TAG, e.toString());
             }
@@ -360,7 +377,7 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                         }
                     } else if (response.code() == 401) {
                         getNavigator().openActivityOnTokenExpire();
-                    }  else {
+                    } else {
                         getNavigator().handleApiError(response.errorBody());
                     }
                 }
@@ -406,7 +423,7 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                         }
                     } else if (response.code() == 401) {
                         getNavigator().openActivityOnTokenExpire();
-                    }  else {
+                    } else {
                         getNavigator().handleApiError(response.errorBody());
                     }
                 }
@@ -494,7 +511,7 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                         }
                     } else if (response.code() == 401) {
                         getNavigator().openActivityOnTokenExpire();
-                    }  else {
+                    } else {
                         getNavigator().handleApiError(response.errorBody());
                     }
                 }
@@ -529,7 +546,7 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                         } catch (Exception e) {
                             getNavigator().showAlert(R.string.alert, R.string.alert_error);
                         }
-                    }  else if (response.code() == 401) {
+                    } else if (response.code() == 401) {
                         getNavigator().openActivityOnTokenExpire();
                     } else {
                         getNavigator().handleApiError(response.errorBody());

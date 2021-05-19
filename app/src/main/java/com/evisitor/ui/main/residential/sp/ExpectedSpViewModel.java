@@ -103,6 +103,7 @@ public class ExpectedSpViewModel extends BaseCheckInOutViewModel<ExpectedSPNavig
 
         if (!spBean.getStatus().equalsIgnoreCase("PENDING"))
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.status, spBean.getStatus())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.visitor_mode, spBean.getMode())));
 
         getNavigator().hideLoading();
         return visitorProfileBeanList;
@@ -118,6 +119,10 @@ public class ExpectedSpViewModel extends BaseCheckInOutViewModel<ExpectedSPNavig
                 object.put("premiseHierarchyDetailsId", getDataManager().getSpDetail().getFlatId());
                 object.put("enteredVehicleNo", getDataManager().getSpDetail().getEnteredVehicleNo());
                 object.put("type", AppConstants.SERVICE_PROVIDER);
+                if (getDataManager().getSpDetail().getVehicleBitMapImage() != null) {
+                    object.put("vehicleImage", AppUtils.getBitmapToBase64(getDataManager().getSpDetail().getVehicleBitMapImage()));
+                }
+                //  object.put("type", AppConstants.SERVICE_PROVIDER);
             } catch (JSONException e) {
                 AppLogger.w(TAG, e.toString());
             }
@@ -138,6 +143,9 @@ public class ExpectedSpViewModel extends BaseCheckInOutViewModel<ExpectedSPNavig
                 object.put("state", isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);
                 object.put("rejectedBy", isAccept ? null : getDataManager().getUserDetail().getFullName());
                 object.put("rejectReason", input);
+                if (getDataManager().getSpDetail().getVehicleBitMapImage() != null) {
+                    object.put("vehicleImage", AppUtils.getBitmapToBase64(getDataManager().getSpDetail().getVehicleBitMapImage()));
+                }
             } catch (JSONException e) {
                 AppLogger.w(TAG, e.toString());
             }

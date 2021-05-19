@@ -1,6 +1,7 @@
 package com.evisitor.ui.main.home.visitorprofile;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 
@@ -11,14 +12,24 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.evisitor.EVisitor;
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
+import com.evisitor.data.DataManager;
+import com.evisitor.data.model.CommercialStaffResponse;
 import com.evisitor.data.model.CommercialVisitorResponse;
 import com.evisitor.data.model.DeviceBean;
+import com.evisitor.data.model.Guests;
+import com.evisitor.data.model.HouseKeepingResponse;
+import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.databinding.DialogVisitorProfileBinding;
 import com.evisitor.ui.base.BaseDialog;
+import com.evisitor.ui.dialog.ImagePickBottomSheetDialog;
+import com.evisitor.ui.dialog.ImagePickCallback;
 import com.evisitor.ui.main.commercial.gadgets.GadgetsInputActivity;
+import com.evisitor.util.AppUtils;
+import com.evisitor.util.PermissionUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -34,7 +45,7 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
     private VisitorProfileCallback callback;
     private List<VisitorProfileBean> visitorInfoList;
     private String btnLabel = "";
-    private String image = "", documentImage = "";
+    private String image = "", documentImage = "", vehicalNoPlateImg = "";
     private boolean isBtnVisible = true;
     private boolean isCommercialGuest = false;
 
@@ -50,6 +61,8 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        DataManager dataManager = EVisitor.getInstance().getDataManager();
         mViewModel.setNavigator(getBaseActivity());
     }
 
@@ -82,10 +95,18 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
         return this;
     }
 
+
     public VisitorProfileDialog setDocumentImage(String documentImage) {
         this.documentImage = documentImage;
         return this;
     }
+
+    public VisitorProfileDialog setVehicalNoPlateImg(String vehicalNoPlateImg) {
+        this.vehicalNoPlateImg = vehicalNoPlateImg;
+        return this;
+    }
+
+
     public VisitorProfileDialog setIsCommercialGuest(boolean isTrue) {
         this.isCommercialGuest = isTrue;
         return this;
@@ -104,10 +125,14 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getViewDataBinding().imgClose.setOnClickListener(this);
+        getViewDataBinding().tvClickImage.setOnClickListener(this);
+        getViewDataBinding().viewNoPlateImg.setOnClickListener(this);
+
         getViewDataBinding().btnOk.setVisibility(isBtnVisible ? View.VISIBLE : View.GONE);
         getViewDataBinding().btnOk.setOnClickListener(this);
         getViewDataBinding().imgProfile.setOnClickListener(this);
         getViewDataBinding().tvDocumentImage.setOnClickListener(this);
+        getViewDataBinding().showNoPlatImage.setOnClickListener(this);
         if (!btnLabel.isEmpty()) {
             getViewDataBinding().btnOk.setText(btnLabel);
         }
@@ -140,6 +165,8 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
                     getViewDataBinding().tvGadgetsInfo.setVisibility(View.VISIBLE);
                     getViewDataBinding().tvGadgetsInfo.setText(getString(R.string.add_gadgets_info));
                     getViewDataBinding().tvGadgetsInfo.setOnClickListener(this);
+
+                    getViewDataBinding().tvClickImage.setVisibility(View.VISIBLE);
                 } else {
                     getViewDataBinding().tvGadgetsInfo.setVisibility(View.GONE);
                 }
@@ -148,11 +175,19 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
             }
         } else {
             getViewDataBinding().tvGadgetsInfo.setVisibility(View.GONE);
+            if (btnLabel.equalsIgnoreCase(getString(R.string.check_in))) {
+                getViewDataBinding().tvClickImage.setVisibility(View.VISIBLE);
+            }
         }
 
         if (!documentImage.isEmpty()) {
             getViewDataBinding().tvDocumentImage.setVisibility(View.VISIBLE);
         } else getViewDataBinding().tvDocumentImage.setVisibility(View.GONE);
+
+        if (vehicalNoPlateImg != null && !vehicalNoPlateImg.isEmpty()) {
+            getViewDataBinding().viewNoPlateImg.setVisibility(View.VISIBLE);
+        } else getViewDataBinding().viewNoPlateImg.setVisibility(View.GONE);
+
 
     }
 
@@ -181,7 +216,92 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
             case R.id.img_profile:
                 showFullImage(image);
                 break;
+            case R.id.show_no_plat_image:
+                Bitmap bitmap = null;
+                DataManager dataManager = mViewModel.getDataManager();
+                if (dataManager.isCommercial()) {
+                    CommercialVisitorResponse.CommercialGuest guests = dataManager.getCommercialVisitorDetail();
+                    if (guests != null) {
+                        bitmap = guests.getNo_plate_bmp_img();
+                    }
+                    CommercialStaffResponse.ContentBean staff = dataManager.getCommercialStaff();
+                    if (staff != null) {
+                        bitmap = staff.getBitmapVehicleImage();
+                    }
 
+                } else {
+                    Guests guests = dataManager.getGuestDetail();
+                    if (guests != null) {
+                        bitmap = guests.getNo_plate_bmp_img();
+                    }
+                    HouseKeepingResponse.ContentBean hkBean = dataManager.getHouseKeeping();
+                    if (hkBean != null) {
+                        bitmap = hkBean.getVehicalBitmapImg();
+                    }
+                }
+
+                ServiceProvider spBean = dataManager.getSpDetail();
+                if (spBean != null) {
+                    bitmap = spBean.getVehicleBitMapImage();
+
+                }
+                showBitmapImage(bitmap);
+                break;
+
+
+            case R.id.tv_click_image:
+                if (PermissionUtils.RequestMultiplePermissionCamera(getBaseActivity())) {
+                    ImagePickBottomSheetDialog.newInstance(new ImagePickCallback() {
+                        @Override
+                        public void onImageReceived(Bitmap bitmap) {
+                            if (bitmap != null) {
+                                getViewDataBinding().showNoPlatImage.setVisibility(View.VISIBLE);
+                            } else {
+                                getViewDataBinding().showNoPlatImage.setVisibility(View.GONE);
+                            }
+                            DataManager dataManager = mViewModel.getDataManager();
+                            if (dataManager.isCommercial()) {
+                                CommercialVisitorResponse.CommercialGuest guests = dataManager.getCommercialVisitorDetail();
+                                if (guests != null) {
+                                    guests.setNo_plate_bmp_img(bitmap);
+                                    dataManager.setCommercialVisitorDetail(guests);
+
+                                }
+
+                                CommercialStaffResponse.ContentBean staff = dataManager.getCommercialStaff();
+                                if (staff != null) {
+                                    staff.setBitmapVehicleImage(bitmap);
+                                    dataManager.setCommercialStaff(staff);
+                                }
+
+                            } else {
+                                Guests guests = dataManager.getGuestDetail();
+                                if (guests != null) {
+                                    guests.setNo_plate_bmp_img(bitmap);
+                                    dataManager.setGuestDetail(guests);
+                                }
+
+                                HouseKeepingResponse.ContentBean hkBean = dataManager.getHouseKeeping();
+                                if (hkBean != null) {
+                                    hkBean.setVehicalBitmapImg(bitmap);
+                                    dataManager.setHouseKeeping(hkBean);
+                                }
+                            }
+
+                            ServiceProvider spBean = dataManager.getSpDetail();
+                            if (spBean != null) {
+                                spBean.setVehicleBitMapImage(bitmap);
+                                dataManager.setSPDetail(spBean);
+                            }
+                        }
+
+                        @Override
+                        public void onView() {
+
+                        }
+                    }, "").show(getBaseActivity().getSupportFragmentManager());
+                }
+                break;
 
             case R.id.tv_document_image:
                 showFullImage(documentImage);
@@ -193,6 +313,12 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
                     i.putExtra("list", new Gson().toJson(deviceBeanList));
                 i.putExtra("add", btnLabel.equalsIgnoreCase(getString(R.string.check_in)));
                 startActivityForResult(i, SCAN_RESULT);
+                break;
+
+            case R.id.view_no_plate_img:
+                if (!vehicalNoPlateImg.isEmpty()) {
+                    showFullImage(vehicalNoPlateImg);
+                }
                 break;
         }
     }

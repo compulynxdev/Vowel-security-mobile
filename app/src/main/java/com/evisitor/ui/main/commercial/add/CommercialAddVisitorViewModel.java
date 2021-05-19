@@ -67,10 +67,10 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
         } else if (configurationResponse.getGuestField().isContactNo() && (visitorData.contact.length() < 7 || visitorData.contact.length() > 12)) {
             getNavigator().showToast(R.string.alert_contact_length);
             return false;
-        }else if (configurationResponse.getGuestField().isContactNo() && visitorData.contact.startsWith("0")) {
+        } else if (configurationResponse.getGuestField().isContactNo() && visitorData.contact.startsWith("0")) {
             getNavigator().showToast(R.string.alert_contact_not_start_with_zero);
             return false;
-        }  else if (configurationResponse.getGuestField().isGender() && visitorData.gender.isEmpty()) {
+        } else if (configurationResponse.getGuestField().isGender() && visitorData.gender.isEmpty()) {
             getNavigator().showToast(R.string.alert_select_gender);
             return false;
         } else if (visitorData.houseId.isEmpty()) {
@@ -99,6 +99,7 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
                 object.put("contactNo", addVisitorData.contact);
                 object.put("guestType", AppConstants.WALKIN_VISITOR);
                 object.put("type", "random");
+                object.put("mode", addVisitorData.mode);
                 object.put("address", addVisitorData.address);
                 object.put("country", "");
                 if (addVisitorData.isStaffSelect) {
@@ -126,6 +127,10 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
                     object.put("rejectedBy", getDataManager().getUserDetail().getFullName());
                     object.put("rejectReason", addVisitorData.rejectedReason);
                 }
+
+                if (addVisitorData.vehicalNoPlateBitMapImg != null) {
+                    object.put("vehicleImage", AppUtils.getBitmapToBase64(addVisitorData.vehicalNoPlateBitMapImg));
+                }
             } catch (Exception e) {
                 AppLogger.w("CommercialAddVisitorViewModel", e.toString());
             }
@@ -145,7 +150,7 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
                         }
                     } else if (response.code() == 401) {
                         getNavigator().openActivityOnTokenExpire();
-                    }  else {
+                    } else {
                         getNavigator().handleApiError(response.errorBody());
                     }
                 }
@@ -181,10 +186,10 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
         } else if (visitorData.contact.length() < 7 || visitorData.contact.length() > 12) {
             getNavigator().showToast(R.string.alert_contact_length);
             return false;
-        }else if (visitorData.contact.startsWith("0")) {
+        } else if (visitorData.contact.startsWith("0")) {
             getNavigator().showToast(R.string.alert_contact_not_start_with_zero);
             return false;
-        }  else if (visitorData.gender.isEmpty()) {
+        } else if (visitorData.gender.isEmpty()) {
             getNavigator().showToast(R.string.alert_select_gender);
             return false;
         }/* else if (visitorData.houseId.isEmpty()) {
@@ -248,6 +253,9 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
                     object.put("rejectedBy", getDataManager().getUserDetail().getFullName());
                     object.put("rejectReason", visitorData.rejectedReason);
                 }
+                if (visitorData.vehicalNoPlateBitMapImg != null) {
+                    object.put("vehicleImage", AppUtils.getBitmapToBase64(visitorData.vehicalNoPlateBitMapImg));
+                }
             } catch (Exception e) {
                 AppLogger.w("CommercialAddVisitorViewModel", e.toString());
             }
@@ -267,7 +275,7 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
                         } catch (Exception e) {
                             getNavigator().showAlert(R.string.alert, R.string.alert_error);
                         }
-                    }  else if (response.code() == 401) {
+                    } else if (response.code() == 401) {
                         getNavigator().openActivityOnTokenExpire();
                     } else {
                         getNavigator().handleApiError(response.errorBody());
@@ -315,7 +323,7 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
                         }
                     } else if (response.code() == 401) {
                         getNavigator().openActivityOnTokenExpire();
-                    }  else {
+                    } else {
                         getNavigator().handleApiError(response.errorBody());
                     }
                 }
@@ -395,7 +403,7 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
                         }
                     } else if (response.code() == 401) {
                         getNavigator().openActivityOnTokenExpire();
-                    }  else {
+                    } else {
                         getNavigator().handleApiError(response.errorBody());
                     }
                 }
@@ -430,7 +438,7 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
                         } catch (Exception e) {
                             getNavigator().showAlert(R.string.alert, R.string.alert_error);
                         }
-                    }  else if (response.code() == 401) {
+                    } else if (response.code() == 401) {
                         getNavigator().openActivityOnTokenExpire();
                     } else {
                         getNavigator().handleApiError(response.errorBody());
@@ -465,7 +473,7 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
                         } catch (Exception e) {
                             getNavigator().showAlert(R.string.alert, R.string.alert_error);
                         }
-                    }  else if (response.code() == 401) {
+                    } else if (response.code() == 401) {
                         getNavigator().openActivityOnTokenExpire();
                     } else {
                         getNavigator().handleApiError(response.errorBody());

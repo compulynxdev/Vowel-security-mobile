@@ -101,6 +101,7 @@ public class ExpectedHKViewModel extends BaseCheckInOutViewModel<ExpectedHKNavig
                 visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, hkBean.getResidentName())));
             }
         }
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.visitor_mode, hkBean.getMode())));
         getNavigator().hideLoading();
         return visitorProfileBeanList;
     }
@@ -136,6 +137,11 @@ public class ExpectedHKViewModel extends BaseCheckInOutViewModel<ExpectedHKNavig
                 object.put("state", isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);
                 object.put("rejectedBy", isAccept ? null : getDataManager().getUserDetail().getFullName());
                 object.put("rejectReason", input);
+
+                if (getDataManager().getHouseKeeping().getVehicalBitmapImg() != null) {
+                    object.put("vehicleImage", AppUtils.getBitmapToBase64(getDataManager().getHouseKeeping().getVehicalBitmapImg()));
+                }
+
             } catch (JSONException e) {
                 AppLogger.w(TAG, e.toString());
             }

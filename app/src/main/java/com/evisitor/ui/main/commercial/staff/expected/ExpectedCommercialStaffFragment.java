@@ -77,7 +77,8 @@ public class ExpectedCommercialStaffFragment extends BaseFragment<FragmentExpect
             VisitorProfileDialog.newInstance(visitorProfileBeanList, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
                 mViewModel.doCheckIn();
-            }).setImage(list.get(pos).getImageUrl()).setDocumentImage(list.get(pos).getDocumentImage()).setBtnLabel(getString(R.string.check_in)).show(getFragmentManager());
+            }).setImage(list.get(pos).getImageUrl()).setDocumentImage(list.get(pos).getDocumentImage()).setBtnLabel(getString(R.string.check_in))
+        .show(getFragmentManager());
         });
         adapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(adapter);

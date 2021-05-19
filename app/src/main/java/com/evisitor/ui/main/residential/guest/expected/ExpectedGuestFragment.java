@@ -80,11 +80,14 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
         adapter = new ExpectedGuestAdapter(guestsList, getContext(), pos -> {
             Guests guestBean = guestsList.get(pos);
             List<VisitorProfileBean> visitorProfileBeanList = mViewModel.setClickVisitorDetail(guestBean);
+
             VisitorProfileDialog.newInstance(visitorProfileBeanList, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
                 decideNextProcess();
             }).setBtnLabel(getString(R.string.check_in)).setBtnVisible(guestBean.getStatus().equalsIgnoreCase("PENDING"))
-                    .setImage(guestBean.getImageUrl()).show(getFragmentManager());
+                    .setImage(guestBean.getImageUrl())
+                    .setVehicalNoPlateImg(guestBean.getVehicleImage()).show(getFragmentManager());
+
         });
         adapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(adapter);

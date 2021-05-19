@@ -162,7 +162,8 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
             VisitorProfileDialog.newInstance(beans, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
                 mViewModel.staffCheckOut();
-            }).setImage(bean.getImageUrl()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
+            }).setImage(bean.getImageUrl()).setBtnLabel(getString(R.string.check_out))
+                    .setVehicalNoPlateImg(bean.getVehicleImage()).show(getFragmentManager());
         });
     }
 
@@ -205,7 +206,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                 if (serviceProvider.isCheckOutFeature() && !serviceProvider.isHostCheckOut())
                     showCallDialog(2);
                 else mViewModel.checkOut(2);
-            }).setImage(serviceProvider.getImageUrl()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
+            }).setImage(serviceProvider.getImageUrl()).setVehicalNoPlateImg(serviceProvider.getVehicleImage()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
         });
     }
 
@@ -219,7 +220,8 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                 if (guests.isCheckOutFeature() && !guests.isHostCheckOut())
                     showCallDialog(0);
                 else mViewModel.checkOut(0);
-            }).setImage(guests.getImageUrl()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
+            }).setImage(guests.getImageUrl()).setBtnLabel(getString(R.string.check_out)).
+                    setVehicalNoPlateImg(guests.getVehicleImage()).show(getFragmentManager());
         });
 
         getViewDataBinding().recyclerView.setAdapter(guestAdapter);

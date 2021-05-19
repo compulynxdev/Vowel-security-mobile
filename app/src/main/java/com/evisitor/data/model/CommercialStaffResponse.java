@@ -1,5 +1,7 @@
 package com.evisitor.data.model;
 
+import android.graphics.Bitmap;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -31,6 +33,7 @@ public class CommercialStaffResponse {
     private boolean first;
     private boolean empty;
     private List<ContentBean> content;
+
 
     public PageableBean getPageable() {
         return pageable;
@@ -119,6 +122,8 @@ public class CommercialStaffResponse {
     public void setContent(List<ContentBean> content) {
         this.content = content;
     }
+
+
 
     public static class PageableBean {
         /**
@@ -322,6 +327,17 @@ public class CommercialStaffResponse {
         private String timeIn;
         private String timeOut;
         private String nationality;
+        private String vehicleImage;
+        private Bitmap bitmapVehicleImage;
+        private String mode;
+
+        public Bitmap getBitmapVehicleImage() {
+            return bitmapVehicleImage;
+        }
+
+        public void setBitmapVehicleImage(Bitmap bitmapVehicleImage) {
+            this.bitmapVehicleImage = bitmapVehicleImage;
+        }
 
         public String getImageUrl() {
             return imageUrl == null ? "" : imageUrl;
@@ -556,7 +572,25 @@ public class CommercialStaffResponse {
         public void setNationality(String nationality) {
             this.nationality = nationality;
         }
+
+        public String getVehicleImage() {
+            return vehicleImage;
+        }
+
+        public void setVehicleImage(String vehicleImage) {
+            this.vehicleImage = vehicleImage;
+        }
+
+        public String getMode() {
+            return mode;
+        }
+
+        public void setMode(String mode) {
+            this.mode = mode;
+        }
     }
+
+
 
 }
 

@@ -2,6 +2,7 @@ package com.evisitor.ui.base;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -195,6 +196,10 @@ public abstract class BaseDialog<T extends ViewDataBinding, V extends BaseViewMo
     public void showFullImage(String imageUrl) {
         if (mActivity != null)
             mActivity.showFullImage(imageUrl);
+    }
+    public void showBitmapImage(Bitmap bitmap) {
+        if (mActivity != null)
+            mActivity.showFullBitmapImage(bitmap);
     }
 
 }

@@ -102,6 +102,9 @@ public class ExpectedGuestViewModel extends BaseCheckInOutViewModel<ExpectedGues
         if (!guests.getStatus().equalsIgnoreCase("PENDING"))
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.status, guests.getStatus())));
 
+        if (guests.getMode() != null && !guests.getMode().isEmpty())
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.visitor_mode, guests.getMode())));
+
         getNavigator().hideLoading();
         return visitorProfileBeanList;
     }
@@ -116,6 +119,9 @@ public class ExpectedGuestViewModel extends BaseCheckInOutViewModel<ExpectedGues
                 object.put("premiseHierarchyDetailsId", getDataManager().getGuestDetail().getFlatId());
                 object.put("enteredVehicleNo", getDataManager().getGuestDetail().getEnteredVehicleNo());
                 object.put("type", AppConstants.GUEST);
+                if (getDataManager().getGuestDetail().getNo_plate_bmp_img() != null) {
+                    object.put("vehicleImage", AppUtils.getBitmapToBase64(getDataManager().getGuestDetail().getNo_plate_bmp_img()));
+                }
             } catch (JSONException e) {
                 AppLogger.w(TAG, e.toString());
             }
@@ -136,6 +142,9 @@ public class ExpectedGuestViewModel extends BaseCheckInOutViewModel<ExpectedGues
                 object.put("state", isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);
                 object.put("rejectedBy", isAccept ? null : getDataManager().getUserDetail().getFullName());
                 object.put("rejectReason", input);
+                if (getDataManager().getGuestDetail().getNo_plate_bmp_img() != null) {
+                    object.put("vehicleImage", AppUtils.getBitmapToBase64(getDataManager().getGuestDetail().getNo_plate_bmp_img()));
+                }
             } catch (JSONException e) {
                 AppLogger.w(TAG, e.toString());
             }

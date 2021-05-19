@@ -22,11 +22,13 @@ import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.AddVisitorData;
 import com.evisitor.data.model.CompanyBean;
 import com.evisitor.data.model.GuestConfigurationResponse;
+import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.HostDetailBean;
 import com.evisitor.data.model.HouseDetailBean;
 import com.evisitor.data.model.IdentityBean;
 import com.evisitor.data.model.ProfileBean;
 import com.evisitor.data.model.RecurrentVisitor;
+import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.databinding.ActivityAddVisitorBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.base.BaseViewModel;
@@ -62,6 +64,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
     private String idType = "";
     private Boolean isGuest;
     private String imageUrl;
+    private Bitmap vehicalImgBitmap;
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, AddVisitorActivity.class);
@@ -303,7 +306,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
             startActivityForResult(i, SCAN_RESULT);
         });
         setOnClickListener(imgBack, getViewDataBinding().tvVisitorType, getViewDataBinding().tvNationality, getViewDataBinding().tvAssignedTo, getViewDataBinding().tvEmployment, getViewDataBinding().tvIdentity, getViewDataBinding().tvGender, getViewDataBinding().tvOwner, getViewDataBinding().tvHost
-                , getViewDataBinding().frameImg, getViewDataBinding().btnAdd, getViewDataBinding().rlCode, visitorCtegory);
+                , getViewDataBinding().frameImg, getViewDataBinding().btnAdd, getViewDataBinding().rlCode, visitorCtegory, getViewDataBinding().takeNoPlateImg, getViewDataBinding().showNoPlatImage);
         getViewDataBinding().tvCode.setText("+".concat(countryCode));
 
         getViewDataBinding().etIdentity.addTextChangedListener(new TextWatcher() {
@@ -436,6 +439,33 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                     }
                 }).show(getSupportFragmentManager());
                 break;
+            case R.id.take_no_plate_img:
+                if (PermissionUtils.RequestMultiplePermissionCamera(this)) {
+                    ImagePickBottomSheetDialog.newInstance(new ImagePickCallback() {
+                        @Override
+                        public void onImageReceived(Bitmap bitmap) {
+                            vehicalImgBitmap = bitmap;
+                            if (bitmap != null) {
+                                getViewDataBinding().showNoPlatImage.setVisibility(View.VISIBLE);
+                            } else {
+                                getViewDataBinding().showNoPlatImage.setVisibility(View.GONE);
+                            }
+
+                        }
+
+                        @Override
+                        public void onView() {
+
+                        }
+                    }, "").show(getSupportFragmentManager());
+                }
+                break;
+
+            case R.id.show_no_plat_image:
+                if (vehicalImgBitmap != null) {
+                    showFullBitmapImage(vehicalImgBitmap);
+                }
+                break;
 
             case R.id.btn_add:
                 if (isGuest == null) {
@@ -454,6 +484,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                 visitorData.houseId = houseId;
                 visitorData.residentId = residentId;
                 visitorData.mode = getViewDataBinding().tvVisitorMode.getText().toString();
+                visitorData.vehicleNo = getViewDataBinding().etVehicle.getText().toString().trim();
                 if (isGuest) {
                     if (mViewModel.doVerifyGuestInputs(visitorData, mViewModel.getDataManager().getGuestConfiguration())) {
                         mViewModel.doCheckGuestStatus(getViewDataBinding().etIdentity.getText().toString().trim(), idType);
@@ -513,6 +544,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
         visitorData.vehicleNo = getViewDataBinding().etVehicle.getText().toString().trim();
         visitorData.dialingCode = countryCode;
         visitorData.isAccept = isAccept;
+        visitorData.vehicalNoPlateBitMapImg = vehicalImgBitmap;
         mViewModel.doAddSp(visitorData);
     }
 
@@ -535,7 +567,9 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
         getViewDataBinding().tvVisitorMode.setText(visitorType);
         if (visitorType.equals("Walk-In")) {
             getViewDataBinding().etVehicle.setVisibility(View.GONE);
+            getViewDataBinding().takeNoPlateImg.setVisibility(View.GONE);
         } else {
+            getViewDataBinding().takeNoPlateImg.setVisibility(View.VISIBLE);
             getViewDataBinding().etVehicle.setVisibility(View.VISIBLE);
         }
     }
@@ -601,8 +635,8 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
         addVisitorData.gender = (mViewModel.getDataManager().getGuestConfiguration().getGuestField().isGender()) ? getViewDataBinding().tvGender.getText().toString() : "";
         addVisitorData.houseId = houseId;
         addVisitorData.residentId = residentId;
-        addVisitorData.mode=getViewDataBinding().tvVisitorMode.getText().toString().trim();
-
+        addVisitorData.mode = getViewDataBinding().tvVisitorMode.getText().toString().trim();
+        addVisitorData.vehicalNoPlateBitMapImg = vehicalImgBitmap;
         if (!isAccept) {
             addVisitorData.rejectedReason = input;
         }
@@ -830,5 +864,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
         getViewDataBinding().etContact.setText(recurrentVisitor.getContactNo());
         getViewDataBinding().tvGender.setText(recurrentVisitor.getGender());
         getViewDataBinding().etVehicle.setText(recurrentVisitor.getExpectedVehicleNo());
+        getViewDataBinding().tvVisitorMode.setText(recurrentVisitor.getMode() != null && !recurrentVisitor.getMode().equals("") ? mViewModel.getVisitorMode(recurrentVisitor.getMode()) : mViewModel.getVisitorMode("Walk-In"));
+
     }
 }

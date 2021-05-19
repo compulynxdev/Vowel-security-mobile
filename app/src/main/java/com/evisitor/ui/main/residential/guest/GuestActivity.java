@@ -54,6 +54,7 @@ public class GuestActivity extends BaseActivity<ActivityExpectedGuestOrVisitorBi
         setUpSearch();
         guestFragment = ExpectedGuestFragment.newInstance();
         replaceFragment(guestFragment, R.id.frame_view);
+
         getViewDataBinding().fabAdd.setOnClickListener(v -> {
             if (mViewModel.getDataManager().isIdentifyFeature()) {
                 AlertDialog.newInstance()
@@ -86,6 +87,7 @@ public class GuestActivity extends BaseActivity<ActivityExpectedGuestOrVisitorBi
 
     private void setUpSearch() {
         getViewDataBinding().header.imgSearch.setVisibility(View.VISIBLE);
+
         getViewDataBinding().header.imgSearch.setOnClickListener(v -> {
             hideKeyboard();
             getViewDataBinding().customSearchView.llSearchBar.setVisibility(getViewDataBinding().customSearchView.llSearchBar.getVisibility() == View.GONE

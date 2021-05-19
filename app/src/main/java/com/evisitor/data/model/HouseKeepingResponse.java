@@ -1,5 +1,7 @@
 package com.evisitor.data.model;
 
+import android.graphics.Bitmap;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -316,6 +318,24 @@ public class HouseKeepingResponse {
         private String rejectedOn;
         private String nationality;
         private String documentImage;
+        private String mode;
+        private Bitmap vehicalBitmapImg;
+
+        public Bitmap getVehicalBitmapImg() {
+            return vehicalBitmapImg;
+        }
+
+        public void setVehicalBitmapImg(Bitmap vehicalBitmapImg) {
+            this.vehicalBitmapImg = vehicalBitmapImg;
+        }
+
+        public String getMode() {
+            return mode;
+        }
+
+        public void setMode(String mode) {
+            this.mode = mode;
+        }
 
         public String getImageUrl() {
             return imageUrl == null ? "" : imageUrl;

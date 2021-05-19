@@ -1,5 +1,7 @@
 package com.evisitor.data.model;
 
+import android.graphics.Bitmap;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -116,6 +118,18 @@ public class CommercialVisitorResponse {
 
         @SerializedName("documentType")
         private String documentType;
+
+//        @SerializedName("noPlateImage")
+//        private String noPlateImage;
+
+        @SerializedName("bmp_profile")
+        public Bitmap bmp_profile;
+
+        @SerializedName("mode")
+        private String mode;
+
+        @SerializedName("no_plate_bmp_img")
+        public Bitmap no_plate_bmp_img;
 
 
         public String getCheckInTime() {
@@ -359,6 +373,29 @@ public class CommercialVisitorResponse {
             this.documentType = documentType;
         }
 
+        public Bitmap getBmp_profile() {
+            return bmp_profile;
+        }
+
+        public void setBmp_profile(Bitmap bmp_profile) {
+            this.bmp_profile = bmp_profile;
+        }
+
+        public String getMode() {
+            return mode;
+        }
+
+        public void setMode(String mode) {
+            this.mode = mode;
+        }
+
+        public Bitmap getNo_plate_bmp_img() {
+            return no_plate_bmp_img;
+        }
+
+        public void setNo_plate_bmp_img(Bitmap no_plate_bmp_img) {
+            this.no_plate_bmp_img = no_plate_bmp_img;
+        }
     }
 
 }

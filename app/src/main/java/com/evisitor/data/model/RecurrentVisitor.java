@@ -65,6 +65,9 @@ public class RecurrentVisitor implements Parcelable {
     @SerializedName("premiseName")
     private String premiseName;
 
+    @SerializedName("mode")
+    private String mode;
+
     public RecurrentVisitor() {
 
     }
@@ -118,6 +121,7 @@ public class RecurrentVisitor implements Parcelable {
         dest.writeString(companyAddress);
         dest.writeString(profile);
         dest.writeString(premiseName);
+        dest.writeString(mode);
     }
 
     @Override
@@ -167,6 +171,14 @@ public class RecurrentVisitor implements Parcelable {
 
     public String getExpectedVehicleNo() {
         return expectedVehicleNo == null ? "" : expectedVehicleNo;
+    }
+
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
     }
 
     public void setExpectedVehicleNo(String expectedVehicleNo) {

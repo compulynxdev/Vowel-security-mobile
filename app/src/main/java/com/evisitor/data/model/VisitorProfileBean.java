@@ -12,6 +12,7 @@ public class VisitorProfileBean {
     private int view_type = VIEW_TYPE_ITEM;
     private List<String> dataList;
 
+
     private int pos = -1;
 
     public VisitorProfileBean(String title) {
@@ -70,4 +71,6 @@ public class VisitorProfileBean {
     public int getPos() {
         return pos;
     }
+
+
 }

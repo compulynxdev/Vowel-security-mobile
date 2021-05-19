@@ -46,4 +46,15 @@ public class AddVisitorData {
     public List<DeviceBean> deviceBeanList = new ArrayList<>();
 
     public String mode;
+    public Bitmap vehicalNoPlateBitMapImg;
+
+
+
+
+
+
+
+
+
+
 }

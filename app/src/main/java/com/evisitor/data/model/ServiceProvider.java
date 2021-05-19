@@ -1,5 +1,7 @@
 package com.evisitor.data.model;
 
+import android.graphics.Bitmap;
+
 import com.google.gson.annotations.SerializedName;
 
 public class ServiceProvider {
@@ -101,6 +103,24 @@ public class ServiceProvider {
 
     @SerializedName("documentType")
     private String documentType;
+
+    @SerializedName("mode")
+    private String mode;
+
+    @SerializedName("vehicleImage")
+    private String vehicleImage;
+
+    @SerializedName("vehicleBitMapImage")
+    private Bitmap vehicleBitMapImage;
+
+
+    public Bitmap getVehicleBitMapImage() {
+        return vehicleBitMapImage;
+    }
+
+    public void setVehicleBitMapImage(Bitmap vehicleBitMapImage) {
+        this.vehicleBitMapImage = vehicleBitMapImage;
+    }
 
     public String getStatus() {
         return status == null ? "PENDING" : status;
@@ -356,5 +376,21 @@ public class ServiceProvider {
 
     public void setDocumentType(String documentType) {
         this.documentType = documentType;
+    }
+
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
+
+    public String getVehicleImage() {
+        return vehicleImage;
+    }
+
+    public void setVehicleImage(String vehicleImage) {
+        this.vehicleImage = vehicleImage;
     }
 }

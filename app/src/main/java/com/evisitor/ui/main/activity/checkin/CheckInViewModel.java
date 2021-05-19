@@ -140,7 +140,6 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
 
     }
 
-
     private void getCommercialStaffList(int page, Map<String, String> map) {
         getDataManager().doGetCommercialStaffCheckInOutListDetail(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
             @Override
@@ -329,6 +328,8 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
 
         if (!guests.getHost().isEmpty())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, guests.getHost().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getHost())));
+
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.visitor_mode, guests.getMode())));
         getNavigator().hideLoading();
         return visitorProfileBeanList;
     }
@@ -354,6 +355,8 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, guests.getHost().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getHost())));
         if (guests.isCheckOutFeature())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_is_checkout, guests.isHostCheckOut())));
+
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.visitor_mode, guests.getMode())));
         getNavigator().hideLoading();
         return visitorProfileBeanList;
     }
@@ -377,6 +380,7 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, bean.getDocumentId().isEmpty() ? getNavigator().getContext().getString(R.string.na) : bean.getDocumentId())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_nationality, bean.getNationality().isEmpty() ? getNavigator().getContext().getString(R.string.na) : bean.getNationality())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), bean.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : bean.getPremiseName())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.visitor_mode, bean.getMode())));
         getNavigator().hideLoading();
         return visitorProfileBeanList;
     }
@@ -397,6 +401,8 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_comp_name, houseKeeping.getCompanyName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : houseKeeping.getCompanyName())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), houseKeeping.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : houseKeeping.getPremiseName())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, houseKeeping.getHost().isEmpty() ? houseKeeping.getCreatedBy() : houseKeeping.getHost())));
+        if (houseKeeping.getMode() != null)
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.visitor_mode, houseKeeping.getMode())));
         if (houseKeeping.isCheckOutFeature())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_is_checkout, houseKeeping.isHostCheckOut())));
         getNavigator().hideLoading();
@@ -423,6 +429,8 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
             if (serviceProvider.isCheckOutFeature())
                 visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_is_checkout, serviceProvider.isHostCheckOut())));
         }
+
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.visitor_mode, serviceProvider.getMode())));
         getNavigator().hideLoading();
         return visitorProfileBeanList;
     }

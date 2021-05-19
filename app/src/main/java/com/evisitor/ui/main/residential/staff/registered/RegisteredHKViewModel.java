@@ -99,6 +99,8 @@ public class RegisteredHKViewModel extends BaseViewModel<RegisteredHKNavigator> 
         if (bean.getCreatedDate() != null && !bean.getCreatedDate().isEmpty())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_register_date, CalenderUtils.formatDate(bean.getCreatedDate(), CalenderUtils.SERVER_DATE_FORMAT2, CalenderUtils.CUSTOM_TIMESTAMP_FORMAT_SLASH))));
 
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.visitor_mode, bean.getMode())));
+
         getNavigator().hideLoading();
         return visitorProfileBeanList;
     }

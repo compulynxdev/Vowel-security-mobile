@@ -64,7 +64,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
     private String countryCode = "254";
     // private String ownerId = "";  //also called house owner id
     private String houseId = "";
-    private Bitmap bmp_profile;
+    private Bitmap bmp_profile, vehicalImgBitmap;
     private String idType = "";
     private Boolean isGuest;
     private boolean isStaffSelect;
@@ -248,7 +248,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
         });
 
         setOnClickListener(imgBack, getViewDataBinding().tvVisitorType, getViewDataBinding().tvNationality, getViewDataBinding().tvEmployment, getViewDataBinding().tvIdentity, getViewDataBinding().tvGender, getViewDataBinding().tvWhomToMeet
-                , getViewDataBinding().frameImg, getViewDataBinding().btnAdd, getViewDataBinding().rlCode, getViewDataBinding().tvGadgets,getViewDataBinding().tvVisitorMode);
+                , getViewDataBinding().frameImg, getViewDataBinding().btnAdd, getViewDataBinding().rlCode, getViewDataBinding().tvGadgets, getViewDataBinding().tvVisitorMode, getViewDataBinding().etClickImag, getViewDataBinding().showNoPlatImage);
         getViewDataBinding().tvCode.setText("+".concat(countryCode));
         getViewDataBinding().etIdentity.addTextChangedListener(new TextWatcher() {
             @Override
@@ -299,6 +299,30 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
                         }
                     }, "").show(getSupportFragmentManager());
                 }
+                break;
+            case R.id.et_click_imag:
+                if (PermissionUtils.RequestMultiplePermissionCamera(this)) {
+                    ImagePickBottomSheetDialog.newInstance(new ImagePickCallback() {
+                        @Override
+                        public void onImageReceived(Bitmap bitmap) {
+                            vehicalImgBitmap = bitmap;
+                            if (bitmap != null) {
+                                getViewDataBinding().showNoPlatImage.setVisibility(View.VISIBLE);
+                            } else {
+                                getViewDataBinding().showNoPlatImage.setVisibility(View.GONE);
+                            }
+                        }
+
+                        @Override
+                        public void onView() {
+
+                        }
+                    }, "").show(getSupportFragmentManager());
+                }
+                break;
+            case R.id.show_no_plat_image:
+                if (vehicalImgBitmap != null)
+                    showFullBitmapImage(vehicalImgBitmap);
                 break;
 
             case R.id.tv_visitor_type:
@@ -397,7 +421,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
                 visitorData.address = getViewDataBinding().etAddress.getText().toString().trim();
                 visitorData.gender = getViewDataBinding().tvGender.getText().toString();
                 visitorData.houseId = houseId;
-                visitorData.mode= getViewDataBinding().tvVisitorMode.getText().toString();
+                visitorData.mode = getViewDataBinding().tvVisitorMode.getText().toString();
                 visitorData.isStaffSelect = isStaffSelect;
                 if (isGuest) {
                     visitorData.purpose = getViewDataBinding().etPurpose.getText().toString();
@@ -460,6 +484,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
         visitorData.vehicleNo = getViewDataBinding().etVehicle.getText().toString().trim();
         visitorData.dialingCode = countryCode;
         visitorData.isAccept = isAccept;
+        visitorData.vehicalNoPlateBitMapImg = vehicalImgBitmap;
         mViewModel.doAddSp(visitorData);
     }
 
@@ -494,8 +519,10 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
         getViewDataBinding().tvVisitorMode.setText(visitorType);
         if (visitorType.equals("Walk-In")) {
             getViewDataBinding().etVehicle.setVisibility(View.GONE);
+            getViewDataBinding().etClickImag.setVisibility(View.GONE);
         } else {
             getViewDataBinding().etVehicle.setVisibility(View.VISIBLE);
+            getViewDataBinding().etClickImag.setVisibility(View.VISIBLE);
         }
 
     }
@@ -567,6 +594,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
         addVisitorData.houseId = houseId;
         addVisitorData.purpose = getViewDataBinding().etPurpose.getText().toString();
         addVisitorData.deviceBeanList.clear();
+        addVisitorData.mode = getViewDataBinding().tvVisitorMode.getText().toString();
         addVisitorData.deviceBeanList.addAll(deviceBeanList);
         addVisitorData.gender = (mViewModel.getDataManager().getGuestConfiguration().getGuestField().isGender()) ? getViewDataBinding().tvGender.getText().toString() : "";
         if (!isAccept) {
@@ -787,5 +815,6 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
         getViewDataBinding().etContact.setText(recurrentVisitor.getContactNo());
         getViewDataBinding().tvGender.setText(recurrentVisitor.getGender());
         getViewDataBinding().etVehicle.setText(recurrentVisitor.getExpectedVehicleNo());
+        getViewDataBinding().tvVisitorMode.setText(recurrentVisitor.getMode() != null && !recurrentVisitor.getMode().equals("") ? mViewModel.getVisitorMode(recurrentVisitor.getMode()) : mViewModel.getVisitorMode("Walk-In"));
     }
 }

@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +29,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.evisitor.R;
 import com.evisitor.ui.dialog.AlertDialog;
+import com.evisitor.ui.image.BitmapImageViewActivity;
 import com.evisitor.ui.image.ImageViewActivity;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppLogger;
@@ -35,6 +37,8 @@ import com.evisitor.util.CommonUtils;
 import com.evisitor.util.NetworkUtils;
 
 import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
 
 import okhttp3.ResponseBody;
 
@@ -268,6 +272,16 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     public void showFullImage(String imageUrl) {
         Intent intent = ImageViewActivity.newIntent(this);
         intent.putExtra(AppConstants.IMAGE_VIEW_URL, imageUrl);
+        startActivity(intent);
+    }
+
+    public void showFullBitmapImage(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+
+        Intent intent = BitmapImageViewActivity.newIntent(this);
+        intent.putExtra(AppConstants.IMAGE_VIEW_URL, byteArray);
         startActivity(intent);
     }
 

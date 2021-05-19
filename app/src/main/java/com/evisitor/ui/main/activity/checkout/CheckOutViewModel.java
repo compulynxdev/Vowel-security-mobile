@@ -271,6 +271,7 @@ public class CheckOutViewModel extends BaseViewModel<ActivityNavigator> {
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, guests.getHost().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getHost())));
         if (guests.isCheckOutFeature())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_is_checkout, guests.isHostCheckOut())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.visitor_mode, guests.getMode())));
         getNavigator().hideLoading();
         return visitorProfileBeanList;
     }
@@ -340,6 +341,7 @@ public class CheckOutViewModel extends BaseViewModel<ActivityNavigator> {
             if (serviceProvider.isCheckOutFeature())
                 visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_is_checkout, serviceProvider.isHostCheckOut())));
         }
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.visitor_mode, serviceProvider.getMode())));
         getNavigator().hideLoading();
         return visitorProfileBeanList;
     }
