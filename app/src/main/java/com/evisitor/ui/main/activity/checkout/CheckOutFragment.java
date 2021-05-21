@@ -157,24 +157,31 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
 
     private void setUpCommercialStaffAdapter() {
         commercialStaffList = new ArrayList<>();
-        commercialStaffAdapter = new CommercialStaffCheckOutAdapter(commercialStaffList, pos -> VisitorProfileDialog.newInstance(mViewModel.getCommercialStaffProfileBean(commercialStaffList.get(pos)), null).setImage(commercialStaffList.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
+        commercialStaffAdapter = new CommercialStaffCheckOutAdapter(commercialStaffList, pos -> VisitorProfileDialog.newInstance(mViewModel.getCommercialStaffProfileBean(commercialStaffList.get(pos)), null).setImage(commercialStaffList.get(pos).getImageUrl()).
+                setVehicalNoPlateImg(commercialStaffList.get(pos).getVehicleImage())
+                .setBtnVisible(false).show(getChildFragmentManager()));
         commercialStaffAdapter.setHasStableIds(true);
     }
 
     private void setUpHouseKeeperAdapter() {
         houseKeepingList = new ArrayList<>();
-        houseKeepingAdapter = new HouseKeepingCheckOutAdapter(houseKeepingList, pos -> VisitorProfileDialog.newInstance(mViewModel.getHouseKeepingProfileBean(houseKeepingList.get(pos)), null).setImage(houseKeepingList.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
+        houseKeepingAdapter = new HouseKeepingCheckOutAdapter(houseKeepingList, pos -> VisitorProfileDialog.newInstance(mViewModel.getHouseKeepingProfileBean(houseKeepingList.get(pos)), null).setImage(houseKeepingList.get(pos).getImageUrl())
+                . setVehicalNoPlateImg(houseKeepingList.get(pos).getVehicleImage())
+                .setBtnVisible(false).show(getChildFragmentManager()));
         houseKeepingAdapter.setHasStableIds(true);
     }
 
     private void setUpServiceProviderAdapter() {
-        serviceProviderAdapter = new ServiceProviderCheckOutAdapter(serviceProviderList, pos -> VisitorProfileDialog.newInstance(mViewModel.getServiceProviderProfileBean(serviceProviderList.get(pos)), null).setImage(serviceProviderList.get(pos).getImageUrl()).setBtnVisible(false).show(getChildFragmentManager()));
+        serviceProviderAdapter = new ServiceProviderCheckOutAdapter(serviceProviderList, pos -> VisitorProfileDialog.newInstance(mViewModel.getServiceProviderProfileBean(serviceProviderList.get(pos)), null).setImage(serviceProviderList.get(pos).getImageUrl())
+                .setVehicalNoPlateImg(serviceProviderList.get(pos).getVehicleImage()).setBtnVisible(false).show(getChildFragmentManager()));
         serviceProviderAdapter.setHasStableIds(true);
     }
 
     private void setUpCommercialVisitorAdapter() {
         commercialGuestList = new ArrayList<>();
-        commercialVisitorAdapter = new CommercialVisitorCheckOutAdapter(commercialGuestList, pos -> VisitorProfileDialog.newInstance(mViewModel.getCommercialGuestProfileBean(commercialGuestList.get(pos)), null).setImage(commercialGuestList.get(pos).getImageUrl()).setIsCommercialGuest(true).setBtnVisible(false).show(getChildFragmentManager()));
+        commercialVisitorAdapter = new CommercialVisitorCheckOutAdapter(commercialGuestList, pos -> VisitorProfileDialog.newInstance(mViewModel.getCommercialGuestProfileBean(commercialGuestList.get(pos)), null).setImage(commercialGuestList.get(pos).getImageUrl()).
+                setVehicalNoPlateImg(commercialGuestList.get(pos).getVehicleImage())
+                .setIsCommercialGuest(true).setBtnVisible(false).show(getChildFragmentManager()));
         commercialVisitorAdapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(commercialVisitorAdapter);
     }

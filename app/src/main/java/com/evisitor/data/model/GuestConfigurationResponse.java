@@ -8,6 +8,7 @@ public class GuestConfigurationResponse {
 
     public boolean isDataUpdated = false;
     private GuestFieldsBean guestField;
+    private SecondGuestFieldsBean secGuestField;
 
     public GuestFieldsBean getGuestField() {
         return guestField == null ? new GuestFieldsBean() : guestField;
@@ -15,6 +16,14 @@ public class GuestConfigurationResponse {
 
     public void setGuestField(GuestFieldsBean guestField) {
         this.guestField = guestField;
+    }
+
+    public SecondGuestFieldsBean getSecGuestField() {
+        return secGuestField;
+    }
+
+    public void setSecGuestField(SecondGuestFieldsBean secGuestField) {
+        this.secGuestField = secGuestField;
     }
 
     public static class GuestFieldsBean {
@@ -60,6 +69,46 @@ public class GuestConfigurationResponse {
 
         public void setAddress(boolean address) {
             this.address = address;
+        }
+    }
+
+
+    public static class SecondGuestFieldsBean {
+        private boolean secAddress;
+        private boolean secFullname;
+        private boolean secDocumentID;
+        private boolean secContactNo;
+
+        public boolean isSecAddress() {
+            return secAddress;
+        }
+
+        public void setSecAddress(boolean secAddress) {
+            this.secAddress = secAddress;
+        }
+
+        public boolean isSecFullname() {
+            return secFullname;
+        }
+
+        public void setSecFullname(boolean secFullname) {
+            this.secFullname = secFullname;
+        }
+
+        public boolean isSecDocumentID() {
+            return secDocumentID;
+        }
+
+        public void setSecDocumentID(boolean secDocumentID) {
+            this.secDocumentID = secDocumentID;
+        }
+
+        public boolean isSecContactNo() {
+            return secContactNo;
+        }
+
+        public void setSecContactNo(boolean secContactNo) {
+            this.secContactNo = secContactNo;
         }
     }
 }

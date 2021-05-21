@@ -77,7 +77,6 @@ public class BaseViewModel<N extends BaseNavigator> extends ViewModel {
                             GuestConfigurationResponse configurationResponse = getDataManager().getGson().fromJson(response.body().string(), GuestConfigurationResponse.class);
                             configurationResponse.isDataUpdated = true;
                             getDataManager().setGuestConfiguration(configurationResponse);
-
                             if (callback != null) callback.onSuccess(configurationResponse);
                         } catch (Exception e) {
                             if (finalIsShowMsg) {

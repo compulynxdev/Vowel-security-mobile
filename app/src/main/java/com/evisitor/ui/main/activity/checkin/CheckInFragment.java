@@ -177,7 +177,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                 if (!guests.getHost().isEmpty() && guests.getHostCheckOutTime().isEmpty())
                     showCallDialog(0);
                 else mViewModel.checkOut(0);
-            }).setIsCommercialGuest(true).setImage(guests.getImageUrl()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
+            }).setIsCommercialGuest(true).setImage(guests.getImageUrl()).setVehicalNoPlateImg(guests.getVehicleImage()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
         });
 
         getViewDataBinding().recyclerView.setAdapter(commercialVisitorAdapter);
@@ -194,7 +194,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                     if (isNetworkConnected(true))
                         mViewModel.checkOut(1);
                 }
-            }).setImage(houseKeeping.getImageUrl()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
+            }).setImage(houseKeeping.getImageUrl()).setVehicalNoPlateImg(houseKeeping.getVehicleImage()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
         });
     }
 

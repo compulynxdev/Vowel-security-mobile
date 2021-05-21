@@ -344,7 +344,6 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
 
         if (getDataManager().getGuestConfiguration().getGuestField().isContactNo())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, guests.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getDialingCode().concat(guests.getContactNo()))));
-
         if (getDataManager().isIdentifyFeature()) {
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity_type, guests.getDocumentType().isEmpty() ? getNavigator().getContext().getString(R.string.na) : getIdentityType(guests.getDocumentType()))));
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, guests.getIdentityNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getIdentityNo())));

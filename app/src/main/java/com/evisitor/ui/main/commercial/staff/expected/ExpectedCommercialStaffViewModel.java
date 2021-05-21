@@ -1,5 +1,7 @@
 package com.evisitor.ui.main.commercial.staff.expected;
 
+import android.content.Intent;
+
 import androidx.annotation.NonNull;
 
 import com.evisitor.R;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -138,7 +141,9 @@ public class ExpectedCommercialStaffViewModel extends BaseCheckInOutViewModel<Ex
         if (!bean.getPremiseName().isEmpty()) {
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), bean.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : bean.getPremiseName())));
         }
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.visitor_mode, bean.getMode())));
+        if (bean.getMode() != null) {
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.visitor_mode, bean.getMode())));
+        }
         getNavigator().hideLoading();
         return visitorProfileBeanList;
     }

@@ -321,8 +321,9 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
                 }
                 break;
             case R.id.show_no_plat_image:
-                if (vehicalImgBitmap != null)
+                if (vehicalImgBitmap != null) {
                     showFullBitmapImage(vehicalImgBitmap);
+                }
                 break;
 
             case R.id.tv_visitor_type:

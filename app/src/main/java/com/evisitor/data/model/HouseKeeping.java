@@ -79,6 +79,9 @@ public class HouseKeeping {
     @SerializedName("mode")
     private String mode;
 
+    @SerializedName("vehicleImage")
+    private String vehicleImage;
+
     public String getMode() {
         return mode;
     }
@@ -309,5 +312,13 @@ public class HouseKeeping {
 
     public void setDocumentType(String documentType) {
         this.documentType = documentType;
+    }
+
+    public String getVehicleImage() {
+        return vehicleImage;
+    }
+
+    public void setVehicleImage(String vehicleImage) {
+        this.vehicleImage = vehicleImage;
     }
 }

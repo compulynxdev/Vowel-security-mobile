@@ -306,7 +306,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
             startActivityForResult(i, SCAN_RESULT);
         });
         setOnClickListener(imgBack, getViewDataBinding().tvVisitorType, getViewDataBinding().tvNationality, getViewDataBinding().tvAssignedTo, getViewDataBinding().tvEmployment, getViewDataBinding().tvIdentity, getViewDataBinding().tvGender, getViewDataBinding().tvOwner, getViewDataBinding().tvHost
-                , getViewDataBinding().frameImg, getViewDataBinding().btnAdd, getViewDataBinding().rlCode, visitorCtegory, getViewDataBinding().takeNoPlateImg, getViewDataBinding().showNoPlatImage);
+                , getViewDataBinding().frameImg, getViewDataBinding().btnAdd, getViewDataBinding().rlCode, visitorCtegory, getViewDataBinding().takeNoPlateImg, getViewDataBinding().showNoPlatImage, getViewDataBinding().rbIndividual, getViewDataBinding().rbGroup);
         getViewDataBinding().tvCode.setText("+".concat(countryCode));
 
         getViewDataBinding().etIdentity.addTextChangedListener(new TextWatcher() {
@@ -400,6 +400,17 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
 
             case R.id.tv_owner:
                 //setUpOwner(true);
+                break;
+
+            case R.id.rb_individual:
+                getViewDataBinding().tvGroupMember.setVisibility(View.GONE);
+                break;
+            case R.id.rb_group:
+                getViewDataBinding().tvGroupMember.setVisibility(View.VISIBLE);
+                break;
+
+            case R.id.tv_group_member:
+               // getViewDataBinding().tvGroupMember.setVisibility(View.VISIBLE);
                 break;
 
             case R.id.tv_host:

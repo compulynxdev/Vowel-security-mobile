@@ -131,6 +131,9 @@ public class CommercialVisitorResponse {
         @SerializedName("no_plate_bmp_img")
         public Bitmap no_plate_bmp_img;
 
+        @SerializedName("vehicleImage")
+        public String vehicleImage;
+
 
         public String getCheckInTime() {
             return checkInTime;
@@ -395,6 +398,14 @@ public class CommercialVisitorResponse {
 
         public void setNo_plate_bmp_img(Bitmap no_plate_bmp_img) {
             this.no_plate_bmp_img = no_plate_bmp_img;
+        }
+
+        public String getVehicleImage() {
+            return vehicleImage;
+        }
+
+        public void setVehicleImage(String vehicleImage) {
+            this.vehicleImage = vehicleImage;
         }
     }
 

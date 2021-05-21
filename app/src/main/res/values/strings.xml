@@ -352,6 +352,8 @@
     <string name="take_no_plate_image">Take No.Plate Image</string>
     <string name="please_enter_vehical_no">Please enter vehical no</string>
     <string name="view_no_plate_image">View No.Plate Image</string>
+    <string name="individual">Individual</string>
+    <string name="add_group_member">Add Group Member</string>
 
 
 </resources>
