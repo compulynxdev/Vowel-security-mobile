@@ -10,6 +10,7 @@ import com.evisitor.ui.main.BaseCheckInOutViewModel;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppLogger;
 import com.evisitor.util.AppUtils;
+import com.evisitor.util.CommonUtils;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -83,14 +84,14 @@ public class ExpectedCommercialGuestViewModel extends BaseCheckInOutViewModel<Ex
         getDataManager().setCommercialVisitorDetail(guests);
         List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, guests.getName())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), guests.getExpectedVehicleNo(), VisitorProfileBean.VIEW_TYPE_EDITABLE));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), CommonUtils.paritalEncodeData(guests.getExpectedVehicleNo()), VisitorProfileBean.VIEW_TYPE_EDITABLE));
 
         if (getDataManager().getGuestConfiguration().getGuestField().isContactNo())
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, guests.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(guests.getDialingCode()).concat(" ").concat(guests.getContactNo()))));
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, guests.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : CommonUtils.paritalEncodeData("+ ".concat(guests.getDialingCode()).concat(" ").concat(guests.getContactNo())))));
 
         if (getDataManager().isIdentifyFeature()) {
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity_type, guests.getDocumentType().isEmpty() ? getNavigator().getContext().getString(R.string.na) : getIdentityType(guests.getDocumentType()))));
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, guests.getIdentityNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getIdentityNo())));
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, guests.getIdentityNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : CommonUtils.paritalEncodeData(guests.getIdentityNo()))));
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_nationality, guests.getNationality().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getNationality())));
         }
 

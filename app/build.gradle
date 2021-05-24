@@ -25,14 +25,15 @@ android {
             //buildConfigField("String", "BASE_URL", "\"http://3.19.243.207:8087/\"")
 
             //Stage url
-            buildConfigField("String", "BASE_URL", "\"http://52.15.186.140:8090/\"")
+          //  buildConfigField("String", "BASE_URL", "\"http://52.15.186.140:8090/\"")
 
             //Dev url
-            //buildConfigField("String", "BASE_URL", "\"http://103.21.52.30:8085/\"")
+            buildConfigField("String", "BASE_URL", "\"http://103.21.52.30:8085/\"")
 
             //Local
             //buildConfigField("String", "BASE_URL", "\"http://192.168.43.134:8085/\"")
             //buildConfigField("String", "BASE_URL", "\"http://192.168.43.58:8085/\"")
+          //  buildConfigField("String", "BASE_URL", "\"http://192.168.43.81:8085/\"")
         }
 
         release {
@@ -52,7 +53,7 @@ android {
             //Local
             //buildConfigField("String", "BASE_URL", "\"http://192.168.43.134:8085/\"")  //shivanshu
             //buildConfigField("String", "BASE_URL", "\"http://192.168.43.58:8085/\"")  //sandeep
-            buildConfigField("String", "BASE_URL", "\"http://192.168.43.160:8085/\"")  //sandeep
+            buildConfigField("String", "BASE_URL", "\"http://192.168.43.81:8085/\"")  //sandeep
 
         }
     }

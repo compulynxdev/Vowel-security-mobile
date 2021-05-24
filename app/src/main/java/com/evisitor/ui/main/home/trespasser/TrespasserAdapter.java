@@ -16,6 +16,7 @@ import com.evisitor.data.model.TrespasserResponse;
 import com.evisitor.ui.base.BaseViewHolder;
 import com.evisitor.ui.base.ItemClickCallback;
 import com.evisitor.util.CalenderUtils;
+import com.evisitor.util.CommonUtils;
 import com.evisitor.util.pagination.FooterLoader;
 
 import java.util.Date;
@@ -117,7 +118,7 @@ public class TrespasserAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             name.setText(name.getContext().getString(R.string.data_name, bean.getFullName()));
             if (bean.getDocumentId() != null && !bean.getDocumentId().isEmpty()) {
                 docId.setVisibility(View.VISIBLE);
-                docId.setText(docId.getContext().getString(R.string.data_identity, bean.getDocumentId()));
+                docId.setText(docId.getContext().getString(R.string.data_identity, CommonUtils.paritalEncodeData(bean.getDocumentId())));
             } else docId.setVisibility(View.GONE);
 
             if (bean.getFlatNo() != null && !bean.getFlatNo().isEmpty()) {

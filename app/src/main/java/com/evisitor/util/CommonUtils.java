@@ -37,8 +37,9 @@ public final class CommonUtils {
     }
 
 
-    public static String paritalEncodeData(String date) {
-        return date.replaceAll("\\w(?=\\w{4})", "*");
+    public static String paritalEncodeData(String data) {
+        String obj = data.replace("+", "");
+        return data.replace(" ", "").replaceAll("\\w(?=\\w{4})", "*");
     }
 
     public static String loadJSONFromAsset(Context context, String jsonFileName) {
