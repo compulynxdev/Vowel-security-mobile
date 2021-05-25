@@ -83,6 +83,11 @@ public class VisitorProfileAdapter extends RecyclerView.Adapter<BaseViewHolder> 
         public void onBind(int position) {
             VisitorProfileBean bean = list.get(position);
 
+//            if(bean.getTitle().contains(activity.getString(R.string.txt_mobile))||bean.getTitle().contains(activity.getString(R.string.txt_vehical_no))){
+//                tv_name.setText("work" );
+//            }else {
+//                tv_name.setText(bean.getTitle());
+//            }
             tv_name.setText(bean.getTitle());
         }
     }

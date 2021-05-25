@@ -7,8 +7,8 @@ import com.evisitor.BuildConfig;
  */
 class WebServices {
 
-    static final String BASE_URL = BuildConfig.BASE_URL + "e-visitor-system/api/";
-   // static final String BASE_URL = BuildConfig.BASE_URL + "api/"; //Local Server
+    //static final String BASE_URL = BuildConfig.BASE_URL + "e-visitor-system/api/";
+    static final String BASE_URL = BuildConfig.BASE_URL + "api/"; //Local Server
 
     static final String LOGIN_AUTH = "authenticate";
     static final String GET_USER_DETAIL = "usermaster/get_user_details"; //?username=ram
