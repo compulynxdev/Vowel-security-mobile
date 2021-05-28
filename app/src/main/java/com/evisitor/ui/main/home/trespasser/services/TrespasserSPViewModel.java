@@ -10,6 +10,7 @@ import com.evisitor.ui.base.BaseViewModel;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppLogger;
 import com.evisitor.util.CalenderUtils;
+import com.evisitor.util.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -76,9 +77,9 @@ public class TrespasserSPViewModel extends BaseViewModel<TrespasserSPNavigator> 
         getNavigator().showLoading();
         List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, visitorResponse.getFullName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : visitorResponse.getFullName())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, visitorResponse.getDocumentId().isEmpty() ? getNavigator().getContext().getString(R.string.na) : visitorResponse.getDocumentId())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, visitorResponse.getDocumentId().isEmpty() ? getNavigator().getContext().getString(R.string.na) : CommonUtils.paritalEncodeData(visitorResponse.getDocumentId()))));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_gender, visitorResponse.getGender().isEmpty() ? getNavigator().getContext().getString(R.string.na) : visitorResponse.getGender())));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, visitorResponse.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : "+ ".concat(visitorResponse.getDialingCode()).concat(" ").concat(visitorResponse.getContactNo()))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, visitorResponse.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : CommonUtils.paritalEncodeData("".concat(visitorResponse.getDialingCode()).concat(" ").concat(visitorResponse.getContactNo())))));
         if (!visitorResponse.getCheckOutTime().isEmpty()) {
             Date checkOutTime = CalenderUtils.getDateFormat(visitorResponse.getCheckOutTime(), CalenderUtils.SERVER_DATE_FORMAT);
             Date hostCheckOutTime = CalenderUtils.getDateFormat(visitorResponse.getHostCheckOutTime(), CalenderUtils.SERVER_DATE_FORMAT);

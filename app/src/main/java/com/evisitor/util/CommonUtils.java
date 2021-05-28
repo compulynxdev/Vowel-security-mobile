@@ -36,6 +36,12 @@ public final class CommonUtils {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
+
+    public static String paritalEncodeData(String data) {
+        String obj = data.replace("+", "");
+        return data.replace(" ", "").replaceAll("\\w(?=\\w{4})", "*");
+    }
+
     public static String loadJSONFromAsset(Context context, String jsonFileName) {
         try {
             InputStream is = context.getAssets().open(jsonFileName);

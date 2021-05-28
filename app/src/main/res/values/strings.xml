@@ -365,4 +365,6 @@
     <string name="please_capture_vehical_image">Please capture vehicle no.plate image</string>
 
 
+    <string name="txt_mobile">Mobile</string>
+    <string name="txt_vehical_no">Vehical No</string>
 </resources>

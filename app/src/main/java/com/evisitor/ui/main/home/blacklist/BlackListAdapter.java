@@ -125,7 +125,7 @@ public class BlackListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
             if (bean.getContactNo() != null && !bean.getContactNo().isEmpty()) {
                 contact.setVisibility(View.VISIBLE);
-                contact.setText(contact.getContext().getString(R.string.data_mobile, bean.getDialingCode().concat(bean.getContactNo())));
+                contact.setText(contact.getContext().getString(R.string.data_mobile, CommonUtils.paritalEncodeData(bean.getDialingCode().concat(bean.getContactNo()))));
             } else contact.setVisibility(View.GONE);
 
             if (bean.getType() != null && !bean.getType().isEmpty()) {
