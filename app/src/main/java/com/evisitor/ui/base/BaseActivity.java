@@ -95,6 +95,8 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
         performDataBinding();
     }
 
+
+
     public T getViewDataBinding() {
         return mViewDataBinding;
     }

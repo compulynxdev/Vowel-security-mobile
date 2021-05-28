@@ -79,6 +79,13 @@ public class GuestConfigurationResponse {
         private boolean secDocumentID;
         private boolean secContactNo;
 
+        public SecondGuestFieldsBean(boolean secAddress, boolean secFullname, boolean secDocumentID, boolean secContactNo) {
+            this.secAddress = secAddress;
+            this.secFullname = secFullname;
+            this.secDocumentID = secDocumentID;
+            this.secContactNo = secContactNo;
+        }
+
         public boolean isSecAddress() {
             return secAddress;
         }

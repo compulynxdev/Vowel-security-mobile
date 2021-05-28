@@ -21,6 +21,7 @@ import com.evisitor.ui.main.commercial.add.whomtomeet.WhomToMeetViewModel;
 import com.evisitor.ui.main.commercial.add.whomtomeet.level.SelectLastLevelViewModel;
 import com.evisitor.ui.main.commercial.add.whomtomeet.staff.SelectStaffViewModel;
 import com.evisitor.ui.main.commercial.gadgets.GadgetsInputViewModel;
+import com.evisitor.ui.main.commercial.secondryguest.SecoundryGuestInputViewModel;
 import com.evisitor.ui.main.commercial.staff.CommercialStaffViewModel;
 import com.evisitor.ui.main.commercial.staff.expected.ExpectedCommercialStaffViewModel;
 import com.evisitor.ui.main.commercial.staff.registered.RegisteredCommercialStaffViewModel;
@@ -252,6 +253,9 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(FilterRecurrentVisitorViewModel.class)) {
             //noinspection unchecked
             return (T) new FilterRecurrentVisitorViewModel(dataManager);
+        } else if (modelClass.isAssignableFrom(SecoundryGuestInputViewModel.class)) {
+            //noinspection unchecked
+            return (T) new SecoundryGuestInputViewModel(dataManager);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

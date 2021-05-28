@@ -16,8 +16,10 @@ import com.evisitor.ui.base.BaseViewModel;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppLogger;
 import com.evisitor.util.AppUtils;
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
@@ -170,6 +172,9 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
         } else if ((visitorData.mode.equalsIgnoreCase("Drive-In") && visitorData.vehicleNo == null) || ((visitorData.mode.equalsIgnoreCase("Drive-In") && visitorData.vehicleNo.isEmpty()))) {
             getNavigator().showToast(R.string.please_enter_vehical_no);
             return false;
+        } else if ((visitorData.mode.equalsIgnoreCase("Drive-In") && visitorData.vehicalNoPlateBitMapImg == null)) {
+            getNavigator().showToast(R.string.please_capture_vehical_image);
+            return false;
         } else return true;
     }
 
@@ -191,6 +196,11 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                 object.put("guestType", AppConstants.WALKIN_VISITOR);
                 object.put("type", "random");
                 object.put("mode", addVisitorData.mode);
+                object.put("groupType", addVisitorData.groupType);
+
+                JSONArray guestList = new JSONArray(new Gson().toJson(addVisitorData.guestList));
+
+                object.put("guestList", guestList);
                 //object.put("type", addVisitorData..toUpperCase());
                 object.put("address", addVisitorData.address);
                 object.put("country", "");
@@ -306,6 +316,9 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
         } else if ((visitorData.mode.equalsIgnoreCase("Drive-In") && visitorData.vehicleNo == null) || ((visitorData.mode.equalsIgnoreCase("Drive-In") && visitorData.vehicleNo.isEmpty()))) {
             getNavigator().showToast(R.string.please_enter_vehical_no);
             return false;
+        } else if ((visitorData.mode.equalsIgnoreCase("Drive-In") && visitorData.vehicalNoPlateBitMapImg == null)) {
+            getNavigator().showToast(R.string.please_capture_vehical_image);
+            return false;
         } else return true;
     }
 
@@ -333,6 +346,7 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                 object.put("contactNo", visitorData.contact);
                 object.put("type", "random");
                 object.put("mode", visitorData.mode);
+                object.put("guestList", visitorData.guestList);
                 object.put("address", visitorData.address);
                 object.put("country", "");
                 //object.put("expectedDate", new Date());

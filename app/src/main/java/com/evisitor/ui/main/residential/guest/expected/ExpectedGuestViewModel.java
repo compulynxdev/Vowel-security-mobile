@@ -105,6 +105,7 @@ public class ExpectedGuestViewModel extends BaseCheckInOutViewModel<ExpectedGues
         if (guests.getMode() != null && !guests.getMode().isEmpty())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.visitor_mode, guests.getMode())));
 
+
         getNavigator().hideLoading();
         return visitorProfileBeanList;
     }

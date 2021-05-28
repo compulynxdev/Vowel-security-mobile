@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class Guests {
 
     @SerializedName("fullName")
@@ -92,6 +94,12 @@ public class Guests {
 
     @SerializedName("vehicleImage")
     public String vehicleImage;
+
+    @SerializedName("groupType")
+    public String groupType;
+
+    @SerializedName("guestList")
+    public List<SecoundryGuest> guestList;
 
 
 
@@ -367,5 +375,13 @@ public class Guests {
 
     public void setVehicleImage(String vehicleImage) {
         this.vehicleImage = vehicleImage;
+    }
+
+    public List<SecoundryGuest> getGuestList() {
+        return guestList;
+    }
+
+    public void setGuestList(List<SecoundryGuest> guestList) {
+        this.guestList = guestList;
     }
 }

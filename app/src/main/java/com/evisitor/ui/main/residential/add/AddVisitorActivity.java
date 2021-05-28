@@ -28,6 +28,7 @@ import com.evisitor.data.model.HouseDetailBean;
 import com.evisitor.data.model.IdentityBean;
 import com.evisitor.data.model.ProfileBean;
 import com.evisitor.data.model.RecurrentVisitor;
+import com.evisitor.data.model.SecoundryGuest;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.databinding.ActivityAddVisitorBinding;
 import com.evisitor.ui.base.BaseActivity;
@@ -38,20 +39,28 @@ import com.evisitor.ui.dialog.ImagePickCallback;
 import com.evisitor.ui.dialog.country.CountrySelectionDialog;
 import com.evisitor.ui.dialog.selection.SelectionBottomSheetDialog;
 import com.evisitor.ui.main.MainActivity;
+import com.evisitor.ui.main.commercial.gadgets.GadgetsInputActivity;
+import com.evisitor.ui.main.commercial.secondryguest.SecoundryGuestInputActivity;
 import com.evisitor.ui.main.home.rejectreason.InputDialog;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppUtils;
 import com.evisitor.util.PermissionUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.sharma.mrzreader.MrzRecord;
 import com.smartengines.Constant;
 import com.smartengines.MainResultStore;
 import com.smartengines.ScanSmartActivity;
 import com.smartengines.ScannedIDData;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+import static com.evisitor.util.AppConstants.ADD_FAMILY_MEMBER;
 import static com.evisitor.util.AppConstants.SCAN_RESULT;
+import static com.evisitor.util.AppConstants.SCAN_RESULT_GADGETS;
 
 public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, AddVisitorViewModel> implements AddVisitorNavigator, View.OnClickListener, BaseViewModel.GuestConfigurationCallback {
 
@@ -63,8 +72,9 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
     private List<HostDetailBean> hostDetailList;
     private String idType = "";
     private Boolean isGuest;
-    private String imageUrl;
+    private String imageUrl, groupType;
     private Bitmap vehicalImgBitmap;
+    private List<SecoundryGuest> secoundryGuestList;
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, AddVisitorActivity.class);
@@ -292,6 +302,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
     }*/
 
     private void setUp() {
+        secoundryGuestList = new ArrayList<>();
         countryCode = getViewModel().getDataManager().getPropertyDialingCode();
         ImageView imgBack = findViewById(R.id.img_back);
         TextView visitorCtegory = findViewById(R.id.tv_visitor_mode);
@@ -306,7 +317,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
             startActivityForResult(i, SCAN_RESULT);
         });
         setOnClickListener(imgBack, getViewDataBinding().tvVisitorType, getViewDataBinding().tvNationality, getViewDataBinding().tvAssignedTo, getViewDataBinding().tvEmployment, getViewDataBinding().tvIdentity, getViewDataBinding().tvGender, getViewDataBinding().tvOwner, getViewDataBinding().tvHost
-                , getViewDataBinding().frameImg, getViewDataBinding().btnAdd, getViewDataBinding().rlCode, visitorCtegory, getViewDataBinding().takeNoPlateImg, getViewDataBinding().showNoPlatImage);
+                , getViewDataBinding().frameImg, getViewDataBinding().btnAdd, getViewDataBinding().rlCode, visitorCtegory, getViewDataBinding().takeNoPlateImg, getViewDataBinding().showNoPlatImage, getViewDataBinding().rbIndividual, getViewDataBinding().rbGroup, getViewDataBinding().tvGroupMember);
         getViewDataBinding().tvCode.setText("+".concat(countryCode));
 
         getViewDataBinding().etIdentity.addTextChangedListener(new TextWatcher() {
@@ -402,16 +413,23 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                 //setUpOwner(true);
                 break;
 
-//            case R.id.rb_individual:
-//                getViewDataBinding().tvGroupMember.setVisibility(View.GONE);
-//                break;
-//            case R.id.rb_group:
-//                getViewDataBinding().tvGroupMember.setVisibility(View.VISIBLE);
-//                break;
+            case R.id.rb_individual:
+                groupType = "Indivisual";
+                getViewDataBinding().tvGroupMember.setVisibility(View.GONE);
+                break;
+            case R.id.rb_group:
+                groupType = "Group";
+                getViewDataBinding().tvGroupMember.setVisibility(View.VISIBLE);
+                break;
 
-//            case R.id.tv_group_member:
-//               // getViewDataBinding().tvGroupMember.setVisibility(View.VISIBLE);
-//                break;
+            case R.id.tv_group_member:
+                Intent i = SecoundryGuestInputActivity.getStartIntent(this);
+                if (!secoundryGuestList.isEmpty()) {
+                    i.putExtra("list", new Gson().toJson(secoundryGuestList));
+                }
+                i.putExtra("add", true);
+                startActivityForResult(i, ADD_FAMILY_MEMBER);
+                break;
 
             case R.id.tv_host:
                 if (hostDetailList != null) {
@@ -510,6 +528,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                     visitorData.profile = getViewDataBinding().actvWorkProfile.getText().toString().trim();
                     visitorData.companyName = getViewDataBinding().actvCompanyName.getText().toString().trim();
                     visitorData.companyAddress = getViewDataBinding().etCompanyAddress.getText().toString().trim();
+                    visitorData.guestList = secoundryGuestList;
 
 
                     if (mViewModel.doVerifySPInputs(visitorData)) {
@@ -648,6 +667,8 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
         addVisitorData.residentId = residentId;
         addVisitorData.mode = getViewDataBinding().tvVisitorMode.getText().toString().trim();
         addVisitorData.vehicalNoPlateBitMapImg = vehicalImgBitmap;
+        addVisitorData.guestList = secoundryGuestList;
+        addVisitorData.groupType = groupType;
         if (!isAccept) {
             addVisitorData.rejectedReason = input;
         }
@@ -708,6 +729,16 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                     Log.e("FieldName",name);
                 }*/
                 setSmartScanData();
+            } else if (requestCode == ADD_FAMILY_MEMBER && data != null) {
+                Type listType = new TypeToken<List<SecoundryGuest>>() {
+                }.getType();
+                secoundryGuestList.clear();
+                secoundryGuestList.addAll(Objects.requireNonNull(mViewModel.getDataManager().getGson().fromJson(data.getStringExtra("data"), listType)));
+                if (!secoundryGuestList.isEmpty())
+                    getViewDataBinding().tvGroupMember.setText(getString(R.string.view_group_member).concat(" : ").concat(String.valueOf(secoundryGuestList.size())));
+                else {
+                    getViewDataBinding().tvGroupMember.setText("");
+                }
             }
         }
     }

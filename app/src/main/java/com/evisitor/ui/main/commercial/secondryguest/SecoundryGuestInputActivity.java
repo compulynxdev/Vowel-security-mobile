@@ -9,8 +9,13 @@ import android.widget.ImageView;
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.DeviceBean;
+import com.evisitor.data.model.GuestConfigurationResponse;
+import com.evisitor.data.model.IdentityBean;
+import com.evisitor.data.model.SecoundryGuest;
 import com.evisitor.databinding.GadgetsInputDialogBinding;
+import com.evisitor.databinding.SecondryGuestInputDialogBinding;
 import com.evisitor.ui.base.BaseActivity;
+import com.evisitor.ui.dialog.selection.SelectionBottomSheetDialog;
 import com.evisitor.ui.main.commercial.gadgets.GadgetsAdapter;
 import com.evisitor.ui.main.commercial.gadgets.GadgetsInputViewModel;
 import com.evisitor.util.AppLogger;
@@ -26,9 +31,9 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
-public class SecoundryGuestInputActivity extends BaseActivity<GadgetsInputDialogBinding, SecoundryGuestInputViewModel> implements View.OnClickListener {
+public class SecoundryGuestInputActivity extends BaseActivity<SecondryGuestInputDialogBinding, SecoundryGuestInputViewModel> implements View.OnClickListener {
 
-    private List<DeviceBean> beans;
+    private List<SecoundryGuest> beans;
     private SecoundryGuestAdapter adapter;
     private boolean isAdd;
 
@@ -43,7 +48,7 @@ public class SecoundryGuestInputActivity extends BaseActivity<GadgetsInputDialog
 
     @Override
     public int getLayoutId() {
-        return R.layout.gadgets_input_dialog;
+        return R.layout.secondry_guest_input_dialog;
     }
 
     @Override
@@ -63,7 +68,7 @@ public class SecoundryGuestInputActivity extends BaseActivity<GadgetsInputDialog
     private void setUpIntent(Intent intent) {
         beans = new ArrayList<>();
         if (intent.hasExtra("list")) {
-            Type listType = new TypeToken<List<DeviceBean>>() {
+            Type listType = new TypeToken<List<SecoundryGuest>>() {
             }.getType();
             beans.addAll(Objects.requireNonNull(mViewModel.getDataManager().getGson().fromJson(intent.getStringExtra("list"), listType)));
         }
@@ -72,10 +77,10 @@ public class SecoundryGuestInputActivity extends BaseActivity<GadgetsInputDialog
 
     private void setUpAdapter() {
         if (beans.isEmpty())
-            beans.add(new DeviceBean(getString(R.string.device).concat(" ").concat("1"), "", "", "", "", ""));
+            beans.add(new SecoundryGuest(getString(R.string.member).concat(" ").concat("1"), "", "", "", "", "", ""));
         adapter = new SecoundryGuestAdapter(beans, new SecoundryGuestAdapter.AdapterCallback() {
             @Override
-            public void onChangeList(List<DeviceBean> deviceList) {
+            public void onChangeList(List<SecoundryGuest> deviceList) {
                 beans = deviceList;
             }
 
@@ -84,13 +89,13 @@ public class SecoundryGuestInputActivity extends BaseActivity<GadgetsInputDialog
                 beans.remove(position);
                 adapter.notifyItemRemoved(position);
             }
-        });
+        }, getSupportFragmentManager());
         adapter.setIsAdd(isAdd);
         getViewDataBinding().recyclerView.setAdapter(adapter);
     }
 
     private void setUp() {
-        getViewDataBinding().toolbar.tvTitle.setText(R.string.enter_gadget_info);
+        getViewDataBinding().toolbar.tvTitle.setText(R.string.title_add_secoundry_guest);
         ImageView imgBack = findViewById(R.id.img_back);
         imgBack.setVisibility(View.VISIBLE);
         imgBack.setOnClickListener(this);
@@ -104,6 +109,7 @@ public class SecoundryGuestInputActivity extends BaseActivity<GadgetsInputDialog
             getViewDataBinding().btnOk.setVisibility(View.GONE);
         }
         imgSearch.setOnClickListener(this);
+        //getViewDataBinding().setOnClickListener(this);
         getViewDataBinding().btnOk.setOnClickListener(this);
     }
 
@@ -141,17 +147,20 @@ public class SecoundryGuestInputActivity extends BaseActivity<GadgetsInputDialog
                 break;
 
             case R.id.img_search:
-                if (beans.size() < 5) {
+                if (beans.size() < 10) {
                     if (mViewModel.verifyDeviceDetails(beans)) {
-                        beans.add(new DeviceBean(getString(R.string.device).concat(" ").concat(String.valueOf(beans.size() + 1)), "", "", "", "", ""));
+                        beans.add(new SecoundryGuest(getString(R.string.device).concat(" ").concat(String.valueOf(beans.size() + 1)), "", "", "", "", "", ""));
                         adapter.notifyDataSetChanged();
                         getViewDataBinding().recyclerView.scrollToPosition(adapter.getItemCount() - 1);
                     } else
                         showAlert(R.string.alert, R.string.please_fill_details).show(getSupportFragmentManager());
                 } else
-                    showAlert(R.string.alert, R.string.can_enter_more_device).show(getSupportFragmentManager());
+                    showAlert(R.string.alert, R.string.can_add_more_member).show(getSupportFragmentManager());
                 break;
+
+
         }
+
     }
 
 }

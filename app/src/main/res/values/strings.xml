@@ -311,6 +311,7 @@
     <string name="enter_device_serial">Serial number</string>
     <string name="enter_device_tag">Tag number</string>
     <string name="can_enter_more_device">You can\'t enter more than 5 device details!</string>
+    <string name="can_add_more_member">You can\'t add more than 10 Member!</string>
     <string name="enter_device_manufacturer">Manufacturer</string>
     <string name="please_fill_details">Please fill the device details first, if you have device then device name and device serial number is mandatory!!</string>
     <string name="please_select">Please select</string>
@@ -354,6 +355,14 @@
     <string name="view_no_plate_image">View No.Plate Image</string>
     <string name="individual">Individual</string>
     <string name="add_group_member">Add Group Member</string>
+    <string name="family_member">Family Member</string>
+    <string name="fullname">Fullname</string>
+    <string name="document_id">Document Id</string>
+    <string name="contact_no">Contact No</string>
+    <string name="member">Member</string>
+    <string name="title_add_secoundry_guest">Add Secoundry Guest</string>
+    <string name="view_group_member">VIew Group Member</string>
+    <string name="please_capture_vehical_image">Please capture vehicle no.plate image</string>
 
 
 </resources>

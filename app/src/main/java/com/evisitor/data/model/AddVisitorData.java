@@ -44,8 +44,10 @@ public class AddVisitorData {
     //commercial
     public String purpose;
     public List<DeviceBean> deviceBeanList = new ArrayList<>();
+    public List<SecoundryGuest> guestList = new ArrayList<>();
 
     public String mode;
+    public String groupType;
     public Bitmap vehicalNoPlateBitMapImg;
 
 

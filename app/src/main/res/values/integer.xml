@@ -8,4 +8,5 @@
     <integer name="profile_length">30</integer>
     <integer name="company_name_length">30</integer>
     <integer name="company_address_length">50</integer>
+    <integer name="mobile_no_length">11</integer>
 </resources>
