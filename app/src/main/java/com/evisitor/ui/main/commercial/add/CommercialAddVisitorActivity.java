@@ -26,6 +26,7 @@ import com.evisitor.data.model.HouseDetailBean;
 import com.evisitor.data.model.IdentityBean;
 import com.evisitor.data.model.ProfileBean;
 import com.evisitor.data.model.RecurrentVisitor;
+import com.evisitor.data.model.SecoundryGuest;
 import com.evisitor.data.model.SelectCommercialStaffResponse;
 import com.evisitor.databinding.ActivityCommercialAddVisitorBinding;
 import com.evisitor.ui.base.BaseActivity;
@@ -39,6 +40,7 @@ import com.evisitor.ui.main.MainActivity;
 import com.evisitor.ui.main.commercial.add.whomtomeet.WhomToMeetBottomSheet;
 import com.evisitor.ui.main.commercial.add.whomtomeet.WhomToMeetCallback;
 import com.evisitor.ui.main.commercial.gadgets.GadgetsInputActivity;
+import com.evisitor.ui.main.commercial.secondryguest.SecoundryGuestInputActivity;
 import com.evisitor.ui.main.home.rejectreason.InputDialog;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppUtils;
@@ -56,6 +58,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static com.evisitor.util.AppConstants.ADD_FAMILY_MEMBER;
 import static com.evisitor.util.AppConstants.SCAN_RESULT;
 import static com.evisitor.util.AppConstants.SCAN_RESULT_GADGETS;
 
@@ -65,11 +68,12 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
     // private String ownerId = "";  //also called house owner id
     private String houseId = "";
     private Bitmap bmp_profile, vehicalImgBitmap;
-    private String idType = "";
+    private String idType = "", groupType = "Indivisual";
     private Boolean isGuest;
     private boolean isStaffSelect;
     private List<DeviceBean> deviceBeanList;
     private String imageUrl;
+    private List<SecoundryGuest> secoundryGuestList;
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, CommercialAddVisitorActivity.class);
@@ -232,6 +236,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
     }
 
     private void setUp() {
+        secoundryGuestList = new ArrayList<>();
         countryCode = getViewModel().getDataManager().getPropertyDialingCode();
         deviceBeanList = new ArrayList<>();
         ImageView imgBack = findViewById(R.id.img_back);
@@ -248,7 +253,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
         });
 
         setOnClickListener(imgBack, getViewDataBinding().tvVisitorType, getViewDataBinding().tvNationality, getViewDataBinding().tvEmployment, getViewDataBinding().tvIdentity, getViewDataBinding().tvGender, getViewDataBinding().tvWhomToMeet
-                , getViewDataBinding().frameImg, getViewDataBinding().btnAdd, getViewDataBinding().rlCode, getViewDataBinding().tvGadgets, getViewDataBinding().tvVisitorMode, getViewDataBinding().etClickImag, getViewDataBinding().showNoPlatImage);
+                , getViewDataBinding().frameImg, getViewDataBinding().btnAdd, getViewDataBinding().rlCode, getViewDataBinding().tvGadgets, getViewDataBinding().tvVisitorMode, getViewDataBinding().etClickImag, getViewDataBinding().showNoPlatImage, getViewDataBinding().rbIndividual, getViewDataBinding().rbGroup, getViewDataBinding().tvGroupMember);
         getViewDataBinding().tvCode.setText("+".concat(countryCode));
         getViewDataBinding().etIdentity.addTextChangedListener(new TextWatcher() {
             @Override
@@ -324,6 +329,23 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
                 if (vehicalImgBitmap != null) {
                     showFullBitmapImage(vehicalImgBitmap);
                 }
+                break;
+            case R.id.rb_individual:
+                groupType = "Indivisual";
+                getViewDataBinding().tvGroupMember.setVisibility(View.GONE);
+                break;
+            case R.id.rb_group:
+                groupType = "Group";
+                getViewDataBinding().tvGroupMember.setVisibility(View.VISIBLE);
+                break;
+
+            case R.id.tv_group_member:
+                Intent intent = SecoundryGuestInputActivity.getStartIntent(this);
+                if (!secoundryGuestList.isEmpty()) {
+                    intent.putExtra("list", new Gson().toJson(secoundryGuestList));
+                }
+                intent.putExtra("add", true);
+                startActivityForResult(intent, ADD_FAMILY_MEMBER);
                 break;
 
             case R.id.tv_visitor_type:
@@ -424,6 +446,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
                 visitorData.houseId = houseId;
                 visitorData.mode = getViewDataBinding().tvVisitorMode.getText().toString();
                 visitorData.isStaffSelect = isStaffSelect;
+                visitorData.guestList = secoundryGuestList;
                 if (isGuest) {
                     visitorData.purpose = getViewDataBinding().etPurpose.getText().toString();
                     visitorData.deviceBeanList.clear();
@@ -486,6 +509,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
         visitorData.dialingCode = countryCode;
         visitorData.isAccept = isAccept;
         visitorData.vehicalNoPlateBitMapImg = vehicalImgBitmap;
+        visitorData.guestList = secoundryGuestList;
         mViewModel.doAddSp(visitorData);
     }
 
@@ -498,10 +522,12 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
         if (visitorType.equals("Guest") || visitorType.equals("Visitor")) {
             isGuest = true;
             getViewDataBinding().groupGuestCommercial.setVisibility(View.VISIBLE);
+            getViewDataBinding().rg.setVisibility(View.VISIBLE);
             getViewDataBinding().groupSp.setVisibility(View.GONE);
         } else {
             isGuest = false;
             getViewDataBinding().groupGuestCommercial.setVisibility(View.GONE);
+            getViewDataBinding().rg.setVisibility(View.GONE);
             getViewDataBinding().groupSp.setVisibility(View.VISIBLE);
 
             if (mViewModel.doGetLiveHouseDetails().getValue() == null || mViewModel.doGetHouseDetailsList().isEmpty()) {
@@ -668,6 +694,16 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
                     Log.e("FieldName",name);
                 }*/
                 setSmartScanData();
+            } else if (requestCode == ADD_FAMILY_MEMBER && data != null) {
+                Type listType = new TypeToken<List<SecoundryGuest>>() {
+                }.getType();
+                secoundryGuestList.clear();
+                secoundryGuestList.addAll(Objects.requireNonNull(mViewModel.getDataManager().getGson().fromJson(data.getStringExtra("data"), listType)));
+                if (!secoundryGuestList.isEmpty())
+                    getViewDataBinding().tvGroupMember.setText(getString(R.string.view_group_member).concat(" : ").concat(String.valueOf(secoundryGuestList.size())));
+                else {
+                    getViewDataBinding().tvGroupMember.setText("");
+                }
             }
         }
     }

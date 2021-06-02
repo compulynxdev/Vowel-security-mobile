@@ -1,8 +1,10 @@
 package com.evisitor.ui.main;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -17,6 +19,8 @@ import com.evisitor.ui.main.home.HomeFragment;
 import com.evisitor.ui.main.notifications.NotificationsFragment;
 import com.evisitor.ui.main.profile.UserProfileFragment;
 import com.evisitor.ui.main.settings.SettingsFragment;
+
+import java.io.Console;
 
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements BaseNavigator {
@@ -50,7 +54,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mViewModel.setNavigator(this);
-
+        getMemoryInfo();
         getViewDataBinding().bottomNavigation.add(new MeowBottomNavigation.Model(ID_HOME, R.drawable.ic_home));
         getViewDataBinding().bottomNavigation.add(new MeowBottomNavigation.Model(ID_ACTIVITY, R.drawable.ic_clock));
         getViewDataBinding().bottomNavigation.add(new MeowBottomNavigation.Model(ID_NOTIFICATION, R.drawable.ic_notification));
@@ -94,6 +98,26 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
             } else getViewDataBinding().bottomNavigation.clearCount(ID_NOTIFICATION);
         });
         getViewDataBinding().bottomNavigation.show(ID_HOME, true);
+    }
+
+
+    private String getMemoryInfo() {
+        ActivityManager.MemoryInfo memoryInfo = new ActivityManager.MemoryInfo();
+        ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        activityManager.getMemoryInfo(memoryInfo);
+        Runtime runtime = Runtime.getRuntime();
+        StringBuilder builder = new StringBuilder();
+        builder.append("Available Memory: ").append(memoryInfo.availMem).append("\n").
+                append("Total Memory: ").append(memoryInfo.totalMem).append("\n").
+                append("Runtime Maximum Memory: ").append(runtime.maxMemory()).append("\n").
+                append("Runtime Total Memory: ").append(runtime.totalMemory()).append("\n").
+                append("Runtime Free Memory: ").append(runtime.freeMemory()).append("\n");
+        Log.e("Available Memory==",memoryInfo.availMem+"");
+        Log.e("Total Memory==",memoryInfo.totalMem+"");
+        Log.e("Runtime Maximum Memory",runtime.maxMemory()+"");
+        Log.e("Runtime Total Memory",runtime.totalMemory()+"");
+        Log.e("Runtime Free Memory",runtime.freeMemory()+"");
+        return builder.toString();
     }
 
 }

@@ -153,7 +153,7 @@
                     android:theme="@style/EditTextTheme"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_visitor_mode"
+                    app:layout_constraintTop_toBottomOf="@id/tv_group_member"
                     tools:ignore="LabelFor"
                     tools:targetApi="o" />
 
@@ -434,6 +434,59 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_visitor_type"
                     tools:ignore="LabelFor" />
 
+                <RadioGroup
+                    android:id="@+id/rg"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_visitor_mode">
+
+                    <RadioButton
+                        android:id="@+id/rb_individual"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/white"
+                        android:checked="true"
+                        android:fontFamily="@font/futura_round"
+                        android:text="@string/individual"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                    <RadioButton
+                        android:id="@+id/rb_group"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:buttonTint="@color/white"
+                        android:fontFamily="@font/futura_round"
+                        android:text="@string/group"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/tv_group_member"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/bg_search"
+                    android:fontFamily="@font/futura_round_medium"
+                    android:gravity="center_vertical"
+                    android:hint="@string/add_group_member"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="8dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black40p"
+                    android:textSize="16sp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rg" />
                 <TextView
                     android:id="@+id/tv_identity"
                     android:layout_width="match_parent"

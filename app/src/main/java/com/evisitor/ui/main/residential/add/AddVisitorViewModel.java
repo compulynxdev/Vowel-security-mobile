@@ -198,9 +198,10 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                 object.put("mode", addVisitorData.mode);
                 object.put("groupType", addVisitorData.groupType);
 
-                JSONArray guestList = new JSONArray(new Gson().toJson(addVisitorData.guestList));
-
-                object.put("guestList", guestList);
+                if(addVisitorData.guestList.size()>0) {
+                    JSONArray guestList = new JSONArray(new Gson().toJson(addVisitorData.guestList));
+                    object.put("guestList", guestList);
+                }
                 //object.put("type", addVisitorData..toUpperCase());
                 object.put("address", addVisitorData.address);
                 object.put("country", "");

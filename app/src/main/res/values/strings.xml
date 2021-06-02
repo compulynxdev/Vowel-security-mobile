@@ -367,4 +367,5 @@
 
     <string name="txt_mobile">Mobile</string>
     <string name="txt_vehical_no">Vehical No</string>
+    <string name="please_add_group_member_detail_first">Please add group member detail first</string>
 </resources>

@@ -153,7 +153,7 @@ public class SecoundryGuestInputActivity extends BaseActivity<SecondryGuestInput
                         adapter.notifyDataSetChanged();
                         getViewDataBinding().recyclerView.scrollToPosition(adapter.getItemCount() - 1);
                     } else
-                        showAlert(R.string.alert, R.string.please_fill_details).show(getSupportFragmentManager());
+                        showAlert(R.string.alert, R.string.please_add_group_member_detail_first).show(getSupportFragmentManager());
                 } else
                     showAlert(R.string.alert, R.string.can_add_more_member).show(getSupportFragmentManager());
                 break;

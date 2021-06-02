@@ -102,6 +102,12 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
                 object.put("mode", addVisitorData.mode);
                 object.put("address", addVisitorData.address);
                 object.put("country", "");
+                object.put("groupType", addVisitorData.groupType);
+                if (addVisitorData.guestList.size() > 0) {
+                    JSONArray guestList = new JSONArray(new Gson().toJson(addVisitorData.guestList));
+                    object.put("guestList", guestList);
+                }
+
                 if (addVisitorData.isStaffSelect) {
                     object.put("employeeId", addVisitorData.houseId);
                 } else {

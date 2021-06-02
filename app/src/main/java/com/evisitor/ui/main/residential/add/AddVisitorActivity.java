@@ -72,7 +72,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
     private List<HostDetailBean> hostDetailList;
     private String idType = "";
     private Boolean isGuest;
-    private String imageUrl, groupType;
+    private String imageUrl, groupType="Indivisual";
     private Bitmap vehicalImgBitmap;
     private List<SecoundryGuest> secoundryGuestList;
 
@@ -583,10 +583,12 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
         if (visitorType.equals("Guest")) {
             isGuest = true;
             getViewDataBinding().groupResident.setVisibility(View.VISIBLE);
+            getViewDataBinding().rg.setVisibility(View.VISIBLE);
             getViewDataBinding().groupSp.setVisibility(View.GONE);
         } else {
             isGuest = false;
             getViewDataBinding().groupResident.setVisibility(View.GONE);
+            getViewDataBinding().rg.setVisibility(View.GONE);
             getViewDataBinding().groupSp.setVisibility(View.VISIBLE);
         }
         setIdentity();
