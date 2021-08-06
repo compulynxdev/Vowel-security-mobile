@@ -10,23 +10,31 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
+import com.evisitor.data.model.CheckInTemperature;
 import com.evisitor.data.model.CommercialVisitorResponse;
+import com.evisitor.data.model.SecondaryGuest;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.databinding.FragmentExpectedCommercialGuestBinding;
 import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.dialog.AlertDialog;
+import com.evisitor.ui.main.commercial.secondryguest.SecondaryGuestInputActivity;
 import com.evisitor.ui.main.home.idverification.IdVerificationCallback;
 import com.evisitor.ui.main.home.idverification.IdVerificationDialog;
 import com.evisitor.ui.main.home.rejectreason.InputDialog;
 import com.evisitor.ui.main.home.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.smartengines.MainResultStore;
 import com.smartengines.ScanSmartActivity;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
+import static com.evisitor.util.AppConstants.ADD_FAMILY_MEMBER;
 
 public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpectedCommercialGuestBinding, ExpectedCommercialGuestViewModel> implements ExpectedCommercialGuestNavigator {
     private final int SCAN_RESULT = 101;
@@ -34,6 +42,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
     private RecyclerViewScrollListener scrollListener;
     private ExpectedCommercialGuestAdapter adapter;
     private String search = "";
+    List<CheckInTemperature> guestIds = new ArrayList<>();
     private int page = 0;
 
     public static ExpectedCommercialGuestFragment newInstance() {
@@ -108,10 +117,13 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
     private void decideNextProcess() {
         CommercialVisitorResponse.CommercialGuest tmpBean = mViewModel.getDataManager().getCommercialVisitorDetail();
         if (tmpBean.getCheckInStatus()) {
-            mViewModel.approveByCall(true, null);
+            if(tmpBean.getGuestList().isEmpty())
+                mViewModel.approveByCall(true, null,guestIds);
+            else showSecondaryGuestListForCheckIn();
         } else {
             if (!mViewModel.getDataManager().isIdentifyFeature() || tmpBean.getIdentityNo().isEmpty()) {
-                showCheckinOptions();
+                if(tmpBean.getGuestList().isEmpty()) showCheckinOptions();
+                else showSecondaryGuestListForCheckIn();
             } else {
                 IdVerificationDialog.newInstance(new IdVerificationCallback() {
                     @Override
@@ -121,13 +133,13 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
                         Intent i = ScanSmartActivity.getStartIntent(getContext());
                         startActivityForResult(i, SCAN_RESULT);
                     }
-
                     @Override
                     public void onSubmitClick(IdVerificationDialog dialog, String id) {
                         dialog.dismiss();
 
                         if (tmpBean.getIdentityNo().equalsIgnoreCase(id))
-                            showCheckinOptions();
+                            if(tmpBean.getGuestList().isEmpty()) showCheckinOptions();
+                            else showSecondaryGuestListForCheckIn();
                         else {
                             showToast(R.string.alert_id);
                         }
@@ -140,27 +152,11 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        CommercialVisitorResponse.CommercialGuest tmpBean = mViewModel.getDataManager().getCommercialVisitorDetail();
         if (resultCode == RESULT_OK) {
             if (requestCode == SCAN_RESULT /*&& data != null*/) {
                 String identityNo = MainResultStore.instance.getScannedIDData().idNumber;
                 String fullName = MainResultStore.instance.getScannedIDData().name;
-               /* MrzRecord mrzRecord = (MrzRecord) data.getSerializableExtra("Record");
-                assert mrzRecord != null;
-
-                String code = mrzRecord.getCode1() + "" + mrzRecord.getCode2();
-                switch (code.toLowerCase()) {
-                    case "p<":
-                    case "p":
-                        identityNo = mrzRecord.getDocumentNumber();
-                        break;
-
-                    case "ac":
-                    case "id":
-                        identityNo = mrzRecord.getOptional2().length() == 9 ?
-                                mrzRecord.getOptional2().substring(0, mrzRecord.getOptional2().length() - 1) :
-                                mrzRecord.getOptional2();
-                        break;
-                }*/
                 if (mViewModel.getDataManager().getCommercialVisitorDetail().getIdentityNo().equalsIgnoreCase(identityNo)) {
                     if (mViewModel.getDataManager().getCommercialVisitorDetail().getName().equalsIgnoreCase(fullName)) {
                         showCheckinOptions();
@@ -169,6 +165,16 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
                     }
                 } else {
                     showToast(R.string.alert_invalid_id);
+                }
+            }else if(requestCode == ADD_FAMILY_MEMBER){
+                Type listType = new TypeToken<List<CheckInTemperature>>() {
+                }.getType();
+                guestIds.clear();
+                guestIds.addAll(Objects.requireNonNull(mViewModel.getDataManager().getGson().fromJson(data.getStringExtra("data"), listType)));
+                if(tmpBean.getCheckInStatus()){
+                    mViewModel.approveByCall(true,null,guestIds);
+                }else{
+                    showCheckinOptions();
                 }
             }
         }
@@ -209,7 +215,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
                     .setNegativeBtnLabel(getString(R.string.send_notification))
                     .setOnNegativeClickListener(dialog1 -> {
                         dialog1.dismiss();
-                        mViewModel.sendNotification();
+                        mViewModel.sendNotification(guestIds);
                     })
                     .show(getFragmentManager());
         }
@@ -229,7 +235,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
                 })
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
-                    mViewModel.approveByCall(true, null);
+                    mViewModel.approveByCall(true, null,guestIds);
                 }).show(getFragmentManager());
     }
 
@@ -237,7 +243,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
         InputDialog.newInstance().setTitle(getString(R.string.are_you_sure))
                 .setOnPositiveClickListener((dialog, input) -> {
                     dialog.dismiss();
-                    mViewModel.approveByCall(false, input);
+                    mViewModel.approveByCall(false, input,guestIds);
                 }).show(getFragmentManager());
     }
 
@@ -268,6 +274,16 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
             adapter.showLoading(isShowLoader);
             adapter.notifyDataSetChanged();
         }
+    }
+
+    private void showSecondaryGuestListForCheckIn() {
+       CommercialVisitorResponse.CommercialGuest tmpBean = mViewModel.getDataManager().getCommercialVisitorDetail();
+        Intent i = SecondaryGuestInputActivity.getStartIntent(getBaseActivity());
+        if (!tmpBean.getGuestList().isEmpty()) {
+            i.putExtra("list", new Gson().toJson(tmpBean.guestList));
+        }
+        i.putExtra("checkIn", true);
+        startActivityForResult(i, ADD_FAMILY_MEMBER);
     }
 
     @Override

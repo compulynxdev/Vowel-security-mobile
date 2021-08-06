@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.widget.SearchView;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
@@ -56,6 +58,16 @@ public class TrespasserActivity extends BaseActivity<ActivityTrespasserBinding, 
         getViewDataBinding().header.tvTitle.setText(R.string.title_trespasser_visitor);
         getViewDataBinding().header.imgBack.setVisibility(View.VISIBLE);
         getViewDataBinding().header.imgBack.setOnClickListener(v -> onBackPressed());
+
+        getViewDataBinding().fabNotify.setOnClickListener(v -> getViewModel().doEnableDeviceNotification());
+        getViewModel().getIsNotificationEnable().observe(this, aBoolean -> {
+            if(aBoolean){
+                getViewDataBinding().fabNotify.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.ic_notification_on));
+            }else{
+                getViewDataBinding().fabNotify.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.ic_disable_alarm));
+            }
+        });
+        getViewModel().doGetDeviceNotificationStatus();
 
         getViewDataBinding().llTab.setVisibility(mViewModel.getDataManager().isCommercial() ? View.GONE : View.VISIBLE);
         getViewDataBinding().tvService.setOnClickListener(this);

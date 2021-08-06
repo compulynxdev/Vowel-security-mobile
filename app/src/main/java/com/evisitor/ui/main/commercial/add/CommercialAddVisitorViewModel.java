@@ -1,5 +1,9 @@
 package com.evisitor.ui.main.commercial.add;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.Environment;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
@@ -21,12 +25,17 @@ import com.google.gson.reflect.TypeToken;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -38,6 +47,7 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
     private final List<String> genderList = new ArrayList<>();
     private final List<IdentityBean> identityTypeList = new ArrayList<>();
     private final List<String> visitorTypeList = new ArrayList<>();
+    private final MutableLiveData<String> numberPlate = new MutableLiveData<>();
     private final List<String> visitorTypeModeList = new ArrayList<>();
     private final MutableLiveData<List<HouseDetailBean>> houseDetailMutableList = new MutableLiveData<>();
     private final List<String> employmentList = new ArrayList<>();
@@ -46,6 +56,10 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
 
     public CommercialAddVisitorViewModel(DataManager dataManager) {
         super(dataManager);
+    }
+
+    public MutableLiveData<String> getNumberPlate() {
+        return numberPlate;
     }
 
     boolean doVerifyGuestInputs(AddVisitorData visitorData, GuestConfigurationResponse configurationResponse) {
@@ -91,6 +105,7 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
             try {
                 object.put("fullName", addVisitorData.name);
                 object.put("accountId", getDataManager().getAccountId());
+                object.put("bodyTemperature", addVisitorData.bodyTemperature);
                 object.put("email", "");
                 object.put("nationality", addVisitorData.nationality);
                 object.put("documentType", addVisitorData.identityNo.isEmpty() ? "" : addVisitorData.idType);
@@ -99,6 +114,7 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
                 object.put("contactNo", addVisitorData.contact);
                 object.put("guestType", AppConstants.WALKIN_VISITOR);
                 object.put("type", "random");
+                object.put("companyName", addVisitorData.visitorCompanyName);
                 object.put("mode", addVisitorData.mode);
                 object.put("address", addVisitorData.address);
                 object.put("country", "");
@@ -248,6 +264,7 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
                 object.put("expectedVehicle", visitorData.vehicleNo.toUpperCase());
                 object.put("enteredVehicleNo", visitorData.vehicleNo.toUpperCase());
                 object.put("gender", visitorData.gender);
+                object.put("bodyTemperature", visitorData.bodyTemperature);
                 if (visitorData.bmp_profile == null) {
                     object.put("image", visitorData.imageUrl == null ? "" : visitorData.imageUrl);
                 } else {
@@ -501,5 +518,65 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
 
     MutableLiveData<List<HouseDetailBean>> doGetLiveHouseDetails() {
         return houseDetailMutableList;
+    }
+
+    void numberPlateVerification(Bitmap bitmap){
+        MultipartBody.Part body = AppUtils.prepareFilePart("upload","image/png",bitmapToFile(getNavigator().getContext(),bitmap, UUID.randomUUID().toString().concat(".png")));
+        getDataManager().doNumberPlateDetails("Token a9d83735e6a2668030950af73b3595d9d0c4ad64",body).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call,@NonNull Response<ResponseBody> response) {
+                try {
+                    if (response.code() == 201) {
+                        assert response.body() != null;
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        if(jsonObject.has("results")){
+                            JSONArray array = jsonObject.getJSONArray("results");
+                            if(array.length()>0){
+                                if(array.getJSONObject(0).has("plate")){
+                                    String numerPlate = array.getJSONObject(0).getString("plate");
+                                    numberPlate.setValue(numerPlate);
+                                }
+                            }
+                        }
+
+                    } else if (response.code() == 401) {
+                        getNavigator().openActivityOnTokenExpire();
+                    } else getNavigator().handleApiError(response.errorBody());
+                } catch (Exception e) {
+                    AppLogger.w("VisitorProfileViewModel", e.toString());
+                }
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                getNavigator().hideLoading();
+                getNavigator().handleApiFailure(t);
+            }
+        });
+    }
+
+    public static File bitmapToFile(Context context, Bitmap bitmap, String fileNameToSave) { // File name like "image.png"
+        //create a file to write bitmap data
+        File file = null;
+        try {
+            file = new File(Environment.getExternalStorageDirectory() + File.separator + fileNameToSave);
+            file.createNewFile();
+
+//Convert bitmap to byte array
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 0 , bos); // YOU can also save it in JPEG
+            byte[] bitmapdata = bos.toByteArray();
+
+//write the bytes in file
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(bitmapdata);
+            fos.flush();
+            fos.close();
+            return file;
+        }catch (Exception e){
+            e.printStackTrace();
+            return file; // it will return null
+        }
     }
 }

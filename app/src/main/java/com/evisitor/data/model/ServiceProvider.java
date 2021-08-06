@@ -113,6 +113,8 @@ public class ServiceProvider {
     @SerializedName("vehicleBitMapImage")
     private Bitmap vehicleBitMapImage;
 
+    @SerializedName("bodyTemperature")
+    public String bodyTemperature;
 
     public Bitmap getVehicleBitMapImage() {
         return vehicleBitMapImage;
@@ -392,5 +394,13 @@ public class ServiceProvider {
 
     public void setVehicleImage(String vehicleImage) {
         this.vehicleImage = vehicleImage;
+    }
+
+    public String getBodyTemperature() {
+        return bodyTemperature == null ? "" : bodyTemperature;
+    }
+
+    public void setBodyTemperature(String bodyTemperature) {
+        this.bodyTemperature = bodyTemperature;
     }
 }

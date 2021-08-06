@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.evisitor.R;
 import com.evisitor.data.DataManager;
+import com.evisitor.data.model.CheckInTemperature;
 import com.evisitor.data.model.CommercialVisitorResponse;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.ui.main.BaseCheckInOutViewModel;
@@ -85,7 +86,6 @@ public class ExpectedCommercialGuestViewModel extends BaseCheckInOutViewModel<Ex
         List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, guests.getName())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), CommonUtils.paritalEncodeData(guests.getExpectedVehicleNo()), VisitorProfileBean.VIEW_TYPE_EDITABLE));
-
         if (getDataManager().getGuestConfiguration().getGuestField().isContactNo())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, guests.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : CommonUtils.paritalEncodeData("".concat(guests.getDialingCode()).concat(" ").concat(guests.getContactNo())))));
 
@@ -102,15 +102,18 @@ public class ExpectedCommercialGuestViewModel extends BaseCheckInOutViewModel<Ex
         return visitorProfileBeanList;
     }
 
-    void sendNotification() {
+    void sendNotification(List<CheckInTemperature> guestIds) {
         if (getNavigator().isNetworkConnected(true)) {
             JSONObject object = new JSONObject();
             try {
                 object.put("id", getDataManager().getCommercialVisitorDetail().getGuestId());
                 object.put("accountId", getDataManager().getAccountId());
                 object.put("staffId", getDataManager().getCommercialVisitorDetail().getStaffId());
+                JSONArray ids = new JSONArray(new Gson().toJson(guestIds));
+                object.put("guestIdList", ids);
                 object.put("premiseHierarchyDetailsId", getDataManager().getCommercialVisitorDetail().getFlatId());
                 object.put("enteredVehicleNo", getDataManager().getCommercialVisitorDetail().getEnteredVehicleNo());
+                object.put("bodyTemperature", getDataManager().getCommercialVisitorDetail().getBodyTemperature());
                 JSONArray deviceList = new JSONArray(new Gson().toJson(getDataManager().getCommercialVisitorDetail().getDeviceBeanList()));
                 object.put("deviceList", deviceList);
                 //object.put("type", AppConstants.GUEST);
@@ -123,15 +126,18 @@ public class ExpectedCommercialGuestViewModel extends BaseCheckInOutViewModel<Ex
         }
     }
 
-    void approveByCall(boolean isAccept, String input) {
+    void approveByCall(boolean isAccept, String input,List<CheckInTemperature> guestIds) {
         if (getNavigator().isNetworkConnected(true)) {
             JSONObject object = new JSONObject();
             try {
                 object.put("id", getDataManager().getCommercialVisitorDetail().getGuestId());
                 object.put("enteredVehicleNo", getDataManager().getCommercialVisitorDetail().getEnteredVehicleNo());
+                object.put("bodyTemperature", getDataManager().getCommercialVisitorDetail().getBodyTemperature());
                 object.put("accountId", getDataManager().getAccountId());
                 JSONArray deviceList = new JSONArray(new Gson().toJson(getDataManager().getCommercialVisitorDetail().getDeviceBeanList()));
                 object.put("deviceList", deviceList);
+                JSONArray ids = new JSONArray(new Gson().toJson(guestIds));
+                object.put("guestIdList", ids);
                 object.put("type", AppConstants.CHECK_IN);
                 object.put("visitor", AppConstants.GUEST);
                 object.put("state", isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);

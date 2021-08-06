@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Guests {
@@ -98,10 +99,15 @@ public class Guests {
     @SerializedName("groupType")
     public String groupType;
 
+    @SerializedName("isVip")
+    public boolean isVip = false;
+
+    public boolean minor = false;
+
     @SerializedName("guestList")
-    public List<SecoundryGuest> guestList;
+    public List<SecondaryGuest> guestList;
 
-
+    public String bodyTemperature;
 
     public String getCheckInTime() {
         return checkInTime;
@@ -377,11 +383,35 @@ public class Guests {
         this.vehicleImage = vehicleImage;
     }
 
-    public List<SecoundryGuest> getGuestList() {
-        return guestList;
+    public List<SecondaryGuest> getGuestList() {
+        return guestList==null ? new ArrayList<>() : guestList;
     }
 
-    public void setGuestList(List<SecoundryGuest> guestList) {
+    public void setGuestList(List<SecondaryGuest> guestList) {
         this.guestList = guestList;
+    }
+
+    public boolean isVip() {
+        return isVip;
+    }
+
+    public void setVip(boolean vip) {
+        isVip = vip;
+    }
+
+    public String getBodyTemperature() {
+        return bodyTemperature == null ? "" : bodyTemperature;
+    }
+
+    public void setBodyTemperature(String bodyTemperature) {
+        this.bodyTemperature = bodyTemperature;
+    }
+
+    public boolean isMinor() {
+        return minor;
+    }
+
+    public void setMinor(boolean minor) {
+        this.minor = minor;
     }
 }

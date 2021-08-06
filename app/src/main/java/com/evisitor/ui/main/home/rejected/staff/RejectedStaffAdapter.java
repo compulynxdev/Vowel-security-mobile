@@ -16,6 +16,7 @@ import com.evisitor.R;
 import com.evisitor.data.model.HouseKeepingResponse;
 import com.evisitor.ui.base.BaseViewHolder;
 import com.evisitor.ui.base.ItemClickCallback;
+import com.evisitor.util.CommonUtils;
 import com.evisitor.util.pagination.FooterLoader;
 
 import java.util.List;
@@ -117,7 +118,7 @@ public class RejectedStaffAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             HouseKeepingResponse.ContentBean bean = list.get(position);
             Context context = name.getContext();
             name.setText(context.getString(R.string.data_name, bean.getFullName()));
-            identity.setText(context.getString(R.string.data_identity, bean.getDocumentId().isEmpty() ? "N?A" : bean.getDocumentId()));
+            identity.setText(context.getString(R.string.data_identity, bean.getDocumentId().isEmpty() ? "N?A" : CommonUtils.paritalEncodeData(bean.getDocumentId())));
             profile.setText(context.getString(R.string.data_profile, bean.getProfile()));
             reject.setVisibility(bean.getRejectedBy().isEmpty() ? View.GONE : View.VISIBLE);
             reject.setText(context.getString(R.string.rejected_by, bean.getRejectedBy()));

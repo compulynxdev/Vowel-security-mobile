@@ -320,6 +320,7 @@ public class HouseKeepingResponse {
         private String documentImage;
         private String mode;
         private Bitmap vehicalBitmapImg;
+        public String bodyTemperature;
 
         public Bitmap getVehicalBitmapImg() {
             return vehicalBitmapImg;
@@ -599,6 +600,14 @@ public class HouseKeepingResponse {
 
         public void setDocumentImage(String documentImage) {
             this.documentImage = documentImage;
+        }
+
+        public String getBodyTemperature() {
+            return bodyTemperature == null ? "" : bodyTemperature;
+        }
+
+        public void setBodyTemperature(String bodyTemperature) {
+            this.bodyTemperature = bodyTemperature;
         }
     }
 }

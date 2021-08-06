@@ -26,7 +26,7 @@ import com.evisitor.data.model.HouseDetailBean;
 import com.evisitor.data.model.IdentityBean;
 import com.evisitor.data.model.ProfileBean;
 import com.evisitor.data.model.RecurrentVisitor;
-import com.evisitor.data.model.SecoundryGuest;
+import com.evisitor.data.model.SecondaryGuest;
 import com.evisitor.data.model.SelectCommercialStaffResponse;
 import com.evisitor.databinding.ActivityCommercialAddVisitorBinding;
 import com.evisitor.ui.base.BaseActivity;
@@ -40,7 +40,7 @@ import com.evisitor.ui.main.MainActivity;
 import com.evisitor.ui.main.commercial.add.whomtomeet.WhomToMeetBottomSheet;
 import com.evisitor.ui.main.commercial.add.whomtomeet.WhomToMeetCallback;
 import com.evisitor.ui.main.commercial.gadgets.GadgetsInputActivity;
-import com.evisitor.ui.main.commercial.secondryguest.SecoundryGuestInputActivity;
+import com.evisitor.ui.main.commercial.secondryguest.SecondaryGuestInputActivity;
 import com.evisitor.ui.main.home.rejectreason.InputDialog;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppUtils;
@@ -68,12 +68,12 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
     // private String ownerId = "";  //also called house owner id
     private String houseId = "";
     private Bitmap bmp_profile, vehicalImgBitmap;
-    private String idType = "", groupType = "Indivisual";
+    private String idType = "", groupType = "Individual";
     private Boolean isGuest;
     private boolean isStaffSelect;
     private List<DeviceBean> deviceBeanList;
     private String imageUrl;
-    private List<SecoundryGuest> secoundryGuestList;
+    private List<SecondaryGuest> secoundryGuestList;
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, CommercialAddVisitorActivity.class);
@@ -104,6 +104,14 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
         setUpProfileSearch();
         setUpCompanySearch();
         setIntentData(getIntent());
+       // getViewModel().getNumberPlate().observe(this, s -> getViewDataBinding().etVehicle.setText(s.toUpperCase()));
+        getViewModel().getNumberPlate().observe(this, s -> {
+            getViewDataBinding().etVehicle.setText(s.toUpperCase());
+            if(s.isEmpty()){
+                vehicalImgBitmap = null;
+                getViewDataBinding().showNoPlatImage.setVisibility(View.GONE);
+            }
+        });
     }
 
     private void setUpDepartment() {
@@ -313,6 +321,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
                             vehicalImgBitmap = bitmap;
                             if (bitmap != null) {
                                 getViewDataBinding().showNoPlatImage.setVisibility(View.VISIBLE);
+                                getViewModel().numberPlateVerification(bitmap);
                             } else {
                                 getViewDataBinding().showNoPlatImage.setVisibility(View.GONE);
                             }
@@ -331,7 +340,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
                 }
                 break;
             case R.id.rb_individual:
-                groupType = "Indivisual";
+                groupType = "Individual";
                 getViewDataBinding().tvGroupMember.setVisibility(View.GONE);
                 break;
             case R.id.rb_group:
@@ -340,7 +349,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
                 break;
 
             case R.id.tv_group_member:
-                Intent intent = SecoundryGuestInputActivity.getStartIntent(this);
+                Intent intent = SecondaryGuestInputActivity.getStartIntent(this);
                 if (!secoundryGuestList.isEmpty()) {
                     intent.putExtra("list", new Gson().toJson(secoundryGuestList));
                 }
@@ -447,6 +456,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
                 visitorData.mode = getViewDataBinding().tvVisitorMode.getText().toString();
                 visitorData.isStaffSelect = isStaffSelect;
                 visitorData.guestList = secoundryGuestList;
+                visitorData.bodyTemperature = getViewDataBinding().etTemperature.getText().toString().trim();
                 if (isGuest) {
                     visitorData.purpose = getViewDataBinding().etPurpose.getText().toString();
                     visitorData.deviceBeanList.clear();
@@ -618,6 +628,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
         addVisitorData.contact = getViewDataBinding().etContact.getText().toString();
         addVisitorData.dialingCode = countryCode;
         addVisitorData.address = getViewDataBinding().etAddress.getText().toString();
+        addVisitorData.visitorCompanyName = getViewDataBinding().etVisitorCompanyName.getText().toString();
         addVisitorData.houseId = houseId;
         addVisitorData.purpose = getViewDataBinding().etPurpose.getText().toString();
         addVisitorData.deviceBeanList.clear();
@@ -695,7 +706,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
                 }*/
                 setSmartScanData();
             } else if (requestCode == ADD_FAMILY_MEMBER && data != null) {
-                Type listType = new TypeToken<List<SecoundryGuest>>() {
+                Type listType = new TypeToken<List<SecondaryGuest>>() {
                 }.getType();
                 secoundryGuestList.clear();
                 secoundryGuestList.addAll(Objects.requireNonNull(mViewModel.getDataManager().getGson().fromJson(data.getStringExtra("data"), listType)));

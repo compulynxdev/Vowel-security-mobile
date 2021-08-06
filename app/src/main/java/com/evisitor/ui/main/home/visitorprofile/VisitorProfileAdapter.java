@@ -33,6 +33,7 @@ public class VisitorProfileAdapter extends RecyclerView.Adapter<BaseViewHolder> 
 
     private final List<VisitorProfileBean> list;
     private final Activity activity;
+    private EditText et_data;
 
     VisitorProfileAdapter(Activity activity, List<VisitorProfileBean> list) {
         this.list = list;
@@ -70,6 +71,11 @@ public class VisitorProfileAdapter extends RecyclerView.Adapter<BaseViewHolder> 
         return list.get(position).getView_type();
     }
 
+    public void setNumberPlate(String s) {
+        et_data.setText(s.toUpperCase());
+        setNumberPlateData(s);
+    }
+
     public class ItemViewHolder extends BaseViewHolder {
 
         final TextView tv_name;
@@ -82,12 +88,6 @@ public class VisitorProfileAdapter extends RecyclerView.Adapter<BaseViewHolder> 
         @Override
         public void onBind(int position) {
             VisitorProfileBean bean = list.get(position);
-
-//            if(bean.getTitle().contains(activity.getString(R.string.txt_mobile))||bean.getTitle().contains(activity.getString(R.string.txt_vehical_no))){
-//                tv_name.setText("work" );
-//            }else {
-//                tv_name.setText(bean.getTitle());
-//            }
             tv_name.setText(bean.getTitle());
         }
     }
@@ -95,8 +95,6 @@ public class VisitorProfileAdapter extends RecyclerView.Adapter<BaseViewHolder> 
     public class EditableViewHolder extends BaseViewHolder {
 
         final TextView tv_title;
-        final EditText et_data;
-
         EditableViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_title = itemView.findViewById(R.id.tv_title);
@@ -107,7 +105,7 @@ public class VisitorProfileAdapter extends RecyclerView.Adapter<BaseViewHolder> 
         public void onBind(int position) {
             VisitorProfileBean bean = list.get(position);
 
-            DataManager dataManager = EVisitor.getInstance().getDataManager();
+           // DataManager dataManager = EVisitor.getInstance().getDataManager();
             tv_title.setText(bean.getTitle());
             et_data.setText(bean.getValue());
             et_data.addTextChangedListener(new TextWatcher() {
@@ -123,40 +121,45 @@ public class VisitorProfileAdapter extends RecyclerView.Adapter<BaseViewHolder> 
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    if (dataManager.isCommercial()) {
-                        CommercialVisitorResponse.CommercialGuest guests = dataManager.getCommercialVisitorDetail();
-                        if (guests != null) {
-                            guests.setEnteredVehicleNo(et_data.getText().toString());
-                            dataManager.setCommercialVisitorDetail(guests);
-                        }
-
-                        CommercialStaffResponse.ContentBean staff = dataManager.getCommercialStaff();
-                        if (staff != null) {
-                            staff.setEnteredVehicleNo(et_data.getText().toString());
-                            dataManager.setCommercialStaff(staff);
-                        }
-
-                    } else {
-                        Guests guests = dataManager.getGuestDetail();
-                        if (guests != null) {
-                            guests.setEnteredVehicleNo(et_data.getText().toString());
-                            dataManager.setGuestDetail(guests);
-                        }
-
-                        HouseKeepingResponse.ContentBean hkBean = dataManager.getHouseKeeping();
-                        if (hkBean != null) {
-                            hkBean.setEnteredVehicleNo(et_data.getText().toString());
-                            dataManager.setHouseKeeping(hkBean);
-                        }
-                    }
-
-                    ServiceProvider spBean = dataManager.getSpDetail();
-                    if (spBean != null) {
-                        spBean.setEnteredVehicleNo(et_data.getText().toString());
-                        dataManager.setSPDetail(spBean);
-                    }
+                   setNumberPlateData(s.toString());
                 }
             });
+        }
+    }
+
+    private void setNumberPlateData(String s) {
+        DataManager dataManager= EVisitor.getInstance().getDataManager();
+        if (dataManager.isCommercial()) {
+            CommercialVisitorResponse.CommercialGuest guests = dataManager.getCommercialVisitorDetail();
+            if (guests != null) {
+                guests.setEnteredVehicleNo(et_data.getText().toString());
+                dataManager.setCommercialVisitorDetail(guests);
+            }
+
+            CommercialStaffResponse.ContentBean staff = dataManager.getCommercialStaff();
+            if (staff != null) {
+                staff.setEnteredVehicleNo(et_data.getText().toString());
+                dataManager.setCommercialStaff(staff);
+            }
+
+        } else {
+            Guests guests = dataManager.getGuestDetail();
+            if (guests != null) {
+                guests.setEnteredVehicleNo(et_data.getText().toString());
+                dataManager.setGuestDetail(guests);
+            }
+
+            HouseKeepingResponse.ContentBean hkBean = dataManager.getHouseKeeping();
+            if (hkBean != null) {
+                hkBean.setEnteredVehicleNo(et_data.getText().toString());
+                dataManager.setHouseKeeping(hkBean);
+            }
+        }
+
+        ServiceProvider spBean = dataManager.getSpDetail();
+        if (spBean != null) {
+            spBean.setEnteredVehicleNo(et_data.getText().toString());
+            dataManager.setSPDetail(spBean);
         }
     }
 

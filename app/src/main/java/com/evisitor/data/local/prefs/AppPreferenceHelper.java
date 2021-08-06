@@ -40,6 +40,7 @@ public class AppPreferenceHelper implements PreferenceHelper {
     private static final String COMMERCIAL = "COMMERCIAL";
     private static final String PROPERTY_COUNTRY = "PROPERTY_COUNTRY";
     private static final String PROPERTY_DIALING_CODE = "PROPERTY_DIALING_CODE";
+    private static final String CHECK_OUT_FEATURE = "CHECK_OUT_FEATURE";
 
     private final SharedPreferences mPrefs;
 
@@ -55,6 +56,16 @@ public class AppPreferenceHelper implements PreferenceHelper {
     @Override
     public void setLoggedIn(boolean isLoggedIn) {
         mPrefs.edit().putBoolean(PREF_KEY_USER_LOGGED_IN, isLoggedIn).apply();
+    }
+
+    @Override
+    public boolean isCheckOutFeature() {
+        return mPrefs.getBoolean(PREF_KEY_USER_LOGGED_IN, false);
+    }
+
+    @Override
+    public void setCheckOutFeature(boolean checkOutFeature) {
+        mPrefs.edit().putBoolean(PREF_KEY_USER_LOGGED_IN, checkOutFeature).apply();
     }
 
     @Override

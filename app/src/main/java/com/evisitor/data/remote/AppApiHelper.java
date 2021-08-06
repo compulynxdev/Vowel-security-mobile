@@ -3,12 +3,14 @@ package com.evisitor.data.remote;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
 
 /**
  * Created by Priyanka Joshi on 14-07-2020.
@@ -34,13 +36,21 @@ public class AppApiHelper implements ApiHelper {
     }
 
     private static ApiHelper getApiInterface() {
-        if (apiInterface == null) {
             apiInterface = new Retrofit.Builder()
                     .addConverterFactory(GsonConverterFactory.create())
                     .baseUrl(WebServices.BASE_URL)
                     .client(okHttpClient)
                     .build().create(ApiHelper.class);
-        }
+
+        return apiInterface;
+    }
+
+    private static ApiHelper getNumberPlateUrl(){
+            apiInterface = new Retrofit.Builder()
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .baseUrl(WebServices.BASE_PLATE_RECOGNISER)
+                    .client(okHttpClient)
+                    .build().create(ApiHelper.class);
         return apiInterface;
     }
 
@@ -240,6 +250,11 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
+    public Call<ResponseBody> doGetVisitorByQRCode(String authToken, RequestBody requestBody) {
+        return getApiInterface().doGetVisitorByQRCode(authToken, requestBody);
+    }
+
+    @Override
     public Call<ResponseBody> doPasswordReset(RequestBody requestBody) {
         return getApiInterface().doPasswordReset(requestBody);
     }
@@ -247,5 +262,20 @@ public class AppApiHelper implements ApiHelper {
     @Override
     public Call<ResponseBody> doGetFilterVisitorInfo(String authToken, RequestBody requestBody) {
         return getApiInterface().doGetFilterVisitorInfo(authToken, requestBody);
+    }
+
+    @Override
+    public Call<ResponseBody> doNumberPlateDetails(String authToken, MultipartBody.Part file) {
+        return getNumberPlateUrl().doNumberPlateDetails(authToken, file);
+    }
+
+    @Override
+    public Call<ResponseBody> doEnableDeviceNotification(String authToken, RequestBody requestBody) {
+        return getApiInterface().doEnableDeviceNotification(authToken, requestBody);
+    }
+
+    @Override
+    public Call<Boolean> doGetDeviceNotificationStatus(String authToken, RequestBody requestBody) {
+        return getApiInterface().doGetDeviceNotificationStatus(authToken, requestBody);
     }
 }

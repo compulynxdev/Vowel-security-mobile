@@ -1,5 +1,6 @@
 package com.evisitor.ui.main.activity.checkin;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -24,14 +25,19 @@ import com.evisitor.ui.main.activity.checkin.adapter.CommercialVisitorCheckInAda
 import com.evisitor.ui.main.activity.checkin.adapter.GuestCheckInAdapter;
 import com.evisitor.ui.main.activity.checkin.adapter.HouseKeepingCheckInAdapter;
 import com.evisitor.ui.main.activity.checkin.adapter.ServiceProviderCheckInAdapter;
+import com.evisitor.ui.main.home.idverification.IdVerificationCallback;
+import com.evisitor.ui.main.home.idverification.IdVerificationDialog;
 import com.evisitor.ui.main.home.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
-
+import com.google.gson.reflect.TypeToken;
+import com.smartengines.MainResultStore;
+import com.smartengines.ScanSmartActivity;
 import java.util.ArrayList;
 import java.util.List;
+import static android.app.Activity.RESULT_OK;
 
 public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckInViewModel> implements ActivityNavigator {
-
+    private final int SCAN_RESULT = 101;
     private List<CommercialVisitorResponse.CommercialGuest> commercialGuestList;
     private List<Guests> guestsList;
     private List<ServiceProvider> serviceProviderList;
@@ -45,8 +51,8 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
     private OnFragmentInteraction listener;
     private RecyclerViewScrollListener scrollListener;
     private int guestPage, hkPage, spPage;
-    private int listOf = 0;
-    private String search = "";
+    private int listOf = 0,type=0;
+    private String search = "",identity="",name="";
 
     public static CheckInFragment newInstance(int listOf, OnFragmentInteraction listener) {
         CheckInFragment fragment = new CheckInFragment();
@@ -161,7 +167,13 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
             List<VisitorProfileBean> beans = mViewModel.getCommercialStaffBean(bean);
             VisitorProfileDialog.newInstance(beans, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
-                mViewModel.staffCheckOut();
+                if(mViewModel.getDataManager().isCheckOutFeature()){
+                    name = bean.getFullName();
+                    type=3;
+                    identity = bean.getDocumentId();
+                    scanIdDialog(bean.getFullName(),3);
+                }
+                else mViewModel.staffCheckOut();
             }).setImage(bean.getImageUrl()).setBtnLabel(getString(R.string.check_out))
                     .setVehicalNoPlateImg(bean.getVehicleImage()).show(getFragmentManager());
         });
@@ -176,7 +188,17 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                 visitorProfileDialog.dismiss();
                 if (!guests.getHost().isEmpty() && guests.getHostCheckOutTime().isEmpty())
                     showCallDialog(0);
-                else mViewModel.checkOut(0);
+                else{
+                    if(mViewModel.getDataManager().isCheckOutFeature() && !guests.isMinor()){
+                        name = guests.getName();
+                        type=0;
+                        identity = guests.getIdentityNo();
+                        scanIdDialog(guests.getIdentityNo(),0);
+                    }else {
+                        mViewModel.checkOut(0);
+                    }
+                }
+                   // mViewModel.checkOut(0);
             }).setIsCommercialGuest(true).setImage(guests.getImageUrl()).setVehicalNoPlateImg(guests.getVehicleImage()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
         });
 
@@ -191,8 +213,15 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                 if (houseKeeping.isCheckOutFeature() && !houseKeeping.isHostCheckOut())
                     showCallDialog(1);
                 else {
-                    if (isNetworkConnected(true))
-                        mViewModel.checkOut(1);
+                    if(mViewModel.getDataManager().isCheckOutFeature()){
+                        name = houseKeeping.getName();
+                        type=1;
+                        identity = houseKeeping.getIdentityNo();
+                        scanIdDialog(houseKeeping.getIdentityNo(),1);
+                    }else {
+                        if (isNetworkConnected(true))
+                            mViewModel.checkOut(1);
+                    }
                 }
             }).setImage(houseKeeping.getImageUrl()).setVehicalNoPlateImg(houseKeeping.getVehicleImage()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
         });
@@ -205,7 +234,16 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                 visitorProfileDialog.dismiss();
                 if (serviceProvider.isCheckOutFeature() && !serviceProvider.isHostCheckOut())
                     showCallDialog(2);
-                else mViewModel.checkOut(2);
+                else{
+                    if(mViewModel.getDataManager().isCheckOutFeature()){
+                        name = serviceProvider.getName();
+                        type=2;
+                        identity = serviceProvider.getIdentityNo();
+                        scanIdDialog(serviceProvider.getIdentityNo(),2);
+                    }
+                    else
+                        mViewModel.checkOut(2);
+                }
             }).setImage(serviceProvider.getImageUrl()).setVehicalNoPlateImg(serviceProvider.getVehicleImage()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
         });
     }
@@ -219,9 +257,17 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                 visitorProfileDialog.dismiss();
                 if (guests.isCheckOutFeature() && !guests.isHostCheckOut())
                     showCallDialog(0);
-                else mViewModel.checkOut(0);
-            }).setImage(guests.getImageUrl()).setBtnLabel(getString(R.string.check_out)).
-                    setVehicalNoPlateImg(guests.getVehicleImage()).show(getFragmentManager());
+                else{
+                    if(mViewModel.getDataManager().isCheckOutFeature() && !guests.isMinor()){
+                        name = guests.getName();
+                        type=0;
+                        identity = guests.getIdentityNo();
+                        scanIdDialog(guests.getIdentityNo(),0);
+                    }else {
+                        mViewModel.checkOut(0);
+                    }
+                }
+            }).setImage(guests.getImageUrl()).setBtnLabel(getString(R.string.check_out)).setVehicalNoPlateImg(guests.getVehicleImage()).show(getFragmentManager());
         });
 
         getViewDataBinding().recyclerView.setAdapter(guestAdapter);
@@ -442,4 +488,60 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
     public interface OnFragmentInteraction {
         void totalCount(int size);
     }
+
+
+    void scanIdDialog(String identity, int type){
+        IdVerificationDialog.newInstance(new IdVerificationCallback() {
+            @Override
+            public void onScanClick(IdVerificationDialog dialog) {
+                dialog.dismiss();
+                //Intent i = ScanIDActivity.getStartIntent(getContext());
+                Intent i = ScanSmartActivity.getStartIntent(getContext());
+                startActivityForResult(i, SCAN_RESULT);
+            }
+
+            @Override
+            public void onSubmitClick(IdVerificationDialog dialog, String id) {
+                dialog.dismiss();
+                if (identity.equalsIgnoreCase(id)){
+                    //staff
+                    if(type==3){
+                        mViewModel.staffCheckOut();
+                    }else{
+                        mViewModel.checkOut(type);
+                    }
+                }
+                else {
+                    showToast(R.string.alert_id);
+                }
+            }
+        }).show(getFragmentManager());
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Guests tmpBean = mViewModel.getDataManager().getGuestDetail();
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SCAN_RESULT /*&& data != null*/) {
+                String identityNo = MainResultStore.instance.getScannedIDData().idNumber;
+                String fullName = MainResultStore.instance.getScannedIDData().name;
+                if (identity.equalsIgnoreCase(identityNo)) {
+                    if (name.equalsIgnoreCase(fullName)) {
+                        if(type==3){
+                            mViewModel.staffCheckOut();
+                        }else{
+                            mViewModel.checkOut(type);
+                        }
+                    } else {
+                        showToast(R.string.alert_invalid_name);
+                    }
+                } else {
+                    showToast(R.string.alert_invalid_id);
+                }
+            }
+        }
+    }
+
 }

@@ -21,9 +21,11 @@ import com.google.gson.GsonBuilder;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 
 /**
  * Created by Priyanka Joshi on 14-07-2020.
@@ -148,6 +150,16 @@ public class AppDataManager implements DataManager {
     @Override
     public void setLoggedIn(boolean isLoggedIn) {
         preferenceHelper.setLoggedIn(isLoggedIn);
+    }
+
+    @Override
+    public boolean isCheckOutFeature() {
+        return preferenceHelper.isCheckOutFeature();
+    }
+
+    @Override
+    public void setCheckOutFeature(boolean checkOutFeature) {
+        preferenceHelper.setCheckOutFeature(checkOutFeature);
     }
 
     @Override
@@ -491,6 +503,11 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public Call<ResponseBody> doGetVisitorByQRCode(String authToken, RequestBody requestBody) {
+        return apiHelper.doGetVisitorByQRCode(authToken, requestBody);
+    }
+
+    @Override
     public Call<ResponseBody> doPasswordReset(RequestBody requestBody) {
         return apiHelper.doPasswordReset(requestBody);
     }
@@ -498,5 +515,20 @@ public class AppDataManager implements DataManager {
     @Override
     public Call<ResponseBody> doGetFilterVisitorInfo(String authToken, RequestBody requestBody) {
         return apiHelper.doGetFilterVisitorInfo(authToken, requestBody);
+    }
+
+    @Override
+    public Call<ResponseBody> doNumberPlateDetails(String authToken, MultipartBody.Part requestBody) {
+        return apiHelper.doNumberPlateDetails(authToken, requestBody);
+    }
+
+    @Override
+    public Call<ResponseBody> doEnableDeviceNotification(String authToken, RequestBody requestBody) {
+        return apiHelper.doEnableDeviceNotification(authToken, requestBody);
+    }
+
+    @Override
+    public Call<Boolean> doGetDeviceNotificationStatus(String authToken, RequestBody requestBody) {
+        return apiHelper.doGetDeviceNotificationStatus(authToken, requestBody);
     }
 }

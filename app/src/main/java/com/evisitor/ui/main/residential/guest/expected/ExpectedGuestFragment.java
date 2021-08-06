@@ -10,23 +10,31 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
+import com.evisitor.data.model.CheckInTemperature;
 import com.evisitor.data.model.Guests;
+import com.evisitor.data.model.SecondaryGuest;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.databinding.FragmentExpectedGuestBinding;
 import com.evisitor.ui.base.BaseFragment;
 import com.evisitor.ui.dialog.AlertDialog;
+import com.evisitor.ui.main.commercial.secondryguest.SecondaryGuestInputActivity;
 import com.evisitor.ui.main.home.idverification.IdVerificationCallback;
 import com.evisitor.ui.main.home.idverification.IdVerificationDialog;
 import com.evisitor.ui.main.home.rejectreason.InputDialog;
 import com.evisitor.ui.main.home.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.smartengines.MainResultStore;
 import com.smartengines.ScanSmartActivity;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
+import static com.evisitor.util.AppConstants.ADD_FAMILY_MEMBER;
 
 public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBinding, ExpectedGuestViewModel> implements ExpectedGuestNavigator {
     private final int SCAN_RESULT = 101;
@@ -34,6 +42,7 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
     private RecyclerViewScrollListener scrollListener;
     private ExpectedGuestAdapter adapter;
     private String search = "";
+    List<CheckInTemperature> guestIds = new ArrayList<>();
     private int page = 0;
 
     public static ExpectedGuestFragment newInstance() {
@@ -80,7 +89,6 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
         adapter = new ExpectedGuestAdapter(guestsList, getContext(), pos -> {
             Guests guestBean = guestsList.get(pos);
             List<VisitorProfileBean> visitorProfileBeanList = mViewModel.setClickVisitorDetail(guestBean);
-
             VisitorProfileDialog.newInstance(visitorProfileBeanList, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
                 decideNextProcess();
@@ -110,11 +118,15 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
 
     private void decideNextProcess() {
         Guests tmpBean = mViewModel.getDataManager().getGuestDetail();
-        if (tmpBean.getCheckInStatus()) {
-            mViewModel.approveByCall(true, null);
-        } else {
+        if (tmpBean.getCheckInStatus() || tmpBean.isVip()) {
+            if(tmpBean.getGuestList().isEmpty())
+                mViewModel.approveByCall(true, null,guestIds);
+            else showSecondaryGuestListForCheckIn();
+        }
+        else {
             if (!mViewModel.getDataManager().isIdentifyFeature() || tmpBean.getIdentityNo().isEmpty()) {
-                showCheckinOptions();
+                if(tmpBean.getGuestList().isEmpty()) showCheckinOptions();
+                else showSecondaryGuestListForCheckIn();
             } else {
                 IdVerificationDialog.newInstance(new IdVerificationCallback() {
                     @Override
@@ -130,7 +142,8 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
                         dialog.dismiss();
 
                         if (tmpBean.getIdentityNo().equalsIgnoreCase(id))
-                            showCheckinOptions();
+                            if(tmpBean.getGuestList().isEmpty()) showCheckinOptions();
+                            else showSecondaryGuestListForCheckIn();
                         else {
                             showToast(R.string.alert_id);
                         }
@@ -140,9 +153,20 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
         }
     }
 
+    private void showSecondaryGuestListForCheckIn() {
+        Guests tmpBean = mViewModel.getDataManager().getGuestDetail();
+        Intent i = SecondaryGuestInputActivity.getStartIntent(getBaseActivity());
+        if (!tmpBean.getGuestList().isEmpty()) {
+            i.putExtra("list", new Gson().toJson(tmpBean.guestList));
+        }
+        i.putExtra("checkIn", true);
+        startActivityForResult(i, ADD_FAMILY_MEMBER);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Guests tmpBean = mViewModel.getDataManager().getGuestDetail();
         if (resultCode == RESULT_OK) {
             if (requestCode == SCAN_RESULT /*&& data != null*/) {
                 String identityNo = MainResultStore.instance.getScannedIDData().idNumber;
@@ -166,12 +190,23 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
                 }*/
                 if (mViewModel.getDataManager().getGuestDetail().getIdentityNo().equalsIgnoreCase(identityNo)) {
                     if (mViewModel.getDataManager().getGuestDetail().getName().equalsIgnoreCase(fullName)) {
-                        showCheckinOptions();
+                        if(tmpBean.getGuestList().isEmpty()) showCheckinOptions();
+                        else showSecondaryGuestListForCheckIn();
                     } else {
                         showToast(R.string.alert_invalid_name);
                     }
                 } else {
                     showToast(R.string.alert_invalid_id);
+                }
+            }else if(requestCode == ADD_FAMILY_MEMBER){
+                Type listType = new TypeToken<List<CheckInTemperature>>() {
+                }.getType();
+                guestIds.clear();
+                guestIds.addAll(Objects.requireNonNull(mViewModel.getDataManager().getGson().fromJson(data.getStringExtra("data"), listType)));
+                if(tmpBean.getCheckInStatus() || tmpBean.isVip()){
+                    mViewModel.approveByCall(true,null,guestIds);
+                }else{
+                    showCheckinOptions();
                 }
             }
         }
@@ -212,7 +247,7 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
                     .setNegativeBtnLabel(getString(R.string.send_notification))
                     .setOnNegativeClickListener(dialog1 -> {
                         dialog1.dismiss();
-                        mViewModel.sendNotification();
+                        mViewModel.sendNotification(guestIds);
                     })
                     .show(getFragmentManager());
         }
@@ -232,7 +267,7 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
                 })
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
-                    mViewModel.approveByCall(true, null);
+                    mViewModel.approveByCall(true, null,guestIds);
                 }).show(getFragmentManager());
     }
 
@@ -240,7 +275,7 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
         InputDialog.newInstance().setTitle(getString(R.string.are_you_sure))
                 .setOnPositiveClickListener((dialog, input) -> {
                     dialog.dismiss();
-                    mViewModel.approveByCall(false, input);
+                    mViewModel.approveByCall(false, input,guestIds);
                 }).show(getFragmentManager());
     }
 

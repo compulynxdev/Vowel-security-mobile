@@ -82,6 +82,9 @@ public class HouseKeeping {
     @SerializedName("vehicleImage")
     private String vehicleImage;
 
+    @SerializedName("bodyTemperature")
+    private String bodyTemperature;
+
     public String getMode() {
         return mode;
     }
@@ -320,5 +323,13 @@ public class HouseKeeping {
 
     public void setVehicleImage(String vehicleImage) {
         this.vehicleImage = vehicleImage;
+    }
+
+    public String getBodyTemperature() {
+        return bodyTemperature == null ? "" : bodyTemperature;
+    }
+
+    public void setBodyTemperature(String bodyTemperature) {
+        this.bodyTemperature = bodyTemperature;
     }
 }

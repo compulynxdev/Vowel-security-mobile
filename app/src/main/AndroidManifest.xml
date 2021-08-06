@@ -120,7 +120,7 @@
             android:theme="@style/DashboardTheme" />
 
         <activity
-            android:name=".ui.main.commercial.secondryguest.SecoundryGuestInputActivity"
+            android:name=".ui.main.commercial.secondryguest.SecondaryGuestInputActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -209,7 +209,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

@@ -9,4 +9,7 @@ public class GuestViewModel extends BaseViewModel<BaseNavigator> {
         super(dataManager);
     }
 
+    public void getQRCodeData(String qrCode) {
+
+    }
 }

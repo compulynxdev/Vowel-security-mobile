@@ -120,7 +120,7 @@ public final class AppUtils {
         return RequestBody.create(MediaType.parse(bodyContent), data);
     }
 
-    public static MultipartBody.Part prepareFilePart(Context context, String key, @NonNull Uri uri) {
+   /* public static MultipartBody.Part prepareFilePart(Context context, String key, @NonNull Uri uri) {
         File file = FileUtils.getFile(context, uri);
         // create RequestBody instance from file
         RequestBody requestFile =
@@ -130,7 +130,7 @@ public final class AppUtils {
 
         // MultipartBody.Part is used to send also the actual file name
         return MultipartBody.Part.createFormData(key, file.getName(), requestFile);
-    }
+    }*/
 
     public static MultipartBody.Part prepareFilePart(String key, String fileType, File file) {
         // create RequestBody instance from file

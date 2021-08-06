@@ -115,6 +115,7 @@ public class ScanIDActivity extends BaseActivity<ActivityScanIdBinding, ScanIDVi
                     .setRequestedFps(2.0f)
                     .setAutoFocusEnabled(true)
                     .build();
+
             getViewDataBinding().surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
                 @Override
                 public void surfaceCreated(@NonNull SurfaceHolder surfaceHolder) {

@@ -17,6 +17,7 @@ import com.evisitor.data.model.HouseKeepingResponse;
 import com.evisitor.ui.base.BaseViewHolder;
 import com.evisitor.ui.base.ItemClickCallback;
 import com.evisitor.util.CalenderUtils;
+import com.evisitor.util.CommonUtils;
 import com.evisitor.util.pagination.FooterLoader;
 
 import java.util.List;
@@ -118,7 +119,7 @@ public class RegisteredHKAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             HouseKeepingResponse.ContentBean bean = list.get(position);
             Context context = name.getContext();
             name.setText(context.getString(R.string.data_name, bean.getFullName()));
-            identity.setText(context.getString(R.string.data_identity, bean.getDocumentId().isEmpty() ? "N?A" : bean.getDocumentId()));
+            identity.setText(context.getString(R.string.data_identity, bean.getDocumentId().isEmpty() ? "N?A" : CommonUtils.paritalEncodeData(bean.getDocumentId())));
             profile.setText(context.getString(R.string.data_profile, bean.getProfile()));
             time.setText(context.getString(R.string.data_time_slot, CalenderUtils.formatDateWithOutUTC(bean.getTimeIn(), CalenderUtils.TIME_FORMAT, CalenderUtils.TIME_FORMAT_AM), CalenderUtils.formatDateWithOutUTC(bean.getTimeOut(), CalenderUtils.TIME_FORMAT, CalenderUtils.TIME_FORMAT_AM)));
 

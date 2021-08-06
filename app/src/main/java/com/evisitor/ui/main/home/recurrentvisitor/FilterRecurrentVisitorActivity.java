@@ -5,18 +5,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
+import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.IdentityBean;
 import com.evisitor.data.model.RecurrentVisitor;
 import com.evisitor.databinding.ActivityFilterRecurrentVisitorBinding;
 import com.evisitor.ui.base.BaseActivity;
+import com.evisitor.ui.dialog.AlertDialog;
 import com.evisitor.ui.dialog.country.CountrySelectionDialog;
 import com.evisitor.ui.dialog.selection.SelectionBottomSheetDialog;
 import com.evisitor.ui.main.commercial.add.CommercialAddVisitorActivity;
+import com.evisitor.ui.main.home.scan.BarcodeScanActivity;
 import com.evisitor.ui.main.residential.add.AddVisitorActivity;
+import com.evisitor.ui.main.residential.guest.GuestActivity;
+import com.evisitor.util.PermissionUtils;
+
+import static com.evisitor.util.AppConstants.SCAN_RESULT;
 
 public class FilterRecurrentVisitorActivity extends BaseActivity<ActivityFilterRecurrentVisitorBinding, FilterRecurrentVisitorViewModel> implements FilterRecurrentVisitorNavigator, View.OnClickListener {
 
@@ -54,6 +62,13 @@ public class FilterRecurrentVisitorActivity extends BaseActivity<ActivityFilterR
                 getViewDataBinding().rlCode, getViewDataBinding().btnSearch, getViewDataBinding().tvNewVisitor);
         countryCode = getViewModel().getDataManager().getPropertyDialingCode();
         getViewDataBinding().tvCode.setText("+".concat(countryCode));
+    }
+
+    private void scanQR() {
+        if (PermissionUtils.checkCameraPermission(FilterRecurrentVisitorActivity.this)) {
+            Intent i = BarcodeScanActivity.getStartIntent(FilterRecurrentVisitorActivity.this);
+            startActivityForResult(i, SCAN_RESULT);
+        }
     }
 
     private void setOnClickListener(View... views) {
@@ -131,4 +146,5 @@ public class FilterRecurrentVisitorActivity extends BaseActivity<ActivityFilterR
         i.putExtra("RecurrentData", recurrentVisitor);
         startActivity(i);
     }
+
 }

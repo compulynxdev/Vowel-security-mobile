@@ -134,6 +134,15 @@ public class CommercialVisitorResponse {
         @SerializedName("vehicleImage")
         public String vehicleImage;
 
+        @SerializedName("groupType")
+        public String groupType;
+
+        public String bodyTemperature;
+
+        @SerializedName("guestList")
+        public List<SecondaryGuest> guestList;
+
+        public boolean minor = false;
 
         public String getCheckInTime() {
             return checkInTime;
@@ -406,6 +415,46 @@ public class CommercialVisitorResponse {
 
         public void setVehicleImage(String vehicleImage) {
             this.vehicleImage = vehicleImage;
+        }
+
+        public String getGuestType() {
+            return guestType;
+        }
+
+        public void setGuestType(String guestType) {
+            this.guestType = guestType;
+        }
+
+        public String getGroupType() {
+            return groupType;
+        }
+
+        public void setGroupType(String groupType) {
+            this.groupType = groupType;
+        }
+
+        public List<SecondaryGuest> getGuestList() {
+            return guestList == null ? new ArrayList<>() : guestList;
+        }
+
+        public void setGuestList(List<SecondaryGuest> guestList) {
+            this.guestList = guestList;
+        }
+
+        public String getBodyTemperature() {
+            return bodyTemperature == null ? "" : bodyTemperature;
+        }
+
+        public void setBodyTemperature(String bodyTemperature) {
+            this.bodyTemperature = bodyTemperature;
+        }
+
+        public boolean isMinor() {
+            return minor;
+        }
+
+        public void setMinor(boolean minor) {
+            this.minor = minor;
         }
     }
 

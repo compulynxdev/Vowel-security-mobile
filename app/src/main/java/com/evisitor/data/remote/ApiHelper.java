@@ -2,13 +2,16 @@ package com.evisitor.data.remote;
 
 import java.util.Map;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.QueryMap;
 
 /**
@@ -132,10 +135,23 @@ public interface ApiHelper {
     @GET(WebServices.GET_RESIDENT_BY_QR_CODE)
     Call<ResponseBody> doGetResidentByQRCode(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
 
+    @POST(WebServices.GET_VISITOR_BY_QR_CODE)
+    Call<ResponseBody> doGetVisitorByQRCode(@Header("authorization") String authToken, @Body RequestBody requestBody);
+
     @POST(WebServices.POST_TEST_PASSWORD_REQUEST)
     Call<ResponseBody> doPasswordReset(@Body RequestBody requestBody);
 
     @POST(WebServices.GET_FILTER_VISITOR_INFO)
     Call<ResponseBody> doGetFilterVisitorInfo(@Header("authorization") String authToken, @Body RequestBody requestBody);
+
+    @Multipart
+    @POST(WebServices.PLATE_READER)
+    Call<ResponseBody> doNumberPlateDetails(@Header("Authorization") String authToken, @Part MultipartBody.Part file);
+
+    @POST(WebServices.ENABLE_DEVICE_NOTIFICATION)
+    Call<ResponseBody> doEnableDeviceNotification(@Header("authorization") String authToken, @Body RequestBody requestBody);
+
+    @POST(WebServices.DEVICE_NOTIFICATION_STATUS)
+    Call<Boolean> doGetDeviceNotificationStatus(@Header("authorization") String authToken, @Body RequestBody requestBody);
 
 }

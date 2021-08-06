@@ -1,5 +1,9 @@
 package com.evisitor.ui.main.residential.add;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.Environment;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
@@ -22,12 +26,17 @@ import com.google.gson.reflect.TypeToken;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -40,6 +49,7 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
 
     private final MutableLiveData<List<HouseDetailBean>> houseDetailMutableList = new MutableLiveData<>();
     private final MutableLiveData<List<HostDetailBean>> hostDetailMutableList = new MutableLiveData<>();
+    private final MutableLiveData<String> numberPlate = new MutableLiveData<>();
     private final MutableLiveData<Boolean> guestStatusMutableData = new MutableLiveData<>();
     private final List<String> genderList = new ArrayList<>();
     private final List<IdentityBean> identityTypeList = new ArrayList<>();
@@ -56,6 +66,10 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
 
     MutableLiveData<List<HouseDetailBean>> doGetHouseDetails() {
         return houseDetailMutableList;
+    }
+
+    public MutableLiveData<String> getNumberPlate() {
+        return numberPlate;
     }
 
     void doGetHouseDetails(String search) {
@@ -169,7 +183,7 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
         } else if (visitorData.mode.isEmpty()) {
             getNavigator().showToast(R.string.please_select_visitor_mode);
             return false;
-        } else if ((visitorData.mode.equalsIgnoreCase("Drive-In") && visitorData.vehicleNo == null) || ((visitorData.mode.equalsIgnoreCase("Drive-In") && visitorData.vehicleNo.isEmpty()))) {
+        } else if ((visitorData.mode.equalsIgnoreCase("Drive-In") && (visitorData.vehicleNo == null || visitorData.vehicleNo.isEmpty()))) {
             getNavigator().showToast(R.string.please_enter_vehical_no);
             return false;
         } else if ((visitorData.mode.equalsIgnoreCase("Drive-In") && visitorData.vehicalNoPlateBitMapImg == null)) {
@@ -197,7 +211,7 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                 object.put("type", "random");
                 object.put("mode", addVisitorData.mode);
                 object.put("groupType", addVisitorData.groupType);
-
+                object.put("bodyTemperature", addVisitorData.bodyTemperature);
                 if(addVisitorData.guestList.size()>0) {
                     JSONArray guestList = new JSONArray(new Gson().toJson(addVisitorData.guestList));
                     object.put("guestList", guestList);
@@ -356,6 +370,7 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                 object.put("enteredVehicleNo", visitorData.vehicleNo.toUpperCase());
                 object.put("gender", visitorData.gender);
                 object.put("residentId", visitorData.isResident ? visitorData.residentId : null); //host id   //-> send null in case of property
+                object.put("bodyTemperature", visitorData.bodyTemperature);
                 if (visitorData.bmp_profile == null) {
                     object.put("image", visitorData.imageUrl == null ? "" : visitorData.imageUrl);
                 } else {
@@ -574,6 +589,66 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                     getNavigator().handleApiFailure(t);
                 }
             });
+        }
+    }
+
+    void numberPlateVerification(Bitmap bitmap){
+        MultipartBody.Part body = AppUtils.prepareFilePart("upload","image/png",bitmapToFile(getNavigator().getContext(),bitmap, UUID.randomUUID().toString().concat(".png")));
+        getDataManager().doNumberPlateDetails("Token a9d83735e6a2668030950af73b3595d9d0c4ad64",body).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call,@NonNull Response<ResponseBody> response) {
+                try {
+                    if (response.code() == 201) {
+                        assert response.body() != null;
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        if(jsonObject.has("results")){
+                            JSONArray array = jsonObject.getJSONArray("results");
+                            if(array.length()>0){
+                                if(array.getJSONObject(0).has("plate")){
+                                    String numerPlate = array.getJSONObject(0).getString("plate");
+                                    numberPlate.setValue(numerPlate);
+                                }
+                            }else numberPlate.setValue("");
+                        }
+
+                    } else if (response.code() == 401) {
+                        getNavigator().openActivityOnTokenExpire();
+                    } else getNavigator().handleApiError(response.errorBody());
+                } catch (Exception e) {
+                    AppLogger.w("VisitorProfileViewModel", e.toString());
+                }
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                getNavigator().hideLoading();
+                getNavigator().handleApiFailure(t);
+            }
+        });
+    }
+
+    public static File bitmapToFile(Context context, Bitmap bitmap, String fileNameToSave) { // File name like "image.png"
+        //create a file to write bitmap data
+        File file = null;
+        try {
+            file = new File(Environment.getExternalStorageDirectory() + File.separator + fileNameToSave);
+            file.createNewFile();
+
+//Convert bitmap to byte array
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 0 , bos); // YOU can also save it in JPEG
+            byte[] bitmapdata = bos.toByteArray();
+
+//write the bytes in file
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(bitmapdata);
+            fos.flush();
+            fos.close();
+            return file;
+        }catch (Exception e){
+            e.printStackTrace();
+            return file; // it will return null
         }
     }
 }

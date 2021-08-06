@@ -81,6 +81,7 @@ public class ExpectedCommercialStaffViewModel extends BaseCheckInOutViewModel<Ex
         }
     }
 
+/*
     void getScannedData(String code) {
         if (getNavigator().isNetworkConnected()) {
             getNavigator().showLoading();
@@ -121,6 +122,7 @@ public class ExpectedCommercialStaffViewModel extends BaseCheckInOutViewModel<Ex
             getNavigator().showAlert(getNavigator().getContext().getString(R.string.alert), getNavigator().getContext().getString(R.string.alert_internet));
         }
     }
+*/
 
     List<VisitorProfileBean> setClickVisitorDetail(CommercialStaffResponse.ContentBean bean) {
         getNavigator().showLoading();

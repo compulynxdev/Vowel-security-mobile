@@ -7,8 +7,10 @@ import com.evisitor.BuildConfig;
  */
 class WebServices {
 
-  // static final String BASE_URL = BuildConfig.BASE_URL + "e-visitor-system/api/";
-    static final String BASE_URL = BuildConfig.BASE_URL + "api/"; //Local Server
+    static final String BASE_URL = BuildConfig.BASE_URL + "e-visitor-system/api/";
+    static final String BASE_PLATE_RECOGNISER = "https://api.platerecognizer.com/v1/";
+    static final String PLATE_READER = "plate-reader/";
+    //static final String BASE_URL = BuildConfig.BASE_URL + "api/"; //Local Server
 
     static final String LOGIN_AUTH = "authenticate";
     static final String GET_USER_DETAIL = "usermaster/get_user_details"; //?username=ram
@@ -19,7 +21,7 @@ class WebServices {
     static final String GET_HOST_LIST = "resident/get_resident_by_flat_id"; //?accountId=1&flatId=6
 
     static final String GUEST_SEND_NOTIFICATION = "notification/send_notification";
-    static final String CHECK_GUEST_STATUS = "guest/check_blacklist_guest"; //?accountId=1&documentId=44444
+    static final String CHECK_GUEST_STATUS = "guest/check_blacklist_guest/"; //?accountId=1&documentId=44444
 
     static final String GET_EXPECTED_GUEST_LIST = "guest/get_all_booked_guest";
     static final String GET_EXPECTED_SP_LIST = "serviceprovider/get_all_expected_service_provider";
@@ -63,10 +65,15 @@ class WebServices {
 
     static final String GET_STAFF_BY_QR_CODE = "employee/get_staff_by_qr_code";//http://localhost:8085/api/employee/get_staff_by_qr_code?accountId=1&qrCode=fa3b384b-df4d-41a1-8f03-b4f3401f798c
     static final String GET_RESIDENT_BY_QR_CODE = "resident/get_resident_by_qr_code";//http://localhost:8085/api/resident/get_resident_by_qr_code?accountId=2&qrCode=fad58264-b5b9-4856-930b-3d163a4ee8a5
+    static final String GET_VISITOR_BY_QR_CODE = "guest/get_visitor_by_qr_code";
     static final String POST_TEST_PASSWORD_REQUEST = "usermaster/generate_password_link";//http://localhost:8085/api/usermaster/generate_password_link
 
     /*Filter/Search Visitor*/
     static final String GET_FILTER_VISITOR_INFO = "guest/get_visitor_info";
+
+    static final String ENABLE_DEVICE_NOTIFICATION = "notification/enable_device_notification";//http://localhost:8085/api/notification/enable_device_notification
+
+    static final String DEVICE_NOTIFICATION_STATUS = "notification/device_notification_status";//http://localhost:8085/api/notification/device_notification_status
 
     private WebServices() {
     }

@@ -8,16 +8,10 @@ import android.widget.ImageView;
 
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
-import com.evisitor.data.model.DeviceBean;
-import com.evisitor.data.model.GuestConfigurationResponse;
-import com.evisitor.data.model.IdentityBean;
-import com.evisitor.data.model.SecoundryGuest;
-import com.evisitor.databinding.GadgetsInputDialogBinding;
+import com.evisitor.data.model.CheckInTemperature;
+import com.evisitor.data.model.SecondaryGuest;
 import com.evisitor.databinding.SecondryGuestInputDialogBinding;
 import com.evisitor.ui.base.BaseActivity;
-import com.evisitor.ui.dialog.selection.SelectionBottomSheetDialog;
-import com.evisitor.ui.main.commercial.gadgets.GadgetsAdapter;
-import com.evisitor.ui.main.commercial.gadgets.GadgetsInputViewModel;
 import com.evisitor.util.AppLogger;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -31,14 +25,16 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
-public class SecoundryGuestInputActivity extends BaseActivity<SecondryGuestInputDialogBinding, SecoundryGuestInputViewModel> implements View.OnClickListener {
+public class SecondaryGuestInputActivity extends BaseActivity<SecondryGuestInputDialogBinding, SecoundryGuestInputViewModel> implements View.OnClickListener {
 
-    private List<SecoundryGuest> beans;
-    private SecoundryGuestAdapter adapter;
+    private List<SecondaryGuest> beans;
+    private SecondaryGuestAdapter adapter;
     private boolean isAdd;
+    private boolean isCheckIn;
+    List<CheckInTemperature> guestIds = new ArrayList<>();
 
     public static Intent getStartIntent(Context context) {
-        return new Intent(context, SecoundryGuestInputActivity.class);
+        return new Intent(context, SecondaryGuestInputActivity.class);
     }
 
     @Override
@@ -68,19 +64,23 @@ public class SecoundryGuestInputActivity extends BaseActivity<SecondryGuestInput
     private void setUpIntent(Intent intent) {
         beans = new ArrayList<>();
         if (intent.hasExtra("list")) {
-            Type listType = new TypeToken<List<SecoundryGuest>>() {
+            Type listType = new TypeToken<List<SecondaryGuest>>() {
             }.getType();
             beans.addAll(Objects.requireNonNull(mViewModel.getDataManager().getGson().fromJson(intent.getStringExtra("list"), listType)));
         }
         isAdd = intent.getBooleanExtra("add", false);
+        isCheckIn = intent.getBooleanExtra("checkIn", false);
+        if(isCheckIn){
+            getViewDataBinding().btnOk.setText(R.string.check_in);
+        }
     }
 
     private void setUpAdapter() {
         if (beans.isEmpty())
-            beans.add(new SecoundryGuest(getString(R.string.member).concat(" ").concat("1"), "", "", "", "", "", ""));
-        adapter = new SecoundryGuestAdapter(beans, new SecoundryGuestAdapter.AdapterCallback() {
+            beans.add(new SecondaryGuest( "", getString(R.string.member).concat(" ").concat("1"), "", "", "", "","",false,0));
+        adapter = new SecondaryGuestAdapter(beans, new SecondaryGuestAdapter.AdapterCallback() {
             @Override
-            public void onChangeList(List<SecoundryGuest> deviceList) {
+            public void onChangeList(List<SecondaryGuest> deviceList) {
                 beans = deviceList;
             }
 
@@ -89,13 +89,49 @@ public class SecoundryGuestInputActivity extends BaseActivity<SecondryGuestInput
                 beans.remove(position);
                 adapter.notifyItemRemoved(position);
             }
+
+            @Override
+            public void onCheckInSelected(int id) {
+                if(guestIds!=null){
+                    CheckInTemperature tmp = new CheckInTemperature();
+                    tmp.setBodyTemperature("");
+                    tmp.setId(id);
+                    guestIds.add(tmp);
+                }
+            }
+
+            @Override
+            public void onCheckInDeselected(int id) {
+                if(guestIds!=null){
+                    for(int i=0;i < guestIds.size();i++){
+                        if(guestIds.get(i).getId() == id)
+                            guestIds.remove(i);
+                    }
+                }
+            }
+
+            @Override
+            public void onCheckInTemperature(int id, String temperature) {
+                if(guestIds!=null){
+                    for(int i=0;i < guestIds.size();i++){
+                        if(guestIds.get(i).getId() == id)
+                            guestIds.get(i).setBodyTemperature(temperature);
+                    }
+                }
+            }
         }, getSupportFragmentManager());
         adapter.setIsAdd(isAdd);
+        adapter.setIsCheckIn(isCheckIn);
+        if(isCheckIn)
+            getViewDataBinding().toolbar.tvTitle.setText(R.string.title_secoundary_guest);
         getViewDataBinding().recyclerView.setAdapter(adapter);
     }
 
     private void setUp() {
+        if(isAdd)
         getViewDataBinding().toolbar.tvTitle.setText(R.string.title_add_secoundry_guest);
+        else getViewDataBinding().toolbar.tvTitle.setText(R.string.title_secoundary_guest);
+
         ImageView imgBack = findViewById(R.id.img_back);
         imgBack.setVisibility(View.VISIBLE);
         imgBack.setOnClickListener(this);
@@ -104,7 +140,10 @@ public class SecoundryGuestInputActivity extends BaseActivity<SecondryGuestInput
         if (isAdd) {
             imgSearch.setVisibility(View.VISIBLE);
             getViewDataBinding().btnOk.setVisibility(View.VISIBLE);
-        } else {
+        } else if(isCheckIn){
+            imgSearch.setVisibility(View.GONE);
+            getViewDataBinding().btnOk.setVisibility(View.VISIBLE);
+        }else{
             imgSearch.setVisibility(View.GONE);
             getViewDataBinding().btnOk.setVisibility(View.GONE);
         }
@@ -121,8 +160,33 @@ public class SecoundryGuestInputActivity extends BaseActivity<SecondryGuestInput
                 break;
 
             case R.id.btn_ok:
-                if (!beans.isEmpty()) {
-                    if (mViewModel.verifyDeviceDetails(beans)) {
+                if(isCheckIn){
+                    if(guestIds.isEmpty()){
+                        showAlert(R.string.alert, R.string.please_select_guest).show(getSupportFragmentManager());
+                    }else{
+                        Intent intent = getIntent();
+                        Bundle bundle = new Bundle();
+                        String yourListAsString = new Gson().toJson(guestIds);
+                        bundle.putString("data", yourListAsString);
+                        intent.putExtras(bundle);
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    }
+                }else{
+                    if (!beans.isEmpty()) {
+                        if (mViewModel.verifyGuestDetails(beans)) {
+                            Intent intent = getIntent();
+                            Bundle bundle = new Bundle();
+                            String yourListAsString = new Gson().toJson(beans);
+                            AppLogger.i("Device List", yourListAsString);
+                            bundle.putString("data", yourListAsString);
+                            intent.putExtras(bundle);
+                            setResult(RESULT_OK, intent);
+                            finish();
+                        } else {
+                            showAlert(R.string.alert, R.string.please_fill_guest_details).show(getSupportFragmentManager());
+                        }
+                    } else {
                         Intent intent = getIntent();
                         Bundle bundle = new Bundle();
                         String yourListAsString = new Gson().toJson(beans);
@@ -131,25 +195,14 @@ public class SecoundryGuestInputActivity extends BaseActivity<SecondryGuestInput
                         intent.putExtras(bundle);
                         setResult(RESULT_OK, intent);
                         finish();
-                    } else {
-                        showAlert(R.string.alert, R.string.please_fill_details).show(getSupportFragmentManager());
                     }
-                } else {
-                    Intent intent = getIntent();
-                    Bundle bundle = new Bundle();
-                    String yourListAsString = new Gson().toJson(beans);
-                    AppLogger.i("Device List", yourListAsString);
-                    bundle.putString("data", yourListAsString);
-                    intent.putExtras(bundle);
-                    setResult(RESULT_OK, intent);
-                    finish();
                 }
                 break;
 
             case R.id.img_search:
                 if (beans.size() < 10) {
-                    if (mViewModel.verifyDeviceDetails(beans)) {
-                        beans.add(new SecoundryGuest(getString(R.string.device).concat(" ").concat(String.valueOf(beans.size() + 1)), "", "", "", "", "", ""));
+                    if (mViewModel.verifyGuestDetails(beans)) {
+                        beans.add(new SecondaryGuest( "", getString(R.string.member).concat(" ").concat("1"), "", "", "", "","",false,0));
                         adapter.notifyDataSetChanged();
                         getViewDataBinding().recyclerView.scrollToPosition(adapter.getItemCount() - 1);
                     } else

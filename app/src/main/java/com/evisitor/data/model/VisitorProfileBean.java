@@ -72,5 +72,4 @@ public class VisitorProfileBean {
         return pos;
     }
 
-
 }

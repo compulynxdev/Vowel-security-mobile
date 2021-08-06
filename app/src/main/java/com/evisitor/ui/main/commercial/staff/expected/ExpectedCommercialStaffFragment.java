@@ -44,9 +44,9 @@ public class ExpectedCommercialStaffFragment extends BaseFragment<FragmentExpect
         doSearch(search);
     }
 
-    public void scanQRId(String code) {
+    /*public void scanQRId(String code) {
         mViewModel.getScannedData(code);
-    }
+    }*/
 
     @Override
     public int getBindingVariable() {
@@ -151,7 +151,7 @@ public class ExpectedCommercialStaffFragment extends BaseFragment<FragmentExpect
         } else doSearch(search);
     }
 
-    @Override
+    /*@Override
     public void onScannedDataRetrieve(CommercialStaffResponse.ContentBean content) {
         if (content != null) {
             List<VisitorProfileBean> visitorProfileBeanList = mViewModel.setClickVisitorDetail(content);
@@ -160,5 +160,5 @@ public class ExpectedCommercialStaffFragment extends BaseFragment<FragmentExpect
                 mViewModel.doCheckIn();
             }).setImage(content.getImageUrl()).setBtnLabel(getString(R.string.check_in)).show(getFragmentManager());
         }
-    }
+    }*/
 }

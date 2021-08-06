@@ -13,6 +13,10 @@ public interface PreferenceHelper {
 
     void setLoggedIn(boolean isLoggedIn);
 
+    boolean isCheckOutFeature();
+
+    void setCheckOutFeature(boolean checkOutFeature);
+
     boolean isRememberMe();
 
     void setRememberMe(boolean isRemember);

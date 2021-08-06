@@ -26,6 +26,7 @@ public class AddVisitorData {
     public String houseId;//department for commercial
     public boolean isStaffSelect;//for staff selection commercial
     public String residentId;
+    public String visitorCompanyName;
     //reject reason
     public String rejectedReason;
 
@@ -38,13 +39,14 @@ public class AddVisitorData {
     public String profile;
     public String companyName = "";
     public String companyAddress = "";
+    public String bodyTemperature = "";
 
 
 
     //commercial
     public String purpose;
     public List<DeviceBean> deviceBeanList = new ArrayList<>();
-    public List<SecoundryGuest> guestList = new ArrayList<>();
+    public List<SecondaryGuest> guestList = new ArrayList<>();
 
     public String mode;
     public String groupType;

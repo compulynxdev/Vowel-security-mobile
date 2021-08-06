@@ -90,7 +90,7 @@ public class ExpectedHKViewModel extends BaseCheckInOutViewModel<ExpectedHKNavig
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), CommonUtils.paritalEncodeData(hkBean.getExpectedVehicleNo()), VisitorProfileBean.VIEW_TYPE_EDITABLE));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, hkBean.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : CommonUtils.paritalEncodeData("".concat(hkBean.getDialingCode()).concat(" ").concat(hkBean.getContactNo())))));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity_type, hkBean.getDocumentType().isEmpty() ? getNavigator().getContext().getString(R.string.na) : getIdentityType(hkBean.getDocumentType()))));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, hkBean.getDocumentId().isEmpty() ? getNavigator().getContext().getString(R.string.na) : hkBean.getDocumentId())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, hkBean.getDocumentId().isEmpty() ? getNavigator().getContext().getString(R.string.na) : CommonUtils.paritalEncodeData(hkBean.getDocumentId()))));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_nationality, hkBean.getNationality().isEmpty() ? getNavigator().getContext().getString(R.string.na) : hkBean.getNationality())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_comp_name, hkBean.getCompanyName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : hkBean.getCompanyName())));
 
@@ -116,6 +116,7 @@ public class ExpectedHKViewModel extends BaseCheckInOutViewModel<ExpectedHKNavig
                 object.put("residentId", getDataManager().getHouseKeeping().getResidentId());
                 object.put("premiseHierarchyDetailsId", getDataManager().getHouseKeeping().getFlatId());
                 object.put("enteredVehicleNo", getDataManager().getHouseKeeping().getEnteredVehicleNo());
+                object.put("bodyTemperature", getDataManager().getHouseKeeping().getBodyTemperature());
                 object.put("type", AppConstants.HOUSE_HELP);
             } catch (JSONException e) {
                 AppLogger.w(TAG, e.toString());
@@ -133,6 +134,7 @@ public class ExpectedHKViewModel extends BaseCheckInOutViewModel<ExpectedHKNavig
                 object.put("accountId", getDataManager().getAccountId());
                 object.put("staffId", String.valueOf(getDataManager().getHouseKeeping().getId()));
                 object.put("enteredVehicleNo", getDataManager().getHouseKeeping().getEnteredVehicleNo());
+                object.put("bodyTemperature", getDataManager().getHouseKeeping().getBodyTemperature());
                 object.put("type", AppConstants.CHECK_IN);
                 object.put("visitor", AppConstants.HOUSE_HELP);
                 object.put("state", isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);

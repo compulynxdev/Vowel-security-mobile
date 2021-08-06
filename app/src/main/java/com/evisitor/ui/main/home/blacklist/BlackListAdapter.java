@@ -115,7 +115,7 @@ public class BlackListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             name.setText(name.getContext().getString(R.string.data_name, bean.getFullName()));
             if (bean.getDocumentId() != null && !bean.getDocumentId().isEmpty()) {
                 docId.setVisibility(View.VISIBLE);
-                docId.setText(docId.getContext().getString(R.string.data_identity, bean.getDocumentId()));
+                docId.setText(docId.getContext().getString(R.string.data_identity, CommonUtils.paritalEncodeData(bean.getDocumentId())));
             } else docId.setVisibility(View.GONE);
 
             if (bean.getProfile() != null && !bean.getProfile().isEmpty()) {

@@ -87,6 +87,7 @@ public class SmartIDView implements SurfaceHolder.Callback,
                     if (autofocus && cparams.getMaxNumFocusAreas() > 0) {
                         camera.cancelAutoFocus();
                         cparams.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+                        cparams.setFlashMode(Camera.Parameters.FLASH_MODE_ON);
                         camera.setParameters(cparams);
                         camera.autoFocus(SmartIDView.this);
                     }
@@ -254,14 +255,13 @@ public class SmartIDView implements SurfaceHolder.Callback,
                 // camera doesn't support autofocus so select the first mode
                 focus_mode = focus_modes.get(0);
             }
-
+            params.setFlashMode(Camera.Parameters.FLASH_MODE_ON);
             params.setFocusMode(focus_mode);
             camera.setParameters(params);
         }
 
         setPreviewSize(width, height);
         camera.setDisplayOrientation(angle);
-
         camera.setPreviewDisplay(preview.getHolder());
         camera.startPreview();
         camera_opened = true;

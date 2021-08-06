@@ -64,7 +64,6 @@ public class RecurrentVisitor implements Parcelable {
     private String profile;
     @SerializedName("premiseName")
     private String premiseName;
-
     @SerializedName("mode")
     private String mode;
 

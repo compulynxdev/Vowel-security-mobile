@@ -310,7 +310,7 @@
                     android:tint="@color/white"
                     android:visibility="gone"
                     app:layout_constraintStart_toEndOf="@+id/take_no_plate_img"
-                    app:layout_constraintTop_toBottomOf="@id/et_company_address"
+                    app:layout_constraintTop_toBottomOf="@id/et_temperature"
                     tools:ignore="LabelFor"
                     tools:targetApi="o" />
 
@@ -327,33 +327,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/et_vehicle">
-
-                    <EditText
-                        android:id="@+id/et_contact"
-                        android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:layout_gravity="center_vertical"
-                        android:autofillHints="deviceName"
-                        android:background="@null"
-                        android:digits="@string/contact_value"
-                        android:fontFamily="@font/futura_round_medium"
-                        android:gravity="center_vertical"
-                        android:hint="@string/enter_contact"
-                        android:imeOptions="actionNext"
-                        android:inputType="number"
-                        android:maxLength="12"
-                        android:paddingStart="16dp"
-                        android:paddingEnd="8dp"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/black40p"
-                        android:textSize="16sp"
-                        android:theme="@style/EditTextTheme"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/et_vehicle"
-                        tools:ignore="LabelFor"
-                        tools:targetApi="o" />
-
                     <RelativeLayout
                         android:id="@+id/rl_code"
                         android:layout_width="85dp"
@@ -387,6 +360,31 @@
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
                         android:background="@color/gray" />
+                    <EditText
+                        android:id="@+id/et_contact"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center_vertical"
+                        android:autofillHints="deviceName"
+                        android:background="@null"
+                        android:digits="@string/contact_value"
+                        android:fontFamily="@font/futura_round_medium"
+                        android:gravity="center_vertical"
+                        android:hint="@string/enter_contact"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:maxLength="12"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="8dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black40p"
+                        android:textSize="16sp"
+                        android:theme="@style/EditTextTheme"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/et_vehicle"
+                        tools:ignore="LabelFor"
+                        tools:targetApi="o" />
 
                 </LinearLayout>
 
@@ -652,10 +650,37 @@
                     android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/et_company_address"
+                    app:layout_constraintTop_toBottomOf="@id/et_temperature"
                     tools:ignore="LabelFor"
                     tools:targetApi="o" />
 
+                <EditText
+                    android:id="@+id/et_temperature"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:autofillHints="deviceName"
+                    android:background="@drawable/bg_search"
+                    android:fontFamily="@font/futura_round_medium"
+                    android:gravity="center_vertical"
+                    android:hint="@string/enter_body_temperature"
+                    android:imeOptions="actionNext"
+                    android:inputType="numberDecimal"
+                    android:maxLength="@integer/name_length"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="8dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black40p"
+                    android:textSize="16sp"
+                    android:theme="@style/EditTextTheme"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/et_company_address"
+                    tools:ignore="LabelFor"
+                    tools:targetApi="o" />
 
                 <androidx.constraintlayout.widget.Group
                     android:id="@+id/group_resident"

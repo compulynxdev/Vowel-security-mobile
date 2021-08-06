@@ -330,6 +330,7 @@ public class CommercialStaffResponse {
         private String vehicleImage;
         private Bitmap bitmapVehicleImage;
         private String mode;
+        public String bodyTemperature;
 
         public Bitmap getBitmapVehicleImage() {
             return bitmapVehicleImage;
@@ -587,6 +588,14 @@ public class CommercialStaffResponse {
 
         public void setMode(String mode) {
             this.mode = mode;
+        }
+
+        public String getBodyTemperature() {
+            return bodyTemperature == null ? "" : bodyTemperature;
+        }
+
+        public void setBodyTemperature(String bodyTemperature) {
+            this.bodyTemperature = bodyTemperature;
         }
     }
 

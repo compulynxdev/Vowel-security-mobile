@@ -61,13 +61,13 @@ public class CommercialStaffActivity extends BaseActivity<ActivityHkBinding, Com
         getViewDataBinding().header.imgBack.setVisibility(View.VISIBLE);
         getViewDataBinding().header.imgBack.setOnClickListener(v -> onBackPressed());
 
-        getViewDataBinding().header.img2.setVisibility(View.VISIBLE);
+        /*getViewDataBinding().header.img2.setVisibility(View.VISIBLE);
         getViewDataBinding().header.img2.setOnClickListener(v -> {
             if (PermissionUtils.checkCameraPermission(this)) {
                 Intent i = BarcodeScanActivity.getStartIntent(this);
                 startActivityForResult(i, SCAN_RESULT);
             }
-        });
+        });*/
 
 
         getViewDataBinding().tvRegistered.setOnClickListener(this);
@@ -154,7 +154,7 @@ public class CommercialStaffActivity extends BaseActivity<ActivityHkBinding, Com
         }
     }
 
-    @Override
+   /* @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
@@ -168,5 +168,5 @@ public class CommercialStaffActivity extends BaseActivity<ActivityHkBinding, Com
                 }
             }
         }
-    }
+    }*/
 }
