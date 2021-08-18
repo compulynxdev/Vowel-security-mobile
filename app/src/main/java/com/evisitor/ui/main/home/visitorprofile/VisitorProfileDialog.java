@@ -221,6 +221,7 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
         if(btnLabel.equalsIgnoreCase(getString(R.string.check_in))) {
             getViewDataBinding().etTemperature.setEnabled(true);
         }else{
+            getViewDataBinding().etTemperature.setEnabled(false);
             getViewDataBinding().etTemperature.setCursorVisible(false);
         }
         getViewDataBinding().etTemperature.addTextChangedListener(new TextWatcher() {
