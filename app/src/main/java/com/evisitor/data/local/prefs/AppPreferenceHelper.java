@@ -21,11 +21,14 @@ public class AppPreferenceHelper implements PreferenceHelper {
     private static final String USER_PASSWORD = "USER_PASSWORD";
     private static final String ACC_ID = "ACC_ID";
     private static final String USER_ID = "USER_ID";
+    private static final String USER_PANIC_ID = "USER_PANIC_ID";
     private static final String ACCESS_TOKEN = "ACCESS_TOKEN";
     private static final String PREF_KEY_APP_LANGUAGE = "PREF_KEY_APP_LANGUAGE";
 
     /*User Detail*/
     private static final String USER_FULL_NAME = "USER_FULL_NAME";
+    private static final String USER_MASTER_ID = "USER_MASTER_ID";
+    private static final String USER_PLATE_RECOGNIZER_API_KEY = "USER_PLATE_RECOGNIZER_API_KEY";
     private static final String USER_IMAGE = "USER_IMAGE";
     private static final String USER_EMAIL = "USER_EMAIL";
     private static final String GROUP_NAME = "GROUP_NAME";
@@ -151,10 +154,12 @@ public class AppPreferenceHelper implements PreferenceHelper {
     @Override
     public UserDetail getUserDetail() {
         UserDetail userDetail = new UserDetail();
-        userDetail.setId(Integer.parseInt(getUserId()));
+        userDetail.setId(mPrefs.getInt(USER_PANIC_ID,-1));
         userDetail.setUsername(getUsername());
         userDetail.setImageUrl(mPrefs.getString(USER_IMAGE, ""));
         userDetail.setFullName(mPrefs.getString(USER_FULL_NAME, ""));
+        userDetail.setUserMasterId(mPrefs.getInt(USER_MASTER_ID, 0));
+        userDetail.setApiKey(mPrefs.getString(USER_PLATE_RECOGNIZER_API_KEY, "a9d83735e6a2668030950af73b3595d9d0c4ad64"));
         userDetail.setEmail(mPrefs.getString(USER_EMAIL, ""));
         userDetail.setGender(mPrefs.getString(USER_GENDER, ""));
         userDetail.setContactNo(mPrefs.getString(USER_CONTACT, ""));
@@ -169,6 +174,7 @@ public class AppPreferenceHelper implements PreferenceHelper {
     public void setUserDetail(UserDetail userDetail) {
         mPrefs.edit().putString(USER_FULL_NAME, userDetail.getFullName()).apply();
         mPrefs.edit().putString(USER_IMAGE, userDetail.getImageUrl()).apply();
+        mPrefs.edit().putString(USER_PLATE_RECOGNIZER_API_KEY, userDetail.getApiKey()).apply();
         mPrefs.edit().putString(USER_EMAIL, userDetail.getEmail()).apply();
         mPrefs.edit().putString(USER_GENDER, userDetail.getGender()).apply();
         mPrefs.edit().putString(USER_CONTACT, userDetail.getContactNo()).apply();
@@ -176,6 +182,8 @@ public class AppPreferenceHelper implements PreferenceHelper {
         mPrefs.edit().putString(USER_ADDRESS, userDetail.getAddress()).apply();
         mPrefs.edit().putString(USER_COUNTRY, userDetail.getCountry()).apply();
         mPrefs.edit().putString(GROUP_NAME, userDetail.getGroupName()).apply();
+        mPrefs.edit().putInt(USER_MASTER_ID, userDetail.getUserMasterId()).apply();
+        mPrefs.edit().putInt(USER_PANIC_ID, userDetail.getId()).apply();
     }
 
     @Override

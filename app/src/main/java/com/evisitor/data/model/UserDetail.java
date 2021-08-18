@@ -19,6 +19,7 @@ public class UserDetail {
     private String username;
     private String email;
     private int id;
+    private int userMasterId;
     private String address;
     private String contactNo;
     private String dialingCode;
@@ -26,6 +27,7 @@ public class UserDetail {
     private String country;
     private String gender;
     private String role;
+    private String apiKey;
     private String groupName;
     @SerializedName("image")
     private String imageUrl;
@@ -124,5 +126,21 @@ public class UserDetail {
 
     public void setGroupName(String groupName) {
         this.groupName = groupName;
+    }
+
+    public String getApiKey() {
+        return apiKey == null ? "" : apiKey;
+    }
+
+    public void setApiKey(String apiKey) {
+        this.apiKey = apiKey;
+    }
+
+    public int getUserMasterId() {
+        return userMasterId;
+    }
+
+    public void setUserMasterId(int userMasterId) {
+        this.userMasterId = userMasterId;
     }
 }

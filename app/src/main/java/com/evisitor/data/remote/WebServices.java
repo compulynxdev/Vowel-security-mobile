@@ -75,6 +75,8 @@ class WebServices {
 
     static final String DEVICE_NOTIFICATION_STATUS = "notification/device_notification_status";//http://localhost:8085/api/notification/device_notification_status
 
+    static final String SEND_PANIC_NOTIFICATION = "notification/send_panic_notification";//http://localhost:8085/api/notification/send_panic_notification
+
     private WebServices() {
     }
 }

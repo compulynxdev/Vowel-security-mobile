@@ -37,6 +37,7 @@ public final class AppConstants {
     public static final String CONTROLLER_SP = "CONTROLLER_SP";
     public final static String CONTENT_TYPE_JSON = "application/json; charset=utf-8";
     public final static String bearer = "Bearer";
+    public static final String TOKEN = "Token";
     static final String VISITOR_LABEL = "Visitor";
     static final String SP_LABEL = "Service Provider";
     public static String CONTENT_TYPE_TEXT = "text/plain";

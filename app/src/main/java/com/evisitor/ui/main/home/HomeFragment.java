@@ -28,6 +28,7 @@ import com.evisitor.ui.main.home.blacklist.BlackListVisitorActivity;
 import com.evisitor.ui.main.home.flag.FlagVisitorActivity;
 import com.evisitor.ui.main.home.recurrentvisitor.FilterRecurrentVisitorActivity;
 import com.evisitor.ui.main.home.rejected.RejectedVisitorActivity;
+import com.evisitor.ui.main.home.rejectreason.InputDialog;
 import com.evisitor.ui.main.home.scan.BarcodeScanActivity;
 import com.evisitor.ui.main.home.total.TotalVisitorsActivity;
 import com.evisitor.ui.main.home.trespasser.TrespasserActivity;
@@ -94,7 +95,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getViewDataBinding().toolbar.tvTitle.setText(R.string.title_home);
-
         setupAdapter();
         mViewModel.getNotificationCountData().observe(this, count -> {
             if (interaction != null)
@@ -108,6 +108,21 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
                 Intent i = BarcodeScanActivity.getStartIntent(getActivity());
                 startActivityForResult(i, SCAN_RESULT);
             }
+        });
+
+
+        getViewDataBinding().toolbar.imgBack.setVisibility(View.VISIBLE);
+        getViewDataBinding().toolbar.imgBack.setImageResource(R.drawable.ic_notification_on);
+
+        getViewDataBinding().toolbar.imgBack.setOnClickListener(v -> {
+            InputDialog.newInstance().setTitle(getString(R.string.panic)).setHint(getString(R.string.enter_description)).setOnPositiveClickListener((dialog, input) -> {
+                dialog.dismiss();
+                if(input.isEmpty()){
+                    showAlert(R.string.alert,R.string.description_not_empty);
+                }else{
+                    getViewModel().sendPanicAlert(input);
+                }
+            }).show(getFragmentManager());
         });
 
         //update guest configuration in data manager
@@ -183,15 +198,11 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     @Override
     public void onSuccessGuestData(Guests guests) {
         List<VisitorProfileBean> bean = mViewModel.setClickVisitorDetail(guests);
-        VisitorProfileDialog.newInstance(bean, new VisitorProfileCallback() {
-            @Override
-            public void onOkayClick(VisitorProfileDialog dialog) {
-                if(guests.getGuestList().isEmpty()){
-                    if(guests.getCheckInStatus() || guests.isVip()){
-                        mViewModel.approveByCall(guestIds);
-                    }
-                }else showSecondaryGuestListForCheckIn();
-            }
+        VisitorProfileDialog.newInstance(bean, dialog -> {
+            if(guests.getGuestList().isEmpty()){
+                mViewModel.approveByCall(guestIds);
+
+            }else showSecondaryGuestListForCheckIn();
         }).setBtnLabel(getString(R.string.check_in)).setBtnVisible(guests.getStatus().equalsIgnoreCase("PENDING")).setImage(guests.getImageUrl())
                 .setVehicalNoPlateImg(guests.getVehicleImage()).show(getChildFragmentManager());
     }
@@ -238,9 +249,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
                 }.getType();
                 guestIds.clear();
                 guestIds.addAll(Objects.requireNonNull(mViewModel.getDataManager().getGson().fromJson(data.getStringExtra("data"), listType)));
-                if(tmpBean.getCheckInStatus() || tmpBean.isVip()){
-                    mViewModel.approveByCall(guestIds);
-                }
+                mViewModel.approveByCall(guestIds);
+
             }
         }
     }

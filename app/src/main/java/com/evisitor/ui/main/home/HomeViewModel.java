@@ -1,6 +1,7 @@
 package com.evisitor.ui.main.home;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.MutableLiveData;
 
 import com.evisitor.R;
@@ -224,7 +225,7 @@ public class HomeViewModel extends BaseCheckInOutViewModel<HomeNavigator> implem
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, guests.getName())));
         if(guests.isVip)
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vip)));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), CommonUtils.paritalEncodeData(guests.getExpectedVehicleNo()), VisitorProfileBean.VIEW_TYPE_EDITABLE));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), guests.getExpectedVehicleNo(), VisitorProfileBean.VIEW_TYPE_EDITABLE));
         if (getDataManager().getGuestConfiguration().getGuestField().isContactNo())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, guests.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : CommonUtils.paritalEncodeData("".concat(guests.getDialingCode()).concat(" ").concat(guests.getContactNo())))));
 
@@ -405,7 +406,7 @@ public class HomeViewModel extends BaseCheckInOutViewModel<HomeNavigator> implem
                 bean.getTimeOut().isEmpty() ? getNavigator().getContext().getString(R.string.na) : CalenderUtils.formatDateWithOutUTC(bean.getTimeOut(), CalenderUtils.TIME_FORMAT, CalenderUtils.TIME_FORMAT_AM))));
         if (!bean.getEmployment().isEmpty())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.employment, AppUtils.capitaliseFirstLetter(bean.getEmployment()))));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), CommonUtils.paritalEncodeData(bean.getExpectedVehicleNo()), VisitorProfileBean.VIEW_TYPE_EDITABLE));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), bean.getExpectedVehicleNo(), VisitorProfileBean.VIEW_TYPE_EDITABLE));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, bean.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) :CommonUtils.paritalEncodeData( "+ ".concat(bean.getDialingCode()).concat(" ").concat(bean.getContactNo())))));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity_type, bean.getDocumentType().isEmpty() ? getNavigator().getContext().getString(R.string.na) : getIdentityType(bean.getDocumentType()))));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, bean.getDocumentId().isEmpty() ? getNavigator().getContext().getString(R.string.na) : CommonUtils.paritalEncodeData(bean.getDocumentId()))));
@@ -442,9 +443,7 @@ public class HomeViewModel extends BaseCheckInOutViewModel<HomeNavigator> implem
                         try {
                             assert response.body() != null;
                             JSONObject object1 = new JSONObject(response.body().string());
-                            getNavigator().showAlert(getNavigator().getContext().getString(R.string.success), object1.getString("result")).setOnPositiveClickListener(alertDialog -> {
-                                alertDialog.dismiss();
-                            });
+                            getNavigator().showAlert(getNavigator().getContext().getString(R.string.success), object1.getString("result")).setOnPositiveClickListener(DialogFragment::dismiss);
                         } catch (Exception e) {
                             getNavigator().showAlert(R.string.alert, R.string.alert_error);
                         }
@@ -464,4 +463,42 @@ public class HomeViewModel extends BaseCheckInOutViewModel<HomeNavigator> implem
         }
     }
 
+    public void sendPanicAlert(String input) {
+        getNavigator().showLoading();
+        if (getNavigator().isNetworkConnected(true)) {
+            JSONObject object = new JSONObject();
+            try {
+                object.put("accountId", getDataManager().getAccountId());
+                object.put("userMasterId", getDataManager().getUserDetail().getId());
+                object.put("description", input);
+            } catch (JSONException e) {
+                AppLogger.w("ExpectedCommercialStaffViewModel", e.toString());
+            }
+            RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
+            getNavigator().showLoading();
+            getDataManager().doPostPanicNotification(getDataManager().getHeader(), body).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                    getNavigator().hideLoading();
+                    if (response.code() == 200) {
+                        try {
+                            getNavigator().showAlert(getNavigator().getContext().getString(R.string.success), getNavigator().getContext().getString(R.string.panic_send)).setOnPositiveClickListener(DialogFragment::dismiss);
+                        } catch (Exception e) {
+                            getNavigator().showAlert(R.string.alert, R.string.alert_error);
+                        }
+                    } else if (response.code() == 401) {
+                        getNavigator().openActivityOnTokenExpire();
+                    } else {
+                        getNavigator().handleApiError(response.errorBody());
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                    getNavigator().hideLoading();
+                    getNavigator().handleApiFailure(t);
+                }
+            });
+        }
+    }
 }

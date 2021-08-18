@@ -154,4 +154,7 @@ public interface ApiHelper {
     @POST(WebServices.DEVICE_NOTIFICATION_STATUS)
     Call<Boolean> doGetDeviceNotificationStatus(@Header("authorization") String authToken, @Body RequestBody requestBody);
 
+    @POST(WebServices.SEND_PANIC_NOTIFICATION)
+    Call<ResponseBody> doPostPanicNotification(@Header("authorization") String authToken, @Body RequestBody requestBody);
+
 }

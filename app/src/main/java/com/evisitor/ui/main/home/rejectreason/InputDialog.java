@@ -19,7 +19,7 @@ public class InputDialog extends BaseDialog<DialogInputBinding, InputDialogViewM
     private PositiveListener positiveListener;
 
     //default param
-    private String mTitle = "";
+    private String mTitle = "",hint = "";
 
     public static InputDialog newInstance() {
         Bundle args = new Bundle();
@@ -57,6 +57,8 @@ public class InputDialog extends BaseDialog<DialogInputBinding, InputDialogViewM
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getViewDataBinding().tvTitle.setText(mTitle);
+        if(!hint.isEmpty())
+            getViewDataBinding().etInput.setHint(hint);
 
         getViewDataBinding().btnPositive.setOnClickListener(this);
         getViewDataBinding().btnNegative.setOnClickListener(this);
@@ -76,7 +78,10 @@ public class InputDialog extends BaseDialog<DialogInputBinding, InputDialogViewM
 
             case R.id.btn_positive:
                 if (getViewDataBinding().etInput.getText().toString().isEmpty()) {
-                    showToast(getString(R.string.reason_cannot_be_empty));
+                    if(!hint.isEmpty())
+                        showToast(getString(R.string.description_not_empty));
+                    else
+                        showToast(getString(R.string.reason_cannot_be_empty));
                 } else {
                     if (positiveListener != null) {
                         positiveListener.onPositiveClick(this, getViewDataBinding().etInput.getText().toString());
@@ -84,6 +89,11 @@ public class InputDialog extends BaseDialog<DialogInputBinding, InputDialogViewM
                 }
                 break;
         }
+    }
+
+    public InputDialog setHint(String s) {
+        hint = s;
+        return  this;
     }
 
     public interface PositiveListener {

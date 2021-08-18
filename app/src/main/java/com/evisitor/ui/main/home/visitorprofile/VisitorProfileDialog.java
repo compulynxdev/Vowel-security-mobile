@@ -218,9 +218,11 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
 
         getViewModel().getBodyTemperature().observe(this, s -> getViewDataBinding().etTemperature.setText(s));
 
-        if(btnLabel.equalsIgnoreCase(getString(R.string.check_in)))
+        if(btnLabel.equalsIgnoreCase(getString(R.string.check_in))) {
             getViewDataBinding().etTemperature.setEnabled(true);
-
+        }else{
+            getViewDataBinding().etTemperature.setCursorVisible(false);
+        }
         getViewDataBinding().etTemperature.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -232,44 +234,46 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
 
             @Override
             public void afterTextChanged(Editable s) {
-                if ( Integer.parseInt(s.toString()) >= 34 || Integer.parseInt(s.toString()) <= 40){
-                    if (dataManager.isCommercial()) {
-                        CommercialVisitorResponse.CommercialGuest guests = dataManager.getCommercialVisitorDetail();
-                        if (guests != null) {
-                            guests.setBodyTemperature(getViewDataBinding().etTemperature.getText().toString());
-                            dataManager.setCommercialVisitorDetail(guests);
+                if(!s.toString().isEmpty() && s.toString().length()>1){
+                    if ( Integer.parseInt(s.toString()) >= 34 && Integer.parseInt(s.toString()) <= 40){
+                        if (dataManager.isCommercial()) {
+                            CommercialVisitorResponse.CommercialGuest guests = dataManager.getCommercialVisitorDetail();
+                            if (guests != null) {
+                                guests.setBodyTemperature(getViewDataBinding().etTemperature.getText().toString());
+                                dataManager.setCommercialVisitorDetail(guests);
+                            }
+
+                            CommercialStaffResponse.ContentBean staff = dataManager.getCommercialStaff();
+                            if (staff != null) {
+                                staff.setBodyTemperature(getViewDataBinding().etTemperature.getText().toString());
+                                dataManager.setCommercialStaff(staff);
+                            }
+
+                        } else {
+                            Guests guests = dataManager.getGuestDetail();
+                            if (guests != null) {
+                                guests.setBodyTemperature(getViewDataBinding().etTemperature.getText().toString());
+                                dataManager.setGuestDetail(guests);
+                            }
+
+                            HouseKeepingResponse.ContentBean hkBean = dataManager.getHouseKeeping();
+                            if (hkBean != null) {
+                                hkBean.setBodyTemperature(getViewDataBinding().etTemperature.getText().toString());
+                                dataManager.setHouseKeeping(hkBean);
+                            }
                         }
 
-                        CommercialStaffResponse.ContentBean staff = dataManager.getCommercialStaff();
-                        if (staff != null) {
-                            staff.setBodyTemperature(getViewDataBinding().etTemperature.getText().toString());
-                            dataManager.setCommercialStaff(staff);
+                        ServiceProvider spBean = dataManager.getSpDetail();
+                        if (spBean != null) {
+                            spBean.setBodyTemperature(getViewDataBinding().etTemperature.getText().toString());
+                            dataManager.setSPDetail(spBean);
                         }
-
-                    } else {
-                        Guests guests = dataManager.getGuestDetail();
-                        if (guests != null) {
-                            guests.setBodyTemperature(getViewDataBinding().etTemperature.getText().toString());
-                            dataManager.setGuestDetail(guests);
-                        }
-
-                        HouseKeepingResponse.ContentBean hkBean = dataManager.getHouseKeeping();
-                        if (hkBean != null) {
-                            hkBean.setBodyTemperature(getViewDataBinding().etTemperature.getText().toString());
-                            dataManager.setHouseKeeping(hkBean);
-                        }
+                    }else{
+                        getViewDataBinding().etTemperature.setText("");
+                        showToast(R.string.temperature_should_be_30);
                     }
 
-                    ServiceProvider spBean = dataManager.getSpDetail();
-                    if (spBean != null) {
-                        spBean.setBodyTemperature(getViewDataBinding().etTemperature.getText().toString());
-                        dataManager.setSPDetail(spBean);
-                    }
-                }else{
-                    getViewDataBinding().etTemperature.setText("");
-                    showToast(R.string.temperature_should_be_30);
                 }
-
             }
         });
 

@@ -11,11 +11,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.evisitor.EVisitor;
 import com.evisitor.R;
+import com.evisitor.data.model.CommercialStaffResponse;
+import com.evisitor.data.model.CommercialVisitorResponse;
 import com.evisitor.data.model.GuestConfigurationResponse;
+import com.evisitor.data.model.Guests;
+import com.evisitor.data.model.HouseKeepingResponse;
 import com.evisitor.data.model.IdentityBean;
 import com.evisitor.data.model.SecondaryGuest;
+import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.ui.base.BaseViewHolder;
 import com.evisitor.ui.dialog.country.CountrySelectionDialog;
 import com.evisitor.ui.dialog.selection.SelectionBottomSheetDialog;
@@ -234,6 +241,24 @@ public class SecondaryGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> 
 
             cb_minor.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if(getAdapterPosition()!=-1){
+                    if(cb_minor.isChecked()){
+                        etDocumentId.setVisibility(View.GONE);
+                        tvIdentityType.setVisibility( View.GONE);
+                        view1.setVisibility(View.GONE);
+                        llNumber.setVisibility( View.GONE);
+                        etAddress.setVisibility(View.GONE);
+                        list.get(getAdapterPosition()).setDocumentId("");
+                        list.get(getAdapterPosition()).setDocumentType("");
+                        list.get(getAdapterPosition()).setDialingCode("");
+                        list.get(getAdapterPosition()).setContactNo("");
+                        list.get(getAdapterPosition()).setAddress("");
+                    }else{
+                        etDocumentId.setVisibility(View.VISIBLE);
+                        tvIdentityType.setVisibility( View.VISIBLE);
+                        view1.setVisibility(View.VISIBLE);
+                        llNumber.setVisibility( View.VISIBLE);
+                        etAddress.setVisibility(View.VISIBLE);
+                    }
                     list.get(getAdapterPosition()).setMinor(isChecked);
                     callback.onChangeList(list);
                 }
@@ -263,18 +288,25 @@ public class SecondaryGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> 
                 @Override
                 public void afterTextChanged(Editable s) {
                     if (getAdapterPosition() != -1) {
+                        if(!s.toString().isEmpty() && s.toString().length()>1){
+                            if ( Integer.parseInt(s.toString()) >= 34 && Integer.parseInt(s.toString()) <= 40) {
+                                if (isCheckIn)
+                                    callback.onCheckInTemperature(list.get(getAdapterPosition()).getId(), s.toString().trim());
 
-                        if(isCheckIn)
-                            callback.onCheckInTemperature(list.get(getAdapterPosition()).getId(),s.toString().trim());
+                                else {
+                                    list.get(getAdapterPosition()).setBodyTemperature(s.toString());
+                                    callback.onChangeList(list);
+                                }
+                            }else{
+                                etTemperature.setText("");
+                                Toast.makeText(etTemperature.getContext(),R.string.temperature_should_be_30,Toast.LENGTH_LONG).show();
+                            }
 
-                        else{
-                            list.get(getAdapterPosition()).setBodyTemperature(s.toString());
-                            callback.onChangeList(list);
                         }
+
                     }
                 }
             });
-
         }
 
         @Override
@@ -306,7 +338,7 @@ public class SecondaryGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> 
                 else etDocumentId.setVisibility(View.GONE);
                 if(!bean.getContactNo().isEmpty()) {
                     llNumber.setVisibility(View.VISIBLE);
-                    etContactNo.setText(etContactNo.getContext().getString(R.string.data_mobile, bean.getContactNo().isEmpty() ? "N/A" : CommonUtils.paritalEncodeData(bean.getDialingCode().concat(bean.getContactNo()))));
+                    etContactNo.setText( bean.getContactNo().isEmpty() ? "N/A" : CommonUtils.paritalEncodeData(bean.getContactNo()));
                 }
                 else llNumber.setVisibility(View.GONE);
                 tvDialingCode.setText(bean.getDialingCode().isEmpty() ? "" : "+ " + bean.getDialingCode());

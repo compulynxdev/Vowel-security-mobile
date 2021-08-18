@@ -363,8 +363,6 @@
     <string name="title_add_secoundry_guest">Add Secoundary Guest</string>
     <string name="view_group_member">VIew Group Member</string>
     <string name="please_capture_vehical_image">Please capture vehicle no.plate image</string>
-
-
     <string name="txt_mobile">Mobile</string>
     <string name="txt_vehical_no">Vehical No</string>
     <string name="please_add_group_member_detail_first">Please add group member detail first</string>
@@ -378,6 +376,11 @@
     <string name="enter_body_temperature">Enter Body Temperature(C)</string>
     <string name="body_temp">Body Temperature : %s</string>
     <string name="vip">VIP</string>
-    <string name="notification_status_changes">Notification status changed successfully</string>
+    <string name="notification_enabled">Trespasser notifications enabled changed successfully</string>
+    <string name="notification_disabled">Trespasser notifications disabled changed successfully</string>
     <string name="temperature_should_be_30">The temperature should be between 34 and 40!</string>
+    <string name="panic">Panic Alert!</string>
+    <string name="enter_description">Enter Description</string>
+    <string name="description_not_empty">Panic alert description can\'t be empty!</string>
+    <string name="panic_send">Panic notification send successfully!</string>
 </resources>

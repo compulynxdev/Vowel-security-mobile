@@ -593,8 +593,8 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
     }
 
     void numberPlateVerification(Bitmap bitmap){
-        MultipartBody.Part body = AppUtils.prepareFilePart("upload","image/png",bitmapToFile(getNavigator().getContext(),bitmap, UUID.randomUUID().toString().concat(".png")));
-        getDataManager().doNumberPlateDetails("Token a9d83735e6a2668030950af73b3595d9d0c4ad64",body).enqueue(new Callback<ResponseBody>() {
+        MultipartBody.Part body = AppUtils.prepareFilePart("upload","image/png",AppUtils.bitmapToFile(getNavigator().getContext(),bitmap, UUID.randomUUID().toString().concat(".png")));
+        getDataManager().doNumberPlateDetails(AppConstants.TOKEN.concat(" ").concat(getDataManager().getUserDetail().getApiKey()),body).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call,@NonNull Response<ResponseBody> response) {
                 try {
@@ -626,29 +626,5 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                 getNavigator().handleApiFailure(t);
             }
         });
-    }
-
-    public static File bitmapToFile(Context context, Bitmap bitmap, String fileNameToSave) { // File name like "image.png"
-        //create a file to write bitmap data
-        File file = null;
-        try {
-            file = new File(Environment.getExternalStorageDirectory() + File.separator + fileNameToSave);
-            file.createNewFile();
-
-//Convert bitmap to byte array
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 0 , bos); // YOU can also save it in JPEG
-            byte[] bitmapdata = bos.toByteArray();
-
-//write the bytes in file
-            FileOutputStream fos = new FileOutputStream(file);
-            fos.write(bitmapdata);
-            fos.flush();
-            fos.close();
-            return file;
-        }catch (Exception e){
-            e.printStackTrace();
-            return file; // it will return null
-        }
     }
 }

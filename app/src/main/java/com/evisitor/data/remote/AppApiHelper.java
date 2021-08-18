@@ -278,4 +278,9 @@ public class AppApiHelper implements ApiHelper {
     public Call<Boolean> doGetDeviceNotificationStatus(String authToken, RequestBody requestBody) {
         return getApiInterface().doGetDeviceNotificationStatus(authToken, requestBody);
     }
+
+    @Override
+    public Call<ResponseBody> doPostPanicNotification(String authToken, RequestBody requestBody) {
+        return getApiInterface().doPostPanicNotification(authToken, requestBody);
+    }
 }

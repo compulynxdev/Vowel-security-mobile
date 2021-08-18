@@ -11,12 +11,14 @@ import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Environment;
 import android.util.Base64;
 
 import androidx.annotation.NonNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -141,6 +143,35 @@ public final class AppUtils {
 
         // MultipartBody.Part is used to send also the actual file name
         return MultipartBody.Part.createFormData(key, file.getName(), requestFile);
+    }
+
+    public static File bitmapToFile(Context context ,Bitmap bitmap, String fileNameToSave) {
+        // File name like "image.png"
+        //create a file to write bitmap data
+        File file = null;
+        try {
+            //File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            file = new File(context.getFilesDir() + File.separator + fileNameToSave);
+
+            //path.mkdirs();
+
+            file.createNewFile();
+
+//Convert bitmap to byte array
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 0 , bos); // YOU can also save it in JPEG
+            byte[] bitmapdata = bos.toByteArray();
+
+//write the bytes in file
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(bitmapdata);
+            fos.flush();
+            fos.close();
+            return file;
+        }catch (Exception e){
+            e.printStackTrace();
+            return file; // it will return null
+        }
     }
 
 }

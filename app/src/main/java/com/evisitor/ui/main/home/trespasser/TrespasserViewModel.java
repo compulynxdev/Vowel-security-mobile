@@ -82,12 +82,22 @@ public class TrespasserViewModel extends BaseViewModel<BaseNavigator> {
                 if (response.code() == 200) {
                     try {
                         isNotificationEnable.setValue(!isNotificationEnable.getValue());
-                        getNavigator().showAlert(R.string.alert,R.string.notification_status_changes).setOnPositiveClickListener(new AlertDialog.PositiveListener() {
-                            @Override
-                            public void onPositiveClick(AlertDialog dialog) {
-                                dialog.dismiss();
-                            }
-                        });
+                        if(isNotificationEnable.getValue()){
+                            getNavigator().showAlert(R.string.alert,R.string.notification_enabled).setOnPositiveClickListener(new AlertDialog.PositiveListener() {
+                                @Override
+                                public void onPositiveClick(AlertDialog dialog) {
+                                    dialog.dismiss();
+                                }
+                            });
+                        }else{
+                            getNavigator().showAlert(R.string.alert,R.string.notification_disabled).setOnPositiveClickListener(new AlertDialog.PositiveListener() {
+                                @Override
+                                public void onPositiveClick(AlertDialog dialog) {
+                                    dialog.dismiss();
+                                }
+                            });
+                        }
+
                     } catch (Exception e) {
                         getNavigator().showAlert(R.string.alert, R.string.alert_error);
                     }

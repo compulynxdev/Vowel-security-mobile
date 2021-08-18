@@ -531,4 +531,9 @@ public class AppDataManager implements DataManager {
     public Call<Boolean> doGetDeviceNotificationStatus(String authToken, RequestBody requestBody) {
         return apiHelper.doGetDeviceNotificationStatus(authToken, requestBody);
     }
+
+    @Override
+    public Call<ResponseBody> doPostPanicNotification(String authToken, RequestBody requestBody) {
+        return apiHelper.doPostPanicNotification(authToken, requestBody);
+    }
 }
