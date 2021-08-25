@@ -282,6 +282,29 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
                 }
             }
         });
+
+        getViewDataBinding().etTemperature.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(!s.toString().isEmpty() && s.toString().length()>1){
+                    if (!(Integer.parseInt(s.toString()) >= 34 && Integer.parseInt(s.toString()) <= 40)){
+                        getViewDataBinding().etTemperature.setText("");
+                        showToast(R.string.temperature_should_be_30);
+                    }
+                }
+            }
+        });
+
     }
 
     private void setOnClickListener(View... views) {
@@ -630,6 +653,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
         addVisitorData.address = getViewDataBinding().etAddress.getText().toString();
         addVisitorData.visitorCompanyName = getViewDataBinding().etVisitorCompanyName.getText().toString();
         addVisitorData.houseId = houseId;
+        addVisitorData.guestList = secoundryGuestList;
         addVisitorData.purpose = getViewDataBinding().etPurpose.getText().toString();
         addVisitorData.deviceBeanList.clear();
         addVisitorData.mode = getViewDataBinding().tvVisitorMode.getText().toString();

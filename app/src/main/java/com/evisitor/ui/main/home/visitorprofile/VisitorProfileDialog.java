@@ -309,8 +309,15 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
             case R.id.tv_secondary_guest_info:
                 Guests tmpBean = mViewModel.getDataManager().getGuestDetail();
                 Intent intent = SecondaryGuestInputActivity.getStartIntent(getBaseActivity());
-                if (!tmpBean.getGuestList().isEmpty()) {
-                    intent.putExtra("list", new Gson().toJson(tmpBean.guestList));
+                if(tmpBean!=null){
+                    if (!tmpBean.getGuestList().isEmpty()) {
+                        intent.putExtra("list", new Gson().toJson(tmpBean.guestList));
+                    }
+                }else{
+                    CommercialVisitorResponse.CommercialGuest guest = mViewModel.getDataManager().getCommercialVisitorDetail();
+                    if (guest!=null && !guest.getGuestList().isEmpty()) {
+                        intent.putExtra("list", new Gson().toJson(guest.guestList));
+                    }
                 }
                 startActivityForResult(intent, ADD_FAMILY_MEMBER);
                 break;

@@ -12,8 +12,8 @@ android {
 //        versionCode 5
 //        versionName "1.0.4"
 
-        versionCode 3
-        versionName "1.0.2"
+        versionCode 5
+        versionName "1.0.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -26,13 +26,13 @@ android {
             buildConfigField("boolean", "DEBUG_MODE", "true")
 
             //Production url
-            //  buildConfigField("String", "BASE_URL", "\"http://3.19.243.207:8087/\"")
+              buildConfigField("String", "BASE_URL", "\"http://3.19.243.207:8087/\"")
 
-            //Stage url
+            //Stage urlA
             //buildConfigField("String", "BASE_URL", "\"http://52.15.186.140:8090/\"")
 
             //new instance
-            buildConfigField("String", "BASE_URL", "\"http://197.220.114.46:8085/\"")
+            //buildConfigField("String", "BASE_URL", "\"http://197.220.114.46:8085/\"")
 
             //Dev url
              //buildConfigField("String", "BASE_URL", "\"http://103.21.52.30:8085/\"")
@@ -49,13 +49,13 @@ android {
             buildConfigField("boolean", "DEBUG_MODE", "false")
 
             //Production url
-            //  buildConfigField("String", "BASE_URL", "\"http://3.19.243.207:8087/\"")
+              buildConfigField("String", "BASE_URL", "\"http://3.19.243.207:8087/\"")
 
             //Stage url
               //buildConfigField("String", "BASE_URL", "\"http://52.15.186.140:8090/\"")
 
             //new instance
-            buildConfigField("String", "BASE_URL", "\"http://197.220.114.46:8085/\"")
+           // buildConfigField("String", "BASE_URL", "\"http://197.220.114.46:8085/\"")
 
             //Dev url
             //buildConfigField("String", "BASE_URL", "\"http://103.21.52.30:8085/\"")

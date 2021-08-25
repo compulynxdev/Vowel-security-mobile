@@ -63,12 +63,12 @@ public class AppPreferenceHelper implements PreferenceHelper {
 
     @Override
     public boolean isCheckOutFeature() {
-        return mPrefs.getBoolean(PREF_KEY_USER_LOGGED_IN, false);
+        return mPrefs.getBoolean(CHECK_OUT_FEATURE, false);
     }
 
     @Override
     public void setCheckOutFeature(boolean checkOutFeature) {
-        mPrefs.edit().putBoolean(PREF_KEY_USER_LOGGED_IN, checkOutFeature).apply();
+        mPrefs.edit().putBoolean(CHECK_OUT_FEATURE, checkOutFeature).apply();
     }
 
     @Override

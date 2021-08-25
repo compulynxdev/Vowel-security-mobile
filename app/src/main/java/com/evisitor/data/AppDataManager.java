@@ -65,6 +65,10 @@ public class AppDataManager implements DataManager {
     @Override
     public void setGuestDetail(Guests guest) {
         this.guests = guest;
+        this.spDetail = null;
+        this.commercialGuest = null;
+        this.houseKeeping = null;
+        this.officeStaff = null;
     }
 
     @Override
@@ -80,6 +84,10 @@ public class AppDataManager implements DataManager {
     @Override
     public void setSPDetail(ServiceProvider spDetail) {
         this.spDetail = spDetail;
+        this.guests = null;
+        this.commercialGuest = null;
+        this.houseKeeping = null;
+        this.officeStaff = null;
     }
 
     @Override
@@ -95,6 +103,10 @@ public class AppDataManager implements DataManager {
     @Override
     public void setHouseKeeping(HouseKeepingResponse.ContentBean houseKeeping) {
         this.houseKeeping = houseKeeping;
+        this.spDetail = null;
+        this.guests = null;
+        this.commercialGuest = null;
+        this.officeStaff = null;
     }
 
     @Override
@@ -130,6 +142,10 @@ public class AppDataManager implements DataManager {
     @Override
     public void setCommercialVisitorDetail(CommercialVisitorResponse.CommercialGuest guest) {
         commercialGuest = guest;
+        this.spDetail = null;
+        this.guests = null;
+        this.houseKeeping = null;
+        this.officeStaff = null;
     }
 
     @Override
@@ -140,6 +156,10 @@ public class AppDataManager implements DataManager {
     @Override
     public void setCommercialStaff(CommercialStaffResponse.ContentBean officeStaff) {
         this.officeStaff = officeStaff;
+        this.spDetail = null;
+        this.guests = null;
+        this.commercialGuest = null;
+        this.houseKeeping = null;
     }
 
     @Override

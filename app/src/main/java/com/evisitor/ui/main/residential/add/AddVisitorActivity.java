@@ -344,6 +344,28 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                 }
             }
         });
+
+        getViewDataBinding().etTemperature.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(!s.toString().isEmpty() && s.toString().length()>1){
+                    if (!(Integer.parseInt(s.toString()) >= 34 && Integer.parseInt(s.toString()) <= 40)){
+                        getViewDataBinding().etTemperature.setText("");
+                        showToast(R.string.temperature_should_be_30);
+                    }
+                }
+            }
+        });
     }
 
     private void setOnClickListener(View... views) {
