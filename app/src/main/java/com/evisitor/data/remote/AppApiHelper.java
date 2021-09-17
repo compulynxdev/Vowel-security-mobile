@@ -283,4 +283,9 @@ public class AppApiHelper implements ApiHelper {
     public Call<ResponseBody> doPostPanicNotification(String authToken, RequestBody requestBody) {
         return getApiInterface().doPostPanicNotification(authToken, requestBody);
     }
+
+    @Override
+    public Call<ResponseBody> doResidentCheckInCheckOut(String authToken, RequestBody requestBody) {
+        return getApiInterface().doResidentCheckInCheckOut(authToken, requestBody);
+    }
 }

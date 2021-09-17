@@ -1,6 +1,8 @@
 package com.evisitor.data.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
    "image" : "67deb144-3549-4010-b40c-a78725c56986.png",
@@ -36,6 +38,9 @@ public class ResidentProfile implements Serializable {
     private String image;
     private String relationship;
     private String type;
+    private int id = 0;
+    private int primaryId = 0;
+    private List<String> vehicleList;
 
     public String getFullName() {
         return fullName == null ? "" : fullName;
@@ -139,5 +144,29 @@ public class ResidentProfile implements Serializable {
 
     public void setDialingCode(String dialingCode) {
         this.dialingCode = dialingCode;
+    }
+
+    public List<String> getVehicleList() {
+        return vehicleList == null ? new ArrayList<>() : vehicleList;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setVehicleList(List<String> vehicleList) {
+        this.vehicleList = vehicleList;
+    }
+
+    public int getPrimaryId() {
+        return primaryId;
+    }
+
+    public void setPrimaryId(int primaryId) {
+        this.primaryId = primaryId;
     }
 }

@@ -46,6 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="35dp"
                 android:layout_marginTop="16dp"
+                android:id="@+id/constraint"
                 android:layout_marginEnd="35dp"
                 android:layout_marginBottom="35dp"
                 android:background="@drawable/bg_card_corner"
@@ -356,7 +357,18 @@
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
+            <Button
+                android:layout_width="match_parent"
+                android:layout_margin="20dp"
+                android:layout_height="wrap_content"
+                android:text="@string/next"
+                android:id="@+id/btn_next"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_card_corner"
+                android:fontFamily="@font/futura_round_medium"
+                android:backgroundTint="@color/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/constraint"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

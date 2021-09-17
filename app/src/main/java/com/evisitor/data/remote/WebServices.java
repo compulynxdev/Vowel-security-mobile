@@ -77,6 +77,8 @@ class WebServices {
 
     static final String SEND_PANIC_NOTIFICATION = "notification/send_panic_notification";//http://localhost:8085/api/notification/send_panic_notification
 
+    static final String RESIDENT_CHECK_IN_OUT = "resident/check_in_check_out";//http://localhost:8085/api/resident/check_in_check_out
+
     private WebServices() {
     }
 }

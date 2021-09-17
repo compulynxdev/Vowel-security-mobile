@@ -44,10 +44,9 @@ public class ResidentProfileActivity extends BaseActivity<ActivityResidentProfil
     }
 
     private void setUp() {
-
+        getViewModel().setNavigator(this);
         getViewDataBinding().toolbar.imgBack.setVisibility(View.VISIBLE);
         getViewDataBinding().toolbar.imgBack.setOnClickListener(v -> onBackPressed());
-
         getViewDataBinding().toolbar.tvTitle.setText(R.string.resident_profile);
     }
 
@@ -82,5 +81,22 @@ public class ResidentProfileActivity extends BaseActivity<ActivityResidentProfil
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(getViewDataBinding().imgUser);
         }
+
+        getViewDataBinding().btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ResidentVehicleDialog.newInstance(profile, new ResidentVehicleDialog.ResidentCallBack() {
+                    @Override
+                    public void doCheckInOut(boolean isCheckIn, ResidentProfile profile, String vehicleNo) {
+                        getViewModel().doCheckInCheckOut(isCheckIn,profile,vehicleNo);
+                    }
+                }).show(getSupportFragmentManager());
+            }
+        });
+    }
+
+    @Override
+    public void openNext() {
+        onBackPressed();
     }
 }

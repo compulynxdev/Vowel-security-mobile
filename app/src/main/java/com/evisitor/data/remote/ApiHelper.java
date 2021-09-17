@@ -157,4 +157,7 @@ public interface ApiHelper {
     @POST(WebServices.SEND_PANIC_NOTIFICATION)
     Call<ResponseBody> doPostPanicNotification(@Header("authorization") String authToken, @Body RequestBody requestBody);
 
+    @POST(WebServices.RESIDENT_CHECK_IN_OUT)
+    Call<ResponseBody> doResidentCheckInCheckOut(@Header("authorization") String authToken, @Body RequestBody requestBody);
+
 }

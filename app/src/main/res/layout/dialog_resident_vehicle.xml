@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.evisitor.ui.main.residential.residentprofile.ResidentVehicleViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_card_corner">
+
+        <ImageView
+            android:id="@+id/img_close"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="8dp"
+            android:src="@drawable/ic_cancel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tv_select_vehicle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:visibility="gone"
+            android:fontFamily="@font/futura_round_medium"
+            android:text="@string/select_vehicle"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_close" />
+
+        <TextView
+            android:id="@+id/tv_or"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/futura_round_medium"
+            android:text="@string/or"
+            android:visibility="gone"
+            android:textAlignment="center"
+            android:textColor="@color/blue"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_select_vehicle" />
+
+
+        <EditText
+            android:id="@+id/et_vehicle"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/futura_book"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            android:digits="@string/vehicle_value"
+            android:minWidth="100dp"
+            android:textColor="@color/black"
+            android:inputType="textCapCharacters"
+            android:maxLength="@integer/vehicle_no_length"
+            android:textSize="16sp"
+            android:theme="@style/EditTextTheme"
+            android:hint="@string/vehicle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_or"
+            app:layout_constraintEnd_toStartOf="@+id/img_vehicle"
+            tools:ignore="LabelFor" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_camera_dark"
+            android:layout_margin="20dp"
+            app:layout_constraintStart_toEndOf="@id/et_vehicle"
+            app:layout_constraintTop_toTopOf="@id/et_vehicle"
+            app:layout_constraintBottom_toBottomOf="@id/et_vehicle"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/img_vehicle"
+            android:contentDescription="@string/image" />
+
+
+        <Button
+            android:id="@+id/btn_in"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:background="@drawable/bg_card_corner"
+            android:fontFamily="@font/futura_round_medium"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="@string/check_in"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_out"
+            app:layout_constraintTop_toBottomOf="@id/et_vehicle"
+            />
+
+
+        <Button
+            android:id="@+id/btn_out"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:background="@drawable/bg_card_corner"
+            android:fontFamily="@font/futura_round_medium"
+            android:backgroundTint="@color/red"
+            android:text="@string/check_out"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toEndOf="@id/btn_in"
+            app:layout_constraintTop_toBottomOf="@id/et_vehicle"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -34,13 +34,17 @@ android {
             //new instance
             //buildConfigField("String", "BASE_URL", "\"http://197.220.114.46:8085/\"")
 
+            //aws testing
+            //buildConfigField("String", "BASE_URL", "\"http://3.20.249.162:8090/\"")
+
             //Dev url
              //buildConfigField("String", "BASE_URL", "\"http://103.21.52.30:8085/\"")
 
             //Local
             //buildConfigField("String", "BASE_URL", "\"http://192.168.43.134:8085/\"")
-            //buildConfigField("String", "BASE_URL", "\"http://192.168.43.151:8085/\"")
+          //  buildConfigField("String", "BASE_URL", "\"http://192.168.43.151:8085/\"")
               //buildConfigField("String", "BASE_URL", "\"http://192.168.43.82:8085/\"")
+             // buildConfigField("String", "BASE_URL", "\"http://192.168.137.1:8085/\"")
         }
 
         release {
@@ -49,13 +53,17 @@ android {
             buildConfigField("boolean", "DEBUG_MODE", "false")
 
             //Production url
-              buildConfigField("String", "BASE_URL", "\"http://3.19.243.207:8087/\"")
+            buildConfigField("String", "BASE_URL", "\"http://3.19.243.207:8087/\"")
 
             //Stage url
               //buildConfigField("String", "BASE_URL", "\"http://52.15.186.140:8090/\"")
 
             //new instance
-           // buildConfigField("String", "BASE_URL", "\"http://197.220.114.46:8085/\"")
+            //buildConfigField("String", "BASE_URL", "\"http://197.220.114.46:8085/\"")
+
+
+            //aws testing
+            //buildConfigField("String", "BASE_URL", "\"http://3.20.249.162:8090/\"")
 
             //Dev url
             //buildConfigField("String", "BASE_URL", "\"http://103.21.52.30:8085/\"")
@@ -64,6 +72,7 @@ android {
             //buildConfigField("String", "BASE_URL", "\"http://192.168.43.134:8085/\"")  //shivanshu
            //buildConfigField("String", "BASE_URL", "\"http://192.168.43.151:8085/\"")  //sandeep
            //  buildConfigField("String", "BASE_URL", "\"http://192.168.43.82:8085/\"")  //sandeep
+             //buildConfigField("String", "BASE_URL", "\"http://192.168.137.1:8085/\"")  //sandeep
 
         }
     }
