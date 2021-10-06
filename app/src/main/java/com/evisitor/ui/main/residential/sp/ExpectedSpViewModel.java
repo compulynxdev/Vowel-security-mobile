@@ -4,9 +4,11 @@ import androidx.annotation.NonNull;
 
 import com.evisitor.R;
 import com.evisitor.data.DataManager;
+import com.evisitor.data.model.PropertyInfoResponse;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.model.ServiceProviderResponse;
 import com.evisitor.data.model.VisitorProfileBean;
+import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.main.BaseCheckInOutViewModel;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppLogger;
@@ -21,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.lifecycle.MutableLiveData;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -161,5 +164,45 @@ public class ExpectedSpViewModel extends BaseCheckInOutViewModel<ExpectedSPNavig
     @Override
     public void onSuccess() {
         getNavigator().refreshList();
+       /* getNavigator().showAlert(getNavigator().getContext().getString(R.string.print), getNavigator().getContext().getString(R.string.do_you_want_print_label)).setOnPositiveClickListener(dialog -> {
+            dialog.dismiss();
+            getNavigator().printLabel();
+        });*/
+    }
+
+
+    private final MutableLiveData<PropertyInfoResponse> propertyInfoResponseMutableData = new MutableLiveData<>();
+
+    MutableLiveData<PropertyInfoResponse> getPropertyInfo() {
+        if (getNavigator().isNetworkConnected(true)) {
+            getNavigator().showLoading();
+            Map<String, String> map = new HashMap<>();
+            map.put("accountId", getDataManager().getAccountId());
+
+            getDataManager().doGetPropertyInfo(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                    getNavigator().hideLoading();
+                    try {
+                        if (response.code() == 200) {
+                            assert response.body() != null;
+                            PropertyInfoResponse propertyInfoResponse = getDataManager().getGson().fromJson(response.body().string(), PropertyInfoResponse.class);
+                            propertyInfoResponseMutableData.setValue(propertyInfoResponse);
+                        } else if (response.code() == 401) {
+                            getNavigator().openActivityOnTokenExpire();
+                        } else getNavigator().handleApiError(response.errorBody());
+                    } catch (Exception e) {
+                        getNavigator().showAlert(R.string.alert, R.string.alert_error);
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                    getNavigator().hideLoading();
+                    getNavigator().handleApiFailure(t);
+                }
+            });
+        }
+        return propertyInfoResponseMutableData;
     }
 }

@@ -11,4 +11,6 @@ interface ExpectedSPNavigator extends BaseNavigator {
     void hideSwipeToRefresh();
 
     void refreshList();
+
+    void printLabel();
 }

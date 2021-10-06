@@ -26,13 +26,13 @@ android {
             buildConfigField("boolean", "DEBUG_MODE", "true")
 
             //Production url
-              buildConfigField("String", "BASE_URL", "\"http://3.19.243.207:8087/\"")
+            //  buildConfigField("String", "BASE_URL", "\"http://3.19.243.207:8087/\"")
 
             //Stage urlA
             //buildConfigField("String", "BASE_URL", "\"http://52.15.186.140:8090/\"")
 
             //new instance
-            //buildConfigField("String", "BASE_URL", "\"http://197.220.114.46:8085/\"")
+            buildConfigField("String", "BASE_URL", "\"http://197.220.114.46:8085/\"")
 
             //aws testing
             //buildConfigField("String", "BASE_URL", "\"http://3.20.249.162:8090/\"")
@@ -53,13 +53,13 @@ android {
             buildConfigField("boolean", "DEBUG_MODE", "false")
 
             //Production url
-            buildConfigField("String", "BASE_URL", "\"http://3.19.243.207:8087/\"")
+           // buildConfigField("String", "BASE_URL", "\"http://3.19.243.207:8087/\"")
 
             //Stage url
               //buildConfigField("String", "BASE_URL", "\"http://52.15.186.140:8090/\"")
 
             //new instance
-            //buildConfigField("String", "BASE_URL", "\"http://197.220.114.46:8085/\"")
+            buildConfigField("String", "BASE_URL", "\"http://197.220.114.46:8085/\"")
 
 
             //aws testing
@@ -164,4 +164,7 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-crashlytics'
     implementation 'com.google.firebase:firebase-analytics'
+
+    implementation files('libs/BixolonLabelPrinterLibrary.jar')
+
 }

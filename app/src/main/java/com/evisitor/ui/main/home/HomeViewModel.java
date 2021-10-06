@@ -471,6 +471,8 @@ public class HomeViewModel extends BaseCheckInOutViewModel<HomeNavigator> implem
                 object.put("accountId", getDataManager().getAccountId());
                 object.put("userMasterId", getDataManager().getUserDetail().getId());
                 object.put("description", input);
+                object.put("role", "DEVICE_ADMIN");
+
             } catch (JSONException e) {
                 AppLogger.w("ExpectedCommercialStaffViewModel", e.toString());
             }

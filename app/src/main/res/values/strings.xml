@@ -387,4 +387,11 @@
     <string name="select_vehicle">Select Resident Vehicle</string>
     <string name="next">Next</string>
     <string name="check_out_successfully">Check Out Successfully</string>
+
+    <string name="title_connecting">connecting&#8230;</string>
+    <string name="title_connected_to">connected to %s</string>
+    <string name="title_not_connected">not connected</string>
+    <string name="set_printing_type">Set printing type</string>
+    <string name="print">Print</string>
+    <string name="do_you_want_print_label">Do you want to print label?</string>
 </resources>

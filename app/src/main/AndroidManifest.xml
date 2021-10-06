@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.evisitor">
 
+    <uses-permission android:name="android.permission.BLUETOOTH" />
     <application
         android:name=".EVisitor"
         android:allowBackup="false"

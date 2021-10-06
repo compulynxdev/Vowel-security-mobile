@@ -1,13 +1,19 @@
 package com.evisitor.ui.base;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.os.StrictMode;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
@@ -27,6 +33,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bixolon.labelprinter.BixolonLabelPrinter;
 import com.evisitor.R;
 import com.evisitor.ui.dialog.AlertDialog;
 import com.evisitor.ui.image.BitmapImageViewActivity;
@@ -39,6 +46,7 @@ import com.evisitor.util.NetworkUtils;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Set;
 
 import okhttp3.ResponseBody;
 
@@ -299,4 +307,5 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
         searchText.setTypeface(ResourcesCompat.getFont(this, R.font.futura_round_medium));
         searchView.setOnSearchClickListener(v -> hideKeyboard());
     }
+
 }

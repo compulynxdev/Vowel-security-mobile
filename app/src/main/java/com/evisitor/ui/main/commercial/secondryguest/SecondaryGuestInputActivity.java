@@ -161,9 +161,9 @@ public class SecondaryGuestInputActivity extends BaseActivity<SecondryGuestInput
 
             case R.id.btn_ok:
                 if(isCheckIn){
-                    if(guestIds.isEmpty()){
+                    /*if(guestIds.isEmpty()){
                         showAlert(R.string.alert, R.string.please_select_guest).show(getSupportFragmentManager());
-                    }else{
+                    }else{*/
                         Intent intent = getIntent();
                         Bundle bundle = new Bundle();
                         String yourListAsString = new Gson().toJson(guestIds);
@@ -171,7 +171,7 @@ public class SecondaryGuestInputActivity extends BaseActivity<SecondryGuestInput
                         intent.putExtras(bundle);
                         setResult(RESULT_OK, intent);
                         finish();
-                    }
+                    //}
                 }else{
                     if (!beans.isEmpty()) {
                         if (mViewModel.verifyGuestDetails(beans)) {

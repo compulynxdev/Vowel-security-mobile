@@ -49,4 +49,6 @@ public interface BaseNavigator {
     void handleApiFailure(@NonNull Throwable t);
 
     void handleApiError(ResponseBody response);
+
+
 }
