@@ -9,6 +9,7 @@ import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.model.ServiceProviderResponse;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.ui.base.BaseActivity;
+import com.evisitor.ui.dialog.AlertDialog;
 import com.evisitor.ui.main.BaseCheckInOutViewModel;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppLogger;
@@ -164,10 +165,10 @@ public class ExpectedSpViewModel extends BaseCheckInOutViewModel<ExpectedSPNavig
     @Override
     public void onSuccess() {
         getNavigator().refreshList();
-       /* getNavigator().showAlert(getNavigator().getContext().getString(R.string.print), getNavigator().getContext().getString(R.string.do_you_want_print_label)).setOnPositiveClickListener(dialog -> {
+        getNavigator().showAlert(getNavigator().getContext().getString(R.string.print), getNavigator().getContext().getString(R.string.do_you_want_print_label)).setOnPositiveClickListener(dialog -> {
             dialog.dismiss();
             getNavigator().printLabel();
-        });*/
+        }).setOnNegativeClickListener(dialog -> dialog.dismiss()).setNegativeBtnLabel(getNavigator().getContext().getString(R.string.no));
     }
 
 

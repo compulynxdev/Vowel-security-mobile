@@ -342,38 +342,42 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
 
     @Override
     public void printLabel() {
-        int mFontSize = BixolonLabelPrinter.FONT_SIZE_10;
-        int mHorizontalMultiplier = 1;
-        int mVerticalMultiplier = 1;
-        int model = BixolonLabelPrinter.QR_CODE_MODEL2;
-        int eccLevel = BixolonLabelPrinter.ECC_LEVEL_15;
-        int rotation = BixolonLabelPrinter.ROTATION_NONE;
-        //Bitmap logo = urlImageToBitmap();
+                if(mIsConnected){
+                    int mFontSize = BixolonLabelPrinter.FONT_SIZE_10;
+                    int mHorizontalMultiplier = 1;
+                    int mVerticalMultiplier = 1;
+                    int model = BixolonLabelPrinter.QR_CODE_MODEL2;
+                    int eccLevel = BixolonLabelPrinter.ECC_LEVEL_15;
+                    int rotation = BixolonLabelPrinter.ROTATION_NONE;
+                    //Bitmap logo = urlImageToBitmap();
 
-        ServiceProvider serviceProvider = getViewModel().getDataManager().getSpDetail();
-        bixolonLabelPrinter.beginTransactionPrint();
+                    ServiceProvider serviceProvider = getViewModel().getDataManager().getSpDetail();
+                    bixolonLabelPrinter.beginTransactionPrint();
 
-        if(propertyInfo!=null && !propertyInfo.getImage().isEmpty())
-            bixolonLabelPrinter.drawImageFile(propertyInfo.getImage(),10,10,30,0,0,0);
+                    if(propertyInfo!=null && !propertyInfo.getImage().isEmpty())
+                        bixolonLabelPrinter.drawImageFile(propertyInfo.getImage(),10,10,30,0,0,0);
 
-        bixolonLabelPrinter.drawBlock(10,30,800,33,79,3);
-        bixolonLabelPrinter.drawText("Commercial Complex", 10, 50, BixolonLabelPrinter.FONT_SIZE_12,
-                mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
-        bixolonLabelPrinter.drawBlock(10,90,800,93,79,3);
+                    bixolonLabelPrinter.drawBlock(10,30,800,33,79,3);
+                    bixolonLabelPrinter.drawText("Commercial Complex", 10, 50, BixolonLabelPrinter.FONT_SIZE_12,
+                            mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
+                    bixolonLabelPrinter.drawBlock(10,90,800,93,79,3);
 
-        //User details to be printed
-        bixolonLabelPrinter.drawText(getString(R.string.data_name,serviceProvider.getName()), 10, 130, mFontSize,
-                mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
-        bixolonLabelPrinter.drawText(getString(R.string.data_identity,serviceProvider.getIdentityNo()), 10, 170, mFontSize,
-                mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
-        bixolonLabelPrinter.drawText("Type: Service Provider", 10, 210, mFontSize,
-                mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
+                    //User details to be printed
+                    bixolonLabelPrinter.drawText(getString(R.string.data_name,serviceProvider.getName()), 10, 130, mFontSize,
+                            mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
+                    bixolonLabelPrinter.drawText(getString(R.string.data_identity,serviceProvider.getIdentityNo()), 10, 170, mFontSize,
+                            mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
+                    bixolonLabelPrinter.drawText("Type: Service Provider", 10, 210, mFontSize,
+                            mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
 
-        //QR code
-        bixolonLabelPrinter.drawQrCode(serviceProvider.getIdentityNo(), 400, 130, model, eccLevel, 7, rotation);
-        bixolonLabelPrinter.print(1, 1);
-        bixolonLabelPrinter.endTransactionPrint();
-    }
+                    //QR code
+                    bixolonLabelPrinter.drawQrCode(serviceProvider.getIdentityNo(), 400, 130, model, eccLevel, 7, rotation);
+                    bixolonLabelPrinter.print(1, 1);
+                    bixolonLabelPrinter.endTransactionPrint();
+                }else{
+                    showAlert(R.string.alert,R.string.no_printer_connected);
+                }
+           }
 
     private final Handler mHandler = new Handler()
     {
@@ -395,10 +399,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                             break;
 
                         case BixolonLabelPrinter.STATE_NONE:
-                            //Log.e("NONE", msg.toString());
-                            //setStatus(getResources().getString(R.string.title_not_connected));
                             mIsConnected = false;
-                            //invalidateOptionsMenu();
                             break;
                     }
                     break;
