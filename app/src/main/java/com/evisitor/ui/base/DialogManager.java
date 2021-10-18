@@ -52,7 +52,7 @@ public class DialogManager {
 						String strDeviceInfo = null;
 						strDeviceInfo = strSelectList.substring(indexSpace-5, strSelectList.length());
 
-						ExpectedSPFragment.bixolonLabelPrinter.connect(strDeviceInfo);
+						//ExpectedSPFragment.bixolonLabelPrinter.connect(strDeviceInfo);
 						
 					}
 				}).show();
