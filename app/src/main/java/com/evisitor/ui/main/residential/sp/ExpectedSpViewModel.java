@@ -165,10 +165,7 @@ public class ExpectedSpViewModel extends BaseCheckInOutViewModel<ExpectedSPNavig
     @Override
     public void onSuccess() {
         getNavigator().refreshList();
-        getNavigator().showAlert(getNavigator().getContext().getString(R.string.print), getNavigator().getContext().getString(R.string.do_you_want_print_label)).setOnPositiveClickListener(dialog -> {
-            dialog.dismiss();
-            getNavigator().printLabel();
-        }).setOnNegativeClickListener(dialog -> dialog.dismiss()).setNegativeBtnLabel(getNavigator().getContext().getString(R.string.no));
+        getNavigator().showPrintDialog();
     }
 
 

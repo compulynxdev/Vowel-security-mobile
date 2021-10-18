@@ -37,6 +37,8 @@ import com.evisitor.util.pagination.RecyclerViewScrollListener;
 import com.smartengines.MainResultStore;
 import com.smartengines.ScanSmartActivity;
 
+import org.xml.sax.HandlerBase;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -53,6 +55,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
     public static BixolonLabelPrinter bixolonLabelPrinter;
     private boolean mIsConnected = false;
     private PropertyInfoResponse propertyInfo;
+    private final Handler connectHandler = new Handler();
 
 
     public static ExpectedSPFragment newInstance() {
@@ -66,6 +69,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mViewModel.setCheckInOutNavigator(this);
+
         bixolonLabelPrinter = new BixolonLabelPrinter(getActivity(), mHandler, Looper.getMainLooper());
         final int ANDROID_NOUGAT = 24;
 
@@ -340,8 +344,10 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
     }
 
 
+
     @Override
     public void printLabel() {
+
                 if(mIsConnected){
                     int mFontSize = BixolonLabelPrinter.FONT_SIZE_10;
                     int mHorizontalMultiplier = 1;
@@ -354,8 +360,8 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                     ServiceProvider serviceProvider = getViewModel().getDataManager().getSpDetail();
                     bixolonLabelPrinter.beginTransactionPrint();
 
-                    if(propertyInfo!=null && !propertyInfo.getImage().isEmpty())
-                        bixolonLabelPrinter.drawImageFile(propertyInfo.getImage(),10,10,30,0,0,0);
+                   /* if(propertyInfo!=null && !propertyInfo.getImage().isEmpty())
+                       bixolonLabelPrinter.drawImageFile(propertyInfo.getImage(),200,10,80,0,0,0);*/
 
                     bixolonLabelPrinter.drawBlock(10,30,800,33,79,3);
                     bixolonLabelPrinter.drawText("Commercial Complex", 10, 50, BixolonLabelPrinter.FONT_SIZE_12,
@@ -371,13 +377,26 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                             mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
 
                     //QR code
-                    bixolonLabelPrinter.drawQrCode(serviceProvider.getIdentityNo(), 400, 130, model, eccLevel, 7, rotation);
+                    //bixolonLabelPrinter.drawQrCode(serviceProvider.getIdentityNo(), 400, 130, model, eccLevel, 7, rotation);
                     bixolonLabelPrinter.print(1, 1);
                     bixolonLabelPrinter.endTransactionPrint();
                 }else{
+                    //bixolonLabelPrinter.findBluetoothPrinters();
                     showAlert(R.string.alert,R.string.no_printer_connected);
                 }
            }
+
+    @Override
+    public void showPrintDialog() {
+      AlertDialog alertDialog =  AlertDialog.newInstance().setMsg(getString(R.string.do_you_want_print_label)).setNegativeBtnLabel(getString(R.string.connect_with_printer)).setPositiveBtnLabel(getString(R.string.yes)).setOnPositiveClickListener(new AlertDialog.PositiveListener() {
+           @Override
+           public void onPositiveClick(AlertDialog dialog) {
+                     dialog.dismiss();
+                     printLabel();
+           }
+       }).setOnNegativeClickListener(dialog -> bixolonLabelPrinter.findBluetoothPrinters()).setTitle(getString(R.string.printer).concat(String.valueOf(mIsConnected)));
+      alertDialog.show(getChildFragmentManager());
+    }
 
     private final Handler mHandler = new Handler()
     {
@@ -399,18 +418,21 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                             break;
 
                         case BixolonLabelPrinter.STATE_NONE:
+                            //Log.e("NONE", msg.toString());
+                           // setStatus(getResources().getString(R.string.title_not_connected));
                             mIsConnected = false;
+                            //invalidateOptionsMenu();
                             break;
                     }
                     break;
 
                 case BixolonLabelPrinter.MESSAGE_READ:
-                    this.dispatchMessage(msg);
+                    ExpectedSPFragment.dispatchMessage(msg);
                     break;
 
                 case BixolonLabelPrinter.MESSAGE_DEVICE_NAME:
-                    String connectedDeviceName = msg.getData().getString(BixolonLabelPrinter.DEVICE_NAME);
-                    Toast.makeText(getActivity(), connectedDeviceName, Toast.LENGTH_LONG).show();
+                    //connectedDeviceName = msg.getData().getString(BixolonLabelPrinter.DEVICE_NAME);
+                    Toast.makeText(getActivity(), "connectedDeviceName", Toast.LENGTH_LONG).show();
                     break;
 
                 case BixolonLabelPrinter.MESSAGE_TOAST:
@@ -428,7 +450,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                     }
                     else
                     {
-                        DialogManager.showBluetoothDialog(getContext(), (Set<BluetoothDevice>) msg.obj);
+                        DialogManager.showBluetoothDialog(getActivity(), (Set<BluetoothDevice>) msg.obj);
                     }
                     break;
 
@@ -447,9 +469,8 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
         }
     };
 
-
     @SuppressLint("HandlerLeak")
-    private void dispatchMessage(Message msg)
+    private static void dispatchMessage(Message msg)
     {
         switch (msg.arg1)
         {
@@ -500,12 +521,12 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                 {
                     buffer.append("No error");
                 }
-                Toast.makeText(getActivity(), buffer.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(newInstance().getContext(), buffer.toString(), Toast.LENGTH_SHORT).show();
                 break;
             case BixolonLabelPrinter.PROCESS_GET_INFORMATION_MODEL_NAME:
             case BixolonLabelPrinter.PROCESS_GET_INFORMATION_FIRMWARE_VERSION:
             case BixolonLabelPrinter.PROCESS_EXECUTE_DIRECT_IO:
-                Toast.makeText(getActivity(), (String) msg.obj, Toast.LENGTH_SHORT).show();
+                Toast.makeText(newInstance().getContext(), (String) msg.obj, Toast.LENGTH_SHORT).show();
                 break;
         }
     }

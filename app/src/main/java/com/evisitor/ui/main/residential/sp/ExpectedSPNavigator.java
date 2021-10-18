@@ -13,4 +13,6 @@ interface ExpectedSPNavigator extends BaseNavigator {
     void refreshList();
 
     void printLabel();
+
+    void showPrintDialog();
 }
