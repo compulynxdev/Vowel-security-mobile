@@ -29,8 +29,6 @@ import com.evisitor.ui.dialog.ImagePickBottomSheetDialog;
 import com.evisitor.ui.dialog.ImagePickCallback;
 import com.evisitor.ui.main.commercial.gadgets.GadgetsInputActivity;
 import com.evisitor.ui.main.commercial.secondryguest.SecondaryGuestInputActivity;
-import com.evisitor.util.AppLogger;
-import com.evisitor.util.AppUtils;
 import com.evisitor.util.PermissionUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -41,7 +39,6 @@ import static com.evisitor.util.AppConstants.ADD_FAMILY_MEMBER;
 import static com.evisitor.util.AppConstants.SCAN_RESULT;
 
 public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding, VisitorProfileViewModel> implements View.OnClickListener {
-    private static final String TAG = "IdVerificationDialog";
     private List<DeviceBean> deviceBeanList;
     private VisitorProfileCallback callback;
     private List<VisitorProfileBean> visitorInfoList;
@@ -63,8 +60,6 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        DataManager dataManager = EVisitor.getInstance().getDataManager();
         mViewModel.setNavigator(getBaseActivity());
     }
 
@@ -210,9 +205,7 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
             getViewDataBinding().viewNoPlateImg.setVisibility(View.VISIBLE);
         } else getViewDataBinding().viewNoPlateImg.setVisibility(View.GONE);
 
-        getViewModel().getNumberPlate().observe(this, s -> {
-            infoAdapter.setNumberPlate(s);
-        });
+        getViewModel().getNumberPlate().observe(this, s -> infoAdapter.setNumberPlate(s));
 
         getViewDataBinding().tvTitle.setText(getString(R.string.body_temp,""));
 
@@ -236,7 +229,7 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
             @Override
             public void afterTextChanged(Editable s) {
                 if(!s.toString().isEmpty() && s.toString().length()>1){
-                    if ( Integer.parseInt(s.toString()) >= 34 && Integer.parseInt(s.toString()) <= 40){
+                    if ( Double.parseDouble(s.toString()) >= 34 && Double.parseDouble(s.toString()) <= 40){
                         if (dataManager.isCommercial()) {
                             CommercialVisitorResponse.CommercialGuest guests = dataManager.getCommercialVisitorDetail();
                             if (guests != null) {
