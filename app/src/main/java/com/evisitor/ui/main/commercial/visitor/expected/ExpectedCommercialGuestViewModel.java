@@ -6,6 +6,7 @@ import com.evisitor.R;
 import com.evisitor.data.DataManager;
 import com.evisitor.data.model.CheckInTemperature;
 import com.evisitor.data.model.CommercialVisitorResponse;
+import com.evisitor.data.model.PropertyInfoResponse;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.ui.main.BaseCheckInOutViewModel;
 import com.evisitor.util.AppConstants;
@@ -23,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.lifecycle.MutableLiveData;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;

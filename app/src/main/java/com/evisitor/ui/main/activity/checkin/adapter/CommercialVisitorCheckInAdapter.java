@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,10 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.evisitor.EVisitor;
 import com.evisitor.R;
 import com.evisitor.data.model.CommercialVisitorResponse;
 import com.evisitor.ui.base.BaseViewHolder;
-import com.evisitor.ui.base.ItemClickCallback;
 import com.evisitor.util.CalenderUtils;
 import com.evisitor.util.pagination.FooterLoader;
 
@@ -87,6 +88,7 @@ public class CommercialVisitorCheckInAdapter extends RecyclerView.Adapter<BaseVi
 
         final ImageView imgVisitor;
         final TextView name, time, houseNo, host, visitorType;
+        final Button btn_print;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -96,6 +98,7 @@ public class CommercialVisitorCheckInAdapter extends RecyclerView.Adapter<BaseVi
             host = itemView.findViewById(R.id.tv_host);
             visitorType = itemView.findViewById(R.id.tv_type);
             imgVisitor = itemView.findViewById(R.id.img_visitor);
+            btn_print = itemView.findViewById(R.id.btn_ok);
 
             itemView.setOnClickListener(v -> {
                 if (listener != null && getAdapterPosition() != -1)
@@ -107,6 +110,12 @@ public class CommercialVisitorCheckInAdapter extends RecyclerView.Adapter<BaseVi
                     showFullImage(list.get(getAdapterPosition()).getImageUrl());
             });
 
+            if(EVisitor.getInstance().getDataManager().isPrintLabel())
+                btn_print.setVisibility(View.VISIBLE);
+            btn_print.setOnClickListener(v -> {
+                if (listener != null && getAdapterPosition() != -1)
+                    listener.onPrintClick(getAdapterPosition());
+            });
         }
 
         @Override
@@ -143,5 +152,11 @@ public class CommercialVisitorCheckInAdapter extends RecyclerView.Adapter<BaseVi
                         .into(imgVisitor);
             }
         }
+    }
+
+    public interface ItemClickCallback {
+        void onItemClick(int pos);
+
+        void onPrintClick(int pos);
     }
 }

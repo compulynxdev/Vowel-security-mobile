@@ -160,4 +160,7 @@ public interface ApiHelper {
     @POST(WebServices.RESIDENT_CHECK_IN_OUT)
     Call<ResponseBody> doResidentCheckInCheckOut(@Header("authorization") String authToken, @Body RequestBody requestBody);
 
+    @GET(WebServices.GET_IMAGE_BY_NAME)
+    Call<ResponseBody> doGetBase64ImageByName(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+
 }

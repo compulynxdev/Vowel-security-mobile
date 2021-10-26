@@ -288,4 +288,9 @@ public class AppApiHelper implements ApiHelper {
     public Call<ResponseBody> doResidentCheckInCheckOut(String authToken, RequestBody requestBody) {
         return getApiInterface().doResidentCheckInCheckOut(authToken, requestBody);
     }
+
+    @Override
+    public Call<ResponseBody> doGetBase64ImageByName(String authToken, Map<String, String> partMap) {
+        return getApiInterface().doGetBase64ImageByName(authToken, partMap);
+    }
 }

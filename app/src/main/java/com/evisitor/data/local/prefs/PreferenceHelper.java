@@ -74,4 +74,8 @@ public interface PreferenceHelper {
     String getPropertyDialingCode();
 
     void setPropertyDialingCode(String dialingCode);
+
+    boolean isPrintLabel();
+
+    void setPrintLabel(boolean isPrint);
 }

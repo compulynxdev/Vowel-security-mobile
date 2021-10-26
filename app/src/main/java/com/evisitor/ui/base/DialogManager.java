@@ -17,6 +17,8 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Toast;
 
 import com.bixolon.labelprinter.BixolonLabelPrinter;
+import com.evisitor.ui.main.activity.checkin.CheckInFragment;
+import com.evisitor.ui.main.commercial.visitor.expected.ExpectedCommercialGuestFragment;
 import com.evisitor.ui.main.residential.sp.ExpectedSPFragment;
 
 import org.json.JSONException;
@@ -27,7 +29,7 @@ import java.util.Set;
 
 public class DialogManager {
 	
-	public static void showBluetoothDialog(Context context, final Set<BluetoothDevice> pairedDevices) {
+	public static void showBluetoothDialog(Context context, final Set<BluetoothDevice> pairedDevices, boolean isSp) {
 		final String[] items = new String[pairedDevices.size()];
 		int index = 0;
 		for (BluetoothDevice device : pairedDevices) {
@@ -51,9 +53,7 @@ public class DialogManager {
 						}
 						String strDeviceInfo = null;
 						strDeviceInfo = strSelectList.substring(indexSpace-5, strSelectList.length());
-
-						//ExpectedSPFragment.bixolonLabelPrinter.connect(strDeviceInfo);
-						
+						CheckInFragment.bixolonLabelPrinter.connect(strDeviceInfo);
 					}
 				}).show();
 	}

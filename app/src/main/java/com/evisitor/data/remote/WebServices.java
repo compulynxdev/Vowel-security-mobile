@@ -79,6 +79,8 @@ class WebServices {
 
     static final String RESIDENT_CHECK_IN_OUT = "resident/check_in_check_out";//http://localhost:8085/api/resident/check_in_check_out
 
+    static final String GET_IMAGE_BY_NAME = "guest/get_base64_by_image_name";//http://197.220.114.46:8085/e-visitor-system/api/guest/get_base64_by_image_name?imageName=bdadff88-06c9-485a-8aef-5533326143e5.png
+
     private WebServices() {
     }
 }

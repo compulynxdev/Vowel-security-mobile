@@ -90,6 +90,8 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                                 getDataManager().setAccountName(object.getString("accountName"));
                                 getDataManager().setCommercial(object.has("type") && object.getString("type").equalsIgnoreCase("COMMERCIAL"));
                                 getDataManager().setUserId(object.getString("userId"));
+                                if (object.has("printLabel"))
+                                    getDataManager().setPrintLabel(object.getBoolean("printLabel"));
                                 getDataManager().setCheckOutFeature(object.getBoolean("guestCheckOut"));
                                 if (object.has("country"))
                                     getDataManager().setPropertyCountry(object.getString("country"));

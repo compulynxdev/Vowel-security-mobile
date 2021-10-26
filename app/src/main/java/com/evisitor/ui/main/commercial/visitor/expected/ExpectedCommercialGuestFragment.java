@@ -1,27 +1,42 @@
 package com.evisitor.ui.main.commercial.visitor.expected;
 
+import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.os.StrictMode;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bixolon.labelprinter.BixolonLabelPrinter;
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.CheckInTemperature;
 import com.evisitor.data.model.CommercialVisitorResponse;
+import com.evisitor.data.model.PropertyInfoResponse;
 import com.evisitor.data.model.SecondaryGuest;
+import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.databinding.FragmentExpectedCommercialGuestBinding;
 import com.evisitor.ui.base.BaseFragment;
+import com.evisitor.ui.base.DialogManager;
 import com.evisitor.ui.dialog.AlertDialog;
 import com.evisitor.ui.main.commercial.secondryguest.SecondaryGuestInputActivity;
 import com.evisitor.ui.main.home.idverification.IdVerificationCallback;
 import com.evisitor.ui.main.home.idverification.IdVerificationDialog;
 import com.evisitor.ui.main.home.rejectreason.InputDialog;
 import com.evisitor.ui.main.home.visitorprofile.VisitorProfileDialog;
+import com.evisitor.ui.main.residential.sp.ExpectedSPFragment;
+import com.evisitor.util.AppUtils;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -32,6 +47,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import static android.app.Activity.RESULT_OK;
 import static com.evisitor.util.AppConstants.ADD_FAMILY_MEMBER;
@@ -291,4 +307,5 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
         getViewDataBinding().recyclerView.getRecycledViewPool().clear();
         doSearch(search);
     }
+
 }

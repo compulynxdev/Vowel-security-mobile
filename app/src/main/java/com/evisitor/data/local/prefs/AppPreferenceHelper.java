@@ -44,6 +44,7 @@ public class AppPreferenceHelper implements PreferenceHelper {
     private static final String PROPERTY_COUNTRY = "PROPERTY_COUNTRY";
     private static final String PROPERTY_DIALING_CODE = "PROPERTY_DIALING_CODE";
     private static final String CHECK_OUT_FEATURE = "CHECK_OUT_FEATURE";
+    private static final String PRINT_LABEL = "PRINT_LABEL";
 
     private final SharedPreferences mPrefs;
 
@@ -244,6 +245,16 @@ public class AppPreferenceHelper implements PreferenceHelper {
     @Override
     public void setPropertyDialingCode(String dialingCode) {
         mPrefs.edit().putString(PROPERTY_DIALING_CODE, dialingCode).apply();
+    }
+
+    @Override
+    public boolean isPrintLabel() {
+        return mPrefs.getBoolean(PRINT_LABEL, false);
+    }
+
+    @Override
+    public void setPrintLabel(boolean isPrint) {
+        mPrefs.edit().putBoolean(PRINT_LABEL, isPrint).apply();
     }
 
 }

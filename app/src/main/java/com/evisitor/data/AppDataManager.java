@@ -248,6 +248,16 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public boolean isPrintLabel() {
+        return preferenceHelper.isPrintLabel();
+    }
+
+    @Override
+    public void setPrintLabel(boolean isPrint) {
+        preferenceHelper.setPrintLabel(isPrint);
+    }
+
+    @Override
     public String getLanguage() {
         return preferenceHelper.getLanguage();
     }
@@ -560,5 +570,10 @@ public class AppDataManager implements DataManager {
     @Override
     public Call<ResponseBody> doResidentCheckInCheckOut(String authToken, RequestBody requestBody) {
         return apiHelper.doResidentCheckInCheckOut(authToken, requestBody);
+    }
+
+    @Override
+    public Call<ResponseBody> doGetBase64ImageByName(String authToken, Map<String, String> partMap) {
+        return apiHelper.doGetBase64ImageByName(authToken, partMap);
     }
 }

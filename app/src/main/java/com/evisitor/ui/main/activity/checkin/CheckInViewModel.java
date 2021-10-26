@@ -11,6 +11,7 @@ import com.evisitor.data.model.GuestsResponse;
 import com.evisitor.data.model.HouseKeeping;
 import com.evisitor.data.model.HouseKeepingCheckInResponse;
 import com.evisitor.data.model.HouseKeepingResponse;
+import com.evisitor.data.model.PropertyInfoResponse;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.model.ServiceProviderResponse;
 import com.evisitor.data.model.VisitorProfileBean;
@@ -30,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.lifecycle.MutableLiveData;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -37,6 +39,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator> {
+
+    MutableLiveData<String> propertyImage = new MutableLiveData<>();
+
+    MutableLiveData<String> visitorImage = new MutableLiveData<>();
 
     public CheckInViewModel(DataManager dataManager) {
         super(dataManager);
@@ -428,4 +434,87 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
         getNavigator().hideLoading();
         return visitorProfileBeanList;
     }
+
+    private final MutableLiveData<PropertyInfoResponse> propertyInfoResponseMutableData = new MutableLiveData<>();
+
+    MutableLiveData<PropertyInfoResponse> getPropertyInfo() {
+        if (getNavigator().isNetworkConnected(true)) {
+            getNavigator().showLoading();
+            Map<String, String> map = new HashMap<>();
+            map.put("accountId", getDataManager().getAccountId());
+
+            getDataManager().doGetPropertyInfo(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                    getNavigator().hideLoading();
+                    try {
+                        if (response.code() == 200) {
+                            assert response.body() != null;
+                            PropertyInfoResponse propertyInfoResponse = getDataManager().getGson().fromJson(response.body().string(), PropertyInfoResponse.class);
+                            propertyInfoResponseMutableData.setValue(propertyInfoResponse);
+                        } else if (response.code() == 401) {
+                            getNavigator().openActivityOnTokenExpire();
+                        } else getNavigator().handleApiError(response.errorBody());
+                    } catch (Exception e) {
+                        getNavigator().showAlert(R.string.alert, R.string.alert_error);
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                    getNavigator().hideLoading();
+                    getNavigator().handleApiFailure(t);
+                }
+            });
+        }
+        return propertyInfoResponseMutableData;
+    }
+
+    public MutableLiveData<String> getPropertyImage() {
+        return propertyImage;
+    }
+
+    public MutableLiveData<String> getVisitorImage() {
+        return visitorImage;
+    }
+
+    public void getImage(String image, boolean isProperty){
+        if (getNavigator().isNetworkConnected()) {
+            Map<String, String> map = new HashMap<>();
+            map.put("imageName", image);
+            getDataManager().doGetBase64ImageByName(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                    getNavigator().hideLoading();
+                    getNavigator().hideSwipeToRefresh();
+                    try {
+                        if (response.code() == 200) {
+                            assert response.body() != null;
+                            JSONObject object = new JSONObject(response.body().string());
+                            if(isProperty)
+                                propertyImage.setValue(object.getString("imageBase64"));
+                            else visitorImage.setValue(object.getString("imageBase64"));
+                        } else if (response.code() == 401) {
+                            getNavigator().openActivityOnTokenExpire();
+                        } else getNavigator().handleApiError(response.errorBody());
+                    } catch (Exception e) {
+                        getNavigator().showAlert(R.string.alert, R.string.alert_error);
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                    getNavigator().hideLoading();
+                    getNavigator().handleApiFailure(t);
+                    getNavigator().hideSwipeToRefresh();
+                }
+            });
+        } else {
+            getNavigator().hideSwipeToRefresh();
+            getNavigator().hideLoading();
+            getNavigator().showAlert(getNavigator().getContext().getString(R.string.alert), getNavigator().getContext().getString(R.string.alert_internet));
+        }
+    }
+
+
 }

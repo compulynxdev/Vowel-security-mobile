@@ -394,8 +394,10 @@
     <string name="title_not_connected">not connected</string>
     <string name="set_printing_type">Set printing type</string>
     <string name="print">Print</string>
+    <string name="print_label">Print Label</string>
     <string name="do_you_want_print_label">Do you want to print label?</string>
     <string name="no_printer_connected">No printer connected!</string>
-    <string name="printer">Printer</string>
+    <string name="printer">Print the label</string>
     <string name="connect_with_printer">Connect with printer</string>
+    <string name="connect_if_not_connected">Connect with printer if not connected!</string>
 </resources>

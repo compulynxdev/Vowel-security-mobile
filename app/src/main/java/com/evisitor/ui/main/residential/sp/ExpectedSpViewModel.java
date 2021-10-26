@@ -165,42 +165,6 @@ public class ExpectedSpViewModel extends BaseCheckInOutViewModel<ExpectedSPNavig
     @Override
     public void onSuccess() {
         getNavigator().refreshList();
-        getNavigator().showPrintDialog();
     }
 
-
-    private final MutableLiveData<PropertyInfoResponse> propertyInfoResponseMutableData = new MutableLiveData<>();
-
-    MutableLiveData<PropertyInfoResponse> getPropertyInfo() {
-        if (getNavigator().isNetworkConnected(true)) {
-            getNavigator().showLoading();
-            Map<String, String> map = new HashMap<>();
-            map.put("accountId", getDataManager().getAccountId());
-
-            getDataManager().doGetPropertyInfo(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                    getNavigator().hideLoading();
-                    try {
-                        if (response.code() == 200) {
-                            assert response.body() != null;
-                            PropertyInfoResponse propertyInfoResponse = getDataManager().getGson().fromJson(response.body().string(), PropertyInfoResponse.class);
-                            propertyInfoResponseMutableData.setValue(propertyInfoResponse);
-                        } else if (response.code() == 401) {
-                            getNavigator().openActivityOnTokenExpire();
-                        } else getNavigator().handleApiError(response.errorBody());
-                    } catch (Exception e) {
-                        getNavigator().showAlert(R.string.alert, R.string.alert_error);
-                    }
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                    getNavigator().hideLoading();
-                    getNavigator().handleApiFailure(t);
-                }
-            });
-        }
-        return propertyInfoResponseMutableData;
-    }
 }

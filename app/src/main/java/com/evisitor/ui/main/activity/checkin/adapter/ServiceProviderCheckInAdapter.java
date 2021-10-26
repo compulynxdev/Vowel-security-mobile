@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.evisitor.EVisitor;
 import com.evisitor.R;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.ui.base.BaseViewHolder;
@@ -85,12 +87,15 @@ public class ServiceProviderCheckInAdapter extends RecyclerView.Adapter<BaseView
 
     public interface OnItemClickListener {
         void ItemClick(ServiceProvider serviceProvider);
+
+        void printClick(ServiceProvider serviceProvider);
     }
 
     public class ViewHolder extends BaseViewHolder {
 
         final ImageView imgVisitor;
         final TextView name, time, houseNo, host, visitorType;
+        final Button btn_print;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -100,6 +105,10 @@ public class ServiceProviderCheckInAdapter extends RecyclerView.Adapter<BaseView
             host = itemView.findViewById(R.id.tv_host);
             visitorType = itemView.findViewById(R.id.tv_type);
             imgVisitor = itemView.findViewById(R.id.img_visitor);
+            btn_print = itemView.findViewById(R.id.btn_ok);
+
+            if(EVisitor.getInstance().getDataManager().isCommercial() && EVisitor.getInstance().getDataManager().isPrintLabel())
+                btn_print.setVisibility(View.VISIBLE);
 
             itemView.setOnClickListener(v -> {
                 if (listener != null && getAdapterPosition() != -1)
@@ -110,6 +119,12 @@ public class ServiceProviderCheckInAdapter extends RecyclerView.Adapter<BaseView
                 if (getAdapterPosition() != -1)
                     showFullImage(list.get(getAdapterPosition()).getImageUrl());
             });
+
+            btn_print.setOnClickListener(v -> {
+                if (listener != null && getAdapterPosition() != -1)
+                    listener.printClick(list.get(getAdapterPosition()));
+            });
+
         }
 
         @Override
