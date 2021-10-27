@@ -21,6 +21,16 @@ public class CommercialVisitorResponse {
     }
 
     public static class CommercialGuest {
+        public String getQrCode() {
+            return qrCode;
+        }
+
+        public void setQrCode(String qrCode) {
+            this.qrCode = qrCode;
+        }
+
+        @SerializedName("qrCode")
+        private String qrCode;
 
         @SerializedName("employeeName")
         private String host;

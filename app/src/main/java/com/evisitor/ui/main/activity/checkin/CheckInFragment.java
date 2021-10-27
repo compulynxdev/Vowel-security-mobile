@@ -243,8 +243,8 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
             public void onPrintClick(int pos) {
                 CommercialVisitorResponse.CommercialGuest guests = commercialGuestList.get(pos);
                 mViewModel.getCommercialGuestProfileBean(guests);
-                if(guests.getImageUrl()!=null)
-                    getViewModel().getImage(guests.getImageUrl(),false);
+                if(guests.getQrCode()!=null && !guests.getQrCode().isEmpty())
+                    getViewModel().getImage(guests.getQrCode(),false);
 
                 AlertDialog alertDialog =  AlertDialog.newInstance().setMsg(getString(R.string.connect_if_not_connected)).setNegativeBtnLabel(getString(R.string.connect_with_printer)).setPositiveBtnLabel(getString(R.string.yes)).setOnPositiveClickListener(new AlertDialog.PositiveListener() {
                     @Override
@@ -311,7 +311,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
             @Override
             public void printClick(ServiceProvider serviceProvider) {
                 mViewModel.getServiceProviderProfileBean(serviceProvider);
-                if(serviceProvider.getImageUrl()!=null)
+                if(serviceProvider.getImageUrl()!=null && !serviceProvider.getImageUrl().isEmpty())
                     getViewModel().getImage(serviceProvider.getImageUrl(),false);
                 AlertDialog alertDialog =  AlertDialog.newInstance().setMsg(getString(R.string.connect_if_not_connected)).setNegativeBtnLabel(getString(R.string.connect_with_printer)).setPositiveBtnLabel(getString(R.string.yes)).setOnPositiveClickListener(new AlertDialog.PositiveListener() {
                     @Override
@@ -635,12 +635,13 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
             bixolonLabelPrinter.beginTransactionPrint();
 
             if(propertyInfo!=null && !propertyInfo.getImage().isEmpty() && getViewModel().getPropertyImage().getValue()!=null)
-                bixolonLabelPrinter.drawImage(AppUtils.getBitmap(Objects.requireNonNull(getViewModel().getPropertyImage().getValue())),450,40,120,1,1,0);
+                bixolonLabelPrinter.drawImage(AppUtils.getBitmap(Objects.requireNonNull(getViewModel().getPropertyImage().getValue())),450,30,120,1,1,0);
 
             bixolonLabelPrinter.drawBlock(10,30,800,33,79,3);
-            bixolonLabelPrinter.drawText("Commercial Complex", 10, 50, BixolonLabelPrinter.FONT_SIZE_12,
+            bixolonLabelPrinter.drawBlock(10,280,800,283,79,3);
+            bixolonLabelPrinter.drawText(propertyInfo.getFullName(), 10, 50, BixolonLabelPrinter.FONT_SIZE_12,
                     mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
-            bixolonLabelPrinter.drawBlock(10,90,800,93,79,3);
+
 
             if(sp){
                 bixolonLabelPrinter.drawText(getString(R.string.data_name,serviceProvider.getName()), 10, 130, mFontSize,
@@ -650,7 +651,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                 bixolonLabelPrinter.drawText("Type: Service Provider", 10, 210, mFontSize,
                         mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
                 if(serviceProvider!=null && !serviceProvider.getImageUrl().isEmpty() && getViewModel().getVisitorImage().getValue()!=null)
-                    bixolonLabelPrinter.drawImage(AppUtils.getBitmap(Objects.requireNonNull(getViewModel().getVisitorImage().getValue())),450,240,120,1,1,0);
+                    bixolonLabelPrinter.drawImage(AppUtils.getBitmap(Objects.requireNonNull(getViewModel().getVisitorImage().getValue())),450,40,120,1,1,0);
             }
             //visitor details to be printed
             else{
@@ -662,8 +663,8 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                         mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
                 bixolonLabelPrinter.drawText("Type: Visitor", 10, 210, mFontSize,
                         mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
-                if(commercialGuest!=null && !commercialGuest.getImageUrl().isEmpty() && getViewModel().getVisitorImage().getValue()!=null)
-                    bixolonLabelPrinter.drawImage(AppUtils.getBitmap(Objects.requireNonNull(getViewModel().getVisitorImage().getValue())),450,240,120,1,1,0);
+                if(commercialGuest!=null && !commercialGuest.getQrCode().isEmpty() && getViewModel().getVisitorImage().getValue()!=null)
+                    bixolonLabelPrinter.drawImage(AppUtils.getBitmap(Objects.requireNonNull(getViewModel().getVisitorImage().getValue())),450,150,120,1,1,0);
             }
             //QR code
             //bixolonLabelPrinter.drawQrCode(serviceProvider.getIdentityNo(), 400, 130, model, eccLevel, 7, rotation);
