@@ -192,7 +192,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
 
         getViewModel().getPropertyInfo().observe(this, propertyInfoResponse -> {
             propertyInfo = propertyInfoResponse;
-            getViewModel().getImage(propertyInfoResponse.getImage().concat(".png"),true);
+            getViewModel().getImage(propertyInfoResponse.getImage(),true);
         });
     }
 
@@ -630,7 +630,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
             bixolonLabelPrinter.beginTransactionPrint();
 
             if(propertyInfo!=null && !propertyInfo.getImage().isEmpty() && getViewModel().getPropertyImage().getValue()!=null)
-                bixolonLabelPrinter.drawImage(AppUtils.getBitmap(Objects.requireNonNull(getViewModel().getPropertyImage().getValue())),200,10,80,0,0,0);
+                bixolonLabelPrinter.drawImage(AppUtils.getBitmap(Objects.requireNonNull(getViewModel().getPropertyImage().getValue())),450,40,120,1,1,0);
 
             bixolonLabelPrinter.drawBlock(10,30,800,33,79,3);
             bixolonLabelPrinter.drawText("Commercial Complex", 10, 50, BixolonLabelPrinter.FONT_SIZE_12,
