@@ -400,4 +400,5 @@
     <string name="printer">Print the label</string>
     <string name="connect_with_printer">Connect with printer</string>
     <string name="connect_if_not_connected">Connect with printer if not connected!</string>
+    <string name="flagged">Flagged!</string>
 </resources>

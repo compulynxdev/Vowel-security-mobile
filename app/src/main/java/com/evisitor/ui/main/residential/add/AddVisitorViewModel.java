@@ -12,6 +12,8 @@ import com.evisitor.data.DataManager;
 import com.evisitor.data.model.AddVisitorData;
 import com.evisitor.data.model.CompanyBean;
 import com.evisitor.data.model.GuestConfigurationResponse;
+import com.evisitor.data.model.Guests;
+import com.evisitor.data.model.GuestsResponse;
 import com.evisitor.data.model.HostDetailBean;
 import com.evisitor.data.model.HouseDetailBean;
 import com.evisitor.data.model.IdentityBean;
@@ -255,8 +257,9 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                     if (response.code() == 200) {
                         try {
                             assert response.body() != null;
-                            AppLogger.e("Response", response.body().string());
-                            getNavigator().onSuccess(addVisitorData.isAccept);
+                           // AppLogger.e("Response", response.body().string());
+                            Guests guests = getDataManager().getGson().fromJson(response.body().string(), Guests.class);
+                            getNavigator().onSuccess(addVisitorData.isAccept,guests.isFlagedVisitorStatus());
                         } catch (Exception e) {
                             getNavigator().showAlert(R.string.alert, R.string.alert_error);
                         }
@@ -401,7 +404,7 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                         try {
                             assert response.body() != null;
                             AppLogger.e("Response", response.body().string());
-                            getNavigator().onSuccess(visitorData.isAccept);
+                            getNavigator().onSuccess(visitorData.isAccept,false);
                         } catch (Exception e) {
                             getNavigator().showAlert(R.string.alert, R.string.alert_error);
                         }

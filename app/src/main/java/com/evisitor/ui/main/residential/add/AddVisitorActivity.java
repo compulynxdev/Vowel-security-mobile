@@ -710,7 +710,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
     }
 
     @Override
-    public void onSuccess(boolean isAccept) {
+    public void onSuccess(boolean isAccept, boolean isFlagged) {
         if (isAccept) {
             AlertDialog.newInstance()
                     .setCloseBtnShow(false)
@@ -724,6 +724,9 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                         startActivity(intent);
                         finish();
                     }).show(getSupportFragmentManager());
+
+            if(isFlagged)
+                showToast(R.string.flagged);
         } else {
             AlertDialog.newInstance()
                     .setCloseBtnShow(false)

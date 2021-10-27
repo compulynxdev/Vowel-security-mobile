@@ -142,6 +142,9 @@ public class CommercialVisitorResponse {
         @SerializedName("guestList")
         public List<SecondaryGuest> guestList;
 
+        @SerializedName("flagedVisitorStatus")
+        public boolean flagedVisitorStatus = false;
+
         public boolean minor = false;
 
         public String getCheckInTime() {
@@ -455,6 +458,14 @@ public class CommercialVisitorResponse {
 
         public void setMinor(boolean minor) {
             this.minor = minor;
+        }
+
+        public boolean isFlagedVisitorStatus() {
+            return flagedVisitorStatus;
+        }
+
+        public void setFlagedVisitorStatus(boolean flagedVisitorStatus) {
+            this.flagedVisitorStatus = flagedVisitorStatus;
         }
     }
 

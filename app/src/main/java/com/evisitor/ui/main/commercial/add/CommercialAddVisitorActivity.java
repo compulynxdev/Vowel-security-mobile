@@ -666,7 +666,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
     }
 
     @Override
-    public void onSuccess(boolean isAccept) {
+    public void onSuccess(boolean isAccept,boolean isFlagged) {
         if (isAccept) {
             AlertDialog.newInstance()
                     .setCloseBtnShow(false)
@@ -680,6 +680,8 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
                         startActivity(intent);
                         finish();
                     }).show(getSupportFragmentManager());
+
+            if(isFlagged) showToast(R.string.flagged);
         } else {
             AlertDialog.newInstance()
                     .setCloseBtnShow(false)

@@ -109,6 +109,10 @@ public class Guests {
 
     public String bodyTemperature;
 
+    @SerializedName("flagedVisitorStatus")
+    public boolean flagedVisitorStatus = false;
+
+
     public String getCheckInTime() {
         return checkInTime;
     }
@@ -413,5 +417,13 @@ public class Guests {
 
     public void setMinor(boolean minor) {
         this.minor = minor;
+    }
+
+    public boolean isFlagedVisitorStatus() {
+        return flagedVisitorStatus;
+    }
+
+    public void setFlagedVisitorStatus(boolean flagedVisitorStatus) {
+        this.flagedVisitorStatus = flagedVisitorStatus;
     }
 }

@@ -250,7 +250,8 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                         printLabel(false);
                     }
                 }).setOnNegativeClickListener(dialog -> {
-                    bixolonLabelPrinter.findBluetoothPrinters();
+                    if(bixolonLabelPrinter!=null)
+                        bixolonLabelPrinter.findBluetoothPrinters();
                 }).setTitle(getString(R.string.printer));
                 alertDialog.show(getChildFragmentManager());
             }
