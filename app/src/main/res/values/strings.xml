@@ -401,4 +401,6 @@
     <string name="connect_with_printer">Connect with printer</string>
     <string name="connect_if_not_connected">Connect with printer if not connected!</string>
     <string name="flagged">Flagged!</string>
+    <string name="bluetooth_not_enabled">Please enable bluetooth!</string>
+    <string name="printer_not_connect">Print not connected, connnect with the printer to print the label!</string>
 </resources>

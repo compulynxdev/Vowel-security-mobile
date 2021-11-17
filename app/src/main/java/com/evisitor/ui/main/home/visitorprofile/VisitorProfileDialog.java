@@ -229,7 +229,7 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
             @Override
             public void afterTextChanged(Editable s) {
                 if(!s.toString().isEmpty() && s.toString().length()>1){
-                    if ( Double.parseDouble(s.toString()) >= 34 && Double.parseDouble(s.toString()) <= 40){
+                    if (Double.parseDouble(s.toString()) >= 34 && Double.parseDouble(s.toString()) <= 40){
                         if (dataManager.isCommercial()) {
                             CommercialVisitorResponse.CommercialGuest guests = dataManager.getCommercialVisitorDetail();
                             if (guests != null) {

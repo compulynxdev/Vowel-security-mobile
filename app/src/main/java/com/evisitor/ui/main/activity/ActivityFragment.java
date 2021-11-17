@@ -106,7 +106,6 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
         checkOutFragment = CheckOutFragment.newInstance(listOf, size -> getViewDataBinding().tvOut.setText(getString(R.string.check_out_with_count, String.valueOf(size))));
         adapter.addFragment(checkOutFragment);
         getViewDataBinding().viewPager.setOffscreenPageLimit(2);
-
         getViewDataBinding().viewPager.setAdapter(adapter);
         getViewDataBinding().viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

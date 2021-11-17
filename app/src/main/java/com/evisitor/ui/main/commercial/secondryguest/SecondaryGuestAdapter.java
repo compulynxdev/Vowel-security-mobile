@@ -289,7 +289,7 @@ public class SecondaryGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> 
                 public void afterTextChanged(Editable s) {
                     if (getAdapterPosition() != -1) {
                         if(!s.toString().isEmpty() && s.toString().length()>1){
-                            if ( Integer.parseInt(s.toString()) >= 34 && Integer.parseInt(s.toString()) <= 40) {
+                            if (Double.parseDouble(s.toString()) >= 34 && Double.parseDouble(s.toString()) <= 40){
                                 if (isCheckIn)
                                     callback.onCheckInTemperature(list.get(getAdapterPosition()).getId(), s.toString().trim());
 

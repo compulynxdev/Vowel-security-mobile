@@ -116,6 +116,9 @@ public class ServiceProvider {
     @SerializedName("bodyTemperature")
     public String bodyTemperature;
 
+    @SerializedName("qrCode")
+    private String qrCode;
+
     public Bitmap getVehicleBitMapImage() {
         return vehicleBitMapImage;
     }
@@ -402,5 +405,13 @@ public class ServiceProvider {
 
     public void setBodyTemperature(String bodyTemperature) {
         this.bodyTemperature = bodyTemperature;
+    }
+
+    public String getQrCode() {
+        return qrCode;
+    }
+
+    public void setQrCode(String qrCode) {
+        this.qrCode = qrCode;
     }
 }
