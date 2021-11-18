@@ -265,7 +265,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                 }).setTitle(getString(R.string.printer));
                 alertDialog.show(getChildFragmentManager());*/
 
-                if(mIsConnected){
+                if(!BluetoothAdapter.getDefaultAdapter().isEnabled() || !bixolonLabelPrinter.isConnected()){
                     AlertDialog alertDialog =  AlertDialog.newInstance().setMsg(getString(R.string.printer_not_connect)).setNegativeBtnLabel(getString(R.string.cancel)).setPositiveBtnLabel(getString(R.string.connect_with_printer)).setOnPositiveClickListener(new AlertDialog.PositiveListener() {
                         @Override
                         public void onPositiveClick(AlertDialog dialog) {
@@ -354,7 +354,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                     }
                 }).setTitle(getString(R.string.printer));
                 alertDialog.show(getChildFragmentManager());*/
-                if(mIsConnected){
+                if(!BluetoothAdapter.getDefaultAdapter().isEnabled() || !bixolonLabelPrinter.isConnected()){
                     AlertDialog alertDialog =  AlertDialog.newInstance().setMsg(getString(R.string.printer_not_connect)).setNegativeBtnLabel(getString(R.string.cancel)).setPositiveBtnLabel(getString(R.string.connect_with_printer)).setOnPositiveClickListener(new AlertDialog.PositiveListener() {
                         @Override
                         public void onPositiveClick(AlertDialog dialog) {
@@ -686,7 +686,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
             bixolonLabelPrinter.beginTransactionPrint();
 
             if(propertyInfo!=null && !propertyInfo.getImage().isEmpty() && getViewModel().getPropertyImage().getValue()!=null)
-                bixolonLabelPrinter.drawImage(AppUtils.getBitmap(Objects.requireNonNull(getViewModel().getPropertyImage().getValue())),450,30,120,1,1,0);
+                bixolonLabelPrinter.drawImage(AppUtils.getBitmap(Objects.requireNonNull(getViewModel().getPropertyImage().getValue())),450,40,120,1,1,0);
 
             bixolonLabelPrinter.drawBlock(10,30,800,33,79,3);
             bixolonLabelPrinter.drawBlock(10,280,800,283,79,3);
