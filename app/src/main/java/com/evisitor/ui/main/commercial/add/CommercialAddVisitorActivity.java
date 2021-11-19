@@ -297,7 +297,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
             @Override
             public void afterTextChanged(Editable s) {
                 if(!s.toString().isEmpty() && s.toString().length()>1){
-                    if (Double.parseDouble(s.toString()) >= 34 && Double.parseDouble(s.toString()) <= 40){
+                    if (Double.parseDouble(s.toString()) <= 34 || Double.parseDouble(s.toString()) >= 40){
                         getViewDataBinding().etTemperature.setText("");
                         showToast(R.string.temperature_should_be_30);
                     }
