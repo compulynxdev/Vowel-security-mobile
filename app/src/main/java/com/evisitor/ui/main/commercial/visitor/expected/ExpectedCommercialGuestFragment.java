@@ -175,7 +175,8 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
                 String fullName = MainResultStore.instance.getScannedIDData().name;
                 if (mViewModel.getDataManager().getCommercialVisitorDetail().getIdentityNo().equalsIgnoreCase(identityNo)) {
                     if (mViewModel.getDataManager().getCommercialVisitorDetail().getName().equalsIgnoreCase(fullName)) {
-                        showCheckinOptions();
+                        if (tmpBean.getGuestList().isEmpty()) showCheckinOptions();
+                        else showSecondaryGuestListForCheckIn();
                     } else {
                         showToast(R.string.alert_invalid_name);
                     }
