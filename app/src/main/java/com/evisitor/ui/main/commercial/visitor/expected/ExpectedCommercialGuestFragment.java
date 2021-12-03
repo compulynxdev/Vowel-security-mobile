@@ -91,7 +91,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
             List<VisitorProfileBean> visitorProfileBeanList = mViewModel.setClickVisitorDetail(guestBean);
             VisitorProfileDialog.newInstance(visitorProfileBeanList, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
-                decideNextProcess(guestBean);
+                decideNextProcess();
             }).setBtnLabel(getString(R.string.check_in)).setBtnVisible(guestBean.getStatus().equalsIgnoreCase("PENDING"))
                     .setImage(guestBean.getImageUrl()).setIsCommercialGuest(true).show(getFragmentManager());
         });
@@ -114,7 +114,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
         updateUI();
     }
 
-    private void decideNextProcess(CommercialVisitorResponse.CommercialGuest guestBean) {
+    private void decideNextProcess() {
         CommercialVisitorResponse.CommercialGuest tmpBean = mViewModel.getDataManager().getCommercialVisitorDetail();
         if (tmpBean.getCheckInStatus()) {
             if(tmpBean.getGuestList().isEmpty())
@@ -129,7 +129,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
                     @Override
                     public void onScanClick(IdVerificationDialog dialog) {
                         dialog.dismiss();
-                        getPassportType(guestBean);
+                        branchByIdType(tmpBean);
                     }
                     @Override
                     public void onSubmitClick(IdVerificationDialog dialog, String id) {
@@ -151,7 +151,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
      *
      * @param guestBean
      */
-    private void getPassportType(CommercialVisitorResponse.CommercialGuest guestBean) {
+    private void branchByIdType(CommercialVisitorResponse.CommercialGuest guestBean) {
         Intent i;
         switch (guestBean.getDocumentType()) {
             case "passport":
