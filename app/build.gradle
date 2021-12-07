@@ -44,7 +44,9 @@ android {
             //buildConfigField("String", "BASE_URL", "\"http://192.168.43.134:8085/\"")
           //  buildConfigField("String", "BASE_URL", "\"http://192.168.43.151:8085/\"")
               //buildConfigField("String", "BASE_URL", "\"http://192.168.43.82:8085/\"")
-             // buildConfigField("String", "BASE_URL", "\"http://192.168.137.1:8085/\"")
+          //    buildConfigField("String", "BASE_URL", "\"http://192.168.137.1:8085/\"")
+            // buildConfigField("String", "BASE_URL", "\"http://192.168.100.161:8085/\"") //wamae
+
         }
 
         release {
@@ -73,6 +75,8 @@ android {
            //buildConfigField("String", "BASE_URL", "\"http://192.168.43.151:8085/\"")  //sandeep
            //  buildConfigField("String", "BASE_URL", "\"http://192.168.43.82:8085/\"")  //sandeep
              //buildConfigField("String", "BASE_URL", "\"http://192.168.137.1:8085/\"")  //sandeep
+         //   buildConfigField("String", "BASE_URL", "\"http://192.168.100.161:8085/\"") //wamae
+
 
         }
     }
@@ -167,4 +171,9 @@ dependencies {
 
     implementation files('libs/BixolonLabelPrinterLibrary.jar')
 
+    //camera x
+    implementation "androidx.camera:camera-core:${camerax_version}"
+    implementation "androidx.camera:camera-camera2:${camerax_version}"
+    implementation "androidx.camera:camera-lifecycle:${camerax_version}"
+    implementation "androidx.camera:camera-view:1.0.0-alpha31"
 }

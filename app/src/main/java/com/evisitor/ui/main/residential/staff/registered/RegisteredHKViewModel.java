@@ -112,7 +112,7 @@ public class RegisteredHKViewModel extends BaseViewModel<RegisteredHKNavigator> 
             stringBuilder.append(AppUtils.capitaliseFirstLetter(day)).append(", ");
         }
         if (stringBuilder.toString().trim().endsWith(",")) {
-            stringBuilder = new StringBuilder(stringBuilder.toString().substring(0, stringBuilder.toString().trim().length() - 1));
+            stringBuilder = new StringBuilder(stringBuilder.substring(0, stringBuilder.toString().trim().length() - 1));
         }
 
         return stringBuilder.toString();

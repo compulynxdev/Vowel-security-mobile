@@ -374,7 +374,7 @@
     <string name="not_vip">You are not a VIP Guest!</string>
     <string name="title_secoundary_guest">Secondary Guest</string>
     <string name="view_secondary_guest">View Secondary Guest : %s</string>
-    <string name="enter_body_temperature">Enter Body Temperature(C)</string>
+    <string name="enter_body_temperature">Enter Body Temperature©</string>
     <string name="body_temp">Body Temperature : %s</string>
     <string name="vip">VIP</string>
     <string name="notification_enabled">Trespasser notifications enabled changed successfully</string>
@@ -403,4 +403,5 @@
     <string name="flagged">Flagged!</string>
     <string name="bluetooth_not_enabled">Please enable bluetooth!</string>
     <string name="printer_not_connect">Print not connected, connnect with the printer to print the label!</string>
+    <string name="capture">capture</string>
 </resources>

@@ -21,7 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ResidentProfileViewModel extends BaseViewModel<ResidentProfileNavigator> {
-    private MutableLiveData<ResidentProfile> profileLiveData = new MutableLiveData<>();
+    private final MutableLiveData<ResidentProfile> profileLiveData = new MutableLiveData<>();
 
     public ResidentProfileViewModel(DataManager dataManager) {
         super(dataManager);

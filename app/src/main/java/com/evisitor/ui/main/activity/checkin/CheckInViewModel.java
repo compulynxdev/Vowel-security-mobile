@@ -57,7 +57,7 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
             map.put("page", "" + page);
             map.put("size", String.valueOf(AppConstants.LIMIT));
             map.put("type", AppConstants.CHECK_IN);
-
+            map.put("userMasterId", String.valueOf(getDataManager().getUserDetail().getId()));
             switch (listOf) {
                 case 0:
                     if (getDataManager().isCommercial()) {
@@ -247,6 +247,7 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
                     if (getDataManager().isCommercial()) {
                         object.put("accountId", getDataManager().getAccountId());
                         object.put("id", getDataManager().getCommercialVisitorDetail().getGuestId());
+                        object.put("userMasterId",getDataManager().getUserDetail().getId());
                     } else {
                         object.put("id", getDataManager().getGuestDetail().getGuestId());
                     }

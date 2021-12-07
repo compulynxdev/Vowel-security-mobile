@@ -45,6 +45,7 @@ public class CheckOutViewModel extends BaseViewModel<ActivityNavigator> {
             map.put("page", "" + page);
             map.put("size", String.valueOf(AppConstants.LIMIT));
             map.put("type", AppConstants.CHECK_OUT);
+            map.put("userMasterId", String.valueOf(getDataManager().getUserDetail().getId()));
 
             switch (listOf) {
                 case 0:

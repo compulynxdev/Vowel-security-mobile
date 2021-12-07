@@ -293,4 +293,9 @@ public class AppApiHelper implements ApiHelper {
     public Call<ResponseBody> doGetBase64ImageByName(String authToken, Map<String, String> partMap) {
         return getApiInterface().doGetBase64ImageByName(authToken, partMap);
     }
+
+    @Override
+    public Call<ResponseBody> doPostDocument(RequestBody requestBody, MultipartBody.Part body) {
+        return getApiInterface().doPostDocument(requestBody,body);
+    }
 }

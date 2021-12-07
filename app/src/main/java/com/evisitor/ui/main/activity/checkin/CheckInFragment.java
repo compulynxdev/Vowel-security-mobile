@@ -740,7 +740,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                             //setStatus(getString(R.string.title_connected_to, connectedDeviceName));
                             mIsConnected = true;
                             //0 for guest and 1 for sp
-                            printLabel(printType == 0 ? false : true);
+                            printLabel(printType != 0);
                             break;
 
                         case BixolonLabelPrinter.STATE_CONNECTING:

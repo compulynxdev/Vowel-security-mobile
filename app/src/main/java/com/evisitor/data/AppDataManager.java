@@ -576,4 +576,9 @@ public class AppDataManager implements DataManager {
     public Call<ResponseBody> doGetBase64ImageByName(String authToken, Map<String, String> partMap) {
         return apiHelper.doGetBase64ImageByName(authToken, partMap);
     }
+
+    @Override
+    public Call<ResponseBody> doPostDocument(RequestBody requestBody, MultipartBody.Part body) {
+        return apiHelper.doPostDocument(requestBody,body);
+    }
 }

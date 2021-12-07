@@ -163,4 +163,7 @@ public interface ApiHelper {
     @GET(WebServices.GET_IMAGE_BY_NAME)
     Call<ResponseBody> doGetBase64ImageByName(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
 
+    @Multipart
+    @POST(WebServices.MRZ_DATA_EXTRACTION)
+    Call<ResponseBody> doPostDocument(@Part("imagefile") RequestBody requestBody,@Part MultipartBody.Part body);
 }

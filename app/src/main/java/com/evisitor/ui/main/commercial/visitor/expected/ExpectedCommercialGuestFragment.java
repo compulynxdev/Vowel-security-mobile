@@ -23,7 +23,7 @@ import com.evisitor.ui.main.commercial.secondryguest.SecondaryGuestInputActivity
 import com.evisitor.ui.main.home.idverification.IdVerificationCallback;
 import com.evisitor.ui.main.home.idverification.IdVerificationDialog;
 import com.evisitor.ui.main.home.rejectreason.InputDialog;
-import com.evisitor.ui.main.home.scan.ScanIDActivity;
+import com.evisitor.ui.main.home.customCamera.CameraActivity;
 import com.evisitor.ui.main.home.visitorprofile.VisitorProfileDialog;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
 import com.google.gson.Gson;
@@ -161,8 +161,8 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
                         1: CAPTURE IMAGE
                         2: MAKE REQUEST TO ENDPOINT
                  */
-                i  = ScanIDActivity.getStartIntent(getContext());
-                startActivity(i);
+                i = ScanSmartActivity.getStartIntent(getContext());
+                startActivityForResult(i, SCAN_RESULT);
                 break;
             default:
                 i = ScanSmartActivity.getStartIntent(getContext());

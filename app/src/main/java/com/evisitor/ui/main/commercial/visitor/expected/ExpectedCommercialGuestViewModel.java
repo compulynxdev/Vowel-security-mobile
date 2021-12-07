@@ -45,7 +45,8 @@ public class ExpectedCommercialGuestViewModel extends BaseCheckInOutViewModel<Ex
                 map.put("search", search);
             map.put("page", "" + page);
             map.put("size", String.valueOf(AppConstants.LIMIT));
-            map.put("type", AppConstants.EXPECTED);
+            map.put("type", "");
+            map.put("userMasterId", String.valueOf(getDataManager().getUserDetail().getId()));
             AppLogger.d("Searching : ExpectedGuest", page + " : " + search);
 
             getDataManager().doGetExpectedCommercialGuestListDetail(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
