@@ -116,9 +116,14 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
 
     private void decideNextProcess() {
         CommercialVisitorResponse.CommercialGuest tmpBean = mViewModel.getDataManager().getCommercialVisitorDetail();
-        if (tmpBean.getCheckInStatus()) {
+        /*
+            check whether the guest status is accepted and checkInApproved
+            if not send notification
+            if true approve
+         */
+        if (tmpBean.isCheckInApproved()) {
             if(tmpBean.getGuestList().isEmpty())
-                mViewModel.approveByCall(true, null,guestIds);
+                mViewModel.acceptIfCheckInISApproved(guestIds);
             else showSecondaryGuestListForCheckIn();
         } else {
             if (!mViewModel.getDataManager().isIdentifyFeature() || tmpBean.getIdentityNo().isEmpty()) {

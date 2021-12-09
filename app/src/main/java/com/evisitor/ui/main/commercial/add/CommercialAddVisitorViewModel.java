@@ -120,6 +120,8 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
                 object.put("address", addVisitorData.address);
                 object.put("country", "");
                 object.put("groupType", addVisitorData.groupType);
+                object.put("userMasterId",getDataManager().getUserDetail().getId());
+                object.put("status",true);
                 if (addVisitorData.guestList.size() > 0) {
                     JSONArray guestList = new JSONArray(new Gson().toJson(addVisitorData.guestList));
                     object.put("guestList", guestList);

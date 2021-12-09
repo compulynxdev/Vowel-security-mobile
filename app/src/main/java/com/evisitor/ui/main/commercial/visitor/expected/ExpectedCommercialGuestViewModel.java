@@ -1,5 +1,7 @@
 package com.evisitor.ui.main.commercial.visitor.expected;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.evisitor.R;
@@ -115,18 +117,46 @@ public class ExpectedCommercialGuestViewModel extends BaseCheckInOutViewModel<Ex
                 object.put("staffId", getDataManager().getCommercialVisitorDetail().getStaffId());
                 JSONArray ids = new JSONArray(new Gson().toJson(guestIds));
                 object.put("guestIdList", ids);
+                object.put("documentId",getDataManager().getCommercialVisitorDetail().getIdentityNo());
+                object.put("mode",getDataManager().getCommercialVisitorDetail().getMode());
+                object.put("type",AppConstants.GUEST);
                 object.put("premiseHierarchyDetailsId", getDataManager().getCommercialVisitorDetail().getFlatId());
                 object.put("enteredVehicleNo", getDataManager().getCommercialVisitorDetail().getEnteredVehicleNo());
                 object.put("bodyTemperature", getDataManager().getCommercialVisitorDetail().getBodyTemperature());
                 JSONArray deviceList = new JSONArray(new Gson().toJson(getDataManager().getCommercialVisitorDetail().getDeviceBeanList()));
                 object.put("deviceList", deviceList);
-                //object.put("type", AppConstants.GUEST);
             } catch (JSONException e) {
                 AppLogger.w("ExpectedCommercialGuestViewModel", e.toString());
             }
 
             RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
             sendCommercialNotification(body, this);
+        }
+    }
+
+    void acceptIfCheckInISApproved(List<CheckInTemperature> guestIds){
+        if (getNavigator().isNetworkConnected(true)){
+            JSONObject object = new JSONObject();
+            try{
+                object.put("id", getDataManager().getCommercialVisitorDetail().getGuestId());
+                object.put("documentId", getDataManager().getCommercialVisitorDetail().getIdentityNo());
+                object.put("premiseHierarchyDetailsId", getDataManager().getCommercialVisitorDetail().getFlatId());
+                String accountId = getDataManager().getAccountId();
+                object.put("accountId", accountId);
+                object.put("mode", getDataManager().getCommercialVisitorDetail().getMode());
+                object.put("staffId", getDataManager().getCommercialVisitorDetail().getStaffId());
+                object.put("type", AppConstants.CHECK_IN);
+                object.put("visitor", AppConstants.GUEST);
+                object.put("state", AppConstants.ACCEPT);
+                JSONArray ids = new JSONArray(new Gson().toJson(guestIds));
+                object.put("guestIdList", ids);
+                object.put("userMasterId", getDataManager().getUserDetail().getId());
+                Log.e( "accepheckInISApproved: ","" );
+            }catch (Exception e) {
+                AppLogger.w("ExpectedCommercialGuestViewModel", e.toString());
+            }
+            RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
+            doCheckInOut(body, this);
         }
     }
 

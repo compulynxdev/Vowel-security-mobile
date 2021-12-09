@@ -38,6 +38,9 @@ public class CommercialVisitorResponse {
         @SerializedName("image")
         private String imageUrl;
 
+        @SerializedName("checkInApproved")
+        private boolean checkInApproved;
+
         @SerializedName("premiseHierarchyDetailsId")
         private String flatId = "";
 
@@ -476,6 +479,14 @@ public class CommercialVisitorResponse {
 
         public void setFlagedVisitorStatus(boolean flagedVisitorStatus) {
             this.flagedVisitorStatus = flagedVisitorStatus;
+        }
+
+        public boolean isCheckInApproved() {
+            return checkInApproved;
+        }
+
+        public void setCheckInApproved(boolean checkInApproved) {
+            this.checkInApproved = checkInApproved;
         }
     }
 
