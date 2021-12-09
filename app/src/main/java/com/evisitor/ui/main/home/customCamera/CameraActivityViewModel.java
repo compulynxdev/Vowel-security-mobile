@@ -2,7 +2,9 @@ package com.evisitor.ui.main.home.customCamera;
 
 import android.graphics.Bitmap;
 
+import com.evisitor.R;
 import com.evisitor.data.DataManager;
+import com.evisitor.data.model.MrzResponse;
 import com.evisitor.ui.base.BaseViewModel;
 import com.evisitor.util.AppUtils;
 
@@ -32,17 +34,19 @@ public class CameraActivityViewModel  extends BaseViewModel<CameraActivityNaviga
         getDataManager().doPostDocument(description,body).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.code() == 200) {
                     try {
-
-                        callback.onMrzSuccess();
-
+                        if (response.code() == 200) {
+                            assert response.body() != null;
+                            MrzResponse mrzResponse = getDataManager().getGson().fromJson(response.body().string(),MrzResponse.class);
+                            if (mrzResponse != null) {
+                                callback.onMrzSuccess(mrzResponse);
+                            }
+                        } else if (response.code() == 401) {
+                            getNavigator().openActivityOnTokenExpire();
+                        } else callback.OnError(response.errorBody().string());
                     } catch (Exception e) {
-
+                        getNavigator().showAlert(R.string.alert, R.string.alert_error);
                     }
-                } else {
-                    callback.OnError();
-                }
             }
 
             @Override

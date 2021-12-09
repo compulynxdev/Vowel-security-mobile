@@ -21,8 +21,10 @@ import android.widget.Toast;
 
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
+import com.evisitor.data.model.MrzResponse;
 import com.evisitor.databinding.ActivityCameraBinding;
 import com.evisitor.ui.base.BaseActivity;
+import com.evisitor.util.AppLogger;
 import com.evisitor.util.PermissionUtils;
 import com.google.common.util.concurrent.ListenableFuture;
 
@@ -60,6 +62,8 @@ public class CameraActivity extends BaseActivity<ActivityCameraBinding, CameraAc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mViewModel.setNavigator(this);
+
+        PermissionUtils.checkCameraPermission(CameraActivity.this);
 
         previewView = getViewDataBinding().previewView;
 
@@ -144,12 +148,12 @@ public class CameraActivity extends BaseActivity<ActivityCameraBinding, CameraAc
 
         mViewModel.documentMrzExtraction(bitmap, file_name, new MRZCallback() {
             @Override
-            public void onMrzSuccess() {
-
+            public void onMrzSuccess(MrzResponse response) {
+                AppLogger.d("",response.toString());
             }
 
             @Override
-            public void OnError() {
+            public void OnError(String string) {
 
             }
         });
