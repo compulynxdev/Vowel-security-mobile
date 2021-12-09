@@ -32,7 +32,7 @@ android {
             //buildConfigField("String", "BASE_URL", "\"http://52.15.186.140:8090/\"")
 
             //new instance
-            //buildConfigField("String", "BASE_URL", "\"http://197.220.114.46:8085/\"")
+            buildConfigField("String", "BASE_URL", "\"http://197.220.114.46:8085/\"")
 
             //aws testing
             //buildConfigField("String", "BASE_URL", "\"http://3.20.249.162:8090/\"")
@@ -45,7 +45,7 @@ android {
           //  buildConfigField("String", "BASE_URL", "\"http://192.168.43.151:8085/\"")
               //buildConfigField("String", "BASE_URL", "\"http://192.168.43.82:8085/\"")
           //    buildConfigField("String", "BASE_URL", "\"http://192.168.137.1:8085/\"")
-             buildConfigField("String", "BASE_URL", "\"http://192.168.100.161:8085/\"") //wamaeh
+            // buildConfigField("String", "BASE_URL", "\"http://192.168.100.161:8085/\"") //wamaeh
             //buildConfigField("String", "BASE_URL", "\"http://192.168.137.1:8085/\"") //wamaew
 
 
@@ -63,7 +63,7 @@ android {
               //buildConfigField("String", "BASE_URL", "\"http://52.15.186.140:8090/\"")
 
             //new instance
-            //buildConfigField("String", "BASE_URL", "\"http://197.220.114.46:8085/\"")
+            buildConfigField("String", "BASE_URL", "\"http://197.220.114.46:8085/\"")
 
 
             //aws testing
@@ -77,7 +77,7 @@ android {
            //buildConfigField("String", "BASE_URL", "\"http://192.168.43.151:8085/\"")  //sandeep
            //  buildConfigField("String", "BASE_URL", "\"http://192.168.43.82:8085/\"")  //sandeep
              //buildConfigField("String", "BASE_URL", "\"http://192.168.137.1:8085/\"")  //sandeep
-            buildConfigField("String", "BASE_URL", "\"http://192.168.100.161:8085/\"") //wamaeh
+            //buildConfigField("String", "BASE_URL", "\"http://192.168.100.161:8085/\"") //wamaeh
             //buildConfigField("String", "BASE_URL", "\"http://192.168.137.1:8085/\"") //wamaew
 
         }

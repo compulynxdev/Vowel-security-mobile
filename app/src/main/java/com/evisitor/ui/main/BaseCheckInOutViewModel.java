@@ -110,7 +110,10 @@ public class BaseCheckInOutViewModel<N extends BaseNavigator> extends BaseViewMo
                         try {
                             assert response.body() != null;
                             JSONObject object1 = new JSONObject(response.body().string());
-                            getNavigator().showAlert(getNavigator().getContext().getString(R.string.success), object1.getString("result")).setOnPositiveClickListener(dialog -> {
+
+                            String message  = object1.has("result") ? object1.getString("result") : "Action successful" ;
+
+                            getNavigator().showAlert(getNavigator().getContext().getString(R.string.success),message).setOnPositiveClickListener(dialog -> {
                                 dialog.dismiss();
                                 if (apiCallback != null)
                                     apiCallback.onSuccess();
