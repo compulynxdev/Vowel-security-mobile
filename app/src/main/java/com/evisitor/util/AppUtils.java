@@ -173,5 +173,15 @@ public final class AppUtils {
             return file; // it will return null
         }
     }
-
+    public static Bitmap readBitmapFileFromDir(File file_dir){
+        Bitmap bitmap = null;
+        try{
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+            bitmap= BitmapFactory.decodeFile(file_dir.getAbsolutePath(), options);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return bitmap;
+    }
 }

@@ -81,7 +81,7 @@ class WebServices {
 
     static final String GET_IMAGE_BY_NAME = "guest/get_base64_by_image_name";//http://197.220.114.46:8085/e-visitor-system/api/guest/get_base64_by_image_name?imageName=bdadff88-06c9-485a-8aef-5533326143e5.png
 
-    static final String MRZ_DATA_EXTRACTION = "http://67.205.181.63:5000/api/v1/mrz";
+    static final String MRZ_DATA_EXTRACTION = "http://197.220.114.46:5000/api/v1/mrz";
 
     private WebServices() {
     }

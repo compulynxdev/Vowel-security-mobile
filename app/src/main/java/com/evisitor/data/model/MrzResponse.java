@@ -48,6 +48,9 @@ public class MrzResponse {
     @SerializedName("sex")
     private String sex;
 
+    public MrzResponse(String result) {
+    }
+
     public String getCountry() {
         return country;
     }

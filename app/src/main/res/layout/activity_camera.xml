@@ -11,10 +11,71 @@
             name="viewModel"
             type="com.evisitor.ui.main.home.customCamera.CameraActivityViewModel" />
     </data>
-    <FrameLayout
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.main.home.customCamera.CameraActivity">
+        >
+
+
+        <RelativeLayout
+            android:id="@+id/overlay_camerax"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:background="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageviewCamerax"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                tools:src="@drawable/ic_baseline_camera_24" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/retakeBtn"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="75dp"
+                android:backgroundTint="@color/black20p"
+                android:layout_marginBottom="40dp"
+                android:background="@drawable/bg_circle"
+                android:src="@drawable/ic_baseline_clearw"/>
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/requestBtn"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_alignParentEnd="true"
+                android:backgroundTint="@color/black20p"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="76dp"
+                android:layout_marginBottom="40dp"
+                android:src="@drawable/ic_baseline_check_24"
+                android:background="@drawable/bg_circle" />
+
+        </RelativeLayout>
+
+        <FrameLayout
+            android:id="@+id/frame_camerax"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:context=".ui.main.home.customCamera.CameraActivity">
 
 
             <androidx.camera.view.PreviewView
@@ -23,38 +84,28 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="0dp"
-                android:layout_marginEnd="-2dp" />
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+                android:layout_marginEnd="-2dp"
+                app:scaleType="fitCenter"/>
 
-            <FrameLayout
-                android:id="@+id/camera_overlay"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="gone"
-                android:background="@color/white">
+                android:gravity="bottom"
+                android:orientation="vertical">
 
-                <com.google.android.material.progressindicator.LinearProgressIndicator
-                    android:id="@+id/post_progress"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:indeterminate="true"
-                    app:indicatorColor="@color/black"/>
-            </FrameLayout>
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/buttonca"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:backgroundTint="@color/black20p"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="40dp"
+                    android:background="@drawable/bg_circle"
+                    android:src="@drawable/ic_baseline_camera_24"
+                    />
+            </LinearLayout>
+        </FrameLayout>
 
-            <Button
-                android:id="@+id/buttonca"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="154dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginEnd="157dp"
-                android:layout_marginBottom="20dp"
-                android:text="@string/capture" />
-        </RelativeLayout>
-    </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

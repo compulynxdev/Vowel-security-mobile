@@ -1,6 +1,7 @@
 package com.evisitor.ui.main.home.customCamera;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import com.evisitor.R;
 import com.evisitor.data.DataManager;
@@ -18,41 +19,50 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CameraActivityViewModel  extends BaseViewModel<CameraActivityNavigator> {
+public class CameraActivityViewModel extends BaseViewModel<CameraActivityNavigator> {
     public CameraActivityViewModel(DataManager dataManager) {
         super(dataManager);
     }
 
 
-    public void documentMrzExtraction(Bitmap bitmap, String absolutePath, MRZCallback callback){
+    public void documentMrzExtraction(Bitmap bitmap, String absolutePath) {
+        if (!getNavigator().isNetworkConnected()) {
+            getNavigator().hideLoading();
+            getNavigator().showAlert(getNavigator().getContext().getString(R.string.alert), getNavigator().getContext().getString(R.string.alert_internet));
+        } else {
 
-        File file = AppUtils.bitmapToFile(getNavigator().getContext(),bitmap,absolutePath);
-        RequestBody description = RequestBody.create(MultipartBody.FORM,"imagefile");
-        RequestBody fileBody = RequestBody.create(MediaType.parse("imagefile"), file);
-        MultipartBody.Part body = MultipartBody.Part.createFormData("imagefile", file.getName(), fileBody);
+            File file = AppUtils.bitmapToFile(getNavigator().getContext(), bitmap, absolutePath);
+            RequestBody description = RequestBody.create(MultipartBody.FORM, "imagefile");
+            RequestBody fileBody = RequestBody.create(MediaType.parse("imagefile"), file);
+            MultipartBody.Part body = MultipartBody.Part.createFormData("imagefile", file.getName(), fileBody);
 
-        getDataManager().doPostDocument(description,body).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            getDataManager().doPostDocument(description, body).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     try {
                         if (response.code() == 200) {
                             assert response.body() != null;
-                            MrzResponse mrzResponse = getDataManager().getGson().fromJson(response.body().string(),MrzResponse.class);
+                            MrzResponse mrzResponse = getDataManager().getGson().fromJson(response.body().string(), MrzResponse.class);
                             if (mrzResponse != null) {
-                                callback.onMrzSuccess(mrzResponse);
+                                getNavigator().onMrzSuccess(mrzResponse);
                             }
                         } else if (response.code() == 401) {
                             getNavigator().openActivityOnTokenExpire();
-                        } else callback.OnError(response.errorBody().string());
+
+                        } else getNavigator().OnError(response.errorBody());
                     } catch (Exception e) {
                         getNavigator().showAlert(R.string.alert, R.string.alert_error);
                     }
-            }
+                }
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                getNavigator().handleApiFailure(t);
-            }
-        });
+                @Override
+
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    getNavigator().showAlert(R.string.alert, R.string.alert_error);
+                }
+            });
+        }
+
+
     }
 }
