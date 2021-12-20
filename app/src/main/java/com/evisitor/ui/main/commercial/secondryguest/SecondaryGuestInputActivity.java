@@ -31,6 +31,7 @@ public class SecondaryGuestInputActivity extends BaseActivity<SecondryGuestInput
     private SecondaryGuestAdapter adapter;
     private boolean isAdd;
     private boolean isCheckIn;
+    private boolean checkInApproved;
     List<CheckInTemperature> guestIds = new ArrayList<>();
 
     public static Intent getStartIntent(Context context) {
@@ -70,6 +71,7 @@ public class SecondaryGuestInputActivity extends BaseActivity<SecondryGuestInput
         }
         isAdd = intent.getBooleanExtra("add", false);
         isCheckIn = intent.getBooleanExtra("checkIn", false);
+        checkInApproved = intent.getBooleanExtra("checkInApproved",false);
         if(isCheckIn){
             getViewDataBinding().btnOk.setText(R.string.check_in);
         }
@@ -122,6 +124,7 @@ public class SecondaryGuestInputActivity extends BaseActivity<SecondryGuestInput
         }, getSupportFragmentManager());
         adapter.setIsAdd(isAdd);
         adapter.setIsCheckIn(isCheckIn);
+        adapter.checkInApproved(checkInApproved);
         if(isCheckIn)
             getViewDataBinding().toolbar.tvTitle.setText(R.string.title_secoundary_guest);
         getViewDataBinding().recyclerView.setAdapter(adapter);

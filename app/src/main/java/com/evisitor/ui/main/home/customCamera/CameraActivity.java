@@ -117,6 +117,7 @@ public class CameraActivity extends BaseActivity<ActivityCameraBinding, CameraAc
         preview.setSurfaceProvider(previewView.getSurfaceProvider());
 
         imageCapture = new ImageCapture.Builder()
+                .setCaptureMode(ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY)
                 .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
                 .build();
 

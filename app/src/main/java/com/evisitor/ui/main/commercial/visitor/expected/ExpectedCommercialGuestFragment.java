@@ -98,7 +98,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
                 visitorProfileDialog.dismiss();
                 decideNextProcess();
             }).setBtnLabel(getString(R.string.check_in)).setBtnVisible(guestBean.getStatus().equalsIgnoreCase("PENDING"))
-                    .setImage(guestBean.getImageUrl()).setIsCommercialGuest(true).show(getFragmentManager());
+                    .setImage(guestBean.getImageUrl()).setIsCommercialGuest(true).checkInIsApproved(guestBean.isCheckInApproved()).show(getFragmentManager());
         });
         adapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(adapter);
@@ -167,6 +167,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
             case "passport":
                 i = ScanSmartActivity.getStartIntent(getContext());
                 startActivityForResult(i, SCAN_RESULT);
+                break;
             case "dl":
                 i = ScanSmartActivity.getStartIntent(getContext());
                 startActivityForResult(i, SCAN_RESULT);
@@ -323,6 +324,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
             i.putExtra("list", new Gson().toJson(tmpBean.guestList));
         }
         i.putExtra("checkIn", true);
+        i.putExtra("checkInApproved",tmpBean.isCheckInApproved());
         startActivityForResult(i, ADD_FAMILY_MEMBER);
     }
 

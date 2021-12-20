@@ -41,6 +41,7 @@ public class SecondaryGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> 
     private final AdapterCallback callback;
     private boolean isAdd;
     private boolean isCheckIn;
+    private boolean checkInApproved;
     String idType;
     private final FragmentManager fragmentManager;
     List<IdentityBean> identityTypeList = new ArrayList<>();
@@ -67,6 +68,8 @@ public class SecondaryGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> 
     void setIsCheckIn(boolean isCheckIn){
         this.isCheckIn = isCheckIn;
     }
+
+    void checkInApproved(boolean approved){this.checkInApproved = approved;}
 
     @NonNull
     @Override
@@ -362,7 +365,12 @@ public class SecondaryGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> 
                     view1.setVisibility(View.GONE);
                 }
                 try{
-                    etTemperature.setText(bean.getBodyTemperature().isEmpty() ? "" : bean.getBodyTemperature());
+                    if (checkInApproved && bean.getBodyTemperature().isEmpty() ){
+                        etTemperature.setVisibility(View.GONE);
+                    }else {
+                        etTemperature.setText(bean.getBodyTemperature());
+                    }
+
                 }catch (Exception e){
                     AppLogger.d("temperature : ",e.toString());
                 }
@@ -389,6 +397,10 @@ public class SecondaryGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> 
             }
 
             etTemperature.setEnabled(isAdd || isCheckIn);
+            if (checkInApproved){
+                etTemperature.setEnabled(false);
+                etTemperature.setCursorVisible(false);
+            }
         }
     }
 }

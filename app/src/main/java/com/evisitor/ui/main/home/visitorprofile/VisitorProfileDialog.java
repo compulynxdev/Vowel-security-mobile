@@ -47,6 +47,7 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
     private boolean isBtnVisible = true;
     private boolean isCommercialGuest = false;
     private VisitorProfileAdapter infoAdapter;
+    private boolean checkInIsApproved;
 
     public static VisitorProfileDialog newInstance(List<VisitorProfileBean> visitorInfoList, VisitorProfileCallback callback) {
         Bundle args = new Bundle();
@@ -102,6 +103,10 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
         return this;
     }
 
+    public VisitorProfileDialog checkInIsApproved(boolean isApproved){
+        checkInIsApproved = isApproved;
+        return this;
+    }
 
     public VisitorProfileDialog setIsCommercialGuest(boolean isTrue) {
         this.isCommercialGuest = isTrue;
@@ -159,12 +164,15 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
                     getViewDataBinding().tvGadgetsInfo.setVisibility(View.VISIBLE);
                     getViewDataBinding().tvGadgetsInfo.setText(getString(R.string.view_gadgets_info).concat(" : ").concat(String.valueOf(deviceBeanList.size())));
                     getViewDataBinding().tvGadgetsInfo.setOnClickListener(this);
-                } else if (btnLabel.equalsIgnoreCase(getString(R.string.check_in))) {
+                } else if (btnLabel.equalsIgnoreCase(getString(R.string.check_in)) && checkInIsApproved) {
+                    getViewDataBinding().tvGadgetsInfo.setVisibility(View.GONE);
+                    getViewDataBinding().tvClickImage.setVisibility(View.GONE);
+                } else if (btnLabel.equalsIgnoreCase(getString(R.string.check_in))){
                     getViewDataBinding().tvGadgetsInfo.setVisibility(View.VISIBLE);
                     getViewDataBinding().tvGadgetsInfo.setText(getString(R.string.add_gadgets_info));
                     getViewDataBinding().tvGadgetsInfo.setOnClickListener(this);
                     getViewDataBinding().tvClickImage.setVisibility(View.VISIBLE);
-                } else {
+                } else{
                     getViewDataBinding().tvGadgetsInfo.setVisibility(View.GONE);
                 }
             } else {
@@ -207,16 +215,9 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
 
         getViewModel().getNumberPlate().observe(this, s -> infoAdapter.setNumberPlate(s));
 
-        getViewDataBinding().tvTitle.setText(getString(R.string.body_temp,""));
 
-        getViewModel().getBodyTemperature().observe(this, s -> getViewDataBinding().etTemperature.setText(s));
+        updateTemperatureUI();
 
-        if(btnLabel.equalsIgnoreCase(getString(R.string.check_in))) {
-            getViewDataBinding().etTemperature.setEnabled(true);
-        }else{
-            getViewDataBinding().etTemperature.setEnabled(false);
-            getViewDataBinding().etTemperature.setCursorVisible(false);
-        }
         getViewDataBinding().etTemperature.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -271,6 +272,26 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
             }
         });
 
+    }
+
+    private void updateTemperatureUI() {
+        getViewModel().getBodyTemperature().observe(this,s -> {
+            if (s.equals("") && checkInIsApproved){
+                getViewDataBinding().etTemperature.setVisibility(View.GONE);
+                getViewDataBinding().tvTitle.setVisibility(View.GONE);
+                return;
+            }
+            getViewDataBinding().etTemperature.setText(s);
+            getViewDataBinding().tvTitle.setText(getString(R.string.body_temp,""));
+        });
+
+        if (checkInIsApproved){
+            getViewDataBinding().etTemperature.setEnabled(false);
+            getViewDataBinding().etTemperature.setCursorVisible(false);
+        }else{
+            getViewDataBinding().etTemperature.setEnabled(true);
+            getViewDataBinding().etTemperature.setCursorVisible(true);
+        }
     }
 
     private void setUpAdapter() {

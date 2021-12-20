@@ -1,8 +1,6 @@
 package com.evisitor.ui.main.commercial.add;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.os.Environment;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
@@ -26,9 +24,6 @@ import com.google.gson.reflect.TypeToken;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -120,8 +115,8 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
                 object.put("address", addVisitorData.address);
                 object.put("country", "");
                 object.put("groupType", addVisitorData.groupType);
-                object.put("userMasterId",getDataManager().getUserDetail().getId());
-                object.put("status",true);
+                object.put("userMasterId", getDataManager().getUserDetail().getId());
+                object.put("status", true);
                 if (addVisitorData.guestList.size() > 0) {
                     JSONArray guestList = new JSONArray(new Gson().toJson(addVisitorData.guestList));
                     object.put("guestList", guestList);
@@ -170,7 +165,7 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
                             assert response.body() != null;
                             //AppLogger.e("Response", response.body().string());
                             Guests guests = getDataManager().getGson().fromJson(response.body().string(), Guests.class);
-                            getNavigator().onSuccess(addVisitorData.isAccept,guests.isFlagedVisitorStatus());
+                            getNavigator().onSuccess(addVisitorData.isAccept, guests.isFlagedVisitorStatus());
                         } catch (Exception e) {
                             getNavigator().showAlert(R.string.alert, R.string.alert_error);
                         }
@@ -298,7 +293,7 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
                         try {
                             assert response.body() != null;
                             AppLogger.e("Response", response.body().string());
-                            getNavigator().onSuccess(visitorData.isAccept,false);
+                            getNavigator().onSuccess(visitorData.isAccept, false);
                         } catch (Exception e) {
                             getNavigator().showAlert(R.string.alert, R.string.alert_error);
                         }
@@ -524,19 +519,19 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
         return houseDetailMutableList;
     }
 
-    void numberPlateVerification(Bitmap bitmap){
-        MultipartBody.Part body = AppUtils.prepareFilePart("upload","image/png",AppUtils.bitmapToFile(getNavigator().getContext(),bitmap, UUID.randomUUID().toString().concat(".png")));
-        getDataManager().doNumberPlateDetails(AppConstants.TOKEN.concat(" ").concat(getDataManager().getUserDetail().getApiKey()),body).enqueue(new Callback<ResponseBody>() {
+    void numberPlateVerification(Bitmap bitmap) {
+        MultipartBody.Part body = AppUtils.prepareFilePart("upload", "image/png", AppUtils.bitmapToFile(getNavigator().getContext(), bitmap, UUID.randomUUID().toString().concat(".png")));
+        getDataManager().doNumberPlateDetails(AppConstants.TOKEN.concat(" ").concat(getDataManager().getUserDetail().getApiKey()), body).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(@NonNull Call<ResponseBody> call,@NonNull Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
                     if (response.code() == 201) {
                         assert response.body() != null;
                         JSONObject jsonObject = new JSONObject(response.body().string());
-                        if(jsonObject.has("results")){
+                        if (jsonObject.has("results")) {
                             JSONArray array = jsonObject.getJSONArray("results");
-                            if(array.length()>0){
-                                if(array.getJSONObject(0).has("plate")){
+                            if (array.length() > 0) {
+                                if (array.getJSONObject(0).has("plate")) {
                                     String numerPlate = array.getJSONObject(0).getString("plate");
                                     numberPlate.setValue(numerPlate);
                                 }
