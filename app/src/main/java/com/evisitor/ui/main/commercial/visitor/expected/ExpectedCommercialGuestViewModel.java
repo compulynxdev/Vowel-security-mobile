@@ -151,6 +151,7 @@ public class ExpectedCommercialGuestViewModel extends BaseCheckInOutViewModel<Ex
                 JSONArray ids = new JSONArray(new Gson().toJson(guestIds));
                 object.put("guestIdList", ids);
                 object.put("userMasterId", getDataManager().getUserDetail().getId());
+                object.put("name",getDataManager().getCommercialVisitorDetail().getName());
                 Log.e( "accepheckInISApproved: ","" );
             }catch (Exception e) {
                 AppLogger.w("ExpectedCommercialGuestViewModel", e.toString());
@@ -177,6 +178,12 @@ public class ExpectedCommercialGuestViewModel extends BaseCheckInOutViewModel<Ex
                 object.put("state", isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);
                 object.put("rejectedBy", isAccept ? null : getDataManager().getUserDetail().getFullName());
                 object.put("rejectReason", input);
+                object.put("premiseHierarchyDetailsId", getDataManager().getCommercialVisitorDetail().getFlatId());
+                object.put("documentId", getDataManager().getCommercialVisitorDetail().getIdentityNo());
+                object.put("mode", getDataManager().getCommercialVisitorDetail().getMode());
+                object.put("staffId", getDataManager().getCommercialVisitorDetail().getStaffId());
+                object.put("userMasterId", getDataManager().getUserDetail().getId());
+                object.put("name",getDataManager().getCommercialVisitorDetail().getName());
             } catch (JSONException e) {
                 AppLogger.w("ExpectedCommercialGuestViewModel", e.toString());
             }

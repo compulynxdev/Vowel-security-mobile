@@ -179,7 +179,7 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
 
     private void setUpCommercialVisitorAdapter() {
         commercialGuestList = new ArrayList<>();
-        commercialVisitorAdapter = new CommercialVisitorCheckOutAdapter(commercialGuestList, pos -> VisitorProfileDialog.newInstance(mViewModel.getCommercialGuestProfileBean(commercialGuestList.get(pos)), null).setImage(commercialGuestList.get(pos).getImageUrl()).
+        commercialVisitorAdapter = new CommercialVisitorCheckOutAdapter(commercialGuestList, pos -> VisitorProfileDialog.newInstance(mViewModel.getCommercialGuestProfileBean(commercialGuestList.get(pos)), null).setBtnLabel(getString(R.string.check_out)).setImage(commercialGuestList.get(pos).getImageUrl()).
                 setVehicalNoPlateImg(commercialGuestList.get(pos).getVehicleImage())
                 .setIsCommercialGuest(true).setBtnVisible(false).show(getChildFragmentManager()));
         commercialVisitorAdapter.setHasStableIds(true);

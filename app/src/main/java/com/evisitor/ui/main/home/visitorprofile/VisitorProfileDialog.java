@@ -276,7 +276,7 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
 
     private void updateTemperatureUI() {
         getViewModel().getBodyTemperature().observe(this,s -> {
-            if (s.equals("") && checkInIsApproved){
+            if (s.equals("") && checkInIsApproved || btnLabel.equalsIgnoreCase(getString(R.string.check_out))){
                 getViewDataBinding().etTemperature.setVisibility(View.GONE);
                 getViewDataBinding().tvTitle.setVisibility(View.GONE);
                 return;

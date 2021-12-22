@@ -13,6 +13,7 @@ import java.lang.ref.WeakReference;
 
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import okio.Buffer;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -111,9 +112,9 @@ public class BaseCheckInOutViewModel<N extends BaseNavigator> extends BaseViewMo
                             assert response.body() != null;
                             JSONObject object1 = new JSONObject(response.body().string());
 
-                            String message  = object1.has("result") ? object1.getString("result") : "Action successful" ;
+                            String message = object1.has(getNavigator().getContext().getString(R.string.result)) ? object1.getString(getNavigator().getContext().getString(R.string.result)) : getVisitorName(body).concat(" ") + "Can Proceed";
 
-                            getNavigator().showAlert(getNavigator().getContext().getString(R.string.success),message).setOnPositiveClickListener(dialog -> {
+                            getNavigator().showAlert(getNavigator().getContext().getString(R.string.success), message).setOnPositiveClickListener(dialog -> {
                                 dialog.dismiss();
                                 if (apiCallback != null)
                                     apiCallback.onSuccess();
@@ -134,6 +135,17 @@ public class BaseCheckInOutViewModel<N extends BaseNavigator> extends BaseViewMo
                     getNavigator().handleApiFailure(t);
                 }
             });
+        }
+    }
+
+    private String getVisitorName(RequestBody body) {
+        try {
+            final Buffer buffer = new Buffer();
+            body.writeTo(buffer);
+            JSONObject jsonObject = new JSONObject(buffer.readUtf8());
+            return jsonObject.getString("name").replace("\"", "");
+        } catch (Exception e) {
+            return "Guest";
         }
     }
 

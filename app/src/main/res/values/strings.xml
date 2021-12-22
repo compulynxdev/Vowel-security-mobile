@@ -258,7 +258,7 @@
     <string name="group">Group</string>
     <string name="rejected_by">Rejected By : %s</string>
     <string name="property">Property</string>
-    <string name="enter_company_address">Enter Company Address</string>
+    <string name="enter_company_address">Enter Company Address*</string>
     <string name="enter_company_name">Enter Company Name*</string>
     <string name="work_profile">Work Profile*</string>
     <string name="select_employment">Select Employment*</string>
@@ -404,4 +404,5 @@
     <string name="bluetooth_not_enabled">Please enable bluetooth!</string>
     <string name="printer_not_connect">Print not connected, connnect with the printer to print the label!</string>
     <string name="capture">capture</string>
+    <string name="result">result</string>
 </resources>

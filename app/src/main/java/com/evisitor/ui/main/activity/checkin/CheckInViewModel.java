@@ -248,6 +248,7 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
                         object.put("accountId", getDataManager().getAccountId());
                         object.put("id", getDataManager().getCommercialVisitorDetail().getGuestId());
                         object.put("userMasterId",getDataManager().getUserDetail().getId());
+                        object.put("name",getDataManager().getCommercialVisitorDetail().getName());
                     } else {
                         object.put("id", getDataManager().getGuestDetail().getGuestId());
                     }
