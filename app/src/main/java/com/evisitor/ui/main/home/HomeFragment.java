@@ -203,7 +203,9 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
                 mViewModel.approveByCall(guestIds);
 
             }else showSecondaryGuestListForCheckIn();
-        }).setBtnLabel(getString(R.string.check_in)).setBtnVisible(guests.getStatus().equalsIgnoreCase("PENDING")).setImage(guests.getImageUrl())
+        }).setBtnLabel(getString(R.string.check_in))
+                .setBtnVisible(guests.getStatus().equalsIgnoreCase("PENDING"))
+                .setImage(guests.getImageUrl())
                 .setVehicalNoPlateImg(guests.getVehicleImage()).show(getChildFragmentManager());
     }
 

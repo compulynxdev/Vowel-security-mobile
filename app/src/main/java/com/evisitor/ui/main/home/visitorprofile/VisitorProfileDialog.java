@@ -275,23 +275,23 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
     }
 
     private void updateTemperatureUI() {
-        getViewModel().getBodyTemperature().observe(this,s -> {
-            if (s.equals("") && checkInIsApproved || btnLabel.equalsIgnoreCase(getString(R.string.check_out))){
-                getViewDataBinding().etTemperature.setVisibility(View.GONE);
-                getViewDataBinding().tvTitle.setVisibility(View.GONE);
-                return;
-            }
-            getViewDataBinding().etTemperature.setText(s);
-            getViewDataBinding().tvTitle.setText(getString(R.string.body_temp,""));
-        });
+        getViewDataBinding().tvTitle.setText(getString(R.string.body_temp,""));
 
-        if (checkInIsApproved){
-            getViewDataBinding().etTemperature.setEnabled(false);
-            getViewDataBinding().etTemperature.setCursorVisible(false);
-        }else{
-            getViewDataBinding().etTemperature.setEnabled(true);
-            getViewDataBinding().etTemperature.setCursorVisible(true);
-        }
+        getViewModel().getBodyTemperature().observe(this,s -> {
+            if (checkInIsApproved || btnLabel.equalsIgnoreCase(getString(R.string.check_out))){
+                if (s.equals("")){
+                    getViewDataBinding().tvTitle.setVisibility(View.GONE);
+                    getViewDataBinding().etTemperature.setVisibility(View.GONE);
+                }else{
+                    getViewDataBinding().etTemperature.setText(s);
+                    getViewDataBinding().etTemperature.setEnabled(false);
+                    getViewDataBinding().etTemperature.setCursorVisible(false);
+                }
+            }else {
+                getViewDataBinding().etTemperature.setText(s);
+                getViewDataBinding().tvTitle.setText(getString(R.string.body_temp,""));
+            }
+        });
     }
 
     private void setUpAdapter() {

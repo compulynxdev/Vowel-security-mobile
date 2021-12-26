@@ -34,6 +34,7 @@ import com.evisitor.util.AppLogger;
 import com.evisitor.util.AppUtils;
 import com.evisitor.util.PermissionUtils;
 import com.google.common.util.concurrent.ListenableFuture;
+import com.google.gson.Gson;
 
 import java.io.File;
 import java.nio.ByteBuffer;
@@ -119,6 +120,7 @@ public class CameraActivity extends BaseActivity<ActivityCameraBinding, CameraAc
         imageCapture = new ImageCapture.Builder()
                 .setCaptureMode(ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY)
                 .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
+                .setTargetAspectRatio(AspectRatio.RATIO_16_9)
                 .build();
 
 
@@ -182,7 +184,7 @@ public class CameraActivity extends BaseActivity<ActivityCameraBinding, CameraAc
     @Override
     public void onMrzSuccess(MrzResponse mrzResponse) {
         Intent returnIntent = new Intent();
-        returnIntent.putExtra("result", String.valueOf(mrzResponse));
+        returnIntent.putExtra("result",new Gson().toJson(mrzResponse));
         setResult(Activity.RESULT_OK,returnIntent);
         finish();
     }

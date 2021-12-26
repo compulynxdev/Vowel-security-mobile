@@ -249,6 +249,8 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
                         object.put("id", getDataManager().getCommercialVisitorDetail().getGuestId());
                         object.put("userMasterId",getDataManager().getUserDetail().getId());
                         object.put("name",getDataManager().getCommercialVisitorDetail().getName());
+                        object.put("premiseHierarchyDetailsId",getDataManager().getCommercialVisitorDetail().getFlatId2());
+                        object.put("documentId",getDataManager().getCommercialVisitorDetail().getIdentityNo());
                     } else {
                         object.put("id", getDataManager().getGuestDetail().getGuestId());
                     }
@@ -520,3 +522,12 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
 
 
 }
+//{"accountId":"5","id":"106","userMasterId":9,"name":"leeson","visitor":"GUEST","type":"CHECK_OUT"}
+//{
+
+//    "documentId": "343434",
+//    "premiseHierarchyDetailsId": 34,
+
+
+
+//}

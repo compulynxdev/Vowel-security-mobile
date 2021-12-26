@@ -1,5 +1,7 @@
 package com.evisitor.ui.main.home;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.MutableLiveData;
@@ -267,6 +269,15 @@ public class HomeViewModel extends BaseCheckInOutViewModel<HomeNavigator> implem
                     object.put("state", AppConstants.ACCEPT);
                     object.put("rejectedBy", null );
                     object.put("rejectReason", "");
+                    object.put("documentId", getDataManager().getGuestDetail().getIdentityNo());
+                    object.put("userMasterId", getDataManager().getUserDetail().getId());
+                    object.put("name",getDataManager().getGuestDetail().getName());
+                    object.put("accountId", getDataManager().getAccountId());
+                    String flatId2 = getDataManager().getGuestDetail().getFlatId2();
+                    if (!flatId2.equals("")){
+                        object.put("premiseHierarchyDetailsId",getDataManager().getGuestDetail().getFlatId2());
+                    }
+
                     if (getDataManager().getGuestDetail().getNo_plate_bmp_img() != null) {
                         object.put("vehicleImage", AppUtils.getBitmapToBase64(getDataManager().getGuestDetail().getNo_plate_bmp_img()));
                     }

@@ -32,11 +32,11 @@ public class CameraActivityViewModel extends BaseViewModel<CameraActivityNavigat
         } else {
 
             File file = AppUtils.bitmapToFile(getNavigator().getContext(), bitmap, absolutePath);
-            RequestBody description = RequestBody.create(MultipartBody.FORM, "imagefile");
+            //RequestBody description = RequestBody.create(MultipartBody.FORM, "imagefile");
             RequestBody fileBody = RequestBody.create(MediaType.parse("imagefile"), file);
             MultipartBody.Part body = MultipartBody.Part.createFormData("imagefile", file.getName(), fileBody);
 
-            getDataManager().doPostDocument(description, body).enqueue(new Callback<ResponseBody>() {
+            getDataManager().doPostDocument(null, body).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     try {

@@ -208,7 +208,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                     name = bean.getFullName();
                     type=3;
                     identity = bean.getDocumentId();
-                    scanIdDialog(bean.getFullName(),3);
+                    scanIdDialog(bean.getDocumentId(),3);
                 }
                 else mViewModel.staffCheckOut();
             }).setImage(bean.getImageUrl()).setBtnLabel(getString(R.string.check_out))
@@ -238,7 +238,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                         }
                     }
                     // mViewModel.checkOut(0);
-                }).setIsCommercialGuest(true).setImage(guests.getImageUrl()).setVehicalNoPlateImg(guests.getVehicleImage()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
+                }).setIsCommercialGuest(true).setImage(guests.getImageUrl()).setVehicalNoPlateImg(guests.getVehicleImage()).setBtnLabel(getString(R.string.check_out)).setBtnVisible(guests.getCheckOutTime().isEmpty()).show(getFragmentManager());
             }
 
             @Override
@@ -623,7 +623,6 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
             @Override
             public void onScanClick(IdVerificationDialog dialog) {
                 dialog.dismiss();
-                //Intent i = ScanIDActivity.getStartIntent(getContext());
                 Intent i = ScanSmartActivity.getStartIntent(getContext());
                 startActivityForResult(i, SCAN_RESULT);
             }
