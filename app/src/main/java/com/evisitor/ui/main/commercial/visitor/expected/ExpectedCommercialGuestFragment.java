@@ -3,10 +3,8 @@ package com.evisitor.ui.main.commercial.visitor.expected;
 import static android.app.Activity.RESULT_OK;
 import static com.evisitor.util.AppConstants.ADD_FAMILY_MEMBER;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -43,7 +41,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
     private static final int ID_RESULT = 105;
     private static final int SCAN_RESULT = 101;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
-    List<CheckInTemperature> guestIds = new ArrayList<>();
+    private final List<CheckInTemperature> guestIds = new ArrayList<>();
     private List<CommercialVisitorResponse.CommercialGuest> guestsList;
     private RecyclerViewScrollListener scrollListener;
     private ExpectedCommercialGuestAdapter adapter;
@@ -121,16 +119,11 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
 
     private void decideNextProcess() {
         CommercialVisitorResponse.CommercialGuest tmpBean = mViewModel.getDataManager().getCommercialVisitorDetail();
-        /*
-            check whether the guest status is accepted and checkInApproved
-            if not send notification
-            if true approve
-         */
-        if (tmpBean.isCheckInApproved()) {
-            if (tmpBean.getGuestList().isEmpty())
-                mViewModel.acceptIfCheckInISApproved(guestIds);
-            else showSecondaryGuestListForCheckIn();
-        } else {
+
+
+        if (tmpBean.isVip()){
+            doIfCheckInApprovedOrVip(tmpBean);
+        }else{
             if (!mViewModel.getDataManager().isIdentifyFeature() || tmpBean.getIdentityNo().isEmpty()) {
                 if (tmpBean.getGuestList().isEmpty()) showCheckinOptions();
                 else showSecondaryGuestListForCheckIn();
@@ -146,6 +139,10 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
                     public void onSubmitClick(IdVerificationDialog dialog, String id) {
                         dialog.dismiss();
 
+                        if (tmpBean.isCheckInApproved()) {
+                            doIfCheckInApprovedOrVip(tmpBean);
+                            return;
+                        }
                         if (tmpBean.getIdentityNo().equalsIgnoreCase(id))
                             if (tmpBean.getGuestList().isEmpty()) showCheckinOptions();
                             else showSecondaryGuestListForCheckIn();
@@ -157,6 +154,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
             }
         }
     }
+
 
     /**
      * @param guestBean
@@ -187,8 +185,15 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
             if (requestCode == SCAN_RESULT /*&& data != null*/) {
                 String identityNo = MainResultStore.instance.getScannedIDData().idNumber;
                 String fullName = MainResultStore.instance.getScannedIDData().name;
-                if (mViewModel.getDataManager().getCommercialVisitorDetail().getIdentityNo().equalsIgnoreCase(identityNo)) {
-                    if (mViewModel.getDataManager().getCommercialVisitorDetail().getName().equalsIgnoreCase(fullName)) {
+
+                if (tmpBean.getIdentityNo().equalsIgnoreCase(identityNo)) {
+
+                    if (tmpBean.getName().equalsIgnoreCase(fullName)) {
+
+                        if (tmpBean.isCheckInApproved()) {
+                            doIfCheckInApprovedOrVip(tmpBean);
+                            return;
+                        }
                         if (tmpBean.getGuestList().isEmpty()) showCheckinOptions();
                         else showSecondaryGuestListForCheckIn();
                     } else {
@@ -324,7 +329,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
             i.putExtra("list", new Gson().toJson(tmpBean.guestList));
         }
         i.putExtra("checkIn", true);
-        i.putExtra("checkInApproved",tmpBean.isCheckInApproved());
+        i.putExtra("checkInApproved", tmpBean.isCheckInApproved());
         startActivityForResult(i, ADD_FAMILY_MEMBER);
     }
 
@@ -332,6 +337,12 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
     public void refreshList() {
         getViewDataBinding().recyclerView.getRecycledViewPool().clear();
         doSearch(search);
+    }
+
+    private void doIfCheckInApprovedOrVip(CommercialVisitorResponse.CommercialGuest tmpBean) {
+        if (tmpBean.getGuestList().isEmpty())
+            mViewModel.acceptIfCheckInISApproved(guestIds);
+        else showSecondaryGuestListForCheckIn();
     }
 
 }

@@ -65,6 +65,9 @@ public class CommercialVisitorResponse {
         @SerializedName("flatNo")
         private String houseNo;
 
+        @SerializedName("isVip")
+        private boolean isVip;
+
         @SerializedName("createdBy")
         private String createdBy;
 
@@ -257,7 +260,7 @@ public class CommercialVisitorResponse {
         }
 
         public String getCheckOutTime() {
-            return checkOutTime == null ? "" : checkOutTime;
+            return checkOutTime;
         }
 
         public void setCheckOutTime(String checkOutTime) {
@@ -487,6 +490,14 @@ public class CommercialVisitorResponse {
 
         public void setCheckInApproved(boolean checkInApproved) {
             this.checkInApproved = checkInApproved;
+        }
+
+        public boolean isVip() {
+            return isVip;
+        }
+
+        public void setVip(boolean vip) {
+            isVip = vip;
         }
     }
 
