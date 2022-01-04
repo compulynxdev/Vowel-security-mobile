@@ -522,12 +522,3 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
 
 
 }
-//{"accountId":"5","id":"106","userMasterId":9,"name":"leeson","visitor":"GUEST","type":"CHECK_OUT"}
-//{
-
-//    "documentId": "343434",
-//    "premiseHierarchyDetailsId": 34,
-
-
-
-//}

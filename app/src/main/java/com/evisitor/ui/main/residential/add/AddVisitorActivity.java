@@ -1,5 +1,8 @@
 package com.evisitor.ui.main.residential.add;
 
+import static com.evisitor.util.AppConstants.ADD_FAMILY_MEMBER;
+import static com.evisitor.util.AppConstants.SCAN_RESULT;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,7 +16,6 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
@@ -56,9 +58,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static com.evisitor.util.AppConstants.ADD_FAMILY_MEMBER;
-import static com.evisitor.util.AppConstants.SCAN_RESULT;
-
 public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, AddVisitorViewModel> implements AddVisitorNavigator, View.OnClickListener, BaseViewModel.GuestConfigurationCallback {
 
     private String countryCode = "254";
@@ -69,7 +68,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
     private List<HostDetailBean> hostDetailList;
     private String idType = "";
     private Boolean isGuest;
-    private String imageUrl, groupType="Individual";
+    private String imageUrl, groupType = "Individual";
     private Bitmap vehicalImgBitmap;
     private List<SecondaryGuest> secoundryGuestList;
 
@@ -105,7 +104,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
         setIntentData(getIntent());
         getViewModel().getNumberPlate().observe(this, s -> {
             getViewDataBinding().etVehicle.setText(s.toUpperCase());
-            if(s.isEmpty()){
+            if (s.isEmpty()) {
                 vehicalImgBitmap = null;
                 getViewDataBinding().showNoPlatImage.setVisibility(View.GONE);
             }
@@ -358,8 +357,8 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!s.toString().isEmpty() && s.toString().length()>1){
-                    if (Double.parseDouble(s.toString()) <= 34 && Double.parseDouble(s.toString()) >= 40){
+                if (!s.toString().isEmpty() && s.toString().length() > 1) {
+                    if (Double.parseDouble(s.toString()) <= 34 && Double.parseDouble(s.toString()) >= 40) {
                         getViewDataBinding().etTemperature.setText("");
                         showToast(R.string.temperature_should_be_30);
                     }
@@ -615,7 +614,8 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
             getViewDataBinding().groupResident.setVisibility(View.VISIBLE);
             getViewDataBinding().rg.setVisibility(View.VISIBLE);
             getViewDataBinding().groupSp.setVisibility(View.GONE);
-            getViewDataBinding().tvGroupMember.setVisibility(View.VISIBLE);
+            if (groupType.equalsIgnoreCase("Group"))
+                getViewDataBinding().tvGroupMember.setVisibility(View.VISIBLE);
         } else {
             isGuest = false;
             getViewDataBinding().groupResident.setVisibility(View.GONE);
@@ -725,7 +725,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                         finish();
                     }).show(getSupportFragmentManager());
 
-            if(isFlagged)
+            if (isFlagged)
                 showToast(R.string.flagged);
         } else {
             AlertDialog.newInstance()

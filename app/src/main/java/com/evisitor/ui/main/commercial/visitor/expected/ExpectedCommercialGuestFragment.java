@@ -121,9 +121,9 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
         CommercialVisitorResponse.CommercialGuest tmpBean = mViewModel.getDataManager().getCommercialVisitorDetail();
 
 
-        if (tmpBean.isVip()){
+        if (tmpBean.isVip()) {
             doIfCheckInApprovedOrVip(tmpBean);
-        }else{
+        } else {
             if (!mViewModel.getDataManager().isIdentifyFeature() || tmpBean.getIdentityNo().isEmpty()) {
                 if (tmpBean.getGuestList().isEmpty()) showCheckinOptions();
                 else showSecondaryGuestListForCheckIn();
@@ -138,15 +138,12 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
                     @Override
                     public void onSubmitClick(IdVerificationDialog dialog, String id) {
                         dialog.dismiss();
-
-                        if (tmpBean.isCheckInApproved()) {
-                            doIfCheckInApprovedOrVip(tmpBean);
-                            return;
-                        }
-                        if (tmpBean.getIdentityNo().equalsIgnoreCase(id))
-                            if (tmpBean.getGuestList().isEmpty()) showCheckinOptions();
+                        if (tmpBean.getIdentityNo().equalsIgnoreCase(id)) {
+                            if (tmpBean.isCheckInApproved()) {
+                                doIfCheckInApprovedOrVip(tmpBean);
+                            } else if (tmpBean.getGuestList().isEmpty()) showCheckinOptions();
                             else showSecondaryGuestListForCheckIn();
-                        else {
+                        } else {
                             showToast(R.string.alert_id);
                         }
                     }
@@ -298,7 +295,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
         if (this.page == 0) guestsList.clear();
 
         guestsList.addAll(tmpGuestsList);
-        adapter.notifyDataSetChanged();
+        adapter.notifyItemRangeChanged(0, tmpGuestsList.size());
 
         if (guestsList.size() == 0) {
             getViewDataBinding().recyclerView.setVisibility(View.GONE);

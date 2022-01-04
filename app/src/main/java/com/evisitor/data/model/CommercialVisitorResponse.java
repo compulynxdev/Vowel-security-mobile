@@ -21,6 +21,96 @@ public class CommercialVisitorResponse {
     }
 
     public static class CommercialGuest {
+        @SerializedName("bmp_profile")
+        public Bitmap bmp_profile;
+        @SerializedName("no_plate_bmp_img")
+        public Bitmap no_plate_bmp_img;
+        @SerializedName("vehicleImage")
+        public String vehicleImage;
+        @SerializedName("groupType")
+        public String groupType;
+        public String bodyTemperature;
+        @SerializedName("guestList")
+        public List<SecondaryGuest> guestList;
+        @SerializedName("flagedVisitorStatus")
+        public boolean flagedVisitorStatus = false;
+        public boolean minor = false;
+        @SerializedName("qrCode")
+        private String qrCode;
+        @SerializedName("employeeName")
+        private String host;
+        @SerializedName("image")
+        private String imageUrl;
+        @SerializedName("checkInApproved")
+        private boolean checkInApproved;
+        @SerializedName("premiseHierarchyDetailsId")
+        private String flatId = "";
+        @SerializedName("fullName")
+        private String name;
+        @SerializedName("employeeId")
+        private String staffId;
+        @SerializedName("expectedDate")
+        private String time;
+        @SerializedName("dialingCode")
+        private String dialingCode;
+        @SerializedName("expectedVehicleNo")
+        private String expectedVehicleNo;
+        @SerializedName("createdDate")
+        private String createdDate;
+        @SerializedName("flatNo")
+        private String houseNo;
+        @SerializedName("isVip")
+        private boolean isVip;
+        @SerializedName("createdBy")
+        private String createdBy;
+        @SerializedName("deviceList")
+        private List<DeviceBean> deviceBeanList;
+        @SerializedName("documentId")
+        private String identityNo;
+        @SerializedName("id")
+        private String guestId;
+        @SerializedName("state")
+        private String status;
+        @SerializedName("premiseName")
+        private String premiseName;
+        @SerializedName("contactNo")
+        private String contactNo;
+        @SerializedName("gender")
+        private String gender;
+        @SerializedName("checkInTime")
+        private String checkInTime;
+        @SerializedName("enteredVehicleNo")
+        private String enteredVehicleNo = "";
+        @SerializedName("checkOutTime")
+        private String checkOutTime;
+        @SerializedName("flatId")  //for guest check in/out list
+        private String flatId2 = "";
+        @SerializedName("guestType")
+        private String guestType;
+        @SerializedName("checkOutFeature")
+        private boolean checkOutFeature;
+        @SerializedName("checkInStatus")
+        private boolean checkInStatus;
+        @SerializedName("rejectedBy")
+        private String rejectedBy;
+
+//        @SerializedName("noPlateImage")
+//        private String noPlateImage;
+        @SerializedName("rejectReason")
+        private String rejectedReason;
+        @SerializedName("rejectedOn")
+        private String rejectedOn;
+        @SerializedName("purposeOfExit")
+        private String purpose;
+        @SerializedName("hostCheckOutTime")
+        private String hostCheckOutTime;
+        @SerializedName("nationality")
+        private String nationality;
+        @SerializedName("documentType")
+        private String documentType;
+        @SerializedName("mode")
+        private String mode;
+
         public String getQrCode() {
             return qrCode;
         }
@@ -28,140 +118,6 @@ public class CommercialVisitorResponse {
         public void setQrCode(String qrCode) {
             this.qrCode = qrCode;
         }
-
-        @SerializedName("qrCode")
-        private String qrCode;
-
-        @SerializedName("employeeName")
-        private String host;
-
-        @SerializedName("image")
-        private String imageUrl;
-
-        @SerializedName("checkInApproved")
-        private boolean checkInApproved;
-
-        @SerializedName("premiseHierarchyDetailsId")
-        private String flatId = "";
-
-        @SerializedName("fullName")
-        private String name;
-
-        @SerializedName("employeeId")
-        private String staffId;
-
-        @SerializedName("expectedDate")
-        private String time;
-
-        @SerializedName("dialingCode")
-        private String dialingCode;
-
-        @SerializedName("expectedVehicleNo")
-        private String expectedVehicleNo;
-
-        @SerializedName("createdDate")
-        private String createdDate;
-
-        @SerializedName("flatNo")
-        private String houseNo;
-
-        @SerializedName("isVip")
-        private boolean isVip;
-
-        @SerializedName("createdBy")
-        private String createdBy;
-
-        @SerializedName("deviceList")
-        private List<DeviceBean> deviceBeanList;
-
-        @SerializedName("documentId")
-        private String identityNo;
-
-        @SerializedName("id")
-        private String guestId;
-
-        @SerializedName("state")
-        private String status;
-
-        @SerializedName("premiseName")
-        private String premiseName;
-
-        @SerializedName("contactNo")
-        private String contactNo;
-
-
-        @SerializedName("gender")
-        private String gender;
-
-        @SerializedName("checkInTime")
-        private String checkInTime;
-
-        @SerializedName("enteredVehicleNo")
-        private String enteredVehicleNo = "";
-
-        @SerializedName("checkOutTime")
-        private String checkOutTime;
-
-        @SerializedName("flatId")  //for guest check in/out list
-        private String flatId2 = "";
-
-        @SerializedName("guestType")
-        private String guestType;
-
-        @SerializedName("checkOutFeature")
-        private boolean checkOutFeature;
-
-        @SerializedName("checkInStatus")
-        private boolean checkInStatus;
-
-        @SerializedName("rejectedBy")
-        private String rejectedBy;
-
-        @SerializedName("rejectReason")
-        private String rejectedReason;
-
-        @SerializedName("rejectedOn")
-        private String rejectedOn;
-
-        @SerializedName("purposeOfExit")
-        private String purpose;
-
-        @SerializedName("hostCheckOutTime")
-        private String hostCheckOutTime;
-
-        @SerializedName("nationality")
-        private String nationality;
-
-        @SerializedName("documentType")
-        private String documentType;
-
-//        @SerializedName("noPlateImage")
-//        private String noPlateImage;
-
-        @SerializedName("bmp_profile")
-        public Bitmap bmp_profile;
-
-        @SerializedName("mode")
-        private String mode;
-
-        @SerializedName("no_plate_bmp_img")
-        public Bitmap no_plate_bmp_img;
-
-        @SerializedName("vehicleImage")
-        public String vehicleImage;
-
-        @SerializedName("groupType")
-        public String groupType;
-
-        public String bodyTemperature;
-
-        @SerializedName("guestList")
-        public List<SecondaryGuest> guestList;
-
-        @SerializedName("flagedVisitorStatus")
-        public boolean flagedVisitorStatus = false;
-
-        public boolean minor = false;
 
         public String getCheckInTime() {
             return checkInTime;
@@ -172,7 +128,11 @@ public class CommercialVisitorResponse {
         }
 
         public String getStatus() {
-            return status == null ? "PENDING" : status;
+            if (status == null) {
+                return "PENDING";
+            } else if (status.equals("")) {
+                return "PENDING APPROVAL";
+            } else return status;
         }
 
         public void setStatus(String status) {
