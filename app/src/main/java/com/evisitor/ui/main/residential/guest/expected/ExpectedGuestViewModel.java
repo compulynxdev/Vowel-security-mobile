@@ -43,6 +43,7 @@ public class ExpectedGuestViewModel extends BaseCheckInOutViewModel<ExpectedGues
         if (getNavigator().isNetworkConnected()) {
             Map<String, String> map = new HashMap<>();
             map.put("accountId", getDataManager().getAccountId());
+            map.put("userMasterId", String.valueOf(getDataManager().getUserDetail().getId()));
             if (!search.isEmpty())
                 map.put("search", search);
             map.put("page", "" + page);

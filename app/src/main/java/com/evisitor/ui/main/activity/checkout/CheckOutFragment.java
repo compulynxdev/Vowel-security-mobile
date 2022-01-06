@@ -165,7 +165,7 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
 
     private void setUpHouseKeeperAdapter() {
         houseKeepingList = new ArrayList<>();
-        houseKeepingAdapter = new HouseKeepingCheckOutAdapter(houseKeepingList, pos -> VisitorProfileDialog.newInstance(mViewModel.getHouseKeepingProfileBean(houseKeepingList.get(pos)), null).setImage(houseKeepingList.get(pos).getImageUrl())
+        houseKeepingAdapter = new HouseKeepingCheckOutAdapter(houseKeepingList, pos -> VisitorProfileDialog.newInstance(mViewModel.getHouseKeepingProfileBean(houseKeepingList.get(pos)), null).checkInIsApproved(true).setImage(houseKeepingList.get(pos).getImageUrl())
                 . setVehicalNoPlateImg(houseKeepingList.get(pos).getVehicleImage())
                 .setBtnVisible(false).show(getChildFragmentManager()));
         houseKeepingAdapter.setHasStableIds(true);
@@ -173,7 +173,7 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
 
     private void setUpServiceProviderAdapter() {
         serviceProviderAdapter = new ServiceProviderCheckOutAdapter(serviceProviderList, pos -> VisitorProfileDialog.newInstance(mViewModel.getServiceProviderProfileBean(serviceProviderList.get(pos)), null).setImage(serviceProviderList.get(pos).getImageUrl())
-                .setVehicalNoPlateImg(serviceProviderList.get(pos).getVehicleImage()).setBtnVisible(false).show(getChildFragmentManager()));
+                .setVehicalNoPlateImg(serviceProviderList.get(pos).getVehicleImage()).checkInIsApproved(true).setBtnVisible(false).show(getChildFragmentManager()));
         serviceProviderAdapter.setHasStableIds(true);
     }
 
@@ -188,7 +188,7 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
 
     private void setUpGuestAdapter() {
         guestsList = new ArrayList<>();
-        guestAdapter = new GuestCheckOutAdapter(guestsList, pos -> VisitorProfileDialog.newInstance(mViewModel.getGuestProfileBean(guestsList.get(pos)), null).setImage(guestsList.get(pos).getImageUrl()).setVehicalNoPlateImg(guestsList.get(pos).getVehicleImage()).setBtnVisible(false).show(getChildFragmentManager()));
+        guestAdapter = new GuestCheckOutAdapter(guestsList, pos -> VisitorProfileDialog.newInstance(mViewModel.getGuestProfileBean(guestsList.get(pos)), null).setImage(guestsList.get(pos).getImageUrl()).setVehicalNoPlateImg(guestsList.get(pos).getVehicleImage()).setBtnVisible(false).checkInIsApproved(true).show(getChildFragmentManager()));
         guestAdapter.setHasStableIds(true);
         getViewDataBinding().recyclerView.setAdapter(guestAdapter);
     }
