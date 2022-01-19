@@ -122,7 +122,7 @@ public class Guests {
     }
 
     public String getStatus() {
-        return status == null ? "PENDING" : status;
+        return status == null || status.equals("") ? "PENDING" : status;
     }
 
     public void setStatus(String status) {
