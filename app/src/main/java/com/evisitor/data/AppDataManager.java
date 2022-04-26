@@ -25,7 +25,6 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.http.Body;
 
 /**
  * Created by Priyanka Joshi on 14-07-2020.
@@ -538,6 +537,12 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public Call<ResponseBody> doGetSpByQr(String authToken, Map<String, String> partMap) {
+        return apiHelper.doGetSpByQr(authToken, partMap);
+    }
+
+
+    @Override
     public Call<ResponseBody> doPasswordReset(RequestBody requestBody) {
         return apiHelper.doPasswordReset(requestBody);
     }
@@ -579,6 +584,6 @@ public class AppDataManager implements DataManager {
 
     @Override
     public Call<ResponseBody> doPostDocument(RequestBody requestBody, MultipartBody.Part body) {
-        return apiHelper.doPostDocument(requestBody,body);
+        return apiHelper.doPostDocument(requestBody, body);
     }
 }

@@ -10,7 +10,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Body;
 
 /**
  * Created by Priyanka Joshi on 14-07-2020.
@@ -36,21 +35,21 @@ public class AppApiHelper implements ApiHelper {
     }
 
     private static ApiHelper getApiInterface() {
-            apiInterface = new Retrofit.Builder()
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl(WebServices.BASE_URL)
-                    .client(okHttpClient)
-                    .build().create(ApiHelper.class);
+        apiInterface = new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(WebServices.BASE_URL)
+                .client(okHttpClient)
+                .build().create(ApiHelper.class);
 
         return apiInterface;
     }
 
-    private static ApiHelper getNumberPlateUrl(){
-            apiInterface = new Retrofit.Builder()
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl(WebServices.BASE_PLATE_RECOGNISER)
-                    .client(okHttpClient)
-                    .build().create(ApiHelper.class);
+    private static ApiHelper getNumberPlateUrl() {
+        apiInterface = new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(WebServices.BASE_PLATE_RECOGNISER)
+                .client(okHttpClient)
+                .build().create(ApiHelper.class);
         return apiInterface;
     }
 
@@ -255,6 +254,11 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
+    public Call<ResponseBody> doGetSpByQr(String authToken, Map<String, String> partMap) {
+        return getApiInterface().doGetSpByQr(authToken, partMap);
+    }
+
+    @Override
     public Call<ResponseBody> doPasswordReset(RequestBody requestBody) {
         return getApiInterface().doPasswordReset(requestBody);
     }
@@ -296,6 +300,6 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Call<ResponseBody> doPostDocument(RequestBody requestBody, MultipartBody.Part body) {
-        return getApiInterface().doPostDocument(requestBody,body);
+        return getApiInterface().doPostDocument(requestBody, body);
     }
 }

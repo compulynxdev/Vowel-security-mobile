@@ -1,7 +1,5 @@
 package com.evisitor.ui.main.home;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.MutableLiveData;
@@ -14,8 +12,8 @@ import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.HomeBean;
 import com.evisitor.data.model.RecurrentVisitor;
 import com.evisitor.data.model.ResidentProfile;
+import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.model.VisitorProfileBean;
-import com.evisitor.ui.base.BaseViewModel;
 import com.evisitor.ui.main.BaseCheckInOutViewModel;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppLogger;
@@ -179,8 +177,8 @@ public class HomeViewModel extends BaseCheckInOutViewModel<HomeNavigator> implem
             getNavigator().showLoading();
             JSONObject object = new JSONObject();
             try {
-                object.put("accountId",getDataManager().getAccountId());
-                object.put("type","guest");
+                object.put("accountId", getDataManager().getAccountId());
+                object.put("type", "guest");
                 if (!qrCode.isEmpty())
                     object.put("qrCode", qrCode);
             } catch (JSONException e) {
@@ -225,7 +223,7 @@ public class HomeViewModel extends BaseCheckInOutViewModel<HomeNavigator> implem
         List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
         getDataManager().setGuestDetail(guests);
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, guests.getName())));
-        if(guests.isVip)
+        if (guests.isVip)
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vip)));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), guests.getExpectedVehicleNo(), VisitorProfileBean.VIEW_TYPE_EDITABLE));
         if (getDataManager().getGuestConfiguration().getGuestField().isContactNo())
@@ -239,9 +237,7 @@ public class HomeViewModel extends BaseCheckInOutViewModel<HomeNavigator> implem
 
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), guests.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : guests.getPremiseName())));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, guests.getHost().isEmpty() ? guests.getCreatedBy() : guests.getHost())));
-       /* if (guests.isCheckOutFeature())
-            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_is_checkout, guests.isHostCheckOut())));
-        */if (!guests.getStatus().equalsIgnoreCase("PENDING"))
+        if (!guests.getStatus().equalsIgnoreCase("PENDING"))
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.status, guests.getStatus())));
 
         if (guests.getMode() != null && !guests.getMode().isEmpty())
@@ -252,10 +248,10 @@ public class HomeViewModel extends BaseCheckInOutViewModel<HomeNavigator> implem
     }
 
     void approveByCall(List<CheckInTemperature> guestIds) {
-        if((!getDataManager().getGuestDetail().getExpectedVehicleNo().isEmpty() || !getDataManager().getGuestDetail().getEnteredVehicleNo().isEmpty())
-                && getDataManager().getGuestDetail().getNo_plate_bmp_img()==null){
-            getNavigator().showAlert(R.string.alert,R.string.please_capture_vehical_image);
-        }else {
+        if ((!getDataManager().getGuestDetail().getExpectedVehicleNo().isEmpty() || !getDataManager().getGuestDetail().getEnteredVehicleNo().isEmpty())
+                && getDataManager().getGuestDetail().getNo_plate_bmp_img() == null) {
+            getNavigator().showAlert(R.string.alert, R.string.please_capture_vehical_image);
+        } else {
             if (getNavigator().isNetworkConnected(true)) {
                 JSONObject object = new JSONObject();
                 try {
@@ -267,15 +263,15 @@ public class HomeViewModel extends BaseCheckInOutViewModel<HomeNavigator> implem
                     JSONArray ids = new JSONArray(new Gson().toJson(guestIds));
                     object.put("guestIdList", ids);
                     object.put("state", AppConstants.ACCEPT);
-                    object.put("rejectedBy", null );
+                    object.put("rejectedBy", null);
                     object.put("rejectReason", "");
                     object.put("documentId", getDataManager().getGuestDetail().getIdentityNo());
                     object.put("userMasterId", getDataManager().getUserDetail().getId());
-                    object.put("name",getDataManager().getGuestDetail().getName());
+                    object.put("name", getDataManager().getGuestDetail().getName());
                     object.put("accountId", getDataManager().getAccountId());
                     String flatId2 = getDataManager().getGuestDetail().getFlatId2();
-                    if (!flatId2.equals("")){
-                        object.put("premiseHierarchyDetailsId",getDataManager().getGuestDetail().getFlatId2());
+                    if (!flatId2.equals("")) {
+                        object.put("premiseHierarchyDetailsId", getDataManager().getGuestDetail().getFlatId2());
                     }
 
                     if (getDataManager().getGuestDetail().getNo_plate_bmp_img() != null) {
@@ -291,12 +287,36 @@ public class HomeViewModel extends BaseCheckInOutViewModel<HomeNavigator> implem
         }
     }
 
+    List<VisitorProfileBean> getServiceProviderProfileBean(ServiceProvider serviceProvider) {
+        getNavigator().showLoading();
+        List<VisitorProfileBean> visitorProfileBeanList = new ArrayList<>();
+        getDataManager().setSPDetail(serviceProvider);
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_name, serviceProvider.getName())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_time, CalenderUtils.formatDate(serviceProvider.getCheckInTime(), CalenderUtils.SERVER_DATE_FORMAT, CalenderUtils.TIMESTAMP_FORMAT))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_vehicle, serviceProvider.getEnteredVehicleNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : serviceProvider.getEnteredVehicleNo())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_profile, serviceProvider.getProfile().isEmpty() ? getNavigator().getContext().getString(R.string.na) : serviceProvider.getProfile())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, serviceProvider.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : CommonUtils.paritalEncodeData("+ ".concat(serviceProvider.getDialingCode()).concat(" ").concat(serviceProvider.getContactNo())))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity_type, serviceProvider.getDocumentType().isEmpty() ? getNavigator().getContext().getString(R.string.na) : getIdentityType(serviceProvider.getDocumentType()))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, serviceProvider.getIdentityNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : CommonUtils.paritalEncodeData(serviceProvider.getIdentityNo()))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_nationality, serviceProvider.getNationality().isEmpty() ? getNavigator().getContext().getString(R.string.na) : serviceProvider.getNationality())));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_comp_name, serviceProvider.getCompanyName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : serviceProvider.getCompanyName())));
+        if (!getDataManager().isCommercial()) {
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_dynamic_premise, getDataManager().getLevelName(), serviceProvider.getPremiseName().isEmpty() ? getNavigator().getContext().getString(R.string.na) : serviceProvider.getPremiseName())));
+
+            visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_host, serviceProvider.getHost().isEmpty() ? serviceProvider.getCreatedBy() : serviceProvider.getHost())));
+            /*if (serviceProvider.isCheckOutFeature())
+                visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_is_checkout, serviceProvider.isHostCheckOut())));*/
+        }
+        getNavigator().hideLoading();
+        return visitorProfileBeanList;
+    }
+
     public void scanQRIdForRecurrent(String qrCode, boolean isGuest) {
         if (getNavigator().isNetworkConnected()) {
             getNavigator().showLoading();
             JSONObject object = new JSONObject();
             try {
-                object.put("accountId",getDataManager().getAccountId());
+                object.put("accountId", getDataManager().getAccountId());
                 object.put("type", isGuest ? "guest" : "sp");
                 if (!qrCode.isEmpty())
                     object.put("qrCode", qrCode);
@@ -338,29 +358,75 @@ public class HomeViewModel extends BaseCheckInOutViewModel<HomeNavigator> implem
             getNavigator().showAlert(getNavigator().getContext().getString(R.string.alert), getNavigator().getContext().getString(R.string.alert_internet));
         }
     }
+
     @Override
     public void onSuccess() {
 
     }
 
     public void getQRCodeDataByType(String qr, String type) {
-        switch (type){
-            case "guest" : getQRCodeData(qr);
-                            break;
-
-            case "serviceprovider" : scanQRIdForRecurrent(qr,false);
-                                    break;
-
-            case "recurrentGuest" : scanQRIdForRecurrent(qr,true);
+        switch (type) {
+            case "guest":
+                getQRCodeData(qr);
                 break;
 
-            case "resident" : getResidentData(qr);
-                                break;
+            case "serviceprovider":
+                getSpByQr(qr);
+                break;
 
-            case "employee" : getEmployeeScannedData(qr);
+            case "recurrentGuest":
+                scanQRIdForRecurrent(qr, true);
+                break;
+
+            case "resident":
+                getResidentData(qr);
+                break;
+
+            case "employee":
+                getEmployeeScannedData(qr);
                 break;
         }
 
+    }
+
+    private void getSpByQr(String qr) {
+        if (getNavigator().isNetworkConnected()) {
+            getNavigator().showLoading();
+            Map<String, String> map = new HashMap<>();
+            map.put("accountId", getDataManager().getAccountId());
+            if (!qr.isEmpty())
+                map.put("qrCode", qr);
+            getDataManager().doGetSpByQr(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                    getNavigator().hideLoading();
+                    try {
+                        if (response.code() == 200) {
+                            assert response.body() != null;
+                            ServiceProvider serviceProvider = getDataManager().getGson().fromJson(response.body().string(), ServiceProvider.class);
+                            if (serviceProvider != null) {
+                                getNavigator().onSuccessServiceProviderData(serviceProvider);
+                            } else {
+                                getNavigator().showAlert(R.string.alert, R.string.no_data);
+                            }
+                        } else if (response.code() == 401) {
+                            getNavigator().openActivityOnTokenExpire();
+                        } else getNavigator().handleApiError(response.errorBody());
+                    } catch (Exception e) {
+                        getNavigator().showAlert(R.string.alert, R.string.alert_error);
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                    getNavigator().hideLoading();
+                    getNavigator().handleApiFailure(t);
+                }
+            });
+        } else {
+            getNavigator().hideLoading();
+            getNavigator().showAlert(getNavigator().getContext().getString(R.string.alert), getNavigator().getContext().getString(R.string.alert_internet));
+        }
     }
 
 
@@ -418,7 +484,7 @@ public class HomeViewModel extends BaseCheckInOutViewModel<HomeNavigator> implem
         if (!bean.getEmployment().isEmpty())
             visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.employment, AppUtils.capitaliseFirstLetter(bean.getEmployment()))));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.vehicle_col), bean.getExpectedVehicleNo(), VisitorProfileBean.VIEW_TYPE_EDITABLE));
-        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, bean.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) :CommonUtils.paritalEncodeData( "+ ".concat(bean.getDialingCode()).concat(" ").concat(bean.getContactNo())))));
+        visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_mobile, bean.getContactNo().isEmpty() ? getNavigator().getContext().getString(R.string.na) : CommonUtils.paritalEncodeData("+ ".concat(bean.getDialingCode()).concat(" ").concat(bean.getContactNo())))));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity_type, bean.getDocumentType().isEmpty() ? getNavigator().getContext().getString(R.string.na) : getIdentityType(bean.getDocumentType()))));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_identity, bean.getDocumentId().isEmpty() ? getNavigator().getContext().getString(R.string.na) : CommonUtils.paritalEncodeData(bean.getDocumentId()))));
         visitorProfileBeanList.add(new VisitorProfileBean(getNavigator().getContext().getString(R.string.data_nationality, bean.getNationality().isEmpty() ? getNavigator().getContext().getString(R.string.na) : bean.getNationality())));
@@ -513,5 +579,34 @@ public class HomeViewModel extends BaseCheckInOutViewModel<HomeNavigator> implem
                 }
             });
         }
+    }
+
+    public void checkinOutSp(ServiceProvider serviceProvider) {
+        //accountId: 1
+        //bodyTemperature: 36
+        //documentId: "161616"
+        //id: 1
+        //mode: "Walk-In"
+        //premiseHierarchyDetailsId: null
+        //staffId: null
+        //state: "ACCEPTED"
+        //type: "CHECK_IN"
+        //visitor: "SERVICE_PROVIDER"
+        JSONObject object = new JSONObject();
+        try {
+            object.put("accountId", getDataManager().getAccountId());
+            object.put("documentId", serviceProvider.getIdentityNo());
+            object.put("id", serviceProvider.getServiceProviderId());
+            object.put("type", serviceProvider.getCheckInTime() == null ? AppConstants.CHECK_IN : AppConstants.CHECK_OUT);
+            object.put("state", AppConstants.ACCEPT);
+            object.put("visitor", AppConstants.SERVICE_PROVIDER);
+
+        } catch (JSONException e) {
+            AppLogger.w(TAG, e.toString());
+        }
+
+        RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
+        doCheckInOut(body, this);
+
     }
 }

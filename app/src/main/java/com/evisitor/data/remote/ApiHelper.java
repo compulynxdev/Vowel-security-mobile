@@ -138,6 +138,9 @@ public interface ApiHelper {
     @POST(WebServices.GET_VISITOR_BY_QR_CODE)
     Call<ResponseBody> doGetVisitorByQRCode(@Header("authorization") String authToken, @Body RequestBody requestBody);
 
+    @GET(WebServices.GET_SP_BY_QRCODE)
+    Call<ResponseBody> doGetSpByQr(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+
     @POST(WebServices.POST_TEST_PASSWORD_REQUEST)
     Call<ResponseBody> doPasswordReset(@Body RequestBody requestBody);
 
@@ -165,5 +168,5 @@ public interface ApiHelper {
 
     @Multipart
     @POST(WebServices.MRZ_DATA_EXTRACTION)
-    Call<ResponseBody> doPostDocument(@Part("imagefile") RequestBody requestBody,@Part MultipartBody.Part body);
+    Call<ResponseBody> doPostDocument(@Part("imagefile") RequestBody requestBody, @Part MultipartBody.Part body);
 }

@@ -7,117 +7,83 @@ import com.google.gson.annotations.SerializedName;
 public class ServiceProvider {
 
 
-    @SerializedName("fullName")
-    private String name;
-
-    @SerializedName("createdDate")
-    private String createdDate;
-
-    @SerializedName("checkInTime")
-    private String checkInTime;
-
-    @SerializedName("checkOutTime")
-    private String checkOutTime;
-
-    @SerializedName("profile")
-    private String profile;
-
-    @SerializedName("expectedDate")
-    private String time;
-
-    @SerializedName("flatNo")
-    private String houseNo;
-
-    @SerializedName("residentName")
-    private String host;
-
-    @SerializedName("documentId")
-    private String identityNo;
-
-    @SerializedName("contactNo")
-    private String contactNo;
-
-    @SerializedName("dialingCode")
-    private String dialingCode;
-
-    @SerializedName("residentId")
-    private String residentId;
-
-    @SerializedName("flatId")
-    private String flatId = "";
-
-    @SerializedName("id")
-    private String serviceProviderId;
-
-    @SerializedName("image")
-    private String imageUrl;
-
-    @SerializedName("createdBy")
-    private String createdBy;
-
-    @SerializedName("expectedVehicleNo")
-    private String expectedVehicleNo;
-
-    @SerializedName("enteredVehicleNo")
-    private String enteredVehicleNo = "";
-
-    @SerializedName("checkOutFeature")
-    private boolean checkOutFeature;
-
-    @SerializedName("hostCheckOutTime")
-    private String hostCheckOutTime;
-
-    @SerializedName("isHostCheckOut")
-    private boolean isHostCheckOut;
-
-
-    @SerializedName("notificationStatus")
-    private boolean notificationStatus;
-
-    @SerializedName("state")
-    private String status;
-
-    @SerializedName("checkInStatus")
-    private boolean checkInStatus;
-
-    @SerializedName("rejectedBy")
-    private String rejectedBy;
-
-    @SerializedName("rejectReason")
-    private String rejectedReason;
-
-    @SerializedName("companyName")
-    private String companyName;
-
-    @SerializedName("companyAddress")
-    private String companyAddress;
-
-    @SerializedName("premiseName")
-    private String premiseName;
-
-    @SerializedName("rejectedOn")
-    private String rejectedOn;
-
-    @SerializedName("nationality")
-    private String nationality;
-
-    @SerializedName("documentType")
-    private String documentType;
-
-    @SerializedName("mode")
-    private String mode;
-
-    @SerializedName("vehicleImage")
-    private String vehicleImage;
-
-    @SerializedName("vehicleBitMapImage")
-    private Bitmap vehicleBitMapImage;
-
     @SerializedName("bodyTemperature")
     public String bodyTemperature;
-
+    @SerializedName("fullName")
+    private String name;
+    @SerializedName("createdDate")
+    private String createdDate;
+    @SerializedName("checkInTime")
+    private String checkInTime;
+    @SerializedName("checkOutTime")
+    private String checkOutTime;
+    @SerializedName("profile")
+    private String profile;
+    @SerializedName("expectedDate")
+    private String time;
+    @SerializedName("flatNo")
+    private String houseNo;
+    @SerializedName("residentName")
+    private String host;
+    @SerializedName("documentId")
+    private String identityNo;
+    @SerializedName("contactNo")
+    private String contactNo;
+    @SerializedName("dialingCode")
+    private String dialingCode;
+    @SerializedName("residentId")
+    private String residentId;
+    @SerializedName("flatId")
+    private String flatId = "";
+    @SerializedName("id")
+    private String serviceProviderId;
+    @SerializedName("image")
+    private String imageUrl;
+    @SerializedName("createdBy")
+    private String createdBy;
+    @SerializedName("expectedVehicleNo")
+    private String expectedVehicleNo;
+    @SerializedName("enteredVehicleNo")
+    private String enteredVehicleNo = "";
+    @SerializedName("checkOutFeature")
+    private boolean checkOutFeature;
+    @SerializedName("hostCheckOutTime")
+    private String hostCheckOutTime;
+    @SerializedName("isHostCheckOut")
+    private boolean isHostCheckOut;
+    @SerializedName("notificationStatus")
+    private boolean notificationStatus;
+    @SerializedName("state")
+    private String status;
+    @SerializedName("checkInStatus")
+    private boolean checkInStatus;
+    @SerializedName("rejectedBy")
+    private String rejectedBy;
+    @SerializedName("rejectReason")
+    private String rejectedReason;
+    @SerializedName("companyName")
+    private String companyName;
+    @SerializedName("companyAddress")
+    private String companyAddress;
+    @SerializedName("premiseName")
+    private String premiseName;
+    @SerializedName("rejectedOn")
+    private String rejectedOn;
+    @SerializedName("nationality")
+    private String nationality;
+    @SerializedName("documentType")
+    private String documentType;
+    @SerializedName("mode")
+    private String mode;
+    @SerializedName("vehicleImage")
+    private String vehicleImage;
+    @SerializedName("vehicleBitMapImage")
+    private Bitmap vehicleBitMapImage;
     @SerializedName("qrCode")
     private String qrCode;
+
+    @SerializedName("qrValidity")
+    private String qrValidity;
 
     public Bitmap getVehicleBitMapImage() {
         return vehicleBitMapImage;
@@ -307,10 +273,6 @@ public class ServiceProvider {
         return checkInStatus;
     }
 
-    public void setCheckInStatus(boolean checkInStatus) {
-        this.checkInStatus = checkInStatus;
-    }
-
     public String getDialingCode() {
         return dialingCode == null ? "" : dialingCode;
     }
@@ -413,5 +375,21 @@ public class ServiceProvider {
 
     public void setQrCode(String qrCode) {
         this.qrCode = qrCode;
+    }
+
+    public String getQrValidity() {
+        return qrValidity;
+    }
+
+    public void setQrValidity(String qrValidity) {
+        this.qrValidity = qrValidity;
+    }
+
+    public boolean isCheckInStatus() {
+        return checkInStatus;
+    }
+
+    public void setCheckInStatus(boolean checkInStatus) {
+        this.checkInStatus = checkInStatus;
     }
 }

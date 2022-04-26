@@ -1,15 +1,20 @@
 package com.evisitor.ui.main.home.visitorprofile;
 
+import static com.evisitor.util.AppConstants.ADD_FAMILY_MEMBER;
+import static com.evisitor.util.AppConstants.SCAN_RESULT;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.evisitor.EVisitor;
@@ -32,11 +37,10 @@ import com.evisitor.ui.main.commercial.secondryguest.SecondaryGuestInputActivity
 import com.evisitor.util.PermissionUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Objects;
-import static com.evisitor.util.AppConstants.ADD_FAMILY_MEMBER;
-import static com.evisitor.util.AppConstants.SCAN_RESULT;
 
 public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding, VisitorProfileViewModel> implements View.OnClickListener {
     private List<DeviceBean> deviceBeanList;
@@ -103,7 +107,7 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
         return this;
     }
 
-    public VisitorProfileDialog checkInIsApproved(boolean isApproved){
+    public VisitorProfileDialog checkInIsApproved(boolean isApproved) {
         checkInIsApproved = isApproved;
         return this;
     }
@@ -167,12 +171,12 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
                 } else if (btnLabel.equalsIgnoreCase(getString(R.string.check_in)) && checkInIsApproved) {
                     getViewDataBinding().tvGadgetsInfo.setVisibility(View.GONE);
                     getViewDataBinding().tvClickImage.setVisibility(View.GONE);
-                } else if (btnLabel.equalsIgnoreCase(getString(R.string.check_in))){
+                } else if (btnLabel.equalsIgnoreCase(getString(R.string.check_in))) {
                     getViewDataBinding().tvGadgetsInfo.setVisibility(View.VISIBLE);
                     getViewDataBinding().tvGadgetsInfo.setText(getString(R.string.add_gadgets_info));
                     getViewDataBinding().tvGadgetsInfo.setOnClickListener(this);
                     getViewDataBinding().tvClickImage.setVisibility(View.VISIBLE);
-                } else{
+                } else {
                     getViewDataBinding().tvGadgetsInfo.setVisibility(View.GONE);
                 }
             } else {
@@ -185,23 +189,23 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
             }
         }
 
-        if(mViewModel.getDataManager().getGuestConfiguration().isGuestGroupFeature()){
-          if(isCommercialGuest && mViewModel.getDataManager().isCommercial()){
-              CommercialVisitorResponse.CommercialGuest guests = mViewModel.getDataManager().getCommercialVisitorDetail();
-              if(guests!=null && !guests.getGuestList().isEmpty()){
-                  getViewDataBinding().tvSecondaryGuestInfo.setVisibility(View.VISIBLE);
-                  getViewDataBinding().tvSecondaryGuestInfo.setText(getString(R.string.view_secondary_guest,String.valueOf(guests.getGuestList().size())));
-                  getViewDataBinding().tvSecondaryGuestInfo.setOnClickListener(this);
-              }
-          }else{
-              Guests guests = mViewModel.getDataManager().getGuestDetail();
-              if(guests!=null && !guests.getGuestList().isEmpty()){
-                  getViewDataBinding().tvSecondaryGuestInfo.setVisibility(View.VISIBLE);
-                  getViewDataBinding().tvSecondaryGuestInfo.setText(getString(R.string.view_secondary_guest,String.valueOf(guests.getGuestList().size())));
-                  getViewDataBinding().tvSecondaryGuestInfo.setOnClickListener(this);
-              }
-          }
-        }else{
+        if (mViewModel.getDataManager().getGuestConfiguration().isGuestGroupFeature()) {
+            if (isCommercialGuest && mViewModel.getDataManager().isCommercial()) {
+                CommercialVisitorResponse.CommercialGuest guests = mViewModel.getDataManager().getCommercialVisitorDetail();
+                if (guests != null && !guests.getGuestList().isEmpty()) {
+                    getViewDataBinding().tvSecondaryGuestInfo.setVisibility(View.VISIBLE);
+                    getViewDataBinding().tvSecondaryGuestInfo.setText(getString(R.string.view_secondary_guest, String.valueOf(guests.getGuestList().size())));
+                    getViewDataBinding().tvSecondaryGuestInfo.setOnClickListener(this);
+                }
+            } else {
+                Guests guests = mViewModel.getDataManager().getGuestDetail();
+                if (guests != null && !guests.getGuestList().isEmpty()) {
+                    getViewDataBinding().tvSecondaryGuestInfo.setVisibility(View.VISIBLE);
+                    getViewDataBinding().tvSecondaryGuestInfo.setText(getString(R.string.view_secondary_guest, String.valueOf(guests.getGuestList().size())));
+                    getViewDataBinding().tvSecondaryGuestInfo.setOnClickListener(this);
+                }
+            }
+        } else {
             getViewDataBinding().tvSecondaryGuestInfo.setVisibility(View.GONE);
         }
 
@@ -229,8 +233,8 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!s.toString().isEmpty() && s.toString().length()>1){
-                    if (Double.parseDouble(s.toString()) >= 34 && Double.parseDouble(s.toString()) <= 40){
+                if (!s.toString().isEmpty() && s.toString().length() > 1) {
+                    if (Double.parseDouble(s.toString()) >= 34 && Double.parseDouble(s.toString()) <= 40) {
                         if (dataManager.isCommercial()) {
                             CommercialVisitorResponse.CommercialGuest guests = dataManager.getCommercialVisitorDetail();
                             if (guests != null) {
@@ -263,7 +267,7 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
                             spBean.setBodyTemperature(getViewDataBinding().etTemperature.getText().toString());
                             dataManager.setSPDetail(spBean);
                         }
-                    }else{
+                    } else {
                         getViewDataBinding().etTemperature.setText("");
                         showToast(R.string.temperature_should_be_30);
                     }
@@ -275,27 +279,28 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
     }
 
     private void updateTemperatureUI() {
-        getViewDataBinding().tvTitle.setText(getString(R.string.body_temp,""));
+        if (checkInIsApproved || btnLabel.equalsIgnoreCase(getString(R.string.check_out))) {
+            getViewDataBinding().tvTitle.setVisibility(View.GONE);
+            getViewDataBinding().etTemperature.setVisibility(View.GONE);
+            return;
+        }
+        getViewDataBinding().tvTitle.setText(getString(R.string.body_temp, ""));
 
-        getViewModel().getBodyTemperature().observe(this,s -> {
-            if (checkInIsApproved || btnLabel.equalsIgnoreCase(getString(R.string.check_out))){
-                if (s.equals("")){
-                    getViewDataBinding().tvTitle.setVisibility(View.GONE);
-                    getViewDataBinding().etTemperature.setVisibility(View.GONE);
-                }else{
-                    getViewDataBinding().etTemperature.setText(s);
-                    getViewDataBinding().etTemperature.setEnabled(false);
-                    getViewDataBinding().etTemperature.setCursorVisible(false);
-                }
-            }else {
+        getViewModel().getBodyTemperature().observe(this, s -> {
+            if (s.equals("")) {
+                getViewDataBinding().tvTitle.setVisibility(View.GONE);
+                getViewDataBinding().etTemperature.setVisibility(View.GONE);
+            } else {
                 getViewDataBinding().etTemperature.setText(s);
-                getViewDataBinding().tvTitle.setText(getString(R.string.body_temp,""));
+                getViewDataBinding().etTemperature.setEnabled(false);
+                getViewDataBinding().etTemperature.setCursorVisible(false);
             }
+
         });
     }
 
     private void setUpAdapter() {
-       infoAdapter  = new VisitorProfileAdapter(getBaseActivity(), visitorInfoList);
+        infoAdapter = new VisitorProfileAdapter(getBaseActivity(), visitorInfoList);
         getViewDataBinding().recyclerView.setAdapter(infoAdapter);
     }
 
@@ -323,13 +328,13 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
             case R.id.tv_secondary_guest_info:
                 Guests tmpBean = mViewModel.getDataManager().getGuestDetail();
                 Intent intent = SecondaryGuestInputActivity.getStartIntent(getBaseActivity());
-                if(tmpBean!=null){
+                if (tmpBean != null) {
                     if (!tmpBean.getGuestList().isEmpty()) {
                         intent.putExtra("list", new Gson().toJson(tmpBean.guestList));
                     }
-                }else{
+                } else {
                     CommercialVisitorResponse.CommercialGuest guest = mViewModel.getDataManager().getCommercialVisitorDetail();
-                    if (guest!=null && !guest.getGuestList().isEmpty()) {
+                    if (guest != null && !guest.getGuestList().isEmpty()) {
                         intent.putExtra("list", new Gson().toJson(guest.guestList));
                     }
                 }

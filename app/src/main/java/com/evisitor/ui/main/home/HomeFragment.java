@@ -1,6 +1,9 @@
 package com.evisitor.ui.main.home;
 
-import android.app.ActivityManager;
+import static android.app.Activity.RESULT_OK;
+import static com.evisitor.util.AppConstants.ADD_FAMILY_MEMBER;
+import static com.evisitor.util.AppConstants.SCAN_RESULT;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +20,7 @@ import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.HomeBean;
 import com.evisitor.data.model.RecurrentVisitor;
 import com.evisitor.data.model.ResidentProfile;
+import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.databinding.FragmentHomeBinding;
 import com.evisitor.ui.base.BaseFragment;
@@ -32,7 +36,6 @@ import com.evisitor.ui.main.home.rejectreason.InputDialog;
 import com.evisitor.ui.main.home.scan.BarcodeScanActivity;
 import com.evisitor.ui.main.home.total.TotalVisitorsActivity;
 import com.evisitor.ui.main.home.trespasser.TrespasserActivity;
-import com.evisitor.ui.main.home.visitorprofile.VisitorProfileCallback;
 import com.evisitor.ui.main.home.visitorprofile.VisitorProfileDialog;
 import com.evisitor.ui.main.residential.add.AddVisitorActivity;
 import com.evisitor.ui.main.residential.guest.GuestActivity;
@@ -49,15 +52,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static android.app.Activity.RESULT_OK;
-import static com.evisitor.util.AppConstants.ADD_FAMILY_MEMBER;
-import static com.evisitor.util.AppConstants.SCAN_RESULT;
-
 public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel> implements HomeNavigator {
 
+    private final List<CheckInTemperature> guestIds = new ArrayList<>();
     private List<HomeBean> homeList;
     private HomeFragmentInteraction interaction;
-    private final List<CheckInTemperature> guestIds = new ArrayList<>();
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -100,8 +99,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             if (interaction != null)
                 interaction.onReceiveNotificationCount(count);
         });
-         getViewDataBinding().toolbar.imgSearch.setVisibility(View.VISIBLE);
-         getViewDataBinding().toolbar.imgSearch.setImageResource(R.drawable.ic_qr);
+        getViewDataBinding().toolbar.imgSearch.setVisibility(View.VISIBLE);
+        getViewDataBinding().toolbar.imgSearch.setImageResource(R.drawable.ic_qr);
 
         getViewDataBinding().toolbar.imgSearch.setOnClickListener(v -> {
             if (PermissionUtils.checkCameraPermission(getActivity())) {
@@ -117,9 +116,9 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         getViewDataBinding().toolbar.imgBack.setOnClickListener(v -> {
             InputDialog.newInstance().setTitle(getString(R.string.panic)).setHint(getString(R.string.enter_description)).setOnPositiveClickListener((dialog, input) -> {
                 dialog.dismiss();
-                if(input.isEmpty()){
-                    showAlert(R.string.alert,R.string.description_not_empty);
-                }else{
+                if (input.isEmpty()) {
+                    showAlert(R.string.alert, R.string.description_not_empty);
+                } else {
                     getViewModel().sendPanicAlert(input);
                 }
             }).show(getFragmentManager());
@@ -196,13 +195,25 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     }
 
     @Override
+    public void onSuccessServiceProviderData(ServiceProvider serviceProvider) {
+        List<VisitorProfileBean> bean = mViewModel.getServiceProviderProfileBean(serviceProvider);
+        VisitorProfileDialog.newInstance(bean, dialog -> {
+            mViewModel.checkinOutSp(serviceProvider);
+        }).setBtnLabel(getString(R.string.check_in))
+                .setBtnLabel(serviceProvider.getCheckInTime() == null ? AppConstants.CHECK_IN : AppConstants.CHECK_OUT)
+                .setBtnVisible(true)
+                .setImage(serviceProvider.getImageUrl())
+                .setVehicalNoPlateImg(serviceProvider.getVehicleImage()).show(getChildFragmentManager());
+    }
+
+    @Override
     public void onSuccessGuestData(Guests guests) {
         List<VisitorProfileBean> bean = mViewModel.setClickVisitorDetail(guests);
         VisitorProfileDialog.newInstance(bean, dialog -> {
-            if(guests.getGuestList().isEmpty()){
+            if (guests.getGuestList().isEmpty()) {
                 mViewModel.approveByCall(guestIds);
 
-            }else showSecondaryGuestListForCheckIn();
+            } else showSecondaryGuestListForCheckIn();
         }).setBtnLabel(getString(R.string.check_in))
                 .setBtnVisible(guests.getStatus().equalsIgnoreCase("PENDING"))
                 .setImage(guests.getImageUrl())
@@ -227,10 +238,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         }
     }
 
-    public interface HomeFragmentInteraction {
-        void onReceiveNotificationCount(int count);
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -240,12 +247,11 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
                 String barcodeData = data.getStringExtra("data");
                 String[] split = barcodeData.split(",");
                 if (!barcodeData.isEmpty()) {
-                    getViewModel().getQRCodeDataByType(split[0].concat(".png"),split[1]);
-                    //getViewModel().getResidentData(split[0].concat(".png"));
+                    getViewModel().getQRCodeDataByType(split[0].concat(".png"), split[1]);
                 } else {
                     showAlert(R.string.alert, R.string.blank);
                 }
-            }else if(requestCode == ADD_FAMILY_MEMBER){
+            } else if (requestCode == ADD_FAMILY_MEMBER) {
                 Guests tmpBean = mViewModel.getDataManager().getGuestDetail();
                 Type listType = new TypeToken<List<CheckInTemperature>>() {
                 }.getType();
@@ -265,6 +271,10 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         }
         i.putExtra("checkIn", true);
         startActivityForResult(i, ADD_FAMILY_MEMBER);
+    }
+
+    public interface HomeFragmentInteraction {
+        void onReceiveNotificationCount(int count);
     }
 
 }
