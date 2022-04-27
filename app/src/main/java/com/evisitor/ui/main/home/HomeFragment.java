@@ -199,8 +199,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         List<VisitorProfileBean> bean = mViewModel.getServiceProviderProfileBean(serviceProvider);
         VisitorProfileDialog.newInstance(bean, dialog -> {
             mViewModel.checkinOutSp(serviceProvider);
-        }).setBtnLabel(getString(R.string.check_in))
-                .setBtnLabel(serviceProvider.getCheckInTime() == null ? AppConstants.CHECK_IN : AppConstants.CHECK_OUT)
+        }).setBtnLabel(serviceProvider.getCheckInTime().isEmpty() ? getString(R.string.check_in) : getString(R.string.check_out))
                 .setBtnVisible(true)
                 .setImage(serviceProvider.getImageUrl())
                 .setVehicalNoPlateImg(serviceProvider.getVehicleImage()).show(getChildFragmentManager());

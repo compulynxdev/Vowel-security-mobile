@@ -582,22 +582,12 @@ public class HomeViewModel extends BaseCheckInOutViewModel<HomeNavigator> implem
     }
 
     public void checkinOutSp(ServiceProvider serviceProvider) {
-        //accountId: 1
-        //bodyTemperature: 36
-        //documentId: "161616"
-        //id: 1
-        //mode: "Walk-In"
-        //premiseHierarchyDetailsId: null
-        //staffId: null
-        //state: "ACCEPTED"
-        //type: "CHECK_IN"
-        //visitor: "SERVICE_PROVIDER"
         JSONObject object = new JSONObject();
         try {
             object.put("accountId", getDataManager().getAccountId());
             object.put("documentId", serviceProvider.getIdentityNo());
             object.put("id", serviceProvider.getServiceProviderId());
-            object.put("type", serviceProvider.getCheckInTime() == null ? AppConstants.CHECK_IN : AppConstants.CHECK_OUT);
+            object.put("type", serviceProvider.getCheckInTime().isEmpty() ? AppConstants.CHECK_IN : AppConstants.CHECK_OUT);
             object.put("state", AppConstants.ACCEPT);
             object.put("visitor", AppConstants.SERVICE_PROVIDER);
 

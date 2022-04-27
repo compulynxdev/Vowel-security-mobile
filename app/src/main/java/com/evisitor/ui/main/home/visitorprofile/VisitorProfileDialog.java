@@ -279,23 +279,22 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
     }
 
     private void updateTemperatureUI() {
-        if (checkInIsApproved || btnLabel.equalsIgnoreCase(getString(R.string.check_out))) {
-            getViewDataBinding().tvTitle.setVisibility(View.GONE);
-            getViewDataBinding().etTemperature.setVisibility(View.GONE);
-            return;
-        }
         getViewDataBinding().tvTitle.setText(getString(R.string.body_temp, ""));
 
         getViewModel().getBodyTemperature().observe(this, s -> {
-            if (s.equals("")) {
-                getViewDataBinding().tvTitle.setVisibility(View.GONE);
-                getViewDataBinding().etTemperature.setVisibility(View.GONE);
+            if (checkInIsApproved || btnLabel.equalsIgnoreCase(getString(R.string.check_out))) {
+                if (s.equals("")) {
+                    getViewDataBinding().tvTitle.setVisibility(View.GONE);
+                    getViewDataBinding().etTemperature.setVisibility(View.GONE);
+                } else {
+                    getViewDataBinding().etTemperature.setText(s);
+                    getViewDataBinding().etTemperature.setEnabled(false);
+                    getViewDataBinding().etTemperature.setCursorVisible(false);
+                }
             } else {
                 getViewDataBinding().etTemperature.setText(s);
-                getViewDataBinding().etTemperature.setEnabled(false);
-                getViewDataBinding().etTemperature.setCursorVisible(false);
+                getViewDataBinding().tvTitle.setText(getString(R.string.body_temp, ""));
             }
-
         });
     }
 
