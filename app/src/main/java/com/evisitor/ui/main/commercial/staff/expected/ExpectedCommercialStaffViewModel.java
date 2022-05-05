@@ -158,6 +158,7 @@ public class ExpectedCommercialStaffViewModel extends BaseCheckInOutViewModel<Ex
                 object.put("accountId", getDataManager().getAccountId());
                 object.put("staffId", getDataManager().getCommercialStaff().getId());
                 object.put("enteredVehicleNo", getDataManager().getCommercialStaff().getEnteredVehicleNo());
+                object.put("premiseHierarchyDetailsId",getDataManager().getCommercialStaff().getFlatId());
                 object.put("type", AppConstants.CHECK_IN);
             } catch (JSONException e) {
                 AppLogger.w("ExpectedCommercialStaffViewModel", e.toString());
