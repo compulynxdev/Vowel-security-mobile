@@ -147,13 +147,13 @@ public class ExpectedGuestViewModel extends BaseCheckInOutViewModel<ExpectedGues
     }
 
     void approveByCall(boolean isAccept, String input,List<CheckInTemperature> guestIds) {
-        if((!getDataManager().getGuestDetail().getExpectedVehicleNo().isEmpty() || !getDataManager().getGuestDetail().getEnteredVehicleNo().isEmpty())
+        /*if((!getDataManager().getGuestDetail().getExpectedVehicleNo().isEmpty() || !getDataManager().getGuestDetail().getEnteredVehicleNo().isEmpty())
                 && getDataManager().getGuestDetail().getNo_plate_bmp_img()==null){
             getNavigator().showToast(R.string.please_capture_vehical_image);
-       }/*else if(getDataManager().getGuestDetail().getMode().equalsIgnoreCase("Drive-In") && (getDataManager().getGuestDetail().getEnteredVehicleNo().isEmpty() ||
+       }else if(getDataManager().getGuestDetail().getMode().equalsIgnoreCase("Drive-In") && (getDataManager().getGuestDetail().getEnteredVehicleNo().isEmpty() ||
                getDataManager().getGuestDetail().getExpectedVehicleNo().isEmpty())){
             getNavigator().showToast(R.string.please_enter_vehical_no);
-        }*/else {
+        }else {*/
            if (getNavigator().isNetworkConnected(true)) {
                JSONObject object = new JSONObject();
                try {
@@ -177,7 +177,7 @@ public class ExpectedGuestViewModel extends BaseCheckInOutViewModel<ExpectedGues
                RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
                doCheckInOut(body, this);
            }
-       }
+       //}
     }
 
     @Override

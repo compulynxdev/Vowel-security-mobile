@@ -313,14 +313,14 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
         commercialStaffCheckInAdapter = new CommercialStaffCheckInAdapter(commercialStaffList, getBaseActivity(), bean -> {
             List<VisitorProfileBean> beans = mViewModel.getCommercialStaffBean(bean);
             VisitorProfileDialog.newInstance(beans, visitorProfileDialog -> {
-                visitorProfileDialog.dismiss();
-                if (mViewModel.getDataManager().isCheckOutFeature()) {
-                    name = bean.getFullName();
-                    type = 3;
-                    identity = bean.getDocumentId();
-                    scanIdDialog(bean.getDocumentId(), 3);
-                } else mViewModel.staffCheckOut();
-            }).setImage(bean.getImageUrl()).setBtnLabel(getString(R.string.check_out))
+                        visitorProfileDialog.dismiss();
+                        if (mViewModel.getDataManager().isCheckOutFeature()) {
+                            name = bean.getFullName();
+                            type = 3;
+                            identity = bean.getDocumentId();
+                            scanIdDialog(bean.getDocumentId(), 3);
+                        } else mViewModel.staffCheckOut();
+                    }).setImage(bean.getImageUrl()).setBtnLabel(getString(R.string.check_out))
                     .setVehicalNoPlateImg(bean.getVehicleImage()).show(getFragmentManager());
         });
     }
@@ -334,13 +334,15 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                 List<VisitorProfileBean> beans = mViewModel.getCommercialGuestProfileBean(guests);
                 VisitorProfileDialog.newInstance(beans, visitorProfileDialog -> {
                     visitorProfileDialog.dismiss();
+
+                    name = guests.getName();
+                    type = 0;
+                    identity = guests.getIdentityNo();
+
                     if (!guests.getHost().isEmpty() && guests.getHostCheckOutTime().isEmpty())
-                        showCallDialog(0);
+                        showCallDialog(guests.getIdentityNo(), 0);
                     else {
                         if (mViewModel.getDataManager().isCheckOutFeature() && !guests.isMinor()) {
-                            name = guests.getName();
-                            type = 0;
-                            identity = guests.getIdentityNo();
                             scanIdDialog(guests.getIdentityNo(), 0);
                         } else {
                             mViewModel.checkOut(0);
@@ -393,13 +395,14 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
             List<VisitorProfileBean> beans = mViewModel.getHouseKeepingProfileBean(houseKeeping);
             VisitorProfileDialog.newInstance(beans, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
+                name = houseKeeping.getName();
+                type = 1;
+                identity = houseKeeping.getIdentityNo();
+
                 if (houseKeeping.isCheckOutFeature() && !houseKeeping.isHostCheckOut())
-                    showCallDialog(1);
+                    showCallDialog(houseKeeping.getIdentityNo(), 1);
                 else {
                     if (mViewModel.getDataManager().isCheckOutFeature()) {
-                        name = houseKeeping.getName();
-                        type = 1;
-                        identity = houseKeeping.getIdentityNo();
                         scanIdDialog(houseKeeping.getIdentityNo(), 1);
                     } else {
                         if (isNetworkConnected(true))
@@ -417,13 +420,14 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                 List<VisitorProfileBean> beans = mViewModel.getServiceProviderProfileBean(serviceProvider);
                 VisitorProfileDialog.newInstance(beans, visitorProfileDialog -> {
                     visitorProfileDialog.dismiss();
+                    name = serviceProvider.getName();
+                    type = 2;
+                    identity = serviceProvider.getIdentityNo();
+
                     if (serviceProvider.isCheckOutFeature() && !serviceProvider.isHostCheckOut())
-                        showCallDialog(2);
+                        showCallDialog(serviceProvider.getIdentityNo(), 2);
                     else {
                         if (mViewModel.getDataManager().isCheckOutFeature()) {
-                            name = serviceProvider.getName();
-                            type = 2;
-                            identity = serviceProvider.getIdentityNo();
                             scanIdDialog(serviceProvider.getIdentityNo(), 2);
                         } else
                             mViewModel.checkOut(2);
@@ -482,13 +486,15 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
             List<VisitorProfileBean> beans = mViewModel.getGuestProfileBean(guests);
             VisitorProfileDialog.newInstance(beans, visitorProfileDialog -> {
                 visitorProfileDialog.dismiss();
+
+                name = guests.getName();
+                type = 0;
+                identity = guests.getIdentityNo();
+
                 if (guests.isCheckOutFeature() && !guests.isHostCheckOut())
-                    showCallDialog(0);
+                    showCallDialog(guests.getIdentityNo(), 0);
                 else {
                     if (mViewModel.getDataManager().isCheckOutFeature() && !guests.isMinor()) {
-                        name = guests.getName();
-                        type = 0;
-                        identity = guests.getIdentityNo();
                         scanIdDialog(guests.getIdentityNo(), 0);
                     } else {
                         mViewModel.checkOut(0);
@@ -500,7 +506,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
         getViewDataBinding().recyclerView.setAdapter(guestAdapter);
     }
 
-    private void showCallDialog(int type) {
+    private void showCallDialog(String identityNo, int type) {
         AlertDialog.newInstance()
                 .setNegativeBtnShow(false)
                 .setCloseBtnShow(true)
@@ -515,7 +521,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                 .setOnPositiveClickListener(dialog12 -> {
                     dialog12.dismiss();
                     if (isNetworkConnected(true))
-                        mViewModel.checkOut(type);
+                    scanIdDialog(identityNo, type);
                 }).show(getFragmentManager());
     }
 

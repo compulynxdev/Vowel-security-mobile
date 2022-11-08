@@ -8,17 +8,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class RecurrentVisitor implements Parcelable {
 
-    public static final Creator<RecurrentVisitor> CREATOR = new Creator<RecurrentVisitor>() {
-        @Override
-        public RecurrentVisitor createFromParcel(Parcel in) {
-            return new RecurrentVisitor(in);
-        }
-
-        @Override
-        public RecurrentVisitor[] newArray(int size) {
-            return new RecurrentVisitor[size];
-        }
-    };
     private String visitorType;
     @SerializedName("address")
     private String address;
@@ -94,39 +83,20 @@ public class RecurrentVisitor implements Parcelable {
         companyAddress = in.readString();
         profile = in.readString();
         premiseName = in.readString();
+        mode = in.readString();
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(visitorType);
-        dest.writeString(address);
-        dest.writeString(image);
-        dest.writeString(fullName);
-        dest.writeInt(flatId);
-        dest.writeString(flatNo);
-        dest.writeString(expectedVehicleNo);
-        dest.writeString(documentType);
-        dest.writeString(dialingCode);
-        dest.writeString(contactNo);
-        dest.writeString(gender);
-        dest.writeString(nationality);
-        dest.writeString(documentId);
-        dest.writeString(residentName);
-        dest.writeInt(residentId);
-        dest.writeString(email);
-        dest.writeString(staffName);
-        dest.writeString(companyName);
-        dest.writeString(employment);
-        dest.writeString(companyAddress);
-        dest.writeString(profile);
-        dest.writeString(premiseName);
-        dest.writeString(mode);
-    }
+    public static final Creator<RecurrentVisitor> CREATOR = new Creator<RecurrentVisitor>() {
+        @Override
+        public RecurrentVisitor createFromParcel(Parcel in) {
+            return new RecurrentVisitor(in);
+        }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+        @Override
+        public RecurrentVisitor[] newArray(int size) {
+            return new RecurrentVisitor[size];
+        }
+    };
 
     public String getAddress() {
         return address == null ? "" : address;
@@ -318,5 +288,37 @@ public class RecurrentVisitor implements Parcelable {
 
     public void setPremiseName(String premiseName) {
         this.premiseName = premiseName;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(visitorType);
+        parcel.writeString(address);
+        parcel.writeString(image);
+        parcel.writeString(fullName);
+        parcel.writeInt(flatId);
+        parcel.writeString(flatNo);
+        parcel.writeString(expectedVehicleNo);
+        parcel.writeString(documentType);
+        parcel.writeString(dialingCode);
+        parcel.writeString(contactNo);
+        parcel.writeString(gender);
+        parcel.writeString(nationality);
+        parcel.writeString(documentId);
+        parcel.writeString(residentName);
+        parcel.writeInt(residentId);
+        parcel.writeString(email);
+        parcel.writeString(staffName);
+        parcel.writeString(companyName);
+        parcel.writeString(employment);
+        parcel.writeString(companyAddress);
+        parcel.writeString(profile);
+        parcel.writeString(premiseName);
+        parcel.writeString(mode);
     }
 }

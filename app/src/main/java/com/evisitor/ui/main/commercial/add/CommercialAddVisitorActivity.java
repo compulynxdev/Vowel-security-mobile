@@ -890,5 +890,6 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
         getViewDataBinding().tvGender.setText(recurrentVisitor.getGender());
         getViewDataBinding().etVehicle.setText(recurrentVisitor.getExpectedVehicleNo());
         getViewDataBinding().tvVisitorMode.setText(recurrentVisitor.getMode() != null && !recurrentVisitor.getMode().equals("") ? mViewModel.getVisitorMode(recurrentVisitor.getMode()) : mViewModel.getVisitorMode("Walk-In"));
+        updateVisitorModeUI( mViewModel.getVisitorMode(recurrentVisitor.getMode()));
     }
 }

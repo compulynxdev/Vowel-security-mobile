@@ -248,43 +248,43 @@ public class HomeViewModel extends BaseCheckInOutViewModel<HomeNavigator> implem
     }
 
     void approveByCall(List<CheckInTemperature> guestIds) {
-        if ((!getDataManager().getGuestDetail().getExpectedVehicleNo().isEmpty() || !getDataManager().getGuestDetail().getEnteredVehicleNo().isEmpty())
-                && getDataManager().getGuestDetail().getNo_plate_bmp_img() == null) {
-            getNavigator().showAlert(R.string.alert, R.string.please_capture_vehical_image);
-        } else {
-            if (getNavigator().isNetworkConnected(true)) {
-                JSONObject object = new JSONObject();
-                try {
-                    object.put("id", getDataManager().getGuestDetail().getGuestId());
-                    object.put("enteredVehicleNo", getDataManager().getGuestDetail().getEnteredVehicleNo());
-                    object.put("bodyTemperature", getDataManager().getGuestDetail().getBodyTemperature());
-                    object.put("type", AppConstants.CHECK_IN);
-                    object.put("visitor", AppConstants.GUEST);
-                    JSONArray ids = new JSONArray(new Gson().toJson(guestIds));
-                    object.put("guestIdList", ids);
-                    object.put("state", AppConstants.ACCEPT);
-                    object.put("rejectedBy", null);
-                    object.put("rejectReason", "");
-                    object.put("documentId", getDataManager().getGuestDetail().getIdentityNo());
-                    object.put("userMasterId", getDataManager().getUserDetail().getId());
-                    object.put("name", getDataManager().getGuestDetail().getName());
-                    object.put("accountId", getDataManager().getAccountId());
-                    String flatId2 = getDataManager().getGuestDetail().getFlatId2();
-                    if (!flatId2.equals("")) {
-                        object.put("premiseHierarchyDetailsId", getDataManager().getGuestDetail().getFlatId2());
-                    }
-
-                    if (getDataManager().getGuestDetail().getNo_plate_bmp_img() != null) {
-                        object.put("vehicleImage", AppUtils.getBitmapToBase64(getDataManager().getGuestDetail().getNo_plate_bmp_img()));
-                    }
-                } catch (JSONException e) {
-                    AppLogger.w(TAG, e.toString());
+//        if ((!getDataManager().getGuestDetail().getExpectedVehicleNo().isEmpty() || !getDataManager().getGuestDetail().getEnteredVehicleNo().isEmpty())
+//                && getDataManager().getGuestDetail().getNo_plate_bmp_img() == null) {
+//            getNavigator().showAlert(R.string.alert, R.string.please_capture_vehical_image);
+//        } else {
+        if (getNavigator().isNetworkConnected(true)) {
+            JSONObject object = new JSONObject();
+            try {
+                object.put("id", getDataManager().getGuestDetail().getGuestId());
+                object.put("enteredVehicleNo", getDataManager().getGuestDetail().getEnteredVehicleNo());
+                object.put("bodyTemperature", getDataManager().getGuestDetail().getBodyTemperature());
+                object.put("type", AppConstants.CHECK_IN);
+                object.put("visitor", AppConstants.GUEST);
+                JSONArray ids = new JSONArray(new Gson().toJson(guestIds));
+                object.put("guestIdList", ids);
+                object.put("state", AppConstants.ACCEPT);
+                object.put("rejectedBy", null);
+                object.put("rejectReason", "");
+                object.put("documentId", getDataManager().getGuestDetail().getIdentityNo());
+                object.put("userMasterId", getDataManager().getUserDetail().getId());
+                object.put("name", getDataManager().getGuestDetail().getName());
+                object.put("accountId", getDataManager().getAccountId());
+                String flatId2 = getDataManager().getGuestDetail().getFlatId2();
+                if (!flatId2.equals("")) {
+                    object.put("premiseHierarchyDetailsId", getDataManager().getGuestDetail().getFlatId2());
                 }
 
-                RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
-                doCheckInOut(body, this);
+                if (getDataManager().getGuestDetail().getNo_plate_bmp_img() != null) {
+                    object.put("vehicleImage", AppUtils.getBitmapToBase64(getDataManager().getGuestDetail().getNo_plate_bmp_img()));
+                }
+            } catch (JSONException e) {
+                AppLogger.w(TAG, e.toString());
             }
+
+            RequestBody body = AppUtils.createBody(AppConstants.CONTENT_TYPE_JSON, object.toString());
+            doCheckInOut(body, this);
         }
+//        }
     }
 
     List<VisitorProfileBean> getServiceProviderProfileBean(ServiceProvider serviceProvider) {
@@ -371,7 +371,8 @@ public class HomeViewModel extends BaseCheckInOutViewModel<HomeNavigator> implem
                 break;
 
             case "serviceprovider":
-                getSpByQr(qr);
+//                getSpByQr(qr);
+                scanQRIdForRecurrent(qr, false);
                 break;
 
             case "recurrentGuest":
@@ -506,6 +507,7 @@ public class HomeViewModel extends BaseCheckInOutViewModel<HomeNavigator> implem
                 object.put("staffId", getDataManager().getCommercialStaff().getId());
                 object.put("enteredVehicleNo", getDataManager().getCommercialStaff().getEnteredVehicleNo());
                 object.put("bodyTemperature", getDataManager().getCommercialStaff().getBodyTemperature());
+                object.put("premiseHierarchyDetailsId", getDataManager().getCommercialStaff().getFlatId());
                 object.put("type", AppConstants.CHECK_IN);
             } catch (JSONException e) {
                 AppLogger.w("ExpectedCommercialStaffViewModel", e.toString());

@@ -500,7 +500,7 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
                             else visitorImage.setValue(object.getString("imageBase64"));
                         } else if (response.code() == 401) {
                             getNavigator().openActivityOnTokenExpire();
-                        } else getNavigator().handleApiError(response.errorBody());
+                        } else {/*getNavigator().handleApiError(response.errorBody());*/}
                     } catch (Exception e) {
                         getNavigator().showAlert(R.string.alert, R.string.alert_error);
                     }

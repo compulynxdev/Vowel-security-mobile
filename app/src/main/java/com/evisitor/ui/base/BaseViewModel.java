@@ -45,6 +45,7 @@ public class BaseViewModel<N extends BaseNavigator> extends ViewModel {
             identityTypeList.put("nationalId", "National ID");
             identityTypeList.put("dl", "Driving Licence");
             identityTypeList.put("passport", "Passport");
+            identityTypeList.put("National ID", "National ID");
         }
 
         return identityTypeList.get(key);
@@ -57,7 +58,7 @@ public class BaseViewModel<N extends BaseNavigator> extends ViewModel {
             visitorModeList.put("drive-in", "Drive-In");
         }
 
-        return visitorModeList.get(key);
+        return visitorModeList.get(key.toLowerCase());
     }
 
     public void doGetGuestConfiguration(GuestConfigurationCallback callback) {

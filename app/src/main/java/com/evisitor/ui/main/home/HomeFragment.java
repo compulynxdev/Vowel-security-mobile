@@ -198,9 +198,9 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     public void onSuccessServiceProviderData(ServiceProvider serviceProvider) {
         List<VisitorProfileBean> bean = mViewModel.getServiceProviderProfileBean(serviceProvider);
         VisitorProfileDialog.newInstance(bean, dialog -> {
-            mViewModel.checkinOutSp(serviceProvider);
-        }).setBtnLabel(serviceProvider.getCheckInTime().isEmpty() ? getString(R.string.check_in) : getString(R.string.check_out))
-                .setBtnVisible(true)
+                    mViewModel.checkinOutSp(serviceProvider);
+                }).setBtnLabel(serviceProvider.getCheckOutTime().isEmpty() && !serviceProvider.getCheckInTime().isEmpty() ? getString(R.string.check_out) : getString(R.string.check_in))
+                .setBtnVisible(serviceProvider.getCheckOutTime().isEmpty())
                 .setImage(serviceProvider.getImageUrl())
                 .setVehicalNoPlateImg(serviceProvider.getVehicleImage()).show(getChildFragmentManager());
     }
@@ -209,8 +209,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     public void onSuccessGuestData(Guests guests) {
         List<VisitorProfileBean> bean = mViewModel.setClickVisitorDetail(guests);
         VisitorProfileDialog.newInstance(bean, dialog -> {
-            if (guests.getGuestList().isEmpty()) {
-                mViewModel.approveByCall(guestIds);
+                    if (guests.getGuestList().isEmpty()) {
+                        mViewModel.approveByCall(guestIds);
 
             } else showSecondaryGuestListForCheckIn();
         }).setBtnLabel(getString(R.string.check_in))

@@ -262,6 +262,7 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
                 object.put("premiseHierarchyDetailsId", visitorData.houseId);  //house or flat id  //->
                 object.put("expectedVehicle", visitorData.vehicleNo.toUpperCase());
                 object.put("enteredVehicleNo", visitorData.vehicleNo.toUpperCase());
+                object.put("expectedVehicleNo", visitorData.vehicleNo.toUpperCase());
                 object.put("gender", visitorData.gender);
                 object.put("bodyTemperature", visitorData.bodyTemperature);
                 if (visitorData.bmp_profile == null) {

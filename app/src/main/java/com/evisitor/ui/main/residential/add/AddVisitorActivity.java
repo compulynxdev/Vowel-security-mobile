@@ -944,6 +944,6 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
         getViewDataBinding().tvGender.setText(recurrentVisitor.getGender());
         getViewDataBinding().etVehicle.setText(recurrentVisitor.getExpectedVehicleNo());
         getViewDataBinding().tvVisitorMode.setText(recurrentVisitor.getMode() != null && !recurrentVisitor.getMode().isEmpty() ? mViewModel.getVisitorMode(recurrentVisitor.getMode()) : mViewModel.getVisitorMode("Walk-In"));
-
+        updateVisitorCategory(mViewModel.getVisitorMode(recurrentVisitor.getMode()));
     }
 }
