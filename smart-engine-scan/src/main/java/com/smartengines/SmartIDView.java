@@ -33,6 +33,7 @@ import android.content.res.AssetManager;
 import android.hardware.Camera;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.util.Size;
 import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -230,34 +231,47 @@ public class SmartIDView implements SurfaceHolder.Callback,
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void setView(int width, int height) throws Exception {
-        if (camera_opened == false) {
-            camera = Camera.open();
+        if (!camera_opened) {
+            try {
+                camera = Camera.open();
 
-            if (camera == null) {
-                return;
-            }
-
-            camera_opened = true;
-
-            Camera.Parameters params = camera.getParameters();
-
-            List<String> focus_modes = params.getSupportedFocusModes();  // supported focus modes
-            String focus_mode = Camera.Parameters.FOCUS_MODE_AUTO;
-            autofocus = focus_modes.contains(focus_mode);
-
-            if (autofocus == true) {  // camera has autofocus
-                if (focus_modes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)) {
-                    focus_mode = Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE;
-                } else if (focus_modes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO)) {
-                    focus_mode = Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO;
+                if (camera == null) {
+                    return;
                 }
-            } else {
-                // camera doesn't support autofocus so select the first mode
-                focus_mode = focus_modes.get(0);
+
+                camera_opened = true;
+
+                Camera.Parameters params = camera.getParameters();
+
+                List<String> focus_modes = params.getSupportedFocusModes();  // supported focus modes
+                List<Camera.Size> allSizes = params.getSupportedPictureSizes();
+                Camera.Size size = allSizes.get(0); // get top size
+                for (int i = 0; i < allSizes.size(); i++) {
+                    if (allSizes.get(i).width > size.width)
+                        size = allSizes.get(i);
+                }
+
+
+                String focus_mode = Camera.Parameters.FOCUS_MODE_AUTO;
+                autofocus = focus_modes.contains(focus_mode);
+
+                if (autofocus == true) {  // camera has autofocus
+                    if (focus_modes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)) {
+                        focus_mode = Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE;
+                    } else if (focus_modes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO)) {
+                        focus_mode = Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO;
+                    }
+                } else {
+                    // camera doesn't support autofocus so select the first mode
+                    focus_mode = focus_modes.get(0);
+                }
+                params.setFlashMode(Camera.Parameters.FLASH_MODE_ON);
+                params.setFocusMode(focus_mode);
+                params.setPictureSize(size.width, size.height);
+                camera.setParameters(params);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            params.setFlashMode(Camera.Parameters.FLASH_MODE_ON);
-            params.setFocusMode(focus_mode);
-            camera.setParameters(params);
         }
 
         setPreviewSize(width, height);
