@@ -55,6 +55,7 @@ public class BaseViewModel<N extends BaseNavigator> extends ViewModel {
         if (visitorModeList == null) {
             visitorModeList = new HashMap<>();
             visitorModeList.put("Walk-In", "Walk-In");
+            visitorModeList.put("walk-in", "Walk-In");
             visitorModeList.put("drive-in", "Drive-In");
         }
 
