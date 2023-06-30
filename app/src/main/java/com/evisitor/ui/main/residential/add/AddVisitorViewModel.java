@@ -188,9 +188,10 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
         } else if ((visitorData.mode.equalsIgnoreCase("Drive-In") && (visitorData.vehicleNo == null || visitorData.vehicleNo.isEmpty()))) {
             getNavigator().showToast(R.string.please_enter_vehical_no);
             return false;
-        } else if ((visitorData.mode.equalsIgnoreCase("Drive-In") && visitorData.vehicalNoPlateBitMapImg == null)) {
-            getNavigator().showToast(R.string.please_capture_vehical_image);
-            return false;
+//        }
+//        else if ((visitorData.mode.equalsIgnoreCase("Drive-In") && visitorData.vehicalNoPlateBitMapImg == null)) {
+//            getNavigator().showToast(R.string.please_capture_vehical_image);
+//            return false;
         } else return true;
     }
 
