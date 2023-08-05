@@ -225,6 +225,7 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                 object.put("premiseHierarchyDetailsId", addVisitorData.houseId);  //house or flat id
                 object.put("expectedVehicleNo", addVisitorData.vehicleNo.toUpperCase());
                 object.put("enteredVehicleNo", addVisitorData.vehicleNo.toUpperCase());
+                object.put("vehicleModel", addVisitorData.vehicleModel.toUpperCase());
                 object.put("gender", addVisitorData.gender);
                 object.put("residentId", addVisitorData.residentId); //host id
                 object.put("cardId", "");
@@ -372,6 +373,7 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                 object.put("premiseHierarchyDetailsId", visitorData.isResident ? visitorData.houseId : null);  //house or flat id  //->
                 object.put("expectedVehicle", visitorData.vehicleNo.toUpperCase());
                 object.put("enteredVehicleNo", visitorData.vehicleNo.toUpperCase());
+                object.put("vehicleModel", visitorData.vehicleModel.toUpperCase());
                 object.put("gender", visitorData.gender);
                 object.put("residentId", visitorData.isResident ? visitorData.residentId : null); //host id   //-> send null in case of property
                 object.put("bodyTemperature", visitorData.bodyTemperature);

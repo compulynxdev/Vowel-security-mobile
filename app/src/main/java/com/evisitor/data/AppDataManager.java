@@ -257,6 +257,16 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public void setCaptureVehicleModel(boolean capture) {
+        preferenceHelper.setCaptureVehicleModel(capture);
+    }
+
+    @Override
+    public boolean capturesVehicleModel() {
+        return preferenceHelper.capturesVehicleModel();
+    }
+
+    @Override
     public String getLanguage() {
         return preferenceHelper.getLanguage();
     }
@@ -349,6 +359,11 @@ public class AppDataManager implements DataManager {
     @Override
     public Call<ResponseBody> doGetGuestConfiguration(String authToken, Map<String, String> partMap) {
         return apiHelper.doGetGuestConfiguration(authToken, partMap);
+    }
+
+    @Override
+    public Call<ResponseBody> doGetConfigurations(String authToken, Map<String, String> partMap) {
+        return apiHelper.doGetConfigurations(authToken, partMap);
     }
 
     @Override

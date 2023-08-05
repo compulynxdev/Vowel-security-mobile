@@ -539,6 +539,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
         visitorData.imageUrl = imageUrl;
         visitorData.bmp_profile = bmp_profile;
         visitorData.vehicleNo = getViewDataBinding().etVehicle.getText().toString().trim();
+        visitorData.vehicleModel = getViewDataBinding().vehicleModel.getText().toString().trim();
         visitorData.dialingCode = countryCode;
         visitorData.isAccept = isAccept;
         visitorData.vehicalNoPlateBitMapImg = vehicalImgBitmap;
@@ -580,9 +581,13 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
         if (visitorType.equals("Walk-In")) {
             getViewDataBinding().etVehicle.setVisibility(View.GONE);
             getViewDataBinding().etClickImag.setVisibility(View.GONE);
+            getViewDataBinding().vehicleModel.setVisibility(View.GONE);
         } else {
             getViewDataBinding().etVehicle.setVisibility(View.VISIBLE);
             getViewDataBinding().etClickImag.setVisibility(View.VISIBLE);
+            if (mViewModel.getDataManager().capturesVehicleModel()) {
+                getViewDataBinding().vehicleModel.setVisibility(View.VISIBLE);
+            }
         }
 
     }
@@ -648,6 +653,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
         addVisitorData.isStaffSelect = isStaffSelect;
         addVisitorData.name = getViewDataBinding().etName.getText().toString();
         addVisitorData.vehicleNo = getViewDataBinding().etVehicle.getText().toString().trim();
+        addVisitorData.vehicleModel = getViewDataBinding().vehicleModel.getText().toString().trim();
         addVisitorData.contact = getViewDataBinding().etContact.getText().toString();
         addVisitorData.dialingCode = countryCode;
         addVisitorData.address = getViewDataBinding().etAddress.getText().toString();

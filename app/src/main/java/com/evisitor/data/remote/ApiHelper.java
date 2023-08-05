@@ -27,6 +27,9 @@ public interface ApiHelper {
     @GET(WebServices.GET_GUEST_CONFIGURATION)
     Call<ResponseBody> doGetGuestConfiguration(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
 
+    @GET(WebServices.GET_CONFIGURATIONS)
+    Call<ResponseBody> doGetConfigurations(@Header("authorization") String authToken, @QueryMap Map<String, String> partMap);
+
     @POST(WebServices.ADD_GUEST)
     Call<ResponseBody> doAddGuest(@Header("authorization") String authToken, @Body RequestBody requestBody);
 

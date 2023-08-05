@@ -69,6 +69,11 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
+    public Call<ResponseBody> doGetConfigurations(String authToken, Map<String, String> partMap) {
+        return getApiInterface().doGetConfigurations(authToken,partMap);
+    }
+
+    @Override
     public Call<ResponseBody> doAddGuest(String authToken, RequestBody requestBody) {
         return getApiInterface().doAddGuest(authToken, requestBody);
     }

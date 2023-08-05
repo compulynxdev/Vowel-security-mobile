@@ -243,7 +243,28 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_nationality"
                     tools:ignore="LabelFor"
                     tools:targetApi="o" />
-
+                <EditText
+                    android:id="@+id/vehicle_model"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/bg_search"
+                    android:fontFamily="@font/futura_round_medium"
+                    android:gravity="center_vertical"
+                    android:hint="@string/vehicle_model"
+                    android:maxLines="10"
+                    android:paddingStart="16dp"
+                    android:visibility="gone"
+                    android:paddingEnd="8dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black40p"
+                    android:textSize="16sp"
+                    android:theme="@style/EditTextTheme"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/et_vehicle" />
                 <EditText
                     android:id="@+id/et_address"
                     android:layout_width="match_parent"
@@ -307,12 +328,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:src="@drawable/visibility"
-                    android:tint="@color/white"
                     android:visibility="gone"
                     app:layout_constraintStart_toEndOf="@+id/take_no_plate_img"
                     app:layout_constraintTop_toBottomOf="@id/et_temperature"
                     tools:ignore="LabelFor"
-                    tools:targetApi="o" />
+                    tools:targetApi="o"
+                    app:tint="@color/white" />
 
 
                 <LinearLayout
@@ -326,7 +347,7 @@
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/et_vehicle">
+                    app:layout_constraintTop_toBottomOf="@id/vehicle_model">
                     <RelativeLayout
                         android:id="@+id/rl_code"
                         android:layout_width="85dp"
@@ -382,7 +403,7 @@
                         android:theme="@style/EditTextTheme"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/et_vehicle"
+                        app:layout_constraintTop_toBottomOf="@id/vehicle_model"
                         tools:ignore="LabelFor"
                         tools:targetApi="o" />
 

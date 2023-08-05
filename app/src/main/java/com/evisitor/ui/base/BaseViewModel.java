@@ -5,8 +5,10 @@ import androidx.lifecycle.ViewModel;
 
 import com.evisitor.R;
 import com.evisitor.data.DataManager;
+import com.evisitor.data.model.Configurations;
 import com.evisitor.data.model.GuestConfigurationResponse;
 
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,6 +64,42 @@ public class BaseViewModel<N extends BaseNavigator> extends ViewModel {
         return visitorModeList.get(key.toLowerCase());
     }
 
+    public void getConfigurations(){
+        try {
+            if (getNavigator().isNetworkConnected()) {
+                Map<String, String> map = new HashMap<>();
+                map.put("accountId", getDataManager().getAccountId());
+              getDataManager().doGetConfigurations(getDataManager().getHeader(), map).enqueue(new Callback<ResponseBody>() {
+                  @Override
+                  public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                      if (response.isSuccessful()){
+                          try {
+                               if (response.body() != null) {
+                                   Configurations[] configurations = getDataManager().getGson().fromJson(response.body().string(), Configurations[].class);
+                                   for (Configurations configuration : configurations) {
+                                       if (configuration.getFeatureCode().equalsIgnoreCase("vhclmodel")) {
+                                           getDataManager().setCaptureVehicleModel(configuration.isStatus());
+                                       }
+                                   }
+                               }
+                          } catch (IOException e) {
+                              e.printStackTrace();
+                              //throw new RuntimeException(e);
+                          }
+                      }
+                  }
+
+                  @Override
+                  public void onFailure(Call<ResponseBody> call, Throwable t) {
+                      t.printStackTrace();
+                      getNavigator().handleApiFailure(t);
+                  }
+              });
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
     public void doGetGuestConfiguration(GuestConfigurationCallback callback) {
         boolean isShowMsg = true;
         if (callback == null) isShowMsg = false;
@@ -85,6 +123,7 @@ public class BaseViewModel<N extends BaseNavigator> extends ViewModel {
                                 getNavigator().showAlert(R.string.alert, R.string.alert_error);
                             }
                         }
+                        getConfigurations();
                     } else {
                         if (finalIsShowMsg) {
                             getNavigator().handleApiError(response.errorBody());

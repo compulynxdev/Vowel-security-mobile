@@ -45,6 +45,7 @@ public class AppPreferenceHelper implements PreferenceHelper {
     private static final String PROPERTY_DIALING_CODE = "PROPERTY_DIALING_CODE";
     private static final String CHECK_OUT_FEATURE = "CHECK_OUT_FEATURE";
     private static final String PRINT_LABEL = "PRINT_LABEL";
+    private static final String CAPTURE_VEHICLE_MODEL = "CAPTURE_VEHICLE_MODEL";
 
     private final SharedPreferences mPrefs;
 
@@ -255,6 +256,16 @@ public class AppPreferenceHelper implements PreferenceHelper {
     @Override
     public void setPrintLabel(boolean isPrint) {
         mPrefs.edit().putBoolean(PRINT_LABEL, isPrint).apply();
+    }
+
+    @Override
+    public void setCaptureVehicleModel(boolean capture) {
+        mPrefs.edit().putBoolean(CAPTURE_VEHICLE_MODEL,capture).apply();
+    }
+
+    @Override
+    public boolean capturesVehicleModel() {
+        return mPrefs.getBoolean(CAPTURE_VEHICLE_MODEL,false);
     }
 
 }

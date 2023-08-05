@@ -19,6 +19,7 @@ public class AddVisitorData {
     public String nationality = "";
     public String name;
     public String vehicleNo;
+    public String vehicleModel;
     public String contact;
     public String dialingCode;
     public String address;

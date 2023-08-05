@@ -129,6 +129,7 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
                 }
                 object.put("expectedVehicleNo", addVisitorData.vehicleNo.toUpperCase());
                 object.put("enteredVehicleNo", addVisitorData.vehicleNo.toUpperCase());
+                object.put("vehicleModel", addVisitorData.vehicleModel.toUpperCase());
                 object.put("gender", addVisitorData.gender);
                 object.put("residentId", addVisitorData.residentId); //host id
                 object.put("cardId", "");
@@ -263,6 +264,7 @@ public class CommercialAddVisitorViewModel extends BaseViewModel<CommercialAddVi
                 object.put("expectedVehicle", visitorData.vehicleNo.toUpperCase());
                 object.put("enteredVehicleNo", visitorData.vehicleNo.toUpperCase());
                 object.put("expectedVehicleNo", visitorData.vehicleNo.toUpperCase());
+                object.put("vehicleModel", visitorData.vehicleModel.toUpperCase());
                 object.put("gender", visitorData.gender);
                 object.put("bodyTemperature", visitorData.bodyTemperature);
                 if (visitorData.bmp_profile == null) {

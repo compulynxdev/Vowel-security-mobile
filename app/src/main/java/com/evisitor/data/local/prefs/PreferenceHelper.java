@@ -78,4 +78,8 @@ public interface PreferenceHelper {
     boolean isPrintLabel();
 
     void setPrintLabel(boolean isPrint);
+
+    void setCaptureVehicleModel(boolean capture);
+
+    boolean capturesVehicleModel();
 }
