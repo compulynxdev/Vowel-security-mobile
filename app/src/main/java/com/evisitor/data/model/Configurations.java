@@ -59,11 +59,22 @@ public class Configurations {
         this.type = type;
     }
 
-    public String getValue() {
-        return value;
+    public boolean getValue() {
+        return stringToBoolean(this.value);
     }
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public boolean stringToBoolean(String value) {
+        if (this.value == null) {
+            return false;
+        }
+        if (this.value.equalsIgnoreCase("false")) {
+            return false;
+        } else if (this.value.equalsIgnoreCase("true")) {
+            return true;
+        } else return false;
     }
 }

@@ -56,6 +56,9 @@ public class RecurrentVisitor implements Parcelable {
     @SerializedName("mode")
     private String mode;
 
+    @SerializedName("vehicleModel")
+    private String vehicleModel;
+
     public RecurrentVisitor() {
 
     }
@@ -84,6 +87,7 @@ public class RecurrentVisitor implements Parcelable {
         profile = in.readString();
         premiseName = in.readString();
         mode = in.readString();
+        vehicleModel = in.readString();
     }
 
     public static final Creator<RecurrentVisitor> CREATOR = new Creator<RecurrentVisitor>() {
@@ -290,6 +294,14 @@ public class RecurrentVisitor implements Parcelable {
         this.premiseName = premiseName;
     }
 
+    public String getVehicleModel() {
+        return vehicleModel == null ? "" : vehicleModel;
+    }
+
+    public void setVehicleModel(String vehicleModel) {
+        this.vehicleModel = vehicleModel;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -320,5 +332,6 @@ public class RecurrentVisitor implements Parcelable {
         parcel.writeString(profile);
         parcel.writeString(premiseName);
         parcel.writeString(mode);
+        parcel.writeString(vehicleModel);
     }
 }

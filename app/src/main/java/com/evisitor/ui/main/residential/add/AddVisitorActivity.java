@@ -487,11 +487,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                 SelectionBottomSheetDialog.newInstance(getString(R.string.select_employment), mViewModel.getEmploymentTypeList()).setItemSelectedListener(pos -> {
                     String value = mViewModel.getEmploymentTypeList().get(pos).toString();
                     getViewDataBinding().tvEmployment.setText(value);
-                    if (value.equals("Self")) {
-                        getViewDataBinding().groupEmployment.setVisibility(View.GONE);
-                    } else {
-                        getViewDataBinding().groupEmployment.setVisibility(View.VISIBLE);
-                    }
+                    showGroupEmployment(value);
                 }).show(getSupportFragmentManager());
                 break;
             case R.id.take_no_plate_img:
@@ -875,7 +871,13 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                 getViewDataBinding().tvGender.setText(R.string.female);
         }
     }
-
+    private void showGroupEmployment(String value) {
+        if (value.equalsIgnoreCase("Self")) {
+            getViewDataBinding().groupEmployment.setVisibility(View.GONE);
+        } else {
+            getViewDataBinding().groupEmployment.setVisibility(View.VISIBLE);
+        }
+    }
     private void autoFillData(RecurrentVisitor recurrentVisitor) {
         if (recurrentVisitor.getVisitorType().equalsIgnoreCase(AppConstants.GUEST)) {
             getViewDataBinding().toolbar.tvTitle.setText(R.string.title_add_guest);
@@ -902,7 +904,6 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
             getViewDataBinding().etAddress.setText(recurrentVisitor.getAddress());
             getViewDataBinding().tvEmployment.setText(AppUtils.capitaliseFirstLetter(recurrentVisitor.getEmployment()));
             getViewDataBinding().actvWorkProfile.setText(recurrentVisitor.getProfile());
-            getViewDataBinding().actvCompanyName.setText(recurrentVisitor.getCompanyName());
             getViewDataBinding().etCompanyAddress.setText(recurrentVisitor.getCompanyAddress());
             String value;
             if (!recurrentVisitor.getResidentName().isEmpty()) {
@@ -922,6 +923,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
             } else {
                 getViewDataBinding().groupResident.setVisibility(View.VISIBLE);
             }
+            showGroupEmployment(recurrentVisitor.getEmployment());
         }
         if (recurrentVisitor.getImage().isEmpty()) {
             imageUrl = "";
@@ -946,9 +948,11 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
             countryCode = recurrentVisitor.getDialingCode();
             getViewDataBinding().tvCode.setText("+".concat(countryCode));
         }
+        getViewDataBinding().actvCompanyName.setText(recurrentVisitor.getCompanyName());
         getViewDataBinding().etContact.setText(recurrentVisitor.getContactNo());
         getViewDataBinding().tvGender.setText(recurrentVisitor.getGender());
         getViewDataBinding().etVehicle.setText(recurrentVisitor.getExpectedVehicleNo());
+        getViewDataBinding().vehicleModel.setText(recurrentVisitor.getVehicleModel());
         getViewDataBinding().tvVisitorMode.setText(recurrentVisitor.getMode() != null && !recurrentVisitor.getMode().isEmpty() ? mViewModel.getVisitorMode(recurrentVisitor.getMode()) : mViewModel.getVisitorMode("Walk-In"));
         updateVisitorCategory(mViewModel.getVisitorMode(recurrentVisitor.getMode() != null && !recurrentVisitor.getMode().isEmpty() ? mViewModel.getVisitorMode(recurrentVisitor.getMode()) : mViewModel.getVisitorMode("Walk-In")));
     }
