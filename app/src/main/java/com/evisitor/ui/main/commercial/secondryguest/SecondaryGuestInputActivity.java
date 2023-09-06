@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.evisitor.EVisitor;
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.CheckInTemperature;
@@ -78,8 +79,10 @@ public class SecondaryGuestInputActivity extends BaseActivity<SecondryGuestInput
     }
 
     private void setUpAdapter() {
-        if (beans.isEmpty())
-            beans.add(new SecondaryGuest( "", getString(R.string.member).concat(" ").concat("1"), "", "", "", "","",false,0));
+        if (beans.isEmpty()) {
+            String dialing_code = EVisitor.getInstance().getDataManager().getUserDetail().getDialingCode();
+            beans.add(new SecondaryGuest("", getString(R.string.member).concat(" ").concat("1"), "", dialing_code, "", "", "", false, 0));
+        }
         adapter = new SecondaryGuestAdapter(beans, new SecondaryGuestAdapter.AdapterCallback() {
             @Override
             public void onChangeList(List<SecondaryGuest> deviceList) {
@@ -205,7 +208,8 @@ public class SecondaryGuestInputActivity extends BaseActivity<SecondryGuestInput
             case R.id.img_search:
                 if (beans.size() < 10) {
                     if (mViewModel.verifyGuestDetails(beans)) {
-                        beans.add(new SecondaryGuest( "", getString(R.string.member).concat(" ").concat("1"), "", "", "", "","",false,0));
+                        String dialing_code = EVisitor.getInstance().getDataManager().getUserDetail().getDialingCode();
+                        beans.add(new SecondaryGuest( "", getString(R.string.member).concat(" ").concat("1"), "", dialing_code, "", "","",false,0));
                         adapter.notifyDataSetChanged();
                         getViewDataBinding().recyclerView.scrollToPosition(adapter.getItemCount() - 1);
                     } else

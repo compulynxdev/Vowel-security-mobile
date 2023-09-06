@@ -28,11 +28,14 @@ import com.evisitor.ui.dialog.country.CountrySelectionDialog;
 import com.evisitor.ui.dialog.selection.SelectionBottomSheetDialog;
 import com.evisitor.util.AppLogger;
 import com.evisitor.util.CommonUtils;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 //add guest
 //check in
 //list display
@@ -65,11 +68,13 @@ public class SecondaryGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> 
         this.isAdd = isAdd;
     }
 
-    void setIsCheckIn(boolean isCheckIn){
+    void setIsCheckIn(boolean isCheckIn) {
         this.isCheckIn = isCheckIn;
     }
 
-    void checkInApproved(boolean approved){this.checkInApproved = approved;}
+    void checkInApproved(boolean approved) {
+        this.checkInApproved = approved;
+    }
 
     @NonNull
     @Override
@@ -98,15 +103,15 @@ public class SecondaryGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> 
 
         void onCheckInDeselected(int index);
 
-        void onCheckInTemperature(int index,String temperature);
+        void onCheckInTemperature(int index, String temperature);
     }
 
     public class ViewHolder extends BaseViewHolder {
 
-        EditText etFullname, etDocumentId, etContactNo, etAddress,etTemperature;
-        TextView tvIdentityType,tvDialingCode;
+        EditText etFullname, etDocumentId, etContactNo, etAddress, etTemperature;
+        TextView tvIdentityType, tvDialingCode;
         View view1;
-        CheckBox cb_minor,cb_checkIn;
+        CheckBox cb_minor, cb_checkIn;
         final ImageView img_close;
         LinearLayout llNumber;
         RelativeLayout rlCode;
@@ -243,23 +248,23 @@ public class SecondaryGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> 
 
 
             cb_minor.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                if(getAdapterPosition()!=-1){
-                    if(cb_minor.isChecked()){
+                if (getAdapterPosition() != -1) {
+                    if (cb_minor.isChecked()) {
                         etDocumentId.setVisibility(View.GONE);
-                        tvIdentityType.setVisibility( View.GONE);
+                        tvIdentityType.setVisibility(View.GONE);
                         view1.setVisibility(View.GONE);
-                        llNumber.setVisibility( View.GONE);
+                        llNumber.setVisibility(View.GONE);
                         etAddress.setVisibility(View.GONE);
                         list.get(getAdapterPosition()).setDocumentId("");
                         list.get(getAdapterPosition()).setDocumentType("");
                         list.get(getAdapterPosition()).setDialingCode("");
                         list.get(getAdapterPosition()).setContactNo("");
                         list.get(getAdapterPosition()).setAddress("");
-                    }else{
+                    } else {
                         etDocumentId.setVisibility(View.VISIBLE);
-                        tvIdentityType.setVisibility( View.VISIBLE);
+                        tvIdentityType.setVisibility(View.VISIBLE);
                         view1.setVisibility(View.VISIBLE);
-                        llNumber.setVisibility( View.VISIBLE);
+                        llNumber.setVisibility(View.VISIBLE);
                         etAddress.setVisibility(View.VISIBLE);
                     }
                     list.get(getAdapterPosition()).setMinor(isChecked);
@@ -268,12 +273,13 @@ public class SecondaryGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> 
             });
 
             cb_checkIn.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                if(isChecked){
-                    if(getAdapterPosition()!=-1)
+                if (isChecked) {
+                    if (getAdapterPosition() != -1)
                         callback.onCheckInSelected(list.get(getAdapterPosition()).getId());
-                }else{
-                    if(getAdapterPosition()!=-1)
-                    callback.onCheckInDeselected(list.get(getAdapterPosition()).getId());
+                } else {
+                    if (getAdapterPosition() != -1) {
+                        callback.onCheckInDeselected(list.get(getAdapterPosition()).getId());
+                    }
                 }
             });
 
@@ -291,8 +297,8 @@ public class SecondaryGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> 
                 @Override
                 public void afterTextChanged(Editable s) {
                     if (getAdapterPosition() != -1) {
-                        if(!s.toString().isEmpty() && s.toString().length()>1){
-                            if (Double.parseDouble(s.toString()) >= 34 && Double.parseDouble(s.toString()) <= 40){
+                        if (!s.toString().isEmpty() && s.toString().length() > 1) {
+                            if (Double.parseDouble(s.toString()) >= 34 && Double.parseDouble(s.toString()) <= 40) {
                                 if (isCheckIn)
                                     callback.onCheckInTemperature(list.get(getAdapterPosition()).getId(), s.toString().trim());
 
@@ -300,9 +306,9 @@ public class SecondaryGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> 
                                     list.get(getAdapterPosition()).setBodyTemperature(s.toString());
                                     callback.onChangeList(list);
                                 }
-                            }else{
+                            } else {
                                 etTemperature.setText("");
-                                Toast.makeText(etTemperature.getContext(),R.string.temperature_should_be_30,Toast.LENGTH_LONG).show();
+                                Toast.makeText(etTemperature.getContext(), R.string.temperature_should_be_30, Toast.LENGTH_LONG).show();
                             }
 
                         }
@@ -315,7 +321,7 @@ public class SecondaryGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> 
         @Override
         public void onBind(int position) {
             SecondaryGuest bean = list.get(position);
-            if(isAdd){
+            if (isAdd) {
                 etFullname.setText(bean.getFullName().isEmpty() ? "" : bean.getFullName());
                 etDocumentId.setText(bean.getDocumentId().isEmpty() ? "" : bean.getDocumentId());
                 etContactNo.setText(bean.getContactNo().isEmpty() ? "" : bean.getContactNo());
@@ -330,49 +336,44 @@ public class SecondaryGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> 
                         }
 
                     }
-
                 }
-            }else{
-                etFullname.setText(etFullname.getContext().getString(R.string.data_name,bean.getFullName().isEmpty() ? "N/A" : bean.getFullName()));
-                if(!bean.getDocumentId().isEmpty()){
+            } else {
+                etFullname.setText(etFullname.getContext().getString(R.string.data_name, bean.getFullName().isEmpty() ? "N/A" : bean.getFullName()));
+                if (!bean.getDocumentId().isEmpty()) {
                     etDocumentId.setVisibility(View.VISIBLE);
-                    etDocumentId.setText(etDocumentId.getContext().getString(R.string.data_identity,bean.getDocumentId().isEmpty() ? "N/A" : CommonUtils.paritalEncodeData(bean.getDocumentId())));
-                }
-                else etDocumentId.setVisibility(View.GONE);
-                if(!bean.getContactNo().isEmpty()) {
+                    etDocumentId.setText(etDocumentId.getContext().getString(R.string.data_identity, bean.getDocumentId().isEmpty() ? "N/A" : CommonUtils.paritalEncodeData(bean.getDocumentId())));
+                } else etDocumentId.setVisibility(View.GONE);
+                if (!bean.getContactNo().isEmpty()) {
                     llNumber.setVisibility(View.VISIBLE);
-                    etContactNo.setText( bean.getContactNo().isEmpty() ? "N/A" : CommonUtils.paritalEncodeData(bean.getContactNo()));
-                }
-                else llNumber.setVisibility(View.GONE);
+                    etContactNo.setText(bean.getContactNo().isEmpty() ? "N/A" : CommonUtils.paritalEncodeData(bean.getContactNo()));
+                } else llNumber.setVisibility(View.GONE);
                 tvDialingCode.setText(bean.getDialingCode().isEmpty() ? "" : "+ " + bean.getDialingCode());
-                if(!bean.getAddress().isEmpty()) {
+                if (!bean.getAddress().isEmpty()) {
                     etAddress.setVisibility(View.VISIBLE);
                     etAddress.setText(etFullname.getContext().getString(R.string.address).concat(" : ").concat(bean.getAddress().isEmpty() ? "N/A" : bean.getAddress()));
-                }
-                else etAddress.setVisibility(View.GONE);
+                } else etAddress.setVisibility(View.GONE);
                 if (bean.getDocumentType() != null && !bean.getDocumentType().isEmpty()) {
                     tvIdentityType.setVisibility(View.VISIBLE);
-                    view1.setVisibility(View. VISIBLE);
+                    view1.setVisibility(View.VISIBLE);
                     for (int i = 0; i < getIdentityTypeList().size(); i++) {
                         IdentityBean identityBean = identityTypeList.get(i);
                         if (identityBean.getKey().equalsIgnoreCase(bean.getDocumentType()) || identityBean.getTitle().equalsIgnoreCase(bean.getDocumentType())) {
-                            tvIdentityType.setText(etFullname.getContext().getString(R.string.data_identity_type,bean.getDocumentType().isEmpty() ? "N/A" : identityBean.getTitle()));
+                            tvIdentityType.setText(etFullname.getContext().getString(R.string.data_identity_type, bean.getDocumentType().isEmpty() ? "N/A" : identityBean.getTitle()));
                         }
                     }
-                }
-                else{
+                } else {
                     tvIdentityType.setVisibility(View.GONE);
                     view1.setVisibility(View.GONE);
                 }
-                try{
-                    if (checkInApproved && bean.getBodyTemperature().isEmpty() ){
+                try {
+                    if (checkInApproved && bean.getBodyTemperature().isEmpty()) {
                         etTemperature.setVisibility(View.GONE);
-                    }else {
+                    } else {
                         etTemperature.setText(bean.getBodyTemperature());
                     }
 
-                }catch (Exception e){
-                    AppLogger.d("temperature : ",e.toString());
+                } catch (Exception e) {
+                    AppLogger.d("temperature : ", e.toString());
                 }
 
             }
@@ -386,6 +387,7 @@ public class SecondaryGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> 
                 etAddress.setEnabled(true);
                 img_close.setVisibility(View.VISIBLE);
                 cb_minor.setEnabled(true);
+                tvIdentityType.setText("");
             } else {
                 etFullname.setEnabled(false);
                 etDocumentId.setEnabled(false);
@@ -397,7 +399,7 @@ public class SecondaryGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> 
             }
 
             etTemperature.setEnabled(isAdd || isCheckIn);
-            if (checkInApproved){
+            if (checkInApproved) {
                 etTemperature.setEnabled(false);
                 etTemperature.setCursorVisible(false);
             }
