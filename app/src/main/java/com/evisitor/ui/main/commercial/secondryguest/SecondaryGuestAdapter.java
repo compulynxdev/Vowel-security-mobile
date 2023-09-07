@@ -134,14 +134,9 @@ public class SecondaryGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> 
             line = itemView.findViewById(R.id.view2);
             etTemperature = itemView.findViewById(R.id.et_temperature);
 
-            GuestConfigurationResponse configurationResponse = EVisitor.getInstance().getDataManager().getGuestConfiguration();
 
-            etFullname.setVisibility(configurationResponse.getSecGuestField().isSecFullname() ? View.VISIBLE : View.GONE);
-            etDocumentId.setVisibility(configurationResponse.getSecGuestField().isSecDocumentID() ? View.VISIBLE : View.GONE);
-            tvIdentityType.setVisibility(configurationResponse.getSecGuestField().isSecDocumentID() ? View.VISIBLE : View.GONE);
-            view1.setVisibility(configurationResponse.getSecGuestField().isSecDocumentID() ? View.VISIBLE : View.GONE);
-            llNumber.setVisibility(configurationResponse.getSecGuestField().isSecContactNo() ? View.VISIBLE : View.GONE);
-            etAddress.setVisibility(configurationResponse.getSecGuestField().isSecAddress() ? View.VISIBLE : View.GONE);
+
+            updateUi();
 
             tvIdentityType.setOnClickListener(v -> SelectionBottomSheetDialog.newInstance(tvIdentityType.getContext().getString(R.string.select_identity_type), getIdentityTypeList()).setItemSelectedListener(pos -> {
                 IdentityBean bean = getIdentityTypeList().get(pos);
@@ -261,11 +256,7 @@ public class SecondaryGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> 
                         list.get(getAdapterPosition()).setContactNo("");
                         list.get(getAdapterPosition()).setAddress("");
                     } else {
-                        etDocumentId.setVisibility(View.VISIBLE);
-                        tvIdentityType.setVisibility(View.VISIBLE);
-                        view1.setVisibility(View.VISIBLE);
-                        llNumber.setVisibility(View.VISIBLE);
-                        etAddress.setVisibility(View.VISIBLE);
+                       updateUi();
                     }
                     list.get(getAdapterPosition()).setMinor(isChecked);
                     callback.onChangeList(list);
@@ -316,6 +307,18 @@ public class SecondaryGuestAdapter extends RecyclerView.Adapter<BaseViewHolder> 
                     }
                 }
             });
+        }
+
+        /**using configuration the ui will show of hide the fields**/
+        private void updateUi() {
+            GuestConfigurationResponse configurationResponse = EVisitor.getInstance().getDataManager().getGuestConfiguration();
+
+            etFullname.setVisibility(configurationResponse.getSecGuestField().isSecFullname() ? View.VISIBLE : View.GONE);
+            etDocumentId.setVisibility(configurationResponse.getSecGuestField().isSecDocumentID() ? View.VISIBLE : View.GONE);
+            tvIdentityType.setVisibility(configurationResponse.getSecGuestField().isSecDocumentID() ? View.VISIBLE : View.GONE);
+            view1.setVisibility(configurationResponse.getSecGuestField().isSecDocumentID() ? View.VISIBLE : View.GONE);
+            llNumber.setVisibility(configurationResponse.getSecGuestField().isSecContactNo() ? View.VISIBLE : View.GONE);
+            etAddress.setVisibility(configurationResponse.getSecGuestField().isSecAddress() ? View.VISIBLE : View.GONE);
         }
 
         @Override
