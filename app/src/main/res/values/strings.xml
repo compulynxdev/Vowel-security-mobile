@@ -406,4 +406,5 @@
     <string name="capture">capture</string>
     <string name="result">result</string>
     <string name="vehicle_model">Vehicle model</string>
+    <string name="applicaion_not_found">Application not found</string>
 </resources>

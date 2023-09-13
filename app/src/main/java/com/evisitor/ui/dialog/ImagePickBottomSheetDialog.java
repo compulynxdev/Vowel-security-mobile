@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
@@ -119,7 +120,8 @@ public class ImagePickBottomSheetDialog extends BaseBottomSheetDialog<DialogImag
     public void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getBaseActivity().getPackageManager()) != null) {
+        try {
+
             // Create the File where the photo should go
             File photoFile = null;
             try {
@@ -136,6 +138,8 @@ public class ImagePickBottomSheetDialog extends BaseBottomSheetDialog<DialogImag
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, AppConstants.REQUEST_TAKE_PHOTO);
             }
+        }catch (Exception e){
+            Toast.makeText(requireContext(),R.string.applicaion_not_found,Toast.LENGTH_LONG).show();
         }
     }
 
