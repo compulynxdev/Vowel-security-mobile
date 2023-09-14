@@ -321,7 +321,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
                 break;
 
             case R.id.frame_img:
-                if (PermissionUtils.RequestMultiplePermissionCamera(this)) {
+                if (PermissionUtils.checkCameraPermission(this)) {
                     ImagePickBottomSheetDialog.newInstance(new ImagePickCallback() {
                         @Override
                         public void onImageReceived(Bitmap bitmap) {
@@ -337,7 +337,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
                 }
                 break;
             case R.id.et_click_imag:
-                if (PermissionUtils.RequestMultiplePermissionCamera(this)) {
+                if (PermissionUtils.checkCameraPermission(this)) {
                     ImagePickBottomSheetDialog.newInstance(new ImagePickCallback() {
                         @Override
                         public void onImageReceived(Bitmap bitmap) {
