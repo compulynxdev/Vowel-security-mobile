@@ -2,10 +2,12 @@ package com.evisitor.ui.main.activity.checkin;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -54,6 +57,7 @@ import java.util.Objects;
 import java.util.Set;
 
 public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckInViewModel> implements ActivityNavigator {
+    private static final int BLUETOOTH_SCAN_PERMISSION_REQUEST = 1;
     public static BixolonLabelPrinter bixolonLabelPrinter;
     private final int SCAN_RESULT = 101;
     private List<CommercialVisitorResponse.CommercialGuest> commercialGuestList;
@@ -302,10 +306,26 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
             StrictMode.setThreadPolicy(policy);
         }
 
-        getViewModel().getPropertyInfo().observe(this, propertyInfoResponse -> {
+        getViewModel().getPropertyInfo().observe(getViewLifecycleOwner(), propertyInfoResponse -> {
             propertyInfo = propertyInfoResponse;
             getViewModel().getImage(propertyInfoResponse.getImage(), true);
         });
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(), blueToothPermissions(), BLUETOOTH_SCAN_PERMISSION_REQUEST);
+        }
+    }
+
+    private String[] blueToothPermissions() {
+        ArrayList<String> list = new ArrayList<>();
+        list.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        list.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+        list.add(Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            list.add(Manifest.permission.BLUETOOTH_SCAN);
+            list.add(Manifest.permission.BLUETOOTH_CONNECT);
+        }
+        list.add(Manifest.permission.BLUETOOTH_PRIVILEGED);
+        return (String[]) list.toArray();
     }
 
     private void setUpCommercialStaffAdapter() {
