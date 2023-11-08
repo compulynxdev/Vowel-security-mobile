@@ -7,7 +7,6 @@ import android.view.View;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
@@ -41,7 +40,7 @@ public class TrespasserActivity extends BaseActivity<ActivityTrespasserBinding, 
 
     @Override
     public TrespasserViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(TrespasserViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(TrespasserViewModel.class);
     }
 
     @Override

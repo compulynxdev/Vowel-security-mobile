@@ -33,7 +33,7 @@ public class ResidentProfileActivity extends BaseActivity<ActivityResidentProfil
 
     @Override
     public ResidentProfileViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(ResidentProfileViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(ResidentProfileViewModel.class);
     }
 
     @Override

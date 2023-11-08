@@ -35,7 +35,7 @@ public class BarcodeScanActivity extends BaseActivity<ActivityScanBarcodeBinding
 
     @Override
     public BarcodeScanViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(BarcodeScanViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(BarcodeScanViewModel.class);
     }
 
     @Override

@@ -105,7 +105,7 @@ public class VisitorProfileAdapter extends RecyclerView.Adapter<BaseViewHolder> 
         public void onBind(int position) {
             VisitorProfileBean bean = list.get(position);
 
-           // DataManager dataManager = EVisitor.getInstance().getDataManager();
+           // DataManager dataManager = EVisitor.getInstanceM().getDataManager();
             tv_title.setText(bean.getTitle());
             et_data.setText(bean.getValue());
             et_data.addTextChangedListener(new TextWatcher() {

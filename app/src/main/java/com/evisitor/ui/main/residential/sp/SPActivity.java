@@ -39,7 +39,7 @@ public class SPActivity extends BaseActivity<ActivitySpBinding, SPViewModel> {
 
     @Override
     public SPViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(SPViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(SPViewModel.class);
     }
 
     @Override

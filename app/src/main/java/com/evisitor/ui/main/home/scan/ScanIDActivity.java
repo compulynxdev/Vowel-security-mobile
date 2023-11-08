@@ -68,7 +68,7 @@ public class ScanIDActivity extends BaseActivity<ActivityScanIdBinding, ScanIDVi
 
     @Override
     public ScanIDViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(ScanIDViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(ScanIDViewModel.class);
     }
 
     @Override

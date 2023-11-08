@@ -40,7 +40,7 @@ ext {
     // Sdk and tools
     minSdkVersion = 21
     targetSdkVersion = 33
-    compileSdkVersion = 33
+    compileSdkVersion = 34
     buildToolsVersion = '30.0.3'
     constraintLayoutVersion = '2.0.4'
     appcompatVersion = '1.2.0'

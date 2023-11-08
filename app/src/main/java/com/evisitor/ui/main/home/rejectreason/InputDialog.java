@@ -50,7 +50,7 @@ public class InputDialog extends BaseDialog<DialogInputBinding, InputDialogViewM
 
     @Override
     public InputDialogViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(InputDialogViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(InputDialogViewModel.class);
     }
 
     @Override

@@ -267,6 +267,16 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public void setPrinterAddress(String address) {
+        preferenceHelper.setPrinterAddress(address);
+    }
+
+    @Override
+    public String printerAddress() {
+        return preferenceHelper.printerAddress();
+    }
+
+    @Override
     public String getLanguage() {
         return preferenceHelper.getLanguage();
     }

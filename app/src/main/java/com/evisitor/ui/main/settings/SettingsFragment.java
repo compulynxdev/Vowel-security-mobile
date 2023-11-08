@@ -1,7 +1,11 @@
 package com.evisitor.ui.main.settings;
 
+import android.app.AlertDialog;
+import android.bluetooth.BluetoothDevice;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
 
@@ -21,7 +25,9 @@ import com.evisitor.ui.main.settings.language.LanguageDialog;
 import com.evisitor.ui.main.settings.propertyinfo.PropertyInfoActivity;
 import com.evisitor.util.AppConstants;
 
-public class SettingsFragment extends BaseFragment<FragmentSettingsBinding, SettingsViewModel> implements BaseNavigator, View.OnClickListener {
+import java.util.Set;
+
+public class SettingsFragment extends BaseFragment<FragmentSettingsBinding, SettingsViewModel> implements SettingsNavigator, View.OnClickListener {
 
     public static SettingsFragment newInstance() {
         SettingsFragment fragment = new SettingsFragment();
@@ -48,7 +54,7 @@ public class SettingsFragment extends BaseFragment<FragmentSettingsBinding, Sett
 
     @Override
     public SettingsViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(SettingsViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(SettingsViewModel.class);
     }
 
     @Override
@@ -58,7 +64,7 @@ public class SettingsFragment extends BaseFragment<FragmentSettingsBinding, Sett
         tvTitle.setText(R.string.title_settings);
         getViewDataBinding().tvLang.setText(mViewModel.getDataManager().getLanguage());
 
-        setOnClickListener(getViewDataBinding().infoConstraint, getViewDataBinding().premiseInfoConstraint, getViewDataBinding().languageConstraint, getViewDataBinding().aboutusConstraint
+        setOnClickListener(getViewDataBinding().printerConstraint,getViewDataBinding().infoConstraint, getViewDataBinding().premiseInfoConstraint, getViewDataBinding().languageConstraint, getViewDataBinding().aboutusConstraint
                 , getViewDataBinding().privacyConstraint, getViewDataBinding().logoutConstraint);
     }
 
@@ -96,7 +102,9 @@ public class SettingsFragment extends BaseFragment<FragmentSettingsBinding, Sett
                 intent.putExtra("From", AppConstants.ACTIVITY_PRIVACY);
                 startActivity(intent);
                 break;
-
+            case R.id.printer_constraint:
+                getViewModel().initBixolonPrinter(this.getContext());
+                break;
             case R.id.logout_constraint:
                 showAlert(R.string.logout, R.string.logout_msg)
                         .setNegativeBtnShow(true)
@@ -108,5 +116,37 @@ public class SettingsFragment extends BaseFragment<FragmentSettingsBinding, Sett
                         }).setOnNegativeClickListener(DialogFragment::dismiss);
                 break;
         }
+    }
+
+    @Override
+    public void onPairedDevices(Set<BluetoothDevice> devices) {
+        showBluetoothDialog(devices);
+    }
+     void showBluetoothDialog(Set<BluetoothDevice> pairedDevices) {
+        final String[] items = new String[pairedDevices.size()];
+        int index = 0;
+        for (BluetoothDevice device : pairedDevices) {
+            items[index++] = device.getName() + "\n" + device.getAddress();
+        }
+
+
+        new AlertDialog.Builder(getContext()).setTitle("Paired Bluetooth printers")
+                .setItems(items, (dialog, which) -> {
+
+                    String strSelectList = items[which];
+                    String temp;
+                    int indexSpace = 0;
+                    for(int i = 5; i<strSelectList.length(); i++){
+                        temp = strSelectList.substring(i-5, i);
+                        if((temp.equals("00:10"))||(temp.equals("74:F0"))||(temp.equals("00:15")) || (temp.equals("DD:C5")) || (temp.equals("40:19"))){
+                            indexSpace = i;
+                            i = 100;
+                        }
+                    }
+
+                    final String strDeviceInfo = strSelectList.substring(indexSpace-5, strSelectList.length());
+
+                    getViewModel().setSelectedDevice(strDeviceInfo);
+                }).show();
     }
 }

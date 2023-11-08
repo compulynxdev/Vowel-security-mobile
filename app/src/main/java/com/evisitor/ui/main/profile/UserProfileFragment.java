@@ -47,7 +47,7 @@ public class UserProfileFragment extends BaseFragment<FragmentUserProfileBinding
 
     @Override
     public UserProfileViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(UserProfileViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(UserProfileViewModel.class);
     }
 
     @Override

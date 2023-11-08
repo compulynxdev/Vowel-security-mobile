@@ -59,7 +59,7 @@ public class TrespasserSPFragment extends BaseFragment<FragmentTrespasserSBindin
 
     @Override
     public TrespasserSPViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(TrespasserSPViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(TrespasserSPViewModel.class);
     }
 
     @Override

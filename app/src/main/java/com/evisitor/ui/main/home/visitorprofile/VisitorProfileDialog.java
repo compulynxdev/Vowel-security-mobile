@@ -119,7 +119,7 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
 
     @Override
     public VisitorProfileViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(VisitorProfileViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(VisitorProfileViewModel.class);
     }
 
     private void setOnClick(VisitorProfileCallback callback) {

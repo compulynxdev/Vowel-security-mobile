@@ -45,7 +45,7 @@ public class BlackListVisitorActivity extends BaseActivity<ActivityBlackListVisi
 
     @Override
     public BlackListViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(BlackListViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(BlackListViewModel.class);
     }
 
     @Override

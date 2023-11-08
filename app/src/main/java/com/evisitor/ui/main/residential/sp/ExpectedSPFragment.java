@@ -1,47 +1,30 @@
 package com.evisitor.ui.main.residential.sp;
 
-import android.annotation.SuppressLint;
-import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-import android.os.StrictMode;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.bixolon.labelprinter.BixolonLabelPrinter;
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
-import com.evisitor.data.model.PropertyInfoResponse;
 import com.evisitor.data.model.ServiceProvider;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.databinding.FragmentExpectedBinding;
 import com.evisitor.ui.base.BaseFragment;
-import com.evisitor.ui.base.DialogManager;
 import com.evisitor.ui.dialog.AlertDialog;
 import com.evisitor.ui.main.home.idverification.IdVerificationCallback;
 import com.evisitor.ui.main.home.idverification.IdVerificationDialog;
 import com.evisitor.ui.main.home.rejectreason.InputDialog;
 import com.evisitor.ui.main.home.visitorprofile.VisitorProfileDialog;
-import com.evisitor.util.AppConstants;
-import com.evisitor.util.AppUtils;
 import com.evisitor.util.pagination.RecyclerViewScrollListener;
 import com.smartengines.MainResultStore;
 import com.smartengines.ScanSmartActivity;
 
-import org.xml.sax.HandlerBase;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -84,7 +67,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
 
     @Override
     public ExpectedSpViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(ExpectedSpViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(ExpectedSpViewModel.class);
     }
 
     @Override

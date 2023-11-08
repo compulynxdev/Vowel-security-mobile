@@ -61,7 +61,7 @@ public class SelectLastLevelFragment extends BaseFragment<FragmentWhomToMeetBind
 
     @Override
     public SelectLastLevelViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(SelectLastLevelViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(SelectLastLevelViewModel.class);
     }
 
     @Override

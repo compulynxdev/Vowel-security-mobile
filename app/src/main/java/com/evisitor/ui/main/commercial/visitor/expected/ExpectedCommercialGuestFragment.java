@@ -78,7 +78,7 @@ public class ExpectedCommercialGuestFragment extends BaseFragment<FragmentExpect
 
     @Override
     public ExpectedCommercialGuestViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(ExpectedCommercialGuestViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(ExpectedCommercialGuestViewModel.class);
     }
 
     @Override

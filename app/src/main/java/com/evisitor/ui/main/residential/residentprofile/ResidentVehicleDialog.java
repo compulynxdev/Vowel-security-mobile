@@ -13,10 +13,8 @@ import com.evisitor.ui.base.BaseDialog;
 import com.evisitor.ui.dialog.ImagePickBottomSheetDialog;
 import com.evisitor.ui.dialog.ImagePickCallback;
 import com.evisitor.ui.dialog.selection.SelectionBottomSheetDialog;
-import com.evisitor.util.AppUtils;
 import com.evisitor.util.PermissionUtils;
 import androidx.annotation.NonNull;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 public class ResidentVehicleDialog extends BaseDialog<DialogResidentVehicleBinding,ResidentVehicleViewModel> implements View.OnClickListener{
@@ -49,7 +47,7 @@ public class ResidentVehicleDialog extends BaseDialog<DialogResidentVehicleBindi
 
     @Override
     public ResidentVehicleViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(ResidentVehicleViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(ResidentVehicleViewModel.class);
     }
 
     @Override

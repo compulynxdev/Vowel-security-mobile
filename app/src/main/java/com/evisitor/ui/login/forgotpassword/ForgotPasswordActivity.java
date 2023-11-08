@@ -34,7 +34,7 @@ public class ForgotPasswordActivity extends BaseActivity<ActivityForgotPasswordB
 
     @Override
     public ForgotPasswordViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(ForgotPasswordViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(ForgotPasswordViewModel.class);
     }
 
     @Override

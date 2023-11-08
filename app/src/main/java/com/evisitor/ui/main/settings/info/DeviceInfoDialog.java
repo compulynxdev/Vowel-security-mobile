@@ -45,7 +45,7 @@ public class DeviceInfoDialog extends BaseDialog<DialogDeviceInfoBinding, Device
 
     @Override
     public DeviceInfoViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(DeviceInfoViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(DeviceInfoViewModel.class);
     }
 
     @Override

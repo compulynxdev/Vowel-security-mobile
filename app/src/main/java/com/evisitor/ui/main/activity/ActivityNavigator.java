@@ -23,4 +23,6 @@ public interface ActivityNavigator extends BaseNavigator {
     void hideSwipeToRefresh();
 
     void refreshList();
+
+    void print(boolean isGuest);
 }

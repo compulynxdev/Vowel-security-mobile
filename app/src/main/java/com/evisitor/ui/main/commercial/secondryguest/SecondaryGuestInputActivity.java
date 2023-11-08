@@ -51,7 +51,7 @@ public class SecondaryGuestInputActivity extends BaseActivity<SecondryGuestInput
 
     @Override
     public SecoundryGuestInputViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(SecoundryGuestInputViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(SecoundryGuestInputViewModel.class);
     }
 
     @Override

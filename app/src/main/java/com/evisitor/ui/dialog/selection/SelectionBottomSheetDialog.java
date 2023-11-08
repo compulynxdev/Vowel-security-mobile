@@ -53,7 +53,7 @@ public class SelectionBottomSheetDialog extends BaseBottomSheetDialog<DialogSele
 
     @Override
     public SelectionViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(SelectionViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(SelectionViewModel.class);
     }
 
     @Override

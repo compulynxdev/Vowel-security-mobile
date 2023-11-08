@@ -56,7 +56,7 @@ public class RegisteredCommercialStaffFragment extends BaseFragment<FragmentExpe
 
     @Override
     public RegisteredCommercialStaffViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(RegisteredCommercialStaffViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(RegisteredCommercialStaffViewModel.class);
     }
 
     @Override

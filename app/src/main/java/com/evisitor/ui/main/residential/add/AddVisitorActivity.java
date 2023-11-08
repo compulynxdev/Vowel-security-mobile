@@ -88,7 +88,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
 
     @Override
     public AddVisitorViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(AddVisitorViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(AddVisitorViewModel.class);
     }
 
     @Override

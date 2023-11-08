@@ -75,7 +75,7 @@ public class ImagePickBottomSheetDialog extends BaseBottomSheetDialog<DialogImag
 
     @Override
     public ImagePickViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(ImagePickViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(ImagePickViewModel.class);
     }
 
     @Override

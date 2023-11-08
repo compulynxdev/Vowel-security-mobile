@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
@@ -16,11 +15,7 @@ import com.evisitor.databinding.ActivityHkBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.main.commercial.staff.expected.ExpectedCommercialStaffFragment;
 import com.evisitor.ui.main.commercial.staff.registered.RegisteredCommercialStaffFragment;
-import com.evisitor.ui.main.home.scan.BarcodeScanActivity;
-import com.evisitor.util.PermissionUtils;
 import com.evisitor.util.ViewPagerAdapter;
-
-import static com.evisitor.util.AppConstants.SCAN_RESULT;
 
 public class CommercialStaffActivity extends BaseActivity<ActivityHkBinding, CommercialStaffViewModel> implements View.OnClickListener {
 
@@ -43,7 +38,7 @@ public class CommercialStaffActivity extends BaseActivity<ActivityHkBinding, Com
 
     @Override
     public CommercialStaffViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(CommercialStaffViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(CommercialStaffViewModel.class);
     }
 
     @Override

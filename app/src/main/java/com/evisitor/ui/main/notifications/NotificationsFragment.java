@@ -54,7 +54,7 @@ public class NotificationsFragment extends BaseFragment<FragmentNotificationsBin
 
     @Override
     public NotificationsViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(NotificationsViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(NotificationsViewModel.class);
     }
 
     @Override

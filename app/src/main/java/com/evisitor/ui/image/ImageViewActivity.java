@@ -38,7 +38,7 @@ public class ImageViewActivity extends BaseActivity<ActivityImageViewBinding, Im
 
     @Override
     public ImageViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(ImageViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(ImageViewModel.class);
     }
 
     @Override

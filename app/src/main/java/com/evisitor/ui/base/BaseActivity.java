@@ -38,7 +38,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.bixolon.labelprinter.BixolonLabelPrinter;
 import com.evisitor.R;
 import com.evisitor.ui.dialog.AlertDialog;
 import com.evisitor.ui.image.BitmapImageViewActivity;

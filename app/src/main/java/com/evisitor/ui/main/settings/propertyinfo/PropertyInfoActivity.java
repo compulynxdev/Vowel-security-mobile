@@ -32,7 +32,7 @@ public class PropertyInfoActivity extends BaseActivity<ActivityPropertyInfoBindi
 
     @Override
     public PropertyInfoViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(PropertyInfoViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(PropertyInfoViewModel.class);
     }
 
     @Override

@@ -20,8 +20,6 @@ import com.evisitor.ui.main.notifications.NotificationsFragment;
 import com.evisitor.ui.main.profile.UserProfileFragment;
 import com.evisitor.ui.main.settings.SettingsFragment;
 
-import java.io.Console;
-
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements BaseNavigator {
 
@@ -47,7 +45,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     @Override
     public MainViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(MainViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(MainViewModel.class);
     }
 
     @Override

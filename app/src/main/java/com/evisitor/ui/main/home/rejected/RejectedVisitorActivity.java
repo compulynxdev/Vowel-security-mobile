@@ -42,7 +42,7 @@ public class RejectedVisitorActivity extends BaseActivity<ActivityRejectedVisito
 
     @Override
     public RejectedVisitorViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(RejectedVisitorViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(RejectedVisitorViewModel.class);
     }
 
     @Override
