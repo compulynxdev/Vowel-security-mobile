@@ -376,10 +376,7 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
         doSearch(search);
     }
 
-    @Override
-    public void print(boolean isGuest) {
 
-    }
 
     private void updateUI() {
         getViewDataBinding().swipeToRefresh.setRefreshing(true);
