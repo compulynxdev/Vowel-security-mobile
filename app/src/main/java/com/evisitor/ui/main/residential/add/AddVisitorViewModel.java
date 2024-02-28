@@ -215,7 +215,7 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                 object.put("mode", addVisitorData.mode);
                 object.put("groupType", addVisitorData.groupType);
                 object.put("bodyTemperature", addVisitorData.bodyTemperature);
-                if(addVisitorData.guestList.size()>0) {
+                if (addVisitorData.guestList.size() > 0) {
                     JSONArray guestList = new JSONArray(new Gson().toJson(addVisitorData.guestList));
                     object.put("guestList", guestList);
                 }
@@ -259,9 +259,9 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                     if (response.code() == 200) {
                         try {
                             assert response.body() != null;
-                           // AppLogger.e("Response", response.body().string());
+                            // AppLogger.e("Response", response.body().string());
                             Guests guests = getDataManager().getGson().fromJson(response.body().string(), Guests.class);
-                            getNavigator().onSuccess(addVisitorData.isAccept,guests.isFlagedVisitorStatus());
+                            getNavigator().onSuccess(addVisitorData.isAccept, guests.isFlagedVisitorStatus());
                         } catch (Exception e) {
                             getNavigator().showAlert(R.string.alert, R.string.alert_error);
                         }
@@ -336,9 +336,9 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
         } else if ((visitorData.mode.equalsIgnoreCase("Drive-In") && visitorData.vehicleNo == null) || ((visitorData.mode.equalsIgnoreCase("Drive-In") && visitorData.vehicleNo.isEmpty()))) {
             getNavigator().showToast(R.string.please_enter_vehical_no);
             return false;
-        } else if ((visitorData.mode.equalsIgnoreCase("Drive-In") && visitorData.vehicalNoPlateBitMapImg == null)) {
-            getNavigator().showToast(R.string.please_capture_vehical_image);
-            return false;
+//        } else if ((visitorData.mode.equalsIgnoreCase("Drive-In") && visitorData.vehicalNoPlateBitMapImg == null)) {
+//            getNavigator().showToast(R.string.please_capture_vehical_image);
+//            return false;
         } else return true;
     }
 
@@ -371,7 +371,7 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                 object.put("country", "");
                 //object.put("expectedDate", new Date());
                 object.put("premiseHierarchyDetailsId", visitorData.isResident ? visitorData.houseId : null);  //house or flat id  //->
-                object.put("expectedVehicle", visitorData.vehicleNo.toUpperCase());
+                object.put("expectedVehicleNo", visitorData.vehicleNo.toUpperCase());
                 object.put("enteredVehicleNo", visitorData.vehicleNo.toUpperCase());
                 object.put("vehicleModel", visitorData.vehicleModel.toUpperCase());
                 object.put("gender", visitorData.gender);
@@ -407,7 +407,7 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
                         try {
                             assert response.body() != null;
                             AppLogger.e("Response", response.body().string());
-                            getNavigator().onSuccess(visitorData.isAccept,false);
+                            getNavigator().onSuccess(visitorData.isAccept, false);
                         } catch (Exception e) {
                             getNavigator().showAlert(R.string.alert, R.string.alert_error);
                         }
@@ -598,23 +598,23 @@ public class AddVisitorViewModel extends BaseViewModel<AddVisitorNavigator> {
         }
     }
 
-    void numberPlateVerification(Bitmap bitmap){
-        MultipartBody.Part body = AppUtils.prepareFilePart("upload","image/png",AppUtils.bitmapToFile(getNavigator().getContext(),bitmap, UUID.randomUUID().toString().concat(".png")));
-        getDataManager().doNumberPlateDetails(AppConstants.TOKEN.concat(" ").concat(getDataManager().getUserDetail().getApiKey()),body).enqueue(new Callback<ResponseBody>() {
+    void numberPlateVerification(Bitmap bitmap) {
+        MultipartBody.Part body = AppUtils.prepareFilePart("upload", "image/png", AppUtils.bitmapToFile(getNavigator().getContext(), bitmap, UUID.randomUUID().toString().concat(".png")));
+        getDataManager().doNumberPlateDetails(AppConstants.TOKEN.concat(" ").concat(getDataManager().getUserDetail().getApiKey()), body).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(@NonNull Call<ResponseBody> call,@NonNull Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
                     if (response.code() == 201) {
                         assert response.body() != null;
                         JSONObject jsonObject = new JSONObject(response.body().string());
-                        if(jsonObject.has("results")){
+                        if (jsonObject.has("results")) {
                             JSONArray array = jsonObject.getJSONArray("results");
-                            if(array.length()>0){
-                                if(array.getJSONObject(0).has("plate")){
+                            if (array.length() > 0) {
+                                if (array.getJSONObject(0).has("plate")) {
                                     String numerPlate = array.getJSONObject(0).getString("plate");
                                     numberPlate.setValue(numerPlate);
                                 }
-                            }else numberPlate.setValue("");
+                            } else numberPlate.setValue("");
                         }
 
                     } else if (response.code() == 401) {

@@ -95,7 +95,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         super.onViewCreated(view, savedInstanceState);
         getViewDataBinding().toolbar.tvTitle.setText(R.string.title_home);
         setupAdapter();
-        mViewModel.getNotificationCountData().observe(this, count -> {
+        mViewModel.getNotificationCountData().observe(getViewLifecycleOwner(), count -> {
             if (interaction != null)
                 interaction.onReceiveNotificationCount(count);
         });
@@ -173,7 +173,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         });
         getViewDataBinding().recyclerView.setAdapter(homeAdapter);
 
-        mViewModel.getHomeListData().observe(this, homeBeansList -> {
+        mViewModel.getHomeListData().observe(getViewLifecycleOwner(), homeBeansList -> {
             homeList.clear();
             homeList.addAll(homeBeansList);
             homeAdapter.notifyDataSetChanged();
