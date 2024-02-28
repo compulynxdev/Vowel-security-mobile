@@ -46,7 +46,7 @@ public class GadgetsInputActivity extends BaseActivity<GadgetsInputDialogBinding
 
     @Override
     public GadgetsInputViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(GadgetsInputViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(GadgetsInputViewModel.class);
     }
 
     @Override

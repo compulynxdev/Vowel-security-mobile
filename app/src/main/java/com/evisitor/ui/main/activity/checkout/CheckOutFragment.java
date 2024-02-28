@@ -79,7 +79,7 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
 
     @Override
     public CheckOutViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(CheckOutViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(CheckOutViewModel.class);
     }
 
     public void setCheckOutList(int listOf) {
@@ -375,6 +375,8 @@ public class CheckOutFragment extends BaseFragment<FragmentCheckOutBinding, Chec
     public void refreshList() {
         doSearch(search);
     }
+
+
 
     private void updateUI() {
         getViewDataBinding().swipeToRefresh.setRefreshing(true);

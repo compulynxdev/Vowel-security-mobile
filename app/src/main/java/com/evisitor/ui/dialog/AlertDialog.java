@@ -112,7 +112,7 @@ public class AlertDialog extends BaseDialog<DialogAlertBinding, AlertViewModel> 
 
     @Override
     public AlertViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(AlertViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(AlertViewModel.class);
     }
 
     @Override

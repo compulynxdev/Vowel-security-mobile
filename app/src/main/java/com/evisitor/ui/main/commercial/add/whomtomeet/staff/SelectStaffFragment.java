@@ -60,7 +60,7 @@ public class SelectStaffFragment extends BaseFragment<FragmentWhomToMeetBinding,
 
     @Override
     public SelectStaffViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(SelectStaffViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(SelectStaffViewModel.class);
     }
 
     @Override

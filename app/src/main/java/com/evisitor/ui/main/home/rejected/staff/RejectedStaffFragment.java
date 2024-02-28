@@ -56,7 +56,7 @@ public class RejectedStaffFragment extends BaseFragment<FragmentRejectedStaffBin
 
     @Override
     public RejectedStaffViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(RejectedStaffViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(RejectedStaffViewModel.class);
     }
 
     @Override

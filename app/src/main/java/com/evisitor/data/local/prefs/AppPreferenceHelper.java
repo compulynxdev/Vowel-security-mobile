@@ -46,6 +46,7 @@ public class AppPreferenceHelper implements PreferenceHelper {
     private static final String CHECK_OUT_FEATURE = "CHECK_OUT_FEATURE";
     private static final String PRINT_LABEL = "PRINT_LABEL";
     private static final String CAPTURE_VEHICLE_MODEL = "CAPTURE_VEHICLE_MODEL";
+    private static final String PRINTER_ADDRESS = "PRINTER_ADDRESS";
 
     private final SharedPreferences mPrefs;
 
@@ -266,6 +267,16 @@ public class AppPreferenceHelper implements PreferenceHelper {
     @Override
     public boolean capturesVehicleModel() {
         return mPrefs.getBoolean(CAPTURE_VEHICLE_MODEL,false);
+    }
+
+    @Override
+    public void setPrinterAddress(String address) {
+        mPrefs.edit().putString(PRINTER_ADDRESS,address).apply();
+    }
+
+    @Override
+    public String printerAddress() {
+        return mPrefs.getString(PRINTER_ADDRESS,null);
     }
 
 }

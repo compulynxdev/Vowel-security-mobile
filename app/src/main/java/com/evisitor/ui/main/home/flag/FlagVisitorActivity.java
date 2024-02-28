@@ -43,7 +43,7 @@ public class FlagVisitorActivity extends BaseActivity<ActivityFlagVisitorBinding
 
     @Override
     public FlagVisitorViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(FlagVisitorViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(FlagVisitorViewModel.class);
     }
 
     @Override

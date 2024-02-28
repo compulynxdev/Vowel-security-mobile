@@ -5,23 +5,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
-import com.evisitor.data.model.Guests;
 import com.evisitor.data.model.IdentityBean;
 import com.evisitor.data.model.RecurrentVisitor;
 import com.evisitor.databinding.ActivityFilterRecurrentVisitorBinding;
 import com.evisitor.ui.base.BaseActivity;
-import com.evisitor.ui.dialog.AlertDialog;
 import com.evisitor.ui.dialog.country.CountrySelectionDialog;
 import com.evisitor.ui.dialog.selection.SelectionBottomSheetDialog;
 import com.evisitor.ui.main.commercial.add.CommercialAddVisitorActivity;
 import com.evisitor.ui.main.home.scan.BarcodeScanActivity;
 import com.evisitor.ui.main.residential.add.AddVisitorActivity;
-import com.evisitor.ui.main.residential.guest.GuestActivity;
 import com.evisitor.util.PermissionUtils;
 
 import static com.evisitor.util.AppConstants.SCAN_RESULT;
@@ -49,7 +45,7 @@ public class FilterRecurrentVisitorActivity extends BaseActivity<ActivityFilterR
 
     @Override
     public FilterRecurrentVisitorViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(FilterRecurrentVisitorViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(FilterRecurrentVisitorViewModel.class);
     }
 
     @Override

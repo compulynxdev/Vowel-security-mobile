@@ -30,7 +30,7 @@ public class TutorialScanActivity extends BaseActivity<ActivityTutorialScanBindi
 
     @Override
     public TutorialScanViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(TutorialScanViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(TutorialScanViewModel.class);
     }
 
     @Override

@@ -38,7 +38,7 @@ public class HouseKeepingActivity extends BaseActivity<ActivityHkBinding, HKView
 
     @Override
     public HKViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(HKViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(HKViewModel.class);
     }
 
     @Override

@@ -8,14 +8,10 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.ActivityImageViewBinding;
 import com.evisitor.ui.base.BaseActivity;
-
-import java.util.Objects;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -40,7 +36,7 @@ public class BitmapImageViewActivity extends BaseActivity<ActivityImageViewBindi
 
     @Override
     public ImageViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(ImageViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(ImageViewModel.class);
     }
 
     @Override

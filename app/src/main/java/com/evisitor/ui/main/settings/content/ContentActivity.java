@@ -35,7 +35,7 @@ public class ContentActivity extends BaseActivity<ActivityContentBinding, Conten
 
     @Override
     public ContentViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(ContentViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(ContentViewModel.class);
     }
 
     @Override

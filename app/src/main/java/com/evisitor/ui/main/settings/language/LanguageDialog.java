@@ -49,7 +49,7 @@ public class LanguageDialog extends BaseDialog<DialogLanguageBinding, LanguageDi
 
     @Override
     public LanguageDialogViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(LanguageDialogViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(LanguageDialogViewModel.class);
     }
 
     private void setOnClick(LanguageCallback callback) {

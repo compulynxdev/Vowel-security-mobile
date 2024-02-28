@@ -12,7 +12,6 @@ import com.evisitor.R;
 import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.data.model.CheckInTemperature;
 import com.evisitor.data.model.Guests;
-import com.evisitor.data.model.SecondaryGuest;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.databinding.FragmentExpectedGuestBinding;
 import com.evisitor.ui.base.BaseFragment;
@@ -75,7 +74,7 @@ public class ExpectedGuestFragment extends BaseFragment<FragmentExpectedGuestBin
 
     @Override
     public ExpectedGuestViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(ExpectedGuestViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(ExpectedGuestViewModel.class);
     }
 
     @Override

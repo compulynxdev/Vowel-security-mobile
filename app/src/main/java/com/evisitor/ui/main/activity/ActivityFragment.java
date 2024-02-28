@@ -48,7 +48,7 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
 
     @Override
     public ActivityViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(ActivityViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(ActivityViewModel.class);
     }
 
     @Override

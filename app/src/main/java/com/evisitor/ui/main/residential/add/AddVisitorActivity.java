@@ -88,7 +88,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
 
     @Override
     public AddVisitorViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(AddVisitorViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(AddVisitorViewModel.class);
     }
 
     @Override
@@ -381,7 +381,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                 break;
 
             case R.id.frame_img:
-                if (PermissionUtils.RequestMultiplePermissionCamera(this)) {
+                if (PermissionUtils.checkCameraPermission(this)) {
                     ImagePickBottomSheetDialog.newInstance(new ImagePickCallback() {
                         @Override
                         public void onImageReceived(Bitmap bitmap) {
@@ -491,7 +491,7 @@ public class AddVisitorActivity extends BaseActivity<ActivityAddVisitorBinding, 
                 }).show(getSupportFragmentManager());
                 break;
             case R.id.take_no_plate_img:
-                if (PermissionUtils.RequestMultiplePermissionCamera(this)) {
+                if (PermissionUtils.checkCameraPermission(this)) {
                     ImagePickBottomSheetDialog.newInstance(new ImagePickCallback() {
                         @Override
                         public void onImageReceived(Bitmap bitmap) {

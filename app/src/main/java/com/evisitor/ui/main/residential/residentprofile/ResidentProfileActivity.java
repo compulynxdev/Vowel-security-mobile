@@ -33,7 +33,7 @@ public class ResidentProfileActivity extends BaseActivity<ActivityResidentProfil
 
     @Override
     public ResidentProfileViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(ResidentProfileViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(ResidentProfileViewModel.class);
     }
 
     @Override
@@ -85,12 +85,7 @@ public class ResidentProfileActivity extends BaseActivity<ActivityResidentProfil
         getViewDataBinding().btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ResidentVehicleDialog.newInstance(profile, new ResidentVehicleDialog.ResidentCallBack() {
-                    @Override
-                    public void doCheckInOut(boolean isCheckIn, ResidentProfile profile, String vehicleNo) {
-                        getViewModel().doCheckInCheckOut(isCheckIn,profile,vehicleNo);
-                    }
-                }).show(getSupportFragmentManager());
+                ResidentVehicleDialog.newInstance(profile, (isCheckIn, profile1, vehicleNo) -> getViewModel().doCheckInCheckOut(isCheckIn, profile1,vehicleNo)).show(getSupportFragmentManager());
             }
         });
     }

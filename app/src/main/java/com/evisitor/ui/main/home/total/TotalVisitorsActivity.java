@@ -45,7 +45,7 @@ public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBin
 
     @Override
     public TotalVisitorsViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(TotalVisitorsViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(TotalVisitorsViewModel.class);
     }
 
     @Override

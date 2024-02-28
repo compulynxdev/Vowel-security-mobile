@@ -42,7 +42,7 @@ public class VisitorActivity extends BaseActivity<ActivityExpectedGuestOrVisitor
 
     @Override
     public VisitorViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(VisitorViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(VisitorViewModel.class);
     }
 
     @Override

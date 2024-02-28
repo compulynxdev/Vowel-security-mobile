@@ -113,8 +113,10 @@ public class CommercialVisitorCheckInAdapter extends RecyclerView.Adapter<BaseVi
             if(EVisitor.getInstance().getDataManager().isPrintLabel())
                 btn_print.setVisibility(View.VISIBLE);
             btn_print.setOnClickListener(v -> {
-                if (listener != null && getAdapterPosition() != -1)
+                if (listener != null && getAdapterPosition() != -1) {
                     listener.onPrintClick(getAdapterPosition());
+                }
+
             });
         }
 

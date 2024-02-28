@@ -54,7 +54,7 @@ public class CountrySelectionDialog extends BaseDialog<DialogCountrySelectionBin
 
     @Override
     public CountrySelectionDialogViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(CountrySelectionDialogViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(CountrySelectionDialogViewModel.class);
     }
 
     private void setOnClick(boolean isShowDialCode, CountrySelectionCallback callback) {

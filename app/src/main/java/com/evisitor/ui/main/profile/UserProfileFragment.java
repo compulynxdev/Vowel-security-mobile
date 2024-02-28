@@ -47,7 +47,7 @@ public class UserProfileFragment extends BaseFragment<FragmentUserProfileBinding
 
     @Override
     public UserProfileViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(UserProfileViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(UserProfileViewModel.class);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class UserProfileFragment extends BaseFragment<FragmentUserProfileBinding
                     openActivityOnTokenExpire();
                 }).setOnNegativeClickListener(DialogFragment::dismiss));
 
-        mViewModel.getUserDetail().observe(this, userDetail -> {
+        mViewModel.getUserDetail().observe(getViewLifecycleOwner(), userDetail -> {
             getViewDataBinding().tvName.setText(userDetail.getFullName().isEmpty() ? getString(R.string.na) : userDetail.getFullName());
             getViewDataBinding().tvUsername.setText(userDetail.getUsername().isEmpty() ? getString(R.string.na) : userDetail.getUsername());
             getViewDataBinding().tvEmail.setText(userDetail.getEmail().isEmpty() ? getString(R.string.na) : userDetail.getEmail());

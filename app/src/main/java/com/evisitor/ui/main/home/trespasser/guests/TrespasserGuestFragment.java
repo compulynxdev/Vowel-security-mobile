@@ -58,7 +58,7 @@ public class TrespasserGuestFragment extends BaseFragment<FragmentTrespasserGues
 
     @Override
     public TrespasserGuestViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(TrespasserGuestViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(TrespasserGuestViewModel.class);
     }
 
     @Override

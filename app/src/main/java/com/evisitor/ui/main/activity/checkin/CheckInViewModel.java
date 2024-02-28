@@ -17,6 +17,7 @@ import com.evisitor.data.model.ServiceProviderResponse;
 import com.evisitor.data.model.VisitorProfileBean;
 import com.evisitor.ui.main.BaseCheckInOutViewModel;
 import com.evisitor.ui.main.activity.ActivityNavigator;
+import com.evisitor.ui.main.activity.checkin.adapter.PrinterStatus;
 import com.evisitor.util.AppConstants;
 import com.evisitor.util.AppLogger;
 import com.evisitor.util.AppUtils;
@@ -31,6 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -43,7 +45,15 @@ public class CheckInViewModel extends BaseCheckInOutViewModel<ActivityNavigator>
     MutableLiveData<String> propertyImage = new MutableLiveData<>();
 
     MutableLiveData<String> visitorImage = new MutableLiveData<>();
+    private final MutableLiveData<PrinterStatus> _printerStatus = new MutableLiveData<>(PrinterStatus.DISCONNECTED);
 
+    public LiveData<PrinterStatus> getPrinterStatus() {
+        return _printerStatus;
+    }
+
+    public void setPrinterStatus(PrinterStatus printerStatus) {
+        _printerStatus.setValue(printerStatus);
+    }
     public CheckInViewModel(DataManager dataManager) {
         super(dataManager);
     }

@@ -91,7 +91,7 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
 
     @Override
     public CommercialAddVisitorViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(CommercialAddVisitorViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(CommercialAddVisitorViewModel.class);
     }
 
     @Override

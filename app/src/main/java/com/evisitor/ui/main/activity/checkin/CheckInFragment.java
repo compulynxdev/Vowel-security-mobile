@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -42,6 +43,7 @@ import com.evisitor.ui.main.activity.checkin.adapter.CommercialStaffCheckInAdapt
 import com.evisitor.ui.main.activity.checkin.adapter.CommercialVisitorCheckInAdapter;
 import com.evisitor.ui.main.activity.checkin.adapter.GuestCheckInAdapter;
 import com.evisitor.ui.main.activity.checkin.adapter.HouseKeepingCheckInAdapter;
+import com.evisitor.ui.main.activity.checkin.adapter.PrinterStatus;
 import com.evisitor.ui.main.activity.checkin.adapter.ServiceProviderCheckInAdapter;
 import com.evisitor.ui.main.home.idverification.IdVerificationCallback;
 import com.evisitor.ui.main.home.idverification.IdVerificationDialog;
@@ -56,7 +58,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckInViewModel> implements ActivityNavigator {
+public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckInViewModel> implements ActivityNavigator, DialogManager.SelectPrinterCallBack {
     private static final int BLUETOOTH_SCAN_PERMISSION_REQUEST = 1;
     public static BixolonLabelPrinter bixolonLabelPrinter;
     private final int SCAN_RESULT = 101;
@@ -89,10 +91,12 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                             mIsConnected = true;
                             //0 for guest and 1 for sp
                             printLabel(printType != 0);
+                            getViewModel().setPrinterStatus(PrinterStatus.CONNECTED);
                             break;
 
                         case BixolonLabelPrinter.STATE_CONNECTING:
                             //setStatus(getResources().getString(R.string.title_connecting));
+                            // getViewModel().setPrinterStatus(PrinterStatus.CONNECTING);
                             break;
 
                         case BixolonLabelPrinter.STATE_NONE:
@@ -100,6 +104,9 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                             // setStatus(getResources().getString(R.string.title_not_connected));
                             mIsConnected = false;
                             //invalidateOptionsMenu();
+                            if (bixolonLabelPrinter != null && bixolonLabelPrinter.isConnected()) {
+                                getViewModel().setPrinterStatus(PrinterStatus.ERROR);
+                            }
                             break;
                     }
                     break;
@@ -125,7 +132,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                     if (msg.obj == null) {
                         Toast.makeText(getActivity(), "No paired device", Toast.LENGTH_SHORT).show();
                     } else {
-                        DialogManager.showBluetoothDialog(getActivity(), (Set<BluetoothDevice>) msg.obj, true);
+                        showDevices(msg);
                     }
                     break;
 
@@ -136,12 +143,17 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                     break;
 
                 case BixolonLabelPrinter.MESSAGE_OUTPUT_COMPLETE:
+                    getViewModel().setPrinterStatus(PrinterStatus.FINISHED);
                     Toast.makeText(getActivity(), "Transaction Print complete", Toast.LENGTH_SHORT).show();
                     break;
 
             }
         }
     };
+
+    private void showDevices(Message msg) {
+        DialogManager.showBluetoothDialog(getActivity(), (Set<BluetoothDevice>) msg.obj, this);
+    }
 
     public static CheckInFragment newInstance(int listOf, OnFragmentInteraction listener) {
         CheckInFragment fragment = new CheckInFragment();
@@ -218,16 +230,14 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
             case 0:
                 if (mViewModel.getDataManager().isCommercial())
                     getViewDataBinding().recyclerView.setAdapter(commercialVisitorAdapter);
-                else
-                    getViewDataBinding().recyclerView.setAdapter(guestAdapter);
+                else getViewDataBinding().recyclerView.setAdapter(guestAdapter);
                 break;
 
             //house
             case 1:
                 if (mViewModel.getDataManager().isCommercial())
                     getViewDataBinding().recyclerView.setAdapter(commercialStaffCheckInAdapter);
-                else
-                    getViewDataBinding().recyclerView.setAdapter(houseKeepingAdapter);
+                else getViewDataBinding().recyclerView.setAdapter(houseKeepingAdapter);
                 break;
 
             //service
@@ -250,7 +260,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
 
     @Override
     public CheckInViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(CheckInViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(CheckInViewModel.class);
     }
 
     @Override
@@ -310,22 +320,59 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
             propertyInfo = propertyInfoResponse;
             getViewModel().getImage(propertyInfoResponse.getImage(), true);
         });
+
+
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(requireActivity(), blueToothPermissions(), BLUETOOTH_SCAN_PERMISSION_REQUEST);
         }
+
+        getViewModel().getPrinterStatus().observe(getViewLifecycleOwner(), printerStatus -> {
+            Log.i("TAG", "onViewCreated: "+printerStatus.name());
+            switch (printerStatus) {
+                case CONNECTING:
+                    showLoading();
+                    break;
+                case CONNECTED:
+                    // Printer is connected
+
+
+                    break;
+                case PRINTING:
+                    // Printer is currently printing
+
+
+                    break;
+                case FINISHED:
+                case ERROR:
+                    // There is an error with the printer
+                    // Printer has finished printing
+                    hideLoading();
+
+                    break;
+
+            }
+        });
     }
 
     private String[] blueToothPermissions() {
-        ArrayList<String> list = new ArrayList<>();
-        list.add(Manifest.permission.ACCESS_FINE_LOCATION);
-        list.add(Manifest.permission.ACCESS_COARSE_LOCATION);
-        list.add(Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS);
+        String[] permissions = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            list.add(Manifest.permission.BLUETOOTH_SCAN);
-            list.add(Manifest.permission.BLUETOOTH_CONNECT);
+            permissions =  new String[6];
+            permissions[0] = Manifest.permission.BLUETOOTH_SCAN;
+            permissions[1] = Manifest.permission.BLUETOOTH_CONNECT;
+            permissions[2] = Manifest.permission.ACCESS_FINE_LOCATION;
+            permissions[3] = Manifest.permission.ACCESS_COARSE_LOCATION;
+            permissions[4] = Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS;
+            permissions[5] = Manifest.permission.BLUETOOTH_PRIVILEGED;
+        }else {
+            permissions = new String[4];
+            permissions[0] = Manifest.permission.ACCESS_FINE_LOCATION;
+            permissions[1] = Manifest.permission.ACCESS_COARSE_LOCATION;
+            permissions[2] = Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS;
+            permissions[3] = Manifest.permission.BLUETOOTH_PRIVILEGED;
         }
-        list.add(Manifest.permission.BLUETOOTH_PRIVILEGED);
-        return (String[]) list.toArray();
+
+        return permissions;
     }
 
     private void setUpCommercialStaffAdapter() {
@@ -333,15 +380,14 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
         commercialStaffCheckInAdapter = new CommercialStaffCheckInAdapter(commercialStaffList, getBaseActivity(), bean -> {
             List<VisitorProfileBean> beans = mViewModel.getCommercialStaffBean(bean);
             VisitorProfileDialog.newInstance(beans, visitorProfileDialog -> {
-                        visitorProfileDialog.dismiss();
-                        if (mViewModel.getDataManager().isCheckOutFeature()) {
-                            name = bean.getFullName();
-                            type = 3;
-                            identity = bean.getDocumentId();
-                            scanIdDialog(bean.getDocumentId(), 3);
-                        } else mViewModel.staffCheckOut();
-                    }).setImage(bean.getImageUrl()).setBtnLabel(getString(R.string.check_out))
-                    .setVehicalNoPlateImg(bean.getVehicleImage()).show(getFragmentManager());
+                visitorProfileDialog.dismiss();
+                if (mViewModel.getDataManager().isCheckOutFeature()) {
+                    name = bean.getFullName();
+                    type = 3;
+                    identity = bean.getDocumentId();
+                    scanIdDialog(bean.getDocumentId(), 3);
+                } else mViewModel.staffCheckOut();
+            }).setImage(bean.getImageUrl()).setBtnLabel(getString(R.string.check_out)).setVehicalNoPlateImg(bean.getVehicleImage()).show(getFragmentManager());
         });
     }
 
@@ -425,8 +471,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                     if (mViewModel.getDataManager().isCheckOutFeature()) {
                         scanIdDialog(houseKeeping.getIdentityNo(), 1);
                     } else {
-                        if (isNetworkConnected(true))
-                            mViewModel.checkOut(1);
+                        if (isNetworkConnected(true)) mViewModel.checkOut(1);
                     }
                 }
             }).setImage(houseKeeping.getImageUrl()).setVehicalNoPlateImg(houseKeeping.getVehicleImage()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
@@ -449,8 +494,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                     else {
                         if (mViewModel.getDataManager().isCheckOutFeature()) {
                             scanIdDialog(serviceProvider.getIdentityNo(), 2);
-                        } else
-                            mViewModel.checkOut(2);
+                        } else mViewModel.checkOut(2);
                     }
                 }).setImage(serviceProvider.getImageUrl()).setVehicalNoPlateImg(serviceProvider.getVehicleImage()).setBtnLabel(getString(R.string.check_out)).show(getFragmentManager());
 
@@ -527,22 +571,15 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
     }
 
     private void showCallDialog(String identityNo, int type) {
-        AlertDialog.newInstance()
-                .setNegativeBtnShow(false)
-                .setCloseBtnShow(true)
-                .setTitle(getString(R.string.check_out))
-                .setMsg(mViewModel.getDataManager().isCommercial() ? getString(R.string.commercial_msg_check_out_call) : getString(R.string.msg_check_out_call))
-                .setPositiveBtnLabel(getString(R.string.approve))
+        AlertDialog.newInstance().setNegativeBtnShow(false).setCloseBtnShow(true).setTitle(getString(R.string.check_out)).setMsg(mViewModel.getDataManager().isCommercial() ? getString(R.string.commercial_msg_check_out_call) : getString(R.string.msg_check_out_call)).setPositiveBtnLabel(getString(R.string.approve))
                 /*.setNegativeBtnLabel(getString(R.string.reject))
                 .setOnNegativeClickListener(dialog1 -> {
                     dialog1.dismiss();
                     showAlert(R.string.alert, R.string.check_out_rejected);
-                })*/
-                .setOnPositiveClickListener(dialog12 -> {
-                    dialog12.dismiss();
-                    if (isNetworkConnected(true))
-                    scanIdDialog(identityNo, type);
-                }).show(getFragmentManager());
+                })*/.setOnPositiveClickListener(dialog12 -> {
+            dialog12.dismiss();
+            if (isNetworkConnected(true)) scanIdDialog(identityNo, type);
+        }).show(getFragmentManager());
     }
 
     public void doSearch(String search) {
@@ -697,7 +734,8 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
         if (mViewModel.getDataManager().isCommercial()) {
             if (commercialVisitorAdapter != null) {
                 commercialVisitorAdapter.showLoading(isShowLoader);
-                commercialVisitorAdapter.notifyDataSetChanged();
+
+                getViewDataBinding().recyclerView.post(() -> commercialVisitorAdapter.notifyDataSetChanged());
             }
         } else {
             if (guestAdapter != null) {
@@ -791,60 +829,71 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
 
     public void printLabel(boolean sp) {
         if (mIsConnected) {
-            int mFontSize = BixolonLabelPrinter.FONT_SIZE_10;
-            int mHorizontalMultiplier = 1;
-            int mVerticalMultiplier = 1;
-            int model = BixolonLabelPrinter.QR_CODE_MODEL2;
-            int eccLevel = BixolonLabelPrinter.ECC_LEVEL_15;
-            int rotation = BixolonLabelPrinter.ROTATION_NONE;
-            //Bitmap logo = urlImageToBitmap();
-
-            ServiceProvider serviceProvider = getViewModel().getDataManager().getSpDetail();
-            bixolonLabelPrinter.beginTransactionPrint();
-
-            if (propertyInfo != null && !propertyInfo.getImage().isEmpty() && getViewModel().getPropertyImage().getValue() != null)
-                bixolonLabelPrinter.drawImage(AppUtils.getBitmap(Objects.requireNonNull(getViewModel().getPropertyImage().getValue())), 450, 40, 120, 1, 1, 0);
-
-            bixolonLabelPrinter.drawBlock(10, 30, 800, 33, 79, 3);
-            bixolonLabelPrinter.drawBlock(10, 280, 800, 283, 79, 3);
-            bixolonLabelPrinter.drawText(propertyInfo.getFullName(), 10, 50, BixolonLabelPrinter.FONT_SIZE_12,
-                    mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
+            new Thread(() -> {
 
 
-            if (sp) {
-                bixolonLabelPrinter.drawText(getString(R.string.data_name, serviceProvider.getName()), 10, 130, mFontSize,
-                        mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
-                bixolonLabelPrinter.drawText(getString(R.string.data_identity, serviceProvider.getIdentityNo()), 10, 170, mFontSize,
-                        mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
-                bixolonLabelPrinter.drawText("Type: Service Provider", 10, 210, mFontSize,
-                        mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
-                if (serviceProvider.getQrCode() != null && !serviceProvider.getQrCode().isEmpty() && getViewModel().getVisitorImage().getValue() != null)
-                    bixolonLabelPrinter.drawImage(AppUtils.getBitmap(Objects.requireNonNull(getViewModel().getVisitorImage().getValue())), 450, 40, 120, 1, 1, 0);
-            }
-            //visitor details to be printed
-            else {
-                CommercialVisitorResponse.CommercialGuest commercialGuest = getViewModel().getDataManager().getCommercialVisitorDetail();
-                bixolonLabelPrinter.drawText(getString(R.string.data_name, commercialGuest.getName()), 10, 130, mFontSize,
-                        mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
-                if (commercialGuest.getIdentityNo() != null && !commercialGuest.getIdentityNo().isEmpty())
-                    bixolonLabelPrinter.drawText(getString(R.string.data_identity, commercialGuest.getIdentityNo()), 10, 170, mFontSize,
-                            mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
-                bixolonLabelPrinter.drawText("Type: Visitor", 10, 210, mFontSize,
-                        mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
-                if (commercialGuest.getQrCode() != null && !commercialGuest.getQrCode().isEmpty() && getViewModel().getVisitorImage().getValue() != null)
-                    bixolonLabelPrinter.drawImage(AppUtils.getBitmap(Objects.requireNonNull(getViewModel().getVisitorImage().getValue())), 450, 150, 120, 1, 1, 0);
-            }
-            //QR code
-            //bixolonLabelPrinter.drawQrCode(serviceProvider.getIdentityNo(), 400, 130, model, eccLevel, 7, rotation);
-            bixolonLabelPrinter.print(1, 1);
-            bixolonLabelPrinter.endTransactionPrint();
+                int mFontSize = BixolonLabelPrinter.FONT_SIZE_10;
+                int mHorizontalMultiplier = 1;
+                int mVerticalMultiplier = 1;
+                int model = BixolonLabelPrinter.QR_CODE_MODEL2;
+                int eccLevel = BixolonLabelPrinter.ECC_LEVEL_15;
+                int rotation = BixolonLabelPrinter.ROTATION_NONE;
+                //Bitmap logo = urlImageToBitmap();
+
+                ServiceProvider serviceProvider = getViewModel().getDataManager().getSpDetail();
+                bixolonLabelPrinter.beginTransactionPrint();
+
+                if (propertyInfo != null && !propertyInfo.getImage().isEmpty() && getViewModel().getPropertyImage().getValue() != null)
+                    bixolonLabelPrinter.drawImage(AppUtils.getBitmap(Objects.requireNonNull(getViewModel().getPropertyImage().getValue())), 450, 40, 120, 1, 1, 0);
+
+                bixolonLabelPrinter.drawBlock(10, 30, 800, 33, 79, 3);
+                bixolonLabelPrinter.drawBlock(10, 280, 800, 283, 79, 3);
+                bixolonLabelPrinter.drawText(propertyInfo.getFullName(), 10, 50, BixolonLabelPrinter.FONT_SIZE_12, mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
+
+
+                if (sp) {
+                    bixolonLabelPrinter.drawText(getString(R.string.data_name, serviceProvider.getName()), 10, 130, mFontSize, mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
+                    bixolonLabelPrinter.drawText(getString(R.string.data_identity, serviceProvider.getIdentityNo()), 10, 170, mFontSize, mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
+                    bixolonLabelPrinter.drawText("Type: Service Provider", 10, 210, mFontSize, mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
+                    if (serviceProvider.getQrCode() != null && !serviceProvider.getQrCode().isEmpty() && getViewModel().getVisitorImage().getValue() != null)
+                        bixolonLabelPrinter.drawImage(AppUtils.getBitmap(Objects.requireNonNull(getViewModel().getVisitorImage().getValue())), 450, 40, 120, 1, 1, 0);
+                }
+                //visitor details to be printed
+                else {
+                    CommercialVisitorResponse.CommercialGuest commercialGuest = getViewModel().getDataManager().getCommercialVisitorDetail();
+                    bixolonLabelPrinter.drawText(getString(R.string.data_name, commercialGuest.getName()), 10, 130, mFontSize, mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
+                    if (commercialGuest.getIdentityNo() != null && !commercialGuest.getIdentityNo().isEmpty())
+                        bixolonLabelPrinter.drawText(getString(R.string.data_identity, commercialGuest.getIdentityNo()), 10, 170, mFontSize, mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
+                    bixolonLabelPrinter.drawText("Type: Visitor", 10, 210, mFontSize, mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
+                    if (commercialGuest.getQrCode() != null && !commercialGuest.getQrCode().isEmpty() && getViewModel().getVisitorImage().getValue() != null)
+                        bixolonLabelPrinter.drawImage(AppUtils.getBitmap(Objects.requireNonNull(getViewModel().getVisitorImage().getValue())), 450, 150, 120, 1, 1, 0);
+                }
+                //QR code
+                //bixolonLabelPrinter.drawQrCode(serviceProvider.getIdentityNo(), 400, 130, model, eccLevel, 7, rotation);
+                bixolonLabelPrinter.print(1, 1);
+                bixolonLabelPrinter.endTransactionPrint();
+            }).start();
         } else {
             //bixolonLabelPrinter.findBluetoothPrinters();
             showAlert(R.string.alert, R.string.no_printer_connected);
         }
     }
 
+    @Override
+    public void printerSelected(String address) {
+        getViewModel().setPrinterStatus(PrinterStatus.CONNECTING);
+        new Thread(() -> {
+            CheckInFragment.bixolonLabelPrinter.connect(address);
+        }).start();
+    }
+
     public interface OnFragmentInteraction {
         void totalCount(int size);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        bixolonLabelPrinter.disconnect();
     }
 }

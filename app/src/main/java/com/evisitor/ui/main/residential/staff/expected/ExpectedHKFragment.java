@@ -66,7 +66,7 @@ public class ExpectedHKFragment extends BaseFragment<FragmentExpectedBinding, Ex
 
     @Override
     public ExpectedHKViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(ExpectedHKViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(ExpectedHKViewModel.class);
     }
 
     @Override

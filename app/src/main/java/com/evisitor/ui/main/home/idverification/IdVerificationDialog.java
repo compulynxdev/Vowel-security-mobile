@@ -48,7 +48,7 @@ public class IdVerificationDialog extends BaseDialog<DialogIdVerificationBinding
 
     @Override
     public IdVerificationViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(IdVerificationViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(IdVerificationViewModel.class);
     }
 
     @Override

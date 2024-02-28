@@ -14,11 +14,9 @@ import com.evisitor.ViewModelProviderFactory;
 import com.evisitor.databinding.ActivityExpectedGuestOrVisitorBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.dialog.AlertDialog;
-import com.evisitor.ui.main.home.scan.BarcodeScanActivity;
 import com.evisitor.ui.main.residential.add.AddVisitorActivity;
 import com.evisitor.ui.main.residential.guest.expected.ExpectedGuestFragment;
 import com.evisitor.util.AppConstants;
-import com.evisitor.util.PermissionUtils;
 import com.smartengines.ScanSmartActivity;
 
 import static com.evisitor.util.AppConstants.SCAN_RESULT;
@@ -43,7 +41,7 @@ public class GuestActivity extends BaseActivity<ActivityExpectedGuestOrVisitorBi
 
     @Override
     public GuestViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(GuestViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(GuestViewModel.class);
     }
 
     @Override

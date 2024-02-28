@@ -56,7 +56,7 @@ public class RejectedSPFragment extends BaseFragment<FragmentRejectedSBinding, R
 
     @Override
     public RejectedSPViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(RejectedSPViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(RejectedSPViewModel.class);
     }
 
     @Override

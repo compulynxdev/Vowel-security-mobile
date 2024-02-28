@@ -82,4 +82,8 @@ public interface PreferenceHelper {
     void setCaptureVehicleModel(boolean capture);
 
     boolean capturesVehicleModel();
+
+    void setPrinterAddress(String address);
+
+    String printerAddress();
 }

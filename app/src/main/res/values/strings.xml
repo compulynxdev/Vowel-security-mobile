@@ -390,8 +390,8 @@
     <string name="check_out_successfully">Check Out Successfully</string>
 
     <string name="title_connecting">connecting&#8230;</string>
-    <string name="title_connected_to">connected to %s</string>
-    <string name="title_not_connected">not connected</string>
+    <string name="title_connected_to">Printer connected </string>
+    <string name="title_not_connected">Printer not connected</string>
     <string name="set_printing_type">Set printing type</string>
     <string name="print">Print</string>
     <string name="print_label">Print Label</string>
@@ -407,4 +407,5 @@
     <string name="result">result</string>
     <string name="vehicle_model">Vehicle model</string>
     <string name="applicaion_not_found">Application not found</string>
+    <string name="set_printer">Set up printer</string>
 </resources>

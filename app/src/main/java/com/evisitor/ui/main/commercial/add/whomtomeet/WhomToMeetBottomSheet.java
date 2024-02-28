@@ -61,7 +61,7 @@ public class WhomToMeetBottomSheet extends BaseBottomSheetDialog<DialogWhomToMee
 
     @Override
     public WhomToMeetViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(WhomToMeetViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getInstanceM()).get(WhomToMeetViewModel.class);
     }
 
     @Override
