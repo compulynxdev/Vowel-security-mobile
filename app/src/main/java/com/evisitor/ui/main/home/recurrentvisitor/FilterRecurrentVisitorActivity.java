@@ -74,65 +74,53 @@ public class FilterRecurrentVisitorActivity extends BaseActivity<ActivityFilterR
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.img_back:
-                onBackPressed();
-                break;
+        int id = v.getId();
 
-            case R.id.tv_visitor_type:
-                SelectionBottomSheetDialog.newInstance(getString(R.string.select_visitor_type), mViewModel.getVisitorTypeList()).setItemSelectedListener(pos -> {
-                    String value = mViewModel.getVisitorTypeList().get(pos).toString();
-                    getViewDataBinding().tvVisitorType.setText(value);
-                    isGuest = value.equals("Guest") || value.equals("Visitor");
-                }).show(getSupportFragmentManager());
-                break;
+        if (id == R.id.img_back) {
+            onBackPressed();
+        } else if (id == R.id.tv_visitor_type) {
+            SelectionBottomSheetDialog.newInstance(getString(R.string.select_visitor_type), mViewModel.getVisitorTypeList()).setItemSelectedListener(pos -> {
+                String value = mViewModel.getVisitorTypeList().get(pos).toString();
+                getViewDataBinding().tvVisitorType.setText(value);
+                isGuest = value.equals("Guest") || value.equals("Visitor");
+            }).show(getSupportFragmentManager());
+        } else if (id == R.id.tv_filter_type) {
+            SelectionBottomSheetDialog.newInstance(getString(R.string.select_filter_type), mViewModel.getFilterTypeList()).setItemSelectedListener(pos -> {
+                String value = mViewModel.getFilterTypeList().get(pos).toString();
+                getViewDataBinding().tvFilterType.setText(value);
+                if (value.equalsIgnoreCase("Identity")) {
+                    isFilterByID = true;
+                    getViewDataBinding().groupId.setVisibility(View.VISIBLE);
+                    getViewDataBinding().groupOther.setVisibility(View.GONE);
 
-            case R.id.tv_filter_type:
-                SelectionBottomSheetDialog.newInstance(getString(R.string.select_filter_type), mViewModel.getFilterTypeList()).setItemSelectedListener(pos -> {
-                    String value = mViewModel.getFilterTypeList().get(pos).toString();
-                    getViewDataBinding().tvFilterType.setText(value);
-                    if (value.equalsIgnoreCase("Identity")) {
-                        isFilterByID = true;
-                        getViewDataBinding().groupId.setVisibility(View.VISIBLE);
-                        getViewDataBinding().groupOther.setVisibility(View.GONE);
+                    getViewDataBinding().etName.setText("");
+                    getViewDataBinding().etContact.setText("");
+                } else {
+                    isFilterByID = false;
+                    getViewDataBinding().groupId.setVisibility(View.GONE);
+                    getViewDataBinding().groupOther.setVisibility(View.VISIBLE);
 
-                        getViewDataBinding().etName.setText("");
-                        getViewDataBinding().etContact.setText("");
-                    } else {
-                        isFilterByID = false;
-                        getViewDataBinding().groupId.setVisibility(View.GONE);
-                        getViewDataBinding().groupOther.setVisibility(View.VISIBLE);
-
-                        getViewDataBinding().etIdentity.setText("");
-                        getViewDataBinding().tvIdentity.setText("");
-                    }
-                }).show(getSupportFragmentManager());
-                break;
-
-            case R.id.tv_identity:
-                SelectionBottomSheetDialog.newInstance(getString(R.string.select_identity_type), mViewModel.getIdentityTypeList()).setItemSelectedListener(pos -> {
-                    IdentityBean bean = (IdentityBean) mViewModel.getIdentityTypeList().get(pos);
-                    getViewDataBinding().tvIdentity.setText(bean.getTitle());
-                    idType = bean.getKey();
-                }).show(getSupportFragmentManager());
-                break;
-
-            case R.id.rl_code:
-                CountrySelectionDialog.newInstance(true, countryResponse -> {
-                    countryCode = countryResponse.getDial_code();
-                    getViewDataBinding().tvCode.setText("+".concat(countryCode));
-                }).show(getSupportFragmentManager());
-                break;
-
-            case R.id.tv_new_visitor:
-                Intent i = mViewModel.getDataManager().isCommercial() ? CommercialAddVisitorActivity.getStartIntent(getContext()) : AddVisitorActivity.getStartIntent(getContext());
-                startActivity(i);
-                break;
-
-            case R.id.btn_search:
-                mViewModel.getFilteredVisitorData(isGuest, isFilterByID, getViewDataBinding().etIdentity.getText().toString().trim(), idType,
-                        getViewDataBinding().etName.getText().toString().trim(), countryCode, getViewDataBinding().etContact.getText().toString().trim());
-                break;
+                    getViewDataBinding().etIdentity.setText("");
+                    getViewDataBinding().tvIdentity.setText("");
+                }
+            }).show(getSupportFragmentManager());
+        } else if (id == R.id.tv_identity) {
+            SelectionBottomSheetDialog.newInstance(getString(R.string.select_identity_type), mViewModel.getIdentityTypeList()).setItemSelectedListener(pos -> {
+                IdentityBean bean = (IdentityBean) mViewModel.getIdentityTypeList().get(pos);
+                getViewDataBinding().tvIdentity.setText(bean.getTitle());
+                idType = bean.getKey();
+            }).show(getSupportFragmentManager());
+        } else if (id == R.id.rl_code) {
+            CountrySelectionDialog.newInstance(true, countryResponse -> {
+                countryCode = countryResponse.getDial_code();
+                getViewDataBinding().tvCode.setText("+".concat(countryCode));
+            }).show(getSupportFragmentManager());
+        } else if (id == R.id.tv_new_visitor) {
+            Intent i = mViewModel.getDataManager().isCommercial() ? CommercialAddVisitorActivity.getStartIntent(getContext()) : AddVisitorActivity.getStartIntent(getContext());
+            startActivity(i);
+        } else if (id == R.id.btn_search) {
+            mViewModel.getFilteredVisitorData(isGuest, isFilterByID, getViewDataBinding().etIdentity.getText().toString().trim(), idType,
+                    getViewDataBinding().etName.getText().toString().trim(), countryCode, getViewDataBinding().etContact.getText().toString().trim());
         }
     }
 

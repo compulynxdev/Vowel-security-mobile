@@ -315,210 +315,183 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.img_back:
-                onBackPressed();
-                break;
+        int id = v.getId();
 
-            case R.id.frame_img:
-                if (PermissionUtils.checkCameraPermission(this)) {
-                    ImagePickBottomSheetDialog.newInstance(new ImagePickCallback() {
-                        @Override
-                        public void onImageReceived(Bitmap bitmap) {
-                            bmp_profile = bitmap;
-                            getViewDataBinding().imgUser.setImageBitmap(bitmap);
-                        }
-
-                        @Override
-                        public void onView() {
-
-                        }
-                    }, "").show(getSupportFragmentManager());
-                }
-                break;
-            case R.id.et_click_imag:
-                if (PermissionUtils.checkCameraPermission(this)) {
-                    ImagePickBottomSheetDialog.newInstance(new ImagePickCallback() {
-                        @Override
-                        public void onImageReceived(Bitmap bitmap) {
-                            vehicalImgBitmap = bitmap;
-                            if (bitmap != null) {
-                                getViewDataBinding().showNoPlatImage.setVisibility(View.VISIBLE);
-                                getViewModel().numberPlateVerification(bitmap);
-                            } else {
-                                getViewDataBinding().showNoPlatImage.setVisibility(View.GONE);
-                            }
-                        }
-
-                        @Override
-                        public void onView() {
-
-                        }
-                    }, "").show(getSupportFragmentManager());
-                }
-                break;
-            case R.id.show_no_plat_image:
-                if (vehicalImgBitmap != null) {
-                    showFullBitmapImage(vehicalImgBitmap);
-                }
-                break;
-            case R.id.rb_individual:
-                groupType = "Individual";
-                getViewDataBinding().tvGroupMember.setVisibility(View.GONE);
-                break;
-            case R.id.rb_group:
-                groupType = "Group";
-                getViewDataBinding().tvGroupMember.setVisibility(View.VISIBLE);
-                break;
-
-            case R.id.tv_group_member:
-                Intent intent = SecondaryGuestInputActivity.getStartIntent(this);
-                if (!secoundryGuestList.isEmpty()) {
-                    intent.putExtra("list", new Gson().toJson(secoundryGuestList));
-                }
-                intent.putExtra("add", true);
-                startActivityForResult(intent, ADD_FAMILY_MEMBER);
-                break;
-
-            case R.id.tv_visitor_type:
-                SelectionBottomSheetDialog.newInstance(getString(R.string.select_visitor_type), mViewModel.getVisitorTypeList()).setItemSelectedListener(pos -> {
-                    String value = mViewModel.getVisitorTypeList().get(pos).toString();
-                    updateVisitorUI(value);
-                }).show(getSupportFragmentManager());
-                break;
-
-
-            case R.id.tv_visitor_mode:
-                SelectionBottomSheetDialog.newInstance(getString(R.string.select_visitor_type), mViewModel.getVisitorTypeMode()).setItemSelectedListener(pos -> {
-                    String value = mViewModel.getVisitorTypeMode().get(pos).toString();
-                    updateVisitorModeUI(value);
-                }).show(getSupportFragmentManager());
-                break;
-
-            case R.id.tv_identity:
-                SelectionBottomSheetDialog.newInstance(getString(R.string.select_identity_type), mViewModel.getIdentityTypeList()).setItemSelectedListener(pos -> {
-                    IdentityBean bean = (IdentityBean) mViewModel.getIdentityTypeList().get(pos);
-                    getViewDataBinding().tvIdentity.setText(bean.getTitle());
-                    idType = bean.getKey();
-                }).show(getSupportFragmentManager());
-                break;
-
-            case R.id.tv_gender:
-                SelectionBottomSheetDialog.newInstance(getString(R.string.select_gender), mViewModel.getGenderList()).setItemSelectedListener(pos -> getViewDataBinding().tvGender.setText(mViewModel.getGenderList().get(pos))).show(getSupportFragmentManager());
-                break;
-
-            case R.id.tv_employment:
-                SelectionBottomSheetDialog.newInstance(getString(R.string.select_employment), mViewModel.getEmploymentTypeList()).setItemSelectedListener(pos -> {
-                    String value = mViewModel.getEmploymentTypeList().get(pos).toString();
-                    getViewDataBinding().tvEmployment.setText(value);
-
-                    showGroupEmployment(value);
-                }).show(getSupportFragmentManager());
-                break;
-
-            case R.id.rl_code:
-                CountrySelectionDialog.newInstance(true, countryResponse -> {
-                    countryCode = countryResponse.getDial_code();
-                    getViewDataBinding().tvCode.setText("+".concat(countryCode));
-                }).show(getSupportFragmentManager());
-                break;
-
-            case R.id.tv_nationality:
-                CountrySelectionDialog.newInstance(false, countryResponse -> getViewDataBinding().tvNationality.setText(countryResponse.getNationality())).show(getSupportFragmentManager());
-                break;
-
-            case R.id.tv_whom_to_meet:
-                if (isGuest) {
-                    WhomToMeetBottomSheet.newInstance(new WhomToMeetCallback() {
-                        @Override
-                        public void onLastLevelClick(HouseDetailBean houseDetailBean) {
-                            updateWhomToMeetData(false, houseDetailBean.getName(), String.valueOf(houseDetailBean.getId()));
-                        }
-
-                        @Override
-                        public void onStaffClick(SelectCommercialStaffResponse staffDetail) {
-                            updateWhomToMeetData(true, staffDetail.getFullName(), String.valueOf(staffDetail.getId()));
-                        }
-                    }).show(getSupportFragmentManager());
-                } else {
-                    SelectionBottomSheetDialog.newInstance(AppUtils.capitaliseFirstLetter(getString(R.string.select).concat(" ").concat(AppUtils.capitaliseFirstLetter(mViewModel.getDataManager().getLevelName()))), mViewModel.doGetHouseDetailsList()).setItemSelectedListener(pos -> {
-                        HouseDetailBean bean = (HouseDetailBean) mViewModel.doGetHouseDetailsList().get(pos);
-                        updateWhomToMeetData(false, bean.getName(), String.valueOf(bean.getId()));
-                    }).show(getSupportFragmentManager());
-                }
-                break;
-
-            case R.id.tv_gadgets:
-                Intent i = GadgetsInputActivity.getStartIntent(this);
-                if (!deviceBeanList.isEmpty()) {
-                    i.putExtra("list", new Gson().toJson(deviceBeanList));
-                }
-                i.putExtra("add", true);
-                startActivityForResult(i, SCAN_RESULT_GADGETS);
-                break;
-
-            case R.id.btn_add:
-                if (isGuest == null) {
-                    showToast(R.string.alert_select_visitor);
-                    return;
-                }
-
-                AddVisitorData visitorData = new AddVisitorData();
-                visitorData.isGuest = isGuest;
-                visitorData.identityNo = getViewDataBinding().etIdentity.getText().toString().trim();
-                visitorData.idType = idType;
-                visitorData.nationality = getViewDataBinding().tvNationality.getText().toString();
-                visitorData.name = getViewDataBinding().etName.getText().toString().trim();
-                visitorData.contact = getViewDataBinding().etContact.getText().toString().trim();
-                visitorData.address = getViewDataBinding().etAddress.getText().toString().trim();
-                visitorData.gender = getViewDataBinding().tvGender.getText().toString();
-                visitorData.houseId = houseId;
-                visitorData.mode = getViewDataBinding().tvVisitorMode.getText().toString();
-                visitorData.isStaffSelect = isStaffSelect;
-                visitorData.guestList = secoundryGuestList;
-                visitorData.bodyTemperature = getViewDataBinding().etTemperature.getText().toString().trim();
-                if (isGuest) {
-                    visitorData.purpose = getViewDataBinding().etPurpose.getText().toString();
-                    visitorData.deviceBeanList.clear();
-                    visitorData.deviceBeanList.addAll(deviceBeanList);
-                    if (mViewModel.doVerifyGuestInputs(visitorData, mViewModel.getDataManager().getGuestConfiguration())) {
-                        mViewModel.doCheckGuestStatus(getViewDataBinding().etIdentity.getText().toString().trim(), idType);
+        if (id == R.id.img_back) {
+            onBackPressed();
+        } else if (id == R.id.frame_img) {
+            if (PermissionUtils.checkCameraPermission(this)) {
+                ImagePickBottomSheetDialog.newInstance(new ImagePickCallback() {
+                    @Override
+                    public void onImageReceived(Bitmap bitmap) {
+                        bmp_profile = bitmap;
+                        getViewDataBinding().imgUser.setImageBitmap(bitmap);
                     }
-                } else {
-                    visitorData.assignedTo = getString(R.string.property);
-                    visitorData.isResident = !visitorData.assignedTo.equalsIgnoreCase("Property");
-                    visitorData.visitorType = getViewDataBinding().tvVisitorType.getText().toString();
-                    visitorData.nationality = getViewDataBinding().tvNationality.getText().toString();
-                    visitorData.employment = getViewDataBinding().tvEmployment.getText().toString();
-                    visitorData.isCompany = !visitorData.employment.equalsIgnoreCase("Self");
-                    visitorData.profile = getViewDataBinding().actvWorkProfile.getText().toString().trim();
-                    visitorData.companyName = getViewDataBinding().actvCompanyName.getText().toString().trim();
-                    visitorData.companyAddress = getViewDataBinding().etCompanyAddress.getText().toString().trim();
 
-                    if (mViewModel.doVerifySPInputs(visitorData)) {
-                        if (visitorData.isResident) {
-                            AlertDialog.newInstance()
-                                    .setNegativeBtnShow(true)
-                                    .setCloseBtnShow(false)
-                                    .setTitle(getString(R.string.check_in))
-                                    .setMsg(getString(R.string.commercial_msg_check_in_call))
-                                    .setPositiveBtnLabel(getString(R.string.approve))
-                                    .setNegativeBtnLabel(getString(R.string.reject))
-                                    .setOnNegativeClickListener(dialog1 -> {
-                                        dialog1.dismiss();
-                                        showReasonSPDialog(visitorData);
-                                    })
-                                    .setOnPositiveClickListener(dialog12 -> {
-                                        dialog12.dismiss();
-                                        doAddSp(true, visitorData);
-                                    }).show(getSupportFragmentManager());
+                    @Override
+                    public void onView() {
+                    }
+                }, "").show(getSupportFragmentManager());
+            }
+        } else if (id == R.id.et_click_imag) {
+            if (PermissionUtils.checkCameraPermission(this)) {
+                ImagePickBottomSheetDialog.newInstance(new ImagePickCallback() {
+                    @Override
+                    public void onImageReceived(Bitmap bitmap) {
+                        vehicalImgBitmap = bitmap;
+                        if (bitmap != null) {
+                            getViewDataBinding().showNoPlatImage.setVisibility(View.VISIBLE);
+                            getViewModel().numberPlateVerification(bitmap);
                         } else {
-                            //for property there is no reject option
-                            doAddSp(true, visitorData);
+                            getViewDataBinding().showNoPlatImage.setVisibility(View.GONE);
                         }
                     }
+
+                    @Override
+                    public void onView() {
+                    }
+                }, "").show(getSupportFragmentManager());
+            }
+        } else if (id == R.id.show_no_plat_image) {
+            if (vehicalImgBitmap != null) {
+                showFullBitmapImage(vehicalImgBitmap);
+            }
+        } else if (id == R.id.rb_individual) {
+            groupType = "Individual";
+            getViewDataBinding().tvGroupMember.setVisibility(View.GONE);
+        } else if (id == R.id.rb_group) {
+            groupType = "Group";
+            getViewDataBinding().tvGroupMember.setVisibility(View.VISIBLE);
+        } else if (id == R.id.tv_group_member) {
+            Intent intent = SecondaryGuestInputActivity.getStartIntent(this);
+            if (!secoundryGuestList.isEmpty()) {
+                intent.putExtra("list", new Gson().toJson(secoundryGuestList));
+            }
+            intent.putExtra("add", true);
+            startActivityForResult(intent, ADD_FAMILY_MEMBER);
+        } else if (id == R.id.tv_visitor_type) {
+            SelectionBottomSheetDialog.newInstance(getString(R.string.select_visitor_type), mViewModel.getVisitorTypeList()).setItemSelectedListener(pos -> {
+                String value = mViewModel.getVisitorTypeList().get(pos).toString();
+                updateVisitorUI(value);
+            }).show(getSupportFragmentManager());
+        } else if (id == R.id.tv_visitor_mode) {
+            SelectionBottomSheetDialog.newInstance(getString(R.string.select_visitor_type), mViewModel.getVisitorTypeMode()).setItemSelectedListener(pos -> {
+                String value = mViewModel.getVisitorTypeMode().get(pos).toString();
+                updateVisitorModeUI(value);
+            }).show(getSupportFragmentManager());
+        } else if (id == R.id.tv_identity) {
+            SelectionBottomSheetDialog.newInstance(getString(R.string.select_identity_type), mViewModel.getIdentityTypeList()).setItemSelectedListener(pos -> {
+                IdentityBean bean = (IdentityBean) mViewModel.getIdentityTypeList().get(pos);
+                getViewDataBinding().tvIdentity.setText(bean.getTitle());
+                idType = bean.getKey();
+            }).show(getSupportFragmentManager());
+        } else if (id == R.id.tv_gender) {
+            SelectionBottomSheetDialog.newInstance(getString(R.string.select_gender), mViewModel.getGenderList()).setItemSelectedListener(pos ->
+                    getViewDataBinding().tvGender.setText(mViewModel.getGenderList().get(pos))
+            ).show(getSupportFragmentManager());
+        } else if (id == R.id.tv_employment) {
+            SelectionBottomSheetDialog.newInstance(getString(R.string.select_employment), mViewModel.getEmploymentTypeList()).setItemSelectedListener(pos -> {
+                String value = mViewModel.getEmploymentTypeList().get(pos).toString();
+                getViewDataBinding().tvEmployment.setText(value);
+
+                showGroupEmployment(value);
+            }).show(getSupportFragmentManager());
+        } else if (id == R.id.rl_code) {
+            CountrySelectionDialog.newInstance(true, countryResponse -> {
+                countryCode = countryResponse.getDial_code();
+                getViewDataBinding().tvCode.setText("+".concat(countryCode));
+            }).show(getSupportFragmentManager());
+        } else if (id == R.id.tv_nationality) {
+            CountrySelectionDialog.newInstance(false, countryResponse ->
+                    getViewDataBinding().tvNationality.setText(countryResponse.getNationality())
+            ).show(getSupportFragmentManager());
+        } else if (id == R.id.tv_whom_to_meet) {
+            if (isGuest) {
+                WhomToMeetBottomSheet.newInstance(new WhomToMeetCallback() {
+                    @Override
+                    public void onLastLevelClick(HouseDetailBean houseDetailBean) {
+                        updateWhomToMeetData(false, houseDetailBean.getName(), String.valueOf(houseDetailBean.getId()));
+                    }
+
+                    @Override
+                    public void onStaffClick(SelectCommercialStaffResponse staffDetail) {
+                        updateWhomToMeetData(true, staffDetail.getFullName(), String.valueOf(staffDetail.getId()));
+                    }
+                }).show(getSupportFragmentManager());
+            } else {
+                SelectionBottomSheetDialog.newInstance(AppUtils.capitaliseFirstLetter(getString(R.string.select).concat(" ").concat(AppUtils.capitaliseFirstLetter(mViewModel.getDataManager().getLevelName()))), mViewModel.doGetHouseDetailsList()).setItemSelectedListener(pos -> {
+                    HouseDetailBean bean = (HouseDetailBean) mViewModel.doGetHouseDetailsList().get(pos);
+                    updateWhomToMeetData(false, bean.getName(), String.valueOf(bean.getId()));
+                }).show(getSupportFragmentManager());
+            }
+        } else if (id == R.id.tv_gadgets) {
+            Intent i = GadgetsInputActivity.getStartIntent(this);
+            if (!deviceBeanList.isEmpty()) {
+                i.putExtra("list", new Gson().toJson(deviceBeanList));
+            }
+            i.putExtra("add", true);
+            startActivityForResult(i, SCAN_RESULT_GADGETS);
+        } else if (id == R.id.btn_add) {
+            if (isGuest == null) {
+                showToast(R.string.alert_select_visitor);
+                return;
+            }
+
+            AddVisitorData visitorData = new AddVisitorData();
+            visitorData.isGuest = isGuest;
+            visitorData.identityNo = getViewDataBinding().etIdentity.getText().toString().trim();
+            visitorData.idType = idType;
+            visitorData.nationality = getViewDataBinding().tvNationality.getText().toString();
+            visitorData.name = getViewDataBinding().etName.getText().toString().trim();
+            visitorData.contact = getViewDataBinding().etContact.getText().toString().trim();
+            visitorData.address = getViewDataBinding().etAddress.getText().toString().trim();
+            visitorData.gender = getViewDataBinding().tvGender.getText().toString();
+            visitorData.houseId = houseId;
+            visitorData.mode = getViewDataBinding().tvVisitorMode.getText().toString();
+            visitorData.isStaffSelect = isStaffSelect;
+            visitorData.guestList = secoundryGuestList;
+            visitorData.bodyTemperature = getViewDataBinding().etTemperature.getText().toString().trim();
+            if (isGuest) {
+                visitorData.purpose = getViewDataBinding().etPurpose.getText().toString();
+                visitorData.deviceBeanList.clear();
+                visitorData.deviceBeanList.addAll(deviceBeanList);
+                if (mViewModel.doVerifyGuestInputs(visitorData, mViewModel.getDataManager().getGuestConfiguration())) {
+                    mViewModel.doCheckGuestStatus(getViewDataBinding().etIdentity.getText().toString().trim(), idType);
                 }
-                break;
+            } else {
+                visitorData.assignedTo = getString(R.string.property);
+                visitorData.isResident = !visitorData.assignedTo.equalsIgnoreCase("Property");
+                visitorData.visitorType = getViewDataBinding().tvVisitorType.getText().toString();
+                visitorData.nationality = getViewDataBinding().tvNationality.getText().toString();
+                visitorData.employment = getViewDataBinding().tvEmployment.getText().toString();
+                visitorData.isCompany = !visitorData.employment.equalsIgnoreCase("Self");
+                visitorData.profile = getViewDataBinding().actvWorkProfile.getText().toString().trim();
+                visitorData.companyName = getViewDataBinding().actvCompanyName.getText().toString().trim();
+                visitorData.companyAddress = getViewDataBinding().etCompanyAddress.getText().toString().trim();
+
+                if (mViewModel.doVerifySPInputs(visitorData)) {
+                    if (visitorData.isResident) {
+                        AlertDialog.newInstance()
+                                .setNegativeBtnShow(true)
+                                .setCloseBtnShow(false)
+                                .setTitle(getString(R.string.check_in))
+                                .setMsg(getString(R.string.commercial_msg_check_in_call))
+                                .setPositiveBtnLabel(getString(R.string.approve))
+                                .setNegativeBtnLabel(getString(R.string.reject))
+                                .setOnNegativeClickListener(dialog1 -> {
+                                    dialog1.dismiss();
+                                    showReasonSPDialog(visitorData);
+                                })
+                                .setOnPositiveClickListener(dialog12 -> {
+                                    dialog12.dismiss();
+                                    doAddSp(true, visitorData);
+                                }).show(getSupportFragmentManager());
+                    } else {
+                        // for property there is no reject option
+                        doAddSp(true, visitorData);
+                    }
+                }
+            }
         }
     }
 

@@ -107,26 +107,14 @@ public class GadgetsInputActivity extends BaseActivity<GadgetsInputDialogBinding
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.img_back:
-                onBackPressed();
-                break;
 
-            case R.id.btn_ok:
-                if (!beans.isEmpty()) {
-                    if (mViewModel.verifyDeviceDetails(beans)) {
-                        Intent intent = getIntent();
-                        Bundle bundle = new Bundle();
-                        String yourListAsString = new Gson().toJson(beans);
-                        AppLogger.i("Device List", yourListAsString);
-                        bundle.putString("data", yourListAsString);
-                        intent.putExtras(bundle);
-                        setResult(RESULT_OK, intent);
-                        finish();
-                    } else {
-                        showAlert(R.string.alert, R.string.please_fill_details).show(getSupportFragmentManager());
-                    }
-                } else {
+        int id = v.getId();
+
+        if (id == R.id.img_back) {
+            onBackPressed();
+        } else if (id == R.id.btn_ok) {
+            if (!beans.isEmpty()) {
+                if (mViewModel.verifyDeviceDetails(beans)) {
                     Intent intent = getIntent();
                     Bundle bundle = new Bundle();
                     String yourListAsString = new Gson().toJson(beans);
@@ -135,20 +123,29 @@ public class GadgetsInputActivity extends BaseActivity<GadgetsInputDialogBinding
                     intent.putExtras(bundle);
                     setResult(RESULT_OK, intent);
                     finish();
+                } else {
+                    showAlert(R.string.alert, R.string.please_fill_details).show(getSupportFragmentManager());
                 }
-                break;
-
-            case R.id.img_search:
-                if (beans.size() < 5) {
-                    if (mViewModel.verifyDeviceDetails(beans)) {
-                        beans.add(new DeviceBean(getString(R.string.device).concat(" ").concat(String.valueOf(beans.size() + 1)), "", "", "", "", ""));
-                        adapter.notifyDataSetChanged();
-                        getViewDataBinding().recyclerView.scrollToPosition(adapter.getItemCount() - 1);
-                    } else
-                        showAlert(R.string.alert, R.string.please_fill_details).show(getSupportFragmentManager());
+            } else {
+                Intent intent = getIntent();
+                Bundle bundle = new Bundle();
+                String yourListAsString = new Gson().toJson(beans);
+                AppLogger.i("Device List", yourListAsString);
+                bundle.putString("data", yourListAsString);
+                intent.putExtras(bundle);
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        } else if (id == R.id.img_search) {
+            if (beans.size() < 5) {
+                if (mViewModel.verifyDeviceDetails(beans)) {
+                    beans.add(new DeviceBean(getString(R.string.device).concat(" ").concat(String.valueOf(beans.size() + 1)), "", "", "", "", ""));
+                    adapter.notifyDataSetChanged();
+                    getViewDataBinding().recyclerView.scrollToPosition(adapter.getItemCount() - 1);
                 } else
-                    showAlert(R.string.alert, R.string.can_enter_more_device).show(getSupportFragmentManager());
-                break;
+                    showAlert(R.string.alert, R.string.please_fill_details).show(getSupportFragmentManager());
+            } else
+                showAlert(R.string.alert, R.string.can_enter_more_device).show(getSupportFragmentManager());
         }
     }
 

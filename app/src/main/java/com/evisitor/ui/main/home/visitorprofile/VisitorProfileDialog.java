@@ -310,140 +310,125 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
     @Override
     public void onClick(View v) {
         hideKeyboard();
-        switch (v.getId()) {
-            case R.id.btn_ok:
-                if (callback != null) callback.onOkayClick(this);
-                else dismiss();
-                break;
+        int id = v.getId();
 
-            case R.id.img_close:
+        if (id == R.id.btn_ok) {
+            if (callback != null) {
+                callback.onOkayClick(this);
+            } else {
                 dismiss();
-                break;
-
-            case R.id.img_profile:
-                showFullImage(image);
-                break;
-
-            case R.id.tv_secondary_guest_info:
-                Guests tmpBean = mViewModel.getDataManager().getGuestDetail();
-                Intent intent = SecondaryGuestInputActivity.getStartIntent(getBaseActivity());
-                if (tmpBean != null) {
-                    if (!tmpBean.getGuestList().isEmpty()) {
-                        intent.putExtra("list", new Gson().toJson(tmpBean.guestList));
-                    }
-                } else {
-                    CommercialVisitorResponse.CommercialGuest guest = mViewModel.getDataManager().getCommercialVisitorDetail();
-                    if (guest != null && !guest.getGuestList().isEmpty()) {
-                        intent.putExtra("list", new Gson().toJson(guest.guestList));
-                    }
+            }
+        } else if (id == R.id.img_close) {
+            dismiss();
+        } else if (id == R.id.img_profile) {
+            showFullImage(image);
+        } else if (id == R.id.tv_secondary_guest_info) {
+            Guests tmpBean = mViewModel.getDataManager().getGuestDetail();
+            Intent intent = SecondaryGuestInputActivity.getStartIntent(getBaseActivity());
+            if (tmpBean != null) {
+                if (!tmpBean.getGuestList().isEmpty()) {
+                    intent.putExtra("list", new Gson().toJson(tmpBean.guestList));
                 }
-                startActivityForResult(intent, ADD_FAMILY_MEMBER);
-                break;
-
-            case R.id.show_no_plat_image:
-                Bitmap bitmap = null;
-                DataManager dataManager = mViewModel.getDataManager();
-                if (dataManager.isCommercial()) {
-                    CommercialVisitorResponse.CommercialGuest guests = dataManager.getCommercialVisitorDetail();
-                    if (guests != null) {
-                        bitmap = guests.getNo_plate_bmp_img();
-                    }
-                    CommercialStaffResponse.ContentBean staff = dataManager.getCommercialStaff();
-                    if (staff != null) {
-                        bitmap = staff.getBitmapVehicleImage();
-                    }
-
-                } else {
-                    Guests guests = dataManager.getGuestDetail();
-                    if (guests != null) {
-                        bitmap = guests.getNo_plate_bmp_img();
-                    }
-                    HouseKeepingResponse.ContentBean hkBean = dataManager.getHouseKeeping();
-                    if (hkBean != null) {
-                        bitmap = hkBean.getVehicalBitmapImg();
-                    }
+            } else {
+                CommercialVisitorResponse.CommercialGuest guest = mViewModel.getDataManager().getCommercialVisitorDetail();
+                if (guest != null && !guest.getGuestList().isEmpty()) {
+                    intent.putExtra("list", new Gson().toJson(guest.guestList));
                 }
-
-                ServiceProvider spBean = dataManager.getSpDetail();
-                if (spBean != null) {
-                    bitmap = spBean.getVehicleBitMapImage();
+            }
+            startActivityForResult(intent, ADD_FAMILY_MEMBER);
+        } else if (id == R.id.show_no_plat_image) {
+            Bitmap bitmap = null;
+            DataManager dataManager = mViewModel.getDataManager();
+            if (dataManager.isCommercial()) {
+                CommercialVisitorResponse.CommercialGuest guests = dataManager.getCommercialVisitorDetail();
+                if (guests != null) {
+                    bitmap = guests.getNo_plate_bmp_img();
                 }
-                showBitmapImage(bitmap);
-                break;
+                CommercialStaffResponse.ContentBean staff = dataManager.getCommercialStaff();
+                if (staff != null) {
+                    bitmap = staff.getBitmapVehicleImage();
+                }
+            } else {
+                Guests guests = dataManager.getGuestDetail();
+                if (guests != null) {
+                    bitmap = guests.getNo_plate_bmp_img();
+                }
+                HouseKeepingResponse.ContentBean hkBean = dataManager.getHouseKeeping();
+                if (hkBean != null) {
+                    bitmap = hkBean.getVehicalBitmapImg();
+                }
+            }
 
-
-            case R.id.tv_click_image:
-                if (PermissionUtils.RequestMultiplePermissionCamera(getBaseActivity())) {
-                    ImagePickBottomSheetDialog.newInstance(new ImagePickCallback() {
-                        @Override
-                        public void onImageReceived(Bitmap bitmap) {
-                            if (bitmap != null) {
-                                getViewDataBinding().showNoPlatImage.setVisibility(View.VISIBLE);
-                                getViewModel().numberPlateVerification(bitmap);
-                            } else {
-                                getViewDataBinding().showNoPlatImage.setVisibility(View.GONE);
-                            }
-                            DataManager dataManager = mViewModel.getDataManager();
-                            if (dataManager.isCommercial()) {
-                                CommercialVisitorResponse.CommercialGuest guests = dataManager.getCommercialVisitorDetail();
-                                if (guests != null) {
-                                    guests.setNo_plate_bmp_img(bitmap);
-                                    dataManager.setCommercialVisitorDetail(guests);
-
-                                }
-
-                                CommercialStaffResponse.ContentBean staff = dataManager.getCommercialStaff();
-                                if (staff != null) {
-                                    staff.setBitmapVehicleImage(bitmap);
-                                    dataManager.setCommercialStaff(staff);
-                                }
-
-                            } else {
-                                Guests guests = dataManager.getGuestDetail();
-                                if (guests != null) {
-                                    guests.setNo_plate_bmp_img(bitmap);
-                                    dataManager.setGuestDetail(guests);
-                                }
-
-                                HouseKeepingResponse.ContentBean hkBean = dataManager.getHouseKeeping();
-                                if (hkBean != null) {
-                                    hkBean.setVehicalBitmapImg(bitmap);
-                                    dataManager.setHouseKeeping(hkBean);
-                                }
+            ServiceProvider spBean = dataManager.getSpDetail();
+            if (spBean != null) {
+                bitmap = spBean.getVehicleBitMapImage();
+            }
+            showBitmapImage(bitmap);
+        } else if (id == R.id.tv_click_image) {
+            if (PermissionUtils.RequestMultiplePermissionCamera(getBaseActivity())) {
+                ImagePickBottomSheetDialog.newInstance(new ImagePickCallback() {
+                    @Override
+                    public void onImageReceived(Bitmap bitmap) {
+                        if (bitmap != null) {
+                            getViewDataBinding().showNoPlatImage.setVisibility(View.VISIBLE);
+                            getViewModel().numberPlateVerification(bitmap);
+                        } else {
+                            getViewDataBinding().showNoPlatImage.setVisibility(View.GONE);
+                        }
+                        DataManager dataManager = mViewModel.getDataManager();
+                        if (dataManager.isCommercial()) {
+                            CommercialVisitorResponse.CommercialGuest guests = dataManager.getCommercialVisitorDetail();
+                            if (guests != null) {
+                                guests.setNo_plate_bmp_img(bitmap);
+                                dataManager.setCommercialVisitorDetail(guests);
                             }
 
-                            ServiceProvider spBean = dataManager.getSpDetail();
-                            if (spBean != null) {
-                                spBean.setVehicleBitMapImage(bitmap);
-                                dataManager.setSPDetail(spBean);
+                            CommercialStaffResponse.ContentBean staff = dataManager.getCommercialStaff();
+                            if (staff != null) {
+                                staff.setBitmapVehicleImage(bitmap);
+                                dataManager.setCommercialStaff(staff);
+                            }
+
+                        } else {
+                            Guests guests = dataManager.getGuestDetail();
+                            if (guests != null) {
+                                guests.setNo_plate_bmp_img(bitmap);
+                                dataManager.setGuestDetail(guests);
+                            }
+
+                            HouseKeepingResponse.ContentBean hkBean = dataManager.getHouseKeeping();
+                            if (hkBean != null) {
+                                hkBean.setVehicalBitmapImg(bitmap);
+                                dataManager.setHouseKeeping(hkBean);
                             }
                         }
 
-                        @Override
-                        public void onView() {
-
+                        ServiceProvider spBean = dataManager.getSpDetail();
+                        if (spBean != null) {
+                            spBean.setVehicleBitMapImage(bitmap);
+                            dataManager.setSPDetail(spBean);
                         }
-                    }, "").show(getBaseActivity().getSupportFragmentManager());
-                }
-                break;
+                    }
 
-            case R.id.tv_document_image:
-                showFullImage(documentImage);
-                break;
+                    @Override
+                    public void onView() {
 
-            case R.id.tv_gadgets_info:
-                Intent i = GadgetsInputActivity.getStartIntent(getContext());
-                if (!deviceBeanList.isEmpty())
-                    i.putExtra("list", new Gson().toJson(deviceBeanList));
-                i.putExtra("add", btnLabel.equalsIgnoreCase(getString(R.string.check_in)));
-                startActivityForResult(i, SCAN_RESULT);
-                break;
-
-            case R.id.view_no_plate_img:
-                if (!vehicalNoPlateImg.isEmpty()) {
-                    showFullImage(vehicalNoPlateImg);
-                }
-                break;
+                    }
+                }, "").show(getBaseActivity().getSupportFragmentManager());
+            }
+        } else if (id == R.id.tv_document_image) {
+            showFullImage(documentImage);
+        } else if (id == R.id.tv_gadgets_info) {
+            Intent i = GadgetsInputActivity.getStartIntent(getContext());
+            if (!deviceBeanList.isEmpty()) {
+                i.putExtra("list", new Gson().toJson(deviceBeanList));
+            }
+            i.putExtra("add", btnLabel.equalsIgnoreCase(getString(R.string.check_in)));
+            startActivityForResult(i, SCAN_RESULT);
+        } else if (id == R.id.view_no_plate_img) {
+            if (!vehicalNoPlateImg.isEmpty()) {
+                showFullImage(vehicalNoPlateImg);
+            }
         }
     }
 

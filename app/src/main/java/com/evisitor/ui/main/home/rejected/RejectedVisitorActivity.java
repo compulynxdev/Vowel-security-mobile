@@ -143,30 +143,32 @@ public class RejectedVisitorActivity extends BaseActivity<ActivityRejectedVisito
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_guest:
-                getViewDataBinding().viewPager.setCurrentItem(0, true);
-                if (getViewModel().getDataManager().isCommercial())
-                    getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_commercial_data_trespasser, ",".concat(getViewModel().getDataManager().getLevelName())));
-                break;
+        int id = v.getId();
 
-            case R.id.tv_house:
-                getViewDataBinding().viewPager.setCurrentItem(1, true);
-                break;
-
-            case R.id.tv_service:
-                getViewDataBinding().viewPager.setCurrentItem(adapterLastPos, true);
-                if (getViewModel().getDataManager().isCommercial())
-                    getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_commercial_data_trespasser, ""));
-                break;
-
-            case R.id.img_search:
-                hideKeyboard();
-                getViewDataBinding().customSearchView.llSearchBar.setVisibility(getViewDataBinding().customSearchView.llSearchBar.getVisibility() == View.GONE
-                        ? View.VISIBLE : View.GONE);
-
-                getViewDataBinding().customSearchView.searchView.setQuery("", false);
-                break;
+        if (id == R.id.tv_guest) {
+            getViewDataBinding().viewPager.setCurrentItem(0, true);
+            if (getViewModel().getDataManager().isCommercial()) {
+                getViewDataBinding().customSearchView.searchView.setQueryHint(
+                        getString(R.string.search_commercial_data_trespasser, ",".concat(getViewModel().getDataManager().getLevelName()))
+                );
+            }
+        } else if (id == R.id.tv_house) {
+            getViewDataBinding().viewPager.setCurrentItem(1, true);
+        } else if (id == R.id.tv_service) {
+            getViewDataBinding().viewPager.setCurrentItem(adapterLastPos, true);
+            if (getViewModel().getDataManager().isCommercial()) {
+                getViewDataBinding().customSearchView.searchView.setQueryHint(
+                        getString(R.string.search_commercial_data_trespasser, "")
+                );
+            }
+        } else if (id == R.id.img_search) {
+            hideKeyboard();
+            if (getViewDataBinding().customSearchView.llSearchBar.getVisibility() == View.GONE) {
+                getViewDataBinding().customSearchView.llSearchBar.setVisibility(View.VISIBLE);
+            } else {
+                getViewDataBinding().customSearchView.llSearchBar.setVisibility(View.GONE);
+            }
+            getViewDataBinding().customSearchView.searchView.setQuery("", false);
         }
     }
 }

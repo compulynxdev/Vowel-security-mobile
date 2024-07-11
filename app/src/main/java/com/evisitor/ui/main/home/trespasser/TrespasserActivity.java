@@ -143,22 +143,20 @@ public class TrespasserActivity extends BaseActivity<ActivityTrespasserBinding, 
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_guest:
-                getViewDataBinding().viewPager.setCurrentItem(0, true);
-                break;
+        int id = v.getId();
 
-            case R.id.tv_service:
-                getViewDataBinding().viewPager.setCurrentItem(1, true);
-                break;
-
-            case R.id.img_search:
-                hideKeyboard();
-                getViewDataBinding().customSearchView.llSearchBar.setVisibility(getViewDataBinding().customSearchView.llSearchBar.getVisibility() == View.GONE
-                        ? View.VISIBLE : View.GONE);
-
-                getViewDataBinding().customSearchView.searchView.setQuery("", false);
-                break;
+        if (id == R.id.tv_guest) {
+            getViewDataBinding().viewPager.setCurrentItem(0, true);
+        } else if (id == R.id.tv_service) {
+            getViewDataBinding().viewPager.setCurrentItem(1, true);
+        } else if (id == R.id.img_search) {
+            hideKeyboard();
+            if (getViewDataBinding().customSearchView.llSearchBar.getVisibility() == View.GONE) {
+                getViewDataBinding().customSearchView.llSearchBar.setVisibility(View.VISIBLE);
+            } else {
+                getViewDataBinding().customSearchView.llSearchBar.setVisibility(View.GONE);
+            }
+            getViewDataBinding().customSearchView.searchView.setQuery("", false);
         }
     }
 }

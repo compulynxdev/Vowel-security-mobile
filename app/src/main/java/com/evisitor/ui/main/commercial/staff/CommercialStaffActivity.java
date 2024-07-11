@@ -130,22 +130,18 @@ public class CommercialStaffActivity extends BaseActivity<ActivityHkBinding, Com
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_expected:
-                getViewDataBinding().viewPager.setCurrentItem(0, true);
-                break;
+        int id = v.getId();
 
-            case R.id.tv_registered:
-                getViewDataBinding().viewPager.setCurrentItem(1, true);
-                break;
+        if (id == R.id.tv_expected) {
+            getViewDataBinding().viewPager.setCurrentItem(0, true);
+        }else if (id == R.id.tv_registered) {
+            getViewDataBinding().viewPager.setCurrentItem(1, true);
+        }else if (id == R.id.img_search) {
+            hideKeyboard();
+            getViewDataBinding().customSearchView.llSearchBar.setVisibility(getViewDataBinding().customSearchView.llSearchBar.getVisibility() == View.GONE
+                    ? View.VISIBLE : View.GONE);
 
-            case R.id.img_search:
-                hideKeyboard();
-                getViewDataBinding().customSearchView.llSearchBar.setVisibility(getViewDataBinding().customSearchView.llSearchBar.getVisibility() == View.GONE
-                        ? View.VISIBLE : View.GONE);
-
-                getViewDataBinding().customSearchView.searchView.setQuery("", false);
-                break;
+            getViewDataBinding().customSearchView.searchView.setQuery("", false);
         }
     }
 

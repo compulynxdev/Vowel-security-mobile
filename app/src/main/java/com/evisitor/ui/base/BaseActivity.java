@@ -306,9 +306,9 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
         else searchView.setQueryHint(getString(R.string.search_data));
         searchView.onActionViewExpanded();
         searchView.clearFocus();
-        TextView searchText = searchView.findViewById(R.id.search_src_text);
-        searchText.setTextSize(16);
-        searchText.setTypeface(ResourcesCompat.getFont(this, R.font.futura_round_medium));
+        //TextView searchText = searchView.findViewById(R.id.search_src_text);
+        //searchText.setTextSize(16);
+        //searchText.setTypeface(ResourcesCompat.getFont(this, R.font.futura_round_medium));
         searchView.setOnSearchClickListener(v -> hideKeyboard());
     }
 

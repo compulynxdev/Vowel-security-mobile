@@ -91,45 +91,40 @@ public class ResidentVehicleDialog extends BaseDialog<DialogResidentVehicleBindi
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.btn_in :
-                dismiss();
-                if(callBack!=null)
-                    callBack.doCheckInOut(true,profile,vehicleNo);
-                break;
+        int id = v.getId();
 
-
-            case R.id.img_vehicle :
-                if (PermissionUtils.RequestMultiplePermissionCamera(getActivity())) {
-                    ImagePickBottomSheetDialog.newInstance(new ImagePickCallback() {
-                        @Override
-                        public void onImageReceived(Bitmap bitmap) {
-                            if (bitmap != null) {
-                                getViewModel().numberPlateVerification(bitmap);
-                            }
+        if (id == R.id.btn_in) {
+            dismiss();
+            if (callBack != null) {
+                callBack.doCheckInOut(true, profile, vehicleNo);
+            }
+        } else if (id == R.id.img_vehicle) {
+            if (PermissionUtils.RequestMultiplePermissionCamera(getActivity())) {
+                ImagePickBottomSheetDialog.newInstance(new ImagePickCallback() {
+                    @Override
+                    public void onImageReceived(Bitmap bitmap) {
+                        if (bitmap != null) {
+                            getViewModel().numberPlateVerification(bitmap);
                         }
+                    }
 
-                        @Override
-                        public void onView() {
+                    @Override
+                    public void onView() {
 
-                        }
-                    }, "").show(getFragmentManager());
-                }
-                break;
-
-            case R.id.btn_out :
-                dismiss();
-                if(callBack!=null)
-                    callBack.doCheckInOut(false,profile,vehicleNo);
-                break;
-
-            case R.id.tv_select_vehicle :
-                SelectionBottomSheetDialog.newInstance(getString(R.string.select_vehicle),profile.getVehicleList()).setItemSelectedListener(pos -> {
-                    vehicleNo = profile.getVehicleList().get(pos);
-                    getViewDataBinding().tvSelectVehicle.setText(vehicleNo.toUpperCase());
-                    getViewDataBinding().etVehicle.setText(vehicleNo.toUpperCase());
-                }).show(getFragmentManager());
-                break;
+                    }
+                }, "").show(getFragmentManager());
+            }
+        } else if (id == R.id.btn_out) {
+            dismiss();
+            if (callBack != null) {
+                callBack.doCheckInOut(false, profile, vehicleNo);
+            }
+        } else if (id == R.id.tv_select_vehicle) {
+            SelectionBottomSheetDialog.newInstance(getString(R.string.select_vehicle), profile.getVehicleList()).setItemSelectedListener(pos -> {
+                vehicleNo = profile.getVehicleList().get(pos);
+                getViewDataBinding().tvSelectVehicle.setText(vehicleNo.toUpperCase());
+                getViewDataBinding().etVehicle.setText(vehicleNo.toUpperCase());
+            }).show(getFragmentManager());
         }
     }
 }

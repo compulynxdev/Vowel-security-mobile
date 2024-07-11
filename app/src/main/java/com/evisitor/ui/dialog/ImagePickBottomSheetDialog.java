@@ -95,25 +95,18 @@ public class ImagePickBottomSheetDialog extends BaseBottomSheetDialog<DialogImag
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tvCancel:
-                dismiss();
-                break;
-
-            case R.id.tvGallery:
-                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(photoPickerIntent, AppConstants.REQUEST_GALLERY);
-                break;
-
-            case R.id.tvCamera:
-                dispatchTakePictureIntent();
-                break;
-
-            case R.id.tvView:
-                dismiss();
-                if (callback != null)
-                    callback.onView();
-                break;
+        if (v.getId() == R.id.tvCancel) {
+            dismiss();
+        } else if (v.getId() == R.id.tvGallery) {
+            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(photoPickerIntent, AppConstants.REQUEST_GALLERY);
+        } else if (v.getId() == R.id.tvCamera) {
+            dispatchTakePictureIntent();
+        } else if (v.getId() == R.id.tvView) {
+            dismiss();
+            if (callback != null) {
+                callback.onView();
+            }
         }
     }
 

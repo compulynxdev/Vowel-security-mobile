@@ -157,22 +157,17 @@ public class AlertDialog extends BaseDialog<DialogAlertBinding, AlertViewModel> 
     @Override
     public void onClick(View v) {
         hideKeyboard();
-        switch (v.getId()) {
-            case R.id.img_close:
-                dismiss();
-                break;
 
-            case R.id.btn_negative:
-                if (negativeListener != null) {
-                    negativeListener.onNegativeClick(this);
-                }
-                break;
-
-            case R.id.btn_positive:
-                if (positiveListener != null) {
-                    positiveListener.onPositiveClick(this);
-                }
-                break;
+        if (v.getId() == R.id.img_close) {
+            dismiss();
+        } else if (v.getId() == R.id.btn_negative) {
+            if (negativeListener != null) {
+                negativeListener.onNegativeClick(this);
+            }
+        } else if (v.getId() == R.id.btn_positive) {
+            if (positiveListener != null) {
+                positiveListener.onPositiveClick(this);
+            }
         }
     }
 

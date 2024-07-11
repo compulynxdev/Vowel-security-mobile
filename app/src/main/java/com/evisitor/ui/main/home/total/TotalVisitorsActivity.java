@@ -131,46 +131,42 @@ public class TotalVisitorsActivity extends BaseActivity<ActivityTotalVisitorsBin
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
+        int id = v.getId();
 
-            case R.id.img_back:
-                onBackPressed();
-                break;
-
-            case R.id.img_search:
-                hideKeyboard();
-                getViewDataBinding().customSearchView.llSearchBar.setVisibility(getViewDataBinding().customSearchView.llSearchBar.getVisibility() == View.GONE
-                        ? View.VISIBLE : View.GONE);
-
-                getViewDataBinding().customSearchView.searchView.setQuery("", false);
-                break;
-
-            case R.id.title_guest:
-                getViewDataBinding().titleGuest.setTextColor(getResources().getColor(R.color.colorPrimary));
-                getViewDataBinding().titleService.setTextColor(getResources().getColor(R.color.black));
-                getViewDataBinding().titleHouse.setTextColor(getResources().getColor(R.color.black));
-                if (getViewModel().getDataManager().isCommercial())
-                    getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_commercial_visitor_data, getViewModel().getDataManager().getLevelName()));
-                getViewDataBinding().viewPager.setCurrentItem(0);
-                break;
-
-            case R.id.title_house:
-                getViewDataBinding().titleGuest.setTextColor(getResources().getColor(R.color.black));
-                getViewDataBinding().titleService.setTextColor(getResources().getColor(R.color.black));
-                getViewDataBinding().titleHouse.setTextColor(getResources().getColor(R.color.colorPrimary));
-                if (getViewModel().getDataManager().isCommercial())
-                    getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_commercial_staff_data, getViewModel().getDataManager().getLevelName()));
-                getViewDataBinding().viewPager.setCurrentItem(1);
-                break;
-
-            case R.id.title_service:
-                getViewDataBinding().titleGuest.setTextColor(getResources().getColor(R.color.black));
-                getViewDataBinding().titleService.setTextColor(getResources().getColor(R.color.colorPrimary));
-                getViewDataBinding().titleHouse.setTextColor(getResources().getColor(R.color.black));
-                if (getViewModel().getDataManager().isCommercial())
-                    getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_commercial_sp_data));
-                getViewDataBinding().viewPager.setCurrentItem(2);
-                break;
+        if (id == R.id.img_back) {
+            onBackPressed();
+        } else if (id == R.id.img_search) {
+            hideKeyboard();
+            if (getViewDataBinding().customSearchView.llSearchBar.getVisibility() == View.GONE) {
+                getViewDataBinding().customSearchView.llSearchBar.setVisibility(View.VISIBLE);
+            } else {
+                getViewDataBinding().customSearchView.llSearchBar.setVisibility(View.GONE);
+            }
+            getViewDataBinding().customSearchView.searchView.setQuery("", false);
+        } else if (id == R.id.title_guest) {
+            getViewDataBinding().titleGuest.setTextColor(getResources().getColor(R.color.colorPrimary));
+            getViewDataBinding().titleService.setTextColor(getResources().getColor(R.color.black));
+            getViewDataBinding().titleHouse.setTextColor(getResources().getColor(R.color.black));
+            if (getViewModel().getDataManager().isCommercial()) {
+                getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_commercial_visitor_data, getViewModel().getDataManager().getLevelName()));
+            }
+            getViewDataBinding().viewPager.setCurrentItem(0);
+        } else if (id == R.id.title_house) {
+            getViewDataBinding().titleGuest.setTextColor(getResources().getColor(R.color.black));
+            getViewDataBinding().titleService.setTextColor(getResources().getColor(R.color.black));
+            getViewDataBinding().titleHouse.setTextColor(getResources().getColor(R.color.colorPrimary));
+            if (getViewModel().getDataManager().isCommercial()) {
+                getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_commercial_staff_data, getViewModel().getDataManager().getLevelName()));
+            }
+            getViewDataBinding().viewPager.setCurrentItem(1);
+        } else if (id == R.id.title_service) {
+            getViewDataBinding().titleGuest.setTextColor(getResources().getColor(R.color.black));
+            getViewDataBinding().titleService.setTextColor(getResources().getColor(R.color.colorPrimary));
+            getViewDataBinding().titleHouse.setTextColor(getResources().getColor(R.color.black));
+            if (getViewModel().getDataManager().isCommercial()) {
+                getViewDataBinding().customSearchView.searchView.setQueryHint(getString(R.string.search_commercial_sp_data));
+            }
+            getViewDataBinding().viewPager.setCurrentItem(2);
         }
     }
 

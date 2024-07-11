@@ -75,47 +75,38 @@ public class SettingsFragment extends BaseFragment<FragmentSettingsBinding, Sett
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.info_constraint:
-                DeviceInfoDialog.newInstance().show(getChildFragmentManager());
-                break;
+        int id = v.getId();
 
-            case R.id.premise_info_constraint:
-                startActivity(PropertyInfoActivity.newIntent(getBaseActivity()));
-                break;
-
-            case R.id.language_constraint:
-                LanguageDialog.newInstance(language -> {
-                    mViewModel.getDataManager().setLanguage(language.getLangName());
-                    getViewDataBinding().tvLang.setText(language.getLocalisationTitle());
-                }).show(getChildFragmentManager());
-                break;
-
-            case R.id.aboutus_constraint:
-                Intent intent = ContentActivity.newIntent(getBaseActivity());
-                intent.putExtra("From", AppConstants.ACTIVITY_ABOUT_US);
-                startActivity(intent);
-                break;
-
-            case R.id.privacy_constraint:
-                intent = ContentActivity.newIntent(getBaseActivity());
-                intent.putExtra("From", AppConstants.ACTIVITY_PRIVACY);
-                startActivity(intent);
-                break;
-            case R.id.printer_constraint:
-                getViewModel().initBixolonPrinter(this.getContext());
-                break;
-            case R.id.logout_constraint:
-                showAlert(R.string.logout, R.string.logout_msg)
-                        .setNegativeBtnShow(true)
-                        .setPositiveBtnLabel(getString(R.string.yes))
-                        .setNegativeBtnLabel(getString(R.string.no))
-                        .setOnPositiveClickListener(dialog -> {
-                            dialog.dismiss();
-                            openActivityOnTokenExpire();
-                        }).setOnNegativeClickListener(DialogFragment::dismiss);
-                break;
+        if (id == R.id.info_constraint) {
+            DeviceInfoDialog.newInstance().show(getChildFragmentManager());
+        } else if (id == R.id.premise_info_constraint) {
+            startActivity(PropertyInfoActivity.newIntent(getBaseActivity()));
+        } else if (id == R.id.language_constraint) {
+            LanguageDialog.newInstance(language -> {
+                mViewModel.getDataManager().setLanguage(language.getLangName());
+                getViewDataBinding().tvLang.setText(language.getLocalisationTitle());
+            }).show(getChildFragmentManager());
+        } else if (id == R.id.aboutus_constraint) {
+            Intent intent = ContentActivity.newIntent(getBaseActivity());
+            intent.putExtra("From", AppConstants.ACTIVITY_ABOUT_US);
+            startActivity(intent);
+        } else if (id == R.id.privacy_constraint) {
+            Intent intent = ContentActivity.newIntent(getBaseActivity());
+            intent.putExtra("From", AppConstants.ACTIVITY_PRIVACY);
+            startActivity(intent);
+        } else if (id == R.id.printer_constraint) {
+            getViewModel().initBixolonPrinter(getContext());
+        } else if (id == R.id.logout_constraint) {
+            showAlert(R.string.logout, R.string.logout_msg)
+                    .setNegativeBtnShow(true)
+                    .setPositiveBtnLabel(getString(R.string.yes))
+                    .setNegativeBtnLabel(getString(R.string.no))
+                    .setOnPositiveClickListener(dialog -> {
+                        dialog.dismiss();
+                        openActivityOnTokenExpire();
+                    }).setOnNegativeClickListener(DialogFragment::dismiss);
         }
+
     }
 
     @Override

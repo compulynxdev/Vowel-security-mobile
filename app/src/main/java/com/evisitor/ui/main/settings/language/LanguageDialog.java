@@ -82,19 +82,19 @@ public class LanguageDialog extends BaseDialog<DialogLanguageBinding, LanguageDi
     @Override
     public void onClick(View v) {
         hideKeyboard();
-        switch (v.getId()) {
-            case R.id.btn_ok:
-                if (verifyInput()) {
-                    dismiss();
-                    callback.onDoneClick(language);
-                } else dismiss();
-                break;
+        int id = v.getId();
 
-            case R.id.btn_cancel:
+        if (id == R.id.btn_ok) {
+            if (verifyInput()) {
                 dismiss();
-                break;
-
+                callback.onDoneClick(language);
+            } else {
+                dismiss();
+            }
+        } else if (id == R.id.btn_cancel) {
+            dismiss();
         }
+
     }
 
     private boolean verifyInput() {

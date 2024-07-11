@@ -58,21 +58,16 @@ public class ForgotPasswordActivity extends BaseActivity<ActivityForgotPasswordB
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-
-            case R.id.btn_submit:
-                if (NetworkUtils.isNetworkConnected(this)) {
-                    getViewModel().verifyData(getViewDataBinding().etUsername.getText().toString(), getViewDataBinding().etEmail.getText().toString(), type);
-                } else showAlert(R.string.alert, R.string.alert_internet);
-                break;
-
-            case R.id.rb_email:
-                setCheckBoxData();
-            case R.id.rb_administrator:
-                setCheckBoxData();
-                break;
-
+        if (v.getId() == R.id.btn_submit) {
+            if (NetworkUtils.isNetworkConnected(this)) {
+                getViewModel().verifyData(getViewDataBinding().etUsername.getText().toString(), getViewDataBinding().etEmail.getText().toString(), type);
+            } else {
+                showAlert(R.string.alert, R.string.alert_internet);
+            }
+        } else if (v.getId() == R.id.rb_email || v.getId() == R.id.rb_administrator) {
+            setCheckBoxData();
         }
+
     }
 
     private void setCheckBoxData() {

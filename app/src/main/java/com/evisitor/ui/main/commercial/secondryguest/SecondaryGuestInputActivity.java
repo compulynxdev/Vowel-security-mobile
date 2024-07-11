@@ -160,39 +160,25 @@ public class SecondaryGuestInputActivity extends BaseActivity<SecondryGuestInput
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.img_back:
-                onBackPressed();
-                break;
-
-            case R.id.btn_ok:
-                if(isCheckIn){
+        int id = v.getId();
+        if (id == R.id.img_back) {
+            onBackPressed();
+        }else if(id == R.id.btn_ok){
+            if(isCheckIn){
                     /*if(guestIds.isEmpty()){
                         showAlert(R.string.alert, R.string.please_select_guest).show(getSupportFragmentManager());
                     }else{*/
-                        Intent intent = getIntent();
-                        Bundle bundle = new Bundle();
-                        String yourListAsString = new Gson().toJson(guestIds);
-                        bundle.putString("data", yourListAsString);
-                        intent.putExtras(bundle);
-                        setResult(RESULT_OK, intent);
-                        finish();
-                    //}
-                }else{
-                    if (!beans.isEmpty()) {
-                        if (mViewModel.verifyGuestDetails(beans)) {
-                            Intent intent = getIntent();
-                            Bundle bundle = new Bundle();
-                            String yourListAsString = new Gson().toJson(beans);
-                            AppLogger.i("Device List", yourListAsString);
-                            bundle.putString("data", yourListAsString);
-                            intent.putExtras(bundle);
-                            setResult(RESULT_OK, intent);
-                            finish();
-                        } else {
-                            showAlert(R.string.alert, R.string.please_fill_guest_details).show(getSupportFragmentManager());
-                        }
-                    } else {
+                Intent intent = getIntent();
+                Bundle bundle = new Bundle();
+                String yourListAsString = new Gson().toJson(guestIds);
+                bundle.putString("data", yourListAsString);
+                intent.putExtras(bundle);
+                setResult(RESULT_OK, intent);
+                finish();
+                //}
+            }else{
+                if (!beans.isEmpty()) {
+                    if (mViewModel.verifyGuestDetails(beans)) {
                         Intent intent = getIntent();
                         Bundle bundle = new Bundle();
                         String yourListAsString = new Gson().toJson(beans);
@@ -201,24 +187,31 @@ public class SecondaryGuestInputActivity extends BaseActivity<SecondryGuestInput
                         intent.putExtras(bundle);
                         setResult(RESULT_OK, intent);
                         finish();
+                    } else {
+                        showAlert(R.string.alert, R.string.please_fill_guest_details).show(getSupportFragmentManager());
                     }
+                } else {
+                    Intent intent = getIntent();
+                    Bundle bundle = new Bundle();
+                    String yourListAsString = new Gson().toJson(beans);
+                    AppLogger.i("Device List", yourListAsString);
+                    bundle.putString("data", yourListAsString);
+                    intent.putExtras(bundle);
+                    setResult(RESULT_OK, intent);
+                    finish();
                 }
-                break;
-
-            case R.id.img_search:
-                if (beans.size() < 10) {
-                    if (mViewModel.verifyGuestDetails(beans)) {
-                        String dialing_code = EVisitor.getInstance().getDataManager().getUserDetail().getDialingCode();
-                        beans.add(new SecondaryGuest( "", getString(R.string.member).concat(" ").concat("1"), "", dialing_code, "", "","",false,0));
-                        adapter.notifyDataSetChanged();
-                        getViewDataBinding().recyclerView.scrollToPosition(adapter.getItemCount() - 1);
-                    } else
-                        showAlert(R.string.alert, R.string.please_add_group_member_detail_first).show(getSupportFragmentManager());
+            }
+        }else if (id == R.id.img_search){
+            if (beans.size() < 10) {
+                if (mViewModel.verifyGuestDetails(beans)) {
+                    String dialing_code = EVisitor.getInstance().getDataManager().getUserDetail().getDialingCode();
+                    beans.add(new SecondaryGuest( "", getString(R.string.member).concat(" ").concat("1"), "", dialing_code, "", "","",false,0));
+                    adapter.notifyDataSetChanged();
+                    getViewDataBinding().recyclerView.scrollToPosition(adapter.getItemCount() - 1);
                 } else
-                    showAlert(R.string.alert, R.string.can_add_more_member).show(getSupportFragmentManager());
-                break;
-
-
+                    showAlert(R.string.alert, R.string.please_add_group_member_detail_first).show(getSupportFragmentManager());
+            } else
+                showAlert(R.string.alert, R.string.can_add_more_member).show(getSupportFragmentManager());
         }
 
     }

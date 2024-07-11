@@ -71,24 +71,24 @@ public class InputDialog extends BaseDialog<DialogInputBinding, InputDialogViewM
     @Override
     public void onClick(View v) {
         hideKeyboard();
-        switch (v.getId()) {
-            case R.id.btn_negative:
-                dismiss();
-                break;
+        int id = v.getId();
 
-            case R.id.btn_positive:
-                if (getViewDataBinding().etInput.getText().toString().isEmpty()) {
-                    if(!hint.isEmpty())
-                        showToast(getString(R.string.description_not_empty));
-                    else
-                        showToast(getString(R.string.reason_cannot_be_empty));
+        if (id == R.id.btn_negative) {
+            dismiss();
+        } else if (id == R.id.btn_positive) {
+            if (getViewDataBinding().etInput.getText().toString().isEmpty()) {
+                if (!hint.isEmpty()) {
+                    showToast(getString(R.string.description_not_empty));
                 } else {
-                    if (positiveListener != null) {
-                        positiveListener.onPositiveClick(this, getViewDataBinding().etInput.getText().toString());
-                    }
+                    showToast(getString(R.string.reason_cannot_be_empty));
                 }
-                break;
+            } else {
+                if (positiveListener != null) {
+                    positiveListener.onPositiveClick(this, getViewDataBinding().etInput.getText().toString());
+                }
+            }
         }
+
     }
 
     public InputDialog setHint(String s) {

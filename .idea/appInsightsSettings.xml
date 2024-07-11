@@ -9,9 +9,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="com.evisitor" />
-                  <option name="mobileSdkAppId" value="1:1000050774782:android:fc6b297de8372afd2e4baf" />
-                  <option name="projectId" value="e-visitor-e02c9" />
-                  <option name="projectNumber" value="1000050774782" />
+                  <option name="mobileSdkAppId" value="1:14024374449:android:452db32a35035c92c30a90" />
+                  <option name="projectId" value="vowel-security" />
+                  <option name="projectNumber" value="14024374449" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
