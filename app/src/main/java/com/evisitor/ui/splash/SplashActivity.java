@@ -12,6 +12,7 @@ import com.evisitor.databinding.ActivitySplashBinding;
 import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.login.LoginActivity;
 import com.evisitor.ui.main.MainActivity;
+import com.evisitor.util.PermissionUtils;
 
 
 public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashViewModel> implements SplashNavigator {

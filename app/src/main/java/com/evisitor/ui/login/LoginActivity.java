@@ -15,6 +15,7 @@ import com.evisitor.ui.base.BaseActivity;
 import com.evisitor.ui.login.forgotpassword.ForgotPasswordActivity;
 import com.evisitor.ui.main.MainActivity;
 import com.evisitor.util.AppLogger;
+import com.evisitor.util.PermissionUtils;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.Objects;
@@ -56,6 +57,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
             getViewDataBinding().etUsername.setText(mViewModel.getDataManager().getUsername());
             getViewDataBinding().etPassword.setText(mViewModel.getDataManager().getUserPassword());
         }
+        PermissionUtils.requestNotificationPermission(this);
     }
 
     private void initFcmToken() {

@@ -6,9 +6,12 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import com.evisitor.EVisitor;
 
 
 /**
@@ -37,11 +40,7 @@ public final class PermissionUtils {
         if (FirstPermissionResult != PackageManager.PERMISSION_GRANTED | SecondPermissionResult != PackageManager.PERMISSION_GRANTED) {
             // No explanation needed, we can request the permission.
             // Creating String Array with Permissions.
-            ActivityCompat.requestPermissions(activity, new String[]
-                    {
-                            Manifest.permission.CAMERA,
-                            Manifest.permission.READ_EXTERNAL_STORAGE,
-                    }, REQUEST_MULTIPLE_CAMERA_PERMISSIONS);
+            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE,}, REQUEST_MULTIPLE_CAMERA_PERMISSIONS);
             return false;
         } else {
             return true;
@@ -56,12 +55,7 @@ public final class PermissionUtils {
         if (FirstPermissionResult != PackageManager.PERMISSION_GRANTED | SecondPermissionResult != PackageManager.PERMISSION_GRANTED | ThirdPermissionResult != PackageManager.PERMISSION_GRANTED) {
             // No explanation needed, we can request the permission.
             // Creating String Array with Permissions.
-            ActivityCompat.requestPermissions(activity, new String[]
-                    {
-                            Manifest.permission.CAMERA,
-                            Manifest.permission.READ_EXTERNAL_STORAGE,
-                            Manifest.permission.ACCESS_FINE_LOCATION,
-                    }, REQUEST_MULTIPLE_PERMISSIONS);
+            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION,}, REQUEST_MULTIPLE_PERMISSIONS);
             return false;
         } else {
             return true;
@@ -69,12 +63,9 @@ public final class PermissionUtils {
     }
 
     public static boolean checkLocationPermission(AppCompatActivity activity) {
-        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // No explanation needed, we can request the permission.
-            ActivityCompat.requestPermissions(activity,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    MY_PERMISSIONS_REQUEST_LOCATION);
+            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
 
             return false;
         } else {
@@ -83,12 +74,9 @@ public final class PermissionUtils {
     }
 
     public static boolean checkCameraPermission(Activity activity) {
-        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             // No explanation needed, we can request the permission.
-            ActivityCompat.requestPermissions(activity,
-                    new String[]{Manifest.permission.CAMERA},
-                    MY_PERMISSIONS_REQUEST_CAMERA);
+            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CAMERA);
             return false;
         } else {
             return true;
@@ -97,15 +85,14 @@ public final class PermissionUtils {
 
     public static boolean isStoragePermissionGranted(Activity activity) {
         if (Build.VERSION.SDK_INT >= 23) {
-            if (activity.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED) {
+            if (activity.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 return true;
             } else {
 
                 ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
                 return false;
             }
-        } else { //permission is automatically granted on sdk<23 upon installation
+        } else { //permission is automatically granted on sdk23 upon installation
             return true;
         }
     }
@@ -117,11 +104,22 @@ public final class PermissionUtils {
      * @return true if permission exists
      */
     public static boolean haveStoragePermission(Context context) {
-        return Build.VERSION.SDK_INT < Build.VERSION_CODES.M ||
-                ContextCompat.checkSelfPermission(
-                        context,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ) == PackageManager.PERMISSION_GRANTED;
+        return Build.VERSION.SDK_INT < Build.VERSION_CODES.M || ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    public static boolean requestNotificationPermission(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(activity, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+                return true;
+            } else if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.POST_NOTIFICATIONS)) {
+                return false;
+            } else {
+                ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 105);
+                return false;
+            }
+        } else {
+            return true;
+        }
     }
 
     /**
@@ -130,11 +128,7 @@ public final class PermissionUtils {
      * @param activity use this activity for the request
      */
     public static void requestStoragePermission(Activity activity) {
-        ActivityCompat.requestPermissions(
-                activity,
-                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE
-        );
+        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
     }
 
     /**
@@ -143,18 +137,13 @@ public final class PermissionUtils {
      * @return true if permission was granted
      */
     public static boolean requestStoragePermission(int requestCode, int[] grantResuts) {
-        return requestCode == PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE &&
-                grantResuts.length > 0 &&
-                grantResuts[0] == PackageManager.PERMISSION_GRANTED;
+        return requestCode == PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE && grantResuts.length > 0 && grantResuts[0] == PackageManager.PERMISSION_GRANTED;
     }
 
     public static boolean requestCallPermission(Activity context) {
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE)
-                != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             // No explanation needed, we can request the permission.
-            ActivityCompat.requestPermissions(context,
-                    new String[]{Manifest.permission.CALL_PHONE},
-                    PERMISSIONS_REQUEST_CALL);
+            ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.CALL_PHONE}, PERMISSIONS_REQUEST_CALL);
             return false;
         } else {
             return true;
