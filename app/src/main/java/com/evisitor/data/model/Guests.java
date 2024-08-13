@@ -18,6 +18,9 @@ public class Guests {
     @SerializedName("enteredVehicleNo")
     private String enteredVehicleNo = "";
 
+    @SerializedName("enteredVehicleModel")
+    private String enteredVehicleModel;
+
     @SerializedName("expectedDate")
     private String time;
 
@@ -425,5 +428,13 @@ public class Guests {
 
     public void setFlagedVisitorStatus(boolean flagedVisitorStatus) {
         this.flagedVisitorStatus = flagedVisitorStatus;
+    }
+
+    public String getEnteredVehicleModel() {
+        return enteredVehicleModel;
+    }
+
+    public void setEnteredVehicleModel(String enteredVehicleModel) {
+        this.enteredVehicleModel = enteredVehicleModel;
     }
 }

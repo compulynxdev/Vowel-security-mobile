@@ -35,12 +35,30 @@ public final class PermissionUtils {
     //Permission function starts from here
     public static boolean RequestMultiplePermissionCamera(Activity activity) {
         int FirstPermissionResult = ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA);
-        int SecondPermissionResult = ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE);
 
-        if (FirstPermissionResult != PackageManager.PERMISSION_GRANTED | SecondPermissionResult != PackageManager.PERMISSION_GRANTED) {
-            // No explanation needed, we can request the permission.
-            // Creating String Array with Permissions.
-            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE,}, REQUEST_MULTIPLE_CAMERA_PERMISSIONS);
+        int SecondPermissionResult;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // Android 13+
+            SecondPermissionResult = ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_MEDIA_IMAGES);
+        } else {
+            SecondPermissionResult = ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE);
+        }
+
+        if (FirstPermissionResult != PackageManager.PERMISSION_GRANTED
+                || SecondPermissionResult != PackageManager.PERMISSION_GRANTED) {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // Android 13+
+                ActivityCompat.requestPermissions(activity,
+                        new String[]{Manifest.permission.CAMERA,
+                                Manifest.permission.READ_MEDIA_IMAGES,
+                                Manifest.permission.READ_MEDIA_VIDEO},
+                        REQUEST_MULTIPLE_CAMERA_PERMISSIONS);
+            } else {
+                ActivityCompat.requestPermissions(activity,
+                        new String[]{Manifest.permission.CAMERA,
+                                Manifest.permission.READ_EXTERNAL_STORAGE},
+                        REQUEST_MULTIPLE_CAMERA_PERMISSIONS);
+            }
+
             return false;
         } else {
             return true;

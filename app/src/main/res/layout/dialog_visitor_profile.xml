@@ -61,14 +61,6 @@
 
         <!--        -->
 
-        <Space
-            android:id="@+id/spacer1"
-            android:layout_width="match_parent"
-            android:layout_height="14dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/show_no_plat_image" />
-
 
         <Space
             android:id="@+id/spacer2"
@@ -78,47 +70,102 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view_no_plate_img" />
 
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/layout_temperature"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/futura_book"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="10dp"
-            app:layout_constraintEnd_toStartOf="@id/et_temperature"
-            app:layout_constraintTop_toTopOf="@id/et_temperature"
-            app:layout_constraintBottom_toBottomOf="@id/et_temperature"
-            />
-
-        <EditText
-            android:id="@+id/et_temperature"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/futura_book"
-            android:imeOptions="actionDone"
-            android:importantForAutofill="no"
-            android:maxLength="4"
-            android:digits="@string/temperature_value"
-            android:inputType="numberDecimal"
-            android:minWidth="100dp"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:theme="@style/EditTextTheme"
+            android:paddingHorizontal="24dp"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tv_title"
-            app:layout_constraintTop_toBottomOf="@id/spacer"
-            tools:ignore="LabelFor" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spacer">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/futura_book"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_temperature"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_weight="1"
+                android:digits="@string/temperature_value"
+                android:fontFamily="@font/futura_book"
+                android:imeOptions="actionDone"
+                android:importantForAutofill="no"
+                android:inputType="numberDecimal"
+                android:maxLength="4"
+                android:minWidth="100dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:theme="@style/EditTextTheme"
+                tools:ignore="LabelFor" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/layout_vehicle_model"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_temperature">
+
+            <TextView
+                android:id="@+id/tv_vehicle_model"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/futura_book"
+                android:text="@string/vehicle_model"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:visibility="invisible" />
+
+            <EditText
+                android:id="@+id/et_vehicle_model"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_weight="1"
+                android:visibility="invisible"
+                android:fontFamily="@font/futura_book"
+                android:imeOptions="actionDone"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:minWidth="100dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:theme="@style/EditTextTheme"
+                tools:ignore="LabelFor" />
+        </LinearLayout>
+
+
+        <Space
+            android:id="@+id/spacer1"
+            android:layout_width="match_parent"
+            android:layout_height="14dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/show_no_plat_image" />
 
         <TextView
             android:id="@+id/tv_click_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="12dp"
-            android:layout_marginTop="5dp"
             android:fontFamily="@font/futura_round_medium"
             android:text="@string/take_no_plate_image"
             android:textAlignment="center"
@@ -128,7 +175,7 @@
             app:layout_constraintBottom_toTopOf="@id/spacer1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_temperature"
+            app:layout_constraintTop_toBottomOf="@+id/layout_vehicle_model"
 
             />
 

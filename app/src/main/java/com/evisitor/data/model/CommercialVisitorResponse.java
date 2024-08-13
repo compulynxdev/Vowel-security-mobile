@@ -111,6 +111,9 @@ public class CommercialVisitorResponse {
         @SerializedName("mode")
         private String mode;
 
+        @SerializedName("enteredVehicleModel")
+        private String enteredVehicleModel;
+
         public String getQrCode() {
             return qrCode;
         }
@@ -459,7 +462,16 @@ public class CommercialVisitorResponse {
         public void setVip(boolean vip) {
             isVip = vip;
         }
+
+        public String getEnteredVehicleModel() {
+            return enteredVehicleModel;
+        }
+
+        public void setEnteredVehicleModel(String enteredVehicleModel) {
+            this.enteredVehicleModel = enteredVehicleModel;
+        }
     }
+
 
 }
 

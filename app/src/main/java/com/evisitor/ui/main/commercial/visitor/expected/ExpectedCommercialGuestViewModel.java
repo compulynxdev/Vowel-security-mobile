@@ -122,6 +122,7 @@ public class ExpectedCommercialGuestViewModel extends BaseCheckInOutViewModel<Ex
                 object.put("type",AppConstants.GUEST);
                 object.put("premiseHierarchyDetailsId", getDataManager().getCommercialVisitorDetail().getFlatId());
                 object.put("enteredVehicleNo", getDataManager().getCommercialVisitorDetail().getEnteredVehicleNo());
+                object.put("enteredVehicleModel", getDataManager().getCommercialVisitorDetail().getEnteredVehicleModel());
                 object.put("bodyTemperature", getDataManager().getCommercialVisitorDetail().getBodyTemperature());
                 JSONArray deviceList = new JSONArray(new Gson().toJson(getDataManager().getCommercialVisitorDetail().getDeviceBeanList()));
                 object.put("deviceList", deviceList);

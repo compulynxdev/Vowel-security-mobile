@@ -131,6 +131,7 @@ public class ExpectedGuestViewModel extends BaseCheckInOutViewModel<ExpectedGues
                     object.put("guestIdList", ids);
                     object.put("premiseHierarchyDetailsId", getDataManager().getGuestDetail().getFlatId());
                     object.put("enteredVehicleNo", getDataManager().getGuestDetail().getEnteredVehicleNo());
+                    object.put("enteredVehicleModel", getDataManager().getGuestDetail().getEnteredVehicleModel());
                     object.put("bodyTemperature", getDataManager().getGuestDetail().getBodyTemperature());
                     object.put("type", AppConstants.GUEST);
                     if (getDataManager().getGuestDetail().getNo_plate_bmp_img() != null) {

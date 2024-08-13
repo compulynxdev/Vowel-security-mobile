@@ -145,18 +145,9 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
         DataManager dataManager = EVisitor.getInstance().getDataManager();
 
         if (image.isEmpty()) {
-            Glide.with(this)
-                    .load(R.drawable.ic_person)
-                    .centerCrop()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(getViewDataBinding().imgProfile);
+            Glide.with(this).load(R.drawable.ic_person).centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL).into(getViewDataBinding().imgProfile);
         } else {
-            Glide.with(this)
-                    .load(mViewModel.getDataManager().getImageBaseURL().concat(image))
-                    .centerCrop()
-                    .placeholder(R.drawable.ic_person)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(getViewDataBinding().imgProfile);
+            Glide.with(this).load(mViewModel.getDataManager().getImageBaseURL().concat(image)).centerCrop().placeholder(R.drawable.ic_person).diskCacheStrategy(DiskCacheStrategy.ALL).into(getViewDataBinding().imgProfile);
         }
         setUpAdapter();
 
@@ -222,6 +213,10 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
 
         updateTemperatureUI();
 
+        if (mViewModel.getDataManager().capturesVehicleModel()) {
+            updateVehicleModelUI();
+        }
+
         getViewDataBinding().etTemperature.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -276,6 +271,43 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
             }
         });
 
+    }
+
+    private void updateVehicleModelUI() {
+        if (checkInIsApproved || btnLabel.equalsIgnoreCase(getString(R.string.check_out))) {
+        } else {
+            getViewDataBinding().tvVehicleModel.setVisibility(View.VISIBLE);
+            getViewDataBinding().etVehicleModel.setVisibility(View.VISIBLE);
+
+            getViewDataBinding().etVehicleModel.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    if (mViewModel.getDataManager().isCommercial()) {
+                        CommercialVisitorResponse.CommercialGuest guests = mViewModel.getDataManager().getCommercialVisitorDetail();
+                        if (guests != null) {
+                            guests.setEnteredVehicleModel(editable.toString());
+                            mViewModel.getDataManager().setCommercialVisitorDetail(guests);
+                        }
+                    } else {
+                        Guests guests = mViewModel.getDataManager().getGuestDetail();
+                        if (guests != null) {
+                            guests.setEnteredVehicleModel(editable.toString());
+                            mViewModel.getDataManager().setGuestDetail(guests);
+                        }
+                    }
+                }
+            });
+        }
     }
 
     private void updateTemperatureUI() {
