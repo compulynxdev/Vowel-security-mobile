@@ -305,6 +305,11 @@ public class VisitorProfileDialog extends BaseDialog<DialogVisitorProfileBinding
                             mViewModel.getDataManager().setGuestDetail(guests);
                         }
                     }
+                    ServiceProvider spBean = mViewModel.getDataManager().getSpDetail();
+                    if (spBean != null) {
+                        spBean.setEnteredVehicleModel(editable.toString());
+                        mViewModel.getDataManager().setSPDetail(spBean);
+                    }
                 }
             });
         }

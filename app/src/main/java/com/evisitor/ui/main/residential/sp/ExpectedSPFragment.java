@@ -136,7 +136,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                 mViewModel.approveByCall(true, null);
             } else {
                 if (tmpBean.getIdentityNo().isEmpty()) {
-                    showCheckinOptions();
+                    notifyCheckInRequest();
                 } else {
                     IdVerificationDialog.newInstance(new IdVerificationCallback() {
                         @Override
@@ -152,7 +152,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                             dialog.dismiss();
 
                             if (tmpBean.getIdentityNo().equalsIgnoreCase(id))
-                                showCheckinOptions();
+                                notifyCheckInRequest();
                             else {
                                 showToast(R.string.alert_id);
                             }
@@ -177,7 +177,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
         mViewModel.getSpListData(page, search);
     }
 
-    private void showCheckinOptions() {
+    private void notifyCheckInRequest() {
         AlertDialog alert = AlertDialog.newInstance()
                 .setCloseBtnShow(true)
                 .setTitle(getString(R.string.check_in))
@@ -260,7 +260,7 @@ public class ExpectedSPFragment extends BaseFragment<FragmentExpectedBinding, Ex
                         if (mViewModel.getDataManager().isCommercial()) {
                             mViewModel.approveByCall(true, null);
                         } else {
-                            showCheckinOptions();
+                            notifyCheckInRequest();
                         }
                     } else {
                         showToast(R.string.alert_invalid_name);

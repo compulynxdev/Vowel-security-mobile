@@ -124,6 +124,7 @@ public class ExpectedSpViewModel extends BaseCheckInOutViewModel<ExpectedSPNavig
                 object.put("premiseHierarchyDetailsId", getDataManager().getSpDetail().getFlatId());
                 object.put("enteredVehicleNo", getDataManager().getSpDetail().getEnteredVehicleNo());
                 object.put("bodyTemperature", getDataManager().getSpDetail().getBodyTemperature());
+                object.put("enteredVehicleModel", getDataManager().getSpDetail().getEnteredVehicleModel());
                 object.put("type", AppConstants.SERVICE_PROVIDER);
                 if (getDataManager().getSpDetail().getVehicleBitMapImage() != null) {
                     object.put("vehicleImage", AppUtils.getBitmapToBase64(getDataManager().getSpDetail().getVehicleBitMapImage()));
@@ -149,6 +150,7 @@ public class ExpectedSpViewModel extends BaseCheckInOutViewModel<ExpectedSPNavig
                 object.put("visitor", AppConstants.SERVICE_PROVIDER);
                 object.put("state", isAccept ? AppConstants.ACCEPT : AppConstants.REJECT);
                 object.put("rejectedBy", isAccept ? null : getDataManager().getUserDetail().getFullName());
+                object.put("enteredVehicleModel", getDataManager().getSpDetail().getEnteredVehicleModel());
                 object.put("rejectReason", input);
                 if (getDataManager().getSpDetail().getVehicleBitMapImage() != null) {
                     object.put("vehicleImage", AppUtils.getBitmapToBase64(getDataManager().getSpDetail().getVehicleBitMapImage()));

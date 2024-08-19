@@ -85,6 +85,9 @@ public class ServiceProvider {
     @SerializedName("qrValidity")
     private String qrValidity;
 
+    @SerializedName("enteredVehicleModel")
+    private String enteredVehicleModel;
+
     public Bitmap getVehicleBitMapImage() {
         return vehicleBitMapImage;
     }
@@ -391,5 +394,13 @@ public class ServiceProvider {
 
     public void setCheckInStatus(boolean checkInStatus) {
         this.checkInStatus = checkInStatus;
+    }
+
+    public String getEnteredVehicleModel() {
+        return enteredVehicleModel == null ? "" : enteredVehicleModel;
+    }
+
+    public void setEnteredVehicleModel(String enteredVehicleModel) {
+        this.enteredVehicleModel = enteredVehicleModel;
     }
 }
