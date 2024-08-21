@@ -1,0 +1,58 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.cll.miniposprinter" >
+4
+5    <uses-sdk android:minSdkVersion="24" />
+5-->C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml
+6    <!-- Request legacy Bluetooth permissions on older devices. -->
+7    <uses-permission
+7-->C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:5:5-7:38
+8        android:name="android.permission.BLUETOOTH"
+8-->C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:6:9-52
+9        android:maxSdkVersion="30" />
+9-->C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:7:9-35
+10    <uses-permission
+10-->C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:8:5-10:38
+11        android:name="android.permission.BLUETOOTH_ADMIN"
+11-->C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:9:9-58
+12        android:maxSdkVersion="30" />
+12-->C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:10:9-35
+13
+14    <!--
+15         Needed only if your app looks for Bluetooth devices.
+16         If your app doesn't use Bluetooth scan results to derive physical
+17         location information, you can strongly assert that your app
+18         doesn't derive physical location.
+19    -->
+20    <uses-permission
+20-->C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:16:5-18:58
+21        android:name="android.permission.BLUETOOTH_SCAN"
+21-->C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:17:9-57
+22        android:usesPermissionFlags="neverForLocation" />
+22-->C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:18:9-55
+23
+24    <!--
+25         Needed only if your app makes the device discoverable to Bluetooth
+26         devices.
+27    -->
+28    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+28-->C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:22:5-78
+28-->C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:22:22-75
+29
+30    <!--
+31         Needed only if your app communicates with already-paired Bluetooth
+32         devices.
+33    -->
+34    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+34-->C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:26:5-76
+34-->C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:26:22-73
+35
+36    <application android:theme="@style/PrinterModuleTheme" >
+36-->C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:27:5-32:19
+36-->C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:28:9-50
+37        <service android:name="net.posprinter.service.PosprinterService" />
+37-->C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:30:9-76
+37-->C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:30:18-73
+38    </application>
+39
+40</manifest>

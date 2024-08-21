@@ -1,0 +1,59 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:2:1-34:12
+INJECTED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:2:1-34:12
+INJECTED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:2:1-34:12
+	package
+		ADDED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:3:5-37
+		INJECTED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml
+		INJECTED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:2:11-69
+uses-permission#android.permission.BLUETOOTH
+ADDED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:5:5-7:38
+	android:maxSdkVersion
+		ADDED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:7:9-35
+	android:name
+		ADDED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:6:9-52
+uses-permission#android.permission.BLUETOOTH_ADMIN
+ADDED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:8:5-10:38
+	android:maxSdkVersion
+		ADDED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:10:9-35
+	android:name
+		ADDED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:9:9-58
+uses-permission#android.permission.BLUETOOTH_SCAN
+ADDED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:16:5-18:58
+	android:usesPermissionFlags
+		ADDED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:18:9-55
+	android:name
+		ADDED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:17:9-57
+uses-permission#android.permission.BLUETOOTH_ADVERTISE
+ADDED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:22:5-78
+	android:name
+		ADDED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:22:22-75
+uses-permission#android.permission.BLUETOOTH_CONNECT
+ADDED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:26:5-76
+	android:name
+		ADDED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:26:22-73
+application
+ADDED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:27:5-32:19
+	android:theme
+		ADDED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:28:9-50
+service#net.posprinter.service.PosprinterService
+ADDED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:30:9-76
+	android:name
+		ADDED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml:30:18-73
+uses-sdk
+INJECTED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml
+INJECTED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml
+INJECTED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml
+INJECTED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml
+		ADDED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml
+		INJECTED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml
+		ADDED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml
+		INJECTED from C:\aDev\VOWEL_Mobile_App\miniposprinter\src\main\AndroidManifest.xml

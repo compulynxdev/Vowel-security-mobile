@@ -408,4 +408,14 @@
     <string name="vehicle_model">Vehicle model</string>
     <string name="applicaion_not_found">Application not found</string>
     <string name="set_printer">Set up printer</string>
+
+    <!--Settings-->
+    <string name="bluetooth_not_supported">Bluetooth not supported</string>
+    <string name="bluetooth_not_supported_msg">This device does not support bluetooth capability.</string>
+    <string name="bluetooth">Bluetooth</string>
+    <string name="bluetooth_desc">To ensure seamless printing of your receipts, we need to establish a Bluetooth connection with your printer. This connection allows us to send the necessary information directly to the printer, ensuring your receipts are printed quickly and accurately.\n\nPlease enable Bluetooth on your device and connect to the printer to proceed with printing.</string>
+    <string name="enable">Enable</string>
+    <string name="no_thanks">No thanks</string>
+    <string name="printing_denied_permission">Receipt printing is not available .Enable bluetooth to start printing.</string>
+    <string name="bluetooth_denied_permission">Bluetooth permission denied</string>
 </resources>

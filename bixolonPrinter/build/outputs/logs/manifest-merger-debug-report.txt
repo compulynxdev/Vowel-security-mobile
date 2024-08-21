@@ -1,0 +1,41 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\aDev\VOWEL_Mobile_App\bixolonPrinter\src\main\AndroidManifest.xml:2:1-10:12
+INJECTED from C:\aDev\VOWEL_Mobile_App\bixolonPrinter\src\main\AndroidManifest.xml:2:1-10:12
+INJECTED from C:\aDev\VOWEL_Mobile_App\bixolonPrinter\src\main\AndroidManifest.xml:2:1-10:12
+	package
+		INJECTED from C:\aDev\VOWEL_Mobile_App\bixolonPrinter\src\main\AndroidManifest.xml
+		ADDED from C:\aDev\VOWEL_Mobile_App\bixolonPrinter\src\main\AndroidManifest.xml:2:1-10:12
+		INJECTED from C:\aDev\VOWEL_Mobile_App\bixolonPrinter\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\aDev\VOWEL_Mobile_App\bixolonPrinter\src\main\AndroidManifest.xml:2:11-69
+uses-permission#android.permission.BLUETOOTH
+ADDED from C:\aDev\VOWEL_Mobile_App\bixolonPrinter\src\main\AndroidManifest.xml:4:5-68
+	android:name
+		ADDED from C:\aDev\VOWEL_Mobile_App\bixolonPrinter\src\main\AndroidManifest.xml:4:22-65
+uses-permission#android.permission.BLUETOOTH_ADMIN
+ADDED from C:\aDev\VOWEL_Mobile_App\bixolonPrinter\src\main\AndroidManifest.xml:5:5-74
+	android:name
+		ADDED from C:\aDev\VOWEL_Mobile_App\bixolonPrinter\src\main\AndroidManifest.xml:5:22-71
+uses-permission#android.permission.BLUETOOTH_CONNECT
+ADDED from C:\aDev\VOWEL_Mobile_App\bixolonPrinter\src\main\AndroidManifest.xml:6:5-76
+	android:name
+		ADDED from C:\aDev\VOWEL_Mobile_App\bixolonPrinter\src\main\AndroidManifest.xml:6:22-73
+application
+ADDED from C:\aDev\VOWEL_Mobile_App\bixolonPrinter\src\main\AndroidManifest.xml:7:5-9:19
+	android:theme
+		ADDED from C:\aDev\VOWEL_Mobile_App\bixolonPrinter\src\main\AndroidManifest.xml:7:18-59
+uses-sdk
+INJECTED from C:\aDev\VOWEL_Mobile_App\bixolonPrinter\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\aDev\VOWEL_Mobile_App\bixolonPrinter\src\main\AndroidManifest.xml
+INJECTED from C:\aDev\VOWEL_Mobile_App\bixolonPrinter\src\main\AndroidManifest.xml
+INJECTED from C:\aDev\VOWEL_Mobile_App\bixolonPrinter\src\main\AndroidManifest.xml
+INJECTED from C:\aDev\VOWEL_Mobile_App\bixolonPrinter\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from C:\aDev\VOWEL_Mobile_App\bixolonPrinter\src\main\AndroidManifest.xml
+		ADDED from C:\aDev\VOWEL_Mobile_App\bixolonPrinter\src\main\AndroidManifest.xml
+		INJECTED from C:\aDev\VOWEL_Mobile_App\bixolonPrinter\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\aDev\VOWEL_Mobile_App\bixolonPrinter\src\main\AndroidManifest.xml
+		ADDED from C:\aDev\VOWEL_Mobile_App\bixolonPrinter\src\main\AndroidManifest.xml
+		INJECTED from C:\aDev\VOWEL_Mobile_App\bixolonPrinter\src\main\AndroidManifest.xml

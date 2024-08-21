@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+                                                       
+                                                   
+
+    
+
+                 
+                     
+                                                                         
+
+           
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" android:tag="layout/fragment_printer_list_dialog_0" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageButton"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:contentDescription="@string/imagebutton"
+                android:src="@drawable/baseline_horizontal_rule_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/txt_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageButton"
+                android:tag="binding_1"    />
+
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/linearProgressIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:indeterminate="true"
+                app:layout_constraintEnd_toEndOf="@+id/txt_message"
+                app:layout_constraintStart_toStartOf="@+id/txt_message"
+                app:layout_constraintTop_toBottomOf="@+id/txt_message"
+                android:tag="binding_2"                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:clipToPadding="false"
+                android:paddingTop="@dimen/list_item_spacing_half"
+                android:paddingBottom="@dimen/list_item_spacing_half"
+                android:tag="binding_3"       
+                app:layout_constraintTop_toBottomOf="@+id/linearProgressIndicator"
+                tools:context=".PrinterFragment"
+                tools:layout_editor_absoluteX="0dp"
+                tools:listitem="@layout/fragment_printer_list_dialog_item" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floating_action_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:tag="binding_4"       
+            android:layout_margin="16dp"
+            android:contentDescription="@string/device_search"
+            app:srcCompat="@drawable/baseline_bluetooth_searching_24" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+         

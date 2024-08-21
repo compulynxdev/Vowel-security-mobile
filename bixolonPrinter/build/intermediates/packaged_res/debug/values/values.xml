@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#408DFF</color>
+    <color name="colorPrimaryDark">#408DFF</color>
+    <color name="grey">#BABABA</color>
+    <color name="red">#ff0000</color>
+    <color name="white">#FFFFFFFF</color>
+    <dimen name="list_item_spacing">16dp</dimen>
+    <dimen name="list_item_spacing_half">8dp</dimen>
+    <string name="bluetooth_not_supported">Bluetooth not supported</string>
+    <string name="connecting">Connecting …</string>
+    <string name="device_search">device search</string>
+    <string name="done_printing">Done Printing</string>
+    <string name="enable_bt">Turn on Bluetooth to continue</string>
+    <string name="error_printer">A printer error occurred</string>
+    <string name="failure_opening">" Failed to open printer"</string>
+    <string name="imagebutton">imageButton</string>
+    <string name="message">message</string>
+    <string name="no_paired_devices">No paired devices found</string>
+    <string name="printing">Printing</string>
+    <string name="scan">Scan</string>
+    <string name="search_device">search device</string>
+    <style name="BixolonModuleTheme" parent="Theme.Material3.DayNight.NoActionBar">
+
+        <item name="colorPrimary">@color/red</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/black</item>
+        <item name="colorOnSecondary">@color/white</item>
+        
+        
+        <item name="colorSecondaryContainer">@color/black</item>
+        <item name="colorOnSecondaryContainer">@color/white</item>
+        <item name="colorPrimaryContainer">@color/black</item>
+        <item name="colorOnPrimaryContainer">@color/white</item>
+    </style>
+</resources>

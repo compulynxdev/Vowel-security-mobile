@@ -1,16 +1,25 @@
 package com.evisitor.ui.main.settings;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -64,7 +73,7 @@ public class SettingsFragment extends BaseFragment<FragmentSettingsBinding, Sett
         tvTitle.setText(R.string.title_settings);
         getViewDataBinding().tvLang.setText(mViewModel.getDataManager().getLanguage());
 
-        setOnClickListener(getViewDataBinding().printerConstraint,getViewDataBinding().infoConstraint, getViewDataBinding().premiseInfoConstraint, getViewDataBinding().languageConstraint, getViewDataBinding().aboutusConstraint
+        setOnClickListener(getViewDataBinding().printerConstraint, getViewDataBinding().infoConstraint, getViewDataBinding().premiseInfoConstraint, getViewDataBinding().languageConstraint, getViewDataBinding().aboutusConstraint
                 , getViewDataBinding().privacyConstraint, getViewDataBinding().logoutConstraint);
     }
 
@@ -95,7 +104,7 @@ public class SettingsFragment extends BaseFragment<FragmentSettingsBinding, Sett
             intent.putExtra("From", AppConstants.ACTIVITY_PRIVACY);
             startActivity(intent);
         } else if (id == R.id.printer_constraint) {
-            getViewModel().initBixolonPrinter(getContext());
+            checkBluetoothPermission();
         } else if (id == R.id.logout_constraint) {
             showAlert(R.string.logout, R.string.logout_msg)
                     .setNegativeBtnShow(true)
@@ -109,11 +118,120 @@ public class SettingsFragment extends BaseFragment<FragmentSettingsBinding, Sett
 
     }
 
+    private void checkBluetoothPermission() {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(), Manifest.permission.BLUETOOTH_CONNECT) ==
+                PackageManager.PERMISSION_GRANTED) {
+
+            BluetoothAdapter bluetoothAdapter = getBluetoothAdapter();
+            if (bluetoothAdapter == null) {
+                com.evisitor.ui.dialog.AlertDialog.newInstance()
+                        .setNegativeBtnShow(true)
+                        .setCloseBtnShow(false)
+                        .setTitle(getString(R.string.bluetooth_not_supported))
+                        .setMsg(getString(R.string.bluetooth_not_supported_msg))
+                        .setPositiveBtnLabel(getString(R.string.ok))
+                        .setOnPositiveClickListener(DialogFragment::dismiss).show(getChildFragmentManager());
+            } else {
+                if (!bluetoothAdapter.isEnabled()) {
+                    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                    enableBluetoothLauncher.launch(enableBtIntent);
+
+                } else {
+                    getViewModel().initBixolonPrinter(getContext());
+                }
+            }
+
+        } else if (ActivityCompat.shouldShowRequestPermissionRationale(
+                requireActivity(), Manifest.permission.BLUETOOTH_CONNECT)) {
+            com.evisitor.ui.dialog.AlertDialog.newInstance()
+                    .setNegativeBtnShow(true)
+                    .setCloseBtnShow(false)
+                    .setTitle(getString(R.string.bluetooth))
+                    .setMsg(getString(R.string.bluetooth_desc))
+                    .setPositiveBtnLabel(getString(R.string.enable))
+                    .setNegativeBtnLabel(getString(R.string.no_thanks))
+                    .setOnNegativeClickListener(DialogFragment::dismiss)
+                    .setOnPositiveClickListener(dialog12 -> {
+                        dialog12.dismiss();
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                            requestPermissionLauncher.launch(
+                                    Manifest.permission.BLUETOOTH_CONNECT);
+                        }
+                    }).show(getChildFragmentManager());
+
+
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                requestPermissionLauncher.launch(
+                        Manifest.permission.BLUETOOTH_CONNECT);
+            }
+        }
+    }
+
+    private ActivityResultLauncher<Intent> enableBluetoothLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    getViewModel().initBixolonPrinter(getContext());
+                } else {
+                    // User declined to enable Bluetooth
+                    com.evisitor.ui.dialog.AlertDialog.newInstance()
+                            .setNegativeBtnShow(false)
+                            .setCloseBtnShow(false)
+                            .setPositiveBtnLabel(getString(R.string.ok))
+                            .setTitle(getString(R.string.bluetooth))
+                            .setMsg(getString(R.string.bluetooth_denied_permission)).setOnPositiveClickListener(dialog -> {
+                                dialog.dismiss();
+                            }).show(getChildFragmentManager());
+                }
+            });
+
+
+    private BluetoothAdapter getBluetoothAdapter() {
+        return BluetoothAdapter.getDefaultAdapter();
+    }
+
+    private final ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+                    BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                    if (bluetoothAdapter == null) {
+                        com.evisitor.ui.dialog.AlertDialog.newInstance()
+                                .setNegativeBtnShow(false)
+                                .setCloseBtnShow(false)
+                                .setTitle(getString(R.string.bluetooth_not_supported))
+                                .setMsg(getString(R.string.bluetooth_not_supported_msg))
+                                .setPositiveBtnLabel(getString(R.string.ok))
+                                .setOnPositiveClickListener(DialogFragment::dismiss).show(getChildFragmentManager());
+                    } else {
+                        if (!bluetoothAdapter.isEnabled()) {
+                            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                            enableBluetoothLauncher.launch(enableBtIntent);
+
+                        } else {
+                            getViewModel().initBixolonPrinter(getContext());
+                        }
+                    }
+
+                } else {
+                    com.evisitor.ui.dialog.AlertDialog.newInstance()
+                            .setNegativeBtnShow(false)
+                            .setCloseBtnShow(false)
+                            .setTitle(getString(R.string.bluetooth))
+                            .setMsg(getString(R.string.printing_denied_permission))
+                            .setPositiveBtnLabel(getString(R.string.ok))
+                            .setOnPositiveClickListener(DialogFragment::dismiss).show(getChildFragmentManager());
+                }
+            });
+
+
     @Override
     public void onPairedDevices(Set<BluetoothDevice> devices) {
         showBluetoothDialog(devices);
     }
-     void showBluetoothDialog(Set<BluetoothDevice> pairedDevices) {
+
+    void showBluetoothDialog(Set<BluetoothDevice> pairedDevices) {
         final String[] items = new String[pairedDevices.size()];
         int index = 0;
         for (BluetoothDevice device : pairedDevices) {
@@ -127,15 +245,15 @@ public class SettingsFragment extends BaseFragment<FragmentSettingsBinding, Sett
                     String strSelectList = items[which];
                     String temp;
                     int indexSpace = 0;
-                    for(int i = 5; i<strSelectList.length(); i++){
-                        temp = strSelectList.substring(i-5, i);
-                        if((temp.equals("00:10"))||(temp.equals("74:F0"))||(temp.equals("00:15")) || (temp.equals("DD:C5")) || (temp.equals("40:19"))){
+                    for (int i = 5; i < strSelectList.length(); i++) {
+                        temp = strSelectList.substring(i - 5, i);
+                        if ((temp.equals("00:10")) || (temp.equals("74:F0")) || (temp.equals("00:15")) || (temp.equals("DD:C5")) || (temp.equals("40:19"))) {
                             indexSpace = i;
                             i = 100;
                         }
                     }
 
-                    final String strDeviceInfo = strSelectList.substring(indexSpace-5, strSelectList.length());
+                    final String strDeviceInfo = strSelectList.substring(indexSpace - 5, strSelectList.length());
 
                     getViewModel().setSelectedDevice(strDeviceInfo);
                 }).show();

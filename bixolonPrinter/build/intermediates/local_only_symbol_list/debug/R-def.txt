@@ -1,0 +1,35 @@
+R_DEF: Internal format may change without notice
+local
+color black
+color colorAccent
+color colorPrimary
+color colorPrimaryDark
+color grey
+color red
+color white
+dimen list_item_spacing
+dimen list_item_spacing_half
+drawable baseline_bluetooth_searching_24
+drawable baseline_horizontal_rule_24
+id floating_action_button
+id imageButton
+id linearProgressIndicator
+id list
+id text
+id txt_message
+layout fragment_printer_list_dialog
+layout fragment_printer_list_dialog_item
+string bluetooth_not_supported
+string connecting
+string device_search
+string done_printing
+string enable_bt
+string error_printer
+string failure_opening
+string imagebutton
+string message
+string no_paired_devices
+string printing
+string scan
+string search_device
+style BixolonModuleTheme
