@@ -107,8 +107,9 @@ public class ServiceProviderCheckInAdapter extends RecyclerView.Adapter<BaseView
             imgVisitor = itemView.findViewById(R.id.img_visitor);
             btn_print = itemView.findViewById(R.id.btn_ok);
 
-            if(EVisitor.getInstance().getDataManager().isCommercial() && EVisitor.getInstance().getDataManager().isPrintLabel())
+            if(EVisitor.getInstance().getDataManager().isCommercial() && EVisitor.getInstance().getDataManager().isPrintLabel()) {
                 btn_print.setVisibility(View.VISIBLE);
+            }
 
             itemView.setOnClickListener(v -> {
                 if (listener != null && getAdapterPosition() != -1)

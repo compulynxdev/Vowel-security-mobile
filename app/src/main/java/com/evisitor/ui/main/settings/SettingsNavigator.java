@@ -7,5 +7,5 @@ import com.evisitor.ui.base.BaseNavigator;
 import java.util.Set;
 
 public interface SettingsNavigator extends BaseNavigator {
-    void onPairedDevices(Set<BluetoothDevice> devices);
+    void showBluetoothDialog(Set<BluetoothDevice> pairedDevices);
 }

@@ -53,6 +53,7 @@ import com.evisitor.util.pagination.RecyclerViewScrollListener;
 import com.smartengines.MainResultStore;
 import com.smartengines.ScanSmartActivity;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -80,33 +81,34 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
     private boolean mIsConnected = false;
     private PropertyInfoResponse propertyInfo;
     private int printType = 0;
-    private final Handler mHandler = new Handler() {
+
+    private static class MyHandler extends Handler {
+        private final WeakReference<CheckInFragment> mFragmentRef;
+
+        MyHandler(CheckInFragment fragment) {
+            mFragmentRef = new WeakReference<>(fragment);
+        }
+
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(@NonNull Message msg) {
+            CheckInFragment fragment = mFragmentRef.get();
+            if (fragment == null || !fragment.isAdded()) {
+                return;
+            }
             switch (msg.what) {
                 case BixolonLabelPrinter.MESSAGE_STATE_CHANGE:
                     switch (msg.arg1) {
                         case BixolonLabelPrinter.STATE_CONNECTED:
-                            //setStatus(getString(R.string.title_connected_to, connectedDeviceName));
-                            mIsConnected = true;
-                            //0 for guest and 1 for sp
-                            printLabel(printType != 0);
-                            getViewModel().setPrinterStatus(PrinterStatus.CONNECTED);
+                            fragment.printLabel(fragment.printType != 0);
                             break;
 
                         case BixolonLabelPrinter.STATE_CONNECTING:
-                            //setStatus(getResources().getString(R.string.title_connecting));
-                            // getViewModel().setPrinterStatus(PrinterStatus.CONNECTING);
+
                             break;
 
                         case BixolonLabelPrinter.STATE_NONE:
-                            //Log.e("NONE", msg.toString());
-                            // setStatus(getResources().getString(R.string.title_not_connected));
-                            mIsConnected = false;
-                            //invalidateOptionsMenu();
-                            if (bixolonLabelPrinter != null && bixolonLabelPrinter.isConnected()) {
-                                getViewModel().setPrinterStatus(PrinterStatus.ERROR);
-                            }
+                            fragment.hideLoading();
+                            fragment.showAlert(R.string.alert, R.string.device_not_found);
                             break;
                     }
                     break;
@@ -116,44 +118,26 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                     break;
 
                 case BixolonLabelPrinter.MESSAGE_DEVICE_NAME:
-                    //connectedDeviceName = msg.getData().getString(BixolonLabelPrinter.DEVICE_NAME);
-                    Toast.makeText(getActivity(), "connectedDeviceName", Toast.LENGTH_LONG).show();
+
                     break;
 
                 case BixolonLabelPrinter.MESSAGE_TOAST:
-                    Toast.makeText(getActivity(), msg.getData().getString(BixolonLabelPrinter.TOAST), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(fragment.getContext(), msg.getData().getString(BixolonLabelPrinter.TOAST), Toast.LENGTH_SHORT).show();
                     break;
 
                 case BixolonLabelPrinter.MESSAGE_LOG:
-                    Toast.makeText(getActivity(), msg.getData().getString(BixolonLabelPrinter.LOG), Toast.LENGTH_SHORT).show();
-                    break;
-
-                case BixolonLabelPrinter.MESSAGE_BLUETOOTH_DEVICE_SET:
-                    if (msg.obj == null) {
-                        Toast.makeText(getActivity(), "No paired device", Toast.LENGTH_SHORT).show();
-                    } else {
-                        showDevices(msg);
-                    }
-                    break;
-
-                case BixolonLabelPrinter.MESSAGE_USB_DEVICE_SET:
-                    if (msg.obj == null) {
-                        Toast.makeText(getActivity(), "No connected device", Toast.LENGTH_SHORT).show();
-                    }
+                    Toast.makeText(fragment.getContext(), msg.getData().getString(BixolonLabelPrinter.LOG), Toast.LENGTH_SHORT).show();
                     break;
 
                 case BixolonLabelPrinter.MESSAGE_OUTPUT_COMPLETE:
-                    getViewModel().setPrinterStatus(PrinterStatus.FINISHED);
-                    Toast.makeText(getActivity(), "Transaction Print complete", Toast.LENGTH_SHORT).show();
+                    fragment.hideLoading();
                     break;
-
             }
         }
-    };
-
-    private void showDevices(Message msg) {
-        DialogManager.showBluetoothDialog(getActivity(), (Set<BluetoothDevice>) msg.obj, this);
     }
+
+
+    private final MyHandler mHandler = new MyHandler(this);
 
     public static CheckInFragment newInstance(int listOf, OnFragmentInteraction listener) {
         CheckInFragment fragment = new CheckInFragment();
@@ -327,7 +311,7 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
         }
 
         getViewModel().getPrinterStatus().observe(getViewLifecycleOwner(), printerStatus -> {
-            Log.i("TAG", "onViewCreated: "+printerStatus.name());
+            Log.i("TAG", "onViewCreated: " + printerStatus.name());
             switch (printerStatus) {
                 case CONNECTING:
                     showLoading();
@@ -357,14 +341,14 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
     private String[] blueToothPermissions() {
         String[] permissions = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            permissions =  new String[6];
+            permissions = new String[6];
             permissions[0] = Manifest.permission.BLUETOOTH_SCAN;
             permissions[1] = Manifest.permission.BLUETOOTH_CONNECT;
             permissions[2] = Manifest.permission.ACCESS_FINE_LOCATION;
             permissions[3] = Manifest.permission.ACCESS_COARSE_LOCATION;
             permissions[4] = Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS;
             permissions[5] = Manifest.permission.BLUETOOTH_PRIVILEGED;
-        }else {
+        } else {
             permissions = new String[4];
             permissions[0] = Manifest.permission.ACCESS_FINE_LOCATION;
             permissions[1] = Manifest.permission.ACCESS_COARSE_LOCATION;
@@ -422,25 +406,24 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
                 CommercialVisitorResponse.CommercialGuest guests = commercialGuestList.get(pos);
                 mViewModel.getCommercialGuestProfileBean(guests);
                 printType = 0;
-                if (guests.getQrCode() != null && !guests.getQrCode().isEmpty())
+                if (guests.getQrCode() != null && !guests.getQrCode().isEmpty()) {
                     getViewModel().getImage(guests.getQrCode(), false);
+                }
+                String address = getViewModel().getDataManager().printerAddress();
 
-                if (!BluetoothAdapter.getDefaultAdapter().isEnabled() || !bixolonLabelPrinter.isConnected()) {
-                    AlertDialog alertDialog = AlertDialog.newInstance().setMsg(getString(R.string.printer_not_connect)).setNegativeBtnLabel(getString(R.string.cancel)).setPositiveBtnLabel(getString(R.string.connect_with_printer)).setOnPositiveClickListener(new AlertDialog.PositiveListener() {
-                        @Override
-                        public void onPositiveClick(AlertDialog dialog) {
-                            if (BluetoothAdapter.getDefaultAdapter().isEnabled()) {
-                                dialog.dismiss();
-                                if (bixolonLabelPrinter != null)
-                                    bixolonLabelPrinter.findBluetoothPrinters();
-                            } else {
-                                showToast(R.string.bluetooth_not_enabled);
-                            }
-                        }
-                    }).setOnNegativeClickListener(DialogFragment::dismiss).setTitle(getString(R.string.printer));
-                    alertDialog.show(getChildFragmentManager());
+                if (address == null || address.isEmpty()) {
+                    showAlert(R.string.alert, R.string.select_printer_desc);
                 } else {
-                    printLabel(false);
+                    if (BluetoothAdapter.getDefaultAdapter().isEnabled()) {
+                        showLoading();
+                        if (!bixolonLabelPrinter.isConnected()) {
+                            new Thread(() -> bixolonLabelPrinter.connect(address)).start();
+                        } else {
+                            printLabel(false);
+                        }
+                    } else {
+                        showToast(R.string.bluetooth_not_enabled);
+                    }
                 }
             }
         });
@@ -504,40 +487,25 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
             public void printClick(ServiceProvider serviceProvider) {
                 mViewModel.getServiceProviderProfileBean(serviceProvider);
                 printType = 1;
-                if (serviceProvider.getQrCode() != null && !serviceProvider.getQrCode().isEmpty())
+
+                if (serviceProvider.getQrCode() != null && !serviceProvider.getQrCode().isEmpty()) {
                     getViewModel().getImage(serviceProvider.getQrCode(), false);
-                /*AlertDialog alertDialog =  AlertDialog.newInstance().setMsg(getString(R.string.connect_if_not_connected)).setNegativeBtnLabel(getString(R.string.connect_with_printer)).setPositiveBtnLabel(getString(R.string.yes)).setOnPositiveClickListener(new AlertDialog.PositiveListener() {
-                    @Override
-                    public void onPositiveClick(AlertDialog dialog) {
-                        dialog.dismiss();
-                        printLabel(true);
-                    }
-                }).setOnNegativeClickListener(dialog -> {
-                    if(BluetoothAdapter.getDefaultAdapter().isEnabled()) {
-                        if (bixolonLabelPrinter != null)
-                            bixolonLabelPrinter.findBluetoothPrinters();
-                    }else {
+                }
+                String address = getViewModel().getDataManager().printerAddress();
+
+                if (address == null || address.isEmpty()) {
+                    showAlert(R.string.alert, R.string.select_printer_desc);
+                } else {
+                    if (BluetoothAdapter.getDefaultAdapter().isEnabled()) {
+                        showLoading();
+                        if (!bixolonLabelPrinter.isConnected()) {
+                            new Thread(() -> bixolonLabelPrinter.connect(address)).start();
+                        } else {
+                            printLabel(true);
+                        }
+                    } else {
                         showToast(R.string.bluetooth_not_enabled);
                     }
-                }).setTitle(getString(R.string.printer));
-                alertDialog.show(getChildFragmentManager());*/
-                if (!BluetoothAdapter.getDefaultAdapter().isEnabled() || !bixolonLabelPrinter.isConnected()) {
-                    AlertDialog alertDialog = AlertDialog.newInstance().setMsg(getString(R.string.printer_not_connect)).setNegativeBtnLabel(getString(R.string.cancel)).setPositiveBtnLabel(getString(R.string.connect_with_printer)).setOnPositiveClickListener(new AlertDialog.PositiveListener() {
-                        @Override
-                        public void onPositiveClick(AlertDialog dialog) {
-                            if (BluetoothAdapter.getDefaultAdapter().isEnabled()) {
-                                dialog.dismiss();
-                                if (bixolonLabelPrinter != null)
-                                    bixolonLabelPrinter.findBluetoothPrinters();
-                            } else {
-                                showToast(R.string.bluetooth_not_enabled);
-                            }
-
-                        }
-                    }).setOnNegativeClickListener(DialogFragment::dismiss).setTitle(getString(R.string.printer));
-                    alertDialog.show(getChildFragmentManager());
-                } else {
-                    printLabel(true);
                 }
             }
         });
@@ -828,55 +796,47 @@ public class CheckInFragment extends BaseFragment<FragmentCheckInBinding, CheckI
     }
 
     public void printLabel(boolean sp) {
-        if (mIsConnected) {
-            new Thread(() -> {
+
+        int mFontSize = BixolonLabelPrinter.FONT_SIZE_10;
+        int mHorizontalMultiplier = 1;
+        int mVerticalMultiplier = 1;
+        int model = BixolonLabelPrinter.QR_CODE_MODEL2;
+        int eccLevel = BixolonLabelPrinter.ECC_LEVEL_15;
+        int rotation = BixolonLabelPrinter.ROTATION_NONE;
+        //Bitmap logo = urlImageToBitmap();
+
+        ServiceProvider serviceProvider = getViewModel().getDataManager().getSpDetail();
+        bixolonLabelPrinter.beginTransactionPrint();
+
+        if (propertyInfo != null && !propertyInfo.getImage().isEmpty() && getViewModel().getPropertyImage().getValue() != null)
+            bixolonLabelPrinter.drawImage(AppUtils.getBitmap(Objects.requireNonNull(getViewModel().getPropertyImage().getValue())), 450, 40, 120, 1, 1, 0);
+
+        bixolonLabelPrinter.drawBlock(10, 30, 800, 33, 79, 3);
+        bixolonLabelPrinter.drawBlock(10, 280, 800, 283, 79, 3);
+        bixolonLabelPrinter.drawText(propertyInfo.getFullName(), 10, 50, BixolonLabelPrinter.FONT_SIZE_12, mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
 
 
-                int mFontSize = BixolonLabelPrinter.FONT_SIZE_10;
-                int mHorizontalMultiplier = 1;
-                int mVerticalMultiplier = 1;
-                int model = BixolonLabelPrinter.QR_CODE_MODEL2;
-                int eccLevel = BixolonLabelPrinter.ECC_LEVEL_15;
-                int rotation = BixolonLabelPrinter.ROTATION_NONE;
-                //Bitmap logo = urlImageToBitmap();
-
-                ServiceProvider serviceProvider = getViewModel().getDataManager().getSpDetail();
-                bixolonLabelPrinter.beginTransactionPrint();
-
-                if (propertyInfo != null && !propertyInfo.getImage().isEmpty() && getViewModel().getPropertyImage().getValue() != null)
-                    bixolonLabelPrinter.drawImage(AppUtils.getBitmap(Objects.requireNonNull(getViewModel().getPropertyImage().getValue())), 450, 40, 120, 1, 1, 0);
-
-                bixolonLabelPrinter.drawBlock(10, 30, 800, 33, 79, 3);
-                bixolonLabelPrinter.drawBlock(10, 280, 800, 283, 79, 3);
-                bixolonLabelPrinter.drawText(propertyInfo.getFullName(), 10, 50, BixolonLabelPrinter.FONT_SIZE_12, mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
-
-
-                if (sp) {
-                    bixolonLabelPrinter.drawText(getString(R.string.data_name, serviceProvider.getName()), 10, 130, mFontSize, mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
-                    bixolonLabelPrinter.drawText(getString(R.string.data_identity, serviceProvider.getIdentityNo()), 10, 170, mFontSize, mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
-                    bixolonLabelPrinter.drawText("Type: Service Provider", 10, 210, mFontSize, mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
-                    if (serviceProvider.getQrCode() != null && !serviceProvider.getQrCode().isEmpty() && getViewModel().getVisitorImage().getValue() != null)
-                        bixolonLabelPrinter.drawImage(AppUtils.getBitmap(Objects.requireNonNull(getViewModel().getVisitorImage().getValue())), 450, 40, 120, 1, 1, 0);
-                }
-                //visitor details to be printed
-                else {
-                    CommercialVisitorResponse.CommercialGuest commercialGuest = getViewModel().getDataManager().getCommercialVisitorDetail();
-                    bixolonLabelPrinter.drawText(getString(R.string.data_name, commercialGuest.getName()), 10, 130, mFontSize, mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
-                    if (commercialGuest.getIdentityNo() != null && !commercialGuest.getIdentityNo().isEmpty())
-                        bixolonLabelPrinter.drawText(getString(R.string.data_identity, commercialGuest.getIdentityNo()), 10, 170, mFontSize, mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
-                    bixolonLabelPrinter.drawText("Type: Visitor", 10, 210, mFontSize, mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
-                    if (commercialGuest.getQrCode() != null && !commercialGuest.getQrCode().isEmpty() && getViewModel().getVisitorImage().getValue() != null)
-                        bixolonLabelPrinter.drawImage(AppUtils.getBitmap(Objects.requireNonNull(getViewModel().getVisitorImage().getValue())), 450, 150, 120, 1, 1, 0);
-                }
-                //QR code
-                //bixolonLabelPrinter.drawQrCode(serviceProvider.getIdentityNo(), 400, 130, model, eccLevel, 7, rotation);
-                bixolonLabelPrinter.print(1, 1);
-                bixolonLabelPrinter.endTransactionPrint();
-            }).start();
-        } else {
-            //bixolonLabelPrinter.findBluetoothPrinters();
-            showAlert(R.string.alert, R.string.no_printer_connected);
+        if (sp) {
+            bixolonLabelPrinter.drawText(getString(R.string.data_name, serviceProvider.getName()), 10, 130, mFontSize, mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
+            bixolonLabelPrinter.drawText(getString(R.string.data_identity, serviceProvider.getIdentityNo()), 10, 170, mFontSize, mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
+            bixolonLabelPrinter.drawText("Type: Service Provider", 10, 210, mFontSize, mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
+            if (serviceProvider.getQrCode() != null && !serviceProvider.getQrCode().isEmpty() && getViewModel().getVisitorImage().getValue() != null)
+                bixolonLabelPrinter.drawImage(AppUtils.getBitmap(Objects.requireNonNull(getViewModel().getVisitorImage().getValue())), 450, 40, 120, 1, 1, 0);
         }
+        //visitor details to be printed
+        else {
+            CommercialVisitorResponse.CommercialGuest commercialGuest = getViewModel().getDataManager().getCommercialVisitorDetail();
+            bixolonLabelPrinter.drawText(getString(R.string.data_name, commercialGuest.getName()), 10, 130, mFontSize, mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
+            if (commercialGuest.getIdentityNo() != null && !commercialGuest.getIdentityNo().isEmpty())
+                bixolonLabelPrinter.drawText(getString(R.string.data_identity, commercialGuest.getIdentityNo()), 10, 170, mFontSize, mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
+            bixolonLabelPrinter.drawText("Type: Visitor", 10, 210, mFontSize, mHorizontalMultiplier, mVerticalMultiplier, 0, 0, false, true, 70);
+            if (commercialGuest.getQrCode() != null && !commercialGuest.getQrCode().isEmpty() && getViewModel().getVisitorImage().getValue() != null)
+                bixolonLabelPrinter.drawImage(AppUtils.getBitmap(Objects.requireNonNull(getViewModel().getVisitorImage().getValue())), 450, 150, 120, 1, 1, 0);
+        }
+        //QR code
+        //bixolonLabelPrinter.drawQrCode(serviceProvider.getIdentityNo(), 400, 130, model, eccLevel, 7, rotation);
+        bixolonLabelPrinter.print(1, 1);
+        bixolonLabelPrinter.endTransactionPrint();
     }
 
     @Override

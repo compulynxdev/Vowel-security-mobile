@@ -418,4 +418,9 @@
     <string name="no_thanks">No thanks</string>
     <string name="printing_denied_permission">Receipt printing is not available .Enable bluetooth to start printing.</string>
     <string name="bluetooth_denied_permission">Bluetooth permission denied</string>
+    <string name="no_paired_devices">No paired devices found.</string>
+    <string name="paired_devices">Paired Bluetooth devices</string>
+    <string name="connected">%s Connected</string>
+    <string name="select_printer_desc">It looks like no printer is selected. Please go to settings and pair a Bluetooth printer first.</string>
+    <string name="device_not_found">The Bluetooth connection failed, and no printer was found.</string>
 </resources>
