@@ -75,6 +75,7 @@ public class BaseViewModel<N extends BaseNavigator> extends ViewModel {
                       if (response.isSuccessful()){
                           try {
                                if (response.body() != null) {
+
                                    Configurations[] configurations = getDataManager().getGson().fromJson(response.body().string(), Configurations[].class);
                                    for (Configurations configuration : configurations) {
                                        if (configuration.getFeatureCode().equalsIgnoreCase("vhclmodel")) {

@@ -830,11 +830,11 @@ public class CommercialAddVisitorActivity extends BaseActivity<ActivityCommercia
                 mViewModel.doGetGuestConfiguration(this);
             }
 
-            if (!recurrentVisitor.getStaffName().isEmpty()) {
-                updateWhomToMeetData(true, recurrentVisitor.getStaffName(), String.valueOf(recurrentVisitor.getStaffId()));
-            } else {
-                updateWhomToMeetData(false, recurrentVisitor.getPremiseName(), String.valueOf(recurrentVisitor.getFlatId()));
-            }
+//            if (!recurrentVisitor.getStaffName().isEmpty()) {
+//                updateWhomToMeetData(true, recurrentVisitor.getStaffName(), String.valueOf(recurrentVisitor.getStaffId()));
+//            } else {
+//                updateWhomToMeetData(false, recurrentVisitor.getPremiseName(), String.valueOf(recurrentVisitor.getFlatId()));
+//            }
             getViewDataBinding().etVisitorCompanyName.setText(recurrentVisitor.getCompanyName());
         } else if (recurrentVisitor.getVisitorType().equalsIgnoreCase(AppConstants.SERVICE_PROVIDER)) {
             getViewDataBinding().toolbar.tvTitle.setText(R.string.title_add_sp);
